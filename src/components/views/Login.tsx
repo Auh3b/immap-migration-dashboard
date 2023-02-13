@@ -179,6 +179,7 @@ function LoginButton() {
 
 const useStylesOrganisation = makeStyles((theme) => ({
   organisations: {
+    marginTop: theme.spacing(2),
     width: '100%',
   },
 }));
