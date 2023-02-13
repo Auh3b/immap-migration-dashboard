@@ -234,6 +234,12 @@ function NavigationMenu({ column = false }: { column?: boolean }) {
           to={ROUTE_PATHS.DEFAULT}
         />
         {/* [hygen] Import links */}
+        <Tab
+          label='Stores'
+          value='. stores'
+          component={NavLink}
+          to={ROUTE_PATHS.STORES}
+        />
       </Tabs>
     </Grid>
   );
