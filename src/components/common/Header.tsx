@@ -30,7 +30,7 @@ const useStylesCommon = makeStyles((theme) => ({
     '& h1': {
       display: 'flex',
       fontWeight: theme.typography.fontWeightRegular,
-      color: theme.palette.common.white,
+      color: theme.palette.common.black,
 
       '& strong': {
         marginRight: theme.spacing(0.5),
@@ -41,6 +41,7 @@ const useStylesCommon = makeStyles((theme) => ({
         marginRight: theme.spacing(1.5),
         width: 'auto',
         verticalAlign: 'bottom',
+        color: 'black'
       },
     },
   },
@@ -51,6 +52,8 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: 'none',
     zIndex: theme.zIndex.modal + 1,
     overflow: 'hidden',
+    backgroundColor: 'white',
+    borderBottom:'1px solid #333333'
   },
 }));
 
@@ -70,6 +73,7 @@ export default function Header() {
 const useStylesDesktop = makeStyles((theme) => ({
   divider: {
     margin: theme.spacing(0, 3),
+    color: theme.palette.common.black
   },
 }));
 
@@ -91,7 +95,6 @@ function Desktop() {
         className={classes.title}
       >
         <Typography component='h1' variant='subtitle1' noWrap>
-          <CartoLogo />
           <AppName />
         </Typography>
       </Link>
@@ -159,7 +162,6 @@ function Mobile() {
         className={classes.title}
       >
         <Typography component='h1' variant='subtitle1' noWrap>
-          <CartoLogoXS />
           <Divider orientation='vertical' light />
           <AppName />
         </Typography>
@@ -194,7 +196,7 @@ function Mobile() {
 function AppName() {
   return (
     <>
-      <strong>React</strong> Demo
+      <strong>UNICEF - LACRO</strong>
     </>
   );
 }
@@ -203,8 +205,8 @@ const useStylesNavigationMenu = makeStyles((theme: CustomTheme) => ({
   navTabs: {
     '& .MuiTabs-indicator': {
       backgroundColor:
-        theme.palette.appBar?.contrastText ||
-        theme.palette.primary?.contrastText,
+        theme.palette.appBar ||
+        'red',
     },
   },
 }));
@@ -223,22 +225,34 @@ function NavigationMenu({ column = false }: { column?: boolean }) {
     >
       <Tabs
         value={pathname}
-        textColor={column ? 'primary' : 'inherit'}
+        textColor={'primary'}
         orientation={column ? 'vertical' : 'horizontal'}
         variant={column ? 'fullWidth' : 'standard'}
       >
         <Tab
-          label='Home'
+          label='Dashboard'
           value=''
           component={NavLink as any}
           to={ROUTE_PATHS.DEFAULT}
         />
         {/* [hygen] Import links */}
         <Tab
-          label='Stores'
-          value='. stores'
+          label='Services'
+          value='services'
           component={NavLink}
-          to={ROUTE_PATHS.STORES}
+          to={ROUTE_PATHS.SERVICES}
+        />
+        <Tab
+          label='Migration flow'
+          value='migration'
+          component={NavLink}
+          to={ROUTE_PATHS.MIGRATION_FLOW}
+        />
+        <Tab
+          label='Media'
+          value='media'
+          component={NavLink}
+          to={ROUTE_PATHS.MEDIA}
         />
       </Tabs>
     </Grid>

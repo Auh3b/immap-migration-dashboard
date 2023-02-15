@@ -7,14 +7,18 @@ const Main = lazy(
 );
 const NotFound = lazy(() => import('components/views/NotFound'));
 const Login = lazy(() => import('components/views/Login'));
-const Stores = lazy(() => import('components/views/Stores'));
+const Services = lazy(() => import('components/views/Services'));
+const MigrationFlow = lazy(() => import('components/views/MigrationFlow'));
+const Media = lazy(() => import('components/views/Media'));
 // [hygen] Import views
 
 export const ROUTE_PATHS = {
   LOGIN: '/login',
   DEFAULT: '/',
   NOT_FOUND: '/404',
-  STORES: '/. stores',
+  SERVICES: '/services',
+  MIGRATION_FLOW: '/migration',
+  MEDIA: '/media',
   // [hygen] Add path routes
 };
 
@@ -30,7 +34,9 @@ const routes = [
     ),
     children: [
       // { path: '/', element: <Navigate to='/<your default view>' /> },
-      { path: ROUTE_PATHS.STORES, element: <Stores /> },
+      { path: ROUTE_PATHS.SERVICES, element: <Services /> },
+      { path: ROUTE_PATHS.MIGRATION_FLOW, element: <MigrationFlow /> },
+      { path: ROUTE_PATHS.MEDIA, element: <Media /> },
       // [hygen] Add routes
     ],
   },

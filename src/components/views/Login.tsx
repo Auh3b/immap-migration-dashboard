@@ -12,6 +12,7 @@ import SvgIcon from '@material-ui/core/SvgIcon';
 import { ReactComponent as CartoLogoNegative } from 'assets/img/carto-logo-negative.svg';
 import immapLogo from 'assets/img/immap-logo.png';
 import unicefLogo from 'assets/img/unicef-logo.png'
+import hero from 'assets/img/hero-image.png'
 import { useAuth0 } from '@auth0/auth0-react';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
@@ -19,15 +20,27 @@ import { ROUTE_PATHS } from 'routes';
 import { RootState } from 'store/store';
 
 const useStyles = makeStyles((theme) => ({
-  login: {
+  container:{
     backgroundColor: 'white',
-    height: '100%',
+    height: '100%'
+  },
+  login: {
     [theme.breakpoints.up('md')]: {
-      padding: theme.spacing(8, 28, 0),
+      padding: theme.spacing(8, 12, 0),
     },
     [theme.breakpoints.down('sm')]: {
       padding: theme.spacing(4, 5, 0),
     },
+  },
+  hero: {
+    [theme.breakpoints.down('sm')]:{
+      display: "none",
+    }
+  },
+  image:{
+    width: '100%',
+    height:'100%',
+    objectFit: 'contain'
   },
   footer: {
     position: 'absolute',
@@ -48,24 +61,34 @@ export default function Login() {
 
   return (
     <Grid
-      container
-      className={classes.login}
-      direction='column'
-      justifyContent='flex-start'
-      alignItems='flex-start'
+    container
+    className={classes.container}
     >
-      <Grid item>
-        <CartoLogoNegative />
+    <Grid item md={6}>
+      <Grid
+        container
+        className={classes.login}
+        direction='column'
+        justifyContent='flex-start'
+        alignItems='flex-start'
+      >
+        <Grid item>
+          <CartoLogoNegative />
+        </Grid>
+
+        <Content />
+
+        <Organisations />
+
+        <Grid item className={classes.footer}>
+          <Typography variant='caption' color='inherit'>
+            &copy; iMMAP {new Date(Date.now()).getFullYear()}
+          </Typography>
+        </Grid>
       </Grid>
-
-      <Content />
-
-      <Organisations />
-
-      <Grid item className={classes.footer}>
-        <Typography variant='caption' color='inherit'>
-          &copy; iMMAP {new Date(Date.now()).getFullYear()}
-        </Typography>
+    </Grid>
+      <Grid item md={6} className={classes.hero}>
+        <img src={hero} className={classes.image}/>
       </Grid>
     </Grid>
   );
@@ -81,20 +104,19 @@ const useStylesContent = makeStyles((theme) => ({
     },
   },
   subtitle: {
-    color: '#333333',
+    color: '#6d6e71',
   },
   title: {
     marginTop: theme.spacing(1),
-    color: '#333333',
+    color: '#1f3a5f',
   },
   description: {
     marginTop: theme.spacing(2),
-    maxWidth: 485,
-    color: '#333333',
+    color: '#6d6e71',
   },
   contact: {
     marginTop: theme.spacing(2),
-    color: '#333333',
+    color: '#6d6e71',
   },
 }));
 
@@ -144,6 +166,10 @@ const useStylesLoginButton = makeStyles((theme) => ({
   loginButton: {
     marginTop: theme.spacing(9),
   },
+  button:{
+    backgroundColor: '#be2126',
+    color: 'white'
+  }
 }));
 
 function LoginButton() {
@@ -160,8 +186,8 @@ function LoginButton() {
     <Grid item className={classes.loginButton}>
       <Button
         variant='contained'
-        color='secondary'
         size='large'
+        className={classes.button}
         onClick={logInWithCarto}
         startIcon={
           loading ? (
@@ -180,20 +206,19 @@ function LoginButton() {
 const useStylesOrganisation = makeStyles((theme) => ({
   organisations: {
     marginTop: theme.spacing(2),
-    width: '100%',
+    gap: '1.2rem'
   },
 }));
 
 export function Organisations() {
   const classes = useStylesOrganisation()
   return (
-    <Grid
-    container 
+    <Grid container
     className={classes.organisations}>
-       <Grid item xs={6}>
+       <Grid item>
         <img src={unicefLogo} alt='iMMAP Logo' width={173} height={100}/>
       </Grid>
-      <Grid item xs={6}>
+      <Grid item>
         <img src={immapLogo} alt='iMMAP Logo' width={323} height={100}/>
       </Grid>
     </Grid>
