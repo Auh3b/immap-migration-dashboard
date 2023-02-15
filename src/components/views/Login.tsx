@@ -11,8 +11,8 @@ import { ReactComponent as CartoIcon } from 'assets/img/icon-carto-symbol.svg';
 import SvgIcon from '@material-ui/core/SvgIcon';
 import { ReactComponent as CartoLogoNegative } from 'assets/img/carto-logo-negative.svg';
 import immapLogo from 'assets/img/immap-logo.png';
-import unicefLogo from 'assets/img/unicef-logo.png'
-import hero from 'assets/img/hero-image.png'
+import unicefLogo from 'assets/img/unicef-logo.png';
+import hero from 'assets/img/hero-image.png';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
@@ -20,9 +20,9 @@ import { ROUTE_PATHS } from 'routes';
 import { RootState } from 'store/store';
 
 const useStyles = makeStyles((theme) => ({
-  container:{
+  container: {
     backgroundColor: 'white',
-    height: '100%'
+    height: '100%',
   },
   login: {
     [theme.breakpoints.up('md')]: {
@@ -33,14 +33,14 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   hero: {
-    [theme.breakpoints.down('sm')]:{
-      display: "none",
-    }
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
+    },
   },
-  image:{
+  image: {
     width: '100%',
-    height:'100%',
-    objectFit: 'contain'
+    height: '100%',
+    objectFit: 'contain',
   },
   footer: {
     position: 'absolute',
@@ -60,35 +60,32 @@ export default function Login() {
   }
 
   return (
-    <Grid
-    container
-    className={classes.container}
-    >
-    <Grid item md={6}>
-      <Grid
-        container
-        className={classes.login}
-        direction='column'
-        justifyContent='flex-start'
-        alignItems='flex-start'
-      >
-        <Grid item>
-          <CartoLogoNegative />
-        </Grid>
+    <Grid container className={classes.container}>
+      <Grid item md={6}>
+        <Grid
+          container
+          className={classes.login}
+          direction='column'
+          justifyContent='flex-start'
+          alignItems='flex-start'
+        >
+          <Grid item>
+            <CartoLogoNegative />
+          </Grid>
 
-        <Content />
+          <Content />
 
-        <Organisations />
+          <Organisations />
 
-        <Grid item className={classes.footer}>
-          <Typography variant='caption' color='inherit'>
-            &copy; iMMAP {new Date(Date.now()).getFullYear()}
-          </Typography>
+          <Grid item className={classes.footer}>
+            <Typography variant='caption' color='inherit'>
+              &copy; iMMAP {new Date(Date.now()).getFullYear()}
+            </Typography>
+          </Grid>
         </Grid>
       </Grid>
-    </Grid>
       <Grid item md={6} className={classes.hero}>
-        <img src={hero} className={classes.image}/>
+        <img src={hero} className={classes.image} />
       </Grid>
     </Grid>
   );
@@ -139,7 +136,12 @@ function Content() {
 
       <Grid item className={classes.description}>
         <Typography variant='body2' color='inherit'>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus architecto iure repudiandae explicabo totam quos et culpa nulla ipsum numquam suscipit ullam temporibus tempora perferendis reiciendis, animi doloremque sequi non praesentium dolorem? Harum dolorum asperiores temporibus at atque cum. Fuga, sunt saepe. Error corporis asperiores corrupti sint reprehenderit voluptatibus neque.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus
+          architecto iure repudiandae explicabo totam quos et culpa nulla ipsum
+          numquam suscipit ullam temporibus tempora perferendis reiciendis,
+          animi doloremque sequi non praesentium dolorem? Harum dolorum
+          asperiores temporibus at atque cum. Fuga, sunt saepe. Error corporis
+          asperiores corrupti sint reprehenderit voluptatibus neque.
         </Typography>
       </Grid>
 
@@ -166,10 +168,10 @@ const useStylesLoginButton = makeStyles((theme) => ({
   loginButton: {
     marginTop: theme.spacing(9),
   },
-  button:{
+  button: {
     backgroundColor: '#be2126',
-    color: 'white'
-  }
+    color: 'white',
+  },
 }));
 
 function LoginButton() {
@@ -206,20 +208,19 @@ function LoginButton() {
 const useStylesOrganisation = makeStyles((theme) => ({
   organisations: {
     marginTop: theme.spacing(2),
-    gap: '1.2rem'
+    gap: '1.2rem',
   },
 }));
 
 export function Organisations() {
-  const classes = useStylesOrganisation()
+  const classes = useStylesOrganisation();
   return (
-    <Grid container
-    className={classes.organisations}>
-       <Grid item>
-        <img src={unicefLogo} alt='iMMAP Logo' width={173} height={100}/>
+    <Grid container className={classes.organisations}>
+      <Grid item>
+        <img src={unicefLogo} alt='iMMAP Logo' width={173} height={100} />
       </Grid>
       <Grid item>
-        <img src={immapLogo} alt='iMMAP Logo' width={323} height={100}/>
+        <img src={immapLogo} alt='iMMAP Logo' width={323} height={100} />
       </Grid>
     </Grid>
   );

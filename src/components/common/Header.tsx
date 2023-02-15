@@ -41,7 +41,7 @@ const useStylesCommon = makeStyles((theme) => ({
         marginRight: theme.spacing(1.5),
         width: 'auto',
         verticalAlign: 'bottom',
-        color: 'black'
+        color: 'black',
       },
     },
   },
@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
     zIndex: theme.zIndex.modal + 1,
     overflow: 'hidden',
     backgroundColor: 'white',
-    borderBottom:'1px solid #333333'
+    borderBottom: '1px solid #333333',
   },
 }));
 
@@ -73,7 +73,7 @@ export default function Header() {
 const useStylesDesktop = makeStyles((theme) => ({
   divider: {
     margin: theme.spacing(0, 3),
-    color: theme.palette.common.black
+    color: theme.palette.common.black,
   },
 }));
 
@@ -204,9 +204,7 @@ function AppName() {
 const useStylesNavigationMenu = makeStyles((theme: CustomTheme) => ({
   navTabs: {
     '& .MuiTabs-indicator': {
-      backgroundColor:
-        theme.palette.appBar ||
-        'red',
+      backgroundColor: theme.palette.appBar || 'red',
     },
   },
 }));
