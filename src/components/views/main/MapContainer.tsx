@@ -7,6 +7,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useSelector } from 'react-redux';
 import { Grid, useMediaQuery } from '@material-ui/core';
 import { CustomTheme } from 'theme';
+import { LegendWidget } from '@carto/react-widgets'
 
 const Map = lazy(
   () => import(/* webpackChunkName: 'map' */ 'components/common/map/Map'),
@@ -41,6 +42,16 @@ const useStyles = makeStyles((theme) => ({
 
     [theme.breakpoints.down('xs')]: {
       display: 'none',
+    },
+  },
+  legend: {
+    position: 'absolute',
+    bottom: theme.spacing(4),
+    right: theme.spacing(4),
+
+    [theme.breakpoints.down('sm')]: {
+      bottom: theme.spacing(10),
+      right: theme.spacing(2),
     },
   },
   cartoLogoMap: {
@@ -79,6 +90,7 @@ export default function MapContainer() {
         <ZoomControl className={classes.zoomControl} showCurrentZoom />
       )}
       {!isGmaps && <CartoLogoMap className={classes.cartoLogoMap} />}
+      <LegendWidget className={classes.legend}/>
     </Grid>
   );
 }
