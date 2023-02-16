@@ -12,7 +12,7 @@ export default function Media() {
 
   return (
     <Grid container direction='column' className={classes.media}>
-      <Grid item>Hello World</Grid>
+      <Grid item></Grid>
     </Grid>
   );
 }

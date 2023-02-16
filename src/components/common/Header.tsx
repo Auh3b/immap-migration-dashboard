@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
     zIndex: theme.zIndex.modal + 1,
     overflow: 'hidden',
     backgroundColor: 'white',
-    borderBottom: '1px solid #333333',
+    borderBottom: '0.5px solid #999',
   },
 }));
 
@@ -228,13 +228,13 @@ function NavigationMenu({ column = false }: { column?: boolean }) {
         orientation={column ? 'vertical' : 'horizontal'}
         variant={column ? 'fullWidth' : 'standard'}
       >
+        {/* [hygen] Import links */}
         <Tab
           label='Dashboard'
-          value=''
-          component={NavLink as any}
-          to={ROUTE_PATHS.DEFAULT}
+          value='dashboard'
+          component={NavLink}
+          to={ROUTE_PATHS.DASHBOARD}
         />
-        {/* [hygen] Import links */}
         <Tab
           label='Services'
           value='services'
