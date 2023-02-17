@@ -6,8 +6,9 @@ import {
   makeStyles,
   Link,
   Typography,
+  Icon,
 } from '@material-ui/core';
-import { ReactComponent as CartoIcon } from 'assets/img/icon-carto-symbol.svg';
+import { Lock } from '@material-ui/icons'
 import SvgIcon from '@material-ui/core/SvgIcon';
 import { ReactComponent as CartoLogoNegative } from 'assets/img/carto-logo-negative.svg';
 import immapLogo from 'assets/img/immap-logo.png';
@@ -105,7 +106,7 @@ const useStylesContent = makeStyles((theme) => ({
   },
   title: {
     marginTop: theme.spacing(1),
-    color: '#1f3a5f',
+    color: theme.palette.primary.main,
   },
   description: {
     marginTop: theme.spacing(2),
@@ -124,7 +125,7 @@ function Content() {
     <Grid item container direction='column' className={classes.content}>
       <Grid item className={classes.subtitle}>
         <Typography variant='subtitle1' color='inherit'>
-          iMMAP
+          UNICEF
         </Typography>
       </Grid>
 
@@ -169,7 +170,7 @@ const useStylesLoginButton = makeStyles((theme) => ({
     marginTop: theme.spacing(9),
   },
   button: {
-    backgroundColor: '#be2126',
+    backgroundColor: theme.palette.primary.main,
     color: 'white',
   },
 }));
@@ -193,13 +194,13 @@ function LoginButton() {
         onClick={logInWithCarto}
         startIcon={
           loading ? (
-            <CircularProgress size={24} />
+            <CircularProgress color='primary' size={24} />
           ) : (
-            <SvgIcon component={CartoIcon}></SvgIcon>
+            <Lock />
           )
         }
       >
-        Login with CARTO
+        Login
       </Button>
     </Grid>
   );

@@ -9,6 +9,7 @@ import LazyLoadRoute from 'components/common/LazyLoadRoute';
 import theme from './theme';
 import routes from './routes';
 import useAuth from './hooks/Auth0';
+import './app.css'
 
 const useStyles = makeStyles(() => ({
   app: {

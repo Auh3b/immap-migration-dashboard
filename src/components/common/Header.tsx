@@ -16,11 +16,10 @@ import {
   MenuItem,
   useMediaQuery,
 } from '@material-ui/core';
+import { Dashboard, DirectionsWalk, LocalHospital, PermMedia, } from '@material-ui/icons';
 import MenuIcon from '@material-ui/icons/Menu';
 import CloseIcon from '@material-ui/icons/Close';
 import { NavLink, useLocation } from 'react-router-dom';
-import { ReactComponent as CartoLogo } from 'assets/img/carto-logo.svg';
-import { ReactComponent as CartoLogoXS } from 'assets/img/carto-logo-xs.svg';
 import { ReactComponent as UnicefLogo } from 'assets/img/unicef.svg'
 import { ROUTE_PATHS } from 'routes';
 import { useAuth0 } from '@auth0/auth0-react';
@@ -31,7 +30,7 @@ const useStylesCommon = makeStyles((theme) => ({
     '& h1': {
       display: 'flex',
       fontWeight: theme.typography.fontWeightRegular,
-      color: theme.palette.common.black,
+      color: theme.palette.primary,
 
       '& strong': {
         marginRight: theme.spacing(0.5),
@@ -74,7 +73,7 @@ export default function Header() {
 const useStylesDesktop = makeStyles((theme) => ({
   divider: {
     margin: theme.spacing(0, 3),
-    color: theme.palette.common.black,
+    color: theme.palette.primary.main,
   },
 }));
 
@@ -202,10 +201,10 @@ function AppName() {
   );
 }
 
-const useStylesNavigationMenu = makeStyles((theme: CustomTheme) => ({
+const useStylesNavigationMenu = makeStyles((theme) => ({
   navTabs: {
     '& .MuiTabs-indicator': {
-      backgroundColor: theme.palette.appBar || 'red',
+      backgroundColor: theme.palette.secondary || theme.palette.info,
     },
   },
 }));
@@ -224,8 +223,8 @@ function NavigationMenu({ column = false }: { column?: boolean }) {
     >
       <Tabs
         value={pathname}
-        textColor={'primary'}
-        indicatorColor='primary'
+        textColor={'secondary'}
+        indicatorColor='secondary'
         orientation={column ? 'vertical' : 'horizontal'}
         variant={column ? 'fullWidth' : 'standard'}
       >
@@ -233,24 +232,28 @@ function NavigationMenu({ column = false }: { column?: boolean }) {
         <Tab
           label='Dashboard'
           value='dashboard'
+          // icon={<Dashboard />}
           component={NavLink}
           to={ROUTE_PATHS.DASHBOARD}
         />
         <Tab
           label='Services'
           value='services'
+          // icon={<LocalHospital />}
           component={NavLink}
           to={ROUTE_PATHS.SERVICES}
         />
         <Tab
           label='Migration flow'
           value='migration'
+          // icon={<DirectionsWalk />}
           component={NavLink}
           to={ROUTE_PATHS.MIGRATION_FLOW}
         />
         <Tab
           label='Media'
           value='media'
+          // icon={<PermMedia />}
           component={NavLink}
           to={ROUTE_PATHS.MEDIA}
         />
@@ -266,6 +269,9 @@ const useStylesUserMenu = makeStyles((theme) => ({
     height: theme.spacing(4.5),
     marginLeft: theme.spacing(1),
   },
+  menu:{
+    zIndex: theme.zIndex.modal + 10,
+  }
 }));
 
 function UserMenu() {
@@ -340,6 +346,7 @@ function UserMenu() {
         }}
         open={open}
         onClose={handleClose}
+        className={classes.menu}
       >
         <MenuItem onClick={handleLogout}>Logout</MenuItem>
         <MenuItem>
