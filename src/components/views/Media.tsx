@@ -65,8 +65,6 @@ export default function Media() {
       <Grid item className={classes.content}>
         <Typography variant='h6' className={classes.title}>Participación por red social</Typography>
         <PieWidgetUI 
-          id='participationGroups'
-          title='Participación por red social'
           data={data}
           color={colors}
         />

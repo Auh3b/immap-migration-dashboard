@@ -21,6 +21,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import { NavLink, useLocation } from 'react-router-dom';
 import { ReactComponent as CartoLogo } from 'assets/img/carto-logo.svg';
 import { ReactComponent as CartoLogoXS } from 'assets/img/carto-logo-xs.svg';
+import { ReactComponent as UnicefLogo } from 'assets/img/unicef.svg'
 import { ROUTE_PATHS } from 'routes';
 import { useAuth0 } from '@auth0/auth0-react';
 import { CustomTheme } from 'theme';
@@ -196,7 +197,7 @@ function Mobile() {
 function AppName() {
   return (
     <>
-      <strong>UNICEF - LACRO</strong>
+      <UnicefLogo/>
     </>
   );
 }
