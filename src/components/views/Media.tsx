@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid } from '@material-ui/core';
+import { Divider, Grid, Typography } from '@material-ui/core';
 import MediaContainer from 'components/common/media/MediaContainer';
 import { FormulaWidget, PieWidget } from '@carto/react-widgets';
 import hotspotSource from "data/sources/hotspotSource"
@@ -35,7 +35,14 @@ const data = [
 
 
 const useStyles = makeStyles(() => ({
-  media: {},
+  media: {
+  },
+  title:{
+    padding: 5,
+  },
+  content:{
+    marginBottom: 10,
+  }
 }));
 
 export default function Media() {
@@ -45,7 +52,7 @@ export default function Media() {
 
   return (
     <Grid container direction='column' className={classes.media}>
-      <Grid item>
+      <Grid item className={classes.content}>
         <FormulaWidget 
           id='participantCount'
           title='Participación por red social'
@@ -54,7 +61,9 @@ export default function Media() {
           operation={AggregationTypes.SUM}
         />
       </Grid>
-      <Grid item>
+      <Divider />
+      <Grid item className={classes.content}>
+        <Typography variant='h6' className={classes.title}>Participación por red social</Typography>
         <PieWidgetUI 
           id='participationGroups'
           title='Participación por red social'
@@ -62,7 +71,8 @@ export default function Media() {
           color={colors}
         />
       </Grid>
-      <Grid item>
+      <Divider />
+      <Grid item className={classes.content}>
         <MediaContainer />
       </Grid>
     </Grid>
