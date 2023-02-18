@@ -2,7 +2,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
 import {
   CategoryWidget,
-  HistogramWidget,
   PieWidget,
   TimeSeriesWidget,
 } from '@carto/react-widgets';
@@ -42,11 +41,11 @@ export default function Dashboard() {
       </Grid>
       <Grid item>
         <TimeSeriesWidget
-          id="surveyDates"
-          title="Distribución de tamaño grupo"
+          id='surveyDates'
+          title='Distribución de tamaño grupo'
           dataSource={hotspotSource.id}
-          column="carto_10_1"
-          stepSize={GroupDateTypes.DAYS} 
+          column='carto_10_1'
+          stepSize={GroupDateTypes.DAYS}
         />
       </Grid>
     </Grid>

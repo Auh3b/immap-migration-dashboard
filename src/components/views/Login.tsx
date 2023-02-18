@@ -8,8 +8,7 @@ import {
   Typography,
   Icon,
 } from '@material-ui/core';
-import { Lock } from '@material-ui/icons'
-import SvgIcon from '@material-ui/core/SvgIcon';
+import { Lock } from '@material-ui/icons';
 import { ReactComponent as CartoLogoNegative } from 'assets/img/carto-logo-negative.svg';
 import immapLogo from 'assets/img/immap-logo.png';
 import unicefLogo from 'assets/img/unicef-logo.png';
@@ -193,11 +192,7 @@ function LoginButton() {
         className={classes.button}
         onClick={logInWithCarto}
         startIcon={
-          loading ? (
-            <CircularProgress color='primary' size={24} />
-          ) : (
-            <Lock />
-          )
+          loading ? <CircularProgress color='secondary' size={24} /> : <Lock />
         }
       >
         Login

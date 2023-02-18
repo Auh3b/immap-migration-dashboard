@@ -1,6 +1,5 @@
-import { Card, Paper,makeStyles, Tab, Tabs, Typography } from "@material-ui/core";
-import { useEffect, useState } from "react";
-import  {CustomTheme } from "theme"
+import { makeStyles, Tab, Tabs, Typography } from '@material-ui/core';
+import { useEffect, useState } from 'react';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -10,12 +9,12 @@ interface TabPanelProps {
 }
 
 function TabPanel(props: TabPanelProps) {
-  const { children, value, index, className,...other } = props;
+  const { children, value, index, className, ...other } = props;
 
   return (
     <div
       className={className}
-      role="tabpanel"
+      role='tabpanel'
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
@@ -39,36 +38,40 @@ function a11yProps(index: number) {
 
 const useStyles = makeStyles((theme) => ({
   card: {
-     margin: 10,
+    margin: 10,
   },
-  content:{
+  content: {
     padding: 10,
-  }
+  },
 }));
 
-export default function MediaContainer({...args}) {
-  const classes = useStyles()
+export default function MediaContainer({ ...args }) {
+  const classes = useStyles();
   const [value, setValue] = useState(0);
 
-  const handleChange = (event:any, newValue:number) => {
+  const handleChange = (event: any, newValue: number) => {
     setValue(newValue);
   };
 
   useEffect(() => {
-    console.log(value)
-  
+    console.log(value);
+
     return () => {
-      console.log("done")
-    }
-  }, [value])
-  
-  
+      console.log('done');
+    };
+  }, [value]);
+
   return (
     <div className={classes.card}>
-      <Tabs value={value} onChange={handleChange} aria-label='tabs example' {...args}>
-        <Tab label='Facebook' {...a11yProps(0)}/>
-        <Tab label='Twitter' {...a11yProps(1)}/>
-        <Tab label='WhatsApp' {...a11yProps(2)}/>
+      <Tabs
+        value={value}
+        onChange={handleChange}
+        aria-label='tabs example'
+        {...args}
+      >
+        <Tab label='Facebook' {...a11yProps(0)} />
+        <Tab label='Twitter' {...a11yProps(1)} />
+        <Tab label='WhatsApp' {...a11yProps(2)} />
       </Tabs>
       <TabPanel className={classes.content} value={value} index={0}>
         FaceBook Cotent
@@ -80,5 +83,5 @@ export default function MediaContainer({...args}) {
         WhatsApp Content
       </TabPanel>
     </div>
-  )
+  );
 }

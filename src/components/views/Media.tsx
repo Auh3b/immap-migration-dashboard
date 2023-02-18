@@ -1,48 +1,40 @@
 import { makeStyles } from '@material-ui/core/styles';
 import { Divider, Grid, Typography } from '@material-ui/core';
 import MediaContainer from 'components/common/media/MediaContainer';
-import { FormulaWidget, PieWidget } from '@carto/react-widgets';
-import hotspotSource from "data/sources/hotspotSource"
+import { FormulaWidget } from '@carto/react-widgets';
+import hotspotSource from 'data/sources/hotspotSource';
 import { AggregationTypes } from '@carto/react-core';
 import { PieWidgetUI } from '@carto/react-ui';
 
-
-const colors = [
-  '#1877f2',
-  '#075e54',
-  '#1da1f2',
-  '#9146ff'
-]
+const colors = ['#1877f2', '#075e54', '#1da1f2', '#9146ff'];
 
 const data = [
   {
     name: 'Facebook',
-    value: Math.floor(5050*0.45)
+    value: Math.floor(5050 * 0.45),
   },
   {
     name: 'WhatsApp',
-    value: Math.floor(5050*0.25)
+    value: Math.floor(5050 * 0.25),
   },
   {
     name: 'Twitter',
-    value: Math.floor(5050*0.20)
+    value: Math.floor(5050 * 0.2),
   },
   {
     name: 'Others',
-    value: Math.floor(5050*0.10)
-  }
-]
-
+    value: Math.floor(5050 * 0.1),
+  },
+];
 
 const useStyles = makeStyles(() => ({
-  media: {
-  },
-  title:{
+  media: {},
+  title: {
     padding: 5,
   },
-  content:{
+  content: {
     marginBottom: 10,
-  }
+  },
 }));
 
 export default function Media() {
@@ -53,7 +45,7 @@ export default function Media() {
   return (
     <Grid container direction='column' className={classes.media}>
       <Grid item className={classes.content}>
-        <FormulaWidget 
+        <FormulaWidget
           id='participantCount'
           title='Participación por red social'
           dataSource={hotspotSource.id}
@@ -63,11 +55,10 @@ export default function Media() {
       </Grid>
       <Divider />
       <Grid item className={classes.content}>
-        <Typography variant='h6' className={classes.title}>Participación por red social</Typography>
-        <PieWidgetUI 
-          data={data}
-          color={colors}
-        />
+        <Typography variant='h6' className={classes.title}>
+          Participación por red social
+        </Typography>
+        <PieWidgetUI data={data} color={colors} />
       </Grid>
       <Divider />
       <Grid item className={classes.content}>

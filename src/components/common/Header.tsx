@@ -16,11 +16,10 @@ import {
   MenuItem,
   useMediaQuery,
 } from '@material-ui/core';
-import { Dashboard, DirectionsWalk, LocalHospital, PermMedia, } from '@material-ui/icons';
 import MenuIcon from '@material-ui/icons/Menu';
 import CloseIcon from '@material-ui/icons/Close';
 import { NavLink, useLocation } from 'react-router-dom';
-import { ReactComponent as UnicefLogo } from 'assets/img/unicef.svg'
+import { ReactComponent as UnicefLogo } from 'assets/img/unicef.svg';
 import { ROUTE_PATHS } from 'routes';
 import { useAuth0 } from '@auth0/auth0-react';
 import { CustomTheme } from 'theme';
@@ -98,11 +97,7 @@ function Desktop() {
           <AppName />
         </Typography>
       </Link>
-      <Divider
-        orientation='vertical'
-        className={classes.divider}
-        light
-      ></Divider>
+      <Divider orientation='vertical' className={classes.divider}></Divider>
       <NavigationMenu />
       <Grid container item xs justifyContent='flex-end'>
         <UserMenu />
@@ -149,13 +144,13 @@ function Mobile() {
     <>
       <IconButton
         className={classes.menuButton}
-        color='inherit'
+        color='primary'
         aria-label='menu'
         onClick={handleDrawerToggle}
       >
         {drawerOpen ? <CloseIcon /> : <MenuIcon />}
       </IconButton>
-      <Divider orientation='vertical' light />
+      <Divider orientation='vertical' />
       <Link
         component={NavLink}
         to={ROUTE_PATHS.DEFAULT}
@@ -196,17 +191,17 @@ function Mobile() {
 function AppName() {
   return (
     <>
-      <UnicefLogo/>
+      <UnicefLogo />
     </>
   );
 }
 
 const useStylesNavigationMenu = makeStyles((theme) => ({
-  navTabs: {
-    '& .MuiTabs-indicator': {
-      backgroundColor: theme.palette.secondary || theme.palette.info,
-    },
-  },
+  // navTabs: {
+  //   '& .MuiTabs-indicator': {
+  //     backgroundColor: theme.palette.primary || theme.palette.secondary,
+  //   },
+  // },
 }));
 
 function NavigationMenu({ column = false }: { column?: boolean }) {
@@ -219,11 +214,11 @@ function NavigationMenu({ column = false }: { column?: boolean }) {
     <Grid
       container
       direction={column ? 'column' : 'row'}
-      className={!column ? classes.navTabs : ''}
+      // className={!column ? classes.navTabs : ''}
     >
       <Tabs
         value={pathname}
-        textColor={'secondary'}
+        textColor='secondary'
         indicatorColor='secondary'
         orientation={column ? 'vertical' : 'horizontal'}
         variant={column ? 'fullWidth' : 'standard'}
@@ -269,9 +264,9 @@ const useStylesUserMenu = makeStyles((theme) => ({
     height: theme.spacing(4.5),
     marginLeft: theme.spacing(1),
   },
-  menu:{
+  menu: {
     zIndex: theme.zIndex.modal + 10,
-  }
+  },
 }));
 
 function UserMenu() {
