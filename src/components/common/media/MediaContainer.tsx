@@ -52,15 +52,7 @@ export default function MediaContainer({ ...args }) {
   const handleChange = (event: any, newValue: number) => {
     setValue(newValue);
   };
-
-  useEffect(() => {
-    console.log(value);
-
-    return () => {
-      console.log('done');
-    };
-  }, [value]);
-
+  
   return (
     <div className={classes.card}>
       <Tabs

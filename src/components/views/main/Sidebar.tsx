@@ -14,6 +14,7 @@ import LazyLoadRoute from 'components/common/LazyLoadRoute';
 import { useTheme } from '@material-ui/styles';
 import { CustomTheme } from 'theme';
 import { RootState } from 'store/store';
+import MapContainer from './MapContainer';
 
 export const DRAWER_WIDTH = 350;
 
@@ -57,18 +58,19 @@ function Desktop() {
   const classes = useStylesDesktop();
 
   return (
-    <Drawer
-      classes={{
-        paper: classes.drawerPaper,
-      }}
-      variant='permanent'
-      anchor='left'
-      open
-    >
-      <Grid container item xs>
-        <Outlet />
-      </Grid>
-    </Drawer>
+    <Outlet context={<MapContainer />} />
+    // <Drawer
+    //   classes={{
+    //     paper: classes.drawerPaper,
+    //   }}
+    //   variant='permanent'
+    //   anchor='left'
+    //   open
+    // >
+    //   <Grid container item xs>
+    //     <Outlet />
+    //   </Grid>
+    // </Drawer>
   );
 }
 

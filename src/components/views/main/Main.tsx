@@ -13,6 +13,7 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import LazyLoadComponent from 'components/common/LazyLoadComponent';
 import { Grid } from '@material-ui/core';
+import { Outlet } from 'react-router-dom';
 
 const MapContainer = lazy(
   () =>
@@ -71,9 +72,10 @@ export default function Main() {
       className={classes.main}
     >
       <LazyLoadComponent>
-        <Sidebar />
+        <Outlet context={<MapContainer />} />
+        {/* <Sidebar />
         <MapContainer />
-        <ErrorSnackbar />
+        <ErrorSnackbar /> */}
       </LazyLoadComponent>
     </Grid>
   );

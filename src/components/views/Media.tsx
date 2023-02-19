@@ -5,6 +5,8 @@ import { FormulaWidget } from '@carto/react-widgets';
 import hotspotSource from 'data/sources/hotspotSource';
 import { AggregationTypes } from '@carto/react-core';
 import { PieWidgetUI } from '@carto/react-ui';
+import MainView from './main/MainView';
+import { useOutletContext } from 'react-router-dom';
 
 const colors = ['#1877f2', '#075e54', '#1da1f2', '#9146ff'];
 
@@ -43,8 +45,10 @@ export default function Media() {
   // [hygen] Add useEffect
 
   return (
-    <Grid container direction='column' className={classes.media}>
-      <Grid item className={classes.content}>
+    <MainView>
+      {{
+        left:<>
+            <Grid item className={classes.content}>
         <FormulaWidget
           id='participantCount'
           title='Participación por red social'
@@ -64,6 +68,30 @@ export default function Media() {
       <Grid item className={classes.content}>
         <MediaContainer />
       </Grid>
-    </Grid>
+        </>,
+      }}
+    </MainView>
+    // <Grid container direction='column' className={classes.media}>
+      // <Grid item className={classes.content}>
+      //   <FormulaWidget
+      //     id='participantCount'
+      //     title='Participación por red social'
+      //     dataSource={hotspotSource.id}
+      //     column='carto_10_e'
+      //     operation={AggregationTypes.SUM}
+      //   />
+      // </Grid>
+      // <Divider />
+      // <Grid item className={classes.content}>
+      //   <Typography variant='h6' className={classes.title}>
+      //     Participación por red social
+      //   </Typography>
+      //   <PieWidgetUI data={data} color={colors} />
+      // </Grid>
+      // <Divider />
+      // <Grid item className={classes.content}>
+      //   <MediaContainer />
+      // </Grid>
+    // </Grid>
   );
 }
