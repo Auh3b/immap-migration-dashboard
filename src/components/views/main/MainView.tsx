@@ -29,15 +29,17 @@ export default function MainView({ children }: { children: MainViewChildren }) {
       <Grid item className={classes.drawer}>
         {children.left}
       </Grid>
-      <Grid xs container direction='column'  item alignContent='stretch'>
+      <Grid xs container direction='column' item alignContent='stretch'>
         <MapContainer />
-        <Grid item>
-          {children.bottom}
-        </Grid>
+        <Grid item>{children.bottom}</Grid>
       </Grid>
-      {children.right ?  <Grid item className={classes.drawer}>
-        {children.right}
-      </Grid> : <></>}
+      {children.right ? (
+        <Grid item className={classes.drawer}>
+          {children.right}
+        </Grid>
+      ) : (
+        <></>
+      )}
     </>
   );
 }

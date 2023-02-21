@@ -53,6 +53,4 @@ const customTheme = {
 
 const theme = createTheme(deepmerge(cartoThemeOptions, customTheme));
 
-console.log(theme);
-
 export default theme as CustomTheme;

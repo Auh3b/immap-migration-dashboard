@@ -3,24 +3,22 @@ import { useDispatch, useSelector } from 'react-redux';
 import { CartoLayer } from '@deck.gl/carto';
 import { selectSourceById, updateLayer } from '@carto/react-redux';
 import { useCartoLayerProps } from '@carto/react-api';
-import htmlForFeature from 'utils/htmlForFeature';
 import { RootState } from 'store/store';
-
 import { LEGEND_TYPES } from '@carto/react-ui';
 
-export const HOTSPOTS_LAYER_ID = 'hotspotsLayer';
+export const SERVICE_POINTS_LAYER_ID = 'servicePointsLayer';
 
-export const HOTSPOT_COLORS = {
-  Hotspots: [231, 63, 116],
+export const SERVICES_COLORS = {
+  Services: [153, 63, 46],
 };
 
-const DATA = Object.entries(HOTSPOT_COLORS).map(([label, color]) => ({
+const DATA = Object.entries(SERVICES_COLORS).map(([label, color]) => ({
   color,
   label,
 }));
 
 const layerConfig = {
-  title: 'Hotspots',
+  title: 'Services',
   visible: true,
   legend: {
     attr: 'hotspot',
@@ -32,30 +30,30 @@ const layerConfig = {
   },
 };
 
-export default function HotspotsLayer() {
+export default function ServicePointsLayer() {
   const dispatch = useDispatch();
-  const { hotspotsLayer } = useSelector(
+  const { servicePointsLayer } = useSelector(
     (state: RootState) => state.carto.layers,
   );
   const source = useSelector((state) =>
-    selectSourceById(state, hotspotsLayer?.source),
+    selectSourceById(state, servicePointsLayer?.source),
   );
   const cartoLayerProps = useCartoLayerProps({
     source,
-    layerConfig: hotspotsLayer,
+    layerConfig: servicePointsLayer,
   });
 
-  if (hotspotsLayer && source) {
+  if (servicePointsLayer && source) {
     return new CartoLayer({
       ...cartoLayerProps,
-      id: HOTSPOTS_LAYER_ID,
-      getFillColor: HOTSPOT_COLORS.Hotspots,
-      pointRadiusMinPixels: 3,
+      id: SERVICE_POINTS_LAYER_ID,
+      getFillColor: [55, 255, 190],
+      pointRadiusMinPixels: 2,
       pickable: true,
       onDataLoad: (data: any) => {
         dispatch(
           updateLayer({
-            id: HOTSPOTS_LAYER_ID,
+            id: SERVICE_POINTS_LAYER_ID,
             layerAttributes: { ...layerConfig },
           }),
         );

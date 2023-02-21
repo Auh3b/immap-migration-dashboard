@@ -1,5 +1,4 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid } from '@material-ui/core';
 import {
   CategoryWidget,
   PieWidget,
@@ -7,7 +6,6 @@ import {
 } from '@carto/react-widgets';
 import hotspotSource from '../../data/sources/hotspotSource';
 import { AggregationTypes, GroupDateTypes } from '@carto/react-core';
-import { useOutletContext } from 'react-router-dom';
 import MainView from './main/MainView';
 
 const useStyles = makeStyles(() => ({

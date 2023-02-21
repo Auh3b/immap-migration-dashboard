@@ -52,7 +52,7 @@ export default function MediaContainer({ ...args }) {
   const handleChange = (event: any, newValue: number) => {
     setValue(newValue);
   };
-  
+
   return (
     <div className={classes.card}>
       <Tabs
