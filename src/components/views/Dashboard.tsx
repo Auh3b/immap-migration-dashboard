@@ -3,6 +3,7 @@ import {
   PieWidget,
   TimeSeriesWidget,
   BarWidget,
+  HistogramWidget,
 } from '@carto/react-widgets';
 import hotspotSource from '../../data/sources/hotspotSource';
 import { AggregationTypes, GroupDateTypes } from '@carto/react-core';
@@ -21,7 +22,7 @@ export default function Dashboard() {
         bottom: (
           <TimeSeriesWidget
             id='surveyDates'
-            title='Distribución de tamaño grupo'
+            title='Encuestas'
             dataSource={hotspotSource.id}
             column='carto_10_1'
             stepSize={GroupDateTypes.DAYS}
@@ -30,6 +31,18 @@ export default function Dashboard() {
       }}
     </MainView>
   );
+}
+
+const xFormatValues = new Map([
+  [1, '18'],
+  [2, '25'],
+  [3, '40'],
+  [4, '64'],
+  [5, '100']
+])
+
+function customFormat(value:number){
+  return xFormatValues.get(value)
 }
 
 function LeftView() {
@@ -56,12 +69,15 @@ function LeftView() {
         />
       </Grid>
       <Grid item>
-        <TimeSeriesWidget
-          id='surveyDates'
-          title='Encuestas'
-          dataSource={hotspotSource.id}
-          column='carto_10_1'
-          stepSize={GroupDateTypes.DAYS}
+      <HistogramWidget
+        id='daysInTransitStay'
+        title='Distribución de tamaño grupo'
+        dataSource={hotspotSource.id}
+        ticks={[2,3,4]}
+        column='carto_10_4'
+        xAxisFormatter={customFormat}
+        operation={AggregationTypes.COUNT}
+        onError={console.error}
         />
       </Grid>
     </MainColumnView>
@@ -104,7 +120,7 @@ function RightView() {
       <Grid item>
         <BarWidget
           id='pregnantWoment'
-          title='embarazadadadadas'
+          title='Embarazos'
           dataSource={hotspotSource.id}
           column='carto_1_27'
           operation={AggregationTypes.COUNT}
