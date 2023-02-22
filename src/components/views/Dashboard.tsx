@@ -38,7 +38,7 @@ function LeftView() {
       <Grid item>
         <PieWidget
           id='genderDistribution'
-          title='Género Porcentaje de género'
+          title='Género'
           dataSource={hotspotSource.id}
           column='carto_10_5'
           operation={AggregationTypes.COUNT}
@@ -48,7 +48,7 @@ function LeftView() {
       <Grid item>
         <CategoryWidget
           id='ageDistribution'
-          title='Distribución de tamaño grupo'
+          title='Tamaño de grupo de viaje'
           dataSource={hotspotSource.id}
           column='carto_10_3'
           operation={AggregationTypes.COUNT}
@@ -58,7 +58,7 @@ function LeftView() {
       <Grid item>
         <TimeSeriesWidget
           id='surveyDates'
-          title='Distribución de tamaño grupo'
+          title='Encuestas'
           dataSource={hotspotSource.id}
           column='carto_10_1'
           stepSize={GroupDateTypes.DAYS}
