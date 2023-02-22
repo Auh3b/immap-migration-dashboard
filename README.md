@@ -1,10 +1,6 @@
-# CARTO for React
+# UNICEF Migration Web App
 
-Welcome to CARTO for React! The best way to develop Location Intelligence Apps using CARTO Cloud Native platform + deck.gl. It will provide you a well designed structure following the best practices for modern frontend development and an integrated toolchain for testing, building and deploying your application.
-
-To get further information about CARTO for React visit our [documentation](https://docs.carto.com/react).
-
-This application has been kickstarted using the CARTO for React basic TypeScript template for CARTO 3.
+This application uses `Carto for React` template 3 with typescript, and uses `yarn` as the package manager. Make sure your using `Node v16.13.0` for compatibility in development.
 
 ## Available Scripts
 
