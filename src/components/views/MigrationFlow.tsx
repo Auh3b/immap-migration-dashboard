@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { CategoryWidget } from '@carto/react-widgets';
+import { CategoryWidget, HistogramWidget } from '@carto/react-widgets';
 import { AggregationTypes } from '@carto/react-core';
 import hotspotSource from '../../data/sources/hotspotSource';
 import MainView from './main/MainView';
@@ -13,6 +13,8 @@ import {
 } from '@carto/react-redux';
 import { MIGRATION_FLOW_LAYER_ID } from 'components/layers/MigrationFlowLayer';
 import migrationFlowSource from 'data/sources/migrationFlowSource';
+import { MainColumnView } from 'components/common/MainColumnView';
+import { Grid } from '@material-ui/core';
 const useStyles = makeStyles(() => ({
   migrationFlow: {},
 }));
@@ -40,59 +42,74 @@ export default function MigrationFlow() {
   return (
     <MainView>
       {{
-        left: (
-          <CategoryWidget
-            id='originCountry'
-            title='País de origen'
-            dataSource={hotspotSource.id}
-            column='carto_10_7'
-            operation={AggregationTypes.COUNT}
-            operationColumn='carto_10_7'
-          />
-        ),
-        right: (
-          <CategoryWidget
-            id='originCountry'
-            title='País donde residía hace un año'
-            dataSource={hotspotSource.id}
-            column='carto_1_11'
-            operation={AggregationTypes.COUNT}
-            operationColumn='carto_1_11'
-          />
-        ),
+        left: <LeftView />,
+        right: <RightView />,
       }}
     </MainView>
-    // <Grid container direction='column' className={classes.migrationFlow}>
-    //   <Grid item>
-    // <CategoryWidget
-    //   id='originCountry'
-    //   title='País de origen'
-    //   dataSource={hotspotSource.id}
-    //   column='carto_10_7'
-    //   operation={AggregationTypes.COUNT}
-    //   operationColumn='carto_10_7'
-    // />
-    //   </Grid>
-    //   <Grid item>
-    //     <CategoryWidget
-    //       id='departCountry'
-    //       title='País de donde viene'
-    //       dataSource={hotspotSource.id}
-    //       column='carto_10_9'
-    //       operation={AggregationTypes.COUNT}
-    //       operationColumn='carto_10_9'
-    //     />
-    //   </Grid>
-    //   <Grid item>
-    // <CategoryWidget
-    //   id='originCountry'
-    //   title='País donde residía hace un año'
-    //   dataSource={hotspotSource.id}
-    //   column='carto_1_11'
-    //   operation={AggregationTypes.COUNT}
-    //   operationColumn='carto_1_11'
-    // />
-    //   </Grid>
-    // </Grid>
   );
+}
+
+function LeftView (){
+  return(
+    <MainColumnView>
+      <Grid item>
+        <CategoryWidget
+          id='originCountry'
+          title='País de origen'
+          dataSource={hotspotSource.id}
+          column='carto_10_7'
+          operation={AggregationTypes.COUNT}
+          operationColumn='carto_10_7'
+        />
+      </Grid>
+      <Grid item>
+        <CategoryWidget
+          id='departCountry'
+          title='País de donde viene'
+          dataSource={hotspotSource.id}
+          column='carto_10_9'
+          operation={AggregationTypes.COUNT}
+          operationColumn='carto_10_9'
+        />
+      </Grid>
+      <Grid item>
+        <CategoryWidget
+          id='originCountry'
+          title='País donde residía hace un año'
+          dataSource={hotspotSource.id}
+          column='carto_1_11'
+          operation={AggregationTypes.COUNT}
+          operationColumn='carto_1_11'
+        />
+      </Grid>
+    </MainColumnView>
+  )
+}
+
+function RightView(){
+  return(
+    <MainColumnView>
+       <Grid item>
+        <CategoryWidget
+          id='reasonForTransitStay'
+          title='Razones de no continuar viaje'
+          dataSource={hotspotSource.id}
+          column='carto_1_65'
+          operation={AggregationTypes.COUNT}
+          operationColumn='carto_1_65'
+        />
+      </Grid>
+      <Grid item>
+        <HistogramWidget
+        id='daysInTransitStay'
+        title='Duración de estadía promedio'
+        dataSource={hotspotSource.id}
+        ticks={[1,2,3,4]}
+        column='carto_1_68'
+        operation={AggregationTypes.COUNT}
+        onError={console.error}
+        />
+      </Grid>
+    </MainColumnView>
+  )
 }
