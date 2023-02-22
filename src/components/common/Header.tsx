@@ -237,7 +237,7 @@ function NavigationMenu({ column = false }: { column?: boolean }) {
           to={ROUTE_PATHS.SERVICES}
         />
         <Tab
-          label='migrantes'
+          label='Migrantes'
           value='migration'
           component={NavLink}
           to={ROUTE_PATHS.MIGRATION_FLOW}
