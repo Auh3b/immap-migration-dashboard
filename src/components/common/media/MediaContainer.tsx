@@ -1,5 +1,5 @@
 import { makeStyles, Tab, Tabs, Typography } from '@material-ui/core';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 interface TabPanelProps {
   children?: React.ReactNode;

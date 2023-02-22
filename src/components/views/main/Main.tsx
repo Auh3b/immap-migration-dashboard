@@ -74,8 +74,8 @@ export default function Main() {
       <LazyLoadComponent>
         <Outlet context={<MapContainer />} />
         {/* <Sidebar />
-        <MapContainer />
-        <ErrorSnackbar /> */}
+        <MapContainer /> */}
+        <ErrorSnackbar />
       </LazyLoadComponent>
     </Grid>
   );

@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { CartoLayer } from '@deck.gl/carto';
 import { selectSourceById, updateLayer } from '@carto/react-redux';
 import { useCartoLayerProps } from '@carto/react-api';
-import htmlForFeature from 'utils/htmlForFeature';
 import { RootState } from 'store/store';
 
 import { LEGEND_TYPES } from '@carto/react-ui';

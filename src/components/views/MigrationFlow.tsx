@@ -2,7 +2,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import { CategoryWidget } from '@carto/react-widgets';
 import { AggregationTypes } from '@carto/react-core';
 import hotspotSource from '../../data/sources/hotspotSource';
-import { useOutletContext } from 'react-router-dom';
 import MainView from './main/MainView';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
@@ -22,7 +21,6 @@ export default function MigrationFlow() {
   const classes = useStyles();
   const dispatch = useDispatch();
   useEffect(() => {
-
     dispatch(addSource(migrationFlowSource));
     dispatch(
       addLayer({

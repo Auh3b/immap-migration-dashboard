@@ -1,4 +1,4 @@
-import { Drawer, Grid, makeStyles } from '@material-ui/core';
+import { Grid, makeStyles, Toolbar } from '@material-ui/core';
 import { ReactChild, ReactNode } from 'react';
 import MapContainer from './MapContainer';
 
@@ -11,9 +11,13 @@ interface MainViewChildren {
   bottom?: ReactChild;
 }
 
-const useStyles = makeStyles(() => ({
+<Toolbar />;
+
+const useStyles = makeStyles((theme) => ({
   drawer: {
     width: DRAWER_WIDTH,
+    maxHeight: `calc(100vh - ${theme.mixins.toolbar.minHeight}px)`,
+    overflow: 'auto',
   },
   drawerPaper: {
     width: DRAWER_WIDTH,
@@ -26,7 +30,13 @@ export default function MainView({ children }: { children: MainViewChildren }) {
 
   return (
     <>
-      <Grid item className={classes.drawer}>
+      <Grid
+        container
+        wrap='nowrap'
+        direction='column'
+        item
+        className={classes.drawer}
+      >
         {children.left}
       </Grid>
       <Grid xs container direction='column' item alignContent='stretch'>
@@ -34,7 +44,13 @@ export default function MainView({ children }: { children: MainViewChildren }) {
         <Grid item>{children.bottom}</Grid>
       </Grid>
       {children.right ? (
-        <Grid item className={classes.drawer}>
+        <Grid
+          container
+          wrap='nowrap'
+          direction='column'
+          item
+          className={classes.drawer}
+        >
           {children.right}
         </Grid>
       ) : (

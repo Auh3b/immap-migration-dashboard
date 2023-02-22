@@ -197,11 +197,11 @@ function AppName() {
 }
 
 const useStylesNavigationMenu = makeStyles((theme) => ({
-  // navTabs: {
-  //   '& .MuiTabs-indicator': {
-  //     backgroundColor: theme.palette.primary || theme.palette.secondary,
-  //   },
-  // },
+  navTabs: {
+    '& .MuiTabs-indicator': {
+      backgroundColor: theme.palette.primary || theme.palette.secondary,
+    },
+  },
 }));
 
 function NavigationMenu({ column = false }: { column?: boolean }) {
@@ -214,7 +214,7 @@ function NavigationMenu({ column = false }: { column?: boolean }) {
     <Grid
       container
       direction={column ? 'column' : 'row'}
-      // className={!column ? classes.navTabs : ''}
+      className={!column ? classes.navTabs : ''}
     >
       <Tabs
         value={pathname}
@@ -225,30 +225,26 @@ function NavigationMenu({ column = false }: { column?: boolean }) {
       >
         {/* [hygen] Import links */}
         <Tab
-          label='Dashboard'
+          label='Inicio'
           value='dashboard'
-          // icon={<Dashboard />}
           component={NavLink}
           to={ROUTE_PATHS.DASHBOARD}
         />
         <Tab
           label='Services'
-          value='services'
-          // icon={<LocalHospital />}
+          value='Servicios'
           component={NavLink}
           to={ROUTE_PATHS.SERVICES}
         />
         <Tab
-          label='Migration flow'
+          label='migrantes'
           value='migration'
-          // icon={<DirectionsWalk />}
           component={NavLink}
           to={ROUTE_PATHS.MIGRATION_FLOW}
         />
         <Tab
-          label='Media'
+          label='Redes sociales'
           value='media'
-          // icon={<PermMedia />}
           component={NavLink}
           to={ROUTE_PATHS.MEDIA}
         />

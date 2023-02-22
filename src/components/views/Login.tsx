@@ -6,10 +6,8 @@ import {
   makeStyles,
   Link,
   Typography,
-  Icon,
 } from '@material-ui/core';
 import { Lock } from '@material-ui/icons';
-import { ReactComponent as CartoLogoNegative } from 'assets/img/carto-logo-negative.svg';
 import immapLogo from 'assets/img/immap-logo.png';
 import unicefLogo from 'assets/img/unicef-logo.png';
 import hero from 'assets/img/hero-image.png';
@@ -69,10 +67,6 @@ export default function Login() {
           justifyContent='flex-start'
           alignItems='flex-start'
         >
-          <Grid item>
-            <CartoLogoNegative />
-          </Grid>
-
           <Content />
 
           <Organisations />
@@ -85,7 +79,7 @@ export default function Login() {
         </Grid>
       </Grid>
       <Grid item md={6} className={classes.hero}>
-        <img src={hero} className={classes.image} />
+        <img src={hero} alt='migrants-silhouette' className={classes.image} />
       </Grid>
     </Grid>
   );
@@ -93,12 +87,12 @@ export default function Login() {
 
 const useStylesContent = makeStyles((theme) => ({
   content: {
-    [theme.breakpoints.up('md')]: {
-      marginTop: theme.spacing(12),
-    },
-    [theme.breakpoints.down('sm')]: {
-      marginTop: theme.spacing(7),
-    },
+    // [theme.breakpoints.up('md')]: {
+    //   marginTop: theme.spacing(12),
+    // },
+    // [theme.breakpoints.down('sm')]: {
+    //   marginTop: theme.spacing(7),
+    // },
   },
   subtitle: {
     color: '#6d6e71',
@@ -130,7 +124,7 @@ function Content() {
 
       <Grid item className={classes.title}>
         <Typography variant='h3' color='inherit'>
-          Welcome to Migration Dashboard
+          Migration Dashboard
         </Typography>
       </Grid>
 
@@ -166,11 +160,14 @@ function Content() {
 
 const useStylesLoginButton = makeStyles((theme) => ({
   loginButton: {
-    marginTop: theme.spacing(9),
+    marginTop: theme.spacing(4),
   },
   button: {
-    backgroundColor: theme.palette.primary.main,
     color: 'white',
+    backgroundColor: theme.palette.primary.main,
+    '&:hover': {
+      color: theme.palette.primary.main,
+    },
   },
 }));
 
@@ -192,7 +189,7 @@ function LoginButton() {
         className={classes.button}
         onClick={logInWithCarto}
         startIcon={
-          loading ? <CircularProgress color='secondary' size={24} /> : <Lock />
+          loading ? <CircularProgress color='inherit' size={24} /> : <Lock />
         }
       >
         Login
@@ -201,10 +198,24 @@ function LoginButton() {
   );
 }
 
+const organisationLogoWidth = 173;
+const organisationLogoHeight = 100;
+
 const useStylesOrganisation = makeStyles((theme) => ({
   organisations: {
-    marginTop: theme.spacing(2),
+    marginTop: theme.spacing(1),
     gap: '1.2rem',
+  },
+  logo: {
+    [theme.breakpoints.down('sm')]: {
+      width: organisationLogoWidth * 0.5,
+      height: organisationLogoHeight * 0.5,
+    },
+    [theme.breakpoints.up('md')]: {
+      width: organisationLogoWidth,
+      height: organisationLogoHeight,
+    },
+    objectFit: 'contain',
   },
 }));
 
@@ -213,10 +224,10 @@ export function Organisations() {
   return (
     <Grid container className={classes.organisations}>
       <Grid item>
-        <img src={unicefLogo} alt='iMMAP Logo' width={173} height={100} />
+        <img src={unicefLogo} alt='iMMAP Logo' className={classes.logo} />
       </Grid>
       <Grid item>
-        <img src={immapLogo} alt='iMMAP Logo' width={323} height={100} />
+        <img src={immapLogo} alt='iMMAP Logo' className={classes.logo} />
       </Grid>
     </Grid>
   );

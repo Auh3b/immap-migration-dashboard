@@ -25,16 +25,18 @@ export default function MigrationFlowLayer() {
         connection: 'carto_dw',
         format: FORMATS.JSON,
       });
-      
-      setJsonData(data.map((d:any )=> ({
-        ...d,
-        from:{
-          coordinates: [d['start_lng'], d['start_lat']]
-        },
-        to:{
-          coordinates: [d['end_lng'], d['end_lat']]
-        }
-      })));
+
+      setJsonData(
+        data.map((d: any) => ({
+          ...d,
+          from: {
+            coordinates: [d['start_lng'], d['start_lat']],
+          },
+          to: {
+            coordinates: [d['end_lng'], d['end_lat']],
+          },
+        })),
+      );
     }
 
     fetchData();
@@ -44,9 +46,9 @@ export default function MigrationFlowLayer() {
     };
   }, []);
 
-  if(jsonData && migrationFlowLayer){
+  if (jsonData && migrationFlowLayer) {
     return new ArcLayer({
-      data:jsonData,
+      data: jsonData,
       id: MIGRATION_FLOW_LAYER_ID,
       getSourcePosition: (d: any) => d.from.coordinates,
       getTargetPosition: (d: any) => d.to.coordinates,
