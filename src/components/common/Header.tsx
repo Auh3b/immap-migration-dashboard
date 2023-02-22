@@ -231,8 +231,8 @@ function NavigationMenu({ column = false }: { column?: boolean }) {
           to={ROUTE_PATHS.DASHBOARD}
         />
         <Tab
-          label='Services'
-          value='Servicios'
+          label='Servicios'
+          value='services'
           component={NavLink}
           to={ROUTE_PATHS.SERVICES}
         />
