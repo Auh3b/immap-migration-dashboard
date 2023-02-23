@@ -112,8 +112,7 @@ export default function Media() {
   useEffect(() => {
     async function fetchMapLayers() {
       const {layers} = await fetchMap({cartoMapId})
-      // const l = layers.splice(2,2)
-      console.log(layers)
+      const l = layers.splice(2,2)
       setLayers(layers)
     }
 
