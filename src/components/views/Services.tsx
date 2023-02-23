@@ -15,7 +15,7 @@ import hotspotSource from '../../data/sources/hotspotSource';
 import { AggregationTypes } from '@carto/react-core';
 import MainView from './main/MainView';
 import { MainColumnView } from 'components/common/MainColumnView';
-import { Grid } from '@material-ui/core';
+import { Divider, Grid, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles(() => ({
   services: {},
@@ -52,10 +52,26 @@ export default function Services() {
   );
 }
 
+const useViewStyle = makeStyles((theme)=>({
+  title:{
+    padding: theme.spacing(2),
+  },
+  divider:{
+    borderBottom: theme.spacing(2),
+    borderTop: theme.spacing(2)
+  } 
+}))
+
 
 function LeftView(){
+  const classes = useViewStyle()
+
   return(
     <MainColumnView>
+      <Grid item className={classes.title}>
+        <Typography variant='subtitle1'>Calidad para adultos</Typography>
+      </Grid>
+      <Divider className={classes.divider} />
       <Grid item>
         <CategoryWidget
           id='serviceType'
@@ -71,9 +87,9 @@ function LeftView(){
           id='serviceQuality'
           title='Calidad servicio'
           dataSource={hotspotSource.id}
-          column='carto_1_51'
+          column='carto_1_43'
           operation={AggregationTypes.COUNT}
-          operationColumn='carto_1_51'
+          operationColumn='carto_1_43'
         />
       </Grid>
       <Grid item>
@@ -101,16 +117,51 @@ function LeftView(){
 }
 
 function RightView(){
+  const classes = useViewStyle()
   return(
      <MainColumnView>
+      <Grid item className={classes.title}>
+        <Typography variant='subtitle1'>Calidad para NNA</Typography>
+      </Grid>
+      <Divider className={classes.divider} />
       <Grid item>
        <CategoryWidget
+          id='serviceSatisfaction'
+          title='Tipo servicio'
+          dataSource={hotspotSource.id}
+          operation={AggregationTypes.COUNT}
+          column='carto_1_47'
+          operationColumn='carto_1_47'
+        />
+      </Grid>
+      <Grid item>
+       <PieWidget
+          id='serviceQuality'
+          title='Calidad servicio'
+          dataSource={hotspotSource.id}
+          column='carto_1_51'
+          operation={AggregationTypes.COUNT}
+          operationColumn='carto_1_51'
+        />
+      </Grid>
+      <Grid item>
+        <CategoryWidget
+          id='accessServices'
+          title='Acceso a servicio'
+          dataSource={hotspotSource.id}
+          operation={AggregationTypes.COUNT}
+          column='carto_1_49'
+          operationColumn='carto_1_49'
+        />
+      </Grid>
+      <Grid item>
+        <CategoryWidget
           id='serviceSatisfaction'
           title='Satisfacción del servicio'
           dataSource={hotspotSource.id}
           operation={AggregationTypes.COUNT}
-          column='carto_1_43'
-          operationColumn='carto_1_43'
+          column='carto_1_51'
+          operationColumn='carto_1_51'
         />
       </Grid>
      </MainColumnView>
