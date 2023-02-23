@@ -20,6 +20,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import CloseIcon from '@material-ui/icons/Close';
 import { NavLink, useLocation } from 'react-router-dom';
 import { ReactComponent as UnicefLogo } from 'assets/img/unicef.svg';
+import { ReactComponent as ImmapLogo } from 'assets/img/immapLogoAlt.svg';
 import { ROUTE_PATHS } from 'routes';
 import { useAuth0 } from '@auth0/auth0-react';
 import { CustomTheme } from 'theme';
@@ -191,7 +192,7 @@ function Mobile() {
 function AppName() {
   return (
     <>
-      <UnicefLogo />
+      <UnicefLogo /><ImmapLogo />
     </>
   );
 }
