@@ -20,8 +20,7 @@ export default function MigrationFlowLayer() {
     async function fetchData() {
       const { data } = await fetchLayerData({
         type: MAP_TYPES.TABLE,
-        source:
-          'carto-dw-ac-4v8fnfsh.private_aclavijo_c8f7e1ef.migration_flow_test',
+        source:'carto-dw-ac-4v8fnfsh.private_aclavijo_c8f7e1ef.migration_flow_test',
         connection: 'carto_dw',
         format: FORMATS.JSON,
       });
