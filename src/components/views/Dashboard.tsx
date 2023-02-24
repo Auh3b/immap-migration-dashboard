@@ -15,12 +15,38 @@ import { MainColumnView } from 'components/common/MainColumnView';
 import { Grid, makeStyles } from '@material-ui/core';
 import { FormulaWidgetUI, WrapperWidgetUI } from '@carto/react-ui';
 import { ReactNode, useEffect, useState } from 'react';
+import { SURVEY_CONCENTRATIONS_LAYER_ID } from 'components/layers/SurveyConcentrationsLayer';
+import { useDispatch } from 'react-redux';
+import {
+  addLayer,
+  removeLayer,
+  addSource,
+  removeSource,
+} from '@carto/react-redux';
+
 import { PregnantWoman as WomanIcon, Accessibility as ManIcon } from '@material-ui/icons';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store/store';
 import { selectSourceById } from '@carto/react-redux';
 
 export default function Dashboard() {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(addSource(hotspotSource));
+
+    dispatch(
+      addLayer({
+        id: SURVEY_CONCENTRATIONS_LAYER_ID,
+        source: hotspotSource.id,
+      }),
+    );
+
+    return () => {
+      dispatch(removeLayer(SURVEY_CONCENTRATIONS_LAYER_ID));
+      dispatch(removeSource(hotspotSource.id));
+    };
+  }, [dispatch]);
+
   // [hygen] Add useEffect
   
   return (
