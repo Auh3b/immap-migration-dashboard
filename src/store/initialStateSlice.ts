@@ -1,4 +1,4 @@
-import { VOYAGER } from '@carto/react-basemaps';
+import { POSITRON } from '@carto/react-basemaps';
 import { InitialCarto3State } from '@carto/react-redux';
 // @ts-ignore
 import { API_VERSIONS } from '@deck.gl/carto';
@@ -12,7 +12,7 @@ export const initialState: InitialCarto3State = {
     bearing: 0,
     dragRotate: false,
   },
-  basemap: VOYAGER,
+  basemap: POSITRON,
   credentials: {
     apiVersion: API_VERSIONS.V3,
     apiBaseUrl: 'https://gcp-us-east1.api.carto.com',
