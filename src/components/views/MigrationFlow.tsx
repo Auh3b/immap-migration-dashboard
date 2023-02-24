@@ -15,12 +15,8 @@ import { MIGRATION_FLOW_LAYER_ID } from 'components/layers/MigrationFlowLayer';
 import migrationFlowSource from 'data/sources/migrationFlowSource';
 import { MainColumnView } from 'components/common/MainColumnView';
 import { Grid } from '@material-ui/core';
-const useStyles = makeStyles(() => ({
-  migrationFlow: {},
-}));
 
 export default function MigrationFlow() {
-  const classes = useStyles();
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(addSource(migrationFlowSource));

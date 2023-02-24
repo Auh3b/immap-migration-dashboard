@@ -6,10 +6,10 @@ import {
   HistogramWidget,
 } from '@carto/react-widgets';
 // @ts-ignore
-import { fetchLayerData, MAP_TYPES, FORMATS } from '@deck.gl/carto';
-import { Credentials, executeSQL } from '@carto/react-api';
+import { FORMATS } from '@deck.gl/carto';
+import { executeSQL, _executeModel } from '@carto/react-api';
 import hotspotSource from '../../data/sources/hotspotSource';
-import { AggregationTypes, GroupDateTypes, groupValuesByColumn } from '@carto/react-core';
+import { AggregationTypes, GroupDateTypes, groupValuesByColumn, _FilterTypes } from '@carto/react-core';
 import MainView from './main/MainView';
 import { MainColumnView } from 'components/common/MainColumnView';
 import { Grid, makeStyles } from '@material-ui/core';
@@ -21,7 +21,6 @@ import {
   addLayer,
   removeLayer,
   addSource,
-  removeSource,
 } from '@carto/react-redux';
 
 import { PregnantWoman as WomanIcon, Accessibility as ManIcon } from '@material-ui/icons';
@@ -43,7 +42,7 @@ export default function Dashboard() {
 
     return () => {
       dispatch(removeLayer(SURVEY_CONCENTRATIONS_LAYER_ID));
-      dispatch(removeSource(hotspotSource.id));
+      // dispatch(removeSource(hotspotSource.id));
     };
   }, [dispatch]);
 
@@ -81,6 +80,7 @@ function customFormat(value:number){
 }
 
 function LeftView() {
+  
   return (
     <MainColumnView>
       <Grid item>
@@ -186,12 +186,6 @@ function GenderIndicator(){
   useEffect(() => {
     async function fetchData(){
       setIsLoading(true)
-      // const { data} = await fetchLayerData({
-      //   type: MAP_TYPES.TABLE,
-      //   source:'carto-dw-ac-4v8fnfsh.shared.carto_10_public',
-      //   connection: 'carto_dw',
-      //   format: FORMATS.JSON,
-      // })
       // @ts-ignore
       const data:any[] = await executeSQL({
         credentials,
@@ -244,7 +238,7 @@ function GenderIndicator(){
 const useGenderStyles = makeStyles((theme)=>({
   container:{
     display:'flex',
-    gap: '5',
+    gap: theme.spacing(2),
     alignItems:'center'
   }
 }))

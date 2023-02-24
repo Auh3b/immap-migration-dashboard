@@ -1,22 +1,37 @@
 import { useSelector } from 'react-redux';
 // @ts-ignore
-import { CartoLayer, FORMATS,fetchLayerData, MAP_TYPES } from '@deck.gl/carto';
+import { FORMATS,fetchLayerData} from '@deck.gl/carto';
 //@ts-ignore
 import { CompositeLayer } from 'deck.gl'
 //@ts-ignore
 import { GeoJsonLayer } from '@deck.gl/layers'
-import { selectSourceById } from '@carto/react-redux';
-import { executeSQL, useCartoLayerProps } from '@carto/react-api';
 import { RootState } from 'store/store';
 import SuperCluster from 'supercluster'
 import { useEffect, useState } from 'react';
 import hotSpotSource from 'data/sources/hotspotSource'
+import { color, extent, interpolateYlOrRd, scaleSequential } from 'd3';
+
+function getExtent(features:any[]){
+  return features.map(f => f.properties.point_count)
+}
+
+function getColorRange(numbers: number[]){
+  return extent(numbers)
+}
+
+function colorScale(extent: [number, number]){
+  return scaleSequential().domain(extent).interpolator(interpolateYlOrRd)
+}
+
+function getFillColor(value:number, extent: [number, number]){
+  //@ts-ignore
+  const colorValue = Object.values(color(colorScale(extent)(value)))
+  colorValue.pop()
+  return colorValue
+}
+
 
 export const SURVEY_CONCENTRATIONS_LAYER_ID = 'surveyConcentrationsLayer';
-
-function getIconSize(size:number) {
-  return Math.min(100, size) / 100 + 1;
-}
 
 class CircleClusterLayer extends CompositeLayer {
   constructor(props:any){
@@ -53,14 +68,21 @@ class CircleClusterLayer extends CompositeLayer {
         data: this.state.index.getClusters([-180, -85, 180, 85], z),
         z
       });
+      //@ts-ignore
+      const clusterValues = getColorRange(getExtent(this.state.data))
+      //@ts-ignore
+      this.setState({
+        clusterValues
+      })
     }
   }
   renderLayers() {
     //@ts-ignore
     const data = {type: 'FeatureCollection', features: this.state.data}
-    console.log(data)
     //@ts-ignore
-    const {sizeScale, getFillColor, id} = this.props;
+    const {clusterValues} = this.state
+    //@ts-ignore
+    const {sizeScale, id} = this.props;
 
     return new GeoJsonLayer(
       //@ts-ignore
@@ -68,12 +90,14 @@ class CircleClusterLayer extends CompositeLayer {
         id,
         data,
         sizeScale,
-        getFillColor,
+        opacity: 0.9,
+        stroked: false,
+        //@ts-ignore
+        getFillColor: d => (d.properties.cluster ? getFillColor(d.properties.point_count, clusterValues)  : [51,66,77]),
         pointType: 'circle',
         //@ts-ignore
-        // getPosition: d => d.geometry.coordinates,
-        //@ts-ignore
-        getPointRadius: d => (d.properties.cluster ? d.properties.point_count*1000 : 100)
+        getPointRadius: d => (d.properties.cluster ? d.properties.point_count*100 : 100),
+        pointRadiusMinPixels:15
       })
     );
   }
@@ -107,7 +131,6 @@ export default function SurveyConcentrationsLayer() {
     return new CircleClusterLayer({
       data,
       id: SURVEY_CONCENTRATIONS_LAYER_ID,
-      getFillColor: [55, 265, 122],
       pointRadiusMinPixels: 2,
       pickable: true,
       sizeScale: 60,
