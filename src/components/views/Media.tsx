@@ -15,6 +15,9 @@ import { fetchMap } from '@deck.gl/carto'
 import DeckGL from '@deck.gl/react'
 import { useEffect, useState } from 'react';
 import DeckGLComponent from 'components/common/map/DeckGLComponent';
+import TopLoading from 'components/common/TopLoading';
+import { useDispatch } from 'react-redux';
+import { setViewState,setBasemap } from '@carto/react-redux';
 
 // const colors = ['#1877f2', '#075e54', '#1da1f2', '#9146ff'];
 
@@ -108,12 +111,19 @@ const cartoMapId = '9ddf6a22-3bdf-4b41-9d6a-80ea80895d32'
 export default function Media() {
   const classes = useStyles();
   const [layers, setLayers] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
+
+  const dispatch = useDispatch()
 
   useEffect(() => {
     async function fetchMapLayers() {
-      const {layers} = await fetchMap({cartoMapId})
-      const l = layers.splice(2,2)
+      setIsLoading(true)
+      const {initialViewState, mapStyle,layers} = await fetchMap({cartoMapId})
+      console.log(initialViewState, mapStyle)
+      // dispatch(setBasemap(mapStyle.styleType))
+      dispatch(setViewState(initialViewState))
       setLayers(layers)
+      setIsLoading(false)
     }
 
     fetchMapLayers()
@@ -127,6 +137,7 @@ export default function Media() {
 
   return (
     <Grid item className={classes.mapWrapper}>
+      {isLoading ? <TopLoading /> : ''}
       <DeckGLComponent layers={layers}/>
     </Grid>
     
