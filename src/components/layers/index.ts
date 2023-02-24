@@ -1,6 +1,7 @@
 import HotspotsLayer from './HotspotsLayer';
 import ServicePointsLayer from './ServicePointsLayer';
 import MigrationFlowLayer from './MigrationFlowLayer';
+import SurveyConcentrationsLayer from './SurveyConcentrationsLayer';
 // [hygen] Import layers
 
 export const getLayers = () => {
@@ -8,6 +9,7 @@ export const getLayers = () => {
     HotspotsLayer(),
     ServicePointsLayer(),
     MigrationFlowLayer(),
+    SurveyConcentrationsLayer(),
     // [hygen] Add layer
   ];
 };
