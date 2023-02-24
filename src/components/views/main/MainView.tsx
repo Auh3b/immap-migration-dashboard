@@ -2,7 +2,7 @@ import { Grid, makeStyles, Toolbar } from '@material-ui/core';
 import { ReactChild, ReactNode } from 'react';
 import MapContainer from './MapContainer';
 
-const DRAWER_WIDTH = 350;
+const DRAWER_WIDTH = 300;
 
 interface MainViewChildren {
   left?: ReactChild;
