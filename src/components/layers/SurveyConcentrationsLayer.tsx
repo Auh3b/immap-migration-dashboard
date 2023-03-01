@@ -160,7 +160,7 @@ export default function SurveyConcentrationsLayer() {
       setData(null);
     };
   }, []);
-  console.log(data);
+
   const cartoLayerProps = useCartoLayerProps({
     source,
     layerConfig: surveyConcentrationsLayer,
@@ -180,7 +180,7 @@ export default function SurveyConcentrationsLayer() {
             layerAttributes: { ...layerConfig },
           }),
         );
-        cartoLayerProps.onDataLoad && cartoLayerProps.onDataLoad(data);
+        // cartoLayerProps.onDataLoad && cartoLayerProps.onDataLoad(data);
       },
       //@ts-ignore
       getPosition: (d) => d.geometry.coordinates,

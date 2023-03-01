@@ -1,3 +1,5 @@
+//@ts-nocheck
+import { TILE_FORMATS } from '@deck.gl/carto';
 import { useEffect, useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store/store';
@@ -10,16 +12,15 @@ interface Method {
 interface useWidgetFetchProps {
   layerId: string;
   column?: string;
-  mapRef: any;
   source: any;
   method?: Method | null;
 }
 
+
+
 export default function useWidgetFetch({
-  layerId,
   method = (input) => input,
   column,
-  mapRef,
   source,
 }: useWidgetFetchProps) {
   const { viewport } = useSelector((state: RootState) => state.carto);
@@ -27,31 +28,42 @@ export default function useWidgetFetch({
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
 
-  useMemo(() => {
-    if (mapRef) {
-      setIsLoading(true);
-      //@ts-ignore
-      const tileData = getTileFeatures({ layerId, mapRef, viewport });
-      let widgetData: any[];
-      if (method) {
-        //@ts-ignore
-        widgetData = method(tileData?.data, column);
+  async function executeWidgetFetch(){
+    try {
+      setIsLoading(true)
+      const tileData = await getTileFeatures({
+        sourceId: source.id,
+        params:{
+          viewport,
+          limit: null,
+          tileFormat: TILE_FORMATS.GEOJSON
+        }
+      })
+
+      if(method){
+        setData(method(tileData, column))
+      }else{
+        setData(data)
       }
 
-      if (error) {
-        setError(true);
-      } else {
-        //@ts-ignore
-        setData(widgetData);
-      }
-      setIsLoading(false);
-      return () => {
-        setData(null);
-        setIsLoading(false);
-        setError(false);
-      };
+      return tileData
+    } catch (error) {
+      setError(true)
+      setIsLoading(false)
     }
-  }, [viewport, mapRef, source]);
+  }
+
+  
+  
+  useMemo(() => {
+    executeWidgetFetch();
+    setIsLoading(false);
+    return () => {
+      setData(null);
+      setIsLoading(false);
+      setError(false);
+    };
+  }, [viewport, source]);
 
   return { data, isLoading, error };
 }

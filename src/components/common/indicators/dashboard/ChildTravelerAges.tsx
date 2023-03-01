@@ -2,7 +2,6 @@ import { _FilterTypes } from '@carto/react-core';
 import { selectSourceById } from '@carto/react-redux';
 import CustomCategoryWidget from 'components/common/customWidgets/CustomCategoryWidget';
 import TopLoading from 'components/common/TopLoading';
-import useMapContext from 'context/useMapContext';
 import { sum } from 'd3';
 import mainSource from 'data/sources/mainSource';
 import useWidgetFetch from 'hooks/useWidgetFetch';
@@ -46,10 +45,8 @@ export default function ChildTravelerAges() {
   const source = useSelector((state) =>
     selectSourceById(state, hotspotsLayer?.source),
   );
-  const { mapRef } = useMapContext();
   const { data, error, isLoading } = useWidgetFetch({
     layerId: 'hotspotsLayer',
-    mapRef,
     source,
     method: transformData,
   });

@@ -4,8 +4,9 @@ export interface defaultCustomWidgetProps {
   title: string;
   id: string;
   dataSource: string;
-  data: any[];
+  data: any[] | null;
   column: string;
   labels?: any;
   filterType: _FilterTypes;
+  isLoading?: boolean;
 }

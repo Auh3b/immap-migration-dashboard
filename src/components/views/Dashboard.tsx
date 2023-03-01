@@ -38,6 +38,7 @@ import TopLoading from 'components/common/TopLoading';
 import useExecuteQuery from 'hooks/useExecuteQuery';
 import ChildrenTravellingAlone from 'components/common/indicators/dashboard/HumanitarianAid';
 import ChildTravelerAges from 'components/common/indicators/dashboard/ChildTravelerAges';
+import TripComposition from 'components/common/indicators/dashboard/TripComposition';
 
 export default function Dashboard() {
   const dispatch = useDispatch();
@@ -115,6 +116,7 @@ function LeftView() {
         />
       </Grid>
       <Grid item>
+        <TripComposition />
         <HistogramWidget
           id='ageDistribution'
           title='Distribución de tamaño grupo'

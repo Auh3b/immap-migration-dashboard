@@ -1,54 +1,13 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { /*Divider,*/ Grid /*,Typography*/ } from '@material-ui/core';
-// import MediaContainer from 'components/common/media/MediaContainer';
-// import { FormulaWidget } from '@carto/react-widgets';
-// import hotspotSource from 'data/sources/hotspotSource';
-// import { AggregationTypes } from '@carto/react-core';
-// import { PieWidgetUI } from '@carto/react-ui';
-// import MainView from './main/MainView';
-//@ts-ignore
-import { Deck } from '@deck.gl/core';
-import Map from 'components/common/map/Map';
+import { Grid  } from '@material-ui/core';
 //@ts-ignore
 import { fetchMap } from '@deck.gl/carto';
 //@ts-ignore
-import DeckGL from '@deck.gl/react';
 import { useEffect, useState } from 'react';
 import DeckGLComponent from 'components/common/map/DeckGLComponent';
 import TopLoading from 'components/common/TopLoading';
 import { useDispatch } from 'react-redux';
 import { setViewState, setBasemap } from '@carto/react-redux';
-
-// const colors = ['#1877f2', '#075e54', '#1da1f2', '#9146ff'];
-
-// const data = [
-//   {
-//     name: 'Facebook',
-//     value: Math.floor(5050 * 0.45),
-//   },
-//   {
-//     name: 'WhatsApp',
-//     value: Math.floor(5050 * 0.25),
-//   },
-//   {
-//     name: 'Twitter',
-//     value: Math.floor(5050 * 0.2),
-//   },
-//   {
-//     name: 'Others',
-//     value: Math.floor(5050 * 0.1),
-//   },
-// ];
-
-// const useStyles = makeStyles(() => ({
-//   media: {},
-//   title: {
-//     padding: 5,
-//   },
-//   content: {
-//     marginBottom: 10,
-//   },
-// }));
 
 const useStyles = makeStyles((theme) => ({
   mapWrapper: {
@@ -120,7 +79,6 @@ export default function Media() {
       const { initialViewState, mapStyle, layers } = await fetchMap({
         cartoMapId,
       });
-      console.log(initialViewState, mapStyle);
       // dispatch(setBasemap(mapStyle.styleType))
       dispatch(setViewState(initialViewState));
       setLayers(layers);
@@ -141,34 +99,5 @@ export default function Media() {
       {isLoading ? <TopLoading /> : ''}
       <DeckGLComponent layers={layers} />
     </Grid>
-
-    // <MainView>
-    //   {{
-    //     left: (
-    //       <>
-    //         <Grid item className={classes.content}>
-    //           <FormulaWidget
-    //             id='participantCount'
-    //             title='Participación por red social'
-    //             dataSource={hotspotSource.id}
-    //             column='carto_10_e'
-    //             operation={AggregationTypes.SUM}
-    //           />
-    //         </Grid>
-    //         <Divider />
-    //         <Grid item className={classes.content}>
-    //           <Typography variant='h6' className={classes.title}>
-    //             Participación por red social
-    //           </Typography>
-    //           <PieWidgetUI data={data} color={colors} />
-    //         </Grid>
-    //         <Divider />
-    //         <Grid item className={classes.content}>
-    //           <MediaContainer />
-    //         </Grid>
-    //       </>
-    //     ),
-    //   }}
-    // </MainView>
   );
 }

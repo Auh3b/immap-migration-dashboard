@@ -51,7 +51,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Main() {
   const classes = useStyles();
-  const [mapRef, setMapRef] = useState(null);
   const dispatch = useDispatch();
   // [hygen] Add useEffect
   useEffect(() => {
@@ -86,14 +85,12 @@ export default function Main() {
       xs
       className={classes.main}
     >
-      <mapContext.Provider value={{ mapRef, setMapRef }}>
-        <LazyLoadComponent>
-          <OutletView />
-          {/* <Sidebar />
-            <MapContainer /> */}
-          <ErrorSnackbar />
-        </LazyLoadComponent>
-      </mapContext.Provider>
+      <LazyLoadComponent>
+        <OutletView />
+        {/* <Sidebar />
+          <MapContainer /> */}
+        <ErrorSnackbar />
+      </LazyLoadComponent>
     </Grid>
   );
 }

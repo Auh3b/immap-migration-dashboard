@@ -13,7 +13,6 @@ import { addFilter, removeFilter, selectSourceById } from '@carto/react-redux';
 import mainSource from 'data/sources/mainSource';
 import { RootState } from 'store/store';
 import useWidgetFetch from 'hooks/useWidgetFetch';
-import useMapContext from 'context/useMapContext';
 
 const CATEGORY_ABREVATIONS = new Map([
   [0, 'Ninguna'],
@@ -102,7 +101,6 @@ export default function HumanitarianAid() {
     selectSourceById(state, hotspotsLayer?.source),
   );
   const dispatch = useDispatch();
-  const { mapRef } = useMapContext();
 
   const dataSource = mainSource.id;
   const column = 'ayudas_hum';
@@ -113,7 +111,6 @@ export default function HumanitarianAid() {
     layerId: 'hotspotsLayer',
     method: pivotData,
     column,
-    mapRef,
     source,
   });
 
