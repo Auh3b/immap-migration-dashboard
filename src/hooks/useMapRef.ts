@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 export default function useMapRef() {
-  const [mapRef, setMapRef] = useState(null)
-  return { mapRef, setMapRef}
+  const [mapRef, setMapRef] = useState(null);
+  return { mapRef, setMapRef };
 }

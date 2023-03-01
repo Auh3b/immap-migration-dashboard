@@ -17,8 +17,8 @@ import useMapContext from 'context/useMapContext';
 maplibregl.workerClass = maplibreglWorker;
 
 export default function DeckGLComponent({ layers }: { layers: any[] }) {
-  const {setMapRef} = useMapContext()
-  const mapRef = useRef(null)
+  const { setMapRef } = useMapContext();
+  const mapRef = useRef(null);
   const viewState = useSelector((state: RootState) => state.carto.viewState);
   const basemap = useSelector(
     // @ts-ignore
@@ -34,7 +34,7 @@ export default function DeckGLComponent({ layers }: { layers: any[] }) {
     handleViewStateChange,
   } = useMapHooks();
   //@ts-ignore
-  const handleOnLoad = () => (setMapRef(mapRef.current))
+  const handleOnLoad = () => setMapRef(mapRef.current);
 
   return (
     // @ts-ignore
@@ -49,7 +49,7 @@ export default function DeckGLComponent({ layers }: { layers: any[] }) {
       getCursor={handleCursor}
       getTooltip={handleTooltip as any}
       pickingRadius={isMobile ? 10 : 0}
-      ref={mapRef} 
+      ref={mapRef}
       onLoad={handleOnLoad}
     >
       <Map

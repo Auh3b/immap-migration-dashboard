@@ -26,7 +26,7 @@ export default function Services() {
   const dispatch = useDispatch();
   const classes = useStyles();
   // useEffect(() => {
-    
+
   //   dispatch(addSource(servicePointsSource));
 
   //   dispatch(
@@ -39,7 +39,7 @@ export default function Services() {
   //   return () => {
   //     dispatch(removeLayer(SERVICE_POINTS_LAYER_ID));
   //     dispatch(removeSource(servicePointsSource.id));
-      
+
   //   };
   // }, [dispatch]);
 
@@ -74,7 +74,7 @@ function LeftView() {
         <Typography variant='subtitle1'>Calidad para adultos</Typography>
       </Grid>
       <Divider className={classes.divider} />
-      <Grid item>
+      {/* <Grid item>
         <CategoryWidget
           id='serviceType'
           title='Tipo servicio'
@@ -113,7 +113,7 @@ function LeftView() {
           column='carto_1_43'
           operationColumn='carto_1_43'
         />
-      </Grid>
+      </Grid> */}
     </MainColumnView>
   );
 }
@@ -126,7 +126,7 @@ function RightView() {
         <Typography variant='subtitle1'>Calidad para NNA</Typography>
       </Grid>
       <Divider className={classes.divider} />
-      <Grid item>
+      {/* <Grid item>
         <CategoryWidget
           id='serviceSatisfaction'
           title='Tipo servicio'
@@ -165,7 +165,7 @@ function RightView() {
           column='carto_1_51'
           operationColumn='carto_1_51'
         />
-      </Grid>
+      </Grid> */}
     </MainColumnView>
   );
 }

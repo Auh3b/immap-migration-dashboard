@@ -1,55 +1,57 @@
-import { useEffect, useMemo, useState } from "react"
-import { useSelector } from "react-redux"
-import { RootState } from "store/store"
-import getTileFeatures from "utils/methods/getTileFeatures"
+import { useEffect, useMemo, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store/store';
+import getTileFeatures from 'utils/methods/getTileFeatures';
 
-interface Method{
-  (input: any[], column:string): any[]
+interface Method {
+  (input: any[], column: string): any[];
 }
 
 interface useWidgetFetchProps {
-  layerId: string
-  column?: string
-  mapRef: any
-  source: any
-  method?: Method | null
+  layerId: string;
+  column?: string;
+  mapRef: any;
+  source: any;
+  method?: Method | null;
 }
 
 export default function useWidgetFetch({
-  layerId, method=(input) => input, column, mapRef, source
+  layerId,
+  method = (input) => input,
+  column,
+  mapRef,
+  source,
 }: useWidgetFetchProps) {
-  const {viewport} = useSelector((state: RootState) => state.carto)
-  const [data, setData] = useState<null|any[]>(null)
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState(false)
+  const { viewport } = useSelector((state: RootState) => state.carto);
+  const [data, setData] = useState<null | any[]>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   useMemo(() => {
-    if(mapRef){
-      setIsLoading(true)
+    if (mapRef) {
+      setIsLoading(true);
       //@ts-ignore
-      const tileData = getTileFeatures({layerId, mapRef, viewport})
-      let widgetData: any[]
-      if(method){
+      const tileData = getTileFeatures({ layerId, mapRef, viewport });
+      let widgetData: any[];
+      if (method) {
         //@ts-ignore
-        widgetData = method(tileData?.data, column)
+        widgetData = method(tileData?.data, column);
       }
-  
-      if(error){
-        setError(true)
-      }else{
+
+      if (error) {
+        setError(true);
+      } else {
         //@ts-ignore
-        setData(widgetData)
+        setData(widgetData);
       }
-      setIsLoading(false)
+      setIsLoading(false);
       return () => {
-        setData(null)
-        setIsLoading(false)
-        setError(false)
-      }
+        setData(null);
+        setIsLoading(false);
+        setError(false);
+      };
     }
-  }, [viewport, mapRef, source])
-  
+  }, [viewport, mapRef, source]);
 
-
-  return {data, isLoading, error}
+  return { data, isLoading, error };
 }

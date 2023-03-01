@@ -1,6 +1,12 @@
 import { Outlet } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import { SwipeableDrawer, Fab, useMediaQuery, Drawer, Grid } from '@material-ui/core';
+import {
+  SwipeableDrawer,
+  Fab,
+  useMediaQuery,
+  Drawer,
+  Grid,
+} from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import { setBottomSheetOpen } from 'store/appSlice';

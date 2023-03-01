@@ -1,19 +1,29 @@
-import { addFilter, removeFilter } from "@carto/react-redux";
-import { CategoryWidgetUI, WrapperWidgetUI } from "@carto/react-ui";
-import { useCallback } from "react";
-import { useDispatch } from "react-redux";
-import { defaultCustomWidgetProps } from "./customWidgetsType";
-import useWidgetFilterValues from "./hooks/useWidgetFilterValues";
+import { addFilter, removeFilter } from '@carto/react-redux';
+import { CategoryWidgetUI, WrapperWidgetUI } from '@carto/react-ui';
+import { useCallback } from 'react';
+import { useDispatch } from 'react-redux';
+import { defaultCustomWidgetProps } from './customWidgetsType';
+import useWidgetFilterValues from './hooks/useWidgetFilterValues';
 
-const EMPTY_ARRAY: [] = []
+const EMPTY_ARRAY: [] = [];
 
 export default function CustomCategoryWidget({
-  title, data, dataSource, column,id,filterType, labels={}
+  title,
+  data,
+  dataSource,
+  column,
+  id,
+  filterType,
+  labels = {},
 }: defaultCustomWidgetProps) {
-  const dispatch = useDispatch()
-  const selectedCategories = useWidgetFilterValues({
-    dataSource, column, id, type: filterType
-  }) || EMPTY_ARRAY
+  const dispatch = useDispatch();
+  const selectedCategories =
+    useWidgetFilterValues({
+      dataSource,
+      column,
+      id,
+      type: filterType,
+    }) || EMPTY_ARRAY;
 
   const handleSelectedCategoriesChange = useCallback(
     (categories) => {
@@ -24,32 +34,30 @@ export default function CustomCategoryWidget({
             column,
             type: filterType,
             values: categories,
-            owner: id
-          })
+            owner: id,
+          }),
         );
       } else {
         dispatch(
           removeFilter({
             id: dataSource,
             column,
-            owner: id
-          })
+            owner: id,
+          }),
         );
       }
     },
-    [column, dataSource, id, dispatch]
+    [column, dataSource, id, dispatch],
   );
 
   return (
-    <WrapperWidgetUI
-    title={title}
-    >
+    <WrapperWidgetUI title={title}>
       <CategoryWidgetUI
-      onSelectedCategoriesChange={handleSelectedCategoriesChange}
-      selectedCategories={selectedCategories}
-      labels={labels}
-      data={data}
+        onSelectedCategoriesChange={handleSelectedCategoriesChange}
+        selectedCategories={selectedCategories}
+        labels={labels}
+        data={data}
       />
     </WrapperWidgetUI>
-  )
+  );
 }

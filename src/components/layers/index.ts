@@ -6,10 +6,10 @@ import SurveyConcentrationsLayer from './SurveyConcentrationsLayer';
 
 export const getLayers = () => {
   return [
+    SurveyConcentrationsLayer(),
     HotspotsLayer(),
     ServicePointsLayer(),
     MigrationFlowLayer(),
-    // SurveyConcentrationsLayer(),
     // [hygen] Add layer
   ];
 };

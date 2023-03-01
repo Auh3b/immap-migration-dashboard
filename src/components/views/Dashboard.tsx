@@ -41,29 +41,18 @@ import ChildTravelerAges from 'components/common/indicators/dashboard/ChildTrave
 
 export default function Dashboard() {
   const dispatch = useDispatch();
-  // useEffect(() => {
-  //   dispatch(addSource(mainSource));
+  useEffect(() => {
+    dispatch(
+      addLayer({
+        id: SURVEY_CONCENTRATIONS_LAYER_ID,
+        source: mainSource.id,
+      }),
+    );
 
-  //   // dispatch(
-  //   //   addLayer({
-  //   //     id: HOTSPOTS_LAYER_ID,
-  //   //     source: mainSource.id,
-  //   //   }),
-  //   // );
-
-  //   dispatch(
-  //     addLayer({
-  //       id: SURVEY_CONCENTRATIONS_LAYER_ID,
-  //       source: mainSource.id,
-  //     }),
-  //   );
-
-  //   return () => {
-  //     dispatch(removeLayer(SURVEY_CONCENTRATIONS_LAYER_ID));
-  //     // dispatch(removeLayer(HOTSPOTS_LAYER_ID));
-  //     // dispatch(removeSource(mainSource.id));
-  //   };
-  // }, [dispatch]);
+    return () => {
+      dispatch(removeLayer(SURVEY_CONCENTRATIONS_LAYER_ID));
+    };
+  }, [dispatch]);
 
   // [hygen] Add useEffect
 
@@ -126,14 +115,14 @@ function LeftView() {
         />
       </Grid>
       <Grid item>
-      <HistogramWidget
-        id='ageDistribution'
-        title='Distribución de tamaño grupo'
-        dataSource={mainSource.id}
-        ticks={[18,25,40,65]}
-        column='edad'
-        // xAxisFormatter={customFormat}
-        operation={AggregationTypes.COUNT}
+        <HistogramWidget
+          id='ageDistribution'
+          title='Distribución de tamaño grupo'
+          dataSource={mainSource.id}
+          ticks={[18, 25, 40, 65]}
+          column='edad'
+          // xAxisFormatter={customFormat}
+          operation={AggregationTypes.COUNT}
         />
       </Grid>
     </MainColumnView>

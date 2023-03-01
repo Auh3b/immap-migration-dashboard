@@ -34,28 +34,30 @@ export default function MigrationFlowLayer() {
 
   // @ts-ignore
 
-  useEffect(()=>{
+  useEffect(() => {
     async function fetchData() {
       const { data } = await fetchLayerData({
         type: MAP_TYPES.TABLE,
-        source:'carto-dw-ac-4v8fnfsh.shared.kuery24022023',
+        source: 'carto-dw-ac-4v8fnfsh.shared.kuery24022023',
         connection: 'carto_dw',
         format: FORMATS.JSON,
       });
-      
-      console.log(data)
-  
-      setJsonData(data.map((d: any) => ({
-        ...d,
-        from: {
-          coordinates: [d['long_paisn'], d['lat_paisna']],
-        },
-        to: {
-          coordinates: [d['longitud'], d['latitud']],
-        },
-      }))) 
+
+      console.log(data);
+
+      setJsonData(
+        data.map((d: any) => ({
+          ...d,
+          from: {
+            coordinates: [d['long_paisn'], d['lat_paisna']],
+          },
+          to: {
+            coordinates: [d['longitud'], d['latitud']],
+          },
+        })),
+      );
     }
-    fetchData()
+    fetchData();
     dispatch(
       updateLayer({
         id: MIGRATION_FLOW_LAYER_ID,
@@ -63,15 +65,16 @@ export default function MigrationFlowLayer() {
       }),
     );
 
-    return ()=>{
-      setJsonData([])
-    }
-  }, [])
+    return () => {
+      setJsonData([]);
+    };
+  }, []);
 
-  if (migrationFlowLayer &&jsonData) {
+  if (migrationFlowLayer && jsonData) {
     return new ArcLayer({
-      data: new Promise((resolve,reject) => {
-        resolve(jsonData)}),
+      data: new Promise((resolve, reject) => {
+        resolve(jsonData);
+      }),
       id: MIGRATION_FLOW_LAYER_ID,
       getSourcePosition: (d: any) => d.from.coordinates,
       getTargetPosition: (d: any) => d.to.coordinates,

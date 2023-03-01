@@ -160,6 +160,7 @@ export default function SurveyConcentrationsLayer() {
       setData(null);
     };
   }, []);
+  console.log(data);
   const cartoLayerProps = useCartoLayerProps({
     source,
     layerConfig: surveyConcentrationsLayer,

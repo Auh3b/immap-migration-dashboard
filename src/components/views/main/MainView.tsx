@@ -29,8 +29,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MainView({ children }: { children: MainViewChildren }) {
   const classes = useStyles();
-  const { mapRef } = useMapContext()
-  console.log(mapRef)
+  const { mapRef } = useMapContext();
+  console.log(mapRef);
   return (
     <>
       <Grid

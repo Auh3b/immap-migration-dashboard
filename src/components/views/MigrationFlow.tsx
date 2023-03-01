@@ -20,7 +20,7 @@ import { Grid } from '@material-ui/core';
 export default function MigrationFlow() {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(setViewState({pitch: 30}))
+    dispatch(setViewState({ pitch: 30 }));
     dispatch(addSource(migrationFlowSource));
     dispatch(
       addLayer({
@@ -32,7 +32,7 @@ export default function MigrationFlow() {
     return () => {
       dispatch(removeLayer(MIGRATION_FLOW_LAYER_ID));
       dispatch(removeSource(migrationFlowSource.id));
-      dispatch(setViewState({pitch: 0}))
+      dispatch(setViewState({ pitch: 0 }));
     };
   }, [dispatch]);
 
