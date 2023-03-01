@@ -22,12 +22,10 @@ const layerConfig = {
   title: 'Hotspots',
   visible: true,
   legend: {
-    attr: 'hotspot',
     type: LEGEND_TYPES.CATEGORY,
     labels: DATA.map((data) => data.label),
     colors: DATA.map((data) => data.color),
-    colllapsible: true,
-    collapsed: true,
+    collapsible: false,
   },
 };
 

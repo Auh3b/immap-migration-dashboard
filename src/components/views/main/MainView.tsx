@@ -1,5 +1,7 @@
 import { Grid, makeStyles, Toolbar } from '@material-ui/core';
+import useMapContext from 'context/useMapContext';
 import { ReactChild, ReactNode } from 'react';
+// import { useOutletContext } from 'react-router-dom';
 import MapContainer from './MapContainer';
 
 const DRAWER_WIDTH = 300;
@@ -27,7 +29,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MainView({ children }: { children: MainViewChildren }) {
   const classes = useStyles();
-
+  const { mapRef } = useMapContext()
+  console.log(mapRef)
   return (
     <>
       <Grid

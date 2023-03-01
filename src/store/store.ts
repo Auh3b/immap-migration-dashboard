@@ -8,6 +8,7 @@ import {
   Store,
 } from 'redux';
 import appSlice from './appSlice';
+import mapSlice from './mapSlice';
 
 interface AppStore extends Store {
   asyncReducers: ReducersMapObject;
@@ -17,6 +18,7 @@ interface AppStore extends Store {
 // Define the Reducers that will always be present in the application
 const staticReducers = {
   app: appSlice,
+  map: mapSlice,
 };
 
 let store: AppStore = {
@@ -47,8 +49,8 @@ function getCustomMiddleware(
       ignoredPaths: ['carto.viewportFeatures'],
     },
     serializableCheck: {
-      ignoredPaths: ['carto.viewportFeatures'],
-      ignoredActions: ['carto/setViewportFeatures'],
+      ignoredPaths: ['carto.viewportFeatures', 'map.ref'],
+      ignoredActions: ['carto/setViewportFeatures', 'app/setMapRef'],
     },
   };
 

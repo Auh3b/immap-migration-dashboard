@@ -192,7 +192,8 @@ function Mobile() {
 function AppName() {
   return (
     <>
-      <UnicefLogo /><ImmapLogo />
+      <UnicefLogo />
+      <ImmapLogo />
     </>
   );
 }

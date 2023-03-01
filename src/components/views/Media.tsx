@@ -7,17 +7,17 @@ import { /*Divider,*/ Grid /*,Typography*/ } from '@material-ui/core';
 // import { PieWidgetUI } from '@carto/react-ui';
 // import MainView from './main/MainView';
 //@ts-ignore
-import { Deck } from '@deck.gl/core'
-import Map from 'components/common/map/Map'
+import { Deck } from '@deck.gl/core';
+import Map from 'components/common/map/Map';
 //@ts-ignore
-import { fetchMap } from '@deck.gl/carto'
+import { fetchMap } from '@deck.gl/carto';
 //@ts-ignore
-import DeckGL from '@deck.gl/react'
+import DeckGL from '@deck.gl/react';
 import { useEffect, useState } from 'react';
 import DeckGLComponent from 'components/common/map/DeckGLComponent';
 import TopLoading from 'components/common/TopLoading';
 import { useDispatch } from 'react-redux';
-import { setViewState,setBasemap } from '@carto/react-redux';
+import { setViewState, setBasemap } from '@carto/react-redux';
 
 // const colors = ['#1877f2', '#075e54', '#1da1f2', '#9146ff'];
 
@@ -105,42 +105,43 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const cartoMapId = '9ddf6a22-3bdf-4b41-9d6a-80ea80895d32'
-
+const cartoMapId = '9ddf6a22-3bdf-4b41-9d6a-80ea80895d32';
 
 export default function Media() {
   const classes = useStyles();
-  const [layers, setLayers] = useState([])
-  const [isLoading, setIsLoading] = useState(false)
+  const [layers, setLayers] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   useEffect(() => {
     async function fetchMapLayers() {
-      setIsLoading(true)
-      const {initialViewState, mapStyle,layers} = await fetchMap({cartoMapId})
-      console.log(initialViewState, mapStyle)
+      setIsLoading(true);
+      const { initialViewState, mapStyle, layers } = await fetchMap({
+        cartoMapId,
+      });
+      console.log(initialViewState, mapStyle);
       // dispatch(setBasemap(mapStyle.styleType))
-      dispatch(setViewState(initialViewState))
-      setLayers(layers)
-      setIsLoading(false)
+      dispatch(setViewState(initialViewState));
+      setLayers(layers);
+      setIsLoading(false);
     }
 
-    fetchMapLayers()
-  
+    fetchMapLayers();
+
     return () => {
-      setLayers([])
-    }
-  }, [])
-  
+      setLayers([]);
+    };
+  }, []);
+
   // [hygen] Add useEffect
 
   return (
     <Grid item className={classes.mapWrapper}>
       {isLoading ? <TopLoading /> : ''}
-      <DeckGLComponent layers={layers}/>
+      <DeckGLComponent layers={layers} />
     </Grid>
-    
+
     // <MainView>
     //   {{
     //     left: (

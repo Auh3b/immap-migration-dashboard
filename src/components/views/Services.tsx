@@ -7,11 +7,12 @@ import {
   removeLayer,
   addSource,
   removeSource,
+  setViewState,
 } from '@carto/react-redux';
 
 import { makeStyles } from '@material-ui/core/styles';
 import { CategoryWidget, PieWidget } from '@carto/react-widgets';
-import hotspotSource from '../../data/sources/hotspotSource';
+import mainSource from '../../data/sources/mainSource';
 import { AggregationTypes } from '@carto/react-core';
 import MainView from './main/MainView';
 import { MainColumnView } from 'components/common/MainColumnView';
@@ -24,21 +25,23 @@ const useStyles = makeStyles(() => ({
 export default function Services() {
   const dispatch = useDispatch();
   const classes = useStyles();
-  useEffect(() => {
-    dispatch(addSource(servicePointsSource));
+  // useEffect(() => {
+    
+  //   dispatch(addSource(servicePointsSource));
 
-    dispatch(
-      addLayer({
-        id: SERVICE_POINTS_LAYER_ID,
-        source: servicePointsSource.id,
-      }),
-    );
+  //   dispatch(
+  //     addLayer({
+  //       id: SERVICE_POINTS_LAYER_ID,
+  //       source: servicePointsSource.id,
+  //     }),
+  //   );
 
-    return () => {
-      dispatch(removeLayer(SERVICE_POINTS_LAYER_ID));
-      dispatch(removeSource(servicePointsSource.id));
-    };
-  }, [dispatch]);
+  //   return () => {
+  //     dispatch(removeLayer(SERVICE_POINTS_LAYER_ID));
+  //     dispatch(removeSource(servicePointsSource.id));
+      
+  //   };
+  // }, [dispatch]);
 
   // [hygen] Add useEffect
 
@@ -52,21 +55,20 @@ export default function Services() {
   );
 }
 
-const useViewStyle = makeStyles((theme)=>({
-  title:{
+const useViewStyle = makeStyles((theme) => ({
+  title: {
     padding: theme.spacing(2),
   },
-  divider:{
+  divider: {
     borderBottom: theme.spacing(2),
-    borderTop: theme.spacing(2)
-  } 
-}))
+    borderTop: theme.spacing(2),
+  },
+}));
 
+function LeftView() {
+  const classes = useViewStyle();
 
-function LeftView(){
-  const classes = useViewStyle()
-
-  return(
+  return (
     <MainColumnView>
       <Grid item className={classes.title}>
         <Typography variant='subtitle1'>Calidad para adultos</Typography>
@@ -76,17 +78,17 @@ function LeftView(){
         <CategoryWidget
           id='serviceType'
           title='Tipo servicio'
-          dataSource={hotspotSource.id}
+          dataSource={mainSource.id}
           operation={AggregationTypes.COUNT}
           column='carto_1_47'
           operationColumn='carto_1_47'
         />
       </Grid>
       <Grid item>
-       <PieWidget
+        <PieWidget
           id='serviceQuality'
           title='Calidad servicio'
-          dataSource={hotspotSource.id}
+          dataSource={mainSource.id}
           column='carto_1_43'
           operation={AggregationTypes.COUNT}
           operationColumn='carto_1_43'
@@ -96,7 +98,7 @@ function LeftView(){
         <CategoryWidget
           id='accessServices'
           title='Acceso a servicio'
-          dataSource={hotspotSource.id}
+          dataSource={mainSource.id}
           operation={AggregationTypes.COUNT}
           column='carto_1_41'
           operationColumn='carto_1_41'
@@ -106,39 +108,39 @@ function LeftView(){
         <CategoryWidget
           id='serviceSatisfaction'
           title='Satisfacción del servicio'
-          dataSource={hotspotSource.id}
+          dataSource={mainSource.id}
           operation={AggregationTypes.COUNT}
           column='carto_1_43'
           operationColumn='carto_1_43'
         />
       </Grid>
     </MainColumnView>
-  )
+  );
 }
 
-function RightView(){
-  const classes = useViewStyle()
-  return(
-     <MainColumnView>
+function RightView() {
+  const classes = useViewStyle();
+  return (
+    <MainColumnView>
       <Grid item className={classes.title}>
         <Typography variant='subtitle1'>Calidad para NNA</Typography>
       </Grid>
       <Divider className={classes.divider} />
       <Grid item>
-       <CategoryWidget
+        <CategoryWidget
           id='serviceSatisfaction'
           title='Tipo servicio'
-          dataSource={hotspotSource.id}
+          dataSource={mainSource.id}
           operation={AggregationTypes.COUNT}
           column='carto_1_47'
           operationColumn='carto_1_47'
         />
       </Grid>
       <Grid item>
-       <PieWidget
+        <PieWidget
           id='serviceQuality'
           title='Calidad servicio'
-          dataSource={hotspotSource.id}
+          dataSource={mainSource.id}
           column='carto_1_51'
           operation={AggregationTypes.COUNT}
           operationColumn='carto_1_51'
@@ -148,7 +150,7 @@ function RightView(){
         <CategoryWidget
           id='accessServices'
           title='Acceso a servicio'
-          dataSource={hotspotSource.id}
+          dataSource={mainSource.id}
           operation={AggregationTypes.COUNT}
           column='carto_1_49'
           operationColumn='carto_1_49'
@@ -158,12 +160,12 @@ function RightView(){
         <CategoryWidget
           id='serviceSatisfaction'
           title='Satisfacción del servicio'
-          dataSource={hotspotSource.id}
+          dataSource={mainSource.id}
           operation={AggregationTypes.COUNT}
           column='carto_1_51'
           operationColumn='carto_1_51'
         />
       </Grid>
-     </MainColumnView>
-  )
+    </MainColumnView>
+  );
 }

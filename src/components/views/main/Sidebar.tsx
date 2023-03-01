@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import { SwipeableDrawer, Fab, useMediaQuery } from '@material-ui/core';
+import { SwipeableDrawer, Fab, useMediaQuery, Drawer, Grid } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import { setBottomSheetOpen } from 'store/appSlice';
@@ -51,7 +51,20 @@ const useStylesDesktop = makeStyles(() => ({
 function Desktop() {
   const classes = useStylesDesktop();
 
-  return <Outlet context={<MapContainer />} />;
+  return (
+    <Drawer
+      classes={{
+        paper: classes.drawerPaper,
+      }}
+      variant='permanent'
+      anchor='left'
+      open
+    >
+      <Grid container item xs>
+        <Outlet />
+      </Grid>
+    </Drawer>
+  );
 }
 
 const useStyleMobile = makeStyles((theme) => ({

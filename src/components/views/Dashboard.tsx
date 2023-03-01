@@ -7,47 +7,66 @@ import {
 } from '@carto/react-widgets';
 // @ts-ignore
 import { FORMATS } from '@deck.gl/carto';
-import { executeSQL, _executeModel } from '@carto/react-api';
-import hotspotSource from '../../data/sources/hotspotSource';
-import { AggregationTypes, GroupDateTypes, groupValuesByColumn, _FilterTypes } from '@carto/react-core';
+import { _executeModel } from '@carto/react-api';
+import mainSource from 'data/sources/mainSource';
+import {
+  AggregationTypes,
+  GroupDateTypes,
+  groupValuesByColumn,
+  _FilterTypes,
+} from '@carto/react-core';
 import MainView from './main/MainView';
 import { MainColumnView } from 'components/common/MainColumnView';
 import { Grid, makeStyles } from '@material-ui/core';
 import { FormulaWidgetUI, WrapperWidgetUI } from '@carto/react-ui';
 import { ReactNode, useEffect, useState } from 'react';
 import { SURVEY_CONCENTRATIONS_LAYER_ID } from 'components/layers/SurveyConcentrationsLayer';
+import { HOTSPOTS_LAYER_ID } from 'components/layers/HotspotsLayer';
 import { useDispatch } from 'react-redux';
 import {
   addLayer,
   removeLayer,
   addSource,
+  removeSource,
 } from '@carto/react-redux';
 
-import { PregnantWoman as WomanIcon, Accessibility as ManIcon } from '@material-ui/icons';
-import { useSelector } from 'react-redux';
-import { RootState } from 'store/store';
-import { selectSourceById } from '@carto/react-redux';
+import {
+  PregnantWoman as WomanIcon,
+  Accessibility as ManIcon,
+} from '@material-ui/icons';
+import TopLoading from 'components/common/TopLoading';
+import useExecuteQuery from 'hooks/useExecuteQuery';
+import ChildrenTravellingAlone from 'components/common/indicators/dashboard/HumanitarianAid';
+import ChildTravelerAges from 'components/common/indicators/dashboard/ChildTravelerAges';
 
 export default function Dashboard() {
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(addSource(hotspotSource));
+  // useEffect(() => {
+  //   dispatch(addSource(mainSource));
 
-    dispatch(
-      addLayer({
-        id: SURVEY_CONCENTRATIONS_LAYER_ID,
-        source: hotspotSource.id,
-      }),
-    );
+  //   // dispatch(
+  //   //   addLayer({
+  //   //     id: HOTSPOTS_LAYER_ID,
+  //   //     source: mainSource.id,
+  //   //   }),
+  //   // );
 
-    return () => {
-      dispatch(removeLayer(SURVEY_CONCENTRATIONS_LAYER_ID));
-      // dispatch(removeSource(hotspotSource.id));
-    };
-  }, [dispatch]);
+  //   dispatch(
+  //     addLayer({
+  //       id: SURVEY_CONCENTRATIONS_LAYER_ID,
+  //       source: mainSource.id,
+  //     }),
+  //   );
+
+  //   return () => {
+  //     dispatch(removeLayer(SURVEY_CONCENTRATIONS_LAYER_ID));
+  //     // dispatch(removeLayer(HOTSPOTS_LAYER_ID));
+  //     // dispatch(removeSource(mainSource.id));
+  //   };
+  // }, [dispatch]);
 
   // [hygen] Add useEffect
-  
+
   return (
     <MainView>
       {{
@@ -57,8 +76,8 @@ export default function Dashboard() {
           <TimeSeriesWidget
             id='surveyDates'
             title='Encuestas'
-            dataSource={hotspotSource.id}
-            column='carto_10_1'
+            dataSource={mainSource.id}
+            column='created_at'
             stepSize={GroupDateTypes.DAYS}
           />
         ),
@@ -72,15 +91,15 @@ const xFormatValues = new Map([
   [2, '25'],
   [3, '40'],
   [4, '64'],
-  [5, '100']
-])
+  [5, '100'],
+]);
 
-function customFormat(value:number){
-  return xFormatValues.get(value)
+function customFormat(value: number) {
+  return xFormatValues.get(value);
 }
 
 function LeftView() {
-  
+  console.log('something');
   return (
     <MainColumnView>
       <Grid item>
@@ -90,32 +109,31 @@ function LeftView() {
         <PieWidget
           id='genderDistribution'
           title='Género'
-          dataSource={hotspotSource.id}
-          column='carto_10_5'
+          dataSource={mainSource.id}
+          column='genero'
           operation={AggregationTypes.COUNT}
-          operationColumn='carto_10_5'
+          operationColumn='genero'
         />
       </Grid>
       <Grid item>
         <CategoryWidget
-          id='ageDistribution'
+          id='ageGroups'
           title='Tamaño de grupo de viaje'
-          dataSource={hotspotSource.id}
-          column='carto_10_3'
+          dataSource={mainSource.id}
+          column='rango_edad'
           operation={AggregationTypes.COUNT}
-          operationColumn='carto_10_3'
+          operationColumn='rango_edad'
         />
       </Grid>
       <Grid item>
       <HistogramWidget
-        id='daysInTransitStay'
+        id='ageDistribution'
         title='Distribución de tamaño grupo'
-        dataSource={hotspotSource.id}
-        ticks={[2,3,4]}
-        column='carto_10_4'
-        xAxisFormatter={customFormat}
+        dataSource={mainSource.id}
+        ticks={[18,25,40,65]}
+        column='edad'
+        // xAxisFormatter={customFormat}
         operation={AggregationTypes.COUNT}
-        onError={console.error}
         />
       </Grid>
     </MainColumnView>
@@ -126,130 +144,129 @@ function RightView() {
   return (
     <MainColumnView>
       <Grid item>
-        <CategoryWidget
-          id='childrendAgeDistribution'
-          title='Rango de edad de niños que están viajando'
-          dataSource={hotspotSource.id}
-          column='carto_1_21'
-          operation={AggregationTypes.COUNT}
-          operationColumn='carto_1_21'
-        />
+        <ChildrenTravellingAlone />
       </Grid>
       <Grid item>
         <CategoryWidget
           id='travellingAlone'
           title='NNA viajan solos'
-          dataSource={hotspotSource.id}
-          column='carto_1_33'
+          dataSource={mainSource.id}
+          column='nna'
           operation={AggregationTypes.COUNT}
-          operationColumn='carto_1_33'
+          operationColumn='nna'
         />
       </Grid>
       <Grid item>
+        <ChildTravelerAges />
+      </Grid>
+      {/* <Grid item>
         <BarWidget
           id='disabledPeople'
           title='Presencia de personas con discapacidadad'
-          dataSource={hotspotSource.id}
-          column='carto_1_31'
+          dataSource={mainSource.id}
+          column='cb_fl_id14'
           operation={AggregationTypes.COUNT}
-          operationColumn='carto_1_31'
+          operationColumn='cb_fl_id14'
         />
       </Grid>
       <Grid item>
         <BarWidget
           id='pregnantWoment'
           title='Embarazos'
-          dataSource={hotspotSource.id}
-          column='carto_1_27'
+          dataSource={mainSource.id}
+          column='cb_fl_id12'
           operation={AggregationTypes.COUNT}
-          operationColumn='carto_1_27'
+          operationColumn='cb_fl_id12'
         />
-      </Grid>
+      </Grid> */}
     </MainColumnView>
   );
 }
 
-function GenderIndicator(){
-  const [women, setWomen] = useState(0)
-  const [men, setMen] = useState(0)
-  const [total, setTotal] = useState(0)
-  const [isLoading, setIsLoading] = useState(false)
+function GenderIndicator() {
+  const [women, setWomen] = useState(0);
+  const [men, setMen] = useState(0);
+  const [total, setTotal] = useState(0);
 
-  const { credentials } = useSelector((state: RootState) => state.carto)
-  const { hotspotsLayer } = useSelector(
-    (state: RootState) => state.carto.layers,
-  );
-  const { data: table, connection } = useSelector((state) =>
-  selectSourceById(state, hotspotsLayer?.source),
-  );
-  
+  const { data, isLoading } = useExecuteQuery({
+    query: 'SELECT genero FROM shared.kuery24022023',
+    format: FORMATS.JSON,
+  });
+
   useEffect(() => {
-    async function fetchData(){
-      setIsLoading(true)
-      // @ts-ignore
-      const data:any[] = await executeSQL({
-        credentials,
-        query: 'SELECT * FROM shared.carto_10_public',
-        connection,
-        opts:{
-          format: FORMATS.JSON
-        }
-      })
-
-      setTotal(data.length)
-
-      const groups  = groupValuesByColumn({
+    if (data && !isLoading) {
+      //@ts-ignore
+      setTotal(data.length);
+      const groups = groupValuesByColumn({
+        //@ts-ignore
         data,
-        keysColumn: 'carto_10_5',
-        operation:AggregationTypes.COUNT,
-        valuesColumns:['carto_10_5']
-      })
+        keysColumn: 'genero',
+        operation: AggregationTypes.COUNT,
+        valuesColumns: ['genero'],
+      });
 
-      setMen(groups.filter(({name})=> name == 'Hombre').map(({value})=>(value))[0])
-      setWomen(groups.filter(({name})=> name == 'Mujer').map(({value})=>(value))[0])
-      setIsLoading(false)
+      setMen(
+        groups
+          .filter(({ name }) => name == 'Hombre')
+          .map(({ value }) => value)[0],
+      );
+      setWomen(
+        groups
+          .filter(({ name }) => name == 'Mujer')
+          .map(({ value }) => value)[0],
+      );
     }
 
-    fetchData()
-  
     return () => {
-      setWomen(0)
-      setMen(0)
-    }
-  }, [])
-  
-  
-  
-  return(
-    <WrapperWidgetUI
-    title='Porcentaje de género/edad'
-    loading={isLoading}
-    >
+      setMen(0);
+      setWomen(0);
+    };
+  }, [data, isLoading]);
+
+  return (
+    <WrapperWidgetUI title='Porcentaje de género/edad' loading={isLoading}>
+      {isLoading ? <TopLoading /> : ''}
       <GenderFormatter gender='Hombre'>
-       <FormulaWidgetUI animation={false} data={men} formatter={(value:number)=>`${value} (${value/total*100}%)`}/>
+        <FormulaWidgetUI
+          data={men}
+          formatter={(value: number) =>
+            `${value} (${Math.floor((value / total) * 100)}%)`
+          }
+        />
       </GenderFormatter>
-      <GenderFormatter gender="Mujer" >
-        <FormulaWidgetUI animation={false} data={women} formatter={(value:number)=>`${value} (${value/total*100}%)`}/>
+      <GenderFormatter gender='Mujer'>
+        <FormulaWidgetUI
+          data={women}
+          formatter={(value: number) =>
+            `${value} (${Math.floor((value / total) * 100)}%)`
+          }
+        />
       </GenderFormatter>
     </WrapperWidgetUI>
-  )
+  );
 }
 
-const useGenderStyles = makeStyles((theme)=>({
-  container:{
-    display:'flex',
+const useGenderStyles = makeStyles((theme) => ({
+  container: {
+    display: 'flex',
     gap: theme.spacing(2),
-    alignItems:'center'
-  }
-}))
+    alignItems: 'center',
+  },
+}));
 
-function GenderFormatter({gender, children}:{gender:string, children:ReactNode}){
-  const classes = useGenderStyles()
+function GenderFormatter({
+  gender,
+  children,
+}: {
+  gender: string;
+  children: ReactNode;
+}) {
+  const classes = useGenderStyles();
 
-  return(
+  return (
     <div className={classes.container}>
-      {gender == 'Hombre'? <ManIcon /> : <WomanIcon />}
+      {gender == 'Hombre' ? <ManIcon /> : <WomanIcon />}
       {children}
     </div>
-  )
+  );
 }
