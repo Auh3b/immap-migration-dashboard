@@ -21,20 +21,22 @@ export default function MigrationFlow() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(setViewState({ pitch: 30 }));
-    dispatch(addSource(migrationFlowSource));
+    dispatch(addSource(mainSource));
     dispatch(
       addLayer({
         id: MIGRATION_FLOW_LAYER_ID,
-        source: migrationFlowSource.id,
+        source: mainSource.id,
       }),
     );
 
     return () => {
       dispatch(removeLayer(MIGRATION_FLOW_LAYER_ID));
-      dispatch(removeSource(migrationFlowSource.id));
+      // dispatch(removeSource(mainSource.id));
       dispatch(setViewState({ pitch: 0 }));
     };
   }, [dispatch]);
+
+  console.log('migration mounted')
 
   // [hygen] Add useEffect
 

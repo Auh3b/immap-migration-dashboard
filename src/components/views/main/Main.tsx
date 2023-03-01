@@ -1,10 +1,9 @@
 //@ts-nocheck
 
-import { lazy, useEffect, useState } from 'react';
+import { lazy, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import LazyLoadComponent from 'components/common/LazyLoadComponent';
 import { Grid } from '@material-ui/core';
-import mapContext from 'context/mapContext';
 import { useDispatch } from 'react-redux';
 import {
   addLayer,
@@ -14,24 +13,23 @@ import {
 } from '@carto/react-redux';
 import { HOTSPOTS_LAYER_ID } from 'components/layers/HotspotsLayer';
 import mainSource from 'data/sources/mainSource';
-// import Sidebar from './Sidebar';
 
-const Sidebar = lazy(
-  () =>
-    import(
-      /* webpackChunkName: 'map-container' */ 'components/views/main/Sidebar'
-    ),
-);
-const MapContainer = lazy(
-  () =>
-    import(
-      /* webpackChunkName: 'map-container' */ 'components/views/main/MapContainer'
-    ),
-);
+// const Sidebar = lazy(
+//   () =>
+//     import(
+//       /* webpackChunkName: 'map-container' */ 'components/views/main/Sidebar'
+//     ),
+// );
+// const MapContainer = lazy(
+//   () =>
+//     import(
+//       /* webpackChunkName: 'map-container' */ 'components/views/main/MapContainer'
+//     ),
+// );
 const OutletView = lazy(
   () =>
     import(
-      /* webpackChunkName: 'OutletView' */ 'components/views/main/OutletView'
+      /* webpackChunkName: 'outlet-view' */ 'components/views/main/OutletView'
     ),
 );
 const ErrorSnackbar = lazy(
@@ -63,15 +61,7 @@ export default function Main() {
       }),
     );
 
-    // dispatch(
-    //   addLayer({
-    //     id: SURVEY_CONCENTRATIONS_LAYER_ID,
-    //     source: mainSource.id,
-    //   }),
-    // );
-
     return () => {
-      // dispatch(removeLayer(SURVEY_CONCENTRATIONS_LAYER_ID));
       dispatch(removeLayer(HOTSPOTS_LAYER_ID));
       dispatch(removeSource(mainSource.id));
     };

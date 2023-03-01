@@ -14,7 +14,6 @@ import LazyLoadRoute from 'components/common/LazyLoadRoute';
 import { useTheme } from '@material-ui/styles';
 import { CustomTheme } from 'theme';
 import { RootState } from 'store/store';
-import MapContainer from './MapContainer';
 
 export const DRAWER_WIDTH = 350;
 

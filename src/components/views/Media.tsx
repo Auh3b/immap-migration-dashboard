@@ -72,7 +72,7 @@ export default function Media() {
   const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = useDispatch();
-
+  console.log('media mounted')
   useEffect(() => {
     async function fetchMapLayers() {
       setIsLoading(true);

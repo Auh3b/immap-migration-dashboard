@@ -90,7 +90,7 @@ export default function MapContainer() {
         <ZoomControl className={classes.zoomControl} showCurrentZoom />
       )}
       {!isGmaps && <CartoLogoMap className={classes.cartoLogoMap} />}
-      <LegendWidget title='' className={classes.legend} />
+      <LegendWidget className={classes.legend} />
     </Grid>
   );
 }

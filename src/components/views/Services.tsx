@@ -26,10 +26,11 @@ const useStyles = makeStyles(() => ({
 
 export default function Services() {
   const dispatch = useDispatch();
-  const classes = useStyles();
-  const {hotspotsLayer} = useSelector((state: RootState) => state.carto.layers)
-  const source = useSelector((state)=> selectSourceById(state, hotspotsLayer?.source))
-
+  // const classes = useStyles();
+  // const {hotspotsLayer} = useSelector((state: RootState) => state.carto.layers)
+  // const source = useSelector((state)=> selectSourceById(state, hotspotsLayer?.source))
+  
+  console.log('service mounted')
   // useEffect(() => {
 
   //   dispatch(addSource(servicePointsSource));

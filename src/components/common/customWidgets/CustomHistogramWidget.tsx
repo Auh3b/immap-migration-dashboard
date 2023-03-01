@@ -5,7 +5,6 @@ import { defaultCustomWidgetProps } from "./customWidgetsType";
 export default function CustomHistogramWidget({
   title, data
 }: defaultCustomWidgetProps) {
-  console.log(data)
   return (
     <WrapperWidgetUI
     title={title}

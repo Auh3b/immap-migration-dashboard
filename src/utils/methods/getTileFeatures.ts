@@ -11,6 +11,8 @@ interface getTileFeaturesPropsParams{
   viewport: [number, number,number, number];
   tileFormat: TILE_FORMATS;
   limit?: number | null;
+  filters?: any;
+  filtersLogicalOperator?: string
 }
 
 export default async function getTileFeatures({

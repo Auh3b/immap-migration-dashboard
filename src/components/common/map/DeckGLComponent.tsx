@@ -45,7 +45,6 @@ export default function DeckGLComponent({ layers }: { layers: any[] }) {
       pickingRadius={isMobile ? 10 : 0}
     >
       <Map
-        id='main'
         mapLib={maplibregl}
         reuseMaps
         mapStyle={basemap.options.mapStyle}

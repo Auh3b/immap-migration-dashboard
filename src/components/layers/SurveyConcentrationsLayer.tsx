@@ -101,7 +101,6 @@ class CircleClusterLayer extends CompositeLayer {
         sizeScale,
         opacity: 0.9,
         stroked: false,
-        // onDataLoad: onDataLoad(),
 
         //@ts-ignore
         getFillColor: (d) =>
@@ -165,6 +164,7 @@ export default function SurveyConcentrationsLayer() {
     source,
     layerConfig: surveyConcentrationsLayer,
   });
+
   if (surveyConcentrationsLayer && data) {
     return new CircleClusterLayer({
       ...cartoLayerProps,

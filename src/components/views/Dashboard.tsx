@@ -42,6 +42,9 @@ import TripComposition from 'components/common/indicators/dashboard/TripComposit
 
 export default function Dashboard() {
   const dispatch = useDispatch();
+
+  console.log('dashboard mounted')
+
   useEffect(() => {
     dispatch(
       addLayer({
@@ -89,7 +92,6 @@ function customFormat(value: number) {
 }
 
 function LeftView() {
-  console.log('something');
   return (
     <MainColumnView>
       <Grid item>

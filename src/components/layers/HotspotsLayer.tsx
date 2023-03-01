@@ -29,6 +29,7 @@ const layerConfig = {
   },
 };
 
+
 export default function HotspotsLayer() {
   const dispatch = useDispatch();
   const { hotspotsLayer } = useSelector(
