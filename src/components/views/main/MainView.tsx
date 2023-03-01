@@ -3,7 +3,7 @@ import { ReactChild, ReactNode } from 'react';
 // import { useOutletContext } from 'react-router-dom';
 import MapContainer from './MapContainer';
 
-const DRAWER_WIDTH = 250;
+const DRAWER_WIDTH = 300;
 
 interface MainViewChildren {
   left?: ReactChild;
