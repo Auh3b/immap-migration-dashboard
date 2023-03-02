@@ -1,4 +1,4 @@
-import { POSITRON, DARK_MATTER } from '@carto/react-basemaps';
+import { DARK_MATTER } from '@carto/react-basemaps';
 import { InitialCarto3State } from '@carto/react-redux';
 // @ts-ignore
 import { API_VERSIONS } from '@deck.gl/carto';

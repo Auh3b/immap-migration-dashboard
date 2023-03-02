@@ -1,17 +1,11 @@
-import { CategoryWidgetUI, WrapperWidgetUI } from '@carto/react-ui';
-//@ts-ignore
 import { Grid } from '@material-ui/core';
 import {
   AggregationTypes,
   groupValuesByColumn,
   _FilterTypes,
 } from '@carto/react-core';
-import { useCallback, useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { addFilter, removeFilter, selectSourceById } from '@carto/react-redux';
 import mainSource from 'data/sources/mainSource';
-import { RootState } from 'store/store';
-import useWidgetFetch from 'hooks/useWidgetFetch';
+import CustomCategoryWidget from 'components/common/customWidgets/CustomCategoryWidget';
 
 const CATEGORY_ABREVATIONS = new Map([
   [0, 'Ninguna'],
@@ -49,8 +43,6 @@ function getCategories({
   });
 }
 
-const EMPTY_ARRAY: [] = [];
-
 function pivotData(data: any[], column: string): any[] {
   //@ts-ignore
   const values = data.map((f) => f[column]).filter((i) => i !== 'null');
@@ -68,98 +60,23 @@ function pivotData(data: any[], column: string): any[] {
   return groupData;
 }
 
-function useWidgetFilterValues({
-  dataSource,
-  id,
-  column,
-  type,
-}: {
-  dataSource: string;
-  id: string;
-  column: string;
-  type: _FilterTypes;
-}) {
-  const { filters } = useSelector(
-    (state) => selectSourceById(state, dataSource) || {},
-  );
-
-  return useMemo(() => {
-    const filter = filters?.[column]?.[type];
-    if (!filter || filter.owner !== id) {
-      return null;
-    }
-    return filter.values;
-  }, [filters, column, type, id]);
-}
+const dataSource = mainSource.id;
+const column = 'ayudas_hum';
+const id = 'humanitarianAid';
+const type = _FilterTypes.STRING_SEARCH;
 
 export default function HumanitarianAid() {
-  const { hotspotsLayer } = useSelector(
-    (state: RootState) => state.carto.layers,
-  );
-  const source = useSelector((state) =>
-    selectSourceById(state, hotspotsLayer?.source),
-  );
-  const dispatch = useDispatch();
-
-  const dataSource = mainSource.id;
-  const column = 'ayudas_hum';
-  const id = 'humanitarianAid';
-  const type = _FilterTypes.STRING_SEARCH;
-
-  const { data, isLoading, error } = useWidgetFetch({
-    method: pivotData,
-    column,
-    source,
-  });
-
-  const selectedCategories =
-    useWidgetFilterValues({
-      dataSource,
-      column,
-      id,
-      type,
-    }) || EMPTY_ARRAY;
-
-  const handleSelectedCategoriesChange = useCallback(
-    (categories) => {
-      if (categories && categories.length) {
-        dispatch(
-          addFilter({
-            id: dataSource,
-            column,
-            type: _FilterTypes.STRING_SEARCH,
-            values: categories,
-            owner: id,
-          }),
-        );
-      } else {
-        dispatch(
-          removeFilter({
-            id: dataSource,
-            column,
-            owner: id,
-          }),
-        );
-      }
-    },
-    [column, dataSource, id, dispatch],
-  );
-
   return (
     <Grid item>
-      <WrapperWidgetUI isLoading={isLoading} title='Ayudas humanitarias'>
-        {error ? (
-          <div>No data available</div>
-        ) : (
-          <CategoryWidgetUI
-            onSelectedCategoriesChange={handleSelectedCategoriesChange}
-            selectedCategories={selectedCategories}
-            labels={Object.fromEntries(CATEGORY_ABREVATIONS)}
-            id={id}
-            data={data}
-          />
-        )}
-      </WrapperWidgetUI>
+      <CustomCategoryWidget
+        title='Ayudas humanitarias'
+        dataSource={dataSource}
+        column={column}
+        id={id}
+        filterType={type}
+        method={pivotData}
+        labels={Object.fromEntries(CATEGORY_ABREVATIONS)}
+      />
     </Grid>
   );
 }

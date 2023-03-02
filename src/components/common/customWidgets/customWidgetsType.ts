@@ -1,12 +1,13 @@
 import { _FilterTypes } from '@carto/react-core';
+import { WidgetFetchMethod } from './hooks/useWidgetFetch';
 
 export interface defaultCustomWidgetProps {
   title: string;
   id: string;
   dataSource: string;
-  data: any[] | null;
   column: string;
-  labels?: any;
   filterType: _FilterTypes;
+  method?: WidgetFetchMethod;
+  labels?: any;
   isLoading?: boolean;
 }

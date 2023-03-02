@@ -8,11 +8,13 @@ export default function useWidgetFilterValues({
   id,
   column,
   type,
+  groupId,
 }: {
   dataSource: string;
   id: string;
   column: string;
   type: _FilterTypes;
+  groupId?: string;
 }) {
   const { filters } = useSelector(
     (state) => selectSourceById(state, dataSource) || {},
@@ -24,5 +26,5 @@ export default function useWidgetFilterValues({
       return null;
     }
     return filter.values;
-  }, [filters, column, type, id]);
+  }, [filters, column, type, id, groupId]);
 }

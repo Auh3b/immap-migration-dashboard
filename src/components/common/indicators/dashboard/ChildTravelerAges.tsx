@@ -1,12 +1,7 @@
 import { _FilterTypes } from '@carto/react-core';
-import { selectSourceById } from '@carto/react-redux';
 import CustomCategoryWidget from 'components/common/customWidgets/CustomCategoryWidget';
-import TopLoading from 'components/common/TopLoading';
 import { sum } from 'd3';
 import mainSource from 'data/sources/mainSource';
-import useWidgetFetch from 'hooks/useWidgetFetch';
-import { useSelector } from 'react-redux';
-import { RootState } from 'store/store';
 
 function transformData(input: any[], column: string) {
   let nna_viven = sum(
@@ -39,35 +34,14 @@ function transformData(input: any[], column: string) {
 }
 
 export default function ChildTravelerAges() {
-  const { hotspotsLayer } = useSelector(
-    (state: RootState) => state.carto.layers,
-  );
-  const source = useSelector((state) =>
-    selectSourceById(state, hotspotsLayer?.source),
-  );
-  const { data, error, isLoading } = useWidgetFetch({
-    source,
-    method: transformData,
-  });
-
   return (
-    <>
-      {}
-      {isLoading ? (
-        <TopLoading />
-      ) : error ? (
-        <div>No data</div>
-      ) : (
-        <CustomCategoryWidget
-          title='Rango de edad de niños que están viajando'
-          id='childTravelerAges'
-          /* @ts-ignore */
-          data={data}
-          dataSource={mainSource.id}
-          column={'nna_viven'}
-          filterType={_FilterTypes.BETWEEN}
-        />
-      )}
-    </>
+    <CustomCategoryWidget
+      title='Rango de edad de niños que están viajando'
+      id='childTravelerAges'
+      dataSource={mainSource.id}
+      column={'nna_viven'}
+      filterType={_FilterTypes.BETWEEN}
+      method={transformData}
+    />
   );
 }

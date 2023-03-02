@@ -4,7 +4,7 @@ import { FORMATS, fetchLayerData } from '@deck.gl/carto';
 //@ts-ignore
 import { CompositeLayer } from 'deck.gl';
 //@ts-ignore
-import { GeoJsonLayer, TextLayer } from '@deck.gl/layers';
+import { GeoJsonLayer } from '@deck.gl/layers';
 import { RootState } from 'store/store';
 import SuperCluster from 'supercluster';
 import { useEffect, useState } from 'react';

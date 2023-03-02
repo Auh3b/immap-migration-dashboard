@@ -14,18 +14,18 @@ import {
 import { HOTSPOTS_LAYER_ID } from 'components/layers/HotspotsLayer';
 import mainSource from 'data/sources/mainSource';
 
-// const Sidebar = lazy(
-//   () =>
-//     import(
-//       /* webpackChunkName: 'map-container' */ 'components/views/main/Sidebar'
-//     ),
-// );
-// const MapContainer = lazy(
-//   () =>
-//     import(
-//       /* webpackChunkName: 'map-container' */ 'components/views/main/MapContainer'
-//     ),
-// );
+const Sidebar = lazy(
+  () =>
+    import(
+      /* webpackChunkName: 'map-container' */ 'components/views/main/Sidebar'
+    ),
+);
+const MapContainer = lazy(
+  () =>
+    import(
+      /* webpackChunkName: 'map-container' */ 'components/views/main/MapContainer'
+    ),
+);
 const OutletView = lazy(
   () =>
     import(
@@ -78,7 +78,7 @@ export default function Main() {
       <LazyLoadComponent>
         <OutletView />
         {/* <Sidebar />
-          <MapContainer /> */}
+        <MapContainer /> */}
         <ErrorSnackbar />
       </LazyLoadComponent>
     </Grid>

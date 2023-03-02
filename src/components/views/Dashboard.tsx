@@ -1,25 +1,25 @@
 import {
   CategoryWidget,
-  PieWidget,
+  // PieWidget,
   TimeSeriesWidget,
   // BarWidget,
   HistogramWidget,
 } from '@carto/react-widgets';
 // @ts-ignore
-import { FORMATS } from '@deck.gl/carto';
+// import { FORMATS } from '@deck.gl/carto';
 // import { _executeModel } from '@carto/react-api';
 import mainSource from 'data/sources/mainSource';
 import {
   AggregationTypes,
   GroupDateTypes,
-  groupValuesByColumn,
+  // groupValuesByColumn,
   // _FilterTypes,
 } from '@carto/react-core';
 import MainView from './main/MainView';
 import { MainColumnView } from 'components/common/MainColumnView';
-import { Grid, makeStyles } from '@material-ui/core';
-import { FormulaWidgetUI, WrapperWidgetUI } from '@carto/react-ui';
-import { ReactNode, useEffect, useState } from 'react';
+import { Grid /*makeStyles*/ } from '@material-ui/core';
+// import { FormulaWidgetUI, WrapperWidgetUI } from '@carto/react-ui';
+import { useEffect /*useState*/ } from 'react';
 import { SURVEY_CONCENTRATIONS_LAYER_ID } from 'components/layers/SurveyConcentrationsLayer';
 // import { HOTSPOTS_LAYER_ID } from 'components/layers/HotspotsLayer';
 import { useDispatch } from 'react-redux';
