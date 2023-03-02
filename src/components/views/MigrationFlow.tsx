@@ -1,5 +1,5 @@
-import { makeStyles } from '@material-ui/core/styles';
-import { CategoryWidget, HistogramWidget } from '@carto/react-widgets';
+// import { makeStyles } from '@material-ui/core/styles';
+import { CategoryWidget } from '@carto/react-widgets';
 import { AggregationTypes } from '@carto/react-core';
 import mainSource from '../../data/sources/mainSource';
 import MainView from './main/MainView';
@@ -9,11 +9,11 @@ import {
   addLayer,
   addSource,
   removeLayer,
-  removeSource,
+  // removeSource,
   setViewState,
 } from '@carto/react-redux';
 import { MIGRATION_FLOW_LAYER_ID } from 'components/layers/MigrationFlowLayer';
-import migrationFlowSource from 'data/sources/migrationFlowSource';
+// import migrationFlowSource from 'data/sources/migrationFlowSource';
 import { MainColumnView } from 'components/common/MainColumnView';
 import { Grid } from '@material-ui/core';
 
@@ -35,8 +35,6 @@ export default function MigrationFlow() {
       dispatch(setViewState({ pitch: 0 }));
     };
   }, [dispatch]);
-
-  console.log('migration mounted')
 
   // [hygen] Add useEffect
 

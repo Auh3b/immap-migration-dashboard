@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid  } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 //@ts-ignore
 import { fetchMap } from '@deck.gl/carto';
 //@ts-ignore
@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import DeckGLComponent from 'components/common/map/DeckGLComponent';
 import TopLoading from 'components/common/TopLoading';
 import { useDispatch } from 'react-redux';
-import { setViewState, setBasemap } from '@carto/react-redux';
+import { setViewState } from '@carto/react-redux';
 
 const useStyles = makeStyles((theme) => ({
   mapWrapper: {
@@ -72,11 +72,11 @@ export default function Media() {
   const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = useDispatch();
-  console.log('media mounted')
+
   useEffect(() => {
     async function fetchMapLayers() {
       setIsLoading(true);
-      const { initialViewState, mapStyle, layers } = await fetchMap({
+      const { initialViewState, layers } = await fetchMap({
         cartoMapId,
       });
       // dispatch(setBasemap(mapStyle.styleType))

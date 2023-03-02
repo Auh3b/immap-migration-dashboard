@@ -2,18 +2,18 @@ import {
   CategoryWidget,
   PieWidget,
   TimeSeriesWidget,
-  BarWidget,
+  // BarWidget,
   HistogramWidget,
 } from '@carto/react-widgets';
 // @ts-ignore
 import { FORMATS } from '@deck.gl/carto';
-import { _executeModel } from '@carto/react-api';
+// import { _executeModel } from '@carto/react-api';
 import mainSource from 'data/sources/mainSource';
 import {
   AggregationTypes,
   GroupDateTypes,
   groupValuesByColumn,
-  _FilterTypes,
+  // _FilterTypes,
 } from '@carto/react-core';
 import MainView from './main/MainView';
 import { MainColumnView } from 'components/common/MainColumnView';
@@ -21,13 +21,13 @@ import { Grid, makeStyles } from '@material-ui/core';
 import { FormulaWidgetUI, WrapperWidgetUI } from '@carto/react-ui';
 import { ReactNode, useEffect, useState } from 'react';
 import { SURVEY_CONCENTRATIONS_LAYER_ID } from 'components/layers/SurveyConcentrationsLayer';
-import { HOTSPOTS_LAYER_ID } from 'components/layers/HotspotsLayer';
+// import { HOTSPOTS_LAYER_ID } from 'components/layers/HotspotsLayer';
 import { useDispatch } from 'react-redux';
 import {
   addLayer,
   removeLayer,
-  addSource,
-  removeSource,
+  // addSource,
+  // removeSource,
 } from '@carto/react-redux';
 
 import {
@@ -42,8 +42,6 @@ import TripComposition from 'components/common/indicators/dashboard/TripComposit
 
 export default function Dashboard() {
   const dispatch = useDispatch();
-
-  console.log('dashboard mounted')
 
   useEffect(() => {
     dispatch(
@@ -87,9 +85,9 @@ const xFormatValues = new Map([
   [5, '100'],
 ]);
 
-function customFormat(value: number) {
-  return xFormatValues.get(value);
-}
+// function customFormat(value: number) {
+//   return xFormatValues.get(value);
+// }
 
 function LeftView() {
   return (
@@ -200,12 +198,12 @@ function GenderIndicator() {
 
       setMen(
         groups
-          .filter(({ name }) => name == 'Hombre')
+          .filter(({ name }) => name === 'Hombre')
           .map(({ value }) => value)[0],
       );
       setWomen(
         groups
-          .filter(({ name }) => name == 'Mujer')
+          .filter(({ name }) => name === 'Mujer')
           .map(({ value }) => value)[0],
       );
     }

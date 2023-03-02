@@ -1,7 +1,6 @@
 import { CategoryWidgetUI, WrapperWidgetUI } from '@carto/react-ui';
 //@ts-ignore
 import { Grid } from '@material-ui/core';
-import TopLoading from 'components/common/TopLoading';
 import {
   AggregationTypes,
   groupValuesByColumn,
@@ -54,7 +53,7 @@ const EMPTY_ARRAY: [] = [];
 
 function pivotData(data: any[], column: string): any[] {
   //@ts-ignore
-  const values = data.map((f) => f[column]).filter((i) => i != 'null');
+  const values = data.map((f) => f[column]).filter((i) => i !== 'null');
   const valueString: string = values.join(',');
   const valuesArray: any[] = valueString.split(',');
   const pivotedData = valuesArray
@@ -149,15 +148,18 @@ export default function HumanitarianAid() {
 
   return (
     <Grid item>
-      <WrapperWidgetUI title='Ayudas humanitarias'>
-        {isLoading ? <TopLoading /> : ''}
-        <CategoryWidgetUI
-          onSelectedCategoriesChange={handleSelectedCategoriesChange}
-          selectedCategories={selectedCategories}
-          labels={Object.fromEntries(CATEGORY_ABREVATIONS)}
-          // id='travellingAlone'
-          data={data}
-        />
+      <WrapperWidgetUI isLoading={isLoading} title='Ayudas humanitarias'>
+        {error ? (
+          <div>No data available</div>
+        ) : (
+          <CategoryWidgetUI
+            onSelectedCategoriesChange={handleSelectedCategoriesChange}
+            selectedCategories={selectedCategories}
+            labels={Object.fromEntries(CATEGORY_ABREVATIONS)}
+            // id='travellingAlone'
+            data={data}
+          />
+        )}
       </WrapperWidgetUI>
     </Grid>
   );

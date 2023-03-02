@@ -1,6 +1,6 @@
 //@ts-nocheck
 import { TILE_FORMATS } from '@deck.gl/carto';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store/store';
 import getTileFeatures from 'utils/methods/getTileFeatures';
@@ -16,8 +16,6 @@ interface useWidgetFetchProps {
   method?: Method | null;
 }
 
-
-
 export default function useWidgetFetch({
   method = (input) => input,
   column,
@@ -28,33 +26,31 @@ export default function useWidgetFetch({
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
 
-  async function executeWidgetFetch(){
+  async function executeWidgetFetch() {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       const tileData = await getTileFeatures({
         sourceId: source.id,
-        params:{
+        params: {
           viewport,
           limit: null,
-          tileFormat: TILE_FORMATS.GEOJSON
-        }
-      })
+          tileFormat: TILE_FORMATS.GEOJSON,
+        },
+      });
 
-      if(method){
-        setData(method(tileData, column))
-      }else{
-        setData(data)
+      if (method) {
+        setData(method(tileData, column));
+      } else {
+        setData(data);
       }
 
-      return tileData
+      return tileData;
     } catch (error) {
-      setError(true)
-      setIsLoading(false)
+      setError(true);
+      setIsLoading(false);
     }
   }
 
-  
-  
   useMemo(() => {
     executeWidgetFetch();
     setIsLoading(false);

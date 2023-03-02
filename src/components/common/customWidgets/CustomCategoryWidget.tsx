@@ -19,7 +19,7 @@ export default function CustomCategoryWidget({
   const dispatch = useDispatch();
   const selectedCategories =
     useWidgetFilterValues({
-      dataSource, 
+      dataSource,
       column,
       id,
       type: filterType,
@@ -47,7 +47,7 @@ export default function CustomCategoryWidget({
         );
       }
     },
-    [column, dataSource, id, dispatch],
+    [column, dataSource, filterType, id, dispatch],
   );
 
   return (

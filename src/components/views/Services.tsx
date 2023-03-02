@@ -1,36 +1,35 @@
-import { useEffect } from 'react';
-import servicePointsSource from 'data/sources/servicePointsSource';
-import { SERVICE_POINTS_LAYER_ID } from 'components/layers/ServicePointsLayer';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  addLayer,
-  removeLayer,
-  addSource,
-  removeSource,
-  setViewState,
-  selectSourceById,
-} from '@carto/react-redux';
+// import { useEffect } from 'react';
+// import servicePointsSource from 'data/sources/servicePointsSource';
+// import { SERVICE_POINTS_LAYER_ID } from 'components/layers/ServicePointsLayer';
+// import { useDispatch } from 'react-redux';
+// import {
+//   addLayer,
+//   removeLayer,
+//   addSource,
+//   removeSource,
+//   setViewState,
+//   selectSourceById,
+// } from '@carto/react-redux';
 
 import { makeStyles } from '@material-ui/core/styles';
-import { CategoryWidget, PieWidget } from '@carto/react-widgets';
-import mainSource from '../../data/sources/mainSource';
-import { AggregationTypes } from '@carto/react-core';
+// import { CategoryWidget, PieWidget } from '@carto/react-widgets';
+// import mainSource from '../../data/sources/mainSource';
+// import { AggregationTypes } from '@carto/react-core';
 import MainView from './main/MainView';
 import { MainColumnView } from 'components/common/MainColumnView';
 import { Divider, Grid, Typography } from '@material-ui/core';
-import { RootState } from 'store/store';
+// import { RootState } from 'store/store';
 
-const useStyles = makeStyles(() => ({
-  services: {},
-}));
+// const useStyles = makeStyles(() => ({
+//   services: {},
+// }));
 
 export default function Services() {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   // const classes = useStyles();
   // const {hotspotsLayer} = useSelector((state: RootState) => state.carto.layers)
   // const source = useSelector((state)=> selectSourceById(state, hotspotsLayer?.source))
-  
-  console.log('service mounted')
+
   // useEffect(() => {
 
   //   dispatch(addSource(servicePointsSource));
