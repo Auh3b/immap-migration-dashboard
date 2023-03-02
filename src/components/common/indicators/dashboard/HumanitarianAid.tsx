@@ -107,7 +107,6 @@ export default function HumanitarianAid() {
   const type = _FilterTypes.STRING_SEARCH;
 
   const { data, isLoading, error } = useWidgetFetch({
-    layerId: 'hotspotsLayer',
     method: pivotData,
     column,
     source,
