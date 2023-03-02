@@ -4,7 +4,7 @@ import { FORMATS, fetchLayerData } from '@deck.gl/carto';
 //@ts-ignore
 import { CompositeLayer } from 'deck.gl';
 //@ts-ignore
-import { GeoJsonLayer } from '@deck.gl/layers';
+import { GeoJsonLayer, TextLayer } from '@deck.gl/layers';
 import { RootState } from 'store/store';
 import SuperCluster from 'supercluster';
 import { useEffect, useState } from 'react';
@@ -87,33 +87,33 @@ class CircleClusterLayer extends CompositeLayer {
   renderLayers() {
     //@ts-ignore
     const data = { type: 'FeatureCollection', features: this.state.data };
-
     //@ts-ignore
     const { clusterValues } = this.state;
     //@ts-ignore
     const { sizeScale, id } = this.props;
 
-    return new GeoJsonLayer(
-      //@ts-ignore
-      this.getSubLayerProps({
-        id,
-        data,
-        sizeScale,
-        opacity: 0.9,
-        stroked: false,
-
+    return [
+      new GeoJsonLayer(
         //@ts-ignore
-        getFillColor: (d) =>
-          d.properties.cluster
-            ? getFillColor(d.properties.point_count, clusterValues)
-            : [51, 66, 77],
-        pointType: 'circle',
-        //@ts-ignore
-        getPointRadius: (d) =>
-          d.properties.cluster ? d.properties.point_count * 100 : 100,
-        pointRadiusMinPixels: 15,
-      }),
-    );
+        this.getSubLayerProps({
+          id,
+          data: new Promise((resolve, reject) => resolve(data)),
+          sizeScale,
+          opacity: 0.9,
+          stroked: false,
+          //@ts-ignore
+          getFillColor: (d) =>
+            d.properties.cluster
+              ? getFillColor(d.properties.point_count, clusterValues)
+              : [51, 66, 77, 0],
+          pointType: 'circle+text',
+          //@ts-ignore
+          getPointRadius: (d) =>
+            d.properties.cluster ? d.properties.point_count * 100 : 100,
+          pointRadiusMinPixels: 15,
+        }),
+      ),
+    ];
   }
 }
 

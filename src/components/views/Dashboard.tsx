@@ -29,16 +29,10 @@ import {
   // addSource,
   // removeSource,
 } from '@carto/react-redux';
-
-import {
-  PregnantWoman as WomanIcon,
-  Accessibility as ManIcon,
-} from '@material-ui/icons';
-import TopLoading from 'components/common/TopLoading';
-import useExecuteQuery from 'hooks/useExecuteQuery';
 import ChildrenTravellingAlone from 'components/common/indicators/dashboard/HumanitarianAid';
 import ChildTravelerAges from 'components/common/indicators/dashboard/ChildTravelerAges';
 import TripComposition from 'components/common/indicators/dashboard/TripComposition';
+import GenderComposition from 'components/common/indicators/dashboard/GenderComposition';
 
 export default function Dashboard() {
   const dispatch = useDispatch();
@@ -77,13 +71,13 @@ export default function Dashboard() {
   );
 }
 
-const xFormatValues = new Map([
-  [1, '18'],
-  [2, '25'],
-  [3, '40'],
-  [4, '64'],
-  [5, '100'],
-]);
+// const xFormatValues = new Map([
+//   [1, '18'],
+//   [2, '25'],
+//   [3, '40'],
+//   [4, '64'],
+//   [5, '100'],
+// ]);
 
 // function customFormat(value: number) {
 //   return xFormatValues.get(value);
@@ -93,9 +87,9 @@ function LeftView() {
   return (
     <MainColumnView>
       <Grid item>
-        <GenderIndicator />
+        <GenderComposition />
       </Grid>
-      <Grid item>
+      {/* <Grid item>
         <PieWidget
           id='genderDistribution'
           title='Género'
@@ -104,7 +98,7 @@ function LeftView() {
           operation={AggregationTypes.COUNT}
           operationColumn='genero'
         />
-      </Grid>
+      </Grid> */}
       <Grid item>
         <CategoryWidget
           id='ageGroups'
@@ -171,93 +165,5 @@ function RightView() {
         />
       </Grid> */}
     </MainColumnView>
-  );
-}
-
-function GenderIndicator() {
-  const [women, setWomen] = useState(0);
-  const [men, setMen] = useState(0);
-  const [total, setTotal] = useState(0);
-
-  const { data, isLoading } = useExecuteQuery({
-    query: 'SELECT genero FROM shared.kuery24022023',
-    format: FORMATS.JSON,
-  });
-
-  useEffect(() => {
-    if (data && !isLoading) {
-      //@ts-ignore
-      setTotal(data.length);
-      const groups = groupValuesByColumn({
-        //@ts-ignore
-        data,
-        keysColumn: 'genero',
-        operation: AggregationTypes.COUNT,
-        valuesColumns: ['genero'],
-      });
-
-      setMen(
-        groups
-          .filter(({ name }) => name === 'Hombre')
-          .map(({ value }) => value)[0],
-      );
-      setWomen(
-        groups
-          .filter(({ name }) => name === 'Mujer')
-          .map(({ value }) => value)[0],
-      );
-    }
-
-    return () => {
-      setMen(0);
-      setWomen(0);
-    };
-  }, [data, isLoading]);
-
-  return (
-    <WrapperWidgetUI title='Porcentaje de género/edad' loading={isLoading}>
-      {isLoading ? <TopLoading /> : ''}
-      <GenderFormatter gender='Hombre'>
-        <FormulaWidgetUI
-          data={men}
-          formatter={(value: number) =>
-            `${value} (${Math.floor((value / total) * 100)}%)`
-          }
-        />
-      </GenderFormatter>
-      <GenderFormatter gender='Mujer'>
-        <FormulaWidgetUI
-          data={women}
-          formatter={(value: number) =>
-            `${value} (${Math.floor((value / total) * 100)}%)`
-          }
-        />
-      </GenderFormatter>
-    </WrapperWidgetUI>
-  );
-}
-
-const useGenderStyles = makeStyles((theme) => ({
-  container: {
-    display: 'flex',
-    gap: theme.spacing(2),
-    alignItems: 'center',
-  },
-}));
-
-function GenderFormatter({
-  gender,
-  children,
-}: {
-  gender: string;
-  children: ReactNode;
-}) {
-  const classes = useGenderStyles();
-
-  return (
-    <div className={classes.container}>
-      {gender == 'Hombre' ? <ManIcon /> : <WomanIcon />}
-      {children}
-    </div>
   );
 }

@@ -46,7 +46,6 @@ export default function ChildTravelerAges() {
     selectSourceById(state, hotspotsLayer?.source),
   );
   const { data, error, isLoading } = useWidgetFetch({
-    layerId: 'hotspotsLayer',
     source,
     method: transformData,
   });

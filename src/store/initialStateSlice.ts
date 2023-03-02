@@ -1,4 +1,4 @@
-import { POSITRON } from '@carto/react-basemaps';
+import { POSITRON, DARK_MATTER } from '@carto/react-basemaps';
 import { InitialCarto3State } from '@carto/react-redux';
 // @ts-ignore
 import { API_VERSIONS } from '@deck.gl/carto';
@@ -12,7 +12,7 @@ export const initialState: InitialCarto3State = {
     bearing: 0,
     dragRotate: false,
   },
-  basemap: POSITRON,
+  basemap: DARK_MATTER,
   credentials: {
     apiVersion: API_VERSIONS.V3,
     apiBaseUrl: 'https://gcp-us-east1.api.carto.com',

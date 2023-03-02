@@ -103,7 +103,7 @@ export default function HumanitarianAid() {
 
   const dataSource = mainSource.id;
   const column = 'ayudas_hum';
-  const id = 'testwidget';
+  const id = 'humanitarianAid';
   const type = _FilterTypes.STRING_SEARCH;
 
   const { data, isLoading, error } = useWidgetFetch({
@@ -156,7 +156,7 @@ export default function HumanitarianAid() {
             onSelectedCategoriesChange={handleSelectedCategoriesChange}
             selectedCategories={selectedCategories}
             labels={Object.fromEntries(CATEGORY_ABREVATIONS)}
-            // id='travellingAlone'
+            id={id}
             data={data}
           />
         )}
