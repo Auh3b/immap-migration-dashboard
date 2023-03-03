@@ -7,7 +7,7 @@ const source = {
   id: MAIN_SOURCE_ID,
   type: MAP_TYPES.QUERY,
   connection: 'carto_dw',
-  data: `SELECT * FROM shared.kuery24022023`,
+  data: `SELECT * FROM shared.LACRO_Marzo_2023`,
 };
 
 export default source;

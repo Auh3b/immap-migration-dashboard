@@ -4,7 +4,8 @@ const useNoteStyle = makeStyles((theme)=>({
   note:{
     fontWeight: 300,
     paddingRight: theme.spacing(2),
-    paddingLeft: theme.spacing(2)
+    paddingLeft: theme.spacing(2),
+    BorderBottom: `${theme.palette.common.black} 1px solid`
   }
 }))
 

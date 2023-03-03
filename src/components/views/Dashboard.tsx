@@ -1,8 +1,9 @@
+import { PregnantWoment } from './../common/indicators/dashboard/PregnantWoment';
+import { PeopleWithDisability } from './../common/indicators/dashboard/PeopleWithDisability';
 import { SurveyDates } from './../common/indicators/dashboard/SurveyDates';
 import mainSource from 'data/sources/mainSource';
 import MainView from './main/MainView';
 import { MainColumnView } from 'components/common/MainColumnView';
-import { Grid } from '@material-ui/core';
 import { useEffect /*useState*/ } from 'react';
 import { SURVEY_CONCENTRATIONS_LAYER_ID } from 'components/layers/SurveyConcentrationsLayer';
 import { useDispatch } from 'react-redux';
@@ -17,6 +18,10 @@ import GenderComposition from 'components/common/indicators/dashboard/GenderComp
 import GroupSizeDistribution from 'components/common/indicators/dashboard/GroupSizeDistribution';
 import TravelGroupAges from 'components/common/indicators/dashboard/TravelGroupAges';
 import ChildrenTravelAlone from 'components/common/indicators/dashboard/ChildrenTravelAlone';
+import PlacesChildrenTravelAlone from 'components/common/indicators/dashboard/PlacesChildrenTravelAlone';
+import SleepOutDoor from 'components/common/indicators/dashboard/SleepOutDoor';
+import SickPeople from 'components/common/indicators/dashboard/SickPeople';
+import RestrictFood from 'components/common/indicators/dashboard/RestrictedFood';
 
 export default function Dashboard() {
   const dispatch = useDispatch();
@@ -50,9 +55,12 @@ export default function Dashboard() {
 function LeftView() {
   return (
     <MainColumnView>
-      <GenderComposition />
+      <GenderComposition dataSource={mainSource.id} />
       <TravelGroupAges dataSource={mainSource.id}/>
-      <GroupSizeDistribution />
+      <GroupSizeDistribution dataSource={mainSource.id} />
+      <SleepOutDoor dataSource={mainSource.id}/>
+      <RestrictFood dataSource={mainSource.id} />
+      <SickPeople dataSource={mainSource.id} />
     </MainColumnView>
   );
 }
@@ -60,28 +68,11 @@ function LeftView() {
 function RightView() {
   return (
     <MainColumnView>
-      <ChildTravelerAges dataSource={mainSource.id}/>
-      <ChildrenTravelAlone dataSource={mainSource.id}/>
-      {/* <Grid item>
-        <BarWidget
-          id='disabledPeople'
-          title='Presencia de personas con discapacidadad'
-          dataSource={mainSource.id}
-          column='cb_fl_id14'
-          operation={AggregationTypes.COUNT}
-          operationColumn='cb_fl_id14'
-        />
-      </Grid>
-      <Grid item>
-        <BarWidget
-          id='pregnantWoment'
-          title='Embarazos'
-          dataSource={mainSource.id}
-          column='cb_fl_id12'
-          operation={AggregationTypes.COUNT}
-          operationColumn='cb_fl_id12'
-        />
-      </Grid> */}
+      <ChildTravelerAges dataSource={mainSource.id} />
+      <ChildrenTravelAlone dataSource={mainSource.id} />
+      <PlacesChildrenTravelAlone dataSource={mainSource.id} />
+      <PeopleWithDisability dataSource={mainSource.id} />
+      <PregnantWoment dataSource={mainSource.id} />
     </MainColumnView>
   );
 }

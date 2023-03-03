@@ -4,7 +4,6 @@ import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType
 import CustomCategoryWidget from 'components/common/customWidgets/CustomCategoryWidget';
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
 import { sum } from 'd3';
-import mainSource from 'data/sources/mainSource';
 
 function transformData(input: any[], column: string) {
   let nna_viven = sum(

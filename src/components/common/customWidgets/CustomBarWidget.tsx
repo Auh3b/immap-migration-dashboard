@@ -1,14 +1,14 @@
-import { addFilter, removeFilter } from '@carto/react-redux';
-import { CategoryWidgetUI, WrapperWidgetUI } from '@carto/react-ui';
-import useWidgetFetch from './hooks/useWidgetFetch';
-import { useCallback } from 'react';
-import { useDispatch } from 'react-redux';
-import { defaultCustomWidgetProps } from './customWidgetsType';
-import useWidgetFilterValues from './hooks/useWidgetFilterValues';
+import { addFilter, removeFilter } from "@carto/react-redux";
+import { BarWidgetUI, WrapperWidgetUI } from "@carto/react-ui";
+import { useCallback, useMemo, useState } from "react";
+import { useDispatch } from "react-redux";
+import { defaultCustomWidgetProps } from "./customWidgetsType";
+import useWidgetFetch from "./hooks/useWidgetFetch";
+import useWidgetFilterValues from "./hooks/useWidgetFilterValues";
 
 const EMPTY_ARRAY: [] = [];
 
-export default function CustomCategoryWidget({
+export default function CustomBarWidget({
   id,
   title,
   method,
@@ -17,6 +17,9 @@ export default function CustomCategoryWidget({
   filterType,
   labels = {},
 }: defaultCustomWidgetProps) {
+  const [xData, setXData] = useState([])
+  const [yData, setYData] = useState([])
+
   const dispatch = useDispatch();
   const selectedCategories =
     useWidgetFilterValues({
@@ -58,18 +61,27 @@ export default function CustomCategoryWidget({
     column,
   });
 
+  useMemo(() => {
+    //@ts-ignore
+    setXData(data?.map((k)=> k.name))
+    //@ts-ignore
+    setYData(data?.map((v)=> v.value))
+  }, [data])
+
   return (
-    <WrapperWidgetUI 
+    <WrapperWidgetUI
       title={title} 
       isLoading={isLoading} 
       onError={error}
     >
-      <CategoryWidgetUI
+      {(data || !isLoading) && <BarWidgetUI
         onSelectedCategoriesChange={handleSelectedCategoriesChange}
         selectedCategories={selectedCategories}
         labels={labels}
-        data={data}
-      />
+        yAxisData={yData}
+        xAxisData={xData}
+      />}
+      
     </WrapperWidgetUI>
-  );
+  )
 }

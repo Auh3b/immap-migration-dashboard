@@ -4,16 +4,16 @@ import {
   _FilterTypes,
 } from '@carto/react-core';
 import { PieWidgetUI, WrapperWidgetUI } from '@carto/react-ui';
-import { Grid, makeStyles, Typography} from '@material-ui/core';
+import { Grid, makeStyles} from '@material-ui/core';
 import { ReactComponent as Woman } from 'assets/img/person-0.svg';
 import { ReactComponent as Man } from 'assets/img/person-1.svg';
 import { useCallback } from 'react';
-import mainSource from 'data/sources/mainSource';
 import useWidgetFetch from 'components/common/customWidgets/hooks/useWidgetFetch';
 import useWidgetFilterValues from 'components/common/customWidgets/hooks/useWidgetFilterValues';
 import { addFilter, removeFilter } from '@carto/react-redux';
 import { useDispatch } from 'react-redux';
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
+import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType';
 
 const EMPTY_ARRAY: [] = [];
 const PRIMARY_COLUMN = 'genero';
@@ -67,7 +67,6 @@ const useGenderStyles = makeStyles((theme) => ({
 
 const id = 'genderComposition';
 const column = PRIMARY_COLUMN;
-const dataSource = mainSource.id;
 const filterType = _FilterTypes.IN;
 const auxiliaryInfo = 'Distribución de la población por sexo y rango de edad.'
 
@@ -78,7 +77,7 @@ const LABELS = {
   '65 años o más': '65+',
 }
 
-export default function GenderComposition() {
+export default function GenderComposition({dataSource}:BasicWidgetType) {
   const { data, isLoading } = useWidgetFetch({
     id,
     dataSource,
@@ -91,8 +90,8 @@ export default function GenderComposition() {
       <WrapperWidgetUI title='Porcentaje de género/edad' isLoading={isLoading}>
         {data && (
           <>
-            <GenderByAge isLoading={isLoading} data={data[0]} index={0} />
-            <GenderByAge isLoading={isLoading} data={data[1]} index={1} />
+            <GenderByAge dataSource={dataSource} isLoading={isLoading} data={data[0]} index={0} />
+            <GenderByAge dataSource={dataSource} isLoading={isLoading} data={data[1]} index={1} />
           </>
         )}
       </WrapperWidgetUI>
@@ -105,10 +104,12 @@ function GenderByAge({
   data,
   index,
   isLoading,
+  dataSource
 }: {
   data: any[];
   index: number;
   isLoading: boolean;
+  dataSource: string
 }) {
   const classes = useGenderStyles();
   const dispatch = useDispatch();

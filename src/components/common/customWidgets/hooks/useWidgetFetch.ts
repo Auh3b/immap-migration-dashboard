@@ -58,7 +58,7 @@ export default function useWidgetFetch({
           sourceId: source.id,
           params,
         }).then(data =>{
-          setData(method(data, column))
+          setData(method(data.filter(i => +i[column] !== 999999), column))
         }).catch(error =>{
           setError(error)
         }).finally(()=>{

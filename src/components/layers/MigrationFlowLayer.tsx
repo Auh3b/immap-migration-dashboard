@@ -115,12 +115,15 @@ export default function MigrationFlowLayer() {
       data: fetchData(),
       id: MIGRATION_FLOW_LAYER_ID,
       getSourcePosition: (d: any) => [+d['long_paisn'], +d['lat_paisna']],
-      getTargetPosition: (d: any) => [d['longitud'], d['latitud']],
+      getTargetPosition: (d: any) => [d['long'], d['lat']],
       getWidth: 1,
       getHeight: 1,
       getSourceColor: [0, 128, 200],
       getTargetColor: [200, 0, 80],
       pickable: true,
+      onDataLoad: (data:any) =>{
+        console.log(data)
+      },
       onDataLoads: () => {
         dispatch(
           updateLayer({

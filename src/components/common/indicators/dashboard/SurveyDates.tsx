@@ -16,7 +16,8 @@ export function SurveyDates({dataSource}:BasicWidgetType) {
         id={id} 
         title={title} 
         dataSource={dataSource} 
-        column={column} 
+        column={column}
+        operationColumn={column}
         stepSize={GroupDateTypes.DAYS} 
       />
       <WidgetNote note={NOTE} />

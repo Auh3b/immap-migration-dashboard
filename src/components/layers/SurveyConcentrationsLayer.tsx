@@ -33,6 +33,15 @@ function getFillColor(value: number, extent: [number, number]) {
   return colorValue;
 }
 
+function checkFeatureCollection(data:any[]):any[]{
+  return data.map(feature =>{
+    if(feature.type){
+      return feature
+    }
+    return feature.properties
+  })
+}
+
 export const SURVEY_CONCENTRATIONS_LAYER_ID = 'surveyConcentrationsLayer';
 
 class CircleClusterLayer extends CompositeLayer {
@@ -57,10 +66,7 @@ class CircleClusterLayer extends CompositeLayer {
       const index = new SuperCluster({ maxZoom: 16, radius: props.sizeScale });
       index.load(
         //@ts-ignore
-        props.data.features.map((d) => ({
-          geometry: { coordinates: props.getPosition(d) },
-          properties: d,
-        })),
+        props.data
       );
       //@ts-ignore
       this.setState({ index });
@@ -70,10 +76,13 @@ class CircleClusterLayer extends CompositeLayer {
     const z = Math.floor(this.context.viewport.zoom);
     //@ts-ignore
     if (rebuildIndex || z !== this.state.z) {
+
+      
+
       //@ts-ignore
       this.setState({
         //@ts-ignore
-        data: this.state.index.getClusters([-180, -85, 180, 85], z),
+        data: checkFeatureCollection(this.state.index.getClusters([-180, -85, 180, 85], z)),
         z,
       });
       //@ts-ignore
@@ -97,10 +106,12 @@ class CircleClusterLayer extends CompositeLayer {
         //@ts-ignore
         this.getSubLayerProps({
           id,
-          data: new Promise((resolve, reject) => resolve(data)),
+          data,
           sizeScale,
           opacity: 0.9,
           stroked: false,
+          //@ts-ignore
+          getText: (d) => d.properties.cluster ? d.properties.point_count : '',
           //@ts-ignore
           getFillColor: (d) =>
             d.properties.cluster
@@ -165,10 +176,13 @@ export default function SurveyConcentrationsLayer() {
     layerConfig: surveyConcentrationsLayer,
   });
 
+  delete cartoLayerProps.onDataLoad
+
   if (surveyConcentrationsLayer && data) {
     return new CircleClusterLayer({
       ...cartoLayerProps,
-      data,
+      //@ts-ignore
+      data: data?.features,
       id: SURVEY_CONCENTRATIONS_LAYER_ID,
       pointRadiusMinPixels: 2,
       pickable: true,
