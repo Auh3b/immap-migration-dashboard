@@ -6,6 +6,7 @@ import {
 } from '@carto/react-core';
 import mainSource from 'data/sources/mainSource';
 import CustomCategoryWidget from 'components/common/customWidgets/CustomCategoryWidget';
+import WidgetNote from 'components/common/customWidgets/WidgetNote';
 
 const CATEGORY_ABREVATIONS = new Map([
   [0, 'Ninguna'],
@@ -65,6 +66,8 @@ const column = 'ayudas_hum';
 const id = 'humanitarianAid';
 const type = _FilterTypes.STRING_SEARCH;
 
+const NOTE = 'Ayudas humanitarias recibidas según zona de tránsito'
+
 export default function HumanitarianAid() {
   return (
     <Grid item>
@@ -77,6 +80,7 @@ export default function HumanitarianAid() {
         method={pivotData}
         labels={Object.fromEntries(CATEGORY_ABREVATIONS)}
       />
+      <WidgetNote note={NOTE} />
     </Grid>
   );
 }

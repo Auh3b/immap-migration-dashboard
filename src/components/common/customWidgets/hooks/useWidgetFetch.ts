@@ -31,7 +31,7 @@ export default function useWidgetFetch({
   const { viewport } = useSelector((state: RootState) => state.carto);
   const [data, setData] = useState<null | any[]>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState(true);
   const isSourceReady = useSelector(
     (state) => global || selectAreFeaturesReadyForSource(state, dataSource),
   );
@@ -49,31 +49,23 @@ export default function useWidgetFetch({
     tileFormat: TILE_FORMATS.GEOJSON,
   };
 
-  async function executeWidgetFetch() {
-    if (source && isSourceReady) {
-      try {
-        const tileData = await getTileFeatures({
+  
+  useCustomCompareEffect(
+    ()=> {
+      setIsLoading(true)
+      if (source && isSourceReady) {
+        getTileFeatures({
           sourceId: source.id,
           params,
-        });
-
-        if (method) {
-          setData(method(tileData, column));
-        } else {
-          setData(data);
-        }
-
-        return tileData;
-      } catch (error) {
-        setError(true);
-      } finally {
-        setIsLoading(false);
+        }).then(data =>{
+          setData(method(data, column))
+        }).catch(error =>{
+          setError(error)
+        }).finally(()=>{
+          setIsLoading(false)
+        })
       }
-    }
-  }
-
-  useCustomCompareEffect(
-    executeWidgetFetch,
+    },
     [params, isSourceReady, source],
     dequal,
   );

@@ -1,5 +1,8 @@
 import { _FilterTypes } from '@carto/react-core';
+import { Grid } from '@material-ui/core';
+import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType';
 import CustomCategoryWidget from 'components/common/customWidgets/CustomCategoryWidget';
+import WidgetNote from 'components/common/customWidgets/WidgetNote';
 import { sum } from 'd3';
 import mainSource from 'data/sources/mainSource';
 
@@ -19,29 +22,36 @@ function transformData(input: any[], column: string) {
 
   return [
     {
-      name: 'nna_viven',
+      name: '0 - 5',
       value: nna_viven,
     },
     {
-      name: 'n_doce_die',
+      name: '6 - 11',
       value: n_doce_die,
     },
     {
-      name: 'n_seis_onc',
+      name: '12 - 17',
       value: n_seis_onc,
     },
   ];
 }
 
-export default function ChildTravelerAges() {
+const NOTE = 'Rango de edades de niños, niñas y adolescentes viajando'
+
+export default function ChildTravelerAges({
+  dataSource
+}: BasicWidgetType) {
   return (
-    <CustomCategoryWidget
-      title='Rango de edad de niños que están viajando'
-      id='childTravelerAges'
-      dataSource={mainSource.id}
-      column={'nna_viven'}
-      filterType={_FilterTypes.BETWEEN}
-      method={transformData}
-    />
+    <Grid item>
+      <CustomCategoryWidget
+        title='Edades de NNA viajando'
+        id='childTravelerAges'
+        dataSource={dataSource}
+        column={'nna_viven'}
+        filterType={_FilterTypes.BETWEEN}
+        method={transformData}
+      />
+      <WidgetNote note={NOTE}/>
+    </Grid>
   );
 }

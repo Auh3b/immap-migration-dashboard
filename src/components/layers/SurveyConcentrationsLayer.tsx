@@ -180,7 +180,6 @@ export default function SurveyConcentrationsLayer() {
             layerAttributes: { ...layerConfig },
           }),
         );
-        // cartoLayerProps.onDataLoad && cartoLayerProps.onDataLoad(data);
       },
       //@ts-ignore
       getPosition: (d) => d.geometry.coordinates,

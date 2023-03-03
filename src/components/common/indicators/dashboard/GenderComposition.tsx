@@ -3,18 +3,17 @@ import {
   groupValuesByColumn,
   _FilterTypes,
 } from '@carto/react-core';
-import { FormulaWidgetUI, PieWidgetUI, WrapperWidgetUI } from '@carto/react-ui';
-import { Divider, Grid, makeStyles, Typography } from '@material-ui/core';
+import { PieWidgetUI, WrapperWidgetUI } from '@carto/react-ui';
+import { Grid, makeStyles, Typography} from '@material-ui/core';
 import { ReactComponent as Woman } from 'assets/img/person-0.svg';
 import { ReactComponent as Man } from 'assets/img/person-1.svg';
-import { useCallback, useMemo, useState } from 'react';
-import { format, sum } from 'd3';
+import { useCallback } from 'react';
 import mainSource from 'data/sources/mainSource';
 import useWidgetFetch from 'components/common/customWidgets/hooks/useWidgetFetch';
 import useWidgetFilterValues from 'components/common/customWidgets/hooks/useWidgetFilterValues';
 import { addFilter, removeFilter } from '@carto/react-redux';
 import { useDispatch } from 'react-redux';
-import TopLoading from 'components/common/TopLoading';
+import WidgetNote from 'components/common/customWidgets/WidgetNote';
 
 const EMPTY_ARRAY: [] = [];
 const PRIMARY_COLUMN = 'genero';
@@ -70,31 +69,34 @@ const id = 'genderComposition';
 const column = PRIMARY_COLUMN;
 const dataSource = mainSource.id;
 const filterType = _FilterTypes.IN;
+const auxiliaryInfo = 'Distribución de la población por sexo y rango de edad.'
+
+const LABELS = {
+  'Entre 18 y 24': '18-24',
+  'Entre 25 y 39': '25-39',
+  'Entre 40 y 64 años': '40-64',
+  '65 años o más': '65+',
+}
 
 export default function GenderComposition() {
-  const classes = useGenderStyles();
   const { data, isLoading } = useWidgetFetch({
     id,
     dataSource,
     column,
     method: getGenderData,
   });
-  // console.log('fired')
+
   return (
     <Grid item>
-      <Typography className={classes.title} variant='subtitle1'>
-        Porcentaje de género/edad
-      </Typography>
-      <Divider />
-      {data && (
-        <>
-          {/* @ts-ignore */}
-          <GendersByPercentage isLoading={isLoading} data={data} />
-          <Divider className={classes.divider} />
-          <GenderByAge isLoading={isLoading} data={data[0]} index={0} />
-          <GenderByAge isLoading={isLoading} data={data[1]} index={1} />
-        </>
-      )}
+      <WrapperWidgetUI title='Porcentaje de género/edad' isLoading={isLoading}>
+        {data && (
+          <>
+            <GenderByAge isLoading={isLoading} data={data[0]} index={0} />
+            <GenderByAge isLoading={isLoading} data={data[1]} index={1} />
+          </>
+        )}
+      </WrapperWidgetUI>
+      <WidgetNote note={auxiliaryInfo}/>
     </Grid>
   );
 }
@@ -164,71 +166,12 @@ function GenderByAge({
               onSelectedCategoriesChange={handleSelectedCategoriesChange}
               selectedCategories={selectedCategories}
               data={data}
+              labels={LABELS}
+              height='150px'
             />
           )}
         </Grid>
       </Grid>
     </WrapperWidgetUI>
-  );
-}
-
-function GendersByPercentage({
-  data,
-  isLoading,
-}: {
-  data: [any[], any[]];
-  isLoading: boolean;
-}) {
-  const classes = useGenderStyles();
-  const [men, setMen] = useState(0);
-  const [women, setWomen] = useState(0);
-  const [total, setTotal] = useState(0);
-
-  useMemo(() => {
-    if (data[0]) {
-      const menValue = sum(data[1], (v) => v.value);
-      setMen(menValue);
-      const womenValue = sum(data[0], (v) => v.value);
-      setWomen(womenValue);
-      const totalValue = menValue + womenValue;
-      setTotal(totalValue);
-    }
-  }, [data]);
-
-  return (
-    <>
-      {men && women && total && (
-        <Grid container className={classes.title}>
-          {isLoading ? <TopLoading /> : ''}
-          <Grid container item xs={6} className={classes.main}>
-            <Grid item xs={3}>
-              <Woman className={classes.iconSmall} />
-            </Grid>
-            <Grid item xs={9}>
-              <FormatedNumber number={women} total={total} />
-            </Grid>
-          </Grid>
-          <Grid container item xs={6} className={classes.main}>
-            <Grid item xs={3}>
-              <Man className={classes.iconSmall} />
-            </Grid>
-            <Grid item xs={9}>
-              <FormatedNumber number={men} total={total} />
-            </Grid>
-          </Grid>
-        </Grid>
-      )}
-    </>
-  );
-}
-
-function FormatedNumber({ number, total }: { number: number; total: number }) {
-  return (
-    <FormulaWidgetUI
-      data={number}
-      formatter={(value: number) =>
-        `${value} (${format('.0%')(value / total)})`
-      }
-    />
   );
 }
