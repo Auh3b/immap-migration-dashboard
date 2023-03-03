@@ -1,3 +1,5 @@
+
+import { FilterTypes } from "@carto/react-core/src/filters/FilterTypes";
 import { addFilter, removeFilter } from "@carto/react-redux";
 import { BarWidgetUI, WrapperWidgetUI } from "@carto/react-ui";
 import { useCallback, useMemo, useState } from "react";
@@ -16,57 +18,75 @@ export default function CustomBarWidget({
   column,
   filterType,
   labels = {},
+  order
 }: defaultCustomWidgetProps) {
-  const [xData, setXData] = useState([])
-  const [yData, setYData] = useState([])
-
   const dispatch = useDispatch();
-  const selectedCategories =
-    useWidgetFilterValues({
-      dataSource,
-      column,
-      id,
-      type: filterType,
-    }) || EMPTY_ARRAY;
 
-  const handleSelectedCategoriesChange = useCallback(
-    (categories) => {
-      if (categories && categories.length) {
-        dispatch(
-          addFilter({
-            id: dataSource,
-            column,
-            type: filterType,
-            values: categories,
-            owner: id,
-          }),
-        );
-      } else {
-        dispatch(
-          removeFilter({
-            id: dataSource,
-            column,
-            owner: id,
-          }),
-        );
-      }
-    },
-    [column, dataSource, filterType, id, dispatch],
-  );
-
-  const { data, isLoading, error } = useWidgetFetch({
+  const { data: _data = [], isLoading, error } = useWidgetFetch({
     id,
     dataSource,
     method,
     column,
   });
 
-  useMemo(() => {
+  
+  const sortedData = useMemo(() => {
+    if (!_data.length || _data) return _data;
     //@ts-ignore
-    setXData(data?.map((k)=> k.name))
+    const sortedByValue = _data.sort((a, b) => b.value - a.value);
+
+    if (order.length) {
+      //@ts-ignore
+      return sortedByValue.sort((a, b) => {
+        const aIndex = order.indexOf(a.name);
+        const bIndex = order.indexOf(b.name);
+
+        return aIndex !== -1 && bIndex !== -1 ? aIndex - bIndex : bIndex - aIndex;
+      });
+    }
+
+    return sortedByValue;
+  }, [order, _data]);
+
+  // For selecting bars, BarWidgetUI uses the index of the bar
+  // so we need to process it before passing it to BarWidgetUI
+  const _selectedBars =
+    useWidgetFilterValues({ dataSource, id, column, type: FilterTypes.IN }) ||
+    EMPTY_ARRAY;
+
+  const selectedBars = useMemo(() => {
     //@ts-ignore
-    setYData(data?.map((v)=> v.value))
-  }, [data])
+    return _selectedBars.map((category) =>
+    //@ts-ignore
+      sortedData.findIndex((d) => d.name === category)
+    );
+  }, [_selectedBars, sortedData]);
+
+  const handleSelectedBarsChange = useCallback(
+    (selectedBarsIdxs) => {
+      if (selectedBarsIdxs?.length) {
+        dispatch(
+          addFilter({
+            id: dataSource,
+            column,
+            type: filterType || FilterTypes.IN,
+            //@ts-ignore
+            values: selectedBarsIdxs.map((idx) => sortedData[idx].name),
+            owner: id
+          })
+        );
+      } else {
+        dispatch(
+          removeFilter({
+            id: dataSource,
+            column,
+            owner: id
+          })
+        );
+      }
+    },
+    [column, dataSource, id, dispatch, sortedData]
+  );
 
   return (
     <WrapperWidgetUI
@@ -74,12 +94,14 @@ export default function CustomBarWidget({
       isLoading={isLoading} 
       onError={error}
     >
-      {(data || !isLoading) && <BarWidgetUI
-        onSelectedCategoriesChange={handleSelectedCategoriesChange}
-        selectedCategories={selectedCategories}
+      {(!!sortedData || !isLoading) && <BarWidgetUI
+        selectedBars={selectedBars}
+        onSelectedBarsChange={handleSelectedBarsChange}
         labels={labels}
-        yAxisData={yData}
-        xAxisData={xData}
+        //@ts-ignore
+        xAxisData={sortedData.map((category) => category.name)}
+        //@ts-ignore
+        yAxisData={sortedData.map((category) => category.value)}
       />}
       
     </WrapperWidgetUI>

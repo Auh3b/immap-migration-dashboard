@@ -121,9 +121,6 @@ export default function MigrationFlowLayer() {
       getSourceColor: [0, 128, 200],
       getTargetColor: [200, 0, 80],
       pickable: true,
-      onDataLoad: (data:any) =>{
-        console.log(data)
-      },
       onDataLoads: () => {
         dispatch(
           updateLayer({
