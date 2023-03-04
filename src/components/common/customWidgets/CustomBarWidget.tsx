@@ -1,12 +1,11 @@
-
-import { FilterTypes } from "@carto/react-core/src/filters/FilterTypes";
-import { addFilter, removeFilter } from "@carto/react-redux";
-import { BarWidgetUI, WrapperWidgetUI } from "@carto/react-ui";
-import { useCallback, useMemo, useState } from "react";
-import { useDispatch } from "react-redux";
-import { defaultCustomWidgetProps } from "./customWidgetsType";
-import useWidgetFetch from "./hooks/useWidgetFetch";
-import useWidgetFilterValues from "./hooks/useWidgetFilterValues";
+import { FilterTypes } from '@carto/react-core/src/filters/FilterTypes';
+import { addFilter, removeFilter } from '@carto/react-redux';
+import { BarWidgetUI, WrapperWidgetUI } from '@carto/react-ui';
+import { useCallback, useMemo } from 'react';
+import { useDispatch } from 'react-redux';
+import { defaultCustomWidgetProps } from './customWidgetsType';
+import useWidgetFetch from './hooks/useWidgetFetch';
+import useWidgetFilterValues from './hooks/useWidgetFilterValues';
 
 const EMPTY_ARRAY: [] = [];
 
@@ -18,18 +17,21 @@ export default function CustomBarWidget({
   column,
   filterType,
   labels = {},
-  order
+  order = [],
 }: defaultCustomWidgetProps) {
   const dispatch = useDispatch();
 
-  const { data: _data = [], isLoading, error } = useWidgetFetch({
+  const {
+    data: _data = [],
+    isLoading,
+    error,
+  } = useWidgetFetch({
     id,
     dataSource,
     method,
     column,
   });
 
-  
   const sortedData = useMemo(() => {
     if (!_data.length || _data) return _data;
     //@ts-ignore
@@ -41,7 +43,9 @@ export default function CustomBarWidget({
         const aIndex = order.indexOf(a.name);
         const bIndex = order.indexOf(b.name);
 
-        return aIndex !== -1 && bIndex !== -1 ? aIndex - bIndex : bIndex - aIndex;
+        return aIndex !== -1 && bIndex !== -1
+          ? aIndex - bIndex
+          : bIndex - aIndex;
       });
     }
 
@@ -57,8 +61,8 @@ export default function CustomBarWidget({
   const selectedBars = useMemo(() => {
     //@ts-ignore
     return _selectedBars.map((category) =>
-    //@ts-ignore
-      sortedData.findIndex((d) => d.name === category)
+      //@ts-ignore
+      sortedData.findIndex((d) => d.name === category),
     );
   }, [_selectedBars, sortedData]);
 
@@ -72,38 +76,35 @@ export default function CustomBarWidget({
             type: filterType || FilterTypes.IN,
             //@ts-ignore
             values: selectedBarsIdxs.map((idx) => sortedData[idx].name),
-            owner: id
-          })
+            owner: id,
+          }),
         );
       } else {
         dispatch(
           removeFilter({
             id: dataSource,
             column,
-            owner: id
-          })
+            owner: id,
+          }),
         );
       }
     },
-    [column, dataSource, id, dispatch, sortedData]
+    [column, dataSource, id, dispatch, sortedData],
   );
 
   return (
-    <WrapperWidgetUI
-      title={title} 
-      isLoading={isLoading} 
-      onError={error}
-    >
-      {(!!sortedData || !isLoading) && <BarWidgetUI
-        selectedBars={selectedBars}
-        onSelectedBarsChange={handleSelectedBarsChange}
-        labels={labels}
-        //@ts-ignore
-        xAxisData={sortedData.map((category) => category.name)}
-        //@ts-ignore
-        yAxisData={sortedData.map((category) => category.value)}
-      />}
-      
+    <WrapperWidgetUI title={title} isLoading={isLoading} onError={error}>
+      {(!!sortedData || !isLoading) && (
+        <BarWidgetUI
+          selectedBars={selectedBars}
+          onSelectedBarsChange={handleSelectedBarsChange}
+          labels={labels}
+          //@ts-ignore
+          xAxisData={sortedData.map((category) => category.name)}
+          //@ts-ignore
+          yAxisData={sortedData.map((category) => category.value)}
+        />
+      )}
     </WrapperWidgetUI>
-  )
+  );
 }

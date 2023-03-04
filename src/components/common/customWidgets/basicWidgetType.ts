@@ -1,6 +1,6 @@
-import { AggregationTypes } from "@carto/react-core"
+import { AggregationTypes } from '@carto/react-core';
 
 export interface BasicWidgetType {
-  dataSource: string
-  operation?: AggregationTypes
+  dataSource: string;
+  operation?: AggregationTypes;
 }

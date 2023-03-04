@@ -46,7 +46,7 @@ export default function Dashboard() {
       {{
         left: <LeftView />,
         right: <RightView />,
-        bottom: <SurveyDates  dataSource={mainSource.id}   />,
+        bottom: <SurveyDates dataSource={mainSource.id} />,
       }}
     </MainView>
   );
@@ -56,9 +56,9 @@ function LeftView() {
   return (
     <MainColumnView>
       <GenderComposition dataSource={mainSource.id} />
-      <TravelGroupAges dataSource={mainSource.id}/>
+      <TravelGroupAges dataSource={mainSource.id} />
       <GroupSizeDistribution dataSource={mainSource.id} />
-      <SleepOutDoor dataSource={mainSource.id}/>
+      <SleepOutDoor dataSource={mainSource.id} />
       <RestrictFood dataSource={mainSource.id} />
       <SickPeople dataSource={mainSource.id} />
     </MainColumnView>

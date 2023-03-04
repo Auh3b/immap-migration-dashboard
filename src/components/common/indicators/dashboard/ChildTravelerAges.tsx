@@ -35,11 +35,9 @@ function transformData(input: any[], column: string) {
   ];
 }
 
-const NOTE = 'Rango de edades de niños, niñas y adolescentes viajando'
+const NOTE = 'Rango de edades de niños, niñas y adolescentes viajando';
 
-export default function ChildTravelerAges({
-  dataSource
-}: BasicWidgetType) {
+export default function ChildTravelerAges({ dataSource }: BasicWidgetType) {
   return (
     <Grid item>
       <CustomCategoryWidget
@@ -47,10 +45,10 @@ export default function ChildTravelerAges({
         id='childTravelerAges'
         dataSource={dataSource}
         column={'nna_viven'}
-        filterType={_FilterTypes.BETWEEN}
+        filterType={_FilterTypes.IN}
         method={transformData}
       />
-      <WidgetNote note={NOTE}/>
+      <WidgetNote note={NOTE} />
     </Grid>
   );
 }

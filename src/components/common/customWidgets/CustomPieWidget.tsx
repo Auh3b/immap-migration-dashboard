@@ -1,10 +1,11 @@
-import { addFilter, removeFilter } from '@carto/react-redux';
+import { addFilter, clearFilters, removeFilter } from '@carto/react-redux';
 import { PieWidgetUI, WrapperWidgetUI } from '@carto/react-ui';
 import useWidgetFetch from './hooks/useWidgetFetch';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { defaultCustomWidgetProps } from './customWidgetsType';
 import useWidgetFilterValues from './hooks/useWidgetFilterValues';
+import { Button, Link, Typography } from '@material-ui/core';
 
 const EMPTY_ARRAY: [] = [];
 
@@ -51,6 +52,10 @@ export default function CustomPieWidget({
     [column, dataSource, filterType, id, dispatch],
   );
 
+  const handleClearClick = () =>{
+    dispatch(clearFilters(dataSource))
+  }
+
   const { data, isLoading, error } = useWidgetFetch({
     id,
     dataSource,
@@ -60,12 +65,17 @@ export default function CustomPieWidget({
 
   return (
     <WrapperWidgetUI title={title} isLoading={isLoading} onError={error}>
+      {(selectedCategories && selectedCategories.length > 0) &&
+      <Button onClick={handleClearClick}>Clear</Button>
+      }
+      {(data.length > 0 || !isLoading) && 
       <PieWidgetUI
         onSelectedCategoriesChange={handleSelectedCategoriesChange}
         selectedCategories={selectedCategories}
         labels={labels}
         data={data}
-      />
+      />}
+      
     </WrapperWidgetUI>
   );
 }

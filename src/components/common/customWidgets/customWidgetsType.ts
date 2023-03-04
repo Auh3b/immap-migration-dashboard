@@ -10,5 +10,5 @@ export interface defaultCustomWidgetProps {
   method?: WidgetFetchMethod;
   labels?: any;
   isLoading?: boolean;
-  order: any[]
+  order?: any[];
 }

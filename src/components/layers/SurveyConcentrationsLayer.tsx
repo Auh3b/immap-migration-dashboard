@@ -33,13 +33,13 @@ function getFillColor(value: number, extent: [number, number]) {
   return colorValue;
 }
 
-function checkFeatureCollection(data:any[]):any[]{
-  return data.map(feature =>{
-    if(feature.type){
-      return feature
+function checkFeatureCollection(data: any[]): any[] {
+  return data.map((feature) => {
+    if (feature.type) {
+      return feature;
     }
-    return feature.properties
-  })
+    return feature.properties;
+  });
 }
 
 export const SURVEY_CONCENTRATIONS_LAYER_ID = 'surveyConcentrationsLayer';
@@ -66,7 +66,7 @@ class CircleClusterLayer extends CompositeLayer {
       const index = new SuperCluster({ maxZoom: 16, radius: props.sizeScale });
       index.load(
         //@ts-ignore
-        props.data
+        props.data,
       );
       //@ts-ignore
       this.setState({ index });
@@ -76,13 +76,11 @@ class CircleClusterLayer extends CompositeLayer {
     const z = Math.floor(this.context.viewport.zoom);
     //@ts-ignore
     if (rebuildIndex || z !== this.state.z) {
-
-      
-
       //@ts-ignore
       this.setState({
         //@ts-ignore
-        data: checkFeatureCollection(this.state.index.getClusters([-180, -85, 180, 85], z)),
+        data: checkFeatureCollection(this.state.index.getClusters([-180, -85, 180, 85], z),
+        ),
         z,
       });
       //@ts-ignore
@@ -111,7 +109,8 @@ class CircleClusterLayer extends CompositeLayer {
           opacity: 0.9,
           stroked: false,
           //@ts-ignore
-          getText: (d) => d.properties.cluster ? d.properties.point_count : '',
+          getText: (d) =>
+            d.properties.cluster ? d.properties.point_count : '',
           //@ts-ignore
           getFillColor: (d) =>
             d.properties.cluster
@@ -176,7 +175,7 @@ export default function SurveyConcentrationsLayer() {
     layerConfig: surveyConcentrationsLayer,
   });
 
-  delete cartoLayerProps.onDataLoad
+  delete cartoLayerProps.onDataLoad;
 
   if (surveyConcentrationsLayer && data) {
     return new CircleClusterLayer({

@@ -1,54 +1,17 @@
-// import { useEffect } from 'react';
-// import servicePointsSource from 'data/sources/servicePointsSource';
-// import { SERVICE_POINTS_LAYER_ID } from 'components/layers/ServicePointsLayer';
-// import { useDispatch } from 'react-redux';
-// import {
-//   addLayer,
-//   removeLayer,
-//   addSource,
-//   removeSource,
-//   setViewState,
-//   selectSourceById,
-// } from '@carto/react-redux';
-
+import { ServiceAccessAdult } from './../common/indicators/services/ServiceAccessAdult';
+import { ServiceSatisfyAdult } from './../common/indicators/services/ServiceSatisfyAdult';
+import { ServiceQualityAdult } from './../common/indicators/services/ServiceQualityAdult';
 import { makeStyles } from '@material-ui/core/styles';
-// import { CategoryWidget, PieWidget } from '@carto/react-widgets';
-// import mainSource from '../../data/sources/mainSource';
-// import { AggregationTypes } from '@carto/react-core';
 import MainView from './main/MainView';
 import { MainColumnView } from 'components/common/MainColumnView';
 import { Divider, Grid, Typography } from '@material-ui/core';
-// import { RootState } from 'store/store';
-
-// const useStyles = makeStyles(() => ({
-//   services: {},
-// }));
+import ServiceTypeAdult from 'components/common/indicators/services/ServiceTypeAdult';
+import mainSource from 'data/sources/mainSource'
+import { ServiceAccessChildren } from 'components/common/indicators/services/ServiceAccessChildren';
+import { ServiceQualityChildren } from 'components/common/indicators/services/ServiceQualityChildren';
+import { ServiceSatisfyChildren } from 'components/common/indicators/services/ServiceSatisfyChildren';
 
 export default function Services() {
-  // const dispatch = useDispatch();
-  // const classes = useStyles();
-  // const {hotspotsLayer} = useSelector((state: RootState) => state.carto.layers)
-  // const source = useSelector((state)=> selectSourceById(state, hotspotsLayer?.source))
-
-  // useEffect(() => {
-
-  //   dispatch(addSource(servicePointsSource));
-
-  //   dispatch(
-  //     addLayer({
-  //       id: SERVICE_POINTS_LAYER_ID,
-  //       source: servicePointsSource.id,
-  //     }),
-  //   );
-
-  //   return () => {
-  //     dispatch(removeLayer(SERVICE_POINTS_LAYER_ID));
-  //     dispatch(removeSource(servicePointsSource.id));
-
-  //   };
-  // }, [dispatch]);
-
-  // [hygen] Add useEffect
 
   return (
     <MainView>
@@ -79,46 +42,10 @@ function LeftView() {
         <Typography variant='subtitle1'>Calidad para adultos</Typography>
       </Grid>
       <Divider className={classes.divider} />
-      {/* <Grid item>
-        <CategoryWidget
-          id='serviceType'
-          title='Tipo servicio'
-          dataSource={mainSource.id}
-          operation={AggregationTypes.COUNT}
-          column='carto_1_47'
-          operationColumn='carto_1_47'
-        />
-      </Grid>
-      <Grid item>
-        <PieWidget
-          id='serviceQuality'
-          title='Calidad servicio'
-          dataSource={mainSource.id}
-          column='carto_1_43'
-          operation={AggregationTypes.COUNT}
-          operationColumn='carto_1_43'
-        />
-      </Grid>
-      <Grid item>
-        <CategoryWidget
-          id='accessServices'
-          title='Acceso a servicio'
-          dataSource={mainSource.id}
-          operation={AggregationTypes.COUNT}
-          column='carto_1_41'
-          operationColumn='carto_1_41'
-        />
-      </Grid>
-      <Grid item>
-        <CategoryWidget
-          id='serviceSatisfaction'
-          title='Satisfacción del servicio'
-          dataSource={mainSource.id}
-          operation={AggregationTypes.COUNT}
-          column='carto_1_43'
-          operationColumn='carto_1_43'
-        />
-      </Grid> */}
+      <ServiceTypeAdult dataSource={mainSource.id} />
+      <ServiceQualityAdult dataSource={mainSource.id} />
+      <ServiceAccessAdult dataSource={mainSource.id} />
+      <ServiceSatisfyAdult dataSource={mainSource.id} />
     </MainColumnView>
   );
 }
@@ -131,46 +58,9 @@ function RightView() {
         <Typography variant='subtitle1'>Calidad para NNA</Typography>
       </Grid>
       <Divider className={classes.divider} />
-      {/* <Grid item>
-        <CategoryWidget
-          id='serviceSatisfaction'
-          title='Tipo servicio'
-          dataSource={mainSource.id}
-          operation={AggregationTypes.COUNT}
-          column='carto_1_47'
-          operationColumn='carto_1_47'
-        />
-      </Grid>
-      <Grid item>
-        <PieWidget
-          id='serviceQuality'
-          title='Calidad servicio'
-          dataSource={mainSource.id}
-          column='carto_1_51'
-          operation={AggregationTypes.COUNT}
-          operationColumn='carto_1_51'
-        />
-      </Grid>
-      <Grid item>
-        <CategoryWidget
-          id='accessServices'
-          title='Acceso a servicio'
-          dataSource={mainSource.id}
-          operation={AggregationTypes.COUNT}
-          column='carto_1_49'
-          operationColumn='carto_1_49'
-        />
-      </Grid>
-      <Grid item>
-        <CategoryWidget
-          id='serviceSatisfaction'
-          title='Satisfacción del servicio'
-          dataSource={mainSource.id}
-          operation={AggregationTypes.COUNT}
-          column='carto_1_51'
-          operationColumn='carto_1_51'
-        />
-      </Grid> */}
+      {/* <ServiceAccessChildren dataSource={mainSource.id} />
+      <ServiceQualityChildren dataSource={mainSource.id} />
+      <ServiceSatisfyChildren dataSource={mainSource.id} /> */}
     </MainColumnView>
   );
 }

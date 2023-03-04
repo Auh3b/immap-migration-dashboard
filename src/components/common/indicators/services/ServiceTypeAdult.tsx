@@ -1,12 +1,8 @@
-import { Grid } from '@material-ui/core';
-import {
-  AggregationTypes,
-  groupValuesByColumn,
-  _FilterTypes,
-} from '@carto/react-core';
-import mainSource from 'data/sources/mainSource';
-import CustomCategoryWidget from 'components/common/customWidgets/CustomCategoryWidget';
-import WidgetNote from 'components/common/customWidgets/WidgetNote';
+import { AggregationTypes, groupValuesByColumn, _FilterTypes } from '@carto/react-core'
+import { Grid } from '@material-ui/core'
+import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType'
+import CustomCategoryWidget from 'components/common/customWidgets/CustomCategoryWidget'
+import WidgetNote from 'components/common/customWidgets/WidgetNote'
 
 const CATEGORY_ABREVATIONS = new Map([
   [0, 'Ninguna'],
@@ -61,26 +57,28 @@ function pivotData(data: any[], column: string): any[] {
   return groupData;
 }
 
-const dataSource = mainSource.id;
-const column = 'ayudas_hum';
-const id = 'humanitarianAid';
-const type = _FilterTypes.STRING_SEARCH;
 
-const NOTE = 'Ayudas humanitarias recibidas según zona de tránsito';
+const NOTE = 'Ayudas humanitarias recibidas según zona de tránsito'
+const id ='serviceTypeAdult'
+const title ='Ayudas humanitarias'
+const column = 'ayudas_hum'
+const filterType = _FilterTypes.IN
+const method = pivotData
 
-export default function HumanitarianAid() {
+
+export default function ServiceTypeAdult({dataSource}:BasicWidgetType) {
   return (
     <Grid item>
-      <CustomCategoryWidget
-        title='Ayudas humanitarias'
+      <CustomCategoryWidget 
+        id={id}
+        title={title}
         dataSource={dataSource}
         column={column}
-        id={id}
-        filterType={type}
-        method={pivotData}
+        method={method}
+        filterType={filterType}
         labels={Object.fromEntries(CATEGORY_ABREVATIONS)}
       />
       <WidgetNote note={NOTE} />
     </Grid>
-  );
+  )
 }

@@ -49,21 +49,28 @@ export default function useWidgetFetch({
     tileFormat: TILE_FORMATS.GEOJSON,
   };
 
-  
   useCustomCompareEffect(
-    ()=> {
-      setIsLoading(true)
+    () => {
+      setIsLoading(true);
       if (source && isSourceReady) {
         getTileFeatures({
           sourceId: source.id,
           params,
-        }).then(data =>{
-          setData(method(data.filter(i => +i[column] !== 999999), column))
-        }).catch(error =>{
-          setError(error)
-        }).finally(()=>{
-          setIsLoading(false)
         })
+          .then((data) => {
+            setData(
+              method(
+                data.filter((i) => i[column] != 999999),
+                column,
+              ),
+            );
+          })
+          .catch((error) => {
+            setError(error);
+          })
+          .finally(() => {
+            setIsLoading(false);
+          });
       }
     },
     [params, isSourceReady, source],
