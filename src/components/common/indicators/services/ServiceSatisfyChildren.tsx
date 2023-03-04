@@ -12,7 +12,7 @@ const labels = {
 }
 
 const NOTE = 'Nivel de satisfacción del servicio tomado'
-const id ='serviceSatisfaction'
+const id ='serviceSatisfactionChildren'
 const title ='Satisfacción del servicio'
 const column = 'cb_fl_co_6'
 const filterType = _FilterTypes.IN
