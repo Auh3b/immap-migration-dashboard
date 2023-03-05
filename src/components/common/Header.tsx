@@ -1,4 +1,4 @@
-import { MouseEvent, useEffect, useState } from 'react';
+import { MouseEvent, useEffect, useMemo, useState } from 'react';
 import {
   AppBar,
   Drawer,
@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
     zIndex: theme.zIndex.modal + 1,
     overflow: 'hidden',
     backgroundColor: 'white',
-    borderBottom: '0.5px solid #999',
+    // borderBottom: '0.5px solid #F4F4F4',
   },
 }));
 
@@ -66,6 +66,7 @@ export default function Header() {
         <Mobile />
         <Desktop />
       </Toolbar>
+      <Divider />
     </AppBar>
   );
 }
@@ -210,7 +211,7 @@ function NavigationMenu({ column = false }: { column?: boolean }) {
   const location = useLocation();
   const classes = useStylesNavigationMenu();
 
-  const pathname = location.pathname.split('/')[1] || '';
+  const pathname = useMemo(() => location.pathname.split('/')[1] || '', [location])
 
   return (
     <Grid
@@ -317,7 +318,7 @@ function UserMenu() {
       >
         <Grid container alignItems='center' item wrap='nowrap'>
           {smDownHidden ? null : (
-            <Typography variant='caption' color='inherit' noWrap>
+            <Typography variant='caption' color='primary' noWrap>
               {user.email}
             </Typography>
           )}

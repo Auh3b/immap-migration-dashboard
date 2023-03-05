@@ -6,13 +6,12 @@ import MainView from './main/MainView';
 import { MainColumnView } from 'components/common/MainColumnView';
 import { Divider, Grid, Typography } from '@material-ui/core';
 import ServiceTypeAdult from 'components/common/indicators/services/ServiceTypeAdult';
-import mainSource from 'data/sources/mainSource'
+import mainSource from 'data/sources/mainSource';
 import { ServiceAccessChildren } from 'components/common/indicators/services/ServiceAccessChildren';
 import { ServiceQualityChildren } from 'components/common/indicators/services/ServiceQualityChildren';
 import { ServiceSatisfyChildren } from 'components/common/indicators/services/ServiceSatisfyChildren';
 
 export default function Services() {
-
   return (
     <MainView>
       {{

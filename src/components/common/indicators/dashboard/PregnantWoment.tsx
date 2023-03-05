@@ -10,7 +10,10 @@ const column = 'cb_fl_id12';
 const operationDefault = AggregationTypes.COUNT;
 const id = 'pregnantWoment';
 
-export function PregnantWoment({ dataSource, operation }: BasicWidgetType) {
+export default function PregnantWoment({
+  dataSource,
+  operation,
+}: BasicWidgetType) {
   return (
     <Grid item>
       <BarWidget

@@ -1,8 +1,12 @@
-import { AggregationTypes, groupValuesByColumn, _FilterTypes } from '@carto/react-core'
-import { Grid } from '@material-ui/core'
-import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType'
-import CustomCategoryWidget from 'components/common/customWidgets/CustomCategoryWidget'
-import WidgetNote from 'components/common/customWidgets/WidgetNote'
+import {
+  AggregationTypes,
+  groupValuesByColumn,
+  _FilterTypes,
+} from '@carto/react-core';
+import { Grid } from '@material-ui/core';
+import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType';
+import CustomCategoryWidget from 'components/common/customWidgets/CustomCategoryWidget';
+import WidgetNote from 'components/common/customWidgets/WidgetNote';
 
 const CATEGORY_ABREVATIONS = new Map([
   [0, 'Ninguna'],
@@ -51,19 +55,17 @@ function pivotData(data: any[], column: string): any[] {
   return groupData;
 }
 
+const NOTE = 'Medios de transporte empleados durante la ruta';
+const id = 'transportMode';
+const title = 'Medios de transporte';
+const column = 'medios_tra';
+const filterType = _FilterTypes.STRING_SEARCH;
+const method = pivotData;
 
-const NOTE = 'Medios de transporte empleados durante la ruta'
-const id ='transportMode'
-const title ='Medios de transporte'
-const column = 'medios_tra'
-const filterType = _FilterTypes.STRING_SEARCH
-const method = pivotData
-
-
-export default function TransportMode ({dataSource}:BasicWidgetType) {
+export default function TransportMode({ dataSource }: BasicWidgetType) {
   return (
     <Grid item>
-      <CustomCategoryWidget 
+      <CustomCategoryWidget
         id={id}
         title={title}
         dataSource={dataSource}
@@ -74,5 +76,5 @@ export default function TransportMode ({dataSource}:BasicWidgetType) {
       />
       <WidgetNote note={NOTE} />
     </Grid>
-  )
+  );
 }

@@ -52,9 +52,9 @@ export default function CustomPieWidget({
     [column, dataSource, filterType, id, dispatch],
   );
 
-  const handleClearClick = () =>{
-    dispatch(clearFilters(dataSource))
-  }
+  const handleClearClick = () => {
+    dispatch(clearFilters(dataSource));
+  };
 
   const { data, isLoading, error } = useWidgetFetch({
     id,
@@ -65,17 +65,17 @@ export default function CustomPieWidget({
 
   return (
     <WrapperWidgetUI title={title} isLoading={isLoading} onError={error}>
-      {(selectedCategories && selectedCategories.length > 0) &&
-      <Button onClick={handleClearClick}>Clear</Button>
-      }
-      {(data.length > 0 || !isLoading) && 
-      <PieWidgetUI
-        onSelectedCategoriesChange={handleSelectedCategoriesChange}
-        selectedCategories={selectedCategories}
-        labels={labels}
-        data={data}
-      />}
-      
+      {selectedCategories && selectedCategories.length > 0 && (
+        <Button onClick={handleClearClick}>Clear</Button>
+      )}
+      {(data.length > 0 || !isLoading) && (
+        <PieWidgetUI
+          onSelectedCategoriesChange={handleSelectedCategoriesChange}
+          selectedCategories={selectedCategories}
+          labels={labels}
+          data={data}
+        />
+      )}
     </WrapperWidgetUI>
   );
 }

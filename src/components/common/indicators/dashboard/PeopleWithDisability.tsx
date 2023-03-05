@@ -9,7 +9,7 @@ const title = 'Identificación de personas con condición de discapacidad';
 const NOTE =
   'Personas con alguna condición de discapacidad (física, visual, auditiva, intelectual, etc.)';
 
-export function PeopleWithDisability({
+export default function PeopleWithDisability({
   dataSource,
   operation,
 }: BasicWidgetType) {

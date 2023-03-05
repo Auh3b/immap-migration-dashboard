@@ -13,6 +13,8 @@ import {
 } from '@carto/react-redux';
 import { HOTSPOTS_LAYER_ID } from 'components/layers/HotspotsLayer';
 import mainSource from 'data/sources/mainSource';
+import FallbackWidget from 'components/common/indicators/FallbackWidget';
+import PageFallback from 'components/common/PageFallback';
 
 const Sidebar = lazy(
   () =>

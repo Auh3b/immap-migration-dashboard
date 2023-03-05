@@ -12,7 +12,7 @@ import { MIGRATION_FLOW_LAYER_ID } from 'components/layers/MigrationFlowLayer';
 import { MainColumnView } from 'components/common/MainColumnView';
 import OriginCountry from 'components/common/indicators/migration/OriginCountry';
 import CountryDeparted from 'components/common/indicators/migration/CountryDeparted';
-import CountryResiding  from 'components/common/indicators/migration/CountryResiding';
+import CountryResiding from 'components/common/indicators/migration/CountryResiding';
 import TransportMode from 'components/common/indicators/migration/TransportMode';
 import { TransitStopLength } from 'components/common/indicators/migration/TransitStopLength';
 import TransitStopReason from 'components/common/indicators/migration/TransitStopReason';

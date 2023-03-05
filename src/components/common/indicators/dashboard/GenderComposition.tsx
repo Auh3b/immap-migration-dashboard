@@ -7,13 +7,16 @@ import { PieWidgetUI, WrapperWidgetUI } from '@carto/react-ui';
 import { Grid, makeStyles } from '@material-ui/core';
 import { ReactComponent as Woman } from 'assets/img/person-0.svg';
 import { ReactComponent as Man } from 'assets/img/person-1.svg';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import useWidgetFetch from 'components/common/customWidgets/hooks/useWidgetFetch';
 import useWidgetFilterValues from 'components/common/customWidgets/hooks/useWidgetFilterValues';
 import { addFilter, removeFilter } from '@carto/react-redux';
 import { useDispatch } from 'react-redux';
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
 import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType';
+import LazyLoadComponent from 'components/common/LazyLoadComponent';
+import FallbackWidget from '../FallbackWidget';
+import TopLoading from 'components/common/TopLoading';
 
 const EMPTY_ARRAY: [] = [];
 const PRIMARY_COLUMN = 'genero';
@@ -77,6 +80,12 @@ const LABELS = {
   '65 años o más': '65+',
 };
 
+const useStyles = makeStyles(()=>({
+  main:{
+    position: 'relative'
+  }
+}))
+
 export default function GenderComposition({ dataSource }: BasicWidgetType) {
   const { data, isLoading } = useWidgetFetch({
     id,
@@ -85,40 +94,57 @@ export default function GenderComposition({ dataSource }: BasicWidgetType) {
     method: getGenderData,
   });
 
+  const classes = useStyles()
+
+  const Men = useMemo(
+    () => (
+      <GenderByAge
+        dataSource={dataSource}
+        data={data[0]}
+        index={0}
+      />
+    ),
+    [data],
+  );
+
+  const Women = useMemo(
+    () => (
+      <GenderByAge
+        dataSource={dataSource}
+        data={data[1]}
+        index={1}
+      />
+    ),
+    [data],
+  );
+
   return (
-    <Grid item>
-      <WrapperWidgetUI title='Porcentaje de género/edad' isLoading={isLoading}>
-        {data && (
-          <>
-            <GenderByAge
-              dataSource={dataSource}
-              isLoading={isLoading}
-              data={data[0]}
-              index={0}
-            />
-            <GenderByAge
-              dataSource={dataSource}
-              isLoading={isLoading}
-              data={data[1]}
-              index={1}
-            />
-          </>
-        )}
-      </WrapperWidgetUI>
-      <WidgetNote note={auxiliaryInfo} />
-    </Grid>
+    <LazyLoadComponent fallback={<FallbackWidget />}>
+      <Grid item className={classes.main}>
+        {isLoading ? <TopLoading /> : ''}
+        <WrapperWidgetUI
+          title='Porcentaje de género/edad'
+        >
+          {data && (
+            <>
+              {Men}
+              {Women}
+            </>
+          )}
+        </WrapperWidgetUI>
+        <WidgetNote note={auxiliaryInfo} />
+      </Grid>
+    </LazyLoadComponent>
   );
 }
 
 function GenderByAge({
   data,
   index,
-  isLoading,
   dataSource,
 }: {
   data: any[];
   index: number;
-  isLoading: boolean;
   dataSource: string;
 }) {
   const classes = useGenderStyles();
@@ -158,11 +184,6 @@ function GenderByAge({
   );
 
   return (
-    <WrapperWidgetUI
-      isLoading={isLoading}
-      title={index ? 'Hombre' : 'Mujer'}
-      expandable={false}
-    >
       <Grid container className={classes.main}>
         <Grid item xs={4}>
           {index ? (
@@ -183,6 +204,5 @@ function GenderByAge({
           )}
         </Grid>
       </Grid>
-    </WrapperWidgetUI>
   );
 }
