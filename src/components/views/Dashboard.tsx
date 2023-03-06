@@ -1,5 +1,5 @@
-import DashboardRightView from 'components/views/Dashboard/DashboardRightView';
-import DashboardLeftView from 'components/views/Dashboard/DashboardLeftView';
+import DashboardRightView from 'components/views/dashboardViews/DashboardRightView';
+import DashboardLeftView from 'components/views/dashboardViews/DashboardLeftView';
 
 import { SurveyDates } from './../common/indicators/dashboard/SurveyDates';
 import mainSource from 'data/sources/mainSource';
