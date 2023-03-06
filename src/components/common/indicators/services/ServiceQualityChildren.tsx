@@ -30,7 +30,7 @@ const method = (input: any[], column: string): any[] => {
   });
 };
 
-export function ServiceQualityChildren({
+export default function ServiceQualityChildren({
   dataSource,
   operation,
 }: BasicWidgetType) {

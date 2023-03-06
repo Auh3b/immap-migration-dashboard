@@ -77,7 +77,7 @@ export default function Main() {
       xs
       className={classes.main}
     >
-      <LazyLoadComponent>
+      <LazyLoadComponent fallback={<PageFallback />}>
         <OutletView />
         {/* <Sidebar />
         <MapContainer /> */}

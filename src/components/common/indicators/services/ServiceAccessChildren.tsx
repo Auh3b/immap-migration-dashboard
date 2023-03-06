@@ -30,7 +30,7 @@ const method = (input: any[], column: string): any[] => {
   });
 };
 
-export function ServiceAccessChildren({
+export default function ServiceAccessChildren({
   dataSource,
   operation,
 }: BasicWidgetType) {

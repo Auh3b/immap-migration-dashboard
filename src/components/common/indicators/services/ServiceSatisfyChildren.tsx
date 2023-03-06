@@ -31,7 +31,7 @@ const method = (input: any[], column: string): any[] => {
   });
 };
 
-export function ServiceSatisfyChildren({
+export default function ServiceSatisfyChildren({
   dataSource,
   operation,
 }: BasicWidgetType) {

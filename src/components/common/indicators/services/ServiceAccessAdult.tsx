@@ -30,7 +30,7 @@ const method = (input: any[], column: string): any[] => {
   });
 };
 
-export function ServiceAccessAdult({ dataSource, operation }: BasicWidgetType) {
+export default function ServiceAccessAdult({ dataSource, operation }: BasicWidgetType) {
   return (
     <Grid item>
       <CustomPieWidget

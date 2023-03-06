@@ -1,17 +1,15 @@
 import { SurveyDates } from './../common/indicators/dashboard/SurveyDates';
 import mainSource from 'data/sources/mainSource';
 import MainView from './main/MainView';
-import { useEffect } from 'react';
+import { lazy, useEffect } from 'react';
 import { SURVEY_CONCENTRATIONS_LAYER_ID } from 'components/layers/SurveyConcentrationsLayer';
 import { useDispatch } from 'react-redux';
 import {
   addLayer,
   removeLayer,
-  // addSource,
-  // removeSource,
 } from '@carto/react-redux';
-import DashboardLeftView from './dashboardViews/DashboardLeftView';
-import DashboardRightView from './dashboardViews/DashboardRightView';
+const  DashboardLeftView = lazy(()=> import('./dashboardViews/DashboardLeftView'))
+const  DashboardRightView = lazy(()=> import('./dashboardViews/DashboardRightView'))
 
 export default function Dashboard() {
   const dispatch = useDispatch();

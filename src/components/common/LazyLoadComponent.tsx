@@ -1,8 +1,9 @@
 import { Suspense } from 'react';
+import PageFallback from './PageFallback'
 
 export default function LazyLoadComponent({
   children,
-  fallback = '',
+  fallback = (<PageFallback />),
 }: {
   children: React.ReactNode;
   fallback?: React.ReactNode;
