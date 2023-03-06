@@ -1,10 +1,10 @@
-import DashboardRightView from './Dashboard/DashboardRightView';
-import DashboardLeftView from './Dashboard/DashboardLeftView';
+import DashboardRightView from 'components/views/Dashboard/DashboardRightView';
+import DashboardLeftView from 'components/views/Dashboard/DashboardLeftView';
 
 import { SurveyDates } from './../common/indicators/dashboard/SurveyDates';
 import mainSource from 'data/sources/mainSource';
 import MainView from './main/MainView';
-import { lazy, useEffect } from 'react';
+import { useEffect } from 'react';
 import { SURVEY_CONCENTRATIONS_LAYER_ID } from 'components/layers/SurveyConcentrationsLayer';
 import { useDispatch } from 'react-redux';
 import {
