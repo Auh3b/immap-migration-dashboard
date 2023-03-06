@@ -1,6 +1,3 @@
-import DashboardRightView from 'components/views/dashboardViews/DashboardRightView';
-import DashboardLeftView from 'components/views/dashboardViews/DashboardLeftView';
-
 import { SurveyDates } from './../common/indicators/dashboard/SurveyDates';
 import mainSource from 'data/sources/mainSource';
 import MainView from './main/MainView';
@@ -13,6 +10,8 @@ import {
   // addSource,
   // removeSource,
 } from '@carto/react-redux';
+import DashboardLeftView from './dashboardViews/DashboardLeftView';
+import DashboardRightView from './dashboardViews/DashboardRightView';
 
 export default function Dashboard() {
   const dispatch = useDispatch();
