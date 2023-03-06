@@ -68,7 +68,7 @@ export default function CustomPieWidget({
       {selectedCategories && selectedCategories.length > 0 && (
         <Button onClick={handleClearClick}>Clear</Button>
       )}
-      {(data.length > 0 || !isLoading) && (
+      {(data) && (
         <PieWidgetUI
           onSelectedCategoriesChange={handleSelectedCategoriesChange}
           selectedCategories={selectedCategories}

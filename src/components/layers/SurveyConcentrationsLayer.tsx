@@ -78,8 +78,8 @@ class CircleClusterLayer extends CompositeLayer {
     if (rebuildIndex || z !== this.state.z) {
       //@ts-ignore
       this.setState({
-        //@ts-ignore
         data: checkFeatureCollection(
+          //@ts-ignore
           this.state.index.getClusters([-180, -85, 180, 85], z),
         ),
         z,

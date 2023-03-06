@@ -3,6 +3,7 @@ import { addFilter, removeFilter } from '@carto/react-redux';
 import { BarWidgetUI, WrapperWidgetUI } from '@carto/react-ui';
 import { useCallback, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
+import WidgetWithAlert from '../indicators/WidgetWithAlert';
 import { defaultCustomWidgetProps } from './customWidgetsType';
 import useWidgetFetch from './hooks/useWidgetFetch';
 import useWidgetFilterValues from './hooks/useWidgetFilterValues';
@@ -31,6 +32,8 @@ export default function CustomBarWidget({
     method,
     column,
   });
+
+
 
   const sortedData = useMemo(() => {
     if (!_data.length || _data) return _data;
@@ -94,17 +97,21 @@ export default function CustomBarWidget({
 
   return (
     <WrapperWidgetUI title={title} isLoading={isLoading} onError={error}>
-      {(!!sortedData || !isLoading) && (
-        <BarWidgetUI
-          selectedBars={selectedBars}
-          onSelectedBarsChange={handleSelectedBarsChange}
-          labels={labels}
-          //@ts-ignore
-          xAxisData={sortedData.map((category) => category.name)}
-          //@ts-ignore
-          yAxisData={sortedData.map((category) => category.value)}
-        />
-      )}
+      <WidgetWithAlert
+        dataSource={dataSource}
+      >
+        {(!!sortedData || !isLoading) && (
+          <BarWidgetUI
+            selectedBars={selectedBars}
+            onSelectedBarsChange={handleSelectedBarsChange}
+            labels={labels}
+            //@ts-ignore
+            xAxisData={sortedData.map((category) => category.name)}
+            //@ts-ignore
+            yAxisData={sortedData.map((category) => category.value)}
+          />
+        )}
+      </WidgetWithAlert>
     </WrapperWidgetUI>
   );
 }

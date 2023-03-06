@@ -10,7 +10,7 @@ import { LEGEND_TYPES } from '@carto/react-ui';
 export const HOTSPOTS_LAYER_ID = 'hotspotsLayer';
 
 export const HOTSPOT_COLORS = {
-  Hotspots: [231, 63, 116],
+  Inmigrante: [231, 63, 116],
 };
 
 const DATA = Object.entries(HOTSPOT_COLORS).map(([label, color]) => ({
@@ -19,7 +19,7 @@ const DATA = Object.entries(HOTSPOT_COLORS).map(([label, color]) => ({
 }));
 
 const layerConfig = {
-  title: 'Hotspots',
+  title: 'Inmigrante',
   visible: true,
   legend: {
     type: LEGEND_TYPES.CATEGORY,
@@ -46,7 +46,8 @@ export default function HotspotsLayer() {
     return new CartoLayer({
       ...cartoLayerProps,
       id: HOTSPOTS_LAYER_ID,
-      getFillColor: HOTSPOT_COLORS.Hotspots,
+      getFillColor: HOTSPOT_COLORS.Inmigrante,
+      stroked: false,
       pointRadiusMinPixels: 3,
       pickable: true,
       onDataLoad: (data: any) => {

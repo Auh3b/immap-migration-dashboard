@@ -74,7 +74,10 @@ const layerConfig = {
       [0, 128, 200],
       [200, 0, 80],
     ],
-    labels: [0, 1],
+    labels: [
+      {label: 'Comenzar', value: 0},
+      {label: 'Finalizar', value: 1}
+    ],
     collapsible: false,
   },
 };

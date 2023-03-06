@@ -9,12 +9,17 @@ import CustomBarWidget from 'components/common/customWidgets/CustomBarWidget';
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
 
 const method = (input: any[], column: string) => {
-  return groupValuesByColumn({
+  const data = groupValuesByColumn({
     data: input,
     valuesColumns: [column],
     keysColumn: column,
     operation: AggregationTypes.COUNT,
   });
+  if(data){
+    return data
+  }
+
+  return []
 };
 
 const NOTE =

@@ -139,7 +139,7 @@ export default function GenderComposition({ dataSource }: BasicWidgetType) {
 }
 
 function GenderByAge({
-  data,
+  data = [],
   index,
   dataSource,
 }: {
@@ -193,7 +193,7 @@ function GenderByAge({
           )}
         </Grid>
         <Grid item xs={8}>
-          {data && (
+          {(data && data.length > 0) && (
             <PieWidgetUI
               onSelectedCategoriesChange={handleSelectedCategoriesChange}
               selectedCategories={selectedCategories}
