@@ -80,11 +80,11 @@ const LABELS = {
   '65 años o más': '65+',
 };
 
-const useStyles = makeStyles(()=>({
-  main:{
-    position: 'relative'
-  }
-}))
+const useStyles = makeStyles(() => ({
+  main: {
+    position: 'relative',
+  },
+}));
 
 export default function GenderComposition({ dataSource }: BasicWidgetType) {
   const { data, isLoading } = useWidgetFetch({
@@ -94,37 +94,23 @@ export default function GenderComposition({ dataSource }: BasicWidgetType) {
     method: getGenderData,
   });
 
-  const classes = useStyles()
+  const classes = useStyles();
 
   const Men = useMemo(
-    () => (
-      <GenderByAge
-        dataSource={dataSource}
-        data={data[0]}
-        index={0}
-      />
-    ),
-    [data],
+    () => <GenderByAge dataSource={dataSource} data={data[0]} index={0} />,
+    [data, dataSource],
   );
 
   const Women = useMemo(
-    () => (
-      <GenderByAge
-        dataSource={dataSource}
-        data={data[1]}
-        index={1}
-      />
-    ),
-    [data],
+    () => <GenderByAge dataSource={dataSource} data={data[1]} index={1} />,
+    [data, dataSource],
   );
 
   return (
     <LazyLoadComponent fallback={<FallbackWidget />}>
       <Grid item className={classes.main}>
         {isLoading ? <TopLoading /> : ''}
-        <WrapperWidgetUI
-          title='Porcentaje de género/edad'
-        >
+        <WrapperWidgetUI title='Porcentaje de género/edad'>
           {data && (
             <>
               {Men}
@@ -180,29 +166,29 @@ function GenderByAge({
         );
       }
     },
-    [column, dataSource, filterType, id, dispatch],
+    [ dataSource, filterType, index,id, dispatch],
   );
 
   return (
-      <Grid container className={classes.main}>
-        <Grid item xs={4}>
-          {index ? (
-            <Man className={classes.icon} />
-          ) : (
-            <Woman className={classes.icon} />
-          )}
-        </Grid>
-        <Grid item xs={8}>
-          {(data && data.length > 0) && (
-            <PieWidgetUI
-              onSelectedCategoriesChange={handleSelectedCategoriesChange}
-              selectedCategories={selectedCategories}
-              data={data}
-              labels={LABELS}
-              height='150px'
-            />
-          )}
-        </Grid>
+    <Grid container className={classes.main}>
+      <Grid item xs={4}>
+        {index ? (
+          <Man className={classes.icon} />
+        ) : (
+          <Woman className={classes.icon} />
+        )}
       </Grid>
+      <Grid item xs={8}>
+        {data && data.length > 0 && (
+          <PieWidgetUI
+            onSelectedCategoriesChange={handleSelectedCategoriesChange}
+            selectedCategories={selectedCategories}
+            data={data}
+            labels={LABELS}
+            height='150px'
+          />
+        )}
+      </Grid>
+    </Grid>
   );
 }

@@ -5,8 +5,10 @@ import MainView from './main/MainView';
 import mainSource from 'data/sources/mainSource';
 import { lazy } from 'react';
 
-const ServiceLeftView = lazy(()=>import('./serviceViews/ServiceLeftView'))
-const ServicesRightView = lazy(()=>import('./serviceViews/ServicesRightView'))
+const ServiceLeftView = lazy(() => import('./serviceViews/ServiceLeftView'));
+const ServicesRightView = lazy(
+  () => import('./serviceViews/ServicesRightView'),
+);
 
 const useViewStyle = makeStyles((theme) => ({
   title: {
@@ -19,16 +21,17 @@ const useViewStyle = makeStyles((theme) => ({
 }));
 
 export default function Services() {
-  const classes = useViewStyle()
+  const classes = useViewStyle();
   return (
     <MainView>
       {{
-        left: <ServiceLeftView classes={classes} dataSources={{mainSource}}  />,
-        right: <ServicesRightView classes={classes} dataSources={{mainSource}}   />
+        left: (
+          <ServiceLeftView classes={classes} dataSources={{ mainSource }} />
+        ),
+        right: (
+          <ServicesRightView classes={classes} dataSources={{ mainSource }} />
+        ),
       }}
     </MainView>
   );
 }
-
-
-

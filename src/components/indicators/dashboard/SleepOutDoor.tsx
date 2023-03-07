@@ -9,7 +9,7 @@ import CustomBarWidget from 'components/common/customWidgets/CustomBarWidget';
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
 import groupCategories from '../utils/groupCategories';
 
-const method = groupCategories
+const method = groupCategories;
 
 const NOTE = 'Personas que alguna vez ha dormido en la intemperie en la ruta';
 const id = 'sleepOutDoor';

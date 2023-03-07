@@ -15,19 +15,20 @@ import getTileFeatures from 'utils/methods/getTileFeatures';
 //@ts-ignore
 import { TILE_FORMATS } from '@deck.gl/carto';
 import { format, scaleLinear } from 'd3';
-import distance from '@turf/distance'
+import distance from '@turf/distance';
 
-type coordinates = [number, number]
+type coordinates = [number, number];
 
-const tripLength = (a:[number, number] , b:[number, number]): number => distance(a, b,  {units: 'kilometers'}) 
+const tripLength = (a: [number, number], b: [number, number]): number =>
+  distance(a, b, { units: 'kilometers' });
 
-const heightScale = scaleLinear().range([0.75,0]).domain([0, 40075])
+const heightScale = scaleLinear().range([0.75, 0]).domain([0, 40075]);
 
-const getHeight = (a:coordinates,  b:coordinates) =>{
-  const distance = tripLength(a,b)
-  const distanceScaled = heightScale(distance)
-  return +format('.2f')(distanceScaled)
-}
+const getHeight = (a: coordinates, b: coordinates) => {
+  const distance = tripLength(a, b);
+  const distanceScaled = heightScale(distance);
+  return +format('.2f')(distanceScaled);
+};
 
 export const MIGRATION_FLOW_LAYER_ID = 'migrationFlowLayer';
 
@@ -91,8 +92,8 @@ const layerConfig = {
       [200, 0, 80],
     ],
     labels: [
-      {label: 'Comenzar', value: 0},
-      {label: 'Finalizar', value: 1}
+      { label: 'Comenzar', value: 0 },
+      { label: 'Finalizar', value: 1 },
     ],
     collapsible: false,
   },
@@ -119,7 +120,13 @@ export default function MigrationFlowLayer() {
         filtersLogicalOperator: source.filtersLogicalOperator,
       },
     });
-    return data.map((d:any) => ({...d, arcHeight: getHeight([+d['long_paisn'], +d['lat_paisna']],[d['long'], d['lat']])}));
+    return data.map((d: any) => ({
+      ...d,
+      arcHeight: getHeight(
+        [+d['long_paisn'], +d['lat_paisna']],
+        [d['long'], d['lat']],
+      ),
+    }));
   }
 
   const cartoLayerProps = useCartoLayerProps({
@@ -136,7 +143,7 @@ export default function MigrationFlowLayer() {
       getSourcePosition: (d: any) => [+d['long_paisn'], +d['lat_paisna']],
       getTargetPosition: (d: any) => [d['long'], d['lat']],
       getWidth: 1,
-      getHeight: (d:any) => d.arcHeight,
+      getHeight: (d: any) => d.arcHeight,
       getTilt: 90,
       getSourceColor: layerConfig.legend.colors[0],
       getTargetColor: layerConfig.legend.colors[1],

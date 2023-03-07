@@ -10,12 +10,13 @@ const labels = {
   1: 'Ubicaciones de la ayuda humanitaria',
 };
 
-const NOTE ='Tipo de información requerida sobre la ayuda humanitaria en la ruta';
+const NOTE =
+  'Tipo de información requerida sobre la ayuda humanitaria en la ruta';
 const id = 'transitInformation';
 const title = 'Necesidades de información';
 const column = 'cb_fl_c_14';
 const filterType = _FilterTypes.IN;
-const method = groupCategories
+const method = groupCategories;
 
 const props = {
   title,
@@ -23,13 +24,10 @@ const props = {
   id,
   filterType,
   method,
-  labels
+  labels,
 };
 
-
-export default function TransitInfomation({
-  dataSource,
-}: BasicWidgetType) {
+export default function TransitInfomation({ dataSource }: BasicWidgetType) {
   return (
     <Grid item>
       <CustomCategoryWidget dataSource={dataSource} {...props} />

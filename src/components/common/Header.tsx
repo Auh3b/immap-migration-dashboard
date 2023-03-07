@@ -211,7 +211,10 @@ function NavigationMenu({ column = false }: { column?: boolean }) {
   const location = useLocation();
   const classes = useStylesNavigationMenu();
 
-  const pathname = useMemo(() => location.pathname.split('/')[1] || '', [location])
+  const pathname = useMemo(
+    () => location.pathname.split('/')[1] || '',
+    [location],
+  );
 
   return (
     <Grid

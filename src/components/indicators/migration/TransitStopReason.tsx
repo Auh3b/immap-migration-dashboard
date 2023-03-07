@@ -9,15 +9,15 @@ import CustomCategoryWidget from 'components/common/customWidgets/CustomCategory
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
 
 /**
- * cb_fl_c_16: Tengo problemas de salud (o mi grupo de viaje)	
- * cb_fl_c_17: Necesito descansar unos días antes de continuar	
- * cb_fl_c_18: No tengo dinero para continuar con el viaje	
- * cb_fl_c_19: Tuve problemas con autoridades migratorias	
- * cb_fl_c_20: Encontré trabajo temporal	
- * cb_fl_c_21: Decidí quedarme un tiempo en el lugar que estoy	
+ * cb_fl_c_16: Tengo problemas de salud (o mi grupo de viaje)
+ * cb_fl_c_17: Necesito descansar unos días antes de continuar
+ * cb_fl_c_18: No tengo dinero para continuar con el viaje
+ * cb_fl_c_19: Tuve problemas con autoridades migratorias
+ * cb_fl_c_20: Encontré trabajo temporal
+ * cb_fl_c_21: Decidí quedarme un tiempo en el lugar que estoy
  * cb_fl_c_22: El clima no es favorable para viajar
  * cb_fl_c_24: No viajo por cuestiones de seguridad.
- * 
+ *
  */
 
 const CATEGORY_ABREVATIONS = new Map([

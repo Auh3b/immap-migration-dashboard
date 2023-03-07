@@ -58,15 +58,15 @@ export default function useWidgetFetch({
           params,
         })
           .then((data) => {
-            if(data && data.length > 0){
+            if (data && data.length > 0) {
               setData(
                 method(
                   data.filter((i) => i[column] != 999999),
                   column,
                 ),
               );
-            }else{
-              setData([])
+            } else {
+              setData([]);
             }
           })
           .catch((error) => {

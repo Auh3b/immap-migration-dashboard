@@ -6,8 +6,7 @@ const PregnantWoment = lazy(
   () => import('components/indicators/dashboard/PregnantWoment'),
 );
 const PlacesChildrenTravelAlone = lazy(
-  () =>
-    import('components/indicators/dashboard/PlacesChildrenTravelAlone'),
+  () => import('components/indicators/dashboard/PlacesChildrenTravelAlone'),
 );
 const PeopleWithDisability = lazy(
   () => import('components/indicators/dashboard/PeopleWithDisability'),

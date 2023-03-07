@@ -1,12 +1,11 @@
 //@ts-nocheck
-import { addFilter, checkIfSourceIsDroppingFeature } from '@carto/react-redux';
+import { checkIfSourceIsDroppingFeature } from '@carto/react-redux';
 import { NoDataAlert } from '@carto/react-ui/';
 import { useSelector } from 'react-redux';
 
-
 const defaultDroppingFeaturesAlertProps = {
-  body: 'Data for this widget is not available at this zoom level. Zoom in to get data from features in the map.'
-}
+  body: 'Data for this widget is not available at this zoom level. Zoom in to get data from features in the map.',
+};
 
 export default function WidgetWithAlert({
   dataSource,
@@ -15,10 +14,10 @@ export default function WidgetWithAlert({
   noDataAlertProps = {},
   global = false,
   warning = '',
-  children
+  children,
 }) {
   const isDroppingFeatures = useSelector((state) =>
-    checkIfSourceIsDroppingFeature(state, dataSource)
+    checkIfSourceIsDroppingFeature(state, dataSource),
   );
 
   return (!global && isDroppingFeatures && showDroppingFeaturesAlert) ||

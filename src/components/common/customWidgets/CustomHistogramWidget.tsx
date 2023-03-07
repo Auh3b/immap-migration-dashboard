@@ -20,11 +20,10 @@ export default function CustomHistogramWidget({
   max,
   ticks = [],
   xAxisFormatter,
-  yAxisFormatter
+  yAxisFormatter,
 }: defaultCustomWidgetProps) {
+  const dispatch = useDispatch();
 
-  const dispatch = useDispatch()
-  
   const { data, isLoading } = useWidgetFetch({
     id,
     dataSource,
@@ -36,29 +35,31 @@ export default function CustomHistogramWidget({
     dataSource,
     id,
     column,
-    type: filterType
+    type: filterType,
   });
 
   const selectedBars = useMemo(() => {
-    return (thresholdsFromFilters || EMPTY_ARRAY)
-    //@ts-ignore
-      .map(([from, to]) => {
-        if (typeof from === 'undefined' || from === null) {
-          return 0;
-        } else if (typeof to === 'undefined' || to === null) {
-          return ticks.length;
-        } else {
-          const idx = ticks.indexOf(from);
-          return idx !== -1 ? idx + 1 : null;
-        }
-      })
-      .filter((v:any) => v !== null);
+    return (
+      (thresholdsFromFilters || EMPTY_ARRAY)
+        //@ts-ignore
+        .map(([from, to]) => {
+          if (typeof from === 'undefined' || from === null) {
+            return 0;
+          } else if (typeof to === 'undefined' || to === null) {
+            return ticks.length;
+          } else {
+            const idx = ticks.indexOf(from);
+            return idx !== -1 ? idx + 1 : null;
+          }
+        })
+        .filter((v: any) => v !== null)
+    );
   }, [thresholdsFromFilters, ticks]);
 
   const handleSelectedBarsChange = useCallback(
     (selectedBars) => {
       if (selectedBars?.length) {
-        const thresholds = selectedBars.map((i:any) => {
+        const thresholds = selectedBars.map((i: any) => {
           let left = ticks[i - 1];
           let right = ticks.length !== i ? ticks[i] : undefined;
 
@@ -70,23 +71,21 @@ export default function CustomHistogramWidget({
             column,
             type: filterType,
             values: thresholds,
-            owner: id
-          })
+            owner: id,
+          }),
         );
       } else {
         dispatch(
           removeFilter({
             id: dataSource,
             column,
-            owner: id
-          })
+            owner: id,
+          }),
         );
       }
     },
-    [column, dataSource, id, dispatch, ticks]
+    [column, dataSource, id, filterType, dispatch, ticks],
   );
-
-  console.log(data)
 
   return (
     <WrapperWidgetUI title={title} isLoading={isLoading}>

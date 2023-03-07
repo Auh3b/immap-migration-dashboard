@@ -35,8 +35,8 @@ export default function MigrationFlow() {
   return (
     <MainView>
       {{
-        left: <MigrationLeftView dataSources={{mainSource}}/>,
-        right: <MigrationRightView dataSources={{mainSource}} />,
+        left: <MigrationLeftView dataSources={{ mainSource }} />,
+        right: <MigrationRightView dataSources={{ mainSource }} />,
       }}
     </MainView>
   );

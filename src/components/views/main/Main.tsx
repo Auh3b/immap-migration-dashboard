@@ -13,21 +13,20 @@ import {
 } from '@carto/react-redux';
 import { HOTSPOTS_LAYER_ID } from 'components/layers/HotspotsLayer';
 import mainSource from 'data/sources/mainSource';
-import FallbackWidget from 'components/indicators/FallbackWidget';
 import PageFallback from 'components/common/PageFallback';
 
-const Sidebar = lazy(
-  () =>
-    import(
-      /* webpackChunkName: 'map-container' */ 'components/views/main/Sidebar'
-    ),
-);
-const MapContainer = lazy(
-  () =>
-    import(
-      /* webpackChunkName: 'map-container' */ 'components/views/main/MapContainer'
-    ),
-);
+// const Sidebar = lazy(
+//   () =>
+//     import(
+//       /* webpackChunkName: 'map-container' */ 'components/views/main/Sidebar'
+//     ),
+// );
+// const MapContainer = lazy(
+//   () =>
+//     import(
+//       /* webpackChunkName: 'map-container' */ 'components/views/main/MapContainer'
+//     ),
+// );
 const OutletView = lazy(
   () =>
     import(

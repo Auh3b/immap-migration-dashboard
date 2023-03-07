@@ -1,5 +1,4 @@
-import { AggregationTypes, _FilterTypes } from '@carto/react-core';
-import { BarWidget } from '@carto/react-widgets';
+import { _FilterTypes } from '@carto/react-core';
 import { Grid } from '@material-ui/core';
 import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType';
 import CustomBarWidget from 'components/common/customWidgets/CustomBarWidget';
@@ -10,7 +9,7 @@ const NOTE = 'Grupos de viaje con mujeres embarazadas';
 const title = 'Identificación de gestantes';
 const column = 'cb_fl_id12';
 const id = 'pregnantWoment';
-const method = groupCategories
+const method = groupCategories;
 const filterType = _FilterTypes.IN;
 
 export default function PregnantWoment({ dataSource }: BasicWidgetType) {

@@ -1,7 +1,7 @@
 import { Grid, makeStyles } from '@material-ui/core';
 import { lazy, ReactChild, ReactNode } from 'react';
 
-const MapContainer = lazy(()=> import('./MapContainer'))
+const MapContainer = lazy(() => import('./MapContainer'));
 
 const DRAWER_WIDTH = 300;
 
@@ -15,7 +15,7 @@ interface MainViewChildren {
 const useStyles = makeStyles((theme) => ({
   drawer: {
     width: DRAWER_WIDTH,
-    maxHeight: `calc(100vh - 54px)`, 
+    maxHeight: `calc(100vh - 54px)`,
     overflow: 'auto',
   },
   drawerPaper: {

@@ -160,7 +160,7 @@ export default function SurveyConcentrationsLayer() {
     (async function () {
       const { data } = await fetchLayerData({
         source: hotSpotSource.data,
-        type: MAP_TYPES.TABLE ,
+        type: MAP_TYPES.TABLE,
         connection: hotSpotSource.connection,
         format: FORMATS.GEOJSON,
       });

@@ -3,7 +3,6 @@ import {
   groupValuesByColumn,
   _FilterTypes,
 } from '@carto/react-core';
-import { PieWidget } from '@carto/react-widgets';
 import { Grid } from '@material-ui/core';
 import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType';
 import CustomPieWidget from 'components/common/customWidgets/CustomPieWidget';

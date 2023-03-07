@@ -14,7 +14,7 @@ export function SurveyDates({ dataSource }: BasicWidgetType) {
   return (
     <Grid item>
       <TimeSeriesWidget
-        wrapperProps={{expanded: false}}
+        wrapperProps={{ expanded: false }}
         id={id}
         title={title}
         dataSource={dataSource}

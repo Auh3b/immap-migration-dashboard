@@ -1,8 +1,4 @@
-import {
-  AggregationTypes,
-  groupValuesByColumn,
-  _FilterTypes,
-} from '@carto/react-core';
+import { _FilterTypes } from '@carto/react-core';
 import { Grid } from '@material-ui/core';
 import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType';
 import CustomCategoryWidget from 'components/common/customWidgets/CustomCategoryWidget';
@@ -15,7 +11,7 @@ const NOTE =
 const column = 'cb_fl_id_1';
 const id = 'placesChildrenTravelAlone';
 const filterType = _FilterTypes.IN;
-const method = groupCategories
+const method = groupCategories;
 
 const props = {
   title,

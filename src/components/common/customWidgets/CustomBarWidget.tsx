@@ -33,8 +33,6 @@ export default function CustomBarWidget({
     column,
   });
 
-
-
   const sortedData = useMemo(() => {
     if (!_data.length || _data) return _data;
     //@ts-ignore
@@ -92,14 +90,12 @@ export default function CustomBarWidget({
         );
       }
     },
-    [column, dataSource, id, dispatch, sortedData],
+    [column, dataSource, id, filterType, dispatch, sortedData],
   );
 
   return (
     <WrapperWidgetUI title={title} isLoading={isLoading} onError={error}>
-      <WidgetWithAlert
-        dataSource={dataSource}
-      >
+      <WidgetWithAlert dataSource={dataSource}>
         {(!!sortedData || !isLoading) && (
           <BarWidgetUI
             selectedBars={selectedBars}

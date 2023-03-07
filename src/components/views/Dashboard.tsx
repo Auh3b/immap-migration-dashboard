@@ -4,12 +4,13 @@ import MainView from './main/MainView';
 import { lazy, useEffect } from 'react';
 import { SURVEY_CONCENTRATIONS_LAYER_ID } from 'components/layers/SurveyConcentrationsLayer';
 import { useDispatch } from 'react-redux';
-import {
-  addLayer,
-  removeLayer,
-} from '@carto/react-redux';
-const  DashboardLeftView = lazy(()=> import('./dashboardViews/DashboardLeftView'))
-const  DashboardRightView = lazy(()=> import('./dashboardViews/DashboardRightView'))
+import { addLayer, removeLayer } from '@carto/react-redux';
+const DashboardLeftView = lazy(
+  () => import('./dashboardViews/DashboardLeftView'),
+);
+const DashboardRightView = lazy(
+  () => import('./dashboardViews/DashboardRightView'),
+);
 
 export default function Dashboard() {
   const dispatch = useDispatch();
