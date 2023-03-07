@@ -1,7 +1,6 @@
 import { _FilterTypes } from '@carto/react-core';
 import { addFilter, removeFilter } from '@carto/react-redux';
 import { HistogramWidgetUI, WrapperWidgetUI } from '@carto/react-ui';
-import { max } from 'd3';
 import { useCallback, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { defaultCustomWidgetProps } from './customWidgetsType';
@@ -9,7 +8,6 @@ import useWidgetFetch from './hooks/useWidgetFetch';
 import useWidgetFilterValues from './hooks/useWidgetFilterValues';
 
 const EMPTY_ARRAY: [] = [];
-
 
 export default function CustomHistogramWidget({
   id,
@@ -87,6 +85,8 @@ export default function CustomHistogramWidget({
     },
     [column, dataSource, id, dispatch, ticks]
   );
+
+  console.log(data)
 
   return (
     <WrapperWidgetUI title={title} isLoading={isLoading}>
