@@ -15,7 +15,7 @@ import { MIGRATION_FLOW_LAYER_ID } from 'components/layers/MigrationFlowLayer';
 export default function MigrationFlow() {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(setViewState({ pitch: 30, dragRotate: true }));
+    dispatch(setViewState({ dragRotate: true }));
     dispatch(addSource(mainSource));
     dispatch(
       addLayer({
@@ -26,7 +26,7 @@ export default function MigrationFlow() {
 
     return () => {
       dispatch(removeLayer(MIGRATION_FLOW_LAYER_ID));
-      dispatch(setViewState({ pitch: 0, dragRotate: false }));
+      dispatch(setViewState({ dragRotate: false }));
     };
   }, [dispatch]);
 

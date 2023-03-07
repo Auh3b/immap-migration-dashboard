@@ -7,8 +7,7 @@ import groupCategories from '../utils/groupCategories';
 
 const method = groupCategories;
 
-const NOTE =
-  ': Personas con alguna enfermedad crónica (diabetes, hipertensión, asma, etc.).';
+const NOTE ='Personas con alguna enfermedad crónica (diabetes, hipertensión, asma, etc.)';
 const id = 'sickPeople';
 const title = 'Población que duerme a la intemperie';
 const column = 'cb_fl_id13';

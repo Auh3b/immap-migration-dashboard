@@ -12,7 +12,7 @@ const column = 'cb_fl_c_23';
 const filterType = _FilterTypes.CLOSED_OPEN;
 const min = 0;
 const max = 2;
-const ticks = [0, 1, 2];
+const ticks = [1,2];
 const method = (input: any[], column: string) => {
   const target = input.map((i: any) => i[column]);
   if (target) {
@@ -20,6 +20,13 @@ const method = (input: any[], column: string) => {
   }
   return [];
 };
+
+const xAxisFormatter = (value:number) => {
+  if(value % 1 === 0 || value === 0){
+    return value
+  }
+  return ''
+}
 
 const props = {
   id,
@@ -30,6 +37,7 @@ const props = {
   max,
   method,
   ticks,
+  xAxisFormatter
 };
 
 export default function TransitStopLength({ dataSource }: BasicWidgetType) {
