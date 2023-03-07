@@ -7,6 +7,7 @@ import { Grid } from '@material-ui/core';
 import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType';
 import CustomCategoryWidget from 'components/common/customWidgets/CustomCategoryWidget';
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
+import groupCategories from '../utils/groupCategories';
 
 const title = 'Identificación NNA solos';
 const NOTE =
@@ -14,14 +15,7 @@ const NOTE =
 const column = 'cb_fl_id_1';
 const id = 'placesChildrenTravelAlone';
 const filterType = _FilterTypes.IN;
-const method = (input: any[], column: string) => {
-  return groupValuesByColumn({
-    data: input,
-    keysColumn: column,
-    valuesColumns: [column],
-    operation: AggregationTypes.COUNT,
-  });
-};
+const method = groupCategories
 
 const props = {
   title,

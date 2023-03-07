@@ -14,6 +14,20 @@ import { useCartoLayerProps } from '@carto/react-api';
 import getTileFeatures from 'utils/methods/getTileFeatures';
 //@ts-ignore
 import { TILE_FORMATS } from '@deck.gl/carto';
+import { format, scaleLinear } from 'd3';
+import distance from '@turf/distance'
+
+type coordinates = [number, number]
+
+const tripLength = (a:[number, number] , b:[number, number]): number => distance(a, b,  {units: 'kilometers'}) 
+
+const heightScale = scaleLinear().range([0.75,0]).domain([0, 40075])
+
+const getHeight = (a:coordinates,  b:coordinates) =>{
+  const distance = tripLength(a,b)
+  const distanceScaled = heightScale(distance)
+  return +format('.2f')(distanceScaled)
+}
 
 export const MIGRATION_FLOW_LAYER_ID = 'migrationFlowLayer';
 
@@ -40,6 +54,7 @@ class TravelLayer extends CompositeLayer {
       getTargetPosition,
       getWidth,
       getHeight,
+      getTilt,
       getSourceColor,
       getTargetColor,
       pickable,
@@ -55,6 +70,7 @@ class TravelLayer extends CompositeLayer {
           getTargetPosition,
           getWidth,
           getHeight,
+          getTilt,
           getSourceColor,
           getTargetColor,
           pickable,
@@ -103,7 +119,7 @@ export default function MigrationFlowLayer() {
         filtersLogicalOperator: source.filtersLogicalOperator,
       },
     });
-    return data;
+    return data.map((d:any) => ({...d, arcHeight: getHeight([+d['long_paisn'], +d['lat_paisna']],[d['long'], d['lat']])}));
   }
 
   const cartoLayerProps = useCartoLayerProps({
@@ -120,9 +136,10 @@ export default function MigrationFlowLayer() {
       getSourcePosition: (d: any) => [+d['long_paisn'], +d['lat_paisna']],
       getTargetPosition: (d: any) => [d['long'], d['lat']],
       getWidth: 1,
-      getHeight: 1,
-      getSourceColor: [0, 128, 200],
-      getTargetColor: [200, 0, 80],
+      getHeight: (d:any) => d.arcHeight,
+      getTilt: 90,
+      getSourceColor: layerConfig.legend.colors[0],
+      getTargetColor: layerConfig.legend.colors[1],
       pickable: true,
       onDataLoads: () => {
         dispatch(

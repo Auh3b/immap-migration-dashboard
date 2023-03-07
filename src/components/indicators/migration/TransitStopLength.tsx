@@ -1,28 +1,27 @@
 import { AggregationTypes } from '@carto/react-core';
-import { BarWidget } from '@carto/react-widgets';
+import { HistogramWidget } from '@carto/react-widgets';
 import { Grid } from '@material-ui/core';
 import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType';
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
 
-const NOTE = 'Grupos de viaje con mujeres embarazadas';
-const title = 'Identificación de gestantes';
-const column = 'cb_fl_id12';
+const NOTE =
+  'Duración promedio de días de estadía de migrantes en zona de tránsito.';
+const id = 'daysInTransitStay';
+const title = 'Días de estadía';
+const column = 'cb_fl_c_23';
 const operationDefault = AggregationTypes.COUNT;
-const id = 'pregnantWoment';
 
-export default function PregnantWoment({
-  dataSource,
-  operation,
-}: BasicWidgetType) {
+export default function TransitStopLength({ dataSource, operation }: BasicWidgetType) {
   return (
     <Grid item>
-      <BarWidget
+      <HistogramWidget
         id={id}
         title={title}
         dataSource={dataSource}
+        ticks={[1, 2, 3, 4]}
         column={column}
         operation={operation ? operation : operationDefault}
-        operationColumn={column}
+        onError={console.error}
       />
       <WidgetNote note={NOTE} />
     </Grid>

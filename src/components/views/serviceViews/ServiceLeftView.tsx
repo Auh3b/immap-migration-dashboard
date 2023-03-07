@@ -2,10 +2,10 @@ import { Divider, Grid, Typography } from "@material-ui/core";
 import { MainColumnView } from "components/common/MainColumnView";
 import { lazy } from "react";
 
-const ServiceAccessAdult = lazy(()=>import ("components/common/indicators/services/ServiceAccessAdult"))
-const ServiceQualityAdult = lazy(()=>import ("components/common/indicators/services/ServiceQualityAdult"))
-const ServiceSatisfyAdult = lazy(()=>import ("components/common/indicators/services/ServiceSatisfyAdult"))
-const ServiceTypeAdult = lazy(()=>import ("components/common/indicators/services/ServiceTypeAdult"))
+const ServiceAccessAdult = lazy(()=>import ("components/indicators/services/ServiceAccessAdult"))
+const ServiceQualityAdult = lazy(()=>import ("components/indicators/services/ServiceQualityAdult"))
+const ServiceSatisfyAdult = lazy(()=>import ("components/indicators/services/ServiceSatisfyAdult"))
+const ServiceTypeAdult = lazy(()=>import ("components/indicators/services/ServiceTypeAdult"))
 
 export default function ServiceLeftView({dataSources, classes}:any) {
   const { mainSource } = dataSources

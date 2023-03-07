@@ -3,7 +3,7 @@ import { addFilter, removeFilter } from '@carto/react-redux';
 import { BarWidgetUI, WrapperWidgetUI } from '@carto/react-ui';
 import { useCallback, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
-import WidgetWithAlert from '../indicators/WidgetWithAlert';
+import WidgetWithAlert from '../../indicators/WidgetWithAlert';
 import { defaultCustomWidgetProps } from './customWidgetsType';
 import useWidgetFetch from './hooks/useWidgetFetch';
 import useWidgetFilterValues from './hooks/useWidgetFilterValues';

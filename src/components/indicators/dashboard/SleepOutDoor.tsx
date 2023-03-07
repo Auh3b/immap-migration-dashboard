@@ -7,20 +7,9 @@ import { Grid } from '@material-ui/core';
 import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType';
 import CustomBarWidget from 'components/common/customWidgets/CustomBarWidget';
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
+import groupCategories from '../utils/groupCategories';
 
-const method = (input: any[], column: string) => {
-  const data = groupValuesByColumn({
-    data: input,
-    valuesColumns: [column],
-    keysColumn: column,
-    operation: AggregationTypes.COUNT,
-  });
-  if(data){
-    return data
-  }
-
-  return []
-};
+const method = groupCategories
 
 const NOTE = 'Personas que alguna vez ha dormido en la intemperie en la ruta';
 const id = 'sleepOutDoor';

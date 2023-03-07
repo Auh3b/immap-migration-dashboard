@@ -3,22 +3,22 @@ import { MainColumnView } from 'components/common/MainColumnView';
 import { lazy } from 'react';
 
 const GenderComposition = lazy(
-  () => import('components/common/indicators/dashboard/GenderComposition'),
+  () => import('components/indicators/dashboard/GenderComposition'),
 );
 const SleepOutDoor = lazy(
-  () => import('components/common/indicators/dashboard/SleepOutDoor'),
+  () => import('components/indicators/dashboard/SleepOutDoor'),
 );
 const RestrictedFood = lazy(
-  () => import('components/common/indicators/dashboard/RestrictedFood'),
+  () => import('components/indicators/dashboard/RestrictedFood'),
 );
 const TravelGroupAges = lazy(
-  () => import('components/common/indicators/dashboard/TravelGroupAges'),
+  () => import('components/indicators/dashboard/TravelGroupAges'),
 );
 const SickPeople = lazy(
-  () => import('components/common/indicators/dashboard/SickPeople'),
+  () => import('components/indicators/dashboard/SickPeople'),
 );
 const GroupSizeDistribution = lazy(
-  () => import('components/common/indicators/dashboard/GroupSizeDistribution'),
+  () => import('components/indicators/dashboard/GroupSizeDistribution'),
 );
 
 export default function DashboardLeftView({

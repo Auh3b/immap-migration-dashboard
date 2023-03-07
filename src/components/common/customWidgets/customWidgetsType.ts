@@ -11,4 +11,9 @@ export interface defaultCustomWidgetProps {
   labels?: any;
   isLoading?: boolean;
   order?: any[];
+  min?: number;
+  max?: number;
+  ticks?: number[];
+  xAxisFormatter?: Function;
+  yAxisFormatter?: Function;
 }

@@ -8,7 +8,7 @@ const NOTE =
   'Serie de tiempo de encuestas Aurora desde inicio de operativo (Marzo 2023)';
 const title = 'Recepción de respuestas Aurora';
 const id = 'surveyDates';
-const column = 'created_at';
+const column = 'timedouble';
 
 export function SurveyDates({ dataSource }: BasicWidgetType) {
   return (

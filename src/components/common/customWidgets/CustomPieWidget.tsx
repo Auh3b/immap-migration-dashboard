@@ -5,9 +5,22 @@ import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { defaultCustomWidgetProps } from './customWidgetsType';
 import useWidgetFilterValues from './hooks/useWidgetFilterValues';
-import { Button, Link, Typography } from '@material-ui/core';
+import { Link, makeStyles } from '@material-ui/core';
 
 const EMPTY_ARRAY: [] = [];
+
+const useStyles = makeStyles(()=>({
+  main:{
+    position: 'relative'
+  },
+  clearBtn:{
+    position: 'absolute',
+    cursor:'pointer',
+    top: 0,
+    right: 0,
+    zIndex: 100
+  }
+}))
 
 export default function CustomPieWidget({
   id,
@@ -18,6 +31,7 @@ export default function CustomPieWidget({
   filterType,
   labels = {},
 }: defaultCustomWidgetProps) {
+  const classes = useStyles()
   const dispatch = useDispatch();
   const selectedCategories =
     useWidgetFilterValues({
@@ -52,7 +66,8 @@ export default function CustomPieWidget({
     [column, dataSource, filterType, id, dispatch],
   );
 
-  const handleClearClick = () => {
+  const handleClearClick = (e:any) => {
+    e.preventDefault()
     dispatch(clearFilters(dataSource));
   };
 
@@ -64,18 +79,20 @@ export default function CustomPieWidget({
   });
 
   return (
-    <WrapperWidgetUI title={title} isLoading={isLoading} onError={error}>
-      {selectedCategories && selectedCategories.length > 0 && (
-        <Button onClick={handleClearClick}>Clear</Button>
-      )}
-      {(data) && (
-        <PieWidgetUI
-          onSelectedCategoriesChange={handleSelectedCategoriesChange}
-          selectedCategories={selectedCategories}
-          labels={labels}
-          data={data}
-        />
-      )}
+    <WrapperWidgetUI  title={title} isLoading={isLoading} onError={error}>
+      <div className={classes.main}>
+        {selectedCategories && selectedCategories.length > 0 && (
+          <Link className={classes.clearBtn} href='#' onClick={handleClearClick}>Clear</Link>
+        )}
+        {(data) && (
+          <PieWidgetUI
+            onSelectedCategoriesChange={handleSelectedCategoriesChange}
+            selectedCategories={selectedCategories}
+            labels={labels}
+            data={data}
+          />
+        )}
+      </div>
     </WrapperWidgetUI>
   );
 }

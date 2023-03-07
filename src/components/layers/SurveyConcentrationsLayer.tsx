@@ -1,5 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 // @ts-ignore
+import { MAP_TYPES } from '@deck.gl/carto';
+// @ts-ignore
 import { FORMATS, fetchLayerData } from '@deck.gl/carto';
 //@ts-ignore
 import { CompositeLayer } from 'deck.gl';
@@ -158,10 +160,10 @@ export default function SurveyConcentrationsLayer() {
     (async function () {
       const { data } = await fetchLayerData({
         source: hotSpotSource.data,
-        ...hotSpotSource,
+        type: MAP_TYPES.TABLE ,
+        connection: hotSpotSource.connection,
         format: FORMATS.GEOJSON,
       });
-
       //@ts-ignore
       setData(data);
     })();

@@ -1,3 +1,5 @@
+import MigrationRightView from './migrationViews/MigrationRightView';
+import MigrationLeftView from './migrationViews/MigrationLeftView';
 import mainSource from '../../data/sources/mainSource';
 import MainView from './main/MainView';
 import { useDispatch } from 'react-redux';
@@ -9,19 +11,11 @@ import {
   setViewState,
 } from '@carto/react-redux';
 import { MIGRATION_FLOW_LAYER_ID } from 'components/layers/MigrationFlowLayer';
-import { MainColumnView } from 'components/common/MainColumnView';
-import OriginCountry from 'components/common/indicators/migration/OriginCountry';
-import CountryDeparted from 'components/common/indicators/migration/CountryDeparted';
-import CountryResiding from 'components/common/indicators/migration/CountryResiding';
-import TransportMode from 'components/common/indicators/migration/TransportMode';
-import { TransitStopLength } from 'components/common/indicators/migration/TransitStopLength';
-import TransitStopReason from 'components/common/indicators/migration/TransitStopReason';
-import TransitInfomation from 'components/common/indicators/migration/TransitInfomation';
 
 export default function MigrationFlow() {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(setViewState({ pitch: 30 }));
+    dispatch(setViewState({ pitch: 30, dragRotate: true }));
     dispatch(addSource(mainSource));
     dispatch(
       addLayer({
@@ -32,7 +26,7 @@ export default function MigrationFlow() {
 
     return () => {
       dispatch(removeLayer(MIGRATION_FLOW_LAYER_ID));
-      dispatch(setViewState({ pitch: 0 }));
+      dispatch(setViewState({ pitch: 0, dragRotate: false }));
     };
   }, [dispatch]);
 
@@ -41,30 +35,9 @@ export default function MigrationFlow() {
   return (
     <MainView>
       {{
-        left: <LeftView />,
-        right: <RightView />,
+        left: <MigrationLeftView dataSources={{mainSource}}/>,
+        right: <MigrationRightView dataSources={{mainSource}} />,
       }}
     </MainView>
-  );
-}
-
-function LeftView() {
-  return (
-    <MainColumnView>
-      <OriginCountry dataSource={mainSource.id} />
-      <CountryDeparted dataSource={mainSource.id} />
-      <CountryResiding dataSource={mainSource.id} />
-      <TransportMode dataSource={mainSource.id} />
-    </MainColumnView>
-  );
-}
-
-function RightView() {
-  return (
-    <MainColumnView>
-      <TransitStopReason dataSource={mainSource.id} />
-      <TransitStopLength dataSource={mainSource.id} />
-      <TransitInfomation dataSource={mainSource.id} />
-    </MainColumnView>
   );
 }

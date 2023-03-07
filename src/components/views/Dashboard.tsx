@@ -1,4 +1,4 @@
-import { SurveyDates } from './../common/indicators/dashboard/SurveyDates';
+import { SurveyDates } from '../indicators/dashboard/SurveyDates';
 import mainSource from 'data/sources/mainSource';
 import MainView from './main/MainView';
 import { lazy, useEffect } from 'react';

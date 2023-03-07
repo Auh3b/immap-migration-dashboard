@@ -3,20 +3,20 @@ import { MainColumnView } from 'components/common/MainColumnView';
 import { lazy } from 'react';
 
 const PregnantWoment = lazy(
-  () => import('components/common/indicators/dashboard/PregnantWoment'),
+  () => import('components/indicators/dashboard/PregnantWoment'),
 );
 const PlacesChildrenTravelAlone = lazy(
   () =>
-    import('components/common/indicators/dashboard/PlacesChildrenTravelAlone'),
+    import('components/indicators/dashboard/PlacesChildrenTravelAlone'),
 );
 const PeopleWithDisability = lazy(
-  () => import('components/common/indicators/dashboard/PeopleWithDisability'),
+  () => import('components/indicators/dashboard/PeopleWithDisability'),
 );
 const ChildTravelerAges = lazy(
-  () => import('components/common/indicators/dashboard/ChildTravelerAges'),
+  () => import('components/indicators/dashboard/ChildTravelerAges'),
 );
 const ChildrenTravelAlone = lazy(
-  () => import('components/common/indicators/dashboard/ChildrenTravelAlone'),
+  () => import('components/indicators/dashboard/ChildrenTravelAlone'),
 );
 
 export default function DashboardRightView({

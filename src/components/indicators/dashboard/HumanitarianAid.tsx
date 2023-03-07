@@ -1,20 +1,26 @@
+import { Grid } from '@material-ui/core';
 import {
   AggregationTypes,
   groupValuesByColumn,
   _FilterTypes,
 } from '@carto/react-core';
-import { Grid } from '@material-ui/core';
-import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType';
+import mainSource from 'data/sources/mainSource';
 import CustomCategoryWidget from 'components/common/customWidgets/CustomCategoryWidget';
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
 
 const CATEGORY_ABREVATIONS = new Map([
   [0, 'Ninguna'],
-  [1, 'Bus'],
-  [2, 'Barco'],
-  [3, 'Avión'],
-  [4, 'Han camina'],
-  [5, 'otro'],
+  [1, 'Alimentación o kit de alimentación'],
+  [2, ' Alojamiento temporal'],
+  [3, 'Salud, primeros auxilios o atención médica'],
+  [4, 'Agua potable'],
+  [5, 'Duchas o baños'],
+  [6, 'Kit de inodoro o elementos de higiene'],
+  [7, 'Información / asistencia legal'],
+  [8, 'Ayuda psicológica'],
+  [9, 'Dinero en efectivo'],
+  [10, 'Transporte humanitario'],
+  [11, 'Otro'],
 ]);
 
 interface getCategoriesProps {
@@ -55,23 +61,23 @@ function pivotData(data: any[], column: string): any[] {
   return groupData;
 }
 
-const NOTE = 'Razón (es) para no continuar el viaje. ';
-const id = 'transitStopReason';
-const title = 'Razón no continúa viaje';
-const column = 'medios_tra';
-const filterType = _FilterTypes.STRING_SEARCH;
-const method = pivotData;
+const dataSource = mainSource.id;
+const column = 'ayudas_hum';
+const id = 'humanitarianAid';
+const type = _FilterTypes.STRING_SEARCH;
 
-export default function TransitStopReason({ dataSource }: BasicWidgetType) {
+const NOTE = 'Ayudas humanitarias recibidas según zona de tránsito';
+
+export default function HumanitarianAid() {
   return (
     <Grid item>
       <CustomCategoryWidget
-        id={id}
-        title={title}
+        title='Ayudas humanitarias'
         dataSource={dataSource}
         column={column}
-        method={method}
-        filterType={filterType}
+        id={id}
+        filterType={type}
+        method={pivotData}
         labels={Object.fromEntries(CATEGORY_ABREVATIONS)}
       />
       <WidgetNote note={NOTE} />
