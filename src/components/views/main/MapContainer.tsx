@@ -20,9 +20,9 @@ const useStyles = makeStyles((theme) => ({
     flex: '1 1 auto',
     overflow: 'hidden',
 
-    // [theme.breakpoints.down('xs')]: {
-    //   height: `calc(100% - ${theme.spacing(12) - 1}px)`, // Minus 1 to fix that weirdly sometimes the bottom sheet is 1px lower than needed
-    // },
+    [theme.breakpoints.down('xs')]: {
+      height: `calc(100% - ${theme.spacing(12) - 1}px)`, // Minus 1 to fix that weirdly sometimes the bottom sheet is 1px lower than needed
+    },
 
     // Fix Mapbox attribution button not clickable
     '& #deckgl-wrapper': {
@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
     right: theme.spacing(4),
 
     [theme.breakpoints.down('sm')]: {
-      bottom: theme.spacing(10),
+      bottom: theme.spacing(14),
       right: theme.spacing(2),
     },
   },

@@ -143,7 +143,7 @@ export default function MigrationFlowLayer() {
       getSourcePosition: (d: any) => [+d['long_paisn'], +d['lat_paisna']],
       getTargetPosition: (d: any) => [d['long'], d['lat']],
       getWidth: 1,
-      getHeight: (d: any) => d.arcHeight,
+      getHeight: 0.1,
       getTilt: 90,
       getSourceColor: layerConfig.legend.colors[0],
       getTargetColor: layerConfig.legend.colors[1],

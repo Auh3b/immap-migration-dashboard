@@ -1,5 +1,3 @@
-// import ServicesRightView from './serviceViews/ServicesRightView';
-// import ServiceLeftView from './serviceViews/ServiceLeftView';
 import { makeStyles } from '@material-ui/core/styles';
 import MainView from './main/MainView';
 import mainSource from 'data/sources/mainSource';
@@ -15,8 +13,7 @@ const useViewStyle = makeStyles((theme) => ({
     padding: theme.spacing(2),
   },
   divider: {
-    borderBottom: theme.spacing(2),
-    borderTop: theme.spacing(2),
+    paddingBottom: 0,
   },
 }));
 

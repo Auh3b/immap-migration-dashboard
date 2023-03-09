@@ -6,7 +6,6 @@ import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import {
   addLayer,
-  addSource,
   removeLayer,
   setViewState,
 } from '@carto/react-redux';
@@ -16,7 +15,6 @@ export default function MigrationFlow() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(setViewState({ dragRotate: true }));
-    dispatch(addSource(mainSource));
     dispatch(
       addLayer({
         id: MIGRATION_FLOW_LAYER_ID,
