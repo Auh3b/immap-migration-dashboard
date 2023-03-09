@@ -7,6 +7,8 @@ import { Grid } from '@material-ui/core';
 import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType';
 import CustomCategoryWidget from 'components/common/customWidgets/CustomCategoryWidget';
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
+import { ReactNode, useEffect, useState } from 'react';
+import useWidgetEffect from '../utils/useWidgetEffect';
 
 const CATEGORY_ABREVATIONS = new Map([
   [0, 'Ninguna'],
@@ -61,19 +63,25 @@ const title = 'Medios de transporte';
 const column = 'medios_tra';
 const filterType = _FilterTypes.STRING_SEARCH;
 const method = pivotData;
+const labels = Object.fromEntries(CATEGORY_ABREVATIONS);
+
+const props = {
+  id,
+  title,
+  column,
+  method,
+  filterType,
+  labels,
+};
 
 export default function TransportMode({ dataSource }: BasicWidgetType) {
+  const { widget } = useWidgetEffect(
+    <CustomCategoryWidget {...props} dataSource={dataSource} />,
+    [dataSource],
+  );
   return (
     <Grid item>
-      <CustomCategoryWidget
-        id={id}
-        title={title}
-        dataSource={dataSource}
-        column={column}
-        method={method}
-        filterType={filterType}
-        labels={Object.fromEntries(CATEGORY_ABREVATIONS)}
-      />
+      {widget}
       <WidgetNote note={NOTE} />
     </Grid>
   );

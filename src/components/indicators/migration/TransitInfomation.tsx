@@ -5,6 +5,7 @@ import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType
 import CustomCategoryWidget from 'components/common/customWidgets/CustomCategoryWidget';
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
 import groupCategories from '../utils/groupCategories';
+import useWidgetEffect from '../utils/useWidgetEffect';
 
 const labels = {
   1: 'Ubicaciones de la ayuda humanitaria',
@@ -28,9 +29,13 @@ const props = {
 };
 
 export default function TransitInfomation({ dataSource }: BasicWidgetType) {
+  const { widget } = useWidgetEffect(
+    <CustomCategoryWidget dataSource={dataSource} {...props} />,
+    [dataSource],
+  );
   return (
     <Grid item>
-      <CustomCategoryWidget dataSource={dataSource} {...props} />
+      {widget}
       <WidgetNote note={NOTE} />
     </Grid>
   );

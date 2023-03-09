@@ -1,20 +1,26 @@
-import { 
-  Grid, 
-  makeStyles, 
-  SwipeableDrawer, 
-  useMediaQuery, 
-  Drawer, 
-  Fab 
+import {
+  Grid,
+  makeStyles,
+  SwipeableDrawer,
+  useMediaQuery,
+  Fab,
 } from '@material-ui/core';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
-import { lazy, ReactChild, ReactNode } from 'react';
+import {
+  lazy,
+  ReactChild,
+  ReactNode,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setBottomSheetOpen } from 'store/appSlice';
 import { RootState } from 'store/store';
 import { useTheme } from '@material-ui/styles';
 import { CustomTheme } from 'theme';
 import LazyLoadRoute from 'components/common/LazyLoadRoute';
-import PageFallback from 'components/common/PageFallback'
+import PageFallback from 'components/common/PageFallback';
 
 const MapContainer = lazy(() => import('./MapContainer'));
 
@@ -30,12 +36,26 @@ interface MainViewChildren {
 export default function MainView({ children }: { children: MainViewChildren }) {
   const { breakpoints }: CustomTheme = useTheme();
   const isMobile = useMediaQuery(breakpoints.down('xs'));
+  const [view, setView] = useState<null | ReactNode>(null);
+
+  useEffect(() => {
+    if (isMobile) {
+      setView(<Mobile children={children} />);
+    } else {
+      setView(<Desktop children={children} />);
+    }
+
+    return () => {
+      setView(null);
+    };
+  }, [breakpoints, isMobile]);
 
   return (
     <>
       <LazyLoadRoute fallback={<PageFallback />}>
-        {!isMobile && <Desktop children={children} />}
-        {isMobile && <Mobile children={children}/>}
+        {view}
+        {/* {!isMobile && <Desktop children={children} />}
+        {isMobile && <Mobile children={children}/>} */}
       </LazyLoadRoute>
     </>
   );
@@ -53,9 +73,8 @@ const useStylesDesktop = makeStyles(() => ({
   },
 }));
 
-function Desktop({children}:{children: MainViewChildren}) {
+function Desktop({ children }: { children: MainViewChildren }) {
   const classes = useStylesDesktop();
-
   return (
     <>
       <Grid
@@ -143,7 +162,7 @@ const useStyleMobile = makeStyles((theme) => ({
   buttonShow: {},
 }));
 
-function Mobile({children}:{children: MainViewChildren}) {
+function Mobile({ children }: { children: MainViewChildren }) {
   const dispatch = useDispatch();
   const bottomSheetOpen = useSelector(
     (state: RootState) => state.app.bottomSheetOpen,

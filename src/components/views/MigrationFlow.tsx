@@ -4,11 +4,7 @@ import mainSource from '../../data/sources/mainSource';
 import MainView from './main/MainView';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import {
-  addLayer,
-  removeLayer,
-  setViewState,
-} from '@carto/react-redux';
+import { addLayer, removeLayer, setViewState } from '@carto/react-redux';
 import { MIGRATION_FLOW_LAYER_ID } from 'components/layers/MigrationFlowLayer';
 
 export default function MigrationFlow() {

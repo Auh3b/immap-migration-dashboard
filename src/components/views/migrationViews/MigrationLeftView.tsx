@@ -1,6 +1,6 @@
 // import OriginCountry from "components/common/indicators/migration/OriginCountry";
 import { MainColumnView } from 'components/common/MainColumnView';
-import React, { lazy } from 'react';
+import { lazy } from 'react';
 const OriginCountry = lazy(
   () => import('components/indicators/migration/OriginCountry'),
 );

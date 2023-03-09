@@ -7,18 +7,8 @@ import { Grid } from '@material-ui/core';
 import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType';
 import CustomCategoryWidget from 'components/common/customWidgets/CustomCategoryWidget';
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
-
-/**
- * cb_fl_c_16: Tengo problemas de salud (o mi grupo de viaje)
- * cb_fl_c_17: Necesito descansar unos días antes de continuar
- * cb_fl_c_18: No tengo dinero para continuar con el viaje
- * cb_fl_c_19: Tuve problemas con autoridades migratorias
- * cb_fl_c_20: Encontré trabajo temporal
- * cb_fl_c_21: Decidí quedarme un tiempo en el lugar que estoy
- * cb_fl_c_22: El clima no es favorable para viajar
- * cb_fl_c_24: No viajo por cuestiones de seguridad.
- *
- */
+import { useEffect } from 'react';
+import useWidgetEffect from '../utils/useWidgetEffect';
 
 const CATEGORY_ABREVATIONS = new Map([
   [0, 'Ninguna'],
@@ -28,8 +18,8 @@ const CATEGORY_ABREVATIONS = new Map([
   [4, 'Tuve problemas con autoridades migratorias'],
   [5, 'Encontré trabajo temporal	'],
   [6, 'Decidí quedarme un tiempo en el lugar que estoy'],
-  [6, 'El clima no es favorable para viajar'],
-  [6, 'No viajo por cuestiones de seguridad'],
+  [7, 'El clima no es favorable para viajar'],
+  [8, 'No viajo por cuestiones de seguridad'],
 ]);
 
 interface getCategoriesProps {
@@ -76,19 +66,25 @@ const title = 'Razón no continúa viaje';
 const column = 'cb_fl_c_15';
 const filterType = _FilterTypes.STRING_SEARCH;
 const method = pivotData;
+const labels = Object.fromEntries(CATEGORY_ABREVATIONS);
+
+const props = {
+  id,
+  title,
+  column,
+  method,
+  filterType,
+  labels,
+};
 
 export default function TransitStopReason({ dataSource }: BasicWidgetType) {
+  const { widget } = useWidgetEffect(
+    <CustomCategoryWidget {...props} dataSource={dataSource} />,
+    [dataSource],
+  );
   return (
     <Grid item>
-      <CustomCategoryWidget
-        id={id}
-        title={title}
-        dataSource={dataSource}
-        column={column}
-        method={method}
-        filterType={filterType}
-        labels={Object.fromEntries(CATEGORY_ABREVATIONS)}
-      />
+      {widget}
       <WidgetNote note={NOTE} />
     </Grid>
   );

@@ -54,6 +54,7 @@ const useGenderStyles = makeStyles((theme) => ({
   },
   icon: {
     objectFit: 'contain',
+    height: '100px',
   },
   title: {
     padding: theme.spacing(2),
@@ -166,7 +167,7 @@ function GenderByAge({
         );
       }
     },
-    [ dataSource, filterType, index,id, dispatch],
+    [dataSource, filterType, index, id, dispatch],
   );
 
   return (

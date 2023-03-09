@@ -3,6 +3,7 @@ import { CategoryWidget } from '@carto/react-widgets';
 import { Grid } from '@material-ui/core';
 import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType';
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
+import useWidgetEffect from '../utils/useWidgetEffect';
 
 const NOTE = 'País donde residía hace un año.';
 const id = 'countryResiding';
@@ -10,19 +11,27 @@ const title = 'País de residencia';
 const column = 'pais_vivia';
 const operationDefault = AggregationTypes.COUNT;
 
+const props = {
+  id,
+  title,
+  column,
+};
+
 export default function CountryResiding({
   dataSource,
   operation,
 }: BasicWidgetType) {
+  const { widget } = useWidgetEffect(
+    <CategoryWidget
+      {...props}
+      dataSource={dataSource}
+      operation={operation ? operation : operationDefault}
+    />,
+    [dataSource, operation],
+  );
   return (
     <Grid item>
-      <CategoryWidget
-        id={id}
-        title={title}
-        dataSource={dataSource}
-        column={column}
-        operation={operation ? operation : operationDefault}
-      />
+      {widget}
       <WidgetNote note={NOTE} />
     </Grid>
   );

@@ -132,6 +132,9 @@ function Mobile() {
 
   useEffect(() => {
     setDrawerOpen(false);
+    return () => {
+      setDrawerOpen(false);
+    };
   }, [location]);
 
   const handleDrawerToggle = () => {

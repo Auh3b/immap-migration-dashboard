@@ -1,9 +1,10 @@
-import {_FilterTypes} from '@carto/react-core';
+import { _FilterTypes } from '@carto/react-core';
 import { Grid } from '@material-ui/core';
 import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType';
 import CustomBarWidget from 'components/common/customWidgets/CustomBarWidget';
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
 import groupCategories from '../utils/groupCategories';
+import useWidgetEffect from '../utils/useWidgetEffect';
 
 const method = groupCategories;
 
@@ -14,17 +15,22 @@ const title = 'Población que ha restringido alimentación';
 const column = 'restringir';
 const filterType = _FilterTypes.IN;
 
+const props = {
+  title,
+  column,
+  id,
+  filterType,
+  method,
+};
+
 export default function RestrictFood({ dataSource }: BasicWidgetType) {
+  const { widget } = useWidgetEffect(
+    <CustomBarWidget dataSource={dataSource} {...props} />,
+    [dataSource],
+  );
   return (
     <Grid item>
-      <CustomBarWidget
-        id={id}
-        title={title}
-        column={column}
-        dataSource={dataSource}
-        filterType={filterType}
-        method={method}
-      />
+      {widget}
       <WidgetNote note={NOTE} />
     </Grid>
   );

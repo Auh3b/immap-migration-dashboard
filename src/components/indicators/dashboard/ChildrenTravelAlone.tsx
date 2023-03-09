@@ -4,6 +4,7 @@ import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType
 import CustomCategoryWidget from 'components/common/customWidgets/CustomCategoryWidget';
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
 import groupCategories from '../utils/groupCategories';
+import useWidgetEffect from '../utils/useWidgetEffect';
 
 const NOTE =
   'Evidencia de niños, niñas y adolescentes (separados y no acompañados) en la ruta.';
@@ -22,9 +23,13 @@ const props = {
 };
 
 export default function ChildrenTravelAlone({ dataSource }: BasicWidgetType) {
+  const { widget } = useWidgetEffect(
+    <CustomCategoryWidget dataSource={dataSource} {...props} />,
+    [dataSource],
+  );
   return (
     <Grid item>
-      <CustomCategoryWidget dataSource={dataSource} {...props} />
+      {widget}
       <WidgetNote note={NOTE} />
     </Grid>
   );

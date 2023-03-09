@@ -4,6 +4,7 @@ import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType
 import CustomBarWidget from 'components/common/customWidgets/CustomBarWidget';
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
 import groupCategories from '../utils/groupCategories';
+import useWidgetEffect from '../utils/useWidgetEffect';
 
 const title = 'Identificación de personas con condición de discapacidad';
 const NOTE =
@@ -13,17 +14,22 @@ const column = 'cb_fl_id14';
 const filterType = _FilterTypes.IN;
 const method = groupCategories;
 
+const props = {
+  title,
+  column,
+  id,
+  filterType,
+  method,
+};
+
 export default function PeopleWithDisability({ dataSource }: BasicWidgetType) {
+  const { widget } = useWidgetEffect(
+    <CustomBarWidget dataSource={dataSource} {...props} />,
+    [dataSource],
+  );
   return (
     <Grid item>
-      <CustomBarWidget
-        id={id}
-        title={title}
-        column={column}
-        dataSource={dataSource}
-        filterType={filterType}
-        method={method}
-      />
+      {widget}
       <WidgetNote note={NOTE} />
     </Grid>
   );

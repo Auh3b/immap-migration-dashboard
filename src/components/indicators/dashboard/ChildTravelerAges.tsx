@@ -4,6 +4,9 @@ import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType
 import CustomCategoryWidget from 'components/common/customWidgets/CustomCategoryWidget';
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
 import { sum } from 'd3';
+import useWidgetEffect from '../utils/useWidgetEffect';
+
+const labels = {};
 
 function transformData(input: any[], column: string) {
   let nna_viven = sum(
@@ -36,18 +39,29 @@ function transformData(input: any[], column: string) {
 }
 
 const NOTE = 'Rango de edades de niños, niñas y adolescentes viajando';
+const title = 'Edades de NNA viajando';
+const id = 'childTravelerAges';
+const column = 'nna_viven';
+const filterType = _FilterTypes.STRING_SEARCH;
+const method = transformData;
+
+const props = {
+  title,
+  column,
+  id,
+  filterType,
+  method,
+  labels,
+};
 
 export default function ChildTravelerAges({ dataSource }: BasicWidgetType) {
+  const { widget } = useWidgetEffect(
+    <CustomCategoryWidget dataSource={dataSource} {...props} />,
+    [dataSource],
+  );
   return (
     <Grid item>
-      <CustomCategoryWidget
-        title='Edades de NNA viajando'
-        id='childTravelerAges'
-        dataSource={dataSource}
-        column={'nna_viven'}
-        filterType={_FilterTypes.IN}
-        method={transformData}
-      />
+      {widget}
       <WidgetNote note={NOTE} />
     </Grid>
   );

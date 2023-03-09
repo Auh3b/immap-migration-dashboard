@@ -7,6 +7,7 @@ import {
 import mainSource from 'data/sources/mainSource';
 import CustomCategoryWidget from 'components/common/customWidgets/CustomCategoryWidget';
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
+import useWidgetEffect from '../utils/useWidgetEffect';
 
 const CATEGORY_ABREVATIONS = new Map([
   [0, 'Ninguna'],
@@ -61,25 +62,34 @@ function pivotData(data: any[], column: string): any[] {
   return groupData;
 }
 
+const NOTE = 'Ayudas humanitarias recibidas según zona de tránsito';
+
 const dataSource = mainSource.id;
 const column = 'ayudas_hum';
 const id = 'humanitarianAid';
-const type = _FilterTypes.STRING_SEARCH;
+const filterType = _FilterTypes.STRING_SEARCH;
+const title = 'Ayudas humanitarias';
+const method = pivotData;
+const labels = Object.fromEntries(CATEGORY_ABREVATIONS);
 
-const NOTE = 'Ayudas humanitarias recibidas según zona de tránsito';
+const props = {
+  id,
+  dataSource,
+  title,
+  column,
+  filterType,
+  method,
+  labels,
+};
 
 export default function HumanitarianAid() {
+  const { widget } = useWidgetEffect(
+    <CustomCategoryWidget {...props} dataSource={dataSource} />,
+    [dataSource],
+  );
   return (
     <Grid item>
-      <CustomCategoryWidget
-        title='Ayudas humanitarias'
-        dataSource={dataSource}
-        column={column}
-        id={id}
-        filterType={type}
-        method={pivotData}
-        labels={Object.fromEntries(CATEGORY_ABREVATIONS)}
-      />
+      {widget}
       <WidgetNote note={NOTE} />
     </Grid>
   );

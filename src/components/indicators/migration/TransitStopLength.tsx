@@ -3,6 +3,7 @@ import { Grid } from '@material-ui/core';
 import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType';
 import CustomHistogramWidget from 'components/common/customWidgets/CustomHistogramWidget';
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
+import useWidgetEffect from '../utils/useWidgetEffect';
 
 const NOTE =
   'Duración promedio de días de estadía de migrantes en zona de tránsito.';
@@ -12,7 +13,7 @@ const column = 'cb_fl_c_23';
 const filterType = _FilterTypes.CLOSED_OPEN;
 const min = 0;
 const max = 2;
-const ticks = [1,2];
+const ticks = [1, 2];
 const method = (input: any[], column: string) => {
   const target = input.map((i: any) => i[column]);
   if (target) {
@@ -21,12 +22,12 @@ const method = (input: any[], column: string) => {
   return [];
 };
 
-const xAxisFormatter = (value:number) => {
-  if(value % 1 === 0 || value === 0){
-    return value
+const xAxisFormatter = (value: number) => {
+  if (value % 1 === 0 || value === 0) {
+    return value;
   }
-  return ''
-}
+  return '';
+};
 
 const props = {
   id,
@@ -37,13 +38,17 @@ const props = {
   max,
   method,
   ticks,
-  xAxisFormatter
+  xAxisFormatter,
 };
 
 export default function TransitStopLength({ dataSource }: BasicWidgetType) {
+  const { widget } = useWidgetEffect(
+    <CustomHistogramWidget {...props} dataSource={dataSource} />,
+    [dataSource],
+  );
   return (
     <Grid item>
-      <CustomHistogramWidget {...props} dataSource={dataSource} />
+      {widget}
       <WidgetNote note={NOTE} />
     </Grid>
   );
