@@ -50,7 +50,7 @@ class TravelLayer extends CompositeLayer {
   renderLayers() {
     const {
       id,
-      data,
+      data, 
       getSourcePosition,
       getTargetPosition,
       getWidth,
@@ -143,8 +143,8 @@ export default function MigrationFlowLayer() {
       getSourcePosition: (d: any) => [+d['long_paisn'], +d['lat_paisna']],
       getTargetPosition: (d: any) => [d['long'], d['lat']],
       getWidth: 1,
-      getHeight: 0.1,
-      getTilt: 90,
+      getHeight: 1,
+      getTilt: 0,
       getSourceColor: layerConfig.legend.colors[0],
       getTargetColor: layerConfig.legend.colors[1],
       pickable: true,

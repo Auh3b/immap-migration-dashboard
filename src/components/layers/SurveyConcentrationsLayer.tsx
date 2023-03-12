@@ -183,7 +183,7 @@ export default function SurveyConcentrationsLayer() {
   if (surveyConcentrationsLayer && data) {
     return new CircleClusterLayer({
       ...cartoLayerProps,
-      //@ts-ignore
+      //@ts-ignore 
       data: data?.features,
       id: SURVEY_CONCENTRATIONS_LAYER_ID,
       pointRadiusMinPixels: 2,

@@ -7,7 +7,6 @@ import { Grid } from '@material-ui/core';
 import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType';
 import CustomCategoryWidget from 'components/common/customWidgets/CustomCategoryWidget';
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
-import { ReactNode, useEffect, useState } from 'react';
 import useWidgetEffect from '../utils/useWidgetEffect';
 
 const CATEGORY_ABREVATIONS = new Map([

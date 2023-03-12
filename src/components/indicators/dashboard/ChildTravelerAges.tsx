@@ -1,9 +1,12 @@
 import { _FilterTypes } from '@carto/react-core';
 import { Grid } from '@material-ui/core';
+import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
 import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType';
 import CustomCategoryWidget from 'components/common/customWidgets/CustomCategoryWidget';
+import ToggleWidget from 'components/common/customWidgets/ToggleWidget';
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
 import { sum } from 'd3';
+import { useState } from 'react';
 import useWidgetEffect from '../utils/useWidgetEffect';
 
 const labels = {};
@@ -56,7 +59,7 @@ const props = {
 
 export default function ChildTravelerAges({ dataSource }: BasicWidgetType) {
   const { widget } = useWidgetEffect(
-    <CustomCategoryWidget dataSource={dataSource} {...props} />,
+    <ToggleWidget dataSource={dataSource} {...props} />,
     [dataSource],
   );
   return (
@@ -66,3 +69,4 @@ export default function ChildTravelerAges({ dataSource }: BasicWidgetType) {
     </Grid>
   );
 }
+

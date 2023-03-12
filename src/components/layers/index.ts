@@ -10,6 +10,7 @@ export const getLayers = () => {
     HotspotsLayer(),
     ServicePointsLayer(),
     MigrationFlowLayer(),
+    // MigrationFlowAlternativeLayer(),
     // [hygen] Add layer
   ];
 };

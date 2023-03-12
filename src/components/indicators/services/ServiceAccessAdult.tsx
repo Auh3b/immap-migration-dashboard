@@ -1,6 +1,4 @@
 import {
-  AggregationTypes,
-  groupValuesByColumn,
   _FilterTypes,
 } from '@carto/react-core';
 import { Grid } from '@material-ui/core';
