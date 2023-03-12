@@ -11,11 +11,18 @@ import { makeStyles } from "@material-ui/core";
 const EMPTY_ARRAY: [] = [];
 
 const useStyles = makeStyles(()=>({
+  container:{
+    width: '100%'
+  }, 
   group:{
-    display: 'flex',
-    gap: '5px',
-    alignItems: 'center',
-  }
+    width: '100%',
+    height: '100%',
+    display: 'block',
+  },
+  optionTitle:{
+    display: 'block',
+    color: 'rgba(44, 48, 50, 1)',
+  },
 }))
 
 export default function ToggleWidget({
@@ -38,14 +45,17 @@ export default function ToggleWidget({
     }) || EMPTY_ARRAY;
 
   const handleSelectedCategoriesChange = useCallback(
-    (categories) => {
-      if (categories && categories.length) {
+    (column, data) => {
+      const map = new Map(data)
+      if (column && column.length) {
+        console.log(map.get(column))
         dispatch(
           addFilter({
             id: dataSource,
             column,
             type: filterType,
-            values: categories,
+            //@ts-ignore
+            values: map.get(column).variables,
             owner: id,
           }),
         );
@@ -62,33 +72,35 @@ export default function ToggleWidget({
     [column, dataSource, filterType, id, dispatch],
   );
 
-  const { data, isLoading, error } = useWidgetFetch({
+  const { data, isLoading } = useWidgetFetch({
     id,
     dataSource,
     method,
     column,
   });
-  console.log(data)
-
-  const [selected, setSelected] = useState([]);
-
-  const handleAlignment = (event:any, newAlignment:any) => {
-    setSelected(newAlignment);
-  };
+  
+  // const [selected, setSelected] = useState(null);
+  // console.log(data)
+  
+  // const handleAlignment = (event:any, newAlignment:any) => {
+  //   handleSelectedCategoriesChange(newAlignment, data)
+  //   setSelected(newAlignment);
+  // };
   return(
     <WrapperWidgetUI
       title={title}
       isLoading={isLoading}
     >
       <ToggleButtonGroup
-        value={selected}
-        onChange={handleAlignment}
+        className={classes.container}
+        // value={selected}
+        // onChange={handleAlignment}
         arial-label='text alignment'
       >
-        {data && data.map(({name, value}:AgeType, index)=>{
+        {data && data.map(([name ,{label, value}], index)=>{
           return(
-            <ToggleButton className={classes.group} value={name} key={index} arial-label={name}>
-              <span>{name}</span>
+            <ToggleButton disabled className={classes.group} value={name} key={index} arial-label={name}>
+              <span className={classes.optionTitle}>{label}</span>
               <FormulaWidgetUI
               data={value}
               />
@@ -101,6 +113,7 @@ export default function ToggleWidget({
 }
 
 interface AgeType{
+  label: string;
   name: string;
   value: number;
 }

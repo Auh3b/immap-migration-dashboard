@@ -1,12 +1,9 @@
 import { _FilterTypes } from '@carto/react-core';
 import { Grid } from '@material-ui/core';
-import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
 import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType';
-import CustomCategoryWidget from 'components/common/customWidgets/CustomCategoryWidget';
 import ToggleWidget from 'components/common/customWidgets/ToggleWidget';
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
 import { sum } from 'd3';
-import { useState } from 'react';
 import useWidgetEffect from '../utils/useWidgetEffect';
 
 const labels = {};
@@ -26,18 +23,24 @@ function transformData(input: any[], column: string) {
   );
 
   return [
-    {
-      name: '0 - 5',
+    ['nna_viven',{
+      label: '0 - 5',
+      name: 'nna_viven',
       value: nna_viven,
-    },
-    {
-      name: '6 - 11',
+      // variables: Array.from(new Set(input.map((d) => d['nna_viven'])))
+    }],
+    ['n_doce_die',{
+      label: '6 - 11',
+      name: 'n_doce_die',
       value: n_doce_die,
-    },
-    {
-      name: '12 - 17',
+      // variables: Array.from( new Set(input.map((d) => d['n_doce_die'])))
+    }],
+    ['n_seis_onc',{
+      label: '12 - 17',
+      name: 'n_seis_onc',
       value: n_seis_onc,
-    },
+      // variables: Array.from( new Set(input.map((d) => d['n_seis_onc'])))
+    }],
   ];
 }
 
@@ -45,7 +48,7 @@ const NOTE = 'Rango de edades de niños, niñas y adolescentes viajando';
 const title = 'Edades de NNA viajando';
 const id = 'childTravelerAges';
 const column = 'nna_viven';
-const filterType = _FilterTypes.STRING_SEARCH;
+const filterType = _FilterTypes.IN;
 const method = transformData;
 
 const props = {

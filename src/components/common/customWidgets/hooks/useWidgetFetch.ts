@@ -1,7 +1,7 @@
 //@ts-nocheck
 import { selectAreFeaturesReadyForSource } from '@carto/react-redux';
 import { TILE_FORMATS } from '@deck.gl/carto';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store/store';
 import getTileFeatures from 'utils/methods/getTileFeatures';
@@ -41,13 +41,13 @@ export default function useWidgetFetch({
     id,
   });
 
-  const params = {
+  const params = useMemo(() =>({
     filters: source.filters,
     filtersLogicalOperator: source.filtersLogicalOperator,
     viewport,
     limit: null,
     tileFormat: TILE_FORMATS.GEOJSON,
-  };
+  }), [source]);
 
   useCustomCompareEffect(
     () => {
