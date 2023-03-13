@@ -11,7 +11,7 @@ const method = groupCategories;
 const NOTE =
   'Personas con alguna enfermedad crónica (diabetes, hipertensión, asma, etc.)';
 const id = 'sickPeople';
-const title = 'Población que duerme a la intemperie';
+const title = 'Identificación de personas enfermas';
 const column = 'cb_fl_id13';
 const filterType = _FilterTypes.IN;
 
