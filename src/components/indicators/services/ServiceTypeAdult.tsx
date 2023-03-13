@@ -12,9 +12,9 @@ import useWidgetEffect from '../utils/useWidgetEffect';
 const CATEGORY_ABREVATIONS = new Map([
   [0, 'Ninguna'],
   [1, 'Alimentación o kit de alimentación'],
-  [2, ' Alojamiento temporal / albergue'],
+  [2, 'Alojamiento temporal'],
   [3, 'Salud, primeros auxilios o atención médica'],
-  [4, 'Agua potable'],
+  [4, 'Agua'],
   [5, 'Duchas o baños'],
   [6, 'Kit de inodoro o elementos de higiene'],
   [7, 'Información / asistencia legal'],
@@ -66,7 +66,7 @@ const NOTE = 'Ayudas humanitarias recibidas según zona de tránsito';
 const id = 'serviceTypeAdult';
 const title = 'Ayudas humanitarias';
 const column = 'ayudas_hum';
-const filterType = _FilterTypes.IN;
+const filterType = _FilterTypes.STRING_SEARCH;
 const method = pivotData;
 const labels = Object.fromEntries(CATEGORY_ABREVATIONS);
 

@@ -21,6 +21,13 @@ export interface useWidgetFetchProps {
   global?: boolean;
 }
 
+/**
+ * This functions is used for retreaving data from loaded map datasets to used by 
+ * custom widgets. This mimicks how data is fetched with by carto standard 
+ * widgets. Though is not as performat as the original since part of the data
+ * modification is done sychronosly as oppose to using multiple threads
+ */
+
 export default function useWidgetFetch({
   id,
   method = (input) => input,
