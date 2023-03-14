@@ -1,5 +1,4 @@
-import { AggregationTypes, _FilterTypes } from '@carto/react-core';
-import { CategoryWidget } from '@carto/react-widgets';
+import { _FilterTypes } from '@carto/react-core';
 import { Grid } from '@material-ui/core';
 import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType';
 import CustomCategoryWidget from 'components/common/customWidgets/CustomCategoryWidget';
@@ -15,7 +14,7 @@ const NOTE =
   'Tipo de información requerida sobre la ayuda humanitaria en la ruta';
 const id = 'transitInformation';
 const title = 'Necesidades de información';
-const column = 'cb_fl_c_14';
+const column = 'm26_inform';
 const filterType = _FilterTypes.IN;
 const method = groupCategories;
 

@@ -19,8 +19,8 @@ import FallbackWidget from '../FallbackWidget';
 import TopLoading from 'components/common/TopLoading';
 
 const EMPTY_ARRAY: [] = [];
-const PRIMARY_COLUMN = 'genero';
-const SECONDARY_COLUMN = 'rango_edad';
+const PRIMARY_COLUMN = 'e07_gener';
+const SECONDARY_COLUMN = 'edadgr';
 
 function groupGenderByAge(data: any[], column: string) {
   return groupValuesByColumn({

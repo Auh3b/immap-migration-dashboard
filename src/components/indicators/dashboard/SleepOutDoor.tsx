@@ -13,7 +13,7 @@ const method = groupCategories;
 const NOTE = 'Personas que alguna vez ha dormido en la intemperie en la ruta';
 const id = 'sleepOutDoor';
 const title = 'Población que duerme a la intemperie';
-const column = 'dormir_int';
+const column = 'e16__tu_';
 const filterType = _FilterTypes.IN;
 
 const props = {

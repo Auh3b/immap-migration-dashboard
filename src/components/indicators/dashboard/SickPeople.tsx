@@ -12,7 +12,7 @@ const NOTE =
   'Personas con alguna enfermedad crónica (diabetes, hipertensión, asma, etc.)';
 const id = 'sickPeople';
 const title = 'Identificación de personas enfermas';
-const column = 'cb_fl_id13';
+const column = 'm02__en_t';
 const filterType = _FilterTypes.IN;
 
 const props = {

@@ -9,7 +9,7 @@ const operationDefault = AggregationTypes.COUNT;
 const NOTE = 'Rango de edades de grupo de viaje';
 const id = 'travelGroupAges';
 const title = 'Edades grupo de viaje';
-const column = 'rango_edad';
+const column = 'edadgr';
 
 const props = {
   id,

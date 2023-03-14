@@ -10,7 +10,7 @@ const NOTE =
   'Evidencia de niños, niñas y adolescentes (separados y no acompañados) en la ruta.';
 const title = 'Presencia de NNA solos';
 const id = 'travellingAlone';
-const column = 'cb_fl_id15';
+const column = 'm06_durant';
 const filterType = _FilterTypes.IN;
 const method = groupCategories;
 

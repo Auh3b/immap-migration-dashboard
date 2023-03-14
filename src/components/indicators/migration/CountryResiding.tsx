@@ -5,10 +5,10 @@ import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
 import useWidgetEffect from '../utils/useWidgetEffect';
 
-const NOTE = 'País donde residía hace un año.';
+const NOTE = 'País donde vivía hace un año.';
 const id = 'countryResiding';
-const title = 'País de residencia';
-const column = 'pais_vivia';
+const title = 'País donde vivía';
+const column = 'e12_pais_';
 const operationDefault = AggregationTypes.COUNT;
 
 const props = {

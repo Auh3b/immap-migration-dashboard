@@ -7,7 +7,6 @@ import { Grid } from '@material-ui/core';
 import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType';
 import CustomCategoryWidget from 'components/common/customWidgets/CustomCategoryWidget';
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
-import { useEffect } from 'react';
 import useWidgetEffect from '../utils/useWidgetEffect';
 
 const CATEGORY_ABREVATIONS = new Map([
@@ -46,8 +45,8 @@ function getCategories({
 function pivotData(data: any[], column: string): any[] {
   //@ts-ignore
   const values = data.map((f) => f[column]).filter((i) => i !== 'null');
-  const valueString: string = values.join('.');
-  const valuesArray: any[] = valueString.split('.');
+  const valueString: string = values.join(',');
+  const valuesArray: any[] = valueString.split(',');
   const pivotedData = valuesArray
     .filter((i: string) => i.length > 0)
     .map((i: any) => Object.fromEntries(new Map([[column, i]])));
@@ -63,7 +62,7 @@ function pivotData(data: any[], column: string): any[] {
 const NOTE = 'Razón (es) para no continuar el viaje. ';
 const id = 'transitStopReason';
 const title = 'Razón no continúa viaje';
-const column = 'cb_fl_c_15';
+const column = 'm29_por_qu';
 const filterType = _FilterTypes.STRING_SEARCH;
 const method = pivotData;
 const labels = Object.fromEntries(CATEGORY_ABREVATIONS);

@@ -59,7 +59,7 @@ function pivotData(data: any[], column: string): any[] {
 const NOTE = 'Medios de transporte empleados durante la ruta';
 const id = 'transportMode';
 const title = 'Medios de transporte';
-const column = 'medios_tra';
+const column = 'e14_medios';
 const filterType = _FilterTypes.STRING_SEARCH;
 const method = pivotData;
 const labels = Object.fromEntries(CATEGORY_ABREVATIONS);

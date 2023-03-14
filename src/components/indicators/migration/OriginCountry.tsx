@@ -8,7 +8,7 @@ import useWidgetEffect from '../utils/useWidgetEffect';
 const NOTE = 'País de nacimiento del migrante que responde.';
 const id = 'originCountry';
 const title = 'País de nacimiento';
-const column = 'pais_nacim';
+const column = 'e08_pais_';
 const operationDefault = AggregationTypes.COUNT;
 
 const props = {

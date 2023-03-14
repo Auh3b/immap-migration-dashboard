@@ -12,7 +12,7 @@ const NOTE =
   'Personas que alguna vez han debido restringir alimentos durante la ruta';
 const id = 'restrictedFood';
 const title = 'Población que ha restringido alimentación';
-const column = 'restringir';
+const column = 'e15__has_';
 const filterType = _FilterTypes.IN;
 
 const props = {

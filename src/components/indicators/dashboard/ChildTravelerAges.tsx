@@ -10,44 +10,46 @@ const labels = {};
 
 function transformData(input: any[], column: string) {
   let nna_viven = sum(
-    input.map((d) => d['nna_viven']),
+    input.map((d) => d['e20__cua']).filter(d => +d !== 999999),
     (i) => i,
   );
   let n_doce_die = sum(
-    input.map((d) => d['n_doce_die']),
+    input.map((d) => d['e21__cua']).filter(d => +d !== 999999),
     (i) => i,
   );
   let n_seis_onc = sum(
-    input.map((d) => d['n_seis_onc']),
+    input.map((d) => d['e22__cua']).filter(d => +d !== 999999),
     (i) => i,
   );
 
-  return [
-    ['nna_viven',{
+  const output =  [
+    ['e20__cua',{
       label: '0 - 5',
-      name: 'nna_viven',
+      name: 'e20__cua',
       value: nna_viven,
       // variables: Array.from(new Set(input.map((d) => d['nna_viven'])))
     }],
-    ['n_doce_die',{
+    ['e21__cua',{
       label: '6 - 11',
-      name: 'n_doce_die',
+      name: 'e21__cua',
       value: n_doce_die,
       // variables: Array.from( new Set(input.map((d) => d['n_doce_die'])))
     }],
-    ['n_seis_onc',{
+    ['e22__cua',{
       label: '12 - 17',
-      name: 'n_seis_onc',
+      name: 'e22__cua',
       value: n_seis_onc,
       // variables: Array.from( new Set(input.map((d) => d['n_seis_onc'])))
     }],
   ];
+  console.log(input)
+  return output
 }
 
 const NOTE = 'Rango de edades de niños, niñas y adolescentes viajando';
 const title = 'Edades de NNA viajando';
 const id = 'childTravelerAges';
-const column = 'nna_viven';
+const column = 'e20__cua';
 const filterType = _FilterTypes.IN;
 const method = transformData;
 

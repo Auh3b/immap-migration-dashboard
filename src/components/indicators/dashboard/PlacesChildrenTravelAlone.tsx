@@ -9,7 +9,7 @@ import useWidgetEffect from '../utils/useWidgetEffect';
 const title = 'Identificación NNA solos';
 const NOTE =
   'Lugares donde se evidencian niños, niñas y adolescentes (separados y no acompañados) en la ruta';
-const column = 'cb_fl_id_1';
+const column = 'm07__en_q';
 const id = 'placesChildrenTravelAlone';
 const filterType = _FilterTypes.IN;
 const method = groupCategories;

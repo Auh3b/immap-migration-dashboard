@@ -9,7 +9,7 @@ const NOTE =
   'Serie de tiempo de encuestas Aurora desde inicio de operativo (Marzo 2023)';
 const title = 'Recepción de respuestas Aurora';
 const id = 'surveyDates';
-const column = 'timedouble';
+const column = 'timeunix';
 const wrapperProps = { expanded: false };
 const stepSize = GroupDateTypes.DAYS;
 

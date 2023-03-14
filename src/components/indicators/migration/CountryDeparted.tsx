@@ -7,8 +7,8 @@ import useWidgetEffect from '../utils/useWidgetEffect';
 
 const NOTE = 'País desde donde inicia el flujo migratorio';
 const id = 'countryDeparted';
-const title = 'País inicial de flujo';
-const column = 'pais_inici';
+const title = 'País inicial de flujo migratorio';
+const column = 'e10_pais_';
 const operationDefault = AggregationTypes.COUNT;
 
 const props = {

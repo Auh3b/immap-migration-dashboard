@@ -8,7 +8,7 @@ import useWidgetEffect from '../utils/useWidgetEffect';
 
 const NOTE = 'Grupos de viaje con mujeres embarazadas';
 const title = 'Identificación de gestantes';
-const column = 'cb_fl_id12';
+const column = 'm01__en_t';
 const id = 'pregnantWoment';
 const method = groupCategories;
 const filterType = _FilterTypes.IN;

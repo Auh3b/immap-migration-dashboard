@@ -9,7 +9,7 @@ const NOTE =
   'Duración promedio de días de estadía de migrantes en zona de tránsito.';
 const id = 'daysInTransitStay';
 const title = 'Días de estadía';
-const column = 'cb_fl_c_23';
+const column = 'm30__cua';
 const filterType = _FilterTypes.CLOSED_OPEN;
 const min = 0;
 const max = 2;

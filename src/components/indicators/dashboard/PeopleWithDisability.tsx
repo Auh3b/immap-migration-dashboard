@@ -10,7 +10,7 @@ const title = 'Identificación de personas con condición de discapacidad';
 const NOTE =
   'Personas con alguna condición de discapacidad (física, visual, auditiva, intelectual, etc.)';
 const id = 'disabledPeople';
-const column = 'cb_fl_id14';
+const column = 'm03__dent';
 const filterType = _FilterTypes.IN;
 const method = groupCategories;
 

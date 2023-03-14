@@ -65,7 +65,7 @@ function pivotData(data: any[], column: string): any[] {
 const NOTE = 'Ayudas humanitarias recibidas según zona de tránsito';
 const id = 'serviceTypeAdult';
 const title = 'Ayudas humanitarias';
-const column = 'ayudas_hum';
+const column = 'e23__cua';
 const filterType = _FilterTypes.STRING_SEARCH;
 const method = pivotData;
 const labels = Object.fromEntries(CATEGORY_ABREVATIONS);
