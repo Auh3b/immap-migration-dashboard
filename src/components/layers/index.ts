@@ -6,8 +6,8 @@ import SurveyConcentrationsLayer from './SurveyConcentrationsLayer';
 
 export const getLayers = () => {
   return [
-    SurveyConcentrationsLayer(),
     HotspotsLayer(),
+    SurveyConcentrationsLayer(),
     ServicePointsLayer(),
     MigrationFlowLayer(),
     // MigrationFlowAlternativeLayer(),

@@ -65,7 +65,7 @@ class CircleClusterLayer extends CompositeLayer {
       changeFlags.dataChanged || props.sizeScale !== oldProps.sizeScale;
 
     if (rebuildIndex) {
-      const index = new SuperCluster({ maxZoom: 16, radius: props.sizeScale });
+      const index = new SuperCluster({ maxZoom: 12, radius: props.sizeScale });
       index.load(
         //@ts-ignore
         props.data,
@@ -96,11 +96,13 @@ class CircleClusterLayer extends CompositeLayer {
   }
   renderLayers() {
     //@ts-ignore
-    const data = { type: 'FeatureCollection', features: this.state.data };
+    const data = { type: 'FeatureCollection', features: this.state.data, attributes: { background: true} };
     //@ts-ignore
     const { clusterValues } = this.state;
     //@ts-ignore
     const { sizeScale, id } = this.props;
+    //@ts-ignore
+    // console.log(this.state)
 
     return [
       new GeoJsonLayer(
@@ -109,11 +111,19 @@ class CircleClusterLayer extends CompositeLayer {
           id,
           data,
           sizeScale,
-          opacity: 0.9,
+          opacity: 1,
           stroked: false,
+          getTextSize: 18,
+          // getTextColor:  [255, 255, 255],
+          textOutlineWidth: 0.3,
+          textOutlineColor: [255, 255, 255],
+          textFontWeight: 'bold',
+          textFontSettings:{
+            sdf: true,
+          },
           //@ts-ignore
           getText: (d) =>
-            d.properties.cluster ? d.properties.point_count : '',
+            d.properties.cluster ? String(d.properties.point_count) : '',
           //@ts-ignore
           getFillColor: (d) =>
             d.properties.cluster
@@ -122,7 +132,7 @@ class CircleClusterLayer extends CompositeLayer {
           pointType: 'circle+text',
           //@ts-ignore
           getPointRadius: (d) =>
-            d.properties.cluster ? d.properties.point_count * 100 : 100,
+            d.properties.cluster ? d.properties.point_count * 10 : 10,
           pointRadiusMinPixels: 15,
         }),
       ),
@@ -135,13 +145,15 @@ const layerConfig = {
   visible: true,
   switchable: true,
   legend: {
-    type: LEGEND_TYPES.CATEGORY,
+    type: LEGEND_TYPES.CONTINUOUS_RAMP,
     collapsible: false,
-    labels: ['Bajo', 'Medio', 'Alto'],
+    labels: [
+     {label: 'Bajo', value: 0},
+     {label: 'Alto', value: 1}
+    ],
     colors: [
-      getFillColor(1, [1, 3]),
-      getFillColor(2, [1, 3]),
-      getFillColor(3, [1, 3]),
+      getFillColor(1, [1, 2]),
+      getFillColor(2, [1, 2]),
     ],
   },
 };
@@ -187,8 +199,8 @@ export default function SurveyConcentrationsLayer() {
       data: data?.features,
       id: SURVEY_CONCENTRATIONS_LAYER_ID,
       pointRadiusMinPixels: 2,
-      pickable: true,
-      sizeScale: 60,
+      pickable: false,
+      sizeScale: 10,
       onDataLoad: (data: any) => {
         dispatch(
           updateLayer({
