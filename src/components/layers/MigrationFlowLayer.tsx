@@ -124,8 +124,8 @@ export default function MigrationFlowLayer() {
       ...d,
       arcHeight: getHeight(
         [+d['long_paisn'], +d['lat_paisna']],
-        [d['long'], d['lat']],
-      ),
+        [d['lon_eng'], d['lat_eng']],
+      ) || 0.5,
     }));
   }
 
@@ -140,14 +140,17 @@ export default function MigrationFlowLayer() {
       ...cartoLayerProps,
       data: fetchData(),
       id: MIGRATION_FLOW_LAYER_ID,
-      getSourcePosition: (d: any) => [+d['long_paisn'], +d['lat_paisna']],
-      getTargetPosition: (d: any) => [d['long'], d['lat']],
+      getSourcePosition: (d: any) => [+d['long_paisn'], parseInt(d['lat_paisna'].replace(',', '.'))],
+      getTargetPosition: (d: any) => [d['lon_eng'], d['lat_eng']],
       getWidth: 1,
       getHeight: 1,
       getTilt: 0,
       getSourceColor: layerConfig.legend.colors[0],
       getTargetColor: layerConfig.legend.colors[1],
       pickable: true,
+      onDataLoad:(data:any)=>{
+        console.log(data)
+      },
       onDataLoads: () => {
         dispatch(
           updateLayer({
