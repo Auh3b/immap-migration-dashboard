@@ -18,13 +18,13 @@ export interface useWidgetFetchProps {
   dataSource: any;
   column?: string;
   method?: WidgetFetchMethod | null;
-  methodParams?: {}; 
+  methodParams?: {};
   global?: boolean;
 }
 
 /**
- * This functions is used for retreaving data from loaded map datasets to used by 
- * custom widgets. This mimicks how data is fetched with by carto standard 
+ * This functions is used for retreaving data from loaded map datasets to used by
+ * custom widgets. This mimicks how data is fetched with by carto standard
  * widgets. Though is not as performat as the original since part of the data
  * modification is done sychronosly as oppose to using multiple threads
  */
@@ -50,13 +50,16 @@ export default function useWidgetFetch({
     id,
   });
 
-  const params = useMemo(() =>({
-    filters: source.filters,
-    filtersLogicalOperator: source.filtersLogicalOperator,
-    viewport,
-    limit: null,
-    tileFormat: TILE_FORMATS.GEOJSON,
-  }), [source]);
+  const params = useMemo(
+    () => ({
+      filters: source.filters,
+      filtersLogicalOperator: source.filtersLogicalOperator,
+      viewport,
+      limit: null,
+      tileFormat: TILE_FORMATS.GEOJSON,
+    }),
+    [source],
+  );
 
   useCustomCompareEffect(
     () => {
@@ -70,9 +73,9 @@ export default function useWidgetFetch({
             if (data && data.length > 0) {
               setData(
                 method(
-                  data.filter((i) => i[column] != 999999),
+                  data.filter((i) => +i[column] !== 999999),
                   column,
-                  methodParams
+                  methodParams,
                 ),
               );
             } else {

@@ -1,25 +1,39 @@
-import {
-  _FilterTypes,
-} from '@carto/react-core';
+import { _FilterTypes } from '@carto/react-core';
 import { Grid } from '@material-ui/core';
 import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType';
+import CustomComparativeCategoryWidget from 'components/common/customWidgets/CustomComparativeCategoryWidget';
 import CustomPieWidget from 'components/common/customWidgets/CustomPieWidget';
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
-import groupCategories from '../utils/groupCategories';
+import stackedGroupCategories from '../utils/stackedGroupCategories';
 import useWidgetEffect from '../utils/useWidgetEffect';
+import aidTypes from './utils/aidTypes';
 
-const labels = {
-  1: 'Sí recomendaría',
-  2: 'No estoy seguro',
-  3: 'No recomendaría',
-};
+const labels = new Map([
+  [0, 'No calificado'],
+  [1, 'Sí recomendaría'],
+  [2, 'No estoy seguro(a)'],
+  [3, 'No recomendaría'],
+]);
+
+const colorMap = new Map([
+  ['No calificado', '#333333' ],
+  ['Sí recomendaría', "#32a852"],
+  ['No estoy seguro(a)',"#fa0"],
+  ['No recomendaría', "#f27"]
+])
 
 const NOTE = 'Nivel de satisfacción del servicio tomado';
 const id = 'serviceSatisfactionChildren';
 const title = 'Satisfacción del servicio';
-const column = 'cb_fl_co_6';
+const column = 'm18_me_con';
+const valueColumn = 'm21_de_acu';
 const filterType = _FilterTypes.IN;
-const method = groupCategories;
+const method = stackedGroupCategories;
+const methodParams = {
+  aidTypes,
+  labels,
+  valueColumn
+};
 
 const props = {
   id,
@@ -27,7 +41,9 @@ const props = {
   column,
   filterType,
   method,
+  methodParams,
   labels,
+  colorMap
 };
 
 export default function ServiceSatisfyChildren({
@@ -35,7 +51,7 @@ export default function ServiceSatisfyChildren({
   operation,
 }: BasicWidgetType) {
   const { widget } = useWidgetEffect(
-    <CustomPieWidget {...props} dataSource={dataSource} />,
+    <CustomComparativeCategoryWidget {...props} dataSource={dataSource} />,
     [dataSource, operation],
   );
   return (

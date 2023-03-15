@@ -95,8 +95,12 @@ class CircleClusterLayer extends CompositeLayer {
     }
   }
   renderLayers() {
-    //@ts-ignore
-    const data = { type: 'FeatureCollection', features: this.state.data, attributes: { background: true} };
+    const data = {
+      type: 'FeatureCollection',
+      //@ts-ignore
+      features: this.state.data,
+      attributes: { background: true },
+    };
     //@ts-ignore
     const { clusterValues } = this.state;
     //@ts-ignore
@@ -118,7 +122,7 @@ class CircleClusterLayer extends CompositeLayer {
           textOutlineWidth: 0.3,
           textOutlineColor: [255, 255, 255],
           textFontWeight: 'bold',
-          textFontSettings:{
+          textFontSettings: {
             sdf: true,
           },
           //@ts-ignore
@@ -148,13 +152,10 @@ const layerConfig = {
     type: LEGEND_TYPES.CONTINUOUS_RAMP,
     collapsible: false,
     labels: [
-     {label: 'Bajo', value: 0},
-     {label: 'Alto', value: 1}
+      { label: 'Bajo', value: 0 },
+      { label: 'Alto', value: 1 },
     ],
-    colors: [
-      getFillColor(1, [1, 2]),
-      getFillColor(2, [1, 2]),
-    ],
+    colors: [getFillColor(1, [1, 2]), getFillColor(2, [1, 2])],
   },
 };
 
@@ -195,7 +196,7 @@ export default function SurveyConcentrationsLayer() {
   if (surveyConcentrationsLayer && data) {
     return new CircleClusterLayer({
       ...cartoLayerProps,
-      //@ts-ignore 
+      //@ts-ignore
       data: data?.features,
       id: SURVEY_CONCENTRATIONS_LAYER_ID,
       pointRadiusMinPixels: 2,

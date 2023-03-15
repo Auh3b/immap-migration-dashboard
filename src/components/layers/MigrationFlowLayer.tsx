@@ -50,7 +50,7 @@ class TravelLayer extends CompositeLayer {
   renderLayers() {
     const {
       id,
-      data, 
+      data,
       getSourcePosition,
       getTargetPosition,
       getWidth,
@@ -122,10 +122,11 @@ export default function MigrationFlowLayer() {
     });
     return data.map((d: any) => ({
       ...d,
-      arcHeight: getHeight(
-        [+d['long_paisn'], +d['lat_paisna']],
-        [d['lon_eng'], d['lat_eng']],
-      ) || 0.5,
+      arcHeight:
+        getHeight(
+          [+d['long_paisn'], +d['lat_paisna']],
+          [d['lon_eng'], d['lat_eng']],
+        ) || 0.5,
     }));
   }
 
@@ -148,8 +149,8 @@ export default function MigrationFlowLayer() {
       getSourceColor: layerConfig.legend.colors[0],
       getTargetColor: layerConfig.legend.colors[1],
       pickable: true,
-      onDataLoad:(data:any)=>{
-        console.log(data)
+      onDataLoad: (data: any) => {
+        console.log(data);
       },
       onDataLoads: () => {
         dispatch(

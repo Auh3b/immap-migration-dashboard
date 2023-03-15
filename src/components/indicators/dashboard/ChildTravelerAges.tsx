@@ -10,40 +10,49 @@ const labels = {};
 
 function transformData(input: any[], column: string) {
   let nna_viven = sum(
-    input.map((d) => d['e20__cua']).filter(d => +d !== 999999),
+    input.map((d) => d['e20__cua']).filter((d) => +d !== 999999),
     (i) => i,
   );
   let n_doce_die = sum(
-    input.map((d) => d['e21__cua']).filter(d => +d !== 999999),
+    input.map((d) => d['e21__cua']).filter((d) => +d !== 999999),
     (i) => i,
   );
   let n_seis_onc = sum(
-    input.map((d) => d['e22__cua']).filter(d => +d !== 999999),
+    input.map((d) => d['e22__cua']).filter((d) => +d !== 999999),
     (i) => i,
   );
 
-  const output =  [
-    ['e20__cua',{
-      label: '0 - 5',
-      name: 'e20__cua',
-      value: nna_viven,
-      // variables: Array.from(new Set(input.map((d) => d['nna_viven'])))
-    }],
-    ['e21__cua',{
-      label: '6 - 11',
-      name: 'e21__cua',
-      value: n_doce_die,
-      // variables: Array.from( new Set(input.map((d) => d['n_doce_die'])))
-    }],
-    ['e22__cua',{
-      label: '12 - 17',
-      name: 'e22__cua',
-      value: n_seis_onc,
-      // variables: Array.from( new Set(input.map((d) => d['n_seis_onc'])))
-    }],
+  const output = [
+    [
+      'e20__cua',
+      {
+        label: '0 - 5',
+        name: 'e20__cua',
+        value: nna_viven,
+        // variables: Array.from(new Set(input.map((d) => d['nna_viven'])))
+      },
+    ],
+    [
+      'e21__cua',
+      {
+        label: '6 - 11',
+        name: 'e21__cua',
+        value: n_doce_die,
+        // variables: Array.from( new Set(input.map((d) => d['n_doce_die'])))
+      },
+    ],
+    [
+      'e22__cua',
+      {
+        label: '12 - 17',
+        name: 'e22__cua',
+        value: n_seis_onc,
+        // variables: Array.from( new Set(input.map((d) => d['n_seis_onc'])))
+      },
+    ],
   ];
-  console.log(input)
-  return output
+  console.log(input);
+  return output;
 }
 
 const NOTE = 'Rango de edades de niños, niñas y adolescentes viajando';
@@ -74,4 +83,3 @@ export default function ChildTravelerAges({ dataSource }: BasicWidgetType) {
     </Grid>
   );
 }
-

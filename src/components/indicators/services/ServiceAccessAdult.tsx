@@ -1,46 +1,37 @@
-import {
-  _FilterTypes,
-} from '@carto/react-core';
+import { _FilterTypes } from '@carto/react-core';
 import { Grid } from '@material-ui/core';
 import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType';
 import CustomComparativeCategoryWidget from 'components/common/customWidgets/CustomComparativeCategoryWidget';
-import CustomPieWidget from 'components/common/customWidgets/CustomPieWidget';
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
-import groupCategories from '../utils/groupCategories';
 import stackedGroupCategories from '../utils/stackedGroupCategories';
 import useWidgetEffect from '../utils/useWidgetEffect';
+import aidTypes from './utils/aidTypes';
 
 const labels = new Map([
   [0, 'No calificado'],
   [1, 'Fácil'],
   [2, 'Regular'],
   [3, 'Difícil'],
-])
-
-const CATEGORY_ABREVATIONS = new Map([
-  [0, 'Ninguna'],
-  [1, 'Alimentación o kit de alimentación'],
-  [2, 'Alojamiento temporal'],
-  [3, 'Salud, primeros auxilios o atención médica'],
-  [4, 'Agua'],
-  [5, 'Duchas o baños'],
-  [6, 'Kit de inodoro o elementos de higiene'],
-  [7, 'Información / asistencia legal'],
-  [8, 'Ayuda psicológica'],
-  [9, 'Dinero en efectivo'],
-  [10, 'Transporte humanitario'],
-  [11, 'Otro'],
 ]);
 
+const colorMap = new Map([
+  ['No calificado', '#333333' ],
+  ['Fácil', "#32a852"],
+  ['Regular',"#fa0"],
+  ['Difícil', "#f27"]
+])
 
 const NOTE = 'Percepción de accesibilidad a servicios humanitarios';
 const id = 'accessServicesAdult';
 const title = 'Accesibilidad';
-const column = 'm14_respec';
+const column = 'e23__cua';
+const valueColumn = 'm14_respec'
 const filterType = _FilterTypes.IN;
 const method = stackedGroupCategories;
 const methodParams = {
-  CATEGORY_ABREVATIONS, labels
+  aidTypes,
+  labels,
+  valueColumn
 };
 
 const props = {
@@ -51,6 +42,7 @@ const props = {
   method,
   methodParams,
   labels,
+  colorMap
 };
 
 export default function ServiceAccessAdult({
@@ -58,10 +50,7 @@ export default function ServiceAccessAdult({
   operation,
 }: BasicWidgetType) {
   const { widget } = useWidgetEffect(
-    <CustomComparativeCategoryWidget 
-    {...props}
-    dataSource={dataSource}
-  />,
+    <CustomComparativeCategoryWidget {...props} dataSource={dataSource} />,
     [dataSource, operation],
   );
   return (

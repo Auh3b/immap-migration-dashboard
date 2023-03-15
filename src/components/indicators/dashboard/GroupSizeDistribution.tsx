@@ -13,15 +13,15 @@ const title = 'Tamaño de grupo de viaje';
 const id = 'tripComposition';
 const column = 'e17__cua';
 const operationDefault = AggregationTypes.COUNT;
-const method = groupCategories
-const filterType = _FilterTypes.IN
+const method = groupCategories;
+const filterType = _FilterTypes.IN;
 
 const props = {
   id,
   title,
   column,
   method,
-  filterType
+  filterType,
 };
 
 export default function GroupSizeDistribution({
@@ -29,16 +29,12 @@ export default function GroupSizeDistribution({
   operation,
 }: BasicWidgetType) {
   const { widget } = useWidgetEffect(
-    <CustomBarWidget
-    {...props}
-    dataSource={dataSource}
-    />
+    <CustomBarWidget {...props} dataSource={dataSource} />,
     // <CategoryWidget
     //   {...props}
     //   dataSource={dataSource}
     //   operation={operation ? operation : operationDefault}
     // />
-    ,
     [dataSource, operation],
   );
   return (

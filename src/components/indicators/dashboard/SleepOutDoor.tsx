@@ -1,6 +1,4 @@
-import {
-  _FilterTypes,
-} from '@carto/react-core';
+import { _FilterTypes } from '@carto/react-core';
 import { Grid } from '@material-ui/core';
 import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType';
 import CustomBarWidget from 'components/common/customWidgets/CustomBarWidget';

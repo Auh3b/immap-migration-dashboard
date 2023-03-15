@@ -1,4 +1,8 @@
-import { _FilterTypes } from '@carto/react-core';
+import {
+  AggregationTypes,
+  groupValuesByColumn,
+  _FilterTypes,
+} from '@carto/react-core';
 import { Grid } from '@material-ui/core';
 import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType';
 import CustomCategoryWidget from 'components/common/customWidgets/CustomCategoryWidget';
@@ -10,7 +14,7 @@ import aidTypes from './utils/aidTypes';
 const NOTE = 'Ayudas humanitarias recibidas según zona de tránsito';
 const id = 'serviceTypeAdult';
 const title = 'Ayudas humanitarias';
-const column = 'e23__cua';
+const column = 'm18_me_con';
 const filterType = _FilterTypes.STRING_SEARCH;
 const method = concatenatedValues;
 const labels = Object.fromEntries(aidTypes);
@@ -24,7 +28,7 @@ const props = {
   labels,
 };
 
-export default function ServiceTypeAdult({ dataSource }: BasicWidgetType) {
+export default function ServiceTypeChildren({ dataSource }: BasicWidgetType) {
   const { widget } = useWidgetEffect(
     <CustomCategoryWidget {...props} dataSource={dataSource} />,
     [dataSource],

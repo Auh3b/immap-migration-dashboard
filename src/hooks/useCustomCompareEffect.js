@@ -1,6 +1,5 @@
-import { debounce } from '@carto/react-core';
 import useDebouce from 'components/common/customWidgets/hooks/useDebouce';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 
 export default function useCustomCompareEffect(effect, deps, depsEqual) {
   const ref = useRef();
@@ -10,5 +9,5 @@ export default function useCustomCompareEffect(effect, deps, depsEqual) {
   }
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useDebouce(effect, 100 ,ref.current);
+  useDebouce(effect, 100, ref.current);
 }

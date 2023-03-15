@@ -8,8 +8,9 @@ export interface defaultCustomWidgetProps {
   column: string;
   filterType: _FilterTypes;
   method?: WidgetFetchMethod;
-  methodParams?:Record<string, unknown>;
+  methodParams?: Record<string, unknown>;
   labels?: any;
+  colorMap?: any;
   isLoading?: boolean;
   order?: any[];
   min?: number;

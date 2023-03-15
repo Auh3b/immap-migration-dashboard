@@ -16,17 +16,21 @@ export default function MigrationFlow() {
         source: mainSource.id,
       }),
     );
-    dispatch(setViewState({
-      //@ts-ignore
-      minZoom: 1,
-    }))
+    dispatch(
+      setViewState({
+        //@ts-ignore
+        minZoom: 1,
+      }),
+    );
 
     return () => {
       dispatch(removeLayer(MIGRATION_FLOW_LAYER_ID));
-      dispatch(setViewState({
-        //@ts-ignore
-        minZoom: 5,
-      }))
+      dispatch(
+        setViewState({
+          //@ts-ignore
+          minZoom: 5,
+        }),
+      );
     };
   }, [dispatch]);
 
