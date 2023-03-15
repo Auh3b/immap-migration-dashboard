@@ -140,7 +140,7 @@ export default function MigrationFlowLayer() {
       ...cartoLayerProps,
       data: fetchData(),
       id: MIGRATION_FLOW_LAYER_ID,
-      getSourcePosition: (d: any) => [+d['long_paisn'], parseInt(d['lat_paisna'].replace(',', '.'))],
+      getSourcePosition: (d: any) => [+d['long_paisn'], d['lat_paisna']],
       getTargetPosition: (d: any) => [d['lon_eng'], d['lat_eng']],
       getWidth: 1,
       getHeight: 1,

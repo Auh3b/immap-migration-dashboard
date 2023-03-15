@@ -72,6 +72,7 @@
   },
   "scripts": {
     "analyze": "source-map-explorer 'build/static/js/*.js'",
+    "source": "source-map-explorer",
     "start": " react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
