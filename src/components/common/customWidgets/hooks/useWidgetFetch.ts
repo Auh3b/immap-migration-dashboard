@@ -18,6 +18,7 @@ export interface useWidgetFetchProps {
   dataSource: any;
   column?: string;
   method?: WidgetFetchMethod | null;
+  methodParams?: {}; 
   global?: boolean;
 }
 
@@ -33,6 +34,7 @@ export default function useWidgetFetch({
   method = (input) => input,
   column,
   dataSource,
+  methodParams = {},
   global = false,
 }: useWidgetFetchProps) {
   const { viewport } = useSelector((state: RootState) => state.carto);
@@ -70,6 +72,7 @@ export default function useWidgetFetch({
                 method(
                   data.filter((i) => i[column] != 999999),
                   column,
+                  methodParams
                 ),
               );
             } else {

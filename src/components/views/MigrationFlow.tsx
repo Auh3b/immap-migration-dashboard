@@ -4,7 +4,7 @@ import mainSource from '../../data/sources/mainSource';
 import MainView from './main/MainView';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import { addLayer, removeLayer } from '@carto/react-redux';
+import { addLayer, removeLayer, setViewState } from '@carto/react-redux';
 import { MIGRATION_FLOW_LAYER_ID } from 'components/layers/MigrationFlowLayer';
 
 export default function MigrationFlow() {
@@ -16,9 +16,17 @@ export default function MigrationFlow() {
         source: mainSource.id,
       }),
     );
+    dispatch(setViewState({
+      //@ts-ignore
+      minZoom: 1,
+    }))
 
     return () => {
       dispatch(removeLayer(MIGRATION_FLOW_LAYER_ID));
+      dispatch(setViewState({
+        //@ts-ignore
+        minZoom: 5,
+      }))
     };
   }, [dispatch]);
 
