@@ -202,12 +202,6 @@ export default function SurveyConcentrationsLayer() {
 
   useEffect(() => {
     (async function () {
-      // const { data } = await fetchLayerData({
-      //   source: hotSpotSource.data,
-      //   type: MAP_TYPES.TABLE,
-      //   connection: hotSpotSource.connection,
-      //   format: FORMATS.GEOJSON,
-      // });
       if(source){
         const data = await fetchData()
         //@ts-ignore
