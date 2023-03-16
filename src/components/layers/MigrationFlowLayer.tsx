@@ -149,9 +149,6 @@ export default function MigrationFlowLayer() {
       getSourceColor: layerConfig.legend.colors[0],
       getTargetColor: layerConfig.legend.colors[1],
       pickable: true,
-      onDataLoad: (data: any) => {
-        console.log(data);
-      },
       onDataLoads: () => {
         dispatch(
           updateLayer({

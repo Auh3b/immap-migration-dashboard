@@ -12,6 +12,7 @@ export interface defaultCustomWidgetProps {
   labels?: any;
   colorMap?: any;
   isLoading?: boolean;
+  bins?:number;
   order?: any[];
   min?: number;
   max?: number;

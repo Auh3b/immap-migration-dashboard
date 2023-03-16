@@ -11,11 +11,8 @@ const id = 'daysInTransitStay';
 const title = 'Días de estadía';
 const column = 'm30__cua';
 const filterType = _FilterTypes.CLOSED_OPEN;
-const min = 0;
-const max = 2;
-const ticks = [1, 2];
 const method = (input: any[], column: string) => {
-  const target = input.map((i: any) => i[column]);
+  const target = input.map((i: any) => ({value: i[column]}));
   if (target) {
     return target;
   }
@@ -34,11 +31,8 @@ const props = {
   title,
   column,
   filterType,
-  min,
-  max,
   method,
-  ticks,
-  xAxisFormatter,
+  // xAxisFormatter,
 };
 
 export default function TransitStopLength({ dataSource }: BasicWidgetType) {

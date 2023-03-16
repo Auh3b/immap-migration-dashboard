@@ -1,7 +1,8 @@
-import { _FilterTypes } from '@carto/react-core';
+import { AggregationTypes, histogram, _FilterTypes } from '@carto/react-core';
 import { addFilter, removeFilter } from '@carto/react-redux';
 import { HistogramWidgetUI, WrapperWidgetUI } from '@carto/react-ui';
-import { useCallback, useMemo } from 'react';
+import { extent } from 'd3';
+import { useCallback, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { defaultCustomWidgetProps } from './customWidgetsType';
 import useWidgetFetch from './hooks/useWidgetFetch';
@@ -15,21 +16,52 @@ export default function CustomHistogramWidget({
   method,
   dataSource,
   column,
+  bins = 3,
   filterType = _FilterTypes.CLOSED_OPEN,
-  min,
-  max,
-  ticks = [],
   xAxisFormatter,
   yAxisFormatter,
 }: defaultCustomWidgetProps) {
   const dispatch = useDispatch();
 
-  const { data, isLoading } = useWidgetFetch({
+  const { data: _data, isLoading } = useWidgetFetch({
     id,
     dataSource,
     method,
     column,
   });
+
+  const range = useMemo(()=>{
+    if(_data.length > 0){
+      return extent(_data.map(d => d.value))
+    }
+
+    return null
+  }, [_data])
+
+  const ticks = useMemo(()=>{
+    if(range){
+      const [ min, max ] = range 
+      const result = [];
+      for (let i = 1; i < bins; i += 1) {
+        result.push(min + (max - min) * (i / bins));
+      }
+      return result;
+    }
+    return []
+  }, [range])
+
+  const data = useMemo(()=>{
+    if(_data && range && ticks){
+      console.log(_data, ticks, range)
+      return histogram({
+        data: _data,
+        valuesColumns: ['value'],
+        ticks,
+        operation: AggregationTypes.COUNT
+      })
+    }
+    return null
+  }, [_data, range, ticks])
 
   const thresholdsFromFilters = useWidgetFilterValues({
     dataSource,
@@ -89,16 +121,18 @@ export default function CustomHistogramWidget({
 
   return (
     <WrapperWidgetUI title={title} isLoading={isLoading}>
-      <HistogramWidgetUI
-        data={data}
-        min={min}
-        max={max}
-        ticks={ticks}
-        selectedBars={selectedBars}
-        onSelectedBarsChange={handleSelectedBarsChange}
-        xAxisFormatter={xAxisFormatter}
-        yAxisFormatter={yAxisFormatter}
-      />
+      {(range&&data&&ticks) && 
+        <HistogramWidgetUI
+          data={data}
+          min={range[0]}
+          max={range[1]}
+          ticks={ticks}
+          selectedBars={selectedBars}
+          onSelectedBarsChange={handleSelectedBarsChange}
+          xAxisFormatter={xAxisFormatter}
+          yAxisFormatter={yAxisFormatter}
+        />
+      }
     </WrapperWidgetUI>
   );
 }
