@@ -19,12 +19,10 @@ const props = {
   title,
   column,
   filterType,
-  method
+  method,
 };
 
-export default function TravelGroupAges({
-  dataSource
-}: BasicWidgetType) {
+export default function TravelGroupAges({ dataSource }: BasicWidgetType) {
   const { widget } = useWidgetEffect(
     <CustomCategoryWidget dataSource={dataSource} {...props} />,
     [dataSource],

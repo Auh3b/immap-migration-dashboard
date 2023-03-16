@@ -15,11 +15,11 @@ const labels = new Map([
 ]);
 
 const colorMap = new Map([
-  ['No calificado', '#333333' ],
-  ['Sí recomendaría', "#32a852"],
-  ['No estoy seguro(a)',"#fa0"],
-  ['No recomendaría', "#f27"]
-])
+  ['No calificado', '#333333'],
+  ['Sí recomendaría', '#32a852'],
+  ['No estoy seguro(a)', '#fa0'],
+  ['No recomendaría', '#f27'],
+]);
 
 const NOTE = 'Disposición para recomendar el servicio tomado    ';
 const id = 'serviceSatisfaction';
@@ -31,7 +31,7 @@ const method = stackedGroupCategories;
 const methodParams = {
   aidTypes,
   labels,
-  valueColumn
+  valueColumn,
 };
 
 const props = {
@@ -42,7 +42,7 @@ const props = {
   method,
   methodParams,
   labels,
-  colorMap
+  colorMap,
 };
 
 export default function ServiceSatisfyAdult({

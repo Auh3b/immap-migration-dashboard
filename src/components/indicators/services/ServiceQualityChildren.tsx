@@ -16,10 +16,10 @@ const labels = new Map([
 
 const colorMap = new Map([
   ['No calificado', '#333333'],
-  ['Satisfecho', "#32a852"],
-  ['Algo satisfecho',"#fa0"],
-  ['Insatisfecho', "#f27"]
-])
+  ['Satisfecho', '#32a852'],
+  ['Algo satisfecho', '#fa0'],
+  ['Insatisfecho', '#f27'],
+]);
 
 const NOTE = 'Nivel de satisfacción del servicio prestado al migrante';
 const id = 'serviceQualityAdult';
@@ -31,7 +31,7 @@ const method = stackedGroupCategories;
 const methodParams = {
   aidTypes,
   labels,
-  valueColumn
+  valueColumn,
 };
 
 const props = {
@@ -42,7 +42,7 @@ const props = {
   method,
   methodParams,
   labels,
-  colorMap
+  colorMap,
 };
 
 export default function ServiceQualityChildren({

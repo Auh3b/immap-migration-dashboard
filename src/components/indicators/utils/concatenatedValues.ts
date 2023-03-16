@@ -1,4 +1,4 @@
-import { AggregationTypes, groupValuesByColumn } from "@carto/react-core";
+import { AggregationTypes, groupValuesByColumn } from '@carto/react-core';
 
 interface getCategoriesProps {
   data: any[];
@@ -38,5 +38,4 @@ function concatenatedValues(data: any[], column: string): any[] {
   return groupData;
 }
 
-
-export default concatenatedValues
+export default concatenatedValues;

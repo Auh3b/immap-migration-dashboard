@@ -15,7 +15,7 @@ const id = 'tripComposition';
 const column = 'e17__cua';
 const method = histogramValues;
 const filterType = _FilterTypes.CLOSED_OPEN;
-const bins = 4
+const bins = 4;
 
 const props = {
   id,
@@ -23,7 +23,7 @@ const props = {
   column,
   method,
   filterType,
-  bins
+  bins,
 };
 
 export default function GroupSizeDistribution({
@@ -31,10 +31,7 @@ export default function GroupSizeDistribution({
   operation,
 }: BasicWidgetType) {
   const { widget } = useWidgetEffect(
-    <CustomHistogramWidget 
-      {...props}
-      dataSource={dataSource}
-    />,
+    <CustomHistogramWidget {...props} dataSource={dataSource} />,
     [dataSource, operation],
   );
   return (

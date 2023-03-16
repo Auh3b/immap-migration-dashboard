@@ -30,37 +30,37 @@ export default function CustomHistogramWidget({
     column,
   });
 
-  const range = useMemo(()=>{
-    if(_data.length > 0){
-      return extent(_data.map(d => d.value))
+  const range = useMemo(() => {
+    if (_data.length > 0) {
+      return extent(_data.map((d) => d.value));
     }
 
-    return null
-  }, [_data])
+    return null;
+  }, [_data]);
 
-  const ticks = useMemo(()=>{
-    if(range){
-      const [ min, max ] = range 
+  const ticks = useMemo(() => {
+    if (range) {
+      const [min, max] = range;
       const result = [];
       for (let i = 1; i < bins; i += 1) {
         result.push(min + (max - min) * (i / bins));
       }
       return result;
     }
-    return []
-  }, [range])
+    return [];
+  }, [range]);
 
-  const data = useMemo(()=>{
-    if(_data && range && ticks){
+  const data = useMemo(() => {
+    if (_data && range && ticks) {
       return histogram({
         data: _data,
         valuesColumns: ['value'],
         ticks,
-        operation: AggregationTypes.COUNT
-      })
+        operation: AggregationTypes.COUNT,
+      });
     }
-    return null
-  }, [_data, range, ticks])
+    return null;
+  }, [_data, range, ticks]);
 
   const thresholdsFromFilters = useWidgetFilterValues({
     dataSource,
@@ -120,7 +120,7 @@ export default function CustomHistogramWidget({
 
   return (
     <WrapperWidgetUI title={title} isLoading={isLoading}>
-      {(range&&data&&ticks) && 
+      {range && data && ticks && (
         <HistogramWidgetUI
           data={data}
           min={range[0]}
@@ -131,7 +131,7 @@ export default function CustomHistogramWidget({
           xAxisFormatter={xAxisFormatter}
           yAxisFormatter={yAxisFormatter}
         />
-      }
+      )}
     </WrapperWidgetUI>
   );
 }

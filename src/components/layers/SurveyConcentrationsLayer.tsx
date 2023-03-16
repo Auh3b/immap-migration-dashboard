@@ -15,10 +15,6 @@ import { color, extent, interpolateYlOrRd, scaleSequential } from 'd3';
 import { selectSourceById, updateLayer } from '@carto/react-redux';
 import { LEGEND_TYPES } from '@carto/react-ui';
 import { useCartoLayerProps } from '@carto/react-api';
-import getTileFeatures from 'utils/methods/getTileFeatures';
-//@ts-ignore
-import { TILE_FORMATS } from '@deck.gl/carto';
-import { featureCollection, point } from '@turf/turf'
 
 function getExtent(features: any[]) {
   return features.map((f) => f.properties.point_count);
@@ -163,16 +159,8 @@ const layerConfig = {
   },
 };
 
-const getPointFeature = (d:any) => {
-  return point(
-    [+d['long_pais'], +d['lat_pais']],
-    {...d}
-    )
-}
-
 export default function SurveyConcentrationsLayer() {
   const [data, setData] = useState(null);
-  const { viewport } = useSelector((state: RootState) => state.carto);
   const { surveyConcentrationsLayer } = useSelector(
     (state: RootState) => state.carto.layers,
   );
@@ -181,39 +169,22 @@ export default function SurveyConcentrationsLayer() {
     selectSourceById(state, surveyConcentrationsLayer?.source),
   );
 
-  
-  async function fetchData() {
-    const data = await getTileFeatures({
-      sourceId: source.id,
-      params: {
-        viewport,
-        tileFormat: TILE_FORMATS.GEOJSON,
-        limit: null,
-        filters: source.filters,
-        filtersLogicalOperator: source.filtersLogicalOperator,
-      },
-    });
-    console.log(source)
-    const pointFeatures = [...data.map(getPointFeature)]
-    const pointCollection = featureCollection(pointFeatures)
-    return pointCollection;
-  }
-
-
   useEffect(() => {
     (async function () {
-      if(source){
-        const data = await fetchData()
-        //@ts-ignore
-        
-        setData(data);
-      }
+      const { data } = await fetchLayerData({
+        source: hotSpotSource.data,
+        type: MAP_TYPES.TABLE,
+        connection: hotSpotSource.connection,
+        format: FORMATS.GEOJSON,
+      });
+      //@ts-ignore
+      setData(data);
     })();
 
     return () => {
       setData(null);
     };
-  }, [source, dispatch, surveyConcentrationsLayer]);
+  }, []);
 
   const cartoLayerProps = useCartoLayerProps({
     source,

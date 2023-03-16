@@ -15,7 +15,7 @@ export default function CustomComparativeCategoryWidget({
 }: defaultCustomWidgetProps) {
   const [data, setData] = useState<null | any[]>(null);
   const [names, setNames] = useState<null | string[]>(null);
-  const [colors, setColors] = useState<null | string[]>(null)
+  const [colors, setColors] = useState<null | string[]>(null);
   const {
     data: _data,
     isLoading,
@@ -33,8 +33,8 @@ export default function CustomComparativeCategoryWidget({
     if (_data) {
       const _names = _data.map(([nameValue]) => nameValue);
       setNames(_names);
-      const _colors = _names.map(name => colorMap.get(name))
-      setColors(_colors)
+      const _colors = _names.map((name) => colorMap.get(name));
+      setColors(_colors);
       const _packedData = _data.map(([name, value]) => Array.from(value));
       const _unpackedData = _packedData.map((group) => {
         let newGroup: any[] = [];

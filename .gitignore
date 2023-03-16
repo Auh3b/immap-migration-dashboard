@@ -30,6 +30,7 @@ storybook-static
 !.env.production
 !jsconfig.json
 .startup.sh
+.backups
 
 npm-debug.log*
 yarn-debug.log*

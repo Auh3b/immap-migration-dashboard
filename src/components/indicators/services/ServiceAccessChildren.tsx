@@ -19,12 +19,11 @@ const labels = new Map([
 ]);
 
 const colorMap = new Map([
-  ['No calificado', '#333333' ],
-  ['Fácil', "#32a852"],
-  ['Regular',"#fa0"],
-  ['Difícil', "#f27"]
-])
-
+  ['No calificado', '#333333'],
+  ['Fácil', '#32a852'],
+  ['Regular', '#fa0'],
+  ['Difícil', '#f27'],
+]);
 
 const NOTE = 'Percepción de accesibilidad a servicios humanitarios';
 const id = 'accessServicesAdult';
@@ -36,7 +35,7 @@ const method = stackedGroupCategories;
 const methodParams = {
   aidTypes,
   labels,
-  valueColumn
+  valueColumn,
 };
 
 const props = {
@@ -47,7 +46,7 @@ const props = {
   method,
   methodParams,
   labels,
-  colorMap
+  colorMap,
 };
 
 export default function ServiceAccessChildren({

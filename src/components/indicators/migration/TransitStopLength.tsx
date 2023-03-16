@@ -12,7 +12,7 @@ const id = 'daysInTransitStay';
 const title = 'Días de estadía';
 const column = 'm30__cua';
 const filterType = _FilterTypes.CLOSED_OPEN;
-const method = histogramValues
+const method = histogramValues;
 
 const xAxisFormatter = (value: number) => {
   if (value % 1 === 0 || value === 0) {

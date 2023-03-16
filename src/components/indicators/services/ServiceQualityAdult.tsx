@@ -15,11 +15,11 @@ const labels = new Map([
 ]);
 
 const colorMap = new Map([
-  ['No calificado', '#333333' ],
-  ['Satisfecho', "#32a852"],
-  ['Algo satisfecho',"#fa0"],
-  ['Insatisfecho', "#f27"]
-])
+  ['No calificado', '#333333'],
+  ['Satisfecho', '#32a852'],
+  ['Algo satisfecho', '#fa0'],
+  ['Insatisfecho', '#f27'],
+]);
 
 const NOTE = 'Nivel de satisfacción del servicio prestado al migrante';
 const id = 'serviceQualityAdult';
@@ -42,7 +42,7 @@ const props = {
   method,
   labels,
   methodParams,
-  colorMap
+  colorMap,
 };
 
 export default function ServiceQualityAdult({
