@@ -3,6 +3,7 @@ import { Grid } from '@material-ui/core';
 import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType';
 import CustomHistogramWidget from 'components/common/customWidgets/CustomHistogramWidget';
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
+import histogramValues from '../utils/histogramValues';
 import useWidgetEffect from '../utils/useWidgetEffect';
 
 const NOTE =
@@ -11,13 +12,7 @@ const id = 'daysInTransitStay';
 const title = 'Días de estadía';
 const column = 'm30__cua';
 const filterType = _FilterTypes.CLOSED_OPEN;
-const method = (input: any[], column: string) => {
-  const target = input.map((i: any) => ({value: i[column]}));
-  if (target) {
-    return target;
-  }
-  return [];
-};
+const method = histogramValues
 
 const xAxisFormatter = (value: number) => {
   if (value % 1 === 0 || value === 0) {

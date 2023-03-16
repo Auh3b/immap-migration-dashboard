@@ -7,14 +7,15 @@ import useWidgetEffect from '../utils/useWidgetEffect';
 import CustomHistogramWidget from 'components/common/customWidgets/CustomHistogramWidget';
 import groupCategories from '../utils/groupCategories';
 import CustomBarWidget from 'components/common/customWidgets/CustomBarWidget';
+import histogramValues from '../utils/histogramValues';
 
 const NOTE = 'Distribución de tamaño de grupo de viaje';
 const title = 'Tamaño de grupo de viaje';
 const id = 'tripComposition';
 const column = 'e17__cua';
-const operationDefault = AggregationTypes.COUNT;
-const method = groupCategories;
-const filterType = _FilterTypes.IN;
+const method = histogramValues;
+const filterType = _FilterTypes.CLOSED_OPEN;
+const bins = 4
 
 const props = {
   id,
@@ -22,6 +23,7 @@ const props = {
   column,
   method,
   filterType,
+  bins
 };
 
 export default function GroupSizeDistribution({
@@ -29,12 +31,10 @@ export default function GroupSizeDistribution({
   operation,
 }: BasicWidgetType) {
   const { widget } = useWidgetEffect(
-    <CustomBarWidget {...props} dataSource={dataSource} />,
-    // <CategoryWidget
-    //   {...props}
-    //   dataSource={dataSource}
-    //   operation={operation ? operation : operationDefault}
-    // />
+    <CustomHistogramWidget 
+      {...props}
+      dataSource={dataSource}
+    />,
     [dataSource, operation],
   );
   return (
