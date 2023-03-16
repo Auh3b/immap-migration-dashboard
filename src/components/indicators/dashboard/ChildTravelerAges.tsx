@@ -29,7 +29,6 @@ function transformData(input: any[], column: string) {
         label: '0 - 5',
         name: 'e20__cua',
         value: nna_viven,
-        // variables: Array.from(new Set(input.map((d) => d['nna_viven'])))
       },
     ],
     [
@@ -38,7 +37,6 @@ function transformData(input: any[], column: string) {
         label: '6 - 11',
         name: 'e21__cua',
         value: n_doce_die,
-        // variables: Array.from( new Set(input.map((d) => d['n_doce_die'])))
       },
     ],
     [
@@ -47,11 +45,9 @@ function transformData(input: any[], column: string) {
         label: '12 - 17',
         name: 'e22__cua',
         value: n_seis_onc,
-        // variables: Array.from( new Set(input.map((d) => d['n_seis_onc'])))
       },
     ],
   ];
-  console.log(input);
   return output;
 }
 

@@ -52,7 +52,6 @@ export default function CustomHistogramWidget({
 
   const data = useMemo(()=>{
     if(_data && range && ticks){
-      console.log(_data, ticks, range)
       return histogram({
         data: _data,
         valuesColumns: ['value'],
