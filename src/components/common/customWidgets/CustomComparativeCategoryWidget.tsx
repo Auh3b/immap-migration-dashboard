@@ -9,18 +9,13 @@ export default function CustomComparativeCategoryWidget({
   method,
   methodParams,
   column,
-  labels,
   colorMap,
   dataSource,
 }: defaultCustomWidgetProps) {
   const [data, setData] = useState<null | any[]>(null);
   const [names, setNames] = useState<null | string[]>(null);
   const [colors, setColors] = useState<null | string[]>(null);
-  const {
-    data: _data,
-    isLoading,
-    error,
-  } = useWidgetFetch({
+  const { data: _data, isLoading } = useWidgetFetch({
     id,
     method,
     column,
@@ -29,7 +24,6 @@ export default function CustomComparativeCategoryWidget({
   });
 
   useMemo(() => {
-    let output: any[];
     if (_data) {
       const _names = _data.map(([nameValue]) => nameValue);
       setNames(_names);
@@ -50,15 +44,14 @@ export default function CustomComparativeCategoryWidget({
       });
       setData(_unpackedData);
     }
-  }, [_data]);
+  }, [_data, colorMap]);
 
   return (
     <WrapperWidgetUI title={title} isLoading={isLoading}>
       {data && names && (
         <ComparativeCategoryWidgetUI
           data={data}
-          // labels={labels}
-          tooltipFormatter={()=> null}
+          tooltipFormatter={() => null}
           names={names}
           colors={colors}
         />

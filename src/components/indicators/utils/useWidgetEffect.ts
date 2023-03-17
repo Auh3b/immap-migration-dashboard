@@ -10,7 +10,7 @@ export default function useWidgetEffect(
     return () => {
       setWidget(null);
     };
-  }, [...deps]);
+  }, deps);
 
   return {
     widget,

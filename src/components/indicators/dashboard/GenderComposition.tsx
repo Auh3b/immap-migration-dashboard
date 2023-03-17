@@ -15,7 +15,7 @@ import { useDispatch } from 'react-redux';
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
 import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType';
 import LazyLoadComponent from 'components/common/LazyLoadComponent';
-import FallbackWidget from '../FallbackWidget';
+import PageFallback from 'components/common/PageFallback';
 import TopLoading from 'components/common/TopLoading';
 
 const EMPTY_ARRAY: [] = [];
@@ -79,7 +79,7 @@ const LABELS = {
   'Entre 25 y 39': '25-39',
   'Entre 40 y 64 años': '40-64',
   '65 años o más': '65+',
-  999999: 'No aclarado'
+  999999: 'No aclarado',
 };
 
 const useStyles = makeStyles(() => ({
@@ -109,7 +109,7 @@ export default function GenderComposition({ dataSource }: BasicWidgetType) {
   );
 
   return (
-    <LazyLoadComponent fallback={<FallbackWidget />}>
+    <LazyLoadComponent fallback={<PageFallback />}>
       <Grid item className={classes.main}>
         {isLoading ? <TopLoading /> : ''}
         <WrapperWidgetUI title='Porcentaje de género/edad'>
@@ -168,7 +168,7 @@ function GenderByAge({
         );
       }
     },
-    [dataSource, filterType, index, id, dispatch],
+    [dataSource, index, dispatch],
   );
 
   return (

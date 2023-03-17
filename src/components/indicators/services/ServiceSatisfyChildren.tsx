@@ -2,7 +2,6 @@ import { _FilterTypes } from '@carto/react-core';
 import { Grid } from '@material-ui/core';
 import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType';
 import CustomComparativeCategoryWidget from 'components/common/customWidgets/CustomComparativeCategoryWidget';
-import CustomPieWidget from 'components/common/customWidgets/CustomPieWidget';
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
 import stackedGroupCategories from '../utils/stackedGroupCategories';
 import useWidgetEffect from '../utils/useWidgetEffect';

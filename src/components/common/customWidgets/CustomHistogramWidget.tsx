@@ -2,7 +2,7 @@ import { AggregationTypes, histogram, _FilterTypes } from '@carto/react-core';
 import { addFilter, removeFilter } from '@carto/react-redux';
 import { HistogramWidgetUI, WrapperWidgetUI } from '@carto/react-ui';
 import { extent } from 'd3';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { defaultCustomWidgetProps } from './customWidgetsType';
 import useWidgetFetch from './hooks/useWidgetFetch';
@@ -48,7 +48,7 @@ export default function CustomHistogramWidget({
       return result;
     }
     return [];
-  }, [range]);
+  }, [range, bins]);
 
   const data = useMemo(() => {
     if (_data && range && ticks) {

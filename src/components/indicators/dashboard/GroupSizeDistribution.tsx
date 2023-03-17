@@ -1,12 +1,9 @@
-import { AggregationTypes, _FilterTypes } from '@carto/react-core';
-import { CategoryWidget, getCategories } from '@carto/react-widgets';
+import { _FilterTypes } from '@carto/react-core';
 import { Grid } from '@material-ui/core';
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
 import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType';
 import useWidgetEffect from '../utils/useWidgetEffect';
 import CustomHistogramWidget from 'components/common/customWidgets/CustomHistogramWidget';
-import groupCategories from '../utils/groupCategories';
-import CustomBarWidget from 'components/common/customWidgets/CustomBarWidget';
 import histogramValues from '../utils/histogramValues';
 
 const NOTE = 'Distribución de tamaño de grupo de viaje';

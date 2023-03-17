@@ -99,21 +99,20 @@ const layerConfig = {
   },
 };
 
-const filterCoordinates = (d:any) =>{
-  return +d['long_paisn'] !== 999999 || +d['lat_paisna'] !== 999999
-}
+const filterCoordinates = (d: any) => {
+  return +d['long_paisn'] !== 999999 || +d['lat_paisna'] !== 999999;
+};
 
-const getArcHeight = (d:any) =>{
+const getArcHeight = (d: any) => {
   return {
     ...d,
     arcHeight:
       getHeight(
         [+d['long_paisn'], +d['lat_paisna']],
         [d['long_pais'], d['lat_pais']],
-      ) || 
-    0.5,
-  }
-}
+      ) || 0.5,
+  };
+};
 
 export default function MigrationFlowLayer() {
   const { viewport } = useSelector((state: RootState) => state.carto);

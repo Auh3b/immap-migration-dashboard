@@ -1,8 +1,4 @@
-import {
-  AggregationTypes,
-  groupValuesByColumn,
-  _FilterTypes,
-} from '@carto/react-core';
+import { _FilterTypes } from '@carto/react-core';
 import { Grid } from '@material-ui/core';
 import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType';
 import CustomComparativeCategoryWidget from 'components/common/customWidgets/CustomComparativeCategoryWidget';

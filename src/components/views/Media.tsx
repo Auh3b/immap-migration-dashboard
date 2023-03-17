@@ -1,13 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
-//@ts-ignore
-import { fetchMap } from '@deck.gl/carto';
-//@ts-ignore
-import { useEffect, useState } from 'react';
-import DeckGLComponent from 'components/common/map/DeckGLComponent';
-import TopLoading from 'components/common/TopLoading';
-import { useDispatch } from 'react-redux';
-import { setViewState } from '@carto/react-redux';
 import MainView from './main/MainView';
 
 const useStyles = makeStyles((theme) => ({
@@ -38,13 +30,7 @@ export default function Media() {
 
   return (
     <Grid item className={classes.mapWrapper}>
-      {/* {isLoading ? <TopLoading /> : ''}
-      <DeckGLComponent layers={layers} /> */}
-      <MainView>
-        {{
-
-        }}
-      </MainView>
+      <MainView>{{}}</MainView>
     </Grid>
   );
 }
