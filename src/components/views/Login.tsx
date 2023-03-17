@@ -107,6 +107,9 @@ const useStylesContent = makeStyles((theme) => ({
   title: {
     marginTop: theme.spacing(1),
     color: theme.palette.primary.main,
+    '&h6':{
+      color: theme.palette.primary.dark
+    }
   },
   description: {
     marginTop: theme.spacing(2),
@@ -133,7 +136,7 @@ function Content() {
         <Typography variant='h4' color='inherit'>
           Monitoreo Flujos Migratorios Mixtos
         </Typography>
-        <Typography variant='subtitle1'>
+        <Typography variant='h6' color='inherit'>
           Colombia - Panamá - Costa Rica
         </Typography>
       </Grid>
