@@ -44,9 +44,7 @@ const customTheme = {
     subtitle1: { fontFamily: 'Barlow' },
     subtitle2: { fontFamily: 'Barlow' },
     body1: { fontFamily: 'Barlow' },
-    body2: { 
-      fontFamily: 'Barlow', 
-      fontSize:  '0.75rem'},
+    body2: { fontFamily: 'Barlow' },
     button: { fontFamily: 'Barlow' },
     caption: { fontFamily: 'Barlow' },
     overline: { fontFamily: 'Barlow' },
