@@ -8,7 +8,8 @@ import {
 } from '@material-ui/core';
 import { Lock } from '@material-ui/icons';
 import immapLogo from 'assets/img/immap-logo.png';
-import unicefLogo from 'assets/img/unicef-logo.png';
+import { ReactComponent as UnicefLogo } from 'assets/img/unicef-logo-2.svg';
+// import unicefLogo from 'assets/img/unicef-logo.png';
 import hero from 'assets/img/migration-reformed.png';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useSelector } from 'react-redux';
@@ -113,7 +114,7 @@ const useStylesContent = makeStyles((theme) => ({
   },
   description: {
     marginTop: theme.spacing(2),
-    color: '#6d6e71',
+    color: '#777779',
   },
   contact: {
     marginTop: theme.spacing(2),
@@ -212,8 +213,7 @@ function LoginButton() {
   );
 }
 
-const organisationLogoWidth = 173;
-const organisationLogoHeight = 100;
+const organisationLogoHeight = 75;
 
 const useStylesOrganisation = makeStyles((theme) => ({
   organisations: {
@@ -222,11 +222,11 @@ const useStylesOrganisation = makeStyles((theme) => ({
   },
   logo: {
     [theme.breakpoints.down('sm')]: {
-      width: organisationLogoWidth * 0.5,
+      width: '100%',
       height: organisationLogoHeight * 0.5,
     },
     [theme.breakpoints.up('md')]: {
-      width: organisationLogoWidth,
+      width: '100%',
       height: organisationLogoHeight,
     },
     objectFit: 'contain',
@@ -238,7 +238,8 @@ export function Organisations() {
   return (
     <Grid item container className={classes.organisations}>
       <Grid item>
-        <img src={unicefLogo} alt='iMMAP Logo' className={classes.logo} />
+        <UnicefLogo className={classes.logo}/>
+        {/* <img src={unicefLogo} alt='iMMAP Logo' className={classes.logo} /> */}
       </Grid>
       <Grid item>
         <img src={immapLogo} alt='iMMAP Logo' className={classes.logo} />

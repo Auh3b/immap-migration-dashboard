@@ -29,6 +29,9 @@ const customTheme = {
       secondary: '#1f3a5f',
       dark: '#6d6e70',
     },
+    common:{
+      
+    }
   },
   typography: {
     fontFamily: 'Barlow',
