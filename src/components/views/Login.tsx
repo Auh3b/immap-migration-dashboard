@@ -126,17 +126,12 @@ function Content() {
 
   return (
     <Grid item container direction='column' justifyContent='space-between' className={classes.content}>
-      {/* <Grid item className={classes.subtitle}>
-        <Typography variant='subtitle1' color='inherit'>
-          UNICEF
-        </Typography>
-      </Grid> */}
 
       <Grid item className={classes.title}>
         <Typography variant='h4' color='inherit'>
           Monitoreo Flujos Migratorios Mixtos
         </Typography>
-        <Typography variant='h6' color='inherit'>
+        <Typography variant='h5' color='inherit'>
           Colombia - Panamá - Costa Rica
         </Typography>
       </Grid>
