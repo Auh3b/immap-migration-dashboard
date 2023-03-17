@@ -9,7 +9,7 @@ import {
 import { Lock } from '@material-ui/icons';
 import immapLogo from 'assets/img/immap-logo.png';
 import unicefLogo from 'assets/img/unicef-logo.png';
-import hero from 'assets/img/hero-image.png';
+import hero from 'assets/img/migration-reformed.png';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   login: {
     height: '100%',
     [theme.breakpoints.up('md')]: {
-      padding: theme.spacing(8, 12, 8),
+      padding: theme.spacing(6, 12, 6),
     },
     [theme.breakpoints.down('sm')]: {
       padding: theme.spacing(4, 5, 4),
