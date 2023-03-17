@@ -4,7 +4,6 @@ import {
   CircularProgress,
   Grid,
   makeStyles,
-  Link,
   Typography,
 } from '@material-ui/core';
 import { Lock } from '@material-ui/icons';
@@ -23,11 +22,12 @@ const useStyles = makeStyles((theme) => ({
     height: '100%',
   },
   login: {
+    height: '100%',
     [theme.breakpoints.up('md')]: {
-      padding: theme.spacing(8, 12, 0),
+      padding: theme.spacing(8, 12, 8),
     },
     [theme.breakpoints.down('sm')]: {
-      padding: theme.spacing(4, 5, 0),
+      padding: theme.spacing(4, 5, 4),
     },
   },
   hero: {
@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     objectFit: 'contain',
   },
   footer: {
-    position: 'absolute',
+    // position: 'absolute',
     bottom: theme.spacing(3),
     color: theme.palette.common.black,
   },
@@ -63,13 +63,20 @@ export default function Login() {
         <Grid
           container
           className={classes.login}
-          direction='column'
           justifyContent='flex-start'
           alignItems='flex-start'
         >
           <Content />
 
           <Organisations />
+          <Grid item>
+            <Typography variant='caption' display='block'>
+              El propósito de este reporte es apoyar el seguimiento a la recolección de la información. En este sentido, toda la información contenida es preliminar y esta en proceso de revisión. 
+            </Typography>
+            <Typography variant='caption' display='block'>
+              Fecha de actualización: 03/13/2023.
+            </Typography>
+          </Grid>
 
           <Grid item className={classes.footer}>
             <Typography variant='caption' color='inherit'>
@@ -115,33 +122,42 @@ function Content() {
   const classes = useStylesContent();
 
   return (
-    <Grid item container direction='column' className={classes.content}>
-      <Grid item className={classes.subtitle}>
+    <Grid item container direction='column' justifyContent='space-between' className={classes.content}>
+      {/* <Grid item className={classes.subtitle}>
         <Typography variant='subtitle1' color='inherit'>
           UNICEF
         </Typography>
-      </Grid>
+      </Grid> */}
 
       <Grid item className={classes.title}>
-        <Typography variant='h3' color='inherit'>
-          Migration Dashboard
+        <Typography variant='h4' color='inherit'>
+          Monitoreo Flujos Migratorios Mixtos
+        </Typography>
+        <Typography variant='subtitle1'>
+          Colombia - Panamá - Costa Rica
         </Typography>
       </Grid>
 
       <Grid item className={classes.description}>
         <Typography variant='body2' color='inherit'>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus
-          architecto iure repudiandae explicabo totam quos et culpa nulla ipsum
-          numquam suscipit ullam temporibus tempora perferendis reiciendis,
-          animi doloremque sequi non praesentium dolorem? Harum dolorum
-          asperiores temporibus at atque cum. Fuga, sunt saepe. Error corporis
-          asperiores corrupti sint reprehenderit voluptatibus neque.
+          Los movimientos de población migrante por la frontera colombo-panameña hacia el norte del continente americano –atravesando la región del Darién– aumentaron significativamente en los meses de junio a octubre de 2021 y han mostrado la misma tendencia desde mayo de 2022 según las cifras reportadas por Migración Panamá. 
+        </Typography>
+      </Grid>
+
+      <Grid item className={classes.description}>
+        <Typography  variant='body2' color='inherit'>
+          Los registros de 2022 indican movimientos de personas de 70 nacionalidades, de las cuales el 60% corresponde a población proveniente de Venezuela. Solo en el mes de enero de 2023 han transitado más de 21 mil personas por el Darién, entre las que se contabilizó a más de 4000 niños, niñas y adolescentes en tránsito.
+        </Typography>
+      </Grid>
+      <Grid item className={classes.description}>
+        <Typography  variant='body2' color='inherit'>
+          En este contexto, UNICEF junto con iMMAP proponen una metodología novedosa para la caracterización y monitoreo de la demanda y oferta de servicios humanitarios a población migrante en la ruta Colombia – Panamá – Costa Rica con especial énfasis en niños, niñas y adolescentes. Este Dashboard muestra los principales resultados y análisis obtenidos de los datos recolectados, los cuales ayudarán, entre otras cosas, a la comprensión del fenómeno migratorio en esta región, la elaboración de planes de respuesta ante el aumento de volumen de migrantes, o, para generar un sistema de alertas tempranas a los tomadores de decisiones.  
         </Typography>
       </Grid>
 
       <LoginButton />
 
-      <Grid item className={classes.contact}>
+      {/* <Grid item className={classes.contact}>
         <Typography variant='caption' color='inherit'>
           Don't have an account yet?{' '}
         </Typography>
@@ -153,7 +169,7 @@ function Content() {
         >
           Contact
         </Link>
-      </Grid>
+      </Grid> */}
     </Grid>
   );
 }
@@ -222,7 +238,7 @@ const useStylesOrganisation = makeStyles((theme) => ({
 export function Organisations() {
   const classes = useStylesOrganisation();
   return (
-    <Grid container className={classes.organisations}>
+    <Grid item container className={classes.organisations}>
       <Grid item>
         <img src={unicefLogo} alt='iMMAP Logo' className={classes.logo} />
       </Grid>
