@@ -58,6 +58,7 @@ export default function CustomComparativeCategoryWidget({
         <ComparativeCategoryWidgetUI
           data={data}
           // labels={labels}
+          tooltipFormatter={()=> null}
           names={names}
           colors={colors}
         />

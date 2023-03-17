@@ -99,6 +99,22 @@ const layerConfig = {
   },
 };
 
+const filterCoordinates = (d:any) =>{
+  return +d['long_paisn'] !== 999999 || +d['lat_paisna'] !== 999999
+}
+
+const getArcHeight = (d:any) =>{
+  return {
+    ...d,
+    arcHeight:
+      getHeight(
+        [+d['long_paisn'], +d['lat_paisna']],
+        [d['long_pais'], d['lat_pais']],
+      ) || 
+    0.5,
+  }
+}
+
 export default function MigrationFlowLayer() {
   const { viewport } = useSelector((state: RootState) => state.carto);
   const dispatch = useDispatch();
@@ -120,14 +136,7 @@ export default function MigrationFlowLayer() {
         filtersLogicalOperator: source.filtersLogicalOperator,
       },
     });
-    return data.map((d: any) => ({
-      ...d,
-      arcHeight:
-        getHeight(
-          [+d['long_paisn'], +d['lat_paisna']],
-          [d['lon_eng'], d['lat_eng']],
-        ) || 0.5,
-    }));
+    return data.filter(filterCoordinates).map(getArcHeight);
   }
 
   const cartoLayerProps = useCartoLayerProps({
@@ -142,7 +151,7 @@ export default function MigrationFlowLayer() {
       data: fetchData(),
       id: MIGRATION_FLOW_LAYER_ID,
       getSourcePosition: (d: any) => [+d['long_paisn'], d['lat_paisna']],
-      getTargetPosition: (d: any) => [d['lon_eng'], d['lat_eng']],
+      getTargetPosition: (d: any) => [d['long_pais'], d['lat_pais']],
       getWidth: 1,
       getHeight: 1,
       getTilt: 0,
