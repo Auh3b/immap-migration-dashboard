@@ -79,6 +79,7 @@ const LABELS = {
   'Entre 25 y 39': '25-39',
   'Entre 40 y 64 años': '40-64',
   '65 años o más': '65+',
+  999999: 'No aclarado'
 };
 
 const useStyles = makeStyles(() => ({

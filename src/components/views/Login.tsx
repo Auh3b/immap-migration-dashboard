@@ -23,12 +23,14 @@ const useStyles = makeStyles((theme) => ({
     height: '100%',
   },
   login: {
-    height: '100%',
     [theme.breakpoints.up('md')]: {
+      height: '100%',
       padding: theme.spacing(6, 12, 6),
     },
     [theme.breakpoints.down('sm')]: {
       padding: theme.spacing(4, 5, 4),
+      overflow: 'auto',
+      maxHeight: 'calc(100vh - 56px) ',
     },
   },
   hero: {
