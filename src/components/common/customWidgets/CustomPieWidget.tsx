@@ -1,11 +1,13 @@
 import { addFilter, clearFilters, removeFilter } from '@carto/react-redux';
-import { PieWidgetUI, WrapperWidgetUI } from '@carto/react-ui';
+import { PieWidgetUI } from '@carto/react-ui';
 import useWidgetFetch from './hooks/useWidgetFetch';
-import { useCallback } from 'react';
+import { lazy, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { defaultCustomWidgetProps } from './customWidgetsType';
 import useWidgetFilterValues from './hooks/useWidgetFilterValues';
 import { Link, makeStyles } from '@material-ui/core';
+
+const CustomWidgetWrapper = lazy(()=> import('components/common/customWidgets/CustomWidgetWrapper'))
 
 const EMPTY_ARRAY: [] = [];
 
@@ -79,7 +81,7 @@ export default function CustomPieWidget({
   });
 
   return (
-    <WrapperWidgetUI title={title} isLoading={isLoading} onError={error}>
+    <CustomWidgetWrapper title={title} isLoading={isLoading} onError={error}>
       <div className={classes.main}>
         {selectedCategories && selectedCategories.length > 0 && (
           <Link
@@ -99,6 +101,6 @@ export default function CustomPieWidget({
           />
         )}
       </div>
-    </WrapperWidgetUI>
+    </CustomWidgetWrapper>
   );
 }

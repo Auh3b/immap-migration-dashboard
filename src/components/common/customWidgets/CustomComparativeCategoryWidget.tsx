@@ -1,7 +1,9 @@
-import { ComparativeCategoryWidgetUI, WrapperWidgetUI } from '@carto/react-ui';
-import { useMemo, useState } from 'react';
+import { ComparativeCategoryWidgetUI } from '@carto/react-ui';
+import { lazy, useMemo, useState } from 'react';
 import { defaultCustomWidgetProps } from './customWidgetsType';
 import useWidgetFetch from './hooks/useWidgetFetch';
+
+const CustomWidgetWrapper = lazy(()=> import('components/common/customWidgets/CustomWidgetWrapper'))
 
 export default function CustomComparativeCategoryWidget({
   id,
@@ -47,7 +49,7 @@ export default function CustomComparativeCategoryWidget({
   }, [_data, colorMap]);
 
   return (
-    <WrapperWidgetUI title={title} isLoading={isLoading}>
+    <CustomWidgetWrapper title={title} isLoading={isLoading}>
       {data && names && (
         <ComparativeCategoryWidgetUI
           data={data}
@@ -56,6 +58,6 @@ export default function CustomComparativeCategoryWidget({
           colors={colors}
         />
       )}
-    </WrapperWidgetUI>
+    </CustomWidgetWrapper>
   );
 }

@@ -1,12 +1,14 @@
 import { AggregationTypes, histogram, _FilterTypes } from '@carto/react-core';
 import { addFilter, removeFilter } from '@carto/react-redux';
-import { HistogramWidgetUI, WrapperWidgetUI } from '@carto/react-ui';
+import { HistogramWidgetUI } from '@carto/react-ui';
 import { extent } from 'd3';
-import { useCallback, useMemo } from 'react';
+import { lazy, useCallback, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { defaultCustomWidgetProps } from './customWidgetsType';
 import useWidgetFetch from './hooks/useWidgetFetch';
 import useWidgetFilterValues from './hooks/useWidgetFilterValues';
+
+const CustomWidgetWrapper = lazy(()=> import('components/common/customWidgets/CustomWidgetWrapper'))
 
 const EMPTY_ARRAY: [] = [];
 
@@ -119,7 +121,7 @@ export default function CustomHistogramWidget({
   );
 
   return (
-    <WrapperWidgetUI title={title} isLoading={isLoading}>
+    <CustomWidgetWrapper title={title} isLoading={isLoading}>
       {range && data && ticks && (
         <HistogramWidgetUI
           data={data}
@@ -132,6 +134,6 @@ export default function CustomHistogramWidget({
           yAxisFormatter={yAxisFormatter}
         />
       )}
-    </WrapperWidgetUI>
+    </CustomWidgetWrapper>
   );
 }

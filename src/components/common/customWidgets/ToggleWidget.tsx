@@ -1,8 +1,11 @@
 import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
 import { defaultCustomWidgetProps } from './customWidgetsType';
 import useWidgetFetch from './hooks/useWidgetFetch';
-import { FormulaWidgetUI, WrapperWidgetUI } from '@carto/react-ui';
+import { FormulaWidgetUI } from '@carto/react-ui';
 import { makeStyles } from '@material-ui/core';
+import { lazy } from 'react';
+
+const CustomWidgetWrapper = lazy(()=> import('components/common/customWidgets/CustomWidgetWrapper'))
 
 const useStyles: any = makeStyles(() => ({
   container: {
@@ -37,7 +40,7 @@ export default function ToggleWidget({
     column,
   });
   return (
-    <WrapperWidgetUI title={title} isLoading={isLoading}>
+    <CustomWidgetWrapper title={title} isLoading={isLoading}>
       <ToggleButtonGroup
         className={classes.container}
         arial-label='text alignment'
@@ -58,6 +61,6 @@ export default function ToggleWidget({
             );
           })}
       </ToggleButtonGroup>
-    </WrapperWidgetUI>
+    </CustomWidgetWrapper>
   );
 }
