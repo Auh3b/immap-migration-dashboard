@@ -78,7 +78,7 @@ export default function Login() {
               información contenida es preliminar y esta en proceso de revisión.
             </Typography>
             <Typography variant='caption' display='block'>
-              Fecha de actualización: 03/13/2023.
+              Fecha de actualización: 03/16/2023.
             </Typography>
           </Grid>
 
