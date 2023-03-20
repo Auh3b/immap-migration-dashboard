@@ -17,6 +17,12 @@ import { TILE_FORMATS } from '@deck.gl/carto';
 import { format, scaleLinear } from 'd3';
 import distance from '@turf/distance';
 
+const layerStyle = new Map([
+  ['país de nacimiento', [195, 108, 108]],
+  ['Flow_start', [108, 195, 108]],
+  ['año después', [108, 108, 195]],
+])
+
 type coordinates = [number, number];
 
 const tripLength = (a: [number, number], b: [number, number]): number =>
@@ -61,70 +67,68 @@ class TravelLayer extends CompositeLayer {
       pickable,
       //@ts-ignore
     } = this.props;
+    const layerName = Array.from(layerStyle.keys())
+    const layerColor = Array.from(layerStyle.values())
     return [
       new ArcLayer(
         //@ts-ignore
         this.getSubLayerProps({
-          id: 'birth_country',
+          id: layerName[0],
           data,
           getSourcePosition,
           getTargetPosition,
           getWidth,
           getHeight,
           getTilt,
-          getSourceColor,
-          getTargetColor,
+          getSourceColor: layerColor[0],
+          getTargetColor: layerColor[0],
           pickable,
         }),
       ),
-      // new ArcLayer(
-      //   //@ts-ignore
-      //   this.getSubLayerProps({
-      //     id: 'flow_start',
-      //     data,
-      //     getSourcePosition: (d: any) => [+d['long_paisi'], d['lat_paisin']],
-      //     getTargetPosition,
-      //     getWidth,
-      //     getHeight,
-      //     getTilt,
-      //     getSourceColor,
-      //     getTargetColor,
-      //     pickable,
-      //   })
-      // ),
-      // new ArcLayer(
-      //   //@ts-ignore
-      //   this.getSubLayerProps({
-      //     id: 'year_later',
-      //     data,
-      //     getSourcePosition: (d: any) => [+d['long_paisv'], d['lat_paisvi']],
-      //     getTargetPosition,
-      //     getWidth,
-      //     getHeight,
-      //     getTilt,
-      //     getSourceColor,
-      //     getTargetColor,
-      //     pickable,
-      //   })
-      // )
+      new ArcLayer(
+        //@ts-ignore
+        this.getSubLayerProps({
+          id: layerName[1],
+          data,
+          getSourcePosition: (d: any) => [+d['long_paisi'], d['lat_paisin']],
+          getTargetPosition,
+          getWidth,
+          getHeight,
+          getTilt,
+          getSourceColor: layerColor[1],
+          getTargetColor: layerColor[1],
+          pickable,
+        })
+      ),
+      new ArcLayer(
+        //@ts-ignore
+        this.getSubLayerProps({
+          id: layerName[2],
+          data,
+          getSourcePosition: (d: any) => [+d['long_paisv'], d['lat_paisvi']],
+          getTargetPosition,
+          getWidth,
+          getHeight,
+          getTilt,
+          getSourceColor: layerColor[2],
+          getTargetColor: layerColor[2],
+          pickable,
+        })
+      )
     ];
   }
 }
+
+
 
 const layerConfig = {
   title: 'Flujo de migración',
   visible: true,
   switchable: true,
   legend: {
-    type: LEGEND_TYPES.CONTINUOUS_RAMP,
-    colors: [
-      [0, 128, 200],
-      [200, 0, 80],
-    ],
-    labels: [
-      { label: 'Comenzar', value: 0 },
-      { label: 'Finalizar', value: 1 },
-    ],
+    type: LEGEND_TYPES.CATEGORY,
+    colors: Array.from(layerStyle.values()),
+    labels: Array.from(layerStyle.keys()),
     collapsible: false,
   },
 };
