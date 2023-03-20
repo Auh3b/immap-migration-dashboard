@@ -4,70 +4,6 @@ import { defaultCustomWidgetProps } from './customWidgetsType';
 import CustomWidgetWrapper from './CustomWidgetWrapper';
 import useWidgetFetch from './hooks/useWidgetFetch';
 
-const data = [
-  {
-    name: 'Grandpa',
-    children: [
-      {
-        name: 'Uncle Leo',
-        value: 15,
-        children: [
-          {
-            name: 'Cousin Jack',
-            value: 2
-          },
-          {
-            name: 'Cousin Mary',
-            value: 5,
-            children: [
-              {
-                name: 'Jackson',
-                value: 2
-              }
-            ]
-          },
-          {
-            name: 'Cousin Ben',
-            value: 4
-          }
-        ]
-      },
-      {
-        name: 'Father',
-        value: 10,
-        children: [
-          {
-            name: 'Me',
-            value: 5
-          },
-          {
-            name: 'Brother Peter',
-            value: 1
-          }
-        ]
-      }
-    ]
-  },
-  {
-    name: 'Nancy',
-    children: [
-      {
-        name: 'Uncle Nike',
-        children: [
-          {
-            name: 'Cousin Betty',
-            value: 1
-          },
-          {
-            name: 'Cousin Jenny',
-            value: 2
-          }
-        ]
-      }
-    ]
-  }
-];
-
 export default function CustomSunburstWidget({
   id,
   title,
@@ -91,13 +27,14 @@ export default function CustomSunburstWidget({
       // emphasis: {
       //     focus: 'ancestor'
       // },
-      data: data,
+      data: data.data,
       radius: [30, '90%'],
       toolTip:{
         show: true,
         trigger: 'item'
       },
       legend: {
+        data: data.legend,
         width: 200,
         left: 0
       },
