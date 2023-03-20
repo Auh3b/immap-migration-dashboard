@@ -1,7 +1,7 @@
 //@ts-nocheck
-import { Grid, makeStyles, Typography } from '@material-ui/core';
+import { Collapse, Grid, Link, makeStyles, Typography } from '@material-ui/core';
 import ReactEchart from 'echarts-for-react'
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { defaultCustomWidgetProps } from './customWidgetsType';
 import CustomWidgetWrapper from './CustomWidgetWrapper';
 import useWidgetFetch from './hooks/useWidgetFetch';
@@ -14,7 +14,8 @@ const useStyle = makeStyles((theme)=>({
     borderRadius: '100%'
   },
   tipsTitle:{
-    fontWeight: '600'
+    fontWeight: '600',
+    display: 'block'
   },
   tips:{
     display: 'block'
@@ -32,7 +33,7 @@ export default function CustomSunburstWidget({
   methodParams
 }:defaultCustomWidgetProps) {
   const classes = useStyle()
-
+  const [isOpen, setIsOpen] = useState(false)
   const {data, isLoading} = useWidgetFetch({
     id,
     method,
@@ -66,6 +67,10 @@ export default function CustomSunburstWidget({
       show: true,
     },
   }), [data])
+
+  const handleClick = () => {
+    setIsOpen(!isOpen)
+  }
   return (
     <CustomWidgetWrapper title={title} isLoading={isLoading}>
       {data && 
@@ -83,15 +88,19 @@ export default function CustomSunburstWidget({
               </Typography>
             </Grid>
           )}
-          <Grid item>
-            <Typography className={classes.tipsTitle} variant='caption'>
-              Tip:
-            </Typography>
-            {levels.map((d, index) =>
-              <Typography className={classes.tips} key={index} variant='overline'>
-                Nivel{index+1}: {d}
+          <Grid xs={12} item>
+            <Link href='#' onClick={handleClick}>
+              <Typography className={classes.tipsTitle} variant='caption'>
+                Tip:
               </Typography>
-            )}
+            </Link>
+            <Collapse in={isOpen} unmountOnExit>
+              {levels.map((d, index) =>
+                <Typography className={classes.tips} key={index} variant='overline'>
+                  Nivel{index+1}: {d}
+                </Typography>
+              )}
+            </Collapse>
           </Grid>
         </Grid>
       }
