@@ -93,11 +93,20 @@ export default function CustomSunburstWidget({
       // },
       data: data,
       radius: [30, '90%'],
+      toolTip:{
+        show: true,
+        trigger: 'item'
+      },
+      legend: {
+        width: 200,
+        left: 0
+      },
       label: {
-        rotate: 'radial'
+        rotate: 'tangential'
       }
     }
   }), [data])
+  console.log(data)
   return (
     <CustomWidgetWrapper title={title} isLoading={isLoading}>
       {data && 
