@@ -27,10 +27,12 @@ export default function CustomComparativeCategoryWidget({
 
   useMemo(() => {
     if (_data) {
+      //@ts-ignore
       const _names = _data.map(([nameValue]) => nameValue);
       setNames(_names);
       const _colors = _names.map((name) => colorMap.get(name));
       setColors(_colors);
+      //@ts-ignore
       const _packedData = _data.map(([name, value]) => Array.from(value));
       const _unpackedData = _packedData.map((group) => {
         let newGroup: any[] = [];
