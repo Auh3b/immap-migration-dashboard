@@ -1,5 +1,5 @@
-// import OriginCountry from "components/common/indicators/migration/OriginCountry";
 import { MainColumnView } from 'components/common/MainColumnView';
+import CountryFlow from 'components/indicators/migration/CountryFlow';
 import { lazy } from 'react';
 const OriginCountry = lazy(
   () => import('components/indicators/migration/OriginCountry'),
@@ -18,6 +18,7 @@ export default function MigrationLeftView({ dataSources }: any) {
   const { mainSource } = dataSources;
   return (
     <MainColumnView>
+      <CountryFlow dataSource={mainSource.id}/>
       <OriginCountry dataSource={mainSource.id} />
       <CountryDeparted dataSource={mainSource.id} />
       <CountryResiding dataSource={mainSource.id} />

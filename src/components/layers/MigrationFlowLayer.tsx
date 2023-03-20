@@ -77,36 +77,36 @@ class TravelLayer extends CompositeLayer {
           pickable,
         }),
       ),
-      new ArcLayer(
-        //@ts-ignore
-        this.getSubLayerProps({
-          id: 'flow_start',
-          data,
-          getSourcePosition: (d: any) => [+d['long_paisi'], d['lat_paisin']],
-          getTargetPosition,
-          getWidth,
-          getHeight,
-          getTilt,
-          getSourceColor,
-          getTargetColor,
-          pickable,
-        })
-      ),
-      new ArcLayer(
-        //@ts-ignore
-        this.getSubLayerProps({
-          id: 'year_later',
-          data,
-          getSourcePosition: (d: any) => [+d['long_paisv'], d['lat_paisvi']],
-          getTargetPosition,
-          getWidth,
-          getHeight,
-          getTilt,
-          getSourceColor,
-          getTargetColor,
-          pickable,
-        })
-      )
+      // new ArcLayer(
+      //   //@ts-ignore
+      //   this.getSubLayerProps({
+      //     id: 'flow_start',
+      //     data,
+      //     getSourcePosition: (d: any) => [+d['long_paisi'], d['lat_paisin']],
+      //     getTargetPosition,
+      //     getWidth,
+      //     getHeight,
+      //     getTilt,
+      //     getSourceColor,
+      //     getTargetColor,
+      //     pickable,
+      //   })
+      // ),
+      // new ArcLayer(
+      //   //@ts-ignore
+      //   this.getSubLayerProps({
+      //     id: 'year_later',
+      //     data,
+      //     getSourcePosition: (d: any) => [+d['long_paisv'], d['lat_paisvi']],
+      //     getTargetPosition,
+      //     getWidth,
+      //     getHeight,
+      //     getTilt,
+      //     getSourceColor,
+      //     getTargetColor,
+      //     pickable,
+      //   })
+      // )
     ];
   }
 }
@@ -187,6 +187,9 @@ export default function MigrationFlowLayer() {
       getSourceColor: layerConfig.legend.colors[0],
       getTargetColor: layerConfig.legend.colors[1],
       pickable: true,
+      // onDataLoad:(data:any[])=>{
+      //   console.log(data.slice(0,10))
+      // },
       onDataLoads: () => {
         dispatch(
           updateLayer({

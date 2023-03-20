@@ -8,16 +8,13 @@ import getTileFeatures from 'utils/methods/getTileFeatures';
 import useCustomCompareEffect from '../../../../hooks/useCustomCompareEffect';
 import { dequal } from 'dequal';
 import useWidgetSource from './useWidgetSource';
-
-export interface WidgetFetchMethod {
-  (input: any[], column: string): any[] | null;
-}
+import MethodFunc from 'components/indicators/utils/methodType';
 
 export interface useWidgetFetchProps {
   id: string;
   dataSource: any;
   column?: string;
-  method?: WidgetFetchMethod | null;
+  method?: MethodFunc | null;
   methodParams?: {};
   global?: boolean;
 }
@@ -31,7 +28,7 @@ export interface useWidgetFetchProps {
 
 export default function useWidgetFetch({
   id,
-  method = (input) => input,
+  method = (input, column) => input,
   column,
   dataSource,
   methodParams = {},

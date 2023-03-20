@@ -1,5 +1,5 @@
 import { _FilterTypes } from '@carto/react-core';
-import { WidgetFetchMethod } from './hooks/useWidgetFetch';
+import MethodFunc from 'components/indicators/utils/methodType';
 
 export interface defaultCustomWidgetProps {
   title: string;
@@ -7,7 +7,7 @@ export interface defaultCustomWidgetProps {
   dataSource: string;
   column: string;
   filterType: _FilterTypes;
-  method?: WidgetFetchMethod;
+  method?: MethodFunc;
   methodParams?: Record<string, unknown>;
   labels?: any;
   colorMap?: any;

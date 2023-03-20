@@ -17,6 +17,7 @@ import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType
 import LazyLoadComponent from 'components/common/LazyLoadComponent';
 import PageFallback from 'components/common/PageFallback';
 import TopLoading from 'components/common/TopLoading';
+import MethodFunc from '../utils/methodType';
 
 const EMPTY_ARRAY: [] = [];
 const PRIMARY_COLUMN = 'e07_gener';
@@ -31,7 +32,7 @@ function groupGenderByAge(data: any[], column: string) {
   });
 }
 
-function getGenderData(input: any[], column: string): any[] | null {
+const getGenderData: MethodFunc = (input, column) =>{
   if (input.length === 0) {
     return null;
   }
