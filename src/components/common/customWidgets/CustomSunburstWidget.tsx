@@ -12,8 +12,16 @@ const useStyle = makeStyles((theme)=>({
     height: theme.spacing(1),
     marginRight: theme.spacing(1),
     borderRadius: '100%'
+  },
+  tipsTitle:{
+    fontWeight: '600'
+  },
+  tips:{
+    display: 'block'
   }
 }))
+
+const levels = ['País de nacimiento','País del flujo inicial', 'País después de un año'] 
 
 export default function CustomSunburstWidget({
   id,
@@ -75,6 +83,16 @@ export default function CustomSunburstWidget({
               </Typography>
             </Grid>
           )}
+          <Grid item>
+            <Typography className={classes.tipsTitle} variant='caption'>
+              Tip:
+            </Typography>
+            {levels.map((d, index) =>
+              <Typography className={classes.tips} key={index} variant='overline'>
+                Nivel{index+1}: {d}
+              </Typography>
+            )}
+          </Grid>
         </Grid>
       }
     </CustomWidgetWrapper>
