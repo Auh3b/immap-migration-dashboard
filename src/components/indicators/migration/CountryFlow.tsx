@@ -88,10 +88,19 @@ function getHierarchy(input:any[],column:string, params?:Record<any,any>){
       itemStyle
     })
   }
+  
+  const legend = colors.forEach((v, k) =>({
+    name: k,
+    icon: 'circle',
+    itemStyle:{
+      color: v
+    }
+  })
+  )
 
   return {
     data: nest,
-    legend: Object.fromEntries(colors)
+    legend
   } 
 }
 
