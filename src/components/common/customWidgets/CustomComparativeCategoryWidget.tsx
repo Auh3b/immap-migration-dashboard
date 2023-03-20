@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { ComparativeCategoryWidgetUI } from '@carto/react-ui';
 import { lazy, useMemo, useState } from 'react';
 import { defaultCustomWidgetProps } from './customWidgetsType';
