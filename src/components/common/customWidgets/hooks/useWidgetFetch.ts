@@ -35,7 +35,7 @@ export default function useWidgetFetch({
   global = false,
 }: useWidgetFetchProps) {
   const { viewport } = useSelector((state: RootState) => state.carto);
-  const [data, setData] = useState<any[]|Record<any,any>>([]);
+  const [data, setData] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const isSourceReady = useSelector(
