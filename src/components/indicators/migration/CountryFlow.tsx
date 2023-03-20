@@ -57,11 +57,10 @@ function getHierarchy(input:any[],column:string, params?:Record<any,any>){
   const childrenNamesLv1 = children1.map(({name})=> name)
   
   const nest:any[] = []
-  console.log(childrenNamesLv1)
 
   for (let i = 0; i < childrenNamesLv1.length; i++){
     const name = childrenNamesLv1[i]
-    const slice1 = getFilteredInput(input, column, name)
+    const slice1 = getFilteredInput(input, levels[0], name)
     const children2 =  getChildren(slice1, levels[1])
     const childrenNamesLv2 = children2.map(({name})=> name)
     const value = getChildrenLength(children2)
@@ -69,11 +68,11 @@ function getHierarchy(input:any[],column:string, params?:Record<any,any>){
       color: colors.get(name) || '#999999'
     }
     const newChildren:any[] = []
-    console.log(childrenNamesLv2)
+
     for (let j = 0; j < childrenNamesLv2.length; j++){
       const name = childrenNamesLv2[j]
-      const slice2 = getFilteredInput(slice1, column, name)
-      const children3 =  getChildren(slice2, levels[2])
+      const slice2 = getFilteredInput(slice1, levels[1], name)
+      const children3 = getChildren(slice2, levels[2])
       const value = getChildrenLength(children3)
       const itemStyle = {
         color: colors.get(name) || '#999999'
@@ -90,7 +89,7 @@ function getHierarchy(input:any[],column:string, params?:Record<any,any>){
     nest.push({
       name,
       value,
-      children: newChildren.filter(d => d.name === name),
+      children: newChildren,
       itemStyle
     })
   }
