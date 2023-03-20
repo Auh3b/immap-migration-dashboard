@@ -91,7 +91,7 @@ function getHierarchy(input:any[],column:string, params?:Record<any,any>){
 
   return {
     data: nest,
-    legend
+    legend: Object.fromEntries(colors)
   } 
 }
 
