@@ -27,6 +27,7 @@ export default function CustomSunburstWidget({
       // emphasis: {
       //     focus: 'ancestor'
       // },
+      //@ts-ignore
       data: data.data,
       radius: [30, '90%'],
       toolTip:{
@@ -34,6 +35,7 @@ export default function CustomSunburstWidget({
         trigger: 'item'
       },
       legend: {
+        //@ts-ignore
         data: data.legend,
         width: 200,
         left: 0
