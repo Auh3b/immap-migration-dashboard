@@ -3,7 +3,7 @@ import { Grid } from "@material-ui/core";
 import { BasicWidgetType } from "components/common/customWidgets/basicWidgetType";
 import CustomSunburstWidget from "components/common/customWidgets/CustomSunburstWidget";
 import WidgetNote from "components/common/customWidgets/WidgetNote";
-import { scaleOrdinal, schemeSet3, sum } from "d3";
+import { scaleOrdinal, schemeSet1, schemeSet3, sum } from "d3";
 import groupCategories from "../utils/groupCategories";
 import useWidgetEffect from "../utils/useWidgetEffect";
 
@@ -12,16 +12,20 @@ function getChildrenLength(input:any[]):number{
   return sum(input, v => v.value)
 }
 
+function filterUnwantedValues(input:any[], column:string){
+  return input.filter(d => +d[column] !== 999999)
+}
+
 function getChildren(input:any[], column:string):any[]{
   return groupCategories(input, column)
 }
 
 function getFilteredInput(input:any[], column:string, value:string):any[]{
-  return input.filter(d => d[column] === value)
+  return filterUnwantedValues(input, column).filter(d => d[column] === value)
 }
 
 function getColorScale(range:string[]){
-  return scaleOrdinal().domain(range).range(schemeSet3)
+  return scaleOrdinal().domain(range).range(schemeSet1)
 }
 
 function getColors(input:any[], columns:string[]){
@@ -49,26 +53,26 @@ function getHierarchy(input:any[],column:string, params?:Record<any,any>){
   //@ts-ignore
   const levels = [column, params.lv2, params.lv3]
   const colors = getColors(input, levels)
-  let children = groupCategories(input,column)
-  const childrenNames = children.map(({name})=> name)
+  const children1 = groupCategories(input,column)
+  const childrenNames = children1.map(({name})=> name)
   
   const nest:any[] = []
 
   for (let i = 0; i < childrenNames.length; i++){
     const name = childrenNames[i]
     const slice = getFilteredInput(input, column, name)
-    const children =  getChildren(slice, levels[1])
-    const childrenNamesLv2 = children.map(({name})=> name)
-    const value = getChildrenLength(children)
+    const children2 =  getChildren(slice, levels[1])
+    const childrenNamesLv2 = children2.map(({name})=> name)
+    const value = getChildrenLength(children2)
     const itemStyle = {
       color: colors.get(name) || '#999999'
     }
     const newChildren:any[] = []
     for (let j = 0; j < childrenNamesLv2.length; j++){
-      const name = childrenNames[j]
+      const name = childrenNamesLv2[j]
       const slice = getFilteredInput(input, column, name)
-      const children =  getChildren(slice, levels[2])
-      const value = getChildrenLength(children)
+      const children3 =  getChildren(slice, levels[2])
+      const value = getChildrenLength(children3)
       const itemStyle = {
         color: colors.get(name) || '#999999'
       }
@@ -76,7 +80,7 @@ function getHierarchy(input:any[],column:string, params?:Record<any,any>){
       newChildren.push({
         name,
         value,
-        children: children.map(d => ({...d, itemStyle: {color: colors.get(d.name)}})),
+        children: children3.map(d => ({...d, itemStyle: {color: colors.get(d.name)}})),
         itemStyle
       })
     }
@@ -89,14 +93,15 @@ function getHierarchy(input:any[],column:string, params?:Record<any,any>){
     })
   }
   
-  const legend = colors.forEach((v, k) =>({
-    name: k,
-    icon: 'circle',
-    itemStyle:{
-      color: v
+  const legend:any[] = []
+  colors.forEach((v, k) =>{
+    if(+k !== 999999){
+      legend.push({
+        name: k,
+        color: v
+      })
     }
   })
-  )
 
   return {
     data: nest,
