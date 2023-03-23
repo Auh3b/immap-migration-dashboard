@@ -38,6 +38,7 @@ const getHeight = (a: coordinates, b: coordinates) => {
 
 export const MIGRATION_FLOW_LAYER_ID = 'migrationFlowLayer';
 
+//@ts-ignore
 class TravelLayer extends CompositeLayer {
   constructor(props: any) {
     super(props);

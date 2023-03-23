@@ -3,7 +3,7 @@ import { Grid } from "@material-ui/core";
 import { BasicWidgetType } from "components/common/customWidgets/basicWidgetType";
 import CustomSunburstWidget from "components/common/customWidgets/CustomSunburstWidget";
 import WidgetNote from "components/common/customWidgets/WidgetNote";
-import { scaleOrdinal, schemeSet1, schemeSet3, sum } from "d3";
+import { scaleOrdinal, schemeSet1, sum } from "d3";
 import groupCategories from "../utils/groupCategories";
 import useWidgetEffect from "../utils/useWidgetEffect";
 
@@ -103,7 +103,6 @@ function getHierarchy(input:any[],column:string, params?:Record<any,any>){
       })
     }
   })
-  console.log(nest)
   return {
     data: nest,
     legend

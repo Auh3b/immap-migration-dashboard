@@ -46,6 +46,7 @@ function checkFeatureCollection(data: any[]): any[] {
 
 export const SURVEY_CONCENTRATIONS_LAYER_ID = 'surveyConcentrationsLayer';
 
+//@ts-ignore
 class CircleClusterLayer extends CompositeLayer {
   constructor(props: any) {
     super(props);
