@@ -1,5 +1,5 @@
 //@ts-nocheck
-import { Collapse, Grid, Link, makeStyles, Typography } from '@material-ui/core';
+import { Collapse, Grid, Link, makeStyles, Typography, useTheme } from '@material-ui/core';
 import ReactEchart from 'echarts-for-react'
 import { useMemo, useState } from 'react';
 import { defaultCustomWidgetProps } from './customWidgetsType';
@@ -7,7 +7,11 @@ import CustomWidgetWrapper from './CustomWidgetWrapper';
 import useWidgetFetch from './hooks/useWidgetFetch';
 
 const useStyle = makeStyles((theme)=>({
+  legendContainer:{
+    gap: theme.spacing(0.5)
+  },
   legendIcon:{
+    display: 'block',
     width: theme.spacing(1),
     height: theme.spacing(1),
     marginRight: theme.spacing(1),
@@ -33,6 +37,7 @@ export default function CustomSunburstWidget({
   methodParams
 }:defaultCustomWidgetProps) {
   const classes = useStyle()
+  const theme = useTheme()
   const [isOpen, setIsOpen] = useState(false)
   const {data, isLoading} = useWidgetFetch({
     id,
@@ -57,16 +62,41 @@ export default function CustomSunburstWidget({
       },
       label: {
         show: false,
-        rotate: 'tangential'
       }
     },
     tooltip:{
-      show: true
+      show: true,
+      padding: [theme.spacing(0.5), theme.spacing(1)], 
+      borderWidth: 0,
+      textStyle: {
+        ...theme.typography.caption,
+        fontSize: 12,
+        lineHeight: 16,
+        color: theme.palette.common.white
+      },
+      backgroundColor: theme.palette.other.tooltip,
+      formatter({name, color, value}){
+        return (
+          `<span 
+            style='min-width: 35px; display: flex; flex-direction: column;'
+            >
+             <span>${name}</span>
+             <span 
+              style='display: flex; justify-content: space-between; align-items: center;'
+              >
+               <span 
+                style='background-color: ${color}; width: 10px; height: 10px; border-radius: 100%;'
+                ></span>
+                <span>${value}</span>
+             </span>
+          </span>`
+        )
+      }
     },
     legend: {
       show: true,
     },
-  }), [data])
+  }), [theme,data])
 
   const handleClick = () => {
     setIsOpen(!isOpen)
@@ -79,10 +109,10 @@ export default function CustomSunburstWidget({
         />
       }
       {data.legend &&
-        <Grid container>
+        <Grid container className={classes.legendContainer}>
           {data.legend.map(({name, color}, index)=>
-            <Grid container alignItems='center' xs={4} item key={index}>
-              <div className={classes.legendIcon} style={{backgroundColor: color}}></div>
+            <Grid container wrap='nowrap' alignItems='center' xs item key={index}>
+              <span className={classes.legendIcon} style={{backgroundColor: color}}></span>
               <Typography variant='overline'>
                 {name}
               </Typography>

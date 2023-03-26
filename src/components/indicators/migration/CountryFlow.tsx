@@ -3,10 +3,12 @@ import { Grid } from "@material-ui/core";
 import { BasicWidgetType } from "components/common/customWidgets/basicWidgetType";
 import CustomSunburstWidget from "components/common/customWidgets/CustomSunburstWidget";
 import WidgetNote from "components/common/customWidgets/WidgetNote";
-import { scaleOrdinal, schemeSet1, sum } from "d3";
+import { scaleOrdinal, sum } from "d3";
 import groupCategories from "../utils/groupCategories";
 import useWidgetEffect from "../utils/useWidgetEffect";
 
+
+const CUSTOM_COLOR_RANGE = ['#1CABE2','#E2531C','#1CE253','#531CE2','#E21CAB','#ABE21C','#E2B61C' ]
 
 function getChildrenLength(input:any[]):number{
   return sum(input, v => v.value)
@@ -25,7 +27,7 @@ function getFilteredInput(input:any[], column:string, value:string):any[]{
 }
 
 function getColorScale(range:string[]){
-  return scaleOrdinal().domain(range).range(schemeSet1)
+  return scaleOrdinal().domain(range).range(CUSTOM_COLOR_RANGE)
 }
 
 function getColors(input:any[], columns:string[]){
