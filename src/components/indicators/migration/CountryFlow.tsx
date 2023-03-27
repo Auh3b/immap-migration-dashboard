@@ -8,7 +8,7 @@ import groupCategories from "../utils/groupCategories";
 import useWidgetEffect from "../utils/useWidgetEffect";
 
 
-const CUSTOM_COLOR_RANGE = ['#1CABE2','#E2531C','#1CE253','#531CE2','#E21CAB','#ABE21C','#E2B61C' ]
+const CUSTOM_COLOR_RANGE = ['#1CABE2','#00833D','#FFC20E','#F26A21','#961A49','#6A1E74','#374EA2', '#777779', '#80BD41']
 
 function getChildrenLength(input:any[]):number{
   return sum(input, v => v.value)
