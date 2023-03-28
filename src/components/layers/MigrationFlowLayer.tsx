@@ -18,9 +18,9 @@ import { format, scaleLinear } from 'd3';
 import distance from '@turf/distance';
 
 const layerStyle = new Map([
-  ['país de nacimiento', [195, 108, 108]],
-  ['Flow_start', [108, 195, 108]],
-  ['año después', [108, 108, 195]],
+  ['Arc 1: país de nacimiento', [195, 108, 108]],
+  ['Arc 2: País donde inició el flujo migratorio', [108, 195, 108]],
+  ['Arc 3: País donde vivía hace un año', [108, 108, 195]],
 ]);
 
 type coordinates = [number, number];
@@ -56,15 +56,12 @@ class TravelLayer extends CompositeLayer {
 
   renderLayers() {
     const {
-      id,
       data,
       getSourcePosition,
       getTargetPosition,
       getWidth,
       getHeight,
       getTilt,
-      getSourceColor,
-      getTargetColor,
       pickable,
       //@ts-ignore
     } = this.props;

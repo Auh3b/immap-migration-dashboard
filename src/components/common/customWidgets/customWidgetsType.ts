@@ -4,7 +4,7 @@ import MethodFunc from 'components/indicators/utils/methodType';
 export interface defaultCustomWidgetProps {
   title: string;
   id: string;
-  dataSource: string;
+  dataSource?: string;
   column: string;
   filterType: _FilterTypes;
   method?: MethodFunc;
@@ -17,6 +17,7 @@ export interface defaultCustomWidgetProps {
   min?: number;
   max?: number;
   ticks?: number[];
+  stacked?: boolean;
   xAxisFormatter?: Function;
   yAxisFormatter?: Function;
 }

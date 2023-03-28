@@ -20,7 +20,7 @@ const CATEGORY_ABREVATIONS = new Map([
 const NOTE =
   'Principales retos a los que se enfrenta el punto de servicio / ayuda humanitaria';
 const id = 'sickPeoplePremise';
-const title = 'Medios de Identificación de personas enfermas';
+const title = 'Retos del punto de servicio';
 const column = 'princ_re_1';
 const filterType = _FilterTypes.STRING_SEARCH;
 const method = concatenatedValues;

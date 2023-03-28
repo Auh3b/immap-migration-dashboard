@@ -19,7 +19,7 @@ const CATEGORY_ABREVATIONS = new Map([
 
 const NOTE = 'Cuales servicios diferenciados para niños niñas y adolescentes se ofrecen en el punto de servicio / ayuda humanitaria?';
 const id = 'childrenDifferentiatedServices';
-const title = 'Cuales servicios diferenciados para niños/adolescentes';
+const title = 'Cuales servicios diferenciados';
 const column = 'cual_serv_';
 const filterType = _FilterTypes.STRING_SEARCH;
 const method = concatenatedValues;
