@@ -11,16 +11,31 @@ interface CustomPalette extends Palette {
   appBar: PaletteColor;
 }
 
+export const UNICEF_COLORS:string[] = [
+  '#1CABE2',
+  '#00833D',
+  '#80BD41',
+  '#FFC20E',
+  '#F26A21',
+  '#E2231A',
+  '#961A49',
+  '#6A1E74',
+  '#D8D1C9',
+  '#777779',
+  '#2D2926',
+  '#374EA2'
+]
+
 const customTheme = {
   palette: {
     primary: {
       // light: will be calculated from palette.primary.main,
-      main: '#1CABE2',
+      main: UNICEF_COLORS[0],
       // dark: will be calculated from palette.primary.main,
       // contrastText: will be calculated to contrast with palette.primary.main
     },
     secondary: {
-      main: '#1CABE2',
+      main: UNICEF_COLORS[0],
       light: '#71caed',
       dark: '#116b8d',
     },
