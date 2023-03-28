@@ -8,7 +8,9 @@ import { defaultCustomWidgetProps } from './customWidgetsType';
 import useWidgetFetch from './hooks/useWidgetFetch';
 import useWidgetFilterValues from './hooks/useWidgetFilterValues';
 
-const CustomWidgetWrapper = lazy(()=> import('components/common/customWidgets/CustomWidgetWrapper'))
+const CustomWidgetWrapper = lazy(
+  () => import('components/common/customWidgets/CustomWidgetWrapper'),
+);
 
 const EMPTY_ARRAY: [] = [];
 

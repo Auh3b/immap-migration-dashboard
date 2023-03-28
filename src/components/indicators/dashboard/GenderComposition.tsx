@@ -32,7 +32,7 @@ function groupGenderByAge(data: any[], column: string) {
   });
 }
 
-const getGenderData: MethodFunc = (input, column) =>{
+const getGenderData: MethodFunc = (input, column) => {
   if (input.length === 0) {
     return null;
   }
@@ -41,7 +41,7 @@ const getGenderData: MethodFunc = (input, column) =>{
   const women = input.filter((i) => i[column] === 'Mujer');
 
   return [groupGenderByAge(men, column), groupGenderByAge(women, column)];
-}
+};
 
 const useGenderStyles = makeStyles((theme) => ({
   main: {

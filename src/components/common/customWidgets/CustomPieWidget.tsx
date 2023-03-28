@@ -7,7 +7,9 @@ import { defaultCustomWidgetProps } from './customWidgetsType';
 import useWidgetFilterValues from './hooks/useWidgetFilterValues';
 import { Link, makeStyles } from '@material-ui/core';
 
-const CustomWidgetWrapper = lazy(()=> import('components/common/customWidgets/CustomWidgetWrapper'))
+const CustomWidgetWrapper = lazy(
+  () => import('components/common/customWidgets/CustomWidgetWrapper'),
+);
 
 const EMPTY_ARRAY: [] = [];
 

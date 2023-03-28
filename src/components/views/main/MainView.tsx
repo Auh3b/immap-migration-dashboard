@@ -18,6 +18,7 @@ import PageFallback from 'components/common/PageFallback';
 const MapContainer = lazy(() => import('./MapContainer'));
 
 const DRAWER_WIDTH = 300;
+const MIDDLE_HEIGHT = 200;
 
 interface MainViewChildren {
   left?: ReactChild;
@@ -64,6 +65,9 @@ const useStylesDesktop = makeStyles(() => ({
     width: DRAWER_WIDTH,
     position: 'absolute',
   },
+  middleDrawer: {
+    minHeight: MIDDLE_HEIGHT,
+  },
 }));
 
 function Desktop({ children }: { children: MainViewChildren }) {
@@ -81,9 +85,13 @@ function Desktop({ children }: { children: MainViewChildren }) {
       </Grid>
       <Grid xs container direction='column' item alignContent='stretch'>
         <MapContainer />
-        <Grid item>{children.bottom}</Grid>
+        {children.middle && (
+          <Grid className={classes.middleDrawer} item>
+            {children.middle}
+          </Grid>
+        )}
       </Grid>
-      {children.right ? (
+      {children.right && (
         <Grid
           container
           wrap='nowrap'
@@ -93,8 +101,6 @@ function Desktop({ children }: { children: MainViewChildren }) {
         >
           {children.right}
         </Grid>
-      ) : (
-        <></>
       )}
     </>
   );

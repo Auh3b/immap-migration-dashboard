@@ -257,6 +257,12 @@ function NavigationMenu({ column = false }: { column?: boolean }) {
           component={NavLink}
           to={ROUTE_PATHS.MEDIA}
         />
+        <Tab
+          label='Servicios Premise'
+          value='premise_service'
+          component={NavLink}
+          to={ROUTE_PATHS.PREMISE_SERVICE}
+        />
       </Tabs>
     </Grid>
   );

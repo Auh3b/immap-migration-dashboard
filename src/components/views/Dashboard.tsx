@@ -35,7 +35,7 @@ export default function Dashboard() {
       {{
         left: <DashboardLeftView dataSources={{ mainSource }} />,
         right: <DashboardRightView dataSources={{ mainSource }} />,
-        bottom: <SurveyDates dataSource={mainSource.id} />,
+        middle: <SurveyDates dataSource={mainSource.id} />,
       }}
     </MainView>
   );

@@ -5,7 +5,9 @@ import { FormulaWidgetUI } from '@carto/react-ui';
 import { makeStyles } from '@material-ui/core';
 import { lazy } from 'react';
 
-const CustomWidgetWrapper = lazy(()=> import('components/common/customWidgets/CustomWidgetWrapper'))
+const CustomWidgetWrapper = lazy(
+  () => import('components/common/customWidgets/CustomWidgetWrapper'),
+);
 
 const useStyles: any = makeStyles(() => ({
   container: {

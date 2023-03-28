@@ -18,7 +18,7 @@ export default function MigrationLeftView({ dataSources }: any) {
   const { mainSource } = dataSources;
   return (
     <MainColumnView>
-      <CountryFlow dataSource={mainSource.id}/>
+      <CountryFlow dataSource={mainSource.id} />
       <OriginCountry dataSource={mainSource.id} />
       <CountryDeparted dataSource={mainSource.id} />
       <CountryResiding dataSource={mainSource.id} />

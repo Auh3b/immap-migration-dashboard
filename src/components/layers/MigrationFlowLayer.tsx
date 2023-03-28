@@ -21,7 +21,7 @@ const layerStyle = new Map([
   ['país de nacimiento', [195, 108, 108]],
   ['Flow_start', [108, 195, 108]],
   ['año después', [108, 108, 195]],
-])
+]);
 
 type coordinates = [number, number];
 
@@ -68,8 +68,8 @@ class TravelLayer extends CompositeLayer {
       pickable,
       //@ts-ignore
     } = this.props;
-    const layerName = Array.from(layerStyle.keys())
-    const layerColor = Array.from(layerStyle.values())
+    const layerName = Array.from(layerStyle.keys());
+    const layerColor = Array.from(layerStyle.values());
     return [
       new ArcLayer(
         //@ts-ignore
@@ -99,7 +99,7 @@ class TravelLayer extends CompositeLayer {
           getSourceColor: layerColor[1],
           getTargetColor: layerColor[1],
           pickable,
-        })
+        }),
       ),
       new ArcLayer(
         //@ts-ignore
@@ -114,13 +114,11 @@ class TravelLayer extends CompositeLayer {
           getSourceColor: layerColor[2],
           getTargetColor: layerColor[2],
           pickable,
-        })
-      )
+        }),
+      ),
     ];
   }
 }
-
-
 
 const layerConfig = {
   title: 'Flujo de migración',
@@ -135,7 +133,16 @@ const layerConfig = {
 };
 
 const filterCoordinates = (d: any) => {
-  return +d['long_paisn'] !== 999999 && +d['lat_paisna'] !== 999999 &&  +d['lon_eng'] !== 999999 && +d['lat_eng'] !== 999999 &&  +d['long_paisv'] !== 999999 && +d['long_paisv'] !== 999999 && +d['long_paisi'] !== 999999 && +d['lat_paisvi'] !== 999999;
+  return (
+    +d['long_paisn'] !== 999999 &&
+    +d['lat_paisna'] !== 999999 &&
+    +d['lon_eng'] !== 999999 &&
+    +d['lat_eng'] !== 999999 &&
+    +d['long_paisv'] !== 999999 &&
+    +d['long_paisv'] !== 999999 &&
+    +d['long_paisi'] !== 999999 &&
+    +d['lat_paisvi'] !== 999999
+  );
 };
 
 const getArcHeight = (d: any) => {

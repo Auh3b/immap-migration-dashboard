@@ -4,7 +4,9 @@ import { lazy, useMemo, useState } from 'react';
 import { defaultCustomWidgetProps } from './customWidgetsType';
 import useWidgetFetch from './hooks/useWidgetFetch';
 
-const CustomWidgetWrapper = lazy(()=> import('components/common/customWidgets/CustomWidgetWrapper'))
+const CustomWidgetWrapper = lazy(
+  () => import('components/common/customWidgets/CustomWidgetWrapper'),
+);
 
 export default function CustomComparativeCategoryWidget({
   id,

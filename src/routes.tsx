@@ -12,6 +12,7 @@ const Services = lazy(() => import('components/views/Services'));
 const MigrationFlow = lazy(() => import('components/views/MigrationFlow'));
 const Media = lazy(() => import('components/views/Media'));
 const Dashboard = lazy(() => import('components/views/Dashboard'));
+const PremiseService = lazy(() => import('components/views/PremiseService'));
 // [hygen] Import views
 
 export const ROUTE_PATHS = {
@@ -22,6 +23,7 @@ export const ROUTE_PATHS = {
   MIGRATION_FLOW: '/migration',
   MEDIA: '/media',
   DASHBOARD: '/dashboard',
+  PREMISE_SERVICE: '/premise_service',
   // [hygen] Add path routes
 };
 
@@ -41,6 +43,7 @@ const routes = [
       { path: ROUTE_PATHS.MIGRATION_FLOW, element: <MigrationFlow /> },
       { path: ROUTE_PATHS.MEDIA, element: <Media /> },
       { path: ROUTE_PATHS.DASHBOARD, element: <Dashboard /> },
+      { path: ROUTE_PATHS.PREMISE_SERVICE, element: <PremiseService /> },
       // [hygen] Add routes
     ],
   },
