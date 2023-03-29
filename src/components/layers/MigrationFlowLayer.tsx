@@ -16,6 +16,10 @@ import getTileFeatures from 'utils/methods/getTileFeatures';
 import { TILE_FORMATS } from '@deck.gl/carto';
 import { format, scaleLinear } from 'd3';
 import distance from '@turf/distance';
+import { Grid, IconButton, makeStyles, Typography } from '@material-ui/core';
+import { useMemo, useState } from 'react';
+import AddIcon from '@material-ui/icons/Add';
+import RemoveIcon from '@material-ui/icons/Remove';
 
 const layerStyle = new Map([
   ['Arc 1: país de nacimiento', [195, 108, 108]],
@@ -63,6 +67,7 @@ class TravelLayer extends CompositeLayer {
       getHeight,
       getTilt,
       pickable,
+      visible,
       //@ts-ignore
     } = this.props;
     const layerName = Array.from(layerStyle.keys());
@@ -78,6 +83,7 @@ class TravelLayer extends CompositeLayer {
           getWidth,
           getHeight,
           getTilt,
+          visible: visible(layerName[0]),
           getSourceColor: layerColor[0],
           getTargetColor: layerColor[0],
           pickable,
@@ -93,6 +99,7 @@ class TravelLayer extends CompositeLayer {
           getWidth,
           getHeight,
           getTilt,
+          visible: visible(layerName[1]),
           getSourceColor: layerColor[1],
           getTargetColor: layerColor[1],
           pickable,
@@ -108,6 +115,7 @@ class TravelLayer extends CompositeLayer {
           getWidth,
           getHeight,
           getTilt,
+          visible: visible(layerName[2]),
           getSourceColor: layerColor[2],
           getTargetColor: layerColor[2],
           pickable,
@@ -117,17 +125,7 @@ class TravelLayer extends CompositeLayer {
   }
 }
 
-const layerConfig = {
-  title: 'Flujo de migración',
-  visible: true,
-  switchable: true,
-  legend: {
-    type: LEGEND_TYPES.CATEGORY,
-    colors: Array.from(layerStyle.values()),
-    labels: Array.from(layerStyle.keys()),
-    collapsible: false,
-  },
-};
+
 
 const filterCoordinates = (d: any) => {
   return (
@@ -155,6 +153,7 @@ const getArcHeight = (d: any) => {
 
 export default function MigrationFlowLayer() {
   const { viewport } = useSelector((state: RootState) => state.carto);
+  const [disabledLayers, setDisabledLayers] = useState([])
   const dispatch = useDispatch();
   const { hotspotsLayer, migrationFlowLayer } = useSelector(
     (state: RootState) => state.carto.layers,
@@ -162,6 +161,17 @@ export default function MigrationFlowLayer() {
   const source = useSelector((state) =>
     selectSourceById(state, migrationFlowLayer?.source),
   );
+
+  const layerConfig = useMemo(() =>({
+    title: 'Flujo de migración',
+    visible: true,
+    switchable: true,
+    legend: {
+      children: <CustomLayerLegend legendItems={Array.from(layerStyle)} disableLayers={setDisabledLayers}/>
+    },
+  }), [])
+
+  console.log(disabledLayers)
 
   async function fetchData() {
     const data = await getTileFeatures({
@@ -193,12 +203,8 @@ export default function MigrationFlowLayer() {
       getWidth: 1,
       getHeight: 1,
       getTilt: 0,
-      getSourceColor: layerConfig.legend.colors[0],
-      getTargetColor: layerConfig.legend.colors[1],
+      visible: (name:string)=> !disabledLayers.includes(name),
       pickable: true,
-      // onDataLoad:(data:any[])=>{
-      //   console.log(data.slice(0,10))
-      // },
       onDataLoads: () => {
         dispatch(
           updateLayer({
@@ -209,4 +215,49 @@ export default function MigrationFlowLayer() {
       },
     });
   }
+}
+
+const useStyle = makeStyles(()=>({
+  legendIcon:{
+    width: '10px',
+    height: '10px',
+    borderRadius: '100%',
+  }
+}))
+
+
+function CustomLayerLegend({legendItems, disableLayers}: {legendItems: any[][], disableLayers: any}){
+  return(
+    <Grid direction='column' container>
+      {legendItems.length > 0 && legendItems.map(([name, color]) => <CustomLegendItem disableLayer={disableLayers} key={name} name={name} color={color} />)}
+    </Grid>
+  )
+}
+
+function CustomLegendItem({color, name, disableLayer}:any){
+  const [isOpen, setIsOpen] = useState(false)
+  const classes = useStyle()
+
+  const handleToggle = () => {
+    setIsOpen((prev) => !prev)
+    if(isOpen){
+      disableLayer((prev:string[]) => prev.filter((d:any) => d !== name))
+    }else{
+      disableLayer((prev:string[]) => [...prev, name])
+    }
+  }
+  
+  return (
+    <Grid item container alignItems='center' justifyContent='space-between'>
+      <Grid xs={11} container item alignItems='center' style={{gap: '5px'}}>
+        <span className={classes.legendIcon} style={{backgroundColor: `rgb(${color[0]},${color[1]}, ${color[2]})`}}></span>
+        <Typography variant='overline'>{name}</Typography>
+      </Grid>
+      <Grid xs={1} item>
+        <IconButton onClick={handleToggle}>
+          {isOpen ? <RemoveIcon /> : <AddIcon />}
+        </IconButton>
+      </Grid>
+    </Grid>
+  )
 }
