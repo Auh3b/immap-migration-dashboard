@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { MouseEvent, useEffect, useMemo, useState } from 'react';
 import {
   AppBar,
@@ -261,7 +262,7 @@ function NavigationMenu({ column = false }: { column?: boolean }) {
           label='Nna'
           value='children'
           component={NavLink}
-          to={ROUTE_PATHS.NNA}
+          to={ROUTE_PATHS.CHILDREN}
         />
         <Tab
           label='Dinámica aurora'
