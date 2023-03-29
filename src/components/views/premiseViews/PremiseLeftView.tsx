@@ -3,6 +3,7 @@ import DisabilityServices from "components/indicators/premise/DisabilityServices
 import LocationCapacity from "components/indicators/premise/LocationCapacity";
 import LocationFeatures from "components/indicators/premise/LocationFeatures";
 import OrgSurveyed from "components/indicators/premise/OrgSurveyed";
+import PremiseGenderComposition from "components/indicators/premise/PremiseGenderComposition";
 import ServiceLocation from "components/indicators/premise/ServiceLocation";
 import WasteManagement from "components/indicators/premise/WasteManagement";
 import WomenDiffServices from 'components/indicators/premise/WomenDiffServices';
@@ -13,6 +14,7 @@ export default function PremiseLeftView({ dataSources }: ViewSourceType) {
   const { premiseSource } = dataSources;
   return (
     <MainColumnView>
+      <PremiseGenderComposition dataSource={premiseSource} />
       <OrgSurveyed dataSource={premiseSource} />
       <ServiceLocation dataSource={premiseSource} />
       <LocationFeatures dataSource={premiseSource} />

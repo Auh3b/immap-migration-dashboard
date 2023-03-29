@@ -4,6 +4,8 @@ import {
   SwipeableDrawer,
   useMediaQuery,
   Fab,
+  IconButton,
+  Collapse,
 } from '@material-ui/core';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import { lazy, ReactChild, ReactNode, useEffect, useState } from 'react';
@@ -14,11 +16,12 @@ import { useTheme } from '@material-ui/styles';
 import { CustomTheme } from 'theme';
 import LazyLoadRoute from 'components/common/LazyLoadRoute';
 import PageFallback from 'components/common/PageFallback';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 const MapContainer = lazy(() => import('./MapContainer'));
 
 const DRAWER_WIDTH = 300;
-const MIDDLE_HEIGHT = 200;
+const MIDDLE_HEIGHT = 50;
 
 interface MainViewChildren {
   left?: ReactChild;
@@ -55,7 +58,7 @@ export default function MainView({ children }: { children: MainViewChildren }) {
   );
 }
 
-const useStylesDesktop = makeStyles(() => ({
+const useStylesDesktop = makeStyles((theme) => ({
   drawer: {
     width: DRAWER_WIDTH,
     maxHeight: `calc(100vh - 54px)`,
@@ -67,11 +70,27 @@ const useStylesDesktop = makeStyles(() => ({
   },
   middleDrawer: {
     minHeight: MIDDLE_HEIGHT,
+    position: 'relative',
   },
+  middleDrawerToggle:{
+    position: 'relative',
+    borderRadius: '100%',
+    backgroundColor: theme.palette.common.white,
+    boxShadow: theme.shadows[10],
+    top: '-10px',
+    left: '10px',
+    '&:hover':{
+      backgroundColor: theme.palette.grey[100],
+    },
+  }
 }));
 
 function Desktop({ children }: { children: MainViewChildren }) {
+  const [isOpen, setIsOpen]  = useState(true)
   const classes = useStylesDesktop();
+  const handleToggleDrawer = () =>{
+    setIsOpen((existingValue) => !existingValue)
+  }
   return (
     <>
       {children.left && (
@@ -89,7 +108,12 @@ function Desktop({ children }: { children: MainViewChildren }) {
         <MapContainer />
         {children.middle && (
           <Grid className={classes.middleDrawer} item>
-            {children.middle}
+            <IconButton color='inherit' onClick={handleToggleDrawer} className={classes.middleDrawerToggle}>
+              {isOpen ? <ExpandMoreIcon /> : <ExpandLessIcon />}
+            </IconButton>
+            <Collapse in={isOpen} unmountOnExit>
+              {children.middle}
+            </Collapse>
           </Grid>
         )}
       </Grid>
