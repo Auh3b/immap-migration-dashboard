@@ -1,4 +1,3 @@
-//@ts-nocheck
 import { MouseEvent, useEffect, useMemo, useState } from 'react';
 import {
   AppBar,
