@@ -7,8 +7,7 @@ import { ArcLayer } from '@deck.gl/layers';
 import { CompositeLayer } from 'deck.gl';
 //@ts-ignore
 import { RootState } from 'store/store';
-// import { useEffect, useState } from 'react';
-import { LEGEND_TYPES } from '@carto/react-ui';
+// import { LEGEND_TYPES } from '@carto/react-ui';
 import { selectSourceById, updateLayer } from '@carto/react-redux';
 import { useCartoLayerProps } from '@carto/react-api';
 import getTileFeatures from 'utils/methods/getTileFeatures';
@@ -20,11 +19,12 @@ import { Grid, IconButton, makeStyles, Typography } from '@material-ui/core';
 import { useMemo, useState } from 'react';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
+import d3Hex2RGB from 'utils/d3Hex2RGB';
 
 const layerStyle = new Map([
-  ['Arc 1: país de nacimiento', [195, 108, 108]],
-  ['Arc 2: País donde inició el flujo migratorio', [108, 195, 108]],
-  ['Arc 3: País donde vivía hace un año', [108, 108, 195]],
+  ['País de nacimiento', d3Hex2RGB(1)],
+  ['País donde inició el flujo migratorio', d3Hex2RGB(4)],
+  ['País donde vivía hace un año', d3Hex2RGB(7)],
 ]);
 
 type coordinates = [number, number];
@@ -170,8 +170,6 @@ export default function MigrationFlowLayer() {
       children: <CustomLayerLegend legendItems={Array.from(layerStyle)} disableLayers={setDisabledLayers}/>
     },
   }), [])
-
-  console.log(disabledLayers)
 
   async function fetchData() {
     const data = await getTileFeatures({

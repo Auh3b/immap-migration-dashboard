@@ -18,8 +18,8 @@ export default function MigrationLeftView({ dataSources }: any) {
     <MainColumnView>
       <CountryFlow dataSource={mainSource.id} />
       <OriginCountry dataSource={mainSource.id} />
-      <CountryDeparted dataSource={mainSource.id} />
       <CountryResiding dataSource={mainSource.id} />
+      <CountryDeparted dataSource={mainSource.id} />
     </MainColumnView>
   );
 }

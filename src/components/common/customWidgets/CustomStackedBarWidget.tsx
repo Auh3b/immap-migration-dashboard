@@ -56,8 +56,6 @@ export default function CustomStackedBarWidget({
 
   }, [_data])
 
-  console.log(id, _data, colors)
-
   return (
     <WrapperWidgetUI title={title} isLoading={isLoading} onError={error}>
       <WidgetWithAlert dataSource={dataSource}>

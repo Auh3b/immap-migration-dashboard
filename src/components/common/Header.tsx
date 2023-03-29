@@ -258,7 +258,7 @@ function NavigationMenu({ column = false }: { column?: boolean }) {
           to={ROUTE_PATHS.MIGRATION_FLOW}
         />
         <Tab
-          label='Nna'
+          label='NNA'
           value='children'
           component={NavLink}
           to={ROUTE_PATHS.CHILDREN}

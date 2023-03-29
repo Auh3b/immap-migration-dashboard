@@ -9,6 +9,7 @@ import useCustomCompareEffect from '../../../../hooks/useCustomCompareEffect';
 import { dequal } from 'dequal';
 import useWidgetSource from './useWidgetSource';
 import MethodFunc from 'components/indicators/utils/methodType';
+import { rollup } from 'd3';
 
 export interface useWidgetFetchProps {
   id: string;

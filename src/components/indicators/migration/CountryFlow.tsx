@@ -130,8 +130,8 @@ const column = 'e08_pais_';
 const filterType = _FilterTypes.IN;
 const method = getHierarchy;
 const methodParams = {
-  lv2: 'e10_pais_',
-  lv3: 'e12_pais_',
+  lv2: 'e12_pais_',
+  lv3: 'e10_pais_',
 };
 
 const props = {
