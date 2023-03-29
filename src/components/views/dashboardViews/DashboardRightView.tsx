@@ -5,17 +5,15 @@ import { lazy } from 'react';
 const PregnantWoment = lazy(
   () => import('components/indicators/dashboard/PregnantWoment'),
 );
-const PlacesChildrenTravelAlone = lazy(
-  () => import('components/indicators/dashboard/PlacesChildrenTravelAlone'),
+
+const SickPeople = lazy(
+  () => import('components/indicators/dashboard/SickPeople'),
 );
-const PeopleWithDisability = lazy(
-  () => import('components/indicators/dashboard/PeopleWithDisability'),
+const SleepOutDoor = lazy(
+  () => import('components/indicators/dashboard/SleepOutDoor'),
 );
-const ChildTravelerAges = lazy(
-  () => import('components/indicators/dashboard/ChildTravelerAges'),
-);
-const ChildrenTravelAlone = lazy(
-  () => import('components/indicators/dashboard/ChildrenTravelAlone'),
+const RestrictedFood = lazy(
+  () => import('components/indicators/dashboard/RestrictedFood'),
 );
 
 export default function DashboardRightView({
@@ -27,10 +25,9 @@ export default function DashboardRightView({
   return (
     <LazyLoadComponent>
       <MainColumnView>
-        <ChildTravelerAges dataSource={mainSource.id} />
-        <ChildrenTravelAlone dataSource={mainSource.id} />
-        <PlacesChildrenTravelAlone dataSource={mainSource.id} />
-        <PeopleWithDisability dataSource={mainSource.id} />
+        <SleepOutDoor dataSource={mainSource.id} />
+        <RestrictedFood dataSource={mainSource.id} />
+        <SickPeople dataSource={mainSource.id} />
         <PregnantWoment dataSource={mainSource.id} />
       </MainColumnView>
     </LazyLoadComponent>

@@ -26,6 +26,7 @@ const props: defaultCustomWidgetProps = {
   filterType,
   method,
   methodParams,
+  stacked: true,
 };
 
 export default function SanitationServices({ dataSource }: BasicWidgetType) {

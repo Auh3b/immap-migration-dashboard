@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import premiseSource from 'data/sources/premiseSource';
 import { PREMISE_SERVICES_LAYER_ID } from 'components/layers/PremiseServicesLayer';
 import { useDispatch } from 'react-redux';
@@ -8,21 +8,21 @@ import {
   addSource,
   removeSource,
 } from '@carto/react-redux';
-
-import { makeStyles } from '@material-ui/core/styles';
 import MainView from './main/MainView';
-import PremiseLeftView from './premiseViews/PremiseLeftView';
-import PremiseRightView from './premiseViews/PremiseRightView';
-import PremiseMiddleView from './premiseViews/PremiseMiddleView';
+import DinamicaMiddleView from './dinamicaViews/DinamicaMiddleView';
+import { useEffect } from 'react';
 
 const useStyles = makeStyles(() => ({
-  premiseService: {},
+  dinámicaAurora: {},
 }));
 
-export default function PremiseService() {
-  const dispatch = useDispatch();
+export default function DinámicaAurora() {
   const classes = useStyles();
-
+  const dispatch = useDispatch();
+  const sources = {
+    premiseSource: premiseSource.id
+  }
+  
   useEffect(() => {
     dispatch(addSource(premiseSource));
 
@@ -38,21 +38,12 @@ export default function PremiseService() {
       dispatch(removeSource(premiseSource.id));
     };
   }, [dispatch]);
-
   // [hygen] Add useEffect
 
   return (
     <MainView>
       {{
-        left: <PremiseLeftView dataSources={{ premiseSource: premiseSource.id }} />,
-        right: (
-          <PremiseRightView dataSources={{ premiseSource: premiseSource.id }} />
-        ),
-        middle: (
-          <PremiseMiddleView
-            dataSources={{ premiseSource: premiseSource.id }}
-          />
-        ),
+        middle: <DinamicaMiddleView  dataSources={sources}/>
       }}
     </MainView>
   );

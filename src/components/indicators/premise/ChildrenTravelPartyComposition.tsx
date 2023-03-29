@@ -29,6 +29,7 @@ const props: defaultCustomWidgetProps = {
   filterType,
   method,
   methodParams,
+  stacked: true,
 };
 
 export default function ChildrenTravelPartyComposition({ dataSource }: BasicWidgetType) {

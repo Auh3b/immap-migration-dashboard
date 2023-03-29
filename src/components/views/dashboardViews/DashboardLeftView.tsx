@@ -5,20 +5,14 @@ import { lazy } from 'react';
 const GenderComposition = lazy(
   () => import('components/indicators/dashboard/GenderComposition'),
 );
-const SleepOutDoor = lazy(
-  () => import('components/indicators/dashboard/SleepOutDoor'),
-);
-const RestrictedFood = lazy(
-  () => import('components/indicators/dashboard/RestrictedFood'),
-);
 const TravelGroupAges = lazy(
   () => import('components/indicators/dashboard/TravelGroupAges'),
 );
-const SickPeople = lazy(
-  () => import('components/indicators/dashboard/SickPeople'),
-);
 const GroupSizeDistribution = lazy(
   () => import('components/indicators/dashboard/GroupSizeDistribution'),
+);
+const PeopleWithDisability = lazy(
+  () => import('components/indicators/dashboard/PeopleWithDisability'),
 );
 
 export default function DashboardLeftView({
@@ -33,9 +27,8 @@ export default function DashboardLeftView({
         <GenderComposition dataSource={mainSource.id} />
         <TravelGroupAges dataSource={mainSource.id} />
         <GroupSizeDistribution dataSource={mainSource.id} />
-        <SleepOutDoor dataSource={mainSource.id} />
-        <RestrictedFood dataSource={mainSource.id} />
-        <SickPeople dataSource={mainSource.id} />
+        <PeopleWithDisability dataSource={mainSource.id} />
+
       </MainColumnView>
     </LazyLoadComponent>
   );

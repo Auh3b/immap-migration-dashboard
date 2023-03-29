@@ -10,9 +10,7 @@ const CountryDeparted = lazy(
 const CountryResiding = lazy(
   () => import('components/indicators/migration/CountryResiding'),
 );
-const TransportMode = lazy(
-  () => import('components/indicators/migration/TransportMode'),
-);
+
 
 export default function MigrationLeftView({ dataSources }: any) {
   const { mainSource } = dataSources;
@@ -22,7 +20,6 @@ export default function MigrationLeftView({ dataSources }: any) {
       <OriginCountry dataSource={mainSource.id} />
       <CountryDeparted dataSource={mainSource.id} />
       <CountryResiding dataSource={mainSource.id} />
-      <TransportMode dataSource={mainSource.id} />
     </MainColumnView>
   );
 }

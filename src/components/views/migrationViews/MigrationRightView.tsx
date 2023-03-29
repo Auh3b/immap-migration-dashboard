@@ -10,6 +10,9 @@ const TransitStopLength = lazy(
 const TransitInfomation = lazy(
   () => import('components/indicators/migration/TransitInfomation'),
 );
+const TransportMode = lazy(
+  () => import('components/indicators/migration/TransportMode'),
+);
 
 export default function MigrationRightView({ dataSources }: any) {
   const { mainSource } = dataSources;
@@ -18,6 +21,7 @@ export default function MigrationRightView({ dataSources }: any) {
       <TransitStopReason dataSource={mainSource.id} />
       <TransitStopLength dataSource={mainSource.id} />
       <TransitInfomation dataSource={mainSource.id} />
+      <TransportMode dataSource={mainSource.id} />
     </MainColumnView>
   );
 }

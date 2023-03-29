@@ -240,28 +240,40 @@ function NavigationMenu({ column = false }: { column?: boolean }) {
           to={ROUTE_PATHS.DASHBOARD}
         />
         <Tab
-          label='Servicios'
+          label='Servicios oferta'
+          value='premise_service'
+          component={NavLink}
+          to={ROUTE_PATHS.PREMISE_SERVICE}
+        />
+        <Tab
+          label='Servicios demanda'
           value='services'
           component={NavLink}
           to={ROUTE_PATHS.SERVICES}
         />
         <Tab
-          label='Migrantes'
+          label='Flujos Migratorios'
           value='migration'
           component={NavLink}
           to={ROUTE_PATHS.MIGRATION_FLOW}
+        />
+        <Tab
+          label='Nna'
+          value='children'
+          component={NavLink}
+          to={ROUTE_PATHS.NNA}
+        />
+        <Tab
+          label='Dinámica aurora'
+          value='dinamica'
+          component={NavLink}
+          to={ROUTE_PATHS.DINÁMICA_AURORA}
         />
         <Tab
           label='Redes sociales'
           value='media'
           component={NavLink}
           to={ROUTE_PATHS.MEDIA}
-        />
-        <Tab
-          label='Servicios Premise'
-          value='premise_service'
-          component={NavLink}
-          to={ROUTE_PATHS.PREMISE_SERVICE}
         />
       </Tabs>
     </Grid>

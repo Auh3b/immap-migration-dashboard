@@ -31,7 +31,7 @@ export default function CustomStackedBarWidget({
   const classes = useStyles()
   const [xAxisData, setXAxisData] = useState([])
   const [yAxisData, setYAxisData] = useState([])
-  const [colors, setColor] = useState([])
+  const [colors, setColors] = useState([])
   const [legend, setLegend] = useState([])
 
   const {
@@ -50,11 +50,13 @@ export default function CustomStackedBarWidget({
     if(_data.length > 0){
       setXAxisData(_data.map(d => d.name)[0])
       setYAxisData(_data.map(d => d.value)[0])
-      setColor(xAxisData.map((d:string, i:number) => UNICEF_COLORS[i]))
+      setColors(_data.map((d) =>d.legend)[0].map((d:string,i:number)=> UNICEF_COLORS[i]))
       setLegend(_data.map(d => d.legend)[0].map((d:string, i:number) =>({name: d, color: UNICEF_COLORS[i]})))
     }
 
   }, [_data])
+
+  console.log(id, _data, colors)
 
   return (
     <WrapperWidgetUI title={title} isLoading={isLoading} onError={error}>
@@ -72,7 +74,7 @@ export default function CustomStackedBarWidget({
             yAxisData={yAxisData}
           />
         )}
-        {(legend.length > 0 && stacked)&& (
+        {(legend.length > 0 && !stacked)&& (
          <Grid container item>
           {legend.map(({name, color}) =>(
             <Grid container key={name} alignItems='center' className={classes.legendContainer} item>

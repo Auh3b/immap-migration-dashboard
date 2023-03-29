@@ -74,15 +74,17 @@ function Desktop({ children }: { children: MainViewChildren }) {
   const classes = useStylesDesktop();
   return (
     <>
-      <Grid
-        container
-        wrap='nowrap'
-        direction='column'
-        item
-        className={classes.drawer}
-      >
-        {children.left}
-      </Grid>
+      {children.left && (
+        <Grid
+          container
+          wrap='nowrap'
+          direction='column'
+          item
+          className={classes.drawer}
+        >
+          {children.left}
+        </Grid>
+      )}
       <Grid xs container direction='column' item alignContent='stretch'>
         <MapContainer />
         {children.middle && (
