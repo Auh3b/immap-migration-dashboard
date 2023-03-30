@@ -9,7 +9,7 @@ import { RootState } from 'store/store';
 import { IconLayer } from '@deck.gl/layers';
 //@ts-ignore
 import { CompositeLayer } from 'deck.gl';
-import mainSource from 'data/sources/mainSource';
+import timelineSource from 'data/sources/timelineSource';
 import d3Hex2RGB from 'utils/d3Hex2RGB';
 import { useEffect, useState } from 'react';
 import AtlasIcon from 'assets/img/icon-atlas.png';
@@ -71,8 +71,8 @@ class TimelineSurvey extends CompositeLayer<any, any> {
           // },
         }),
       );
-
       iconsLayerRenders = [...iconsLayerRenders, iconLayer];
+      console.log(iconsLayerRenders)
     }
     return iconsLayerRenders;
   }
@@ -136,19 +136,21 @@ export default function SurveyTimelineLayer() {
   useEffect(() => {
     (async function fetchData() {
       const { data } = await fetchLayerData({
-        ...mainSource,
-        source: mainSource.data,
+        ...timelineSource,
+        source: timelineSource.data,
         format: 'json',
       });
       setData(data);
     })();
   }, []);
 
+  
   const cartoLayerProps = useCartoLayerProps({
     source,
     layerConfig: surveyTimelineLayer,
   });
-
+  //@ts-ignore
+  // delete cartoLayerProps.visible;
   delete cartoLayerProps.onDataLoad;
 
   if (surveyTimelineLayer && source && data) {

@@ -28,7 +28,7 @@ const timelineValueAlt: MethodFunc = (input, column, params) => {
 
 const NOTE = 'Localización de personas migrantes conectadas a Aurora en los distintos monitoreos';
 const id = 'mobileSurveyResponseTimeline';
-const title = 'Localización de personas migrantes conectadas a Aurora';
+const title = 'Personas migrantes conectadas a Aurora';
 const column = 'timeunix';
 const filterType = _FilterTypes.IN;
 const method = timelineValueAlt;
