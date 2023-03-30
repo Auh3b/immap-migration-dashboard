@@ -19,7 +19,7 @@ const DATA = Object.entries(HOTSPOT_COLORS).map(([label, color]) => ({
 }));
 
 const layerConfig = {
-  title: 'Inmigrante',
+  title: 'Primera conexión Aurora',
   visible: true,
   legend: {
     type: LEGEND_TYPES.CATEGORY,
