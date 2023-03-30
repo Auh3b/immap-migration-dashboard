@@ -7,7 +7,8 @@ import groupCategories from '../utils/groupCategories';
 import useWidgetEffect from '../utils/useWidgetEffect';
 
 const title = 'Servicios diferenciados para mujeres';
-const NOTE = 'El punto de servicio/ayuda humanitaria actualmente cuenta con servicios diferenciados para mujeres';
+const NOTE =
+  'El punto de servicio/ayuda humanitaria actualmente cuenta con servicios diferenciados para mujeres';
 const id = 'childrenDiffirentiatedServicesAvailability';
 const column = 'serv_dif_m';
 const filterType = _FilterTypes.IN;
@@ -21,7 +22,9 @@ const props = {
   method,
 };
 
-export default function WomenDiffServicesAvailability({ dataSource }: BasicWidgetType) {
+export default function WomenDiffServicesAvailability({
+  dataSource,
+}: BasicWidgetType) {
   const { widget } = useWidgetEffect(
     <CustomBarWidget dataSource={dataSource} {...props} />,
     [dataSource],

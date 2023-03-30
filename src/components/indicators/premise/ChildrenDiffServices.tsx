@@ -14,10 +14,11 @@ const CATEGORY_ABREVATIONS = new Map([
   [4, 'Alimentación'],
   [5, 'Baños para niños, niñas o adolescentes'],
   [6, 'Cuidados alternativos (hogares temporales de cuidado)'],
-  [7, 'Otro']
+  [7, 'Otro'],
 ]);
 
-const NOTE = 'Cuales servicios diferenciados para niños niñas y adolescentes se ofrecen en el punto de servicio / ayuda humanitaria?';
+const NOTE =
+  'Cuales servicios diferenciados para niños niñas y adolescentes se ofrecen en el punto de servicio / ayuda humanitaria?';
 const id = 'childrenDifferentiatedServices';
 const title = 'Cuales servicios diferenciados';
 const column = 'cual_serv_';
@@ -46,4 +47,3 @@ export default function ChildrenDiffServices({ dataSource }: BasicWidgetType) {
     </Grid>
   );
 }
-

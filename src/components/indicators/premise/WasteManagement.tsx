@@ -7,7 +7,8 @@ import groupCategories from '../utils/groupCategories';
 import useWidgetEffect from '../utils/useWidgetEffect';
 
 const title = 'Gestión de residuos';
-const NOTE = 'El entorno del punto de servicio tiene problemas de contaminación de basuras';
+const NOTE =
+  'El entorno del punto de servicio tiene problemas de contaminación de basuras';
 const id = 'wasteManagement';
 const column = 'serv_basur';
 const filterType = _FilterTypes.IN;

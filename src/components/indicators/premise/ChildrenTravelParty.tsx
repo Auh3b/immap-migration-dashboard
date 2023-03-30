@@ -10,15 +10,16 @@ import stackedBarCategories from '../utils/stackedBarCategories';
 import useWidgetEffect from '../utils/useWidgetEffect';
 
 const title = 'NNA no acompañados y separados';
-const NOTE = 'Presencia de niños, niñas y adolescentes no acompañados y separados';
+const NOTE =
+  'Presencia de niños, niñas y adolescentes no acompañados y separados';
 const id = 'childrenTravelParty';
 const column = 'serv_dif_n';
 const filterType = _FilterTypes.IN;
 const method = stackedBarCategories;
 const methodParams = {
   columns: ['nna_no_aco', 'nna_separ_'],
-  legend: ['Acompañados NNA', 'Separados NNA']
-}
+  legend: ['Acompañados NNA', 'Separados NNA'],
+};
 
 const props: defaultCustomWidgetProps = {
   title,

@@ -1,5 +1,5 @@
 import { Divider, Grid, Typography } from '@material-ui/core';
-import { MainColumnView } from 'components/common/MainColumnView'
+import { MainColumnView } from 'components/common/MainColumnView';
 import { lazy } from 'react';
 
 const ChildTravelerAges = lazy(
@@ -24,10 +24,8 @@ const ServiceSatisfyChildren = lazy(
   () => import('components/indicators/services/ServiceSatisfyChildren'),
 );
 
-export default function ChildrenLeftView({
-  dataSources, classes
-}: any) {
-  const { mainSource } = dataSources
+export default function ChildrenLeftView({ dataSources, classes }: any) {
+  const { mainSource } = dataSources;
   return (
     <MainColumnView>
       <Grid item className={classes.title}>
@@ -42,5 +40,5 @@ export default function ChildrenLeftView({
       <ServiceQualityChildren dataSource={mainSource} />
       <ServiceSatisfyChildren dataSource={mainSource} />
     </MainColumnView>
-  )
+  );
 }

@@ -72,25 +72,25 @@ const useStylesDesktop = makeStyles((theme) => ({
     minHeight: MIDDLE_HEIGHT,
     position: 'relative',
   },
-  middleDrawerToggle:{
+  middleDrawerToggle: {
     position: 'relative',
     borderRadius: '100%',
     backgroundColor: theme.palette.common.white,
     boxShadow: theme.shadows[10],
     top: '-10px',
     left: '10px',
-    '&:hover':{
+    '&:hover': {
       backgroundColor: theme.palette.grey[100],
     },
-  }
+  },
 }));
 
 function Desktop({ children }: { children: MainViewChildren }) {
-  const [isOpen, setIsOpen]  = useState(true)
+  const [isOpen, setIsOpen] = useState(true);
   const classes = useStylesDesktop();
-  const handleToggleDrawer = () =>{
-    setIsOpen((existingValue) => !existingValue)
-  }
+  const handleToggleDrawer = () => {
+    setIsOpen((existingValue) => !existingValue);
+  };
   return (
     <>
       {children.left && (
@@ -108,7 +108,11 @@ function Desktop({ children }: { children: MainViewChildren }) {
         <MapContainer />
         {children.middle && (
           <Grid className={classes.middleDrawer} item>
-            <IconButton color='inherit' onClick={handleToggleDrawer} className={classes.middleDrawerToggle}>
+            <IconButton
+              color='inherit'
+              onClick={handleToggleDrawer}
+              className={classes.middleDrawerToggle}
+            >
               {isOpen ? <ExpandMoreIcon /> : <ExpandLessIcon />}
             </IconButton>
             <Collapse in={isOpen} unmountOnExit>

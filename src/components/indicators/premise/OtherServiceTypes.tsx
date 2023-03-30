@@ -6,7 +6,8 @@ import WidgetNote from 'components/common/customWidgets/WidgetNote';
 import groupCategories from '../utils/groupCategories';
 import useWidgetEffect from '../utils/useWidgetEffect';
 
-const NOTE = 'Otros servicios prestados en el punto de servicio/ayuda humanitaria ';
+const NOTE =
+  'Otros servicios prestados en el punto de servicio/ayuda humanitaria ';
 const id = 'otherServiceTypes';
 const title = 'Otros servicios';
 const column = 'serv_tipo_';

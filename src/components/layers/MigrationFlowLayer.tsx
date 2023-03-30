@@ -125,8 +125,6 @@ class TravelLayer extends CompositeLayer {
   }
 }
 
-
-
 const filterCoordinates = (d: any) => {
   return (
     +d['long_paisn'] !== 999999 &&
@@ -153,7 +151,7 @@ const getArcHeight = (d: any) => {
 
 export default function MigrationFlowLayer() {
   const { viewport } = useSelector((state: RootState) => state.carto);
-  const [disabledLayers, setDisabledLayers] = useState([])
+  const [disabledLayers, setDisabledLayers] = useState([]);
   const dispatch = useDispatch();
   const { hotspotsLayer, migrationFlowLayer } = useSelector(
     (state: RootState) => state.carto.layers,
@@ -162,14 +160,22 @@ export default function MigrationFlowLayer() {
     selectSourceById(state, migrationFlowLayer?.source),
   );
 
-  const layerConfig = useMemo(() =>({
-    title: 'Flujo de migración',
-    visible: true,
-    switchable: true,
-    legend: {
-      children: <CustomLayerLegend legendItems={Array.from(layerStyle)} disableLayers={setDisabledLayers}/>
-    },
-  }), [])
+  const layerConfig = useMemo(
+    () => ({
+      title: 'Flujo de migración',
+      visible: true,
+      switchable: true,
+      legend: {
+        children: (
+          <CustomLayerLegend
+            legendItems={Array.from(layerStyle)}
+            disableLayers={setDisabledLayers}
+          />
+        ),
+      },
+    }),
+    [],
+  );
 
   async function fetchData() {
     const data = await getTileFeatures({
@@ -201,7 +207,7 @@ export default function MigrationFlowLayer() {
       getWidth: 1,
       getHeight: 1,
       getTilt: 0,
-      visible: (name:string)=> !disabledLayers.includes(name),
+      visible: (name: string) => !disabledLayers.includes(name),
       pickable: true,
       onDataLoads: () => {
         dispatch(
@@ -215,40 +221,58 @@ export default function MigrationFlowLayer() {
   }
 }
 
-const useStyle = makeStyles(()=>({
-  legendIcon:{
+const useStyle = makeStyles(() => ({
+  legendIcon: {
     width: '10px',
     height: '10px',
     borderRadius: '100%',
-  }
-}))
+  },
+}));
 
-
-function CustomLayerLegend({legendItems, disableLayers}: {legendItems: any[][], disableLayers: any}){
-  return(
+function CustomLayerLegend({
+  legendItems,
+  disableLayers,
+}: {
+  legendItems: any[][];
+  disableLayers: any;
+}) {
+  return (
     <Grid direction='column' container>
-      {legendItems.length > 0 && legendItems.map(([name, color]) => <CustomLegendItem disableLayer={disableLayers} key={name} name={name} color={color} />)}
+      {legendItems.length > 0 &&
+        legendItems.map(([name, color]) => (
+          <CustomLegendItem
+            disableLayer={disableLayers}
+            key={name}
+            name={name}
+            color={color}
+          />
+        ))}
     </Grid>
-  )
+  );
 }
 
-function CustomLegendItem({color, name, disableLayer}:any){
-  const [isOpen, setIsOpen] = useState(false)
-  const classes = useStyle()
+function CustomLegendItem({ color, name, disableLayer }: any) {
+  const [isOpen, setIsOpen] = useState(false);
+  const classes = useStyle();
 
   const handleToggle = () => {
-    setIsOpen((prev) => !prev)
-    if(isOpen){
-      disableLayer((prev:string[]) => prev.filter((d:any) => d !== name))
-    }else{
-      disableLayer((prev:string[]) => [...prev, name])
+    setIsOpen((prev) => !prev);
+    if (isOpen) {
+      disableLayer((prev: string[]) => prev.filter((d: any) => d !== name));
+    } else {
+      disableLayer((prev: string[]) => [...prev, name]);
     }
-  }
-  
+  };
+
   return (
     <Grid item container alignItems='center' justifyContent='space-between'>
-      <Grid xs={11} container item alignItems='center' style={{gap: '5px'}}>
-        <span className={classes.legendIcon} style={{backgroundColor: `rgb(${color[0]},${color[1]}, ${color[2]})`}}></span>
+      <Grid xs={11} container item alignItems='center' style={{ gap: '5px' }}>
+        <span
+          className={classes.legendIcon}
+          style={{
+            backgroundColor: `rgb(${color[0]},${color[1]}, ${color[2]})`,
+          }}
+        ></span>
         <Typography variant='overline'>{name}</Typography>
       </Grid>
       <Grid xs={1} item>
@@ -257,5 +281,5 @@ function CustomLegendItem({color, name, disableLayer}:any){
         </IconButton>
       </Grid>
     </Grid>
-  )
+  );
 }

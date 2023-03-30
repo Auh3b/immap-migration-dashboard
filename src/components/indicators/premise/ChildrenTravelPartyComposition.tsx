@@ -10,8 +10,10 @@ import groupedColumns from '../utils/groupedColumns';
 import stackedBarCategories from '../utils/stackedBarCategories';
 import useWidgetEffect from '../utils/useWidgetEffect';
 
-const title = 'Atención a niños, niñas y adolescentes no acompañados y separados';
-const NOTE = 'Cuántos niños, niñas y adolescentes no acompañados y separados atendieron durante la semana inmediatamente anterior';
+const title =
+  'Atención a niños, niñas y adolescentes no acompañados y separados';
+const NOTE =
+  'Cuántos niños, niñas y adolescentes no acompañados y separados atendieron durante la semana inmediatamente anterior';
 const id = 'childrenTravelPartyComposition';
 const column = 'serv_dif_n';
 const filterType = _FilterTypes.IN;
@@ -19,8 +21,8 @@ const method = groupedColumns;
 const methodParams = {
   columns: ['cuan_nna_n', 'cuan_nna_s'],
   legend: ['Acompañados NNA', 'Separados NNA'],
-  aggregateType: AggregationTypes.SUM
-}
+  aggregateType: AggregationTypes.SUM,
+};
 
 const props: defaultCustomWidgetProps = {
   title,
@@ -32,7 +34,9 @@ const props: defaultCustomWidgetProps = {
   stacked: true,
 };
 
-export default function ChildrenTravelPartyComposition({ dataSource }: BasicWidgetType) {
+export default function ChildrenTravelPartyComposition({
+  dataSource,
+}: BasicWidgetType) {
   const { widget } = useWidgetEffect(
     <CustomStackedBarWidget dataSource={dataSource} {...props} />,
     [dataSource],

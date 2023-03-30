@@ -8,16 +8,17 @@ import groupedColumns from '../utils/groupedColumns';
 import useWidgetEffect from '../utils/useWidgetEffect';
 
 const title = 'Servicio de agua';
-const NOTE = 'Capacidad diaria, personas atendidas ayer y promedio diario atendido de personas por el servicio de servicio de agua';
+const NOTE =
+  'Capacidad diaria, personas atendidas ayer y promedio diario atendido de personas por el servicio de servicio de agua';
 const id = 'waterServices';
 const column = '';
 const filterType = _FilterTypes.IN;
 const method = groupedColumns;
 const methodParams = {
-  columns: ['prom_agua_', 'serv_agua','prom_agua1'],
+  columns: ['prom_agua_', 'serv_agua', 'prom_agua1'],
   legend: ['Capacidad diaria', 'Sirvió ayer', 'Promedio diario'],
-  aggregateType: AggregationTypes.SUM
-}
+  aggregateType: AggregationTypes.SUM,
+};
 
 const props: defaultCustomWidgetProps = {
   title,
@@ -41,4 +42,3 @@ export default function WaterService({ dataSource }: BasicWidgetType) {
     </Grid>
   );
 }
-

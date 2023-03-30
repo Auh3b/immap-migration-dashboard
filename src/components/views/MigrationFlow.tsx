@@ -4,15 +4,32 @@ import mainSource from '../../data/sources/mainSource';
 import MainView from './main/MainView';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import { addLayer, removeLayer, setViewState } from '@carto/react-redux';
+import {
+  addLayer,
+  addSource,
+  removeLayer,
+  removeSource,
+  setViewState,
+} from '@carto/react-redux';
 import { MIGRATION_FLOW_LAYER_ID } from 'components/layers/MigrationFlowLayer';
+import { HOTSPOTS_LAYER_ID } from 'components/layers/HotspotsLayer';
+import premiseSource from 'data/sources/premiseSource';
+import { PREMISE_SERVICES_LAYER_ID } from 'components/layers/PremiseServicesLayer';
 
 export default function MigrationFlow() {
   const dispatch = useDispatch();
   useEffect(() => {
+    dispatch(addSource(mainSource));
+
     dispatch(
       addLayer({
         id: MIGRATION_FLOW_LAYER_ID,
+        source: mainSource.id,
+      }),
+    );
+    dispatch(
+      addLayer({
+        id: HOTSPOTS_LAYER_ID,
         source: mainSource.id,
       }),
     );
@@ -25,6 +42,8 @@ export default function MigrationFlow() {
 
     return () => {
       dispatch(removeLayer(MIGRATION_FLOW_LAYER_ID));
+      dispatch(removeLayer(HOTSPOTS_LAYER_ID));
+      dispatch(removeSource(mainSource.id));
       dispatch(
         setViewState({
           //@ts-ignore

@@ -28,7 +28,6 @@ export default function DashboardLeftView({
         <TravelGroupAges dataSource={mainSource.id} />
         <GroupSizeDistribution dataSource={mainSource.id} />
         <PeopleWithDisability dataSource={mainSource.id} />
-
       </MainColumnView>
     </LazyLoadComponent>
   );

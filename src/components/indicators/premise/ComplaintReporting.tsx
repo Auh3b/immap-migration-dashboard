@@ -7,7 +7,8 @@ import groupCategories from '../utils/groupCategories';
 import useWidgetEffect from '../utils/useWidgetEffect';
 
 const title = 'Peticiones o quejas del migrante';
-const NOTE = 'Existe un protocolo para dar solución a sus preguntas, quejas, reclamos y sugerencias';
+const NOTE =
+  'Existe un protocolo para dar solución a sus preguntas, quejas, reclamos y sugerencias';
 const id = 'wasteManagement';
 const column = 'pqr_migran';
 const filterType = _FilterTypes.IN;

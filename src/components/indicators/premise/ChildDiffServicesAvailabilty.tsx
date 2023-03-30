@@ -7,7 +7,8 @@ import groupCategories from '../utils/groupCategories';
 import useWidgetEffect from '../utils/useWidgetEffect';
 
 const title = 'Servicios diferenciados para NNA';
-const NOTE = 'El punto de servicio/ayuda humanitaria actualmente cuenta con servicios diferenciados para niños, niñas y adolescentes?';
+const NOTE =
+  'El punto de servicio/ayuda humanitaria actualmente cuenta con servicios diferenciados para niños, niñas y adolescentes?';
 const id = 'childrenDiffirentiatedServicesAvailability';
 const column = 'serv_dif_n';
 const filterType = _FilterTypes.IN;
@@ -21,7 +22,9 @@ const props = {
   method,
 };
 
-export default function ChildDiffServicesAvailabilty({ dataSource }: BasicWidgetType) {
+export default function ChildDiffServicesAvailabilty({
+  dataSource,
+}: BasicWidgetType) {
   const { widget } = useWidgetEffect(
     <CustomBarWidget dataSource={dataSource} {...props} />,
     [dataSource],

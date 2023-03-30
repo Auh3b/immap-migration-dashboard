@@ -8,16 +8,17 @@ import groupedColumns from '../utils/groupedColumns';
 import useWidgetEffect from '../utils/useWidgetEffect';
 
 const title = 'Otros servicios';
-const NOTE = 'Capacidad diaria, personas atendidas ayer y promedio diario atendido de personas otros servicios prestados';
+const NOTE =
+  'Capacidad diaria, personas atendidas ayer y promedio diario atendido de personas otros servicios prestados';
 const id = 'informationServices';
 const column = '';
 const filterType = _FilterTypes.IN;
 const method = groupedColumns;
 const methodParams = {
-  columns: ['serv_tra_2', 'atend_serv','atend_ser_'],
+  columns: ['serv_tra_2', 'atend_serv', 'atend_ser_'],
   legend: ['Capacidad diaria', 'Sirvió ayer', 'Promedio diario'],
-  aggregateType: AggregationTypes.SUM
-}
+  aggregateType: AggregationTypes.SUM,
+};
 
 const props: defaultCustomWidgetProps = {
   title,

@@ -8,16 +8,17 @@ import groupedColumns from '../utils/groupedColumns';
 import useWidgetEffect from '../utils/useWidgetEffect';
 
 const title = 'Servicio asesoría legal';
-const NOTE = 'Capacidad diaria, personas atendidas ayer y promedio diario atendido de personas por el servicio de asesoría legal';
+const NOTE =
+  'Capacidad diaria, personas atendidas ayer y promedio diario atendido de personas por el servicio de asesoría legal';
 const id = 'legalServices';
 const column = '';
 const filterType = _FilterTypes.IN;
 const method = groupedColumns;
 const methodParams = {
-  columns: ['cap_serv_l', 'cap_serv_1','prom_legal'],
+  columns: ['cap_serv_l', 'cap_serv_1', 'prom_legal'],
   legend: ['Capacidad diaria', 'Sirvió ayer', 'Promedio diario'],
-  aggregateType: AggregationTypes.SUM
-}
+  aggregateType: AggregationTypes.SUM,
+};
 
 const props: defaultCustomWidgetProps = {
   title,

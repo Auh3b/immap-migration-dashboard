@@ -11,7 +11,6 @@ const CountryResiding = lazy(
   () => import('components/indicators/migration/CountryResiding'),
 );
 
-
 export default function MigrationLeftView({ dataSources }: any) {
   const { mainSource } = dataSources;
   return (

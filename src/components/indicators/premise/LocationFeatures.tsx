@@ -15,7 +15,7 @@ const CATEGORY_ABREVATIONS = new Map([
   [5, 'Áreas de registro de la población'],
   [6, 'Áreas de lavandería'],
   [7, 'Área para disposición de basuras'],
-  [8, 'Ninguna de las anteriores']
+  [8, 'Ninguna de las anteriores'],
 ]);
 
 const NOTE = 'Dotaciones del punto de servicio para atender a la población.  ';
@@ -47,4 +47,3 @@ export default function LocationFeatures({ dataSource }: BasicWidgetType) {
     </Grid>
   );
 }
-

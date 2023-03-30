@@ -6,16 +6,16 @@ import WidgetWithAlert from '../../indicators/WidgetWithAlert';
 import { defaultCustomWidgetProps } from './customWidgetsType';
 import useWidgetFetch from './hooks/useWidgetFetch';
 
-const useStyles = makeStyles((theme)=>({
-  legendContainer:{
+const useStyles = makeStyles((theme) => ({
+  legendContainer: {
     gap: theme.spacing(1),
   },
-  legendIcon:{
-    width: '10px', 
-    height: '10px', 
-    borderRadius: '100%'
-  }
-}))
+  legendIcon: {
+    width: '10px',
+    height: '10px',
+    borderRadius: '100%',
+  },
+}));
 
 export default function CustomStackedBarWidget({
   id,
@@ -28,11 +28,11 @@ export default function CustomStackedBarWidget({
   colorMap,
   labels = {},
 }: defaultCustomWidgetProps) {
-  const classes = useStyles()
-  const [xAxisData, setXAxisData] = useState([])
-  const [yAxisData, setYAxisData] = useState([])
-  const [colors, setColors] = useState([])
-  const [legend, setLegend] = useState([])
+  const classes = useStyles();
+  const [xAxisData, setXAxisData] = useState([]);
+  const [yAxisData, setYAxisData] = useState([]);
+  const [colors, setColors] = useState([]);
+  const [legend, setLegend] = useState([]);
 
   const {
     data: _data = [],
@@ -43,23 +43,33 @@ export default function CustomStackedBarWidget({
     dataSource,
     method,
     column,
-    methodParams
+    methodParams,
   });
 
-  useMemo(()=>{
-    if(_data.length > 0){
-      setXAxisData(_data.map(d => d.name)[0])
-      setYAxisData(_data.map(d => d.value)[0])
-      setColors(_data.map((d) =>d.legend)[0].map((d:string,i:number)=> UNICEF_COLORS[i]))
-      setLegend(_data.map(d => d.legend)[0].map((d:string, i:number) =>({name: d, color: UNICEF_COLORS[i]})))
+  useMemo(() => {
+    if (_data.length > 0) {
+      setXAxisData(_data.map((d) => d.name)[0]);
+      setYAxisData(_data.map((d) => d.value)[0]);
+      setColors(
+        _data
+          .map((d) => d.legend)[0]
+          .map((d: string, i: number) => UNICEF_COLORS[i]),
+      );
+      setLegend(
+        _data
+          .map((d) => d.legend)[0]
+          .map((d: string, i: number) => ({
+            name: d,
+            color: UNICEF_COLORS[i],
+          })),
+      );
     }
-
-  }, [_data])
+  }, [_data]);
 
   return (
     <WrapperWidgetUI title={title} isLoading={isLoading} onError={error}>
       <WidgetWithAlert dataSource={dataSource}>
-        {(yAxisData.length > 0 && !isLoading) && (
+        {yAxisData.length > 0 && !isLoading && (
           <BarWidgetUI
             // selectedBars={selectedBars}
             // onSelectedBarsChange={handleSelectedBarsChange}
@@ -72,15 +82,24 @@ export default function CustomStackedBarWidget({
             yAxisData={yAxisData}
           />
         )}
-        {(legend.length > 0 && !stacked)&& (
-         <Grid container item>
-          {legend.map(({name, color}) =>(
-            <Grid container key={name} alignItems='center' className={classes.legendContainer} item>
-              <span className={classes.legendIcon} style={{backgroundColor: color }}></span>
-              <Typography variant='overline'>{name}</Typography>
-            </Grid>
-          ))}
-         </Grid> 
+        {legend.length > 0 && !stacked && (
+          <Grid container item>
+            {legend.map(({ name, color }) => (
+              <Grid
+                container
+                key={name}
+                alignItems='center'
+                className={classes.legendContainer}
+                item
+              >
+                <span
+                  className={classes.legendIcon}
+                  style={{ backgroundColor: color }}
+                ></span>
+                <Typography variant='overline'>{name}</Typography>
+              </Grid>
+            ))}
+          </Grid>
         )}
       </WidgetWithAlert>
     </WrapperWidgetUI>

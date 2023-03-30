@@ -21,7 +21,7 @@ export default function PremiseRightView({ dataSources }: ViewSourceType) {
   const { premiseSource } = dataSources;
   return (
     <MainColumnView>
-      <ServicesProvided dataSource={premiseSource}  />
+      <ServicesProvided dataSource={premiseSource} />
       <OtherServiceTypes dataSource={premiseSource} />
       <LegalServices dataSource={premiseSource} />
       <FoodService dataSource={premiseSource} />

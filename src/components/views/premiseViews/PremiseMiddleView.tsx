@@ -1,5 +1,5 @@
 import { Grid, makeStyles } from '@material-ui/core';
-import ComplaintReporting from "components/indicators/premise/ComplaintReporting";
+import ComplaintReporting from 'components/indicators/premise/ComplaintReporting';
 import InfoLanguages from 'components/indicators/premise/InfoLanguages';
 import OtherLanguges from 'components/indicators/premise/OtherLanguges';
 import SickPeoplePremise from 'components/indicators/premise/SickPeoplePremise';

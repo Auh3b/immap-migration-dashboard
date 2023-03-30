@@ -21,21 +21,21 @@ export interface defaultCustomWidgetProps {
   max?: number;
   ticks?: number[];
   stacked?: boolean;
-  stepSizeOptions?:any,
-  wrapperProps?:any,
-  tooltip?:any,
-  tooltipFormatter?:Function,
-  formatter?:Function,
-  showControls?:any,
-  animation?:any,
-  isPlaying?:Boolean,
-  onPlay?:Function,
-  isPaused?:Boolean,
-  onPause?:Function,
-  onStop?:Function,
-  onTimelineUpdate?:Function,
-  timeWindow?:any,
-  onTimeWindowUpdate?:any,
+  stepSizeOptions?: any;
+  wrapperProps?: any;
+  tooltip?: any;
+  tooltipFormatter?: Function;
+  formatter?: Function;
+  showControls?: any;
+  animation?: any;
+  isPlaying?: Boolean;
+  onPlay?: Function;
+  isPaused?: Boolean;
+  onPause?: Function;
+  onStop?: Function;
+  onTimelineUpdate?: Function;
+  timeWindow?: any;
+  onTimeWindowUpdate?: any;
   xAxisFormatter?: Function;
   yAxisFormatter?: Function;
 }

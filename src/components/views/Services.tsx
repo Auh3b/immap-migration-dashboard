@@ -1,7 +1,17 @@
 import { makeStyles } from '@material-ui/core/styles';
 import MainView from './main/MainView';
 import mainSource from 'data/sources/mainSource';
-import { lazy } from 'react';
+import { lazy, useEffect } from 'react';
+import {
+  addLayer,
+  addSource,
+  removeLayer,
+  removeSource,
+} from '@carto/react-redux';
+import { useDispatch } from 'react-redux';
+import { HOTSPOTS_LAYER_ID } from 'components/layers/HotspotsLayer';
+import premiseSource from 'data/sources/premiseSource';
+import { PREMISE_SERVICES_LAYER_ID } from 'components/layers/PremiseServicesLayer';
 
 const ServiceLeftView = lazy(() => import('./serviceViews/ServiceLeftView'));
 const ServicesRightView = lazy(
@@ -18,7 +28,24 @@ const useViewStyle = makeStyles((theme) => ({
 }));
 
 export default function Services() {
+  const dispatch = useDispatch();
   const classes = useViewStyle();
+
+  useEffect(() => {
+    dispatch(addSource(mainSource));
+    dispatch(
+      addLayer({
+        id: HOTSPOTS_LAYER_ID,
+        source: mainSource.id,
+      }),
+    );
+
+    return () => {
+      dispatch(removeLayer(HOTSPOTS_LAYER_ID));
+      dispatch(removeSource(mainSource.id));
+    };
+  }, [dispatch]);
+  // [hygen] Add useEffect
   return (
     <MainView>
       {{

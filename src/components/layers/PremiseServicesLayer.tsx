@@ -4,14 +4,14 @@ import { CartoLayer } from '@deck.gl/carto';
 import { selectSourceById, updateLayer } from '@carto/react-redux';
 import { useCartoLayerProps } from '@carto/react-api';
 import { RootState } from 'store/store';
-import { LEGEND_TYPES } from '@carto/react-ui'
+import { LEGEND_TYPES } from '@carto/react-ui';
 import { UNICEF_COLORS } from 'theme';
 import { color } from 'd3';
 
 export const PREMISE_SERVICES_LAYER_ID = 'premiseServicesLayer';
 
 export const PREMISE_SERVICES_COLORS = {
-  Punto: [...Object.values(color(UNICEF_COLORS[0])).slice(0, -1)] ,
+  Punto: [...Object.values(color(UNICEF_COLORS[0])).slice(0, -1)],
 };
 
 const DATA = Object.entries(PREMISE_SERVICES_COLORS).map(([label, color]) => ({
@@ -38,7 +38,10 @@ export default function PremiseServicesLayer() {
   const source = useSelector((state) =>
     selectSourceById(state, premiseServicesLayer?.source),
   );
-  const cartoLayerProps = useCartoLayerProps({ source, layerConfig: premiseServicesLayer });
+  const cartoLayerProps = useCartoLayerProps({
+    source,
+    layerConfig: premiseServicesLayer,
+  });
 
   if (premiseServicesLayer && source) {
     return new CartoLayer({

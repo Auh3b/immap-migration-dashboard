@@ -44,7 +44,9 @@ export default function PremiseService() {
   return (
     <MainView>
       {{
-        left: <PremiseLeftView dataSources={{ premiseSource: premiseSource.id }} />,
+        left: (
+          <PremiseLeftView dataSources={{ premiseSource: premiseSource.id }} />
+        ),
         right: (
           <PremiseRightView dataSources={{ premiseSource: premiseSource.id }} />
         ),

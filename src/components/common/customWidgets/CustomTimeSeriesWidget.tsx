@@ -1,14 +1,21 @@
-import { TimeSeriesWidgetUI, TIME_SERIES_CHART_TYPES, WrapperWidgetUI } from '@carto/react-ui'
-import { defaultCustomWidgetProps } from './customWidgetsType'
-import useWidgetFetch from './hooks/useWidgetFetch'
+import {
+  TimeSeriesWidgetUI,
+  TIME_SERIES_CHART_TYPES,
+  WrapperWidgetUI,
+} from '@carto/react-ui';
+import { defaultCustomWidgetProps } from './customWidgetsType';
+import useWidgetFetch from './hooks/useWidgetFetch';
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addFilter, removeFilter } from '@carto/react-redux';
+import { GroupDateTypes, _FilterTypes as FilterTypes } from '@carto/react-core';
 import {
-  GroupDateTypes,
-  _FilterTypes as FilterTypes
-} from '@carto/react-core';
-import { capitalize, Menu, MenuItem, SvgIcon, Typography } from '@material-ui/core';
+  capitalize,
+  Menu,
+  MenuItem,
+  SvgIcon,
+  Typography,
+} from '@material-ui/core';
 
 const STEP_SIZE_RANGE_MAPPING = {
   [GroupDateTypes.YEARS]: 60 * 60 * 24 * 365 * 1000,
@@ -16,9 +23,8 @@ const STEP_SIZE_RANGE_MAPPING = {
   [GroupDateTypes.WEEKS]: 60 * 60 * 24 * 7 * 1000,
   [GroupDateTypes.DAYS]: 60 * 60 * 24 * 1000,
   [GroupDateTypes.HOURS]: 60 * 60 * 1000,
-  [GroupDateTypes.MINUTES]: 60 * 1000
+  [GroupDateTypes.MINUTES]: 60 * 1000,
 };
-
 
 export default function CustomTimeSeriesWidget({
   id,
@@ -32,7 +38,7 @@ export default function CustomTimeSeriesWidget({
   methodParams,
   // Widget
   //@ts-ignore
-  stepSizeOptions=[],
+  stepSizeOptions = [],
   wrapperProps,
   // UI
   tooltip,
@@ -46,20 +52,17 @@ export default function CustomTimeSeriesWidget({
   onPause,
   onStop,
   onTimelineUpdate,
-  timeWindow=[],
+  timeWindow = [],
   onTimeWindowUpdate,
-    // Both
-}: defaultCustomWidgetProps) {
-  const {
-    data,
-    isLoading,
-  } = useWidgetFetch({
+}: // Both
+defaultCustomWidgetProps) {
+  const { data, isLoading } = useWidgetFetch({
     id,
     dataSource,
     column,
     method,
     methodParams,
-  })
+  });
 
   const dispatch = useDispatch();
 
@@ -67,7 +70,7 @@ export default function CustomTimeSeriesWidget({
 
   if (showControls && global) {
     console.warn(
-      'TimeSeriesWidget cannot show controls while using global mode. Controls will be hidden.'
+      'TimeSeriesWidget cannot show controls while using global mode. Controls will be hidden.',
     );
     showControls = false;
   }
@@ -89,14 +92,14 @@ export default function CustomTimeSeriesWidget({
             column,
             type: filterType,
             values: [timeWindow.map((date: Date) => date.getTime?.() || date)],
-            owner: id
-          })
+            owner: id,
+          }),
         );
 
         if (onTimeWindowUpdate) onTimeWindowUpdate(timeWindow);
       }
     },
-    [column, dataSource, isLoading, dispatch, id, onTimeWindowUpdate]
+    [column, dataSource, isLoading, dispatch, id, onTimeWindowUpdate],
   );
 
   const handleTimelineUpdate = useCallback(
@@ -108,9 +111,11 @@ export default function CustomTimeSeriesWidget({
             id: dataSource,
             column,
             type: FilterTypes.TIME,
-            values: [[moment, moment + STEP_SIZE_RANGE_MAPPING[selectedStepSize]]],
-            owner: id
-          })
+            values: [
+              [moment, moment + STEP_SIZE_RANGE_MAPPING[selectedStepSize]],
+            ],
+            owner: id,
+          }),
         );
 
         if (onTimelineUpdate) onTimelineUpdate(new Date(moment));
@@ -124,8 +129,8 @@ export default function CustomTimeSeriesWidget({
       id,
       onTimelineUpdate,
       selectedStepSize,
-      data
-    ]
+      data,
+    ],
   );
 
   const handleStop = useCallback(() => {
@@ -133,8 +138,8 @@ export default function CustomTimeSeriesWidget({
       removeFilter({
         id: dataSource,
         column,
-        owner: id
-      })
+        owner: id,
+      }),
     );
 
     if (onStop) onStop();
@@ -142,7 +147,7 @@ export default function CustomTimeSeriesWidget({
 
   const [anchorEl, setAnchorEl] = useState(null);
 
-  const handleOpenStepSizeMenu = (e:Event) => {
+  const handleOpenStepSizeMenu = (e: Event) => {
     if (e?.currentTarget) {
       setAnchorEl(e.currentTarget);
     }
@@ -152,31 +157,31 @@ export default function CustomTimeSeriesWidget({
     setAnchorEl(null);
   };
 
-  const handleStepSizeUpdate = (stepSize:GroupDateTypes) => {
+  const handleStepSizeUpdate = (stepSize: GroupDateTypes) => {
     setSelectedStepSize(stepSize);
     handleCloseStepSizeMenu();
   };
 
   return (
     <>
-    <WrapperWidgetUI
-      title={title}
-      isLoading={isLoading}
-      {...wrapperProps}
-      actions={[
-        ...(wrapperProps?.actions || []),
-        ...(stepSizeOptions?.length
-          ? [
-              {
-                id: 'a0',
-                name: 'Bucket size',
-                icon: <StepSizeIcon />,
-                action: handleOpenStepSizeMenu
-              }
-            ]
-          : [])
-      ]}
-    >
+      <WrapperWidgetUI
+        title={title}
+        isLoading={isLoading}
+        {...wrapperProps}
+        actions={[
+          ...(wrapperProps?.actions || []),
+          ...(stepSizeOptions?.length
+            ? [
+                {
+                  id: 'a0',
+                  name: 'Bucket size',
+                  icon: <StepSizeIcon />,
+                  action: handleOpenStepSizeMenu,
+                },
+              ]
+            : []),
+        ]}
+      >
         {(!!data.length || isLoading) && (
           <TimeSeriesWidgetUI
             data={data}
@@ -198,30 +203,30 @@ export default function CustomTimeSeriesWidget({
             onTimeWindowUpdate={handleTimeWindowUpdate}
           />
         )}
-    </WrapperWidgetUI>
-    <Menu
-      anchorEl={anchorEl}
-      keepMounted
-      open={Boolean(anchorEl)}
-      onClose={handleCloseStepSizeMenu}
-    >
-      <MenuItem disabled>
-        <Typography variant='caption' color='textSecondary'>
-          Step size
-        </Typography>
-      </MenuItem>
-      {stepSizeOptions.map((stepSize:GroupDateTypes) => (
-        <MenuItem
-          key={stepSize}
-          selected={selectedStepSize === stepSize}
-          onClick={() => handleStepSizeUpdate(stepSize)}
-        >
-          {capitalize(stepSize)}
+      </WrapperWidgetUI>
+      <Menu
+        anchorEl={anchorEl}
+        keepMounted
+        open={Boolean(anchorEl)}
+        onClose={handleCloseStepSizeMenu}
+      >
+        <MenuItem disabled>
+          <Typography variant='caption' color='textSecondary'>
+            Step size
+          </Typography>
         </MenuItem>
-      ))}
-    </Menu>
-  </>
-  )
+        {stepSizeOptions.map((stepSize: GroupDateTypes) => (
+          <MenuItem
+            key={stepSize}
+            selected={selectedStepSize === stepSize}
+            onClick={() => handleStepSizeUpdate(stepSize)}
+          >
+            {capitalize(stepSize)}
+          </MenuItem>
+        ))}
+      </Menu>
+    </>
+  );
 }
 
 // Aux

@@ -11,7 +11,7 @@ interface CustomPalette extends Palette {
   appBar: PaletteColor;
 }
 
-export const UNICEF_COLORS:string[] = [
+export const UNICEF_COLORS: string[] = [
   '#1CABE2',
   '#00833D',
   '#80BD41',
@@ -23,8 +23,8 @@ export const UNICEF_COLORS:string[] = [
   '#D8D1C9',
   '#777779',
   '#2D2926',
-  '#374EA2'
-]
+  '#374EA2',
+];
 
 const customTheme = {
   palette: {

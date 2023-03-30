@@ -8,16 +8,17 @@ import groupedColumns from '../utils/groupedColumns';
 import useWidgetEffect from '../utils/useWidgetEffect';
 
 const title = 'servicio de apoyo o ayuda psicosocial';
-const NOTE = 'Capacidad diaria, personas atendidas ayer y promedio diario atendido de personas por servicio de apoyo o ayuda psicosocial';
+const NOTE =
+  'Capacidad diaria, personas atendidas ayer y promedio diario atendido de personas por servicio de apoyo o ayuda psicosocial';
 const id = 'informationServices';
 const column = '';
 const filterType = _FilterTypes.IN;
 const method = groupedColumns;
 const methodParams = {
-  columns: ['serv_psico', 'serv_psi_1','prom_ser_3'],
+  columns: ['serv_psico', 'serv_psi_1', 'prom_ser_3'],
   legend: ['Capacidad diaria', 'Sirvió ayer', 'Promedio diario'],
-  aggregateType: AggregationTypes.SUM
-}
+  aggregateType: AggregationTypes.SUM,
+};
 
 const props: defaultCustomWidgetProps = {
   title,

@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 //@ts-ignore
-import { fetchLayerData } from '@deck.gl/carto'
+import { fetchLayerData } from '@deck.gl/carto';
 // @ts-ignore
 import { selectSourceById, updateLayer } from '@carto/react-redux';
 import { useCartoLayerProps } from '@carto/react-api';
@@ -9,45 +9,48 @@ import { RootState } from 'store/store';
 import { IconLayer } from '@deck.gl/layers';
 //@ts-ignore
 import { CompositeLayer } from 'deck.gl';
-import mainSource from 'data/sources/mainSource'
+import mainSource from 'data/sources/mainSource';
 import d3Hex2RGB from 'utils/d3Hex2RGB';
 import { useEffect, useState } from 'react';
-import AtlasIcon from 'assets/img/icon-atlas.png'
+import AtlasIcon from 'assets/img/icon-atlas.png';
 
 export const SURVEY_TIMELINE_LAYER_ID = 'surveyTimelineLayer';
 
 const layerConfig = {
-    title: 'Flujo de migración',
-    visible: true,
-    switchable: true,
-    legend: {},
-}
+  title: 'Flujo de migración',
+  visible: true,
+  switchable: true,
+  legend: {},
+};
 
-class TimelineSurvey extends CompositeLayer<any, any>{
-  constructor(props:Record<any,any>){
-    super(props)
+class TimelineSurvey extends CompositeLayer<any, any> {
+  constructor(props: Record<any, any>) {
+    super(props);
   }
 
+  renderLayers() {
+    //@ts-ignore
+    const { iconGroups, data } = this.props;
 
-  
-  renderLayers(){
-    const {
-      iconGroups,
-      data,
-    } = this.props
-    
-    let iconsLayerRenders: any[] = []
+    let iconsLayerRenders: any[] = [];
 
-    for (let { name, coordinatesAccessor, filterFunction, color} of iconGroups){
+    for (let {
+      name,
+      coordinatesAccessor,
+      filterFunction,
+      color,
+    } of iconGroups) {
       const iconLayer = new IconLayer(
         this.getSubLayerProps({
           id: name,
-          data: new Promise((resolve, reject) => {resolve (data.filter(filterFunction))}),
+          data: new Promise((resolve, reject) => {
+            resolve(data.filter(filterFunction));
+          }),
           getPosition: coordinatesAccessor,
           getColor: color,
           iconAtlas: AtlasIcon,
-          getIcon: (d:any) => 'marker',
-          getSize: (d:any) => 4,
+          getIcon: (d: any) => 'marker',
+          getSize: (d: any) => 4,
           iconMapping: {
             marker: {
               x: 0,
@@ -55,90 +58,95 @@ class TimelineSurvey extends CompositeLayer<any, any>{
               width: 128,
               height: 128,
               anchorY: 128,
-              mask: true
-            }
+              mask: true,
+            },
           },
           sizeScale: 8,
           // onDataLoad:(data:any) =>{
           //   console.log(name, data)
           // },
-        })
-      )
+        }),
+      );
 
-      iconsLayerRenders = [...iconsLayerRenders, iconLayer]
+      iconsLayerRenders = [...iconsLayerRenders, iconLayer];
     }
-    console.log(iconsLayerRenders)
-    return iconsLayerRenders
+    console.log(iconsLayerRenders);
+    return iconsLayerRenders;
   }
 }
 
 export const iconGroupsConfig = [
   {
     name: 'Push 1',
-    coordinatesAccessor: (d:any)=> [+d['lon_mon'],+d['lat_mon']],
-    filterFunction: (d:any) => +d['lon_mon']!!== 99999,
-    color: d3Hex2RGB(1)
+    coordinatesAccessor: (d: any) => [+d['lon_mon'], +d['lat_mon']],
+    filterFunction: (d: any) => +d['lon_mon']! !== 99999,
+    color: d3Hex2RGB(1),
   },
-    {
+  {
     name: 'Push 2',
-    coordinatesAccessor: (d:any)=> [+d['lon_mon2'],+d['lat_mon2']],
-    filterFunction: (d:any) => +d['lon_mon2'] !== 999999,
-    color: d3Hex2RGB(2)
+    coordinatesAccessor: (d: any) => [+d['lon_mon2'], +d['lat_mon2']],
+    filterFunction: (d: any) => +d['lon_mon2'] !== 999999,
+    color: d3Hex2RGB(2),
   },
   {
     name: 'Push 3',
-    coordinatesAccessor: (d:any)=> [+d['lon_mon3'],+d['lat_mon3']],
-    filterFunction: (d:any) => +d['lon_mon3'] !== 999999,
-    color: d3Hex2RGB(3)
+    coordinatesAccessor: (d: any) => [+d['lon_mon3'], +d['lat_mon3']],
+    filterFunction: (d: any) => +d['lon_mon3'] !== 999999,
+    color: d3Hex2RGB(3),
   },
   {
     name: 'Push 4',
-    coordinatesAccessor: (d:any)=> [+d['lon_mon4'],+d['lat_mon4']],
-    filterFunction: (d:any) => +d['lon_mon4'] !== 999999,
-    color: d3Hex2RGB(4)
+    coordinatesAccessor: (d: any) => [+d['lon_mon4'], +d['lat_mon4']],
+    filterFunction: (d: any) => +d['lon_mon4'] !== 999999,
+    color: d3Hex2RGB(4),
   },
   {
     name: 'Push 5',
-    coordinatesAccessor: (d:any)=> [+d['lon_mon5'],+d['lat_mon5']],
-    filterFunction: (d:any) => +d['lon_mon5'] !== 999999,
-    color: d3Hex2RGB(5)
+    coordinatesAccessor: (d: any) => [+d['lon_mon5'], +d['lat_mon5']],
+    filterFunction: (d: any) => +d['lon_mon5'] !== 999999,
+    color: d3Hex2RGB(5),
   },
   {
     name: 'Push 6',
-    coordinatesAccessor: (d:any)=> [+d['lon_mon6'],+d['lat_mon6']],
-    filterFunction: (d:any) => +d['lon_mon6'] !== 999999,
-    color: d3Hex2RGB(6)
+    coordinatesAccessor: (d: any) => [+d['lon_mon6'], +d['lat_mon6']],
+    filterFunction: (d: any) => +d['lon_mon6'] !== 999999,
+    color: d3Hex2RGB(6),
   },
   {
     name: 'Enganches',
-    coordinatesAccessor: (d:any)=> [+d['lon_mon7'],+d['lat_mon7']],
-    filterFunction: (d:any) => +d['lon_mon7'] !== 999999,
-    color: d3Hex2RGB(7)
+    coordinatesAccessor: (d: any) => [+d['lon_mon7'], +d['lat_mon7']],
+    filterFunction: (d: any) => +d['lon_mon7'] !== 999999,
+    color: d3Hex2RGB(7),
   },
-]
+];
 
 export default function SurveyTimelineLayer() {
-  const dispatch = useDispatch()
-  const [data, setData] = useState<null | any[]>(null)
-  const { surveyTimelineLayer } = useSelector((state: RootState) => state.carto.layers);
+  const dispatch = useDispatch();
+  const [data, setData] = useState<null | any[]>(null);
+  const { surveyTimelineLayer } = useSelector(
+    (state: RootState) => state.carto.layers,
+  );
   const source = useSelector((state) =>
     selectSourceById(state, surveyTimelineLayer?.source),
   );
 
-  useEffect(()=>{
+  useEffect(() => {
     (async function fetchData() {
-      const {data} = await fetchLayerData({
+      const { data } = await fetchLayerData({
         ...mainSource,
         source: mainSource.data,
-        format: 'json' 
-      })
-      setData(data)
-    })()
-  }, [])
+        format: 'json',
+      });
+      setData(data);
+    })();
+  }, []);
 
-  const cartoLayerProps = useCartoLayerProps({ source, layerConfig: surveyTimelineLayer });
+  const cartoLayerProps = useCartoLayerProps({
+    source,
+    layerConfig: surveyTimelineLayer,
+  });
 
-  delete cartoLayerProps.onDataLoad
+  delete cartoLayerProps.onDataLoad;
 
   if (surveyTimelineLayer && source && data) {
     return new TimelineSurvey({
@@ -149,12 +157,14 @@ export default function SurveyTimelineLayer() {
       pointRadiusMinPixels: 2,
       pickable: true,
       iconGroups: [...iconGroupsConfig],
-      onDataLoad:()=>{
-        dispatch(updateLayer({
-          id: SURVEY_TIMELINE_LAYER_ID,
-          layerAttributes: {...layerConfig}
-        }))
-      }
+      onDataLoad: () => {
+        dispatch(
+          updateLayer({
+            id: SURVEY_TIMELINE_LAYER_ID,
+            layerAttributes: { ...layerConfig },
+          }),
+        );
+      },
     });
   }
 }

@@ -1,32 +1,11 @@
 //@ts-nocheck
 
-import { lazy, useEffect } from 'react';
+import { lazy } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import LazyLoadComponent from 'components/common/LazyLoadComponent';
 import { Grid } from '@material-ui/core';
-import { useDispatch } from 'react-redux';
-import {
-  addLayer,
-  addSource,
-  removeLayer,
-  removeSource,
-} from '@carto/react-redux';
-import { HOTSPOTS_LAYER_ID } from 'components/layers/HotspotsLayer';
-import mainSource from 'data/sources/mainSource';
 import PageFallback from 'components/common/PageFallback';
 
-// const Sidebar = lazy(
-//   () =>
-//     import(
-//       /* webpackChunkName: 'map-container' */ 'components/views/main/Sidebar'
-//     ),
-// );
-// const MapContainer = lazy(
-//   () =>
-//     import(
-//       /* webpackChunkName: 'map-container' */ 'components/views/main/MapContainer'
-//     ),
-// );
 const OutletView = lazy(
   () =>
     import(
@@ -50,23 +29,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Main() {
   const classes = useStyles();
-  const dispatch = useDispatch();
   // [hygen] Add useEffect
-  useEffect(() => {
-    dispatch(addSource(mainSource));
-
-    dispatch(
-      addLayer({
-        id: HOTSPOTS_LAYER_ID,
-        source: mainSource.id,
-      }),
-    );
-
-    return () => {
-      dispatch(removeLayer(HOTSPOTS_LAYER_ID));
-      dispatch(removeSource(mainSource.id));
-    };
-  }, [dispatch]);
   return (
     <Grid
       container
@@ -78,8 +41,6 @@ export default function Main() {
     >
       <LazyLoadComponent fallback={<PageFallback />}>
         <OutletView />
-        {/* <Sidebar />
-        <MapContainer /> */}
         <ErrorSnackbar />
       </LazyLoadComponent>
     </Grid>

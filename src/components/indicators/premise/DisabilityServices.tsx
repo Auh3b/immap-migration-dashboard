@@ -7,7 +7,8 @@ import groupCategories from '../utils/groupCategories';
 import useWidgetEffect from '../utils/useWidgetEffect';
 
 const title = 'Servicios para personas en condición de discapacidad';
-const NOTE = 'El punto de ayuda humanitaria cuenta con servicios para personas en condición de discapacidad';
+const NOTE =
+  'El punto de ayuda humanitaria cuenta con servicios para personas en condición de discapacidad';
 const id = 'diabilityServices';
 const column = 'serv_disca';
 const filterType = _FilterTypes.IN;

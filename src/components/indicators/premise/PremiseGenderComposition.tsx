@@ -13,10 +13,10 @@ import CustomPieWidget from 'components/common/customWidgets/CustomPieWidget';
 const EMPTY_ARRAY: [] = [];
 
 const id = 'Sexo';
-const title = 'Sexo'
+const title = 'Sexo';
 const column = 'identifica';
 const filterType = _FilterTypes.IN;
-const method = groupCategories
+const method = groupCategories;
 const NOTE = 'Sexo de identificación del personal que responde la encuesta';
 
 const props = {
@@ -24,18 +24,20 @@ const props = {
   title,
   column,
   method,
-  filterType
-}
+  filterType,
+};
 
-export default function PremiseGenderComposition({ dataSource }: BasicWidgetType) {
-  const {widget} = useWidgetEffect(
+export default function PremiseGenderComposition({
+  dataSource,
+}: BasicWidgetType) {
+  const { widget } = useWidgetEffect(
     <CustomPieWidget dataSource={dataSource} {...props} />,
     [dataSource],
   );
   return (
-      <Grid item>
-        {widget}
-        <WidgetNote note={NOTE} />
-      </Grid>
+    <Grid item>
+      {widget}
+      <WidgetNote note={NOTE} />
+    </Grid>
   );
 }

@@ -7,24 +7,24 @@ import { iconGroupsConfig } from 'components/layers/SurveyTimelineLayer';
 import MethodFunc from '../utils/methodType';
 import useWidgetEffect from '../utils/useWidgetEffect';
 
-const timelineValueAlt: MethodFunc = (input, column, params) =>{
-  const { iconGroupsConfig } = params
+const timelineValueAlt: MethodFunc = (input, column, params) => {
+  const { iconGroupsConfig } = params;
 
-  let output: Record<string, any>[] = []
+  let output: Record<string, any>[] = [];
 
-  for (let {name, filterFunction, color} of iconGroupsConfig){
-    const value = input.filter(filterFunction).length
+  for (let { name, filterFunction, color } of iconGroupsConfig) {
+    const value = input.filter(filterFunction).length;
     const outputItem = {
       id: name,
       name,
       value,
-      color: `rgb(${color.join(',')})`
-    }
-    output = [...output, outputItem]
+      color: `rgb(${color.join(',')})`,
+    };
+    output = [...output, outputItem];
   }
-  
-  return output
-}
+
+  return output;
+};
 
 const NOTE = 'País desde donde inicia el flujo migratorio';
 const id = 'countryDeparted';
@@ -33,8 +33,8 @@ const column = 'timeunix';
 const filterType = _FilterTypes.IN;
 const method = timelineValueAlt;
 const methodParams = {
-  iconGroupsConfig
-}
+  iconGroupsConfig,
+};
 
 const props = {
   id,
@@ -44,7 +44,6 @@ const props = {
   method,
   methodParams,
 };
-
 
 export default function MobileSurveyTimeline({
   dataSource,
