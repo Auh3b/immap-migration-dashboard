@@ -41,6 +41,7 @@ class TimelineSurvey extends CompositeLayer<any, any> {
       color,
     } of iconGroups) {
       const iconLayer = new IconLayer(
+        //@ts-ignore
         this.getSubLayerProps({
           id: name,
           data: new Promise((resolve, reject) => {
