@@ -29,8 +29,6 @@ export default function CustomTimelineWidget({
     methodParams,
   });
 
-  console.log(data)
-
   return (
     <WrapperWidgetUI title={title} isLoading={isLoading}>
       {data.length > 0 && !isLoading && <CustomTimelineUI data={data} />}
