@@ -1,25 +1,19 @@
 import { useDispatch, useSelector } from 'react-redux';
-// @ts-ignore
-// import { fetchLayerData, MAP_TYPES, FORMATS } from '@deck.gl/carto';
 //@ts-ignore
 import { ArcLayer } from '@deck.gl/layers';
 //@ts-ignore
 import { CompositeLayer } from 'deck.gl';
 //@ts-ignore
 import { RootState } from 'store/store';
-// import { LEGEND_TYPES } from '@carto/react-ui';
-import { selectSourceById, updateLayer } from '@carto/react-redux';
+import { addLayer, removeLayer, selectSourceById, updateLayer } from '@carto/react-redux';
 import { useCartoLayerProps } from '@carto/react-api';
 import getTileFeatures from 'utils/methods/getTileFeatures';
 //@ts-ignore
 import { TILE_FORMATS } from '@deck.gl/carto';
 import { format, scaleLinear } from 'd3';
 import distance from '@turf/distance';
-import { Grid, IconButton, makeStyles, Typography } from '@material-ui/core';
-import { useMemo, useState } from 'react';
-import AddIcon from '@material-ui/icons/Add';
-import RemoveIcon from '@material-ui/icons/Remove';
 import d3Hex2RGB from 'utils/d3Hex2RGB';
+import { LEGEND_TYPES } from '@carto/react-ui';
 
 const layerStyle = new Map([
   ['País de nacimiento', d3Hex2RGB(1)],
@@ -43,15 +37,77 @@ const getHeight = (a: coordinates, b: coordinates) => {
 export const MIGRATION_FLOW_LAYER_ID = 'migrationFlowLayer';
 
 //@ts-ignore
-class TravelLayer extends CompositeLayer {
-  constructor(props: any) {
+class TravelLayer extends CompositeLayer <any, any>{
+  constructor(props: Record<any,any>) {
     super(props);
+  }
+
+  
+  checkLayerConfig(layer: string){
+    //@ts-ignore
+    const { loadedLayers } = this.props
+    
+    return loadedLayers[layer] ? true : false
+  }
+
+  checkVisibility(layer:string){
+    const isLoaded = this.checkLayerConfig(layer)
+    if(isLoaded){
+      //@ts-ignore
+      const { loadedLayers } = this.props 
+      return loadedLayers[layer].visible
+    }
+
+    return false
+  }
+
+  setCompositeLayerLegends(){
+    //@ts-ignore
+    const { id, dispatch, source} = this.props
+    let layerLegends:any = []
+    for (let [name, color] of  Array.from(layerStyle)){
+      const layerId = `${id}-${name}`
+      const isLoaded = this.checkLayerConfig(layerId)
+      if(!isLoaded){
+        const layerConfig = {
+          id: layerId,
+          source,
+          layerAttributes:{
+            title: `${name}`,
+            visible: true,
+            legend:{
+              type: LEGEND_TYPES.CATEGORY,
+              labels: [name],
+              colors: [color],
+              collapsible: false,
+            }
+          }
+        }
+        dispatch(addLayer(layerConfig))
+        layerLegends = [ ...layerLegends, layerConfig]
+      }
+    }
+    this.setState({
+      layerLegends
+    })
   }
 
   initializeState() {
     //@ts-ignore
-    this.props.onDataLoads();
+    this.setCompositeLayerLegends()
   }
+
+  finalizeState(){
+    //@ts-ignore
+    const { layerLegends } = this.state
+    //@ts-ignore
+    const { dispatch } = this.props
+    
+    for (let { id } of layerLegends){
+      dispatch(removeLayer(id))
+    }
+  }
+
 
   //@ts-ignore
   shouldUpdateState({ changeFlags }) {
@@ -60,6 +116,7 @@ class TravelLayer extends CompositeLayer {
 
   renderLayers() {
     const {
+      id,
       data,
       getSourcePosition,
       getTargetPosition,
@@ -67,7 +124,6 @@ class TravelLayer extends CompositeLayer {
       getHeight,
       getTilt,
       pickable,
-      visible,
       //@ts-ignore
     } = this.props;
     const layerName = Array.from(layerStyle.keys());
@@ -83,7 +139,7 @@ class TravelLayer extends CompositeLayer {
           getWidth,
           getHeight,
           getTilt,
-          visible: visible(layerName[0]),
+          visible: this.checkVisibility(`${id}-${layerName[0]}`),
           getSourceColor: layerColor[0],
           getTargetColor: layerColor[0],
           pickable,
@@ -99,7 +155,7 @@ class TravelLayer extends CompositeLayer {
           getWidth,
           getHeight,
           getTilt,
-          visible: visible(layerName[1]),
+          visible: this.checkVisibility(`${id}-${layerName[1]}`),
           getSourceColor: layerColor[1],
           getTargetColor: layerColor[1],
           pickable,
@@ -115,7 +171,7 @@ class TravelLayer extends CompositeLayer {
           getWidth,
           getHeight,
           getTilt,
-          visible: visible(layerName[2]),
+          visible: this.checkVisibility(`${id}-${layerName[2]}`),
           getSourceColor: layerColor[2],
           getTargetColor: layerColor[2],
           pickable,
@@ -151,30 +207,13 @@ const getArcHeight = (d: any) => {
 
 export default function MigrationFlowLayer() {
   const { viewport } = useSelector((state: RootState) => state.carto);
-  const [disabledLayers, setDisabledLayers] = useState([]);
   const dispatch = useDispatch();
+  const {  layers: loadedLayers } = useSelector((state: RootState) => state.carto)
   const { hotspotsLayer, migrationFlowLayer } = useSelector(
     (state: RootState) => state.carto.layers,
   );
   const source = useSelector((state) =>
     selectSourceById(state, migrationFlowLayer?.source),
-  );
-
-  const layerConfig = useMemo(
-    () => ({
-      title: 'Flujo de migración',
-      visible: true,
-      switchable: true,
-      legend: {
-        children: (
-          <CustomLayerLegend
-            legendItems={Array.from(layerStyle)}
-            disableLayers={setDisabledLayers}
-          />
-        ),
-      },
-    }),
-    [],
   );
 
   async function fetchData() {
@@ -207,79 +246,10 @@ export default function MigrationFlowLayer() {
       getWidth: 1,
       getHeight: 1,
       getTilt: 0,
-      visible: (name: string) => !disabledLayers.includes(name),
       pickable: true,
-      onDataLoads: () => {
-        dispatch(
-          updateLayer({
-            id: MIGRATION_FLOW_LAYER_ID,
-            layerAttributes: { ...layerConfig },
-          }),
-        );
-      },
+      dispatch,
+      loadedLayers,
+      source
     });
   }
-}
-
-const useStyle = makeStyles(() => ({
-  legendIcon: {
-    width: '10px',
-    height: '10px',
-    borderRadius: '100%',
-  },
-}));
-
-function CustomLayerLegend({
-  legendItems,
-  disableLayers,
-}: {
-  legendItems: any[][];
-  disableLayers: any;
-}) {
-  return (
-    <Grid direction='column' container>
-      {legendItems.length > 0 &&
-        legendItems.map(([name, color]) => (
-          <CustomLegendItem
-            disableLayer={disableLayers}
-            key={name}
-            name={name}
-            color={color}
-          />
-        ))}
-    </Grid>
-  );
-}
-
-function CustomLegendItem({ color, name, disableLayer }: any) {
-  const [isOpen, setIsOpen] = useState(false);
-  const classes = useStyle();
-
-  const handleToggle = () => {
-    setIsOpen((prev) => !prev);
-    if (isOpen) {
-      disableLayer((prev: string[]) => prev.filter((d: any) => d !== name));
-    } else {
-      disableLayer((prev: string[]) => [...prev, name]);
-    }
-  };
-
-  return (
-    <Grid item container alignItems='center' justifyContent='space-between'>
-      <Grid xs={11} container item alignItems='center' style={{ gap: '5px' }}>
-        <span
-          className={classes.legendIcon}
-          style={{
-            backgroundColor: `rgb(${color[0]},${color[1]}, ${color[2]})`,
-          }}
-        ></span>
-        <Typography variant='overline'>{name}</Typography>
-      </Grid>
-      <Grid xs={1} item>
-        <IconButton onClick={handleToggle}>
-          {isOpen ? <RemoveIcon /> : <AddIcon />}
-        </IconButton>
-      </Grid>
-    </Grid>
-  );
 }
