@@ -66,6 +66,7 @@ class TimelineSurvey extends CompositeLayer<any, any> {
         layerLegends = [ ...layerLegends, layerConfig]
       }
     }
+    //@ts-ignore
     this.setState({
       layerLegends
     })

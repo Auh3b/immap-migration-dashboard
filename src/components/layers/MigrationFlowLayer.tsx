@@ -87,6 +87,7 @@ class TravelLayer extends CompositeLayer <any, any>{
         layerLegends = [ ...layerLegends, layerConfig]
       }
     }
+    //@ts-ignore
     this.setState({
       layerLegends
     })
