@@ -17,7 +17,7 @@ import AtlasIcon from 'assets/img/icon-atlas.png';
 export const SURVEY_TIMELINE_LAYER_ID = 'surveyTimelineLayer';
 
 const layerConfig = {
-  title: 'Flujo de migración',
+  title: 'Aurora',
   visible: true,
   switchable: true,
   legend: {},
