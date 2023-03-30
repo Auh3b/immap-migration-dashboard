@@ -28,6 +28,11 @@ class TimelineSurvey extends CompositeLayer<any, any> {
     super(props);
   }
 
+  initializeState() {
+    //@ts-ignore
+    this.props.onDataLoad();
+  }
+
   renderLayers() {
     //@ts-ignore
     const { iconGroups, data } = this.props;
@@ -44,9 +49,7 @@ class TimelineSurvey extends CompositeLayer<any, any> {
         //@ts-ignore
         this.getSubLayerProps({
           id: name,
-          data: new Promise((resolve, reject) => {
-            resolve(data.filter(filterFunction));
-          }),
+          data:data.filter(filterFunction),
           getPosition: coordinatesAccessor,
           getColor: color,
           iconAtlas: AtlasIcon,
@@ -71,7 +74,6 @@ class TimelineSurvey extends CompositeLayer<any, any> {
 
       iconsLayerRenders = [...iconsLayerRenders, iconLayer];
     }
-    console.log(iconsLayerRenders);
     return iconsLayerRenders;
   }
 }
@@ -152,19 +154,23 @@ export default function SurveyTimelineLayer() {
   if (surveyTimelineLayer && source && data) {
     return new TimelineSurvey({
       ...cartoLayerProps,
-      data,
+      data:new Promise((resolve, reject) => {
+        resolve(data);
+      }),
       id: SURVEY_TIMELINE_LAYER_ID,
       getFillColor: [241, 109, 122],
       pointRadiusMinPixels: 2,
       pickable: true,
       iconGroups: [...iconGroupsConfig],
-      onDataLoad: () => {
+      onDataLoad: (data:any) => {
         dispatch(
           updateLayer({
             id: SURVEY_TIMELINE_LAYER_ID,
             layerAttributes: { ...layerConfig },
           }),
         );
+
+        // cartoLayerProps.onDataLoad && cartoLayerProps.onDataLoad(data);
       },
     });
   }

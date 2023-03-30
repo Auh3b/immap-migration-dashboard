@@ -26,9 +26,9 @@ const timelineValueAlt: MethodFunc = (input, column, params) => {
   return output;
 };
 
-const NOTE = 'País desde donde inicia el flujo migratorio';
-const id = 'countryDeparted';
-const title = 'País inicial de flujo migratorio';
+const NOTE = 'Línea de tiempo de respuesta a la encuesta';
+const id = 'mobileSurveyResponseTimeline';
+const title = 'Línea de tiempo de respuesta a la encuesta';
 const column = 'timeunix';
 const filterType = _FilterTypes.IN;
 const method = timelineValueAlt;
