@@ -30,7 +30,7 @@ class TimelineSurvey extends CompositeLayer<any, any> {
 
   initializeState() {
     //@ts-ignore
-    this.props.onDataLoad();
+    this.props.onDataLoads();
   }
 
   renderLayers() {
@@ -162,7 +162,7 @@ export default function SurveyTimelineLayer() {
       pointRadiusMinPixels: 2,
       pickable: true,
       iconGroups: [...iconGroupsConfig],
-      onDataLoad: (data:any) => {
+      onDataLoads: () => {
         dispatch(
           updateLayer({
             id: SURVEY_TIMELINE_LAYER_ID,
