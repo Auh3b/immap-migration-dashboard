@@ -1,10 +1,10 @@
 import { Grid } from "@material-ui/core";
 import MobileSurveyTimeline from "components/indicators/dynamic/MobileSurveyTimeline";
 
-export default function DinamicaMiddleView({
+export default function DinamicaLeftView({
   dataSources, classes
 }:any) {
-  const { premiseSource, mainSource } = dataSources
+  const { premiseSource, mainSource, timelineSource } = dataSources
   return (
     <Grid xs item>
       <MobileSurveyTimeline dataSource={mainSource}/>

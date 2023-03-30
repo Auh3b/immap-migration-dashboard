@@ -14,7 +14,7 @@ export default function groupCategories(
     valuesColumns: [column],
     operation: AggregationTypes.COUNT,
   });
-
+  console.log(groups)
   if (groups) {
     return groups;
   }
