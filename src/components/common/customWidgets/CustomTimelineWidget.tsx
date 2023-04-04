@@ -36,7 +36,7 @@ export default function CustomTimelineWidget({
   );
 }
 
-function CustomTimelineUI({ data }: { data: TimelineItem[] }) {
+function CustomTimelineUI({ data }: { data: TimelineItemContent[] }) {
   const lastItem = useRef(data.length - 1);
 
   return (
@@ -60,7 +60,7 @@ function CustomTimelineUI({ data }: { data: TimelineItem[] }) {
   );
 }
 
-interface TimelineItem extends Record<string, any> {
+interface TimelineItemContent extends Record<string, any> {
   name: string;
   value: number;
   color?: string;

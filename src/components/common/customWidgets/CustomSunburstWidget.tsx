@@ -35,8 +35,8 @@ const useStyle = makeStyles((theme) => ({
 
 const levels = [
   'País de nacimiento',
-  'País del flujo inicial',
   'País después de un año',
+  'País del flujo inicial',
 ];
 
 export default function CustomSunburstWidget({

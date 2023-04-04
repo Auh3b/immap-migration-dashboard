@@ -8,20 +8,13 @@ import {
   addSource,
   removeSource,
 } from '@carto/react-redux';
-
-import { makeStyles } from '@material-ui/core/styles';
 import MainView from './main/MainView';
 import PremiseLeftView from './premiseViews/PremiseLeftView';
 import PremiseRightView from './premiseViews/PremiseRightView';
 import PremiseMiddleView from './premiseViews/PremiseMiddleView';
 
-const useStyles = makeStyles(() => ({
-  premiseService: {},
-}));
-
 export default function PremiseService() {
   const dispatch = useDispatch();
-  const classes = useStyles();
 
   useEffect(() => {
     dispatch(addSource(premiseSource));

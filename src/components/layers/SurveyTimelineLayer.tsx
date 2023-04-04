@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 //@ts-ignore
 import { fetchLayerData } from '@deck.gl/carto';
 // @ts-ignore
-import { addLayer, removeLayer, selectSourceById, updateLayer } from '@carto/react-redux';
+import { addLayer, removeLayer, selectSourceById } from '@carto/react-redux';
 import { useCartoLayerProps } from '@carto/react-api';
 import { RootState } from 'store/store';
 //@ts-ignore
@@ -22,70 +22,79 @@ class TimelineSurvey extends CompositeLayer<any, any> {
     super(props);
   }
 
-  checkLayerConfig(layer: string){
+  checkLayerConfig(layer: string) {
     //@ts-ignore
-    const { loadedLayers } = this.props
-    
-    return loadedLayers[layer] ? true : false
+    const { loadedLayers } = this.props;
+
+    return loadedLayers[layer] ? true : false;
   }
 
-  checkVisibility(layer:string){
-    const isLoaded = this.checkLayerConfig(layer)
-    if(isLoaded){
+  checkVisibility(layer: string) {
+    const isLoaded = this.checkLayerConfig(layer);
+    if (isLoaded) {
       //@ts-ignore
-      const { loadedLayers } = this.props 
-      return loadedLayers[layer].visible
+      const { loadedLayers } = this.props;
+      return loadedLayers[layer].visible;
     }
 
-    return false
+    return false;
   }
 
-  setCompositeLayerLegends(){
+  setCompositeLayerLegends() {
     //@ts-ignore
-    const { iconGroups, id, dispatch, source} = this.props
-    let layerLegends:any = []
-    for (let {name, color} of  iconGroups){
-      const layerId = `${id}-${name}`
-      const isLoaded = this.checkLayerConfig(layerId)
-      if(!isLoaded){
+    const { iconGroups, id, dispatch, source } = this.props;
+    let layerLegends: any = [];
+    for (let { name, color } of iconGroups) {
+      const layerId = `${id}-${name}`;
+      const isLoaded = this.checkLayerConfig(layerId);
+      if (!isLoaded) {
         const layerConfig = {
           id: layerId,
           source,
-          layerAttributes:{
+          layerAttributes: {
             title: `Aurora ${name}`,
             visible: true,
-            legend:{
+            legend: {
               type: LEGEND_TYPES.CATEGORY,
               labels: [name],
               colors: [color],
               collapsible: false,
-            }
-          }
-        }
-        dispatch(addLayer(layerConfig))
-        layerLegends = [ ...layerLegends, layerConfig]
+            },
+          },
+        };
+        dispatch(addLayer(layerConfig));
+        layerLegends = [...layerLegends, layerConfig];
       }
     }
     //@ts-ignore
     this.setState({
-      layerLegends
-    })
+      layerLegends,
+    });
   }
 
   initializeState() {
-    //@ts-ignore
-    // this.props.onDataLoads();
-    this.setCompositeLayerLegends()
+    this.setCompositeLayerLegends();
   }
 
-  finalizeState(){
+  //@ts-ignore
+  shouldUpdateState({ changeFlags }) {
+    return changeFlags.somethingChanged;
+  }
+
+  //@ts-ignore
+  updateState({ props, oldProps, changeFlags }) {
+    if (this.shouldUpdateState && this.props.data) {
+    }
+  }
+
+  finalizeState() {
     //@ts-ignore
-    const { layerLegends } = this.state
+    const { layerLegends } = this.state;
     //@ts-ignore
-    const { dispatch } = this.props
-    
-    for (let { id } of layerLegends){
-      dispatch(removeLayer(id))
+    const { dispatch } = this.props;
+
+    for (let { id } of layerLegends) {
+      dispatch(removeLayer(id));
     }
   }
 
@@ -101,12 +110,12 @@ class TimelineSurvey extends CompositeLayer<any, any> {
       filterFunction,
       color,
     } of iconGroups) {
-      const layerId =  `${id}-${name}`
+      const layerId = `${id}-${name}`;
       const iconLayer = new IconLayer(
         //@ts-ignore
         this.getSubLayerProps({
           id: name,
-          data:data.filter(filterFunction),
+          data: data.filter(filterFunction),
           getPosition: coordinatesAccessor,
           getColor: color,
           iconAtlas: AtlasIcon,
@@ -124,9 +133,6 @@ class TimelineSurvey extends CompositeLayer<any, any> {
             },
           },
           sizeScale: 8,
-          // onDataLoad:(data:any) =>{
-          //   console.log(name, data)
-          // },
         }),
       );
       iconsLayerRenders = [...iconsLayerRenders, iconLayer];
@@ -183,7 +189,9 @@ export const iconGroupsConfig = [
 export default function SurveyTimelineLayer() {
   const dispatch = useDispatch();
   const [data, setData] = useState<null | any[]>(null);
-  const {  layers: loadedLayers } = useSelector((state: RootState) => state.carto)
+  const { layers: loadedLayers } = useSelector(
+    (state: RootState) => state.carto,
+  );
   const { surveyTimelineLayer } = useSelector(
     (state: RootState) => state.carto.layers,
   );
@@ -202,19 +210,17 @@ export default function SurveyTimelineLayer() {
     })();
   }, []);
 
-  
   const cartoLayerProps = useCartoLayerProps({
     source,
     layerConfig: surveyTimelineLayer,
   });
   //@ts-ignore
-  // delete cartoLayerProps.visible;
   delete cartoLayerProps.onDataLoad;
 
   if (surveyTimelineLayer && source && data) {
     return new TimelineSurvey({
       ...cartoLayerProps,
-      data:new Promise((resolve, reject) => {
+      data: new Promise((resolve, reject) => {
         resolve(data);
       }),
       id: SURVEY_TIMELINE_LAYER_ID,

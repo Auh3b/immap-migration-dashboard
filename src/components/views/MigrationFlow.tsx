@@ -13,8 +13,6 @@ import {
 } from '@carto/react-redux';
 import { MIGRATION_FLOW_LAYER_ID } from 'components/layers/MigrationFlowLayer';
 import { HOTSPOTS_LAYER_ID } from 'components/layers/HotspotsLayer';
-import premiseSource from 'data/sources/premiseSource';
-import { PREMISE_SERVICES_LAYER_ID } from 'components/layers/PremiseServicesLayer';
 
 export default function MigrationFlow() {
   const dispatch = useDispatch();

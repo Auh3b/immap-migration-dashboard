@@ -240,13 +240,13 @@ function NavigationMenu({ column = false }: { column?: boolean }) {
           to={ROUTE_PATHS.DASHBOARD}
         />
         <Tab
-          label='Servicios oferta'
+          label='Servicios'
           value='premise_service'
           component={NavLink}
           to={ROUTE_PATHS.PREMISE_SERVICE}
         />
         <Tab
-          label='Servicios demanda'
+          label='Sobre Servicios'
           value='services'
           component={NavLink}
           to={ROUTE_PATHS.SERVICES}
@@ -258,13 +258,13 @@ function NavigationMenu({ column = false }: { column?: boolean }) {
           to={ROUTE_PATHS.MIGRATION_FLOW}
         />
         <Tab
-          label='NNA'
+          label='Caracterización grupo de viaje'
           value='children'
           component={NavLink}
           to={ROUTE_PATHS.CHILDREN}
         />
         <Tab
-          label='Dinámica aurora'
+          label='Conexiones en la ruta'
           value='dinamica'
           component={NavLink}
           to={ROUTE_PATHS.DINÁMICA_AURORA}

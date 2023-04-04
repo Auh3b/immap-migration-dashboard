@@ -5,7 +5,7 @@ import { ArcLayer } from '@deck.gl/layers';
 import { CompositeLayer } from 'deck.gl';
 //@ts-ignore
 import { RootState } from 'store/store';
-import { addLayer, removeLayer, selectSourceById, updateLayer } from '@carto/react-redux';
+import { addLayer, removeLayer, selectSourceById } from '@carto/react-redux';
 import { useCartoLayerProps } from '@carto/react-api';
 import getTileFeatures from 'utils/methods/getTileFeatures';
 //@ts-ignore
@@ -37,78 +37,76 @@ const getHeight = (a: coordinates, b: coordinates) => {
 export const MIGRATION_FLOW_LAYER_ID = 'migrationFlowLayer';
 
 //@ts-ignore
-class TravelLayer extends CompositeLayer <any, any>{
-  constructor(props: Record<any,any>) {
+class TravelLayer extends CompositeLayer<any, any> {
+  constructor(props: Record<any, any>) {
     super(props);
   }
 
-  
-  checkLayerConfig(layer: string){
+  checkLayerConfig(layer: string) {
     //@ts-ignore
-    const { loadedLayers } = this.props
-    
-    return loadedLayers[layer] ? true : false
+    const { loadedLayers } = this.props;
+
+    return loadedLayers[layer] ? true : false;
   }
 
-  checkVisibility(layer:string){
-    const isLoaded = this.checkLayerConfig(layer)
-    if(isLoaded){
+  checkVisibility(layer: string) {
+    const isLoaded = this.checkLayerConfig(layer);
+    if (isLoaded) {
       //@ts-ignore
-      const { loadedLayers } = this.props 
-      return loadedLayers[layer].visible
+      const { loadedLayers } = this.props;
+      return loadedLayers[layer].visible;
     }
 
-    return false
+    return false;
   }
 
-  setCompositeLayerLegends(){
+  setCompositeLayerLegends() {
     //@ts-ignore
-    const { id, dispatch, source} = this.props
-    let layerLegends:any = []
-    for (let [name, color] of  Array.from(layerStyle)){
-      const layerId = `${id}-${name}`
-      const isLoaded = this.checkLayerConfig(layerId)
-      if(!isLoaded){
+    const { id, dispatch, source } = this.props;
+    let layerLegends: any = [];
+    for (let [name, color] of Array.from(layerStyle)) {
+      const layerId = `${id}-${name}`;
+      const isLoaded = this.checkLayerConfig(layerId);
+      if (!isLoaded) {
         const layerConfig = {
           id: layerId,
           source,
-          layerAttributes:{
+          layerAttributes: {
             title: `${name}`,
             visible: true,
-            legend:{
+            legend: {
               type: LEGEND_TYPES.CATEGORY,
               labels: [name],
               colors: [color],
               collapsible: false,
-            }
-          }
-        }
-        dispatch(addLayer(layerConfig))
-        layerLegends = [ ...layerLegends, layerConfig]
+            },
+          },
+        };
+        dispatch(addLayer(layerConfig));
+        layerLegends = [...layerLegends, layerConfig];
       }
     }
     //@ts-ignore
     this.setState({
-      layerLegends
-    })
+      layerLegends,
+    });
   }
 
   initializeState() {
     //@ts-ignore
-    this.setCompositeLayerLegends()
+    this.setCompositeLayerLegends();
   }
 
-  finalizeState(){
+  finalizeState() {
     //@ts-ignore
-    const { layerLegends } = this.state
+    const { layerLegends } = this.state;
     //@ts-ignore
-    const { dispatch } = this.props
-    
-    for (let { id } of layerLegends){
-      dispatch(removeLayer(id))
+    const { dispatch } = this.props;
+
+    for (let { id } of layerLegends) {
+      dispatch(removeLayer(id));
     }
   }
-
 
   //@ts-ignore
   shouldUpdateState({ changeFlags }) {
@@ -209,7 +207,9 @@ const getArcHeight = (d: any) => {
 export default function MigrationFlowLayer() {
   const { viewport } = useSelector((state: RootState) => state.carto);
   const dispatch = useDispatch();
-  const {  layers: loadedLayers } = useSelector((state: RootState) => state.carto)
+  const { layers: loadedLayers } = useSelector(
+    (state: RootState) => state.carto,
+  );
   const { hotspotsLayer, migrationFlowLayer } = useSelector(
     (state: RootState) => state.carto.layers,
   );
@@ -250,7 +250,7 @@ export default function MigrationFlowLayer() {
       pickable: true,
       dispatch,
       loadedLayers,
-      source
+      source,
     });
   }
 }

@@ -10,8 +10,6 @@ import {
 } from '@carto/react-redux';
 import { useDispatch } from 'react-redux';
 import { HOTSPOTS_LAYER_ID } from 'components/layers/HotspotsLayer';
-import premiseSource from 'data/sources/premiseSource';
-import { PREMISE_SERVICES_LAYER_ID } from 'components/layers/PremiseServicesLayer';
 
 const ServiceLeftView = lazy(() => import('./serviceViews/ServiceLeftView'));
 const ServicesRightView = lazy(

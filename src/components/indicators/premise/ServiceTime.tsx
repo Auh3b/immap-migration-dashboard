@@ -1,6 +1,6 @@
 import { _FilterTypes } from '@carto/react-core';
 import { WrapperWidgetUI } from '@carto/react-ui';
-import { Grid, makeStyles, Typography } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType';
 import CustomBarWidget from 'components/common/customWidgets/CustomBarWidget';
 import WidgetNote from 'components/common/customWidgets/WidgetNote';

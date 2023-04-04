@@ -9,7 +9,6 @@ import {
   removeSource,
 } from '@carto/react-redux';
 import MainView from './main/MainView';
-import DinamicaMiddleView from './dinamicaViews/DinamicaMiddleView';
 import { useEffect } from 'react';
 import { SURVEY_TIMELINE_LAYER_ID } from 'components/layers/SurveyTimelineLayer';
 import DinamicaLeftView from './dinamicaViews/DinamicaLeftView';
@@ -40,7 +39,6 @@ export default function DinámicaAurora() {
       }),
     );
 
-
     return () => {
       dispatch(removeLayer(SURVEY_TIMELINE_LAYER_ID));
       dispatch(removeLayer(HOTSPOTS_LAYER_ID));
@@ -55,7 +53,6 @@ export default function DinámicaAurora() {
     <MainView>
       {{
         left: <DinamicaLeftView dataSources={sources} />,
-        // middle: <DinamicaMiddleView  dataSources={sources}/>
       }}
     </MainView>
   );

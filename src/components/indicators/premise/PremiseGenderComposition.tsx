@@ -1,16 +1,10 @@
-import {
-  AggregationTypes,
-  groupValuesByColumn,
-  _FilterTypes,
-} from '@carto/react-core';
-import { Grid, makeStyles } from '@material-ui/core';
+import { _FilterTypes } from '@carto/react-core';
+import { Grid } from '@material-ui/core';
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
 import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType';
 import groupCategories from '../utils/groupCategories';
 import useWidgetEffect from '../utils/useWidgetEffect';
 import CustomPieWidget from 'components/common/customWidgets/CustomPieWidget';
-
-const EMPTY_ARRAY: [] = [];
 
 const id = 'Sexo';
 const title = 'Sexo';

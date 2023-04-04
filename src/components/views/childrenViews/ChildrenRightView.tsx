@@ -10,9 +10,9 @@ export default function ChildrenRightView({ dataSources, classes }: any) {
   const { premiseSource } = dataSources;
   return (
     <MainColumnView>
-      <Grid item className={classes.title}>
+      {/* <Grid item className={classes.title}>
         <Typography variant='subtitle1'>Oferta (Premise)</Typography>
-      </Grid>
+      </Grid> */}
       <Divider className={classes.divider} />
       <ChildrenUnderCare dataSource={premiseSource} />
       <ChildDiffServicesAvailabilty dataSource={premiseSource} />

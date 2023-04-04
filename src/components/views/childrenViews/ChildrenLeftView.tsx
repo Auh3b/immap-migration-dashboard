@@ -28,9 +28,9 @@ export default function ChildrenLeftView({ dataSources, classes }: any) {
   const { mainSource } = dataSources;
   return (
     <MainColumnView>
-      <Grid item className={classes.title}>
+      {/* <Grid item className={classes.title}>
         <Typography variant='subtitle1'>Demanda (Aurora)</Typography>
-      </Grid>
+      </Grid> */}
       <Divider className={classes.divider} />
       <ChildTravelerAges dataSource={mainSource} />
       <ChildrenTravelAlone dataSource={mainSource} />
