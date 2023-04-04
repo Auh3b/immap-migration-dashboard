@@ -83,6 +83,7 @@ class TimelineSurvey extends CompositeLayer<any, any> {
 
   //@ts-ignore
   updateState({ props, oldProps, changeFlags }) {
+    //@ts-ignore
     if (this.shouldUpdateState && this.props.data) {
     }
   }
