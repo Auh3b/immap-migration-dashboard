@@ -246,7 +246,7 @@ function NavigationMenu({ column = false }: { column?: boolean }) {
           to={ROUTE_PATHS.PREMISE_SERVICE}
         />
         <Tab
-          label='Sobre Servicios'
+          label='Feedback Sobre Servicios'
           value='services'
           component={NavLink}
           to={ROUTE_PATHS.SERVICES}
