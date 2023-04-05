@@ -7,7 +7,7 @@ export const initialState: InitialCarto3State = {
   viewState: {
     latitude: 8.62581290990417,
     longitude: -81.39079408436801,
-    zoom: 5,
+    zoom: 6,
     //@ts-ignore
     // minZoom: 5,
     pitch: 0,
