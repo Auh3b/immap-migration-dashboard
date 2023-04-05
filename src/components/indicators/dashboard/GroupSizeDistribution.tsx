@@ -12,7 +12,7 @@ const id = 'tripComposition';
 const column = 'e17__cua';
 const method = histogramValues;
 const filterType = _FilterTypes.CLOSED_OPEN;
-const bins = 4;
+const bins = 5;
 
 const props = {
   id,

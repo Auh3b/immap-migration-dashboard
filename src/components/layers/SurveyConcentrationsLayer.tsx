@@ -146,7 +146,7 @@ class CircleClusterLayer extends CompositeLayer {
 }
 
 const layerConfig = {
-  title: 'Concentración de encuestas',
+  title: 'Concentración de respuestas Aurora',
   visible: true,
   switchable: true,
   legend: {
