@@ -2,7 +2,12 @@ import { useDispatch, useSelector } from 'react-redux';
 //@ts-ignore
 import { fetchLayerData } from '@deck.gl/carto';
 // @ts-ignore
-import { addLayer, removeLayer, selectSourceById } from '@carto/react-redux';
+import {
+  addLayer,
+  removeLayer,
+  selectSourceById,
+  updateLayer,
+} from '@carto/react-redux';
 import { useCartoLayerProps } from '@carto/react-api';
 import { RootState } from 'store/store';
 //@ts-ignore
@@ -179,12 +184,6 @@ export const iconGroupsConfig = [
     filterFunction: (d: any) => +d['lon_mon6'] !== 999999,
     color: d3Hex2RGB(6),
   },
-  {
-    name: 'Enganches',
-    coordinatesAccessor: (d: any) => [+d['lon_mon7'], +d['lat_mon7']],
-    filterFunction: (d: any) => +d['lon_mon7'] !== 999999,
-    color: d3Hex2RGB(7),
-  },
 ];
 
 export default function SurveyTimelineLayer() {
@@ -193,7 +192,7 @@ export default function SurveyTimelineLayer() {
   const { layers: loadedLayers } = useSelector(
     (state: RootState) => state.carto,
   );
-  const { surveyTimelineLayer } = useSelector(
+  const { hotSpotLayer, surveyTimelineLayer } = useSelector(
     (state: RootState) => state.carto.layers,
   );
   const source = useSelector((state) =>

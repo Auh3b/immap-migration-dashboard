@@ -213,7 +213,7 @@ const useStylesNavigationMenu = makeStyles((theme) => ({
 
 function NavigationMenu({ column = false }: { column?: boolean }) {
   const classes = useStylesNavigationMenu();
-  const pathname = useGetPathname()
+  const pathname = useGetPathname();
   return (
     <Grid
       container

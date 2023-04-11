@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 
 export default function useGetPathname() {
@@ -9,5 +9,5 @@ export default function useGetPathname() {
     [location],
   );
 
-  return pathname
+  return pathname;
 }
