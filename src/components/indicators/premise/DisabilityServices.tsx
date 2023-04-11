@@ -20,6 +20,9 @@ const props = {
   id,
   filterType,
   method,
+  labels: {
+    'Sirvió ayer': 'Personas atendidas ayer',
+  },
 };
 
 export default function DisabilityServices({ dataSource }: BasicWidgetType) {

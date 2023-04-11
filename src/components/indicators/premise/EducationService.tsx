@@ -27,6 +27,9 @@ const props: defaultCustomWidgetProps = {
   filterType,
   method,
   methodParams,
+  labels: {
+    'Sirvió ayer': 'Personas atendidas ayer',
+  },
   stacked: true,
 };
 

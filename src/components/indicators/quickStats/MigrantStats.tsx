@@ -90,7 +90,7 @@ export default function MigrantStats({ isOpen }: { isOpen: boolean }) {
         {data && !isLoading && !error && (
           <>
             <TotalAuroraSubscriber data={data[0]} />
-            <ChildrenOnAurora data={data[0]} />
+            <MigrantsReportedAtServicePoint data={data[0]} />
             <Grid
               className={classes.statContainer}
               item
@@ -98,7 +98,7 @@ export default function MigrantStats({ isOpen }: { isOpen: boolean }) {
               md={6}
               xl={4}
             ></Grid>
-            <MigrantsReportedAtServicePoint data={data[0]} />
+            <ChildrenOnAurora data={data[0]} />
             <ChildrenOnPremise data={data[1]} />
             <ChildrenOnAuroraPercentage data={data[0]} />
           </>
