@@ -44,12 +44,15 @@ export const intervalsFormatter = (
   return `${intervals} <br/> ${CIRCLE_SVG} ${_value}`;
 };
 
-export function numberFormatter(value: number): string {
+export function numberFormatter(
+  value: number,
+  compactMode: 'short' | 'long' = 'long',
+): string {
   return Intl.NumberFormat(DEFAULT_LOCALE, {
     maximumFractionDigits: 1,
     minimumFractionDigits: 0,
-    notation: 'compact',
-    compactDisplay: 'short',
+    notation: 'standard',
+    compactDisplay: compactMode,
   }).format(value);
 }
 

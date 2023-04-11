@@ -1,23 +1,14 @@
-import {
-  AggregationTypes,
-  aggregationFunctions,
-} from '@carto/react-core';
+import { AggregationTypes, aggregationFunctions } from '@carto/react-core';
 import { FormulaWidgetUI } from '@carto/react-ui';
-import {
-  Collapse,
-  Grid,
-  Typography,
-  makeStyles,
-} from '@material-ui/core';
+import { Collapse, Grid, Typography, makeStyles } from '@material-ui/core';
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
-import useWidgetFetch from 'components/common/customWidgets/hooks/useWidgetFetch';
-import mainSource from 'data/sources/mainSource';
-import { ReactNode, useMemo } from 'react';
+import { ReactNode, useEffect, useMemo, useState } from 'react';
 import { defaultFilterFunction } from '../utils/miscelleniousFunctions';
 import { numberFormatter } from 'utils/formatter';
-
-const id = 'migrantStats';
-const dataSource = mainSource.id;
+import { format } from 'd3';
+import { executeSQL } from '@carto/react-api';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store/store';
 
 const useStyles = makeStyles((theme) => ({
   statsContainer: {
@@ -25,7 +16,23 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1),
   },
   statContainer: {
-    marginBottom: theme.spacing(2),
+    [theme.breakpoints.down('sm')]: {
+      borderBottom: `1px solid ${theme.palette.grey[200]}`,
+    },
+    [theme.breakpoints.up('md')]: {
+      '&:nth-child(-n+3)': {
+        borderBottom: `1px solid ${theme.palette.grey[200]}`,
+      },
+      '&:nth-child(3n+1)': {
+        borderRight: `1px solid ${theme.palette.grey[200]}`,
+      },
+      '&:nth-child(3n)': {
+        borderLeft: `1px solid ${theme.palette.grey[200]}`,
+      },
+      '&:nth-child(n+7)': {
+        borderTop: `1px solid ${theme.palette.grey[200]}`,
+      },
+    },
   },
   statTitle: {
     paddingLeft: theme.spacing(2),
@@ -35,21 +42,58 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MigrantStats({ isOpen }: { isOpen: boolean }) {
   const classes = useStyles();
-  const { data, isLoading } = useWidgetFetch({
-    id,
-    dataSource,
-  });
+  const [data, setData] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const credentials = useSelector(
+    (state: RootState) => state.carto.credentials,
+  );
+  const fetchPremise = async () => {
+    const result = await executeSQL({
+      credentials,
+      connection: 'carto_dw',
+      query: 'SELECT * FROM shared.Premise_22032023',
+      opts: {
+        format: 'json',
+      },
+    });
+    return result;
+  };
+  const fetchAurora = async () => {
+    const result = await executeSQL({
+      credentials,
+      connection: 'carto_dw',
+      query: 'SELECT * FROM shared.LACRO_Marzo_2023',
+      opts: {
+        format: 'json',
+      },
+    });
+    return result;
+  };
+  useEffect(() => {
+    setIsLoading(true);
+    Promise.all([fetchAurora(), fetchPremise()])
+      .then((data) => setData(data))
+      .catch((e) => setError(e.message))
+      .finally(() => setIsLoading(false));
+
+    return () => {
+      setData(null);
+      setError(null);
+      setIsLoading(false);
+    };
+  }, []);
 
   return (
     <Collapse in={isOpen} unmountOnExit={true}>
       <Grid xs item container className={classes.statsContainer}>
-        {data.length > 0 && !isLoading && (
+        {data && !isLoading && !error && (
           <>
-            <TotalAuroraSubscriber data={data} />
-            <ChildrenOnAurora data={data} />
-            <MigrantsReportedAtServicePoint data={data} />
-            <ChildrenOnPremise data={data} />
-            <ChildrenOnAuroraPercentage data={data} />
+            <TotalAuroraSubscriber data={data[0]} />
+            <ChildrenOnAurora data={data[0]} />
+            <MigrantsReportedAtServicePoint data={data[0]} />
+            <ChildrenOnPremise data={data[1]} />
+            <ChildrenOnAuroraPercentage data={data[0]} />
             <ChildrenOnPremisePercentage data={data} />
           </>
         )}
@@ -123,6 +167,37 @@ function ChildrenOnAuroraPercentage({ data }: QuickStatProps) {
     AggregationTypes.SUM,
   ];
   const divider: [string, AggregationTypes] = [
+    'objectid',
+    AggregationTypes.COUNT,
+  ];
+  const totalChildenPercent = useMemo(
+    () =>
+      percentValue({
+        input: data,
+        columns,
+        divider,
+      }),
+    [data],
+  );
+  return (
+    <QuickStatFormulaWidget
+      data={totalChildenPercent}
+      note={note}
+      title={title}
+      formatter={percentageFormatter}
+    />
+  );
+}
+
+function ChildrenOnPremisePercentage({ data }: QuickStatProps) {
+  const title = 'Porcentaje NNA reportado Puntos de servicio';
+  const note =
+    'Relación entre NNA y total de personas haciendo uso de los puntos de servicio';
+  const columns: [string[], AggregationTypes] = [
+    ['e17__cua'],
+    AggregationTypes.SUM,
+  ];
+  const divider: [string, AggregationTypes] = [
     'nna_atend',
     AggregationTypes.SUM,
   ];
@@ -140,33 +215,7 @@ function ChildrenOnAuroraPercentage({ data }: QuickStatProps) {
       data={totalChildenPercent}
       note={note}
       title={title}
-    />
-  );
-}
-
-function ChildrenOnPremisePercentage({ data }: QuickStatProps) {
-  const title = 'Porcentaje NNA reportado Puntos de servicio';
-  const note =
-    'Relación entre NNA y total de personas haciendo uso de los puntos de servicio';
-  const columns: [string[], AggregationTypes] = [
-    ['e17__cua'],
-    AggregationTypes.SUM,
-  ];
-  const divider: [string, AggregationTypes] = ['id', AggregationTypes.COUNT];
-  const totalChildenPercent = useMemo(
-    () =>
-      percentValue({
-        input: data,
-        columns,
-        divider,
-      }),
-    [data],
-  );
-  return (
-    <QuickStatFormulaWidget
-      data={totalChildenPercent}
-      note={note}
-      title={title}
+      formatter={percentageFormatter}
     />
   );
 }
@@ -176,11 +225,13 @@ function QuickStatFormulaWidget({
   icon,
   note,
   title,
+  formatter = numberFormatter,
 }: {
   data: number;
   icon?: ReactNode;
   title?: string;
   note?: string;
+  formatter?: Function;
 }) {
   const classes = useStyles();
   return (
@@ -205,7 +256,7 @@ function QuickStatFormulaWidget({
         className={classes.statTitle}
       >
         {icon && icon}
-        <FormulaWidgetUI data={data} formatter={numberFormatter} />
+        <FormulaWidgetUI data={data} formatter={formatter} />
       </Grid>
       <Grid item xs>
         {note && <WidgetNote note={note} />}
@@ -219,7 +270,7 @@ function aggregateColumns(
   columns: string[],
   aggregateType: AggregationTypes = AggregationTypes.SUM,
 ): number {
-  console.log(input);
+  // console.log(input[0]);
 
   let totalValue: number = 0;
   const aggFn = aggregationFunctions[aggregateType];
@@ -249,17 +300,21 @@ function percentValue({
   const [dividerColumn, dividerAggregateType] = divider;
 
   const totalValue = aggregateColumns(
-    input,
+    input.length === 2 ? input[0] : input,
     targetColumns,
     columnAggregateType,
   );
   const dividerValue = aggregateColumns(
-    input,
+    input.length === 2 ? input[1] : input,
     [dividerColumn],
     dividerAggregateType,
   );
 
-  percentageValue = dividerValue > 0 ? totalValue / dividerValue : totalValue;
+  percentageValue = totalValue / dividerValue;
 
   return percentageValue;
+}
+
+function percentageFormatter(value: number) {
+  return format('.0%')(value);
 }

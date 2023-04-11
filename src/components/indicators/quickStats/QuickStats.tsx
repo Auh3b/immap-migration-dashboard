@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function QuickStats() {
   const classes = useStyles();
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleToggle = () => {
     setIsOpen((prev) => !prev);
@@ -30,7 +30,10 @@ export default function QuickStats() {
       <Grid container item className={classes.collapse}>
         <MigrantStats isOpen={isOpen} />
         <Grid xs item>
-          <IconButton onClick={handleToggle}>
+          <IconButton
+            onClick={handleToggle}
+            style={{ color: isOpen ? '#1CABE2' : '#333333' }}
+          >
             {isOpen ? <AssessmentIcon /> : <BarChartIcon />}
           </IconButton>
         </Grid>
