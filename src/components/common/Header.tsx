@@ -24,6 +24,7 @@ import { ReactComponent as ImmapLogo } from 'assets/img/immapLogoAlt.svg';
 import { ROUTE_PATHS } from 'routes';
 import { useAuth0 } from '@auth0/auth0-react';
 import { CustomTheme } from 'theme';
+import useGetPathname from 'hooks/useGetPathname';
 
 const useStylesCommon = makeStyles((theme) => ({
   title: {
@@ -211,14 +212,8 @@ const useStylesNavigationMenu = makeStyles((theme) => ({
 }));
 
 function NavigationMenu({ column = false }: { column?: boolean }) {
-  const location = useLocation();
   const classes = useStylesNavigationMenu();
-
-  const pathname = useMemo(
-    () => location.pathname.split('/')[1] || '',
-    [location],
-  );
-
+  const pathname = useGetPathname()
   return (
     <Grid
       container
