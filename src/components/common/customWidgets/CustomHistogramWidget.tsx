@@ -22,7 +22,7 @@ export default function CustomHistogramWidget({
   column,
   bins = 3,
   filterType = _FilterTypes.CLOSED_OPEN,
-  xAxisFormatter,
+  xAxisFormatter = (value: number) => Math.floor(value),
   yAxisFormatter,
 }: defaultCustomWidgetProps) {
   const dispatch = useDispatch();

@@ -16,7 +16,7 @@ const filterType = _FilterTypes.IN;
 const method = stackedBarCategories;
 const methodParams = {
   columns: ['nna_no_aco', 'nna_separ_'],
-  legend: ['Acompañados NNA', 'Separados NNA'],
+  legend: ['No acompañados', 'Separados'],
 };
 
 const props: defaultCustomWidgetProps = {

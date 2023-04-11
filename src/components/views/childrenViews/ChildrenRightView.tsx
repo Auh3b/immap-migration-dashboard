@@ -10,7 +10,6 @@ export default function ChildrenRightView({ dataSources, classes }: any) {
   const { premiseSource } = dataSources;
   return (
     <MainColumnView>
-      <Divider className={classes.divider} />
       <ChildrenUnderCare dataSource={premiseSource} />
       <ChildDiffServicesAvailabilty dataSource={premiseSource} />
       <ChildrenDiffServices dataSource={premiseSource} />

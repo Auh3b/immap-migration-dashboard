@@ -21,7 +21,7 @@ const NOTE =
   'Cuales servicios diferenciados para niños niñas y adolescentes se ofrecen en el punto de servicio / ayuda humanitaria?';
 const id = 'childrenDifferentiatedServices';
 const title = 'Cuales servicios diferenciados';
-const column = 'cual_serv_';
+const column = 'cual_ser_1';
 const filterType = _FilterTypes.STRING_SEARCH;
 const method = concatenatedValues;
 const labels = Object.fromEntries(CATEGORY_ABREVATIONS);

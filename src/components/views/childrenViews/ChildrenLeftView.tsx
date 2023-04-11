@@ -28,7 +28,6 @@ export default function ChildrenLeftView({ dataSources, classes }: any) {
   const { mainSource } = dataSources;
   return (
     <MainColumnView>
-      <Divider className={classes.divider} />
       <ChildTravelerAges dataSource={mainSource} />
       <ChildrenTravelAlone dataSource={mainSource} />
       <PlacesChildrenTravelAlone dataSource={mainSource} />

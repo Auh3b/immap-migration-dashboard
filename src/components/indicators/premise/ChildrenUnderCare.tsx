@@ -13,7 +13,7 @@ const title = 'Identificación de NNA atendidos';
 const column = 'nna_atend';
 const filterType = _FilterTypes.CLOSED_OPEN;
 const method = histogramValues;
-const bins = 4;
+const bins = 6;
 
 const props = {
   id,
