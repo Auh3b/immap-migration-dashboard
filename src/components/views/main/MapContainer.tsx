@@ -1,4 +1,4 @@
-import { lazy } from 'react';
+import { ReactNode, lazy } from 'react';
 import { BASEMAPS } from '@carto/react-basemaps';
 import ZoomControl from 'components/common/ZoomControl';
 import { getLayers } from 'components/layers';
@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import { Grid, useMediaQuery } from '@material-ui/core';
 import { CustomTheme } from 'theme';
 import { LegendWidget } from '@carto/react-widgets';
+import QuickStats from 'components/indicators/quickStats/QuickStats';
 
 const Map = lazy(
   () => import(/* webpackChunkName: 'map' */ 'components/common/map/Map'),
@@ -68,7 +69,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function MapContainer() {
+export default function MapContainer({
+  children
+}:{
+  children?: ReactNode
+}) {
   const isGmaps = useSelector(
     // @ts-ignore
     (state) => BASEMAPS[state.carto.basemap].type === 'gmaps',
@@ -90,6 +95,8 @@ export default function MapContainer() {
         <ZoomControl className={classes.zoomControl} showCurrentZoom />
       )}
       {!isGmaps && <CartoLogoMap className={classes.cartoLogoMap} />}
+      <QuickStats />
+      {children && children}
       <LegendWidget initialCollapsed={true} className={classes.legend} />
     </Grid>
   );
