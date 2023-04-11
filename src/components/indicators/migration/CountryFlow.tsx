@@ -94,8 +94,10 @@ function getHierarchy(input: any[], column: string, params?: Record<any, any>) {
         value,
         children: children3.map((d) => ({
           ...d,
+          level: 'País del flujo inicia',
           itemStyle: { color: colors.get(d.name) },
         })),
+        level: 'País después de un año',
         itemStyle,
       });
     }
@@ -103,6 +105,7 @@ function getHierarchy(input: any[], column: string, params?: Record<any, any>) {
     nest.push({
       name,
       value,
+      level: 'País de nacimiento',
       children: newChildren,
       itemStyle,
     });

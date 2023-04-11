@@ -91,10 +91,16 @@ export default function MigrantStats({ isOpen }: { isOpen: boolean }) {
           <>
             <TotalAuroraSubscriber data={data[0]} />
             <ChildrenOnAurora data={data[0]} />
+            <Grid
+              className={classes.statContainer}
+              item
+              xs={12}
+              md={6}
+              xl={4}
+            ></Grid>
             <MigrantsReportedAtServicePoint data={data[0]} />
             <ChildrenOnPremise data={data[1]} />
             <ChildrenOnAuroraPercentage data={data[0]} />
-            <ChildrenOnPremisePercentage data={data} />
           </>
         )}
       </Grid>
@@ -109,8 +115,11 @@ interface QuickStatProps {
 function TotalAuroraSubscriber({ data }: QuickStatProps) {
   const title = 'Personas conectadas a Aurora';
   const note = 'Número de migrantes conectados a Aurora';
-  const columns = ['e17__cua'];
-  const totalSubs = useMemo(() => aggregateColumns(data, columns) || 0, [data]);
+  const columns = ['objectid'];
+  const totalSubs = useMemo(
+    () => aggregateColumns(data, columns, AggregationTypes.COUNT) || 0,
+    [data],
+  );
 
   return <QuickStatFormulaWidget data={totalSubs} title={title} note={note} />;
 }
@@ -129,12 +138,12 @@ function ChildrenOnAurora({ data }: QuickStatProps) {
 }
 
 function MigrantsReportedAtServicePoint({ data }: QuickStatProps) {
-  const title = 'Personas conectadas a Aurora';
+  const title = 'Personas en los grupos de viaje validados';
   const note =
     'Número de migrantes reportados haciendo uso de los puntos de servicio';
   const columns = ['e17__cua'];
   const TotalReportedMigrants = useMemo(
-    () => aggregateColumns(data, columns) || 0,
+    () => aggregateColumns(data, columns) + 1 || 0,
     [data],
   );
   return (
@@ -167,38 +176,7 @@ function ChildrenOnAuroraPercentage({ data }: QuickStatProps) {
     AggregationTypes.SUM,
   ];
   const divider: [string, AggregationTypes] = [
-    'objectid',
-    AggregationTypes.COUNT,
-  ];
-  const totalChildenPercent = useMemo(
-    () =>
-      percentValue({
-        input: data,
-        columns,
-        divider,
-      }),
-    [data],
-  );
-  return (
-    <QuickStatFormulaWidget
-      data={totalChildenPercent}
-      note={note}
-      title={title}
-      formatter={percentageFormatter}
-    />
-  );
-}
-
-function ChildrenOnPremisePercentage({ data }: QuickStatProps) {
-  const title = 'Porcentaje NNA reportado Puntos de servicio';
-  const note =
-    'Relación entre NNA y total de personas haciendo uso de los puntos de servicio';
-  const columns: [string[], AggregationTypes] = [
-    ['e17__cua'],
-    AggregationTypes.SUM,
-  ];
-  const divider: [string, AggregationTypes] = [
-    'nna_atend',
+    'e17__cua',
     AggregationTypes.SUM,
   ];
   const totalChildenPercent = useMemo(

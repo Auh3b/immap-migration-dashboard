@@ -62,9 +62,6 @@ export default function CustomSunburstWidget({
     () => ({
       series: {
         type: 'sunburst',
-        // emphasis: {
-        //     focus: 'ancestor'
-        // },
         //@ts-ignore
         data: data.data,
         radius: [30, '90%'],
@@ -87,10 +84,12 @@ export default function CustomSunburstWidget({
           color: theme.palette.common.white,
         },
         backgroundColor: theme.palette.other.tooltip,
-        formatter({ name, color, value }) {
+        formatter({ name, color, value, data }) {
+          const { level } = data;
           return `<span 
             style='min-width: 35px; display: flex; flex-direction: column;'
             >
+             <span style='display: block; border-bottom: 1px solid white;'> ${level}</span>
              <span>${name}</span>
              <span 
               style='display: flex; justify-content: space-between; align-items: center;'
