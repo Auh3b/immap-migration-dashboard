@@ -6,7 +6,7 @@ import WidgetNote from 'components/common/customWidgets/WidgetNote';
 import groupCategories from '../utils/groupCategories';
 import useWidgetEffect from '../utils/useWidgetEffect';
 
-const title = 'Identificación de personas con condición de discapacidad';
+const title = 'Personas en condición de discapacidad';
 const NOTE =
   'Personas con alguna condición de discapacidad (física, visual, auditiva, intelectual, etc.)';
 const id = 'disabledPeople';

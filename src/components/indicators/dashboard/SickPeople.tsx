@@ -11,7 +11,7 @@ const method = groupCategories;
 const NOTE =
   'Personas con alguna enfermedad crónica (diabetes, hipertensión, asma, etc.)';
 const id = 'sickPeople';
-const title = 'Identificación de personas enfermas';
+const title = 'Personas con enfermedades crónicas';
 const column = 'm02__en_t';
 const filterType = _FilterTypes.IN;
 
