@@ -11,7 +11,7 @@ const CATEGORY_ABREVATIONS = new Map([
   [1, 'Bus'],
   [2, 'Barco'],
   [3, 'Avión'],
-  [4, 'Han camina'],
+  [4, 'Han caminado'],
   [5, 'otro'],
 ]);
 

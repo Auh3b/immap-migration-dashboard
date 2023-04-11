@@ -13,10 +13,20 @@ import {
 } from '@carto/react-redux';
 import { MIGRATION_FLOW_LAYER_ID } from 'components/layers/MigrationFlowLayer';
 import { HOTSPOTS_LAYER_ID } from 'components/layers/HotspotsLayer';
+import { initialState } from 'store/initialStateSlice';
 
 export default function MigrationFlow() {
   const dispatch = useDispatch();
   useEffect(() => {
+    dispatch(
+      setViewState({
+        width: 1400,
+        height: 890,
+        latitude: -0.7592270882110561,
+        longitude: -61.55388709207003,
+        zoom: 2.1807410178760893,
+      }),
+    );
     dispatch(addSource(mainSource));
 
     dispatch(
@@ -31,23 +41,12 @@ export default function MigrationFlow() {
         source: mainSource.id,
       }),
     );
-    dispatch(
-      setViewState({
-        //@ts-ignore
-        minZoom: 1,
-      }),
-    );
 
     return () => {
       dispatch(removeLayer(MIGRATION_FLOW_LAYER_ID));
       dispatch(removeLayer(HOTSPOTS_LAYER_ID));
       dispatch(removeSource(mainSource.id));
-      dispatch(
-        setViewState({
-          //@ts-ignore
-          minZoom: 5,
-        }),
-      );
+      dispatch(setViewState(initialState.viewState));
     };
   }, [dispatch]);
 

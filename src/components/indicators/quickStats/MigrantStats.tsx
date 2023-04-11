@@ -270,8 +270,6 @@ function aggregateColumns(
   columns: string[],
   aggregateType: AggregationTypes = AggregationTypes.SUM,
 ): number {
-  // console.log(input[0]);
-
   let totalValue: number = 0;
   const aggFn = aggregationFunctions[aggregateType];
   columns.forEach((column) => {

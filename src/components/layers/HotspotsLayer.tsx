@@ -45,8 +45,6 @@ export default function HotspotsLayer() {
     [pathname],
   );
 
-  console.log(layerConfig);
-
   const cartoLayerProps = useCartoLayerProps({
     source,
     layerConfig: hotspotsLayer,

@@ -19,7 +19,7 @@ const NOTE =
   'Servicios diferenciados para mujeres se ofrecen en el punto de servicio / ayuda humanitaria ';
 const id = 'womenDifferentedServices';
 const title = 'Cuales servicios diferenciados para mujeres';
-const column = 'cual_ser_1';
+const column = 'cual_ser_2';
 const filterType = _FilterTypes.STRING_SEARCH;
 const method = concatenatedValues;
 const labels = Object.fromEntries(CATEGORY_ABREVATIONS);

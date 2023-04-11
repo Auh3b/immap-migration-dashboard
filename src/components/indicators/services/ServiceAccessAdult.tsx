@@ -15,7 +15,7 @@ const labels = new Map([
 ]);
 
 const colorMap = new Map([
-  ['No calificado', '#333333'],
+  ['No calificado', '#bcbcbc'],
   ['Fácil', '#32a852'],
   ['Regular', '#fa0'],
   ['Difícil', '#f27'],

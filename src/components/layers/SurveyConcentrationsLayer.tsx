@@ -106,8 +106,6 @@ class CircleClusterLayer extends CompositeLayer {
     const { clusterValues } = this.state;
     //@ts-ignore
     const { sizeScale, id } = this.props;
-    //@ts-ignore
-    // console.log(this.state)
 
     return [
       new GeoJsonLayer(
