@@ -69,11 +69,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function MapContainer({
-  children
-}:{
-  children?: ReactNode
-}) {
+export default function MapContainer({ children }: { children?: ReactNode }) {
   const isGmaps = useSelector(
     // @ts-ignore
     (state) => BASEMAPS[state.carto.basemap].type === 'gmaps',
