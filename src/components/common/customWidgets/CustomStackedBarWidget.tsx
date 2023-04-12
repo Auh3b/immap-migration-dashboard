@@ -55,7 +55,6 @@ export default function CustomStackedBarWidget({
   }, [_data]);
 
   const legend: { name: string; color: string }[] = useMemo(() => {
-    console.log(colors);
     if (colors.length > 0) {
       return _data
         .map((d) => d.legend)[0]
