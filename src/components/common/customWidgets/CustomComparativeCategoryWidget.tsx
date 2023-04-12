@@ -67,8 +67,6 @@ export default function CustomComparativeCategoryWidget({
     }
   }, [_data, colorMap]);
 
-  console.log(data);
-
   return (
     <CustomWidgetWrapper title={title} isLoading={isLoading}>
       {data && names && (
