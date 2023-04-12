@@ -21,13 +21,13 @@ export const ROUTE_PATHS = {
   LOGIN: '/login',
   DEFAULT: '/',
   NOT_FOUND: '/404',
-  SERVICES: '/services',
-  MIGRATION_FLOW: '/migration',
-  MEDIA: '/media',
-  DASHBOARD: '/dashboard',
-  PREMISE_SERVICE: '/premise_service',
-  CHILDREN: '/children',
-  DINÁMICA_AURORA: '/dinamica',
+  SERVICES: '/feedback_sobre_servicios',
+  MIGRATION_FLOW: '/flujos_migratorios',
+  MEDIA: '/redes_sociales',
+  DASHBOARD: '/inicio',
+  PREMISE_SERVICE: '/servicios',
+  CHILDREN: '/caracterizacion_grupo_de_viaje',
+  DINÁMICA_AURORA: '/conexiones_en_la_ruta',
   // [hygen] Add path routes
 };
 
