@@ -1,5 +1,6 @@
 import { groupValuesByColumn } from '@carto/react-core';
 import MethodFunc from './methodType';
+import { UNICEF_COLORS } from 'theme';
 
 const groupedColumns: MethodFunc = (input, column, params) => {
   const { columns, aggregateType, legend } = params;
@@ -20,6 +21,7 @@ const groupedColumns: MethodFunc = (input, column, params) => {
       value,
       name,
       legend,
+      color: [UNICEF_COLORS[0], UNICEF_COLORS[4], UNICEF_COLORS[3]],
     },
   ];
   return output;

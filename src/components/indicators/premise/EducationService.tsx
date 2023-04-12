@@ -7,6 +7,7 @@ import WidgetNote from 'components/common/customWidgets/WidgetNote';
 import groupedColumns from '../utils/groupedColumns';
 import useWidgetEffect from '../utils/useWidgetEffect';
 import stackedBarCategories from '../utils/stackedBarCategories';
+import singleStackBarValues from '../utils/singleStackBarValues';
 
 const title = 'Servicio de educación';
 const NOTE =
@@ -14,7 +15,7 @@ const NOTE =
 const id = 'hygieneServices';
 const column = '';
 const filterType = _FilterTypes.IN;
-const method = stackedBarCategories;
+const method = singleStackBarValues;
 const methodParams = {
   columns: ['serv_edu_d', 'serv_edu_a', 'prom_ser_1'],
   legend: ['Capacidad diaria', 'Personas atendidas ayer', 'Promedio diario'],

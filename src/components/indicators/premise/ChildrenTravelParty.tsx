@@ -1,4 +1,4 @@
-import { AggregationTypes, _FilterTypes } from '@carto/react-core';
+import { _FilterTypes } from '@carto/react-core';
 import { Grid } from '@material-ui/core';
 import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType';
 import CustomStackedBarWidget from 'components/common/customWidgets/CustomStackedBarWidget';
@@ -17,7 +17,6 @@ const method = stackedBarCategories;
 const methodParams = {
   columns: ['nna_no_aco', 'nna_separ_'],
   legend: ['No acompañados', 'Separados'],
-  aggregateType: AggregationTypes.COUNT,
 };
 
 const props: defaultCustomWidgetProps = {

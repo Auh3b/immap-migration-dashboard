@@ -25,7 +25,7 @@ export default function CustomStackedBarWidget({
   column,
   methodParams,
   stacked,
-  xAxisFormatter,
+  xAxisFormatter = (value: string) => value,
   colorMap,
   labels,
 }: defaultCustomWidgetProps) {
@@ -33,7 +33,6 @@ export default function CustomStackedBarWidget({
   const [xAxisData, setXAxisData] = useState([]);
   const [yAxisData, setYAxisData] = useState([]);
   const [colors, setColors] = useState([]);
-  const [legend, setLegend] = useState([]);
 
   const {
     data: _data = [],
@@ -52,17 +51,21 @@ export default function CustomStackedBarWidget({
       setXAxisData(_data.map((d) => d.name)[0]);
       setYAxisData(_data.map((d) => d.value)[0]);
       setColors(_data.map((d) => d.color)[0]);
-      setLegend(
-        _data
-          .map((d) => d.legend)[0]
-          .map((d: string, i: number) => ({
-            name: d,
-            color: colors[i],
-          })),
-      );
     }
   }, [_data]);
-  console.log(_data);
+
+  const legend: { name: string; color: string }[] = useMemo(() => {
+    console.log(colors);
+    if (colors.length > 0) {
+      return _data
+        .map((d) => d.legend)[0]
+        .map((d: string, i: number) => ({
+          name: d,
+          color: colors[i],
+        }));
+    }
+    return [];
+  }, [_data, colors]);
 
   return (
     <WrapperWidgetUI title={title} isLoading={isLoading} onError={error}>
@@ -72,12 +75,12 @@ export default function CustomStackedBarWidget({
             stacked={stacked}
             labels={labels}
             colors={colors}
-            series={labels ? labels : legend.map(({ name }) => name)}
+            series={stacked ? labels : legend.map(({ name }) => name) || []}
             //@ts-ignore
             xAxisData={xAxisData}
             //@ts-ignore
             yAxisData={yAxisData}
-            xAxisFormatter={(value: string) => ''}
+            xAxisFormatter={stacked ? xAxisFormatter : (value: string) => ''}
           />
         )}
         {legend.length > 0 && !stacked && (
