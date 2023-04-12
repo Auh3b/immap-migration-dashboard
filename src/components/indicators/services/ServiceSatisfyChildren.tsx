@@ -43,6 +43,7 @@ const props = {
   methodParams,
   labels,
   colorMap,
+  parentKey: aidTypes,
 };
 
 export default function ServiceSatisfyChildren({

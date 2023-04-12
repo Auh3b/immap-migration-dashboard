@@ -38,4 +38,5 @@ export interface defaultCustomWidgetProps {
   onTimeWindowUpdate?: any;
   xAxisFormatter?: Function;
   yAxisFormatter?: Function;
+  parentKey?: any;
 }

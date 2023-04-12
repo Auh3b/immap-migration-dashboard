@@ -43,6 +43,7 @@ const props = {
   labels,
   methodParams,
   colorMap,
+  parentKey: aidTypes,
 };
 
 export default function ServiceQualityAdult({

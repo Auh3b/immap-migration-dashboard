@@ -3,10 +3,13 @@ import { ComparativeCategoryWidgetUI } from '@carto/react-ui';
 import { lazy, useMemo, useState } from 'react';
 import { defaultCustomWidgetProps } from './customWidgetsType';
 import useWidgetFetch from './hooks/useWidgetFetch';
+import useComparativeWidgetFilter from './hooks/useComparativeWidgetFilter';
 
 const CustomWidgetWrapper = lazy(
   () => import('components/common/customWidgets/CustomWidgetWrapper'),
 );
+
+const EMPTY_ARRAY = [];
 
 export default function CustomComparativeCategoryWidget({
   id,
@@ -16,6 +19,7 @@ export default function CustomComparativeCategoryWidget({
   column,
   colorMap,
   dataSource,
+  parentKey = new Map([]),
 }: defaultCustomWidgetProps) {
   const [data, setData] = useState<null | any[]>(null);
   const [names, setNames] = useState<null | string[]>(null);
@@ -28,6 +32,16 @@ export default function CustomComparativeCategoryWidget({
     methodParams,
   });
 
+  const _comparativeSelection = useComparativeWidgetFilter({
+    dataSource,
+    column,
+  });
+
+  const selectParentCategory = useMemo(
+    () => _comparativeSelection[0],
+    [_comparativeSelection],
+  );
+
   useMemo(() => {
     if (_data) {
       //@ts-ignore
@@ -38,20 +52,22 @@ export default function CustomComparativeCategoryWidget({
       //@ts-ignore
       const _packedData = _data.map(([name, value]) => Array.from(value));
       const _unpackedData = _packedData.map((group) => {
-        let newGroup: any[] = [];
-        for (let d of group) {
-          newGroup.push({
-            //@ts-ignore
-            name: d[0],
-            //@ts-ignore
-            value: d[1],
-          });
-        }
-        return newGroup;
+        return group.map(([name, value]) => ({ name, value }));
       });
-      setData(_unpackedData);
+
+      if (selectParentCategory) {
+        const targetSubCategoryKey = parentKey.get(+selectParentCategory);
+        const targetSubCategoryValue = _unpackedData.map((group) =>
+          group.filter(({ name }) => name === targetSubCategoryKey),
+        );
+        setData(targetSubCategoryValue);
+      } else {
+        setData(_unpackedData);
+      }
     }
   }, [_data, colorMap]);
+
+  console.log(data);
 
   return (
     <CustomWidgetWrapper title={title} isLoading={isLoading}>
