@@ -230,43 +230,43 @@ function NavigationMenu({ column = false }: { column?: boolean }) {
         {/* [hygen] Import links */}
         <Tab
           label='Inicio'
-          value='dashboard'
+          value='inicio'
           component={NavLink}
           to={ROUTE_PATHS.DASHBOARD}
         />
         <Tab
           label='Servicios'
-          value='premise_service'
+          value='servicios'
           component={NavLink}
           to={ROUTE_PATHS.PREMISE_SERVICE}
         />
         <Tab
           label='Feedback Sobre Servicios'
-          value='services'
+          value='feedback_sobre_servicios'
           component={NavLink}
           to={ROUTE_PATHS.SERVICES}
         />
         <Tab
           label='Flujos Migratorios'
-          value='migration'
+          value='flujos_migratorios'
           component={NavLink}
           to={ROUTE_PATHS.MIGRATION_FLOW}
         />
         <Tab
           label='Caracterización grupo de viaje'
-          value='children'
+          value='caracterizacion_grupo_de_viaje'
           component={NavLink}
           to={ROUTE_PATHS.CHILDREN}
         />
         <Tab
           label='Conexiones en la ruta'
-          value='dinamica'
+          value='conexiones_en_la_ruta'
           component={NavLink}
           to={ROUTE_PATHS.DINÁMICA_AURORA}
         />
         <Tab
           label='Redes sociales'
-          value='media'
+          value='redes_sociales'
           component={NavLink}
           to={ROUTE_PATHS.MEDIA}
         />
