@@ -6,6 +6,7 @@ import { defaultCustomWidgetProps } from 'components/common/customWidgets/custom
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
 import groupedColumns from '../utils/groupedColumns';
 import useWidgetEffect from '../utils/useWidgetEffect';
+import stackedBarCategories from '../utils/stackedBarCategories';
 
 const title = 'Otros servicios';
 const NOTE =
@@ -13,10 +14,10 @@ const NOTE =
 const id = 'informationServices';
 const column = '';
 const filterType = _FilterTypes.IN;
-const method = groupedColumns;
+const method = stackedBarCategories;
 const methodParams = {
   columns: ['serv_tra_2', 'atend_serv', 'atend_ser_'],
-  legend: ['Capacidad diaria', 'Sirvió ayer', 'Promedio diario'],
+  legend: ['Capacidad diaria', 'Personas atendidas ayer', 'Promedio diario'],
   aggregateType: AggregationTypes.SUM,
 };
 
@@ -27,10 +28,7 @@ const props: defaultCustomWidgetProps = {
   filterType,
   method,
   methodParams,
-  labels: {
-    'Sirvió ayer': 'Personas atendidas ayer',
-  },
-  stacked: true,
+  stacked: false,
 };
 
 export default function OtherService({ dataSource }: BasicWidgetType) {

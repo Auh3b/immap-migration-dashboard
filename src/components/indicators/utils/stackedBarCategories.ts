@@ -1,31 +1,28 @@
-import { AggregationTypes, groupValuesByColumn } from '@carto/react-core';
+import { AggregationTypes, aggregationFunctions } from '@carto/react-core';
 import MethodFunc from 'components/indicators/utils/methodType';
+import { UNICEF_COLORS } from 'theme';
 
 const stackedBarCategories: MethodFunc = (input, column, params) => {
-  const { columns, legend } = params;
-  let valueGroup: any = [];
-  let valueUnique: string[] = [];
+  const { columns, legend, aggregationType = AggregationTypes.SUM } = params;
+  let name = [legend];
+  let value: [number][] = [];
   for (let i = 0; i < columns.length; i++) {
     const target_column = columns[i];
-    const group_column_values = groupValuesByColumn({
-      data: input.filter((d) => +d[target_column] !== 999999),
-      valuesColumns: [target_column],
-      keysColumn: target_column,
-      operation: AggregationTypes.COUNT,
-    });
-    valueUnique = [
-      ...valueUnique,
-      ...group_column_values.map(({ name }) => name),
-    ];
-    valueGroup = [...valueGroup, group_column_values.map(({ value }) => value)];
+    //@ts-expect-error
+    const column_value = aggregationFunctions[aggregationType](
+      input.filter((d) => +d[target_column] !== 999999),
+      target_column,
+    );
+    value = [...value, [column_value]];
   }
 
-  valueUnique = Array.from(new Set(valueUnique));
   const output = [
     {
-      name: valueUnique,
-      value: valueGroup,
+      name,
+      value,
       legend,
+      //@ts-ignore
+      color: [UNICEF_COLORS[0], UNICEF_COLORS[4], UNICEF_COLORS[3]],
     },
   ];
   return output;

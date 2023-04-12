@@ -292,5 +292,5 @@ function percentValue({
 }
 
 function percentageFormatter(value: number) {
-  return format('.0%')(value);
+  return format('.2%')(value);
 }
