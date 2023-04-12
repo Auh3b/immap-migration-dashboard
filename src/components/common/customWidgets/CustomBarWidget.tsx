@@ -34,12 +34,11 @@ export default function CustomBarWidget({
   });
 
   const sortedData = useMemo(() => {
-    if (!_data.length || _data) return _data;
-    //@ts-ignore
+    if (!_data.length) return _data;
+
     const sortedByValue = _data.sort((a, b) => b.value - a.value);
 
-    if (order.length) {
-      //@ts-ignore
+    if (order.length && order.length > 0) {
       return sortedByValue.sort((a, b) => {
         const aIndex = order.indexOf(a.name);
         const bIndex = order.indexOf(b.name);
@@ -52,6 +51,8 @@ export default function CustomBarWidget({
 
     return sortedByValue;
   }, [order, _data]);
+
+  console.log(id, _data, sortedData);
 
   // For selecting bars, BarWidgetUI uses the index of the bar
   // so we need to process it before passing it to BarWidgetUI

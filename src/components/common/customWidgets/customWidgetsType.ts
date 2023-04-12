@@ -14,7 +14,7 @@ export interface defaultCustomWidgetProps {
   colorMap?: any;
   isLoading?: boolean;
   bins?: number;
-  order?: any[];
+  order?: string[];
   chartType?: TIME_SERIES_CHART_TYPES;
   min?: number;
   stepSize?: GroupDateTypes;
