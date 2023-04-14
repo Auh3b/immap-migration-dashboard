@@ -1,6 +1,12 @@
 # UNICEF Migration Web App
 
-This application uses `Carto for React` template 3 with typescript, and uses `yarn` as the package manager. Make sure your using `Node v16.13.0` for compatibility in development.
+This application build using `Carto for React` template 3 with typescript, and uses `yarn` as the package manager. Make sure your using `Node v16.13.0` for compatibility in development.
+
+## Project Setup
+
+install project using yarn
+
+### `yarn install`
 
 ## Available Scripts
 

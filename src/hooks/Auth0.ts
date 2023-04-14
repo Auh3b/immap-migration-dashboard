@@ -11,6 +11,7 @@ export default function useAuth() {
     if (isAuthenticated) {
       const getAccessToken = async () => {
         let accessToken = await getAccessTokenSilently();
+        console.log(accessToken)
         dispatch(setCredentials({ accessToken }));
       };
       getAccessToken();

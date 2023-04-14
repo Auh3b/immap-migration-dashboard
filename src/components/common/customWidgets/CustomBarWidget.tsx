@@ -52,8 +52,6 @@ export default function CustomBarWidget({
     return sortedByValue;
   }, [order, _data]);
 
-  console.log(id, _data, sortedData);
-
   // For selecting bars, BarWidgetUI uses the index of the bar
   // so we need to process it before passing it to BarWidgetUI
   const _selectedBars =
