@@ -9,10 +9,6 @@ import { format } from 'd3';
 import { executeSQL } from '@carto/react-api';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store/store';
-import mainSource from 'data/sources/mainSource'
-import premiseSource from 'data/sources/premiseSource'
-// @ts-ignore
-import { FORMATS, fetchLayerData } from '@deck.gl/carto';
 
 const useStyles = makeStyles((theme) => ({
   statsContainer: {
@@ -49,22 +45,28 @@ export default function MigrantStats({ isOpen }: { isOpen: boolean }) {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-
+  const credentials = useSelector(
+    (state: RootState) => state.carto.credentials,
+  );
   const fetchPremise = async () => {
-    const {data: result} = await fetchLayerData({
-      source: premiseSource.data,
-      type: premiseSource.type,
-      connection: premiseSource.connection,
-      format: FORMATS.JSON
+    const result = await executeSQL({
+      credentials,
+      connection: 'carto_dw',
+      query: 'SELECT * FROM shared.Premise_22032023',
+      opts: {
+        format: 'json',
+      },
     });
     return result;
   };
   const fetchAurora = async () => {
-    const {data: result} = await fetchLayerData({
-      source: mainSource.data,
-      type: mainSource.type,
-      connection: mainSource.connection,
-      format: FORMATS.JSON
+    const result = await executeSQL({
+      credentials,
+      connection: 'carto_dw',
+      query: 'SELECT * FROM shared.LACRO_Marzo_2023',
+      opts: {
+        format: 'json',
+      },
     });
     return result;
   };
