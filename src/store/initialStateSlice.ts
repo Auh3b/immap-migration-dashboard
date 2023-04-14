@@ -18,12 +18,13 @@ export const initialState: InitialCarto3State = {
   credentials: {
     apiVersion: API_VERSIONS.V3,
     apiBaseUrl: 'https://gcp-us-east1.api.carto.com',
+    // accessToken: 'eyJhbGciOiJIUzI1NiJ9.eyJhIjoiYWNfNHY4Zm5mc2giLCJqdGkiOiIzMmE5N2IxMyJ9.d2qwdn9-ckiWYsmNUyJ5-4Ui1WhNjbjG0mLJJMNLMQ0'
   },
   googleApiKey: '', // only required when using a Google Basemap,
   googleMapId: '', // only required when using a Google Custom Basemap
   oauth: {
-    domain: 'auth.carto.com',
-    clientId: 'ebwqhBhEtDbonOIiowYmClZKYQUzLdwV', // type here your application clientId
+    domain: 'dev-k52rcymcfpbru0c6.us.auth0.com',
+    clientId: 'LMphNEIciySqmskZ1Cx7l7DvqLrHRJgz', // type here your application clientId
     organizationId: '', // organizationId is required for SSO
     scopes: [
       'read:current_user',
