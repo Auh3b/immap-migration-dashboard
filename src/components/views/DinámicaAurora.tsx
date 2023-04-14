@@ -19,9 +19,9 @@ import { initialState } from 'store/initialStateSlice';
 export default function DinámicaAurora() {
   const dispatch = useDispatch();
   const sources = {
-    premiseSource: premiseSource.id,
-    mainSource: mainSource.id,
-    timelineSource: timelineSource.id,
+    premiseSource,
+    mainSource,
+    timelineSource,
   };
 
   useEffect(() => {
@@ -36,18 +36,19 @@ export default function DinámicaAurora() {
     );
 
     dispatch(addSource(mainSource));
+    dispatch(
+      addLayer({
+        id: HOTSPOTS_LAYER_ID,
+        source: mainSource.id,
+      }),
+    );
+
     dispatch(addSource(timelineSource));
 
     dispatch(
       addLayer({
         id: SURVEY_TIMELINE_LAYER_ID,
         source: timelineSource.id,
-      }),
-    );
-    dispatch(
-      addLayer({
-        id: HOTSPOTS_LAYER_ID,
-        source: mainSource.id,
       }),
     );
 

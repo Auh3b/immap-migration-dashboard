@@ -30,7 +30,7 @@ const NOTE =
   'Localización de personas migrantes conectadas a Aurora en los distintos monitoreos';
 const id = 'mobileSurveyResponseTimeline';
 const title = 'Personas migrantes conectadas a Aurora';
-const column = 'timeunix';
+const column = '';
 const filterType = _FilterTypes.IN;
 const method = timelineValueAlt;
 const methodParams = {

@@ -5,7 +5,7 @@ export default function DinamicaLeftView({ dataSources, classes }: any) {
   const { mainSource } = dataSources;
   return (
     <Grid xs item>
-      <MobileSurveyTimeline dataSource={mainSource} />
+      <MobileSurveyTimeline dataSource={mainSource.id} />
     </Grid>
   );
 }

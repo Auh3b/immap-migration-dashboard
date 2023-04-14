@@ -151,7 +151,7 @@ export const iconGroupsConfig = [
   {
     name: 'Push 1',
     coordinatesAccessor: (d: any) => [+d['lon_mon'], +d['lat_mon']],
-    filterFunction: (d: any) => +d['lon_mon']! !== 99999,
+    filterFunction: (d: any) => +d['lon_mon'] !== 99999,
     color: d3Hex2RGB(1),
   },
   {
@@ -192,7 +192,7 @@ export default function SurveyTimelineLayer() {
   const { layers: loadedLayers } = useSelector(
     (state: RootState) => state.carto,
   );
-  const { hotSpotLayer, surveyTimelineLayer } = useSelector(
+  const { surveyTimelineLayer } = useSelector(
     (state: RootState) => state.carto.layers,
   );
   const source = useSelector((state) =>

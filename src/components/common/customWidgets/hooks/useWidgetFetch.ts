@@ -49,9 +49,9 @@ export default function useWidgetFetch({
 
   const params = useMemo(
     () => ({
-      filters: source.filters,
-      filtersLogicalOperator: source.filtersLogicalOperator,
-      viewport,
+      // filters: source.filters,
+      // filtersLogicalOperator: source.filtersLogicalOperator,
+      // viewport,
       limit: null,
       tileFormat: TILE_FORMATS.GEOJSON,
     }),

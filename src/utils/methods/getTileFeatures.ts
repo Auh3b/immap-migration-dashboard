@@ -19,6 +19,7 @@ export default async function getTileFeatures({
   sourceId,
   params,
 }: getTileFeaturesProps) {
-  const { data } = await executeTask(sourceId, Methods.FEATURES_RAW, params);
+  const { data, currentPage: page, pages: numberPages, totalCount } = await executeTask(sourceId, Methods.FEATURES_RAW, params);
+  console.log(data, page, numberPages ,totalCount)
   return data;
 }
