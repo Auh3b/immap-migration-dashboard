@@ -31,6 +31,8 @@ storybook-static
 !jsconfig.json
 .startup.sh
 .backups
+.structure.py
+.structure.txt
 
 npm-debug.log*
 yarn-debug.log*
