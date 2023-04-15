@@ -25,7 +25,7 @@ function getColorRange(numbers: number[]) {
 }
 
 function colorScale(extent: [number, number]) {
-  return scaleSequential().domain(extent).interpolator(interpolateYlOrRd);
+  return scaleSequential(['#ffffb2', '#b10026']).domain(extent);
 }
 
 function getFillColor(value: number, extent: [number, number]) {
@@ -90,9 +90,12 @@ class CircleClusterLayer extends CompositeLayer {
       //@ts-ignore
       const clusterValues = getColorRange(getExtent(this.state.data));
       //@ts-ignore
-      this.setState({
-        clusterValues,
-      });
+      if(!this.state.clusterValues){
+        //@ts-ignore
+        this.setState({
+          clusterValues,
+        });
+      }
     }
   }
   renderLayers() {
@@ -136,7 +139,7 @@ class CircleClusterLayer extends CompositeLayer {
           //@ts-ignore
           getPointRadius: (d) =>
             d.properties.cluster ? d.properties.point_count * 10 : 10,
-          pointRadiusMinPixels: 15,
+          pointRadiusMinPixels: 25,
         }),
       ),
     ];
@@ -154,7 +157,7 @@ const layerConfig = {
       { label: 'Bajo', value: 0 },
       { label: 'Alto', value: 1 },
     ],
-    colors: [getFillColor(1, [1, 2]), getFillColor(2, [1, 2])],
+    colors: [[255,255,178], [177,0,38]],
   },
 };
 
@@ -200,7 +203,7 @@ export default function SurveyConcentrationsLayer() {
       id: SURVEY_CONCENTRATIONS_LAYER_ID,
       pointRadiusMinPixels: 2,
       pickable: false,
-      sizeScale: 10,
+      sizeScale: 60,
       onDataLoad: (data: any) => {
         dispatch(
           updateLayer({
