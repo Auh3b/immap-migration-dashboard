@@ -9,8 +9,8 @@ import { format } from 'd3';
 import { executeSQL } from '@carto/react-api';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store/store';
-import mainSource from 'data/sources/mainSource'
-import premiseSource from 'data/sources/premiseSource'
+import mainSource from 'data/sources/mainSource';
+import premiseSource from 'data/sources/premiseSource';
 // @ts-ignore
 import { FORMATS, fetchLayerData } from '@deck.gl/carto';
 
@@ -51,20 +51,20 @@ export default function MigrantStats({ isOpen }: { isOpen: boolean }) {
   const [error, setError] = useState(null);
 
   const fetchPremise = async () => {
-    const {data: result} = await fetchLayerData({
+    const { data: result } = await fetchLayerData({
       source: premiseSource.data,
       type: premiseSource.type,
       connection: premiseSource.connection,
-      format: FORMATS.JSON
+      format: FORMATS.JSON,
     });
     return result;
   };
   const fetchAurora = async () => {
-    const {data: result} = await fetchLayerData({
+    const { data: result } = await fetchLayerData({
       source: mainSource.data,
       type: mainSource.type,
       connection: mainSource.connection,
-      format: FORMATS.JSON
+      format: FORMATS.JSON,
     });
     return result;
   };
