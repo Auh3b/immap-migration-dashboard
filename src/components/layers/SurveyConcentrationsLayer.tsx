@@ -11,11 +11,10 @@ import { RootState } from 'store/store';
 import SuperCluster from 'supercluster';
 import { useEffect, useState } from 'react';
 import hotSpotSource from 'data/sources/hotspotSource';
-import { Color, color, extent, interpolateYlOrRd, scaleSequential } from 'd3';
+import { Color, color, extent, scaleSequential } from 'd3';
 import { selectSourceById, updateLayer } from '@carto/react-redux';
 import { LEGEND_TYPES } from '@carto/react-ui';
 import { useCartoLayerProps } from '@carto/react-api';
-import { UNICEF_COLORS } from 'theme';
 
 const light = color('white');
 const dark = color('black');
