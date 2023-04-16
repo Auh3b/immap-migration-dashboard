@@ -11,10 +11,14 @@ import { RootState } from 'store/store';
 import SuperCluster from 'supercluster';
 import { useEffect, useState } from 'react';
 import hotSpotSource from 'data/sources/hotspotSource';
-import { color, extent, interpolateYlOrRd, scaleSequential } from 'd3';
+import { Color, color, extent, interpolateYlOrRd, scaleSequential } from 'd3';
 import { selectSourceById, updateLayer } from '@carto/react-redux';
 import { LEGEND_TYPES } from '@carto/react-ui';
 import { useCartoLayerProps } from '@carto/react-api';
+import { UNICEF_COLORS } from 'theme';
+
+const light = color('white');
+const dark = color('black');
 
 function getExtent(features: any[]) {
   return features.map((f) => f.properties.point_count);
@@ -28,9 +32,23 @@ function colorScale(extent: [number, number]) {
   return scaleSequential(['#ffffb2', '#b10026']).domain(extent);
 }
 
-function getFillColor(value: number, extent: [number, number]) {
+function getColor(value: number, extent: [number, number]) {
+  return color(colorScale(extent)(value));
+}
+
+function getTextColor(value: number, extent: [number, number]) {
   //@ts-ignore
-  const colorValue = Object.values(color(colorScale(extent)(value)));
+  const hslColor = color(getColor(value, extent).formatHsl());
+  //@ts-ignore
+  if (hslColor.l > 0.5) {
+    return getFillColor(dark);
+  }
+  return getFillColor(light);
+}
+
+function getFillColor(color: Color) {
+  //@ts-ignore
+  const colorValue = Object.values(color);
   colorValue.pop();
   return colorValue;
 }
@@ -90,7 +108,7 @@ class CircleClusterLayer extends CompositeLayer {
       //@ts-ignore
       const clusterValues = getColorRange(getExtent(this.state.data));
       //@ts-ignore
-      if(!this.state.clusterValues){
+      if (!this.state.clusterValues) {
         //@ts-ignore
         this.setState({
           clusterValues,
@@ -120,24 +138,25 @@ class CircleClusterLayer extends CompositeLayer {
           opacity: 1,
           stroked: false,
           getTextSize: 18,
-          // getTextColor:  [255, 255, 255],
-          textOutlineWidth: 0.3,
+          getTextColor: (d: any) => {
+            return d.properties.cluster
+              ? getTextColor(d.properties.point_count, clusterValues)
+              : [0, 0, 0];
+          },
+          textOutlineWidth: 0,
           textOutlineColor: [255, 255, 255],
           textFontWeight: 'bold',
           textFontSettings: {
             sdf: true,
           },
-          //@ts-ignore
-          getText: (d) =>
+          getText: (d: any) =>
             d.properties.cluster ? String(d.properties.point_count) : '',
-          //@ts-ignore
-          getFillColor: (d) =>
+          getFillColor: (d: any) =>
             d.properties.cluster
-              ? getFillColor(d.properties.point_count, clusterValues)
+              ? getFillColor(getColor(d.properties.point_count, clusterValues))
               : [51, 66, 77, 0],
           pointType: 'circle+text',
-          //@ts-ignore
-          getPointRadius: (d) =>
+          getPointRadius: (d: any) =>
             d.properties.cluster ? d.properties.point_count * 10 : 10,
           pointRadiusMinPixels: 25,
         }),
@@ -157,7 +176,10 @@ const layerConfig = {
       { label: 'Bajo', value: 0 },
       { label: 'Alto', value: 1 },
     ],
-    colors: [[255,255,178], [177,0,38]],
+    colors: [
+      [255, 255, 178],
+      [177, 0, 38],
+    ],
   },
 };
 
