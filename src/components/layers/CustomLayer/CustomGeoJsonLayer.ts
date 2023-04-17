@@ -1,6 +1,8 @@
-//@ts-nocheck
 import { UpdateStateInfo } from '@deck.gl/core/lib/layer';
-import { CompositeLayer, GeoJsonLayer } from 'deck.gl';
+//@ts-ignore
+import { CompositeLayer } from 'deck.gl';
+//@ts-ignore
+import { GeoJsonLayer } from '@deck.gl/layers';
 
 class CustomGeoJsonLayer extends CompositeLayer<any, any> {
   constructor(props: any) {
