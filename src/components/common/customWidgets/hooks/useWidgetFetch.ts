@@ -50,7 +50,6 @@ export default function useWidgetFetch({
     () => ({
       filters: source.filters,
       filtersLogicalOperator: source.filtersLogicalOperator,
-      viewport,
       limit: null,
     }),
     [source],

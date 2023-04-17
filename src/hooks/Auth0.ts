@@ -10,11 +10,7 @@ export default function useAuth() {
   useEffect(() => {
     if (isAuthenticated) {
       const getAccessToken = async () => {
-<<<<<<< HEAD
         let accessToken = process.env.REACT_APP_CARTO_ACCESS_TOKEN;
-=======
-        let accessToken = await getAccessTokenSilently();
->>>>>>> test/no-ref/alternative-design-1
         dispatch(setCredentials({ accessToken }));
       };
       getAccessToken();
