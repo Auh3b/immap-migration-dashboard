@@ -34,7 +34,6 @@ export default function useWidgetFetch({
   methodParams = {},
   global = false,
 }: useWidgetFetchProps) {
-  const { viewport } = useSelector((state: RootState) => state.carto);
   const [data, setData] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -49,15 +48,14 @@ export default function useWidgetFetch({
 
   const params = useMemo(
     () => ({
-      // filters: source.filters,
-      // filtersLogicalOperator: source.filtersLogicalOperator,
-      // viewport,
+      filters: source.filters,
+      filtersLogicalOperator: source.filtersLogicalOperator,
+      viewport,
       limit: null,
-      tileFormat: TILE_FORMATS.GEOJSON,
     }),
     [source],
   );
-
+  
   useCustomCompareEffect(
     () => {
       setIsLoading(true);

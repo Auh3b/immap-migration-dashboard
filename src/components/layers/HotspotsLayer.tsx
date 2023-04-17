@@ -4,9 +4,7 @@ import { CartoLayer } from '@deck.gl/carto';
 import { selectSourceById, updateLayer } from '@carto/react-redux';
 import { useCartoLayerProps } from '@carto/react-api';
 import { RootState } from 'store/store';
-
 import { LEGEND_TYPES } from '@carto/react-ui';
-import { useLocation } from 'react-router-dom';
 import { useMemo } from 'react';
 import useGetPathname from 'hooks/useGetPathname';
 import { ROUTE_PATHS } from 'routes';
@@ -55,9 +53,12 @@ export default function HotspotsLayer() {
       ...cartoLayerProps,
       id: HOTSPOTS_LAYER_ID,
       getFillColor: HOTSPOT_COLOR,
-      stroked: false,
-      pointRadiusMinPixels: 3,
+      stroked: true,
+      pointRadiusUnits: 'pixels',
+      lineWidthUnits: 'pixels',
       pickable: true,
+      getLineColor: [124, 33, 62],
+      pointRadiusMinPixels: 3,
       onDataLoad: (data: any) => {
         dispatch(
           updateLayer({

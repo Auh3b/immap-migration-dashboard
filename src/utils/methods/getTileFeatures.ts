@@ -19,6 +19,7 @@ export default async function getTileFeatures({
   sourceId,
   params,
 }: getTileFeaturesProps) {
+<<<<<<< HEAD
   const {
     data,
     currentPage: page,
@@ -26,5 +27,9 @@ export default async function getTileFeatures({
     totalCount,
   } = await executeTask(sourceId, Methods.FEATURES_RAW, params);
   console.log(data, page, numberPages, totalCount);
+=======
+  const { data } = await executeTask(sourceId, Methods.FEATURES_RAW, params);
+  console.log(data)
+>>>>>>> test/no-ref/alternative-design-1
   return data;
 }
