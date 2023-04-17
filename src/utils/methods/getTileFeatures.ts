@@ -20,6 +20,5 @@ export default async function getTileFeatures({
   params,
 }: getTileFeaturesProps) {
   const { data } = await executeTask(sourceId, Methods.FEATURES_RAW, params);
-  console.log(data)
   return data;
 }

@@ -13,12 +13,19 @@ import { RootState } from 'store/store';
 //@ts-ignore
 import { IconLayer } from '@deck.gl/layers';
 //@ts-ignore
-import { CompositeLayer } from 'deck.gl';
+import { CompositeLayer, GeoJsonLayer } from 'deck.gl';
 import timelineSource from 'data/sources/timelineSource';
-import d3Hex2RGB from 'utils/d3Hex2RGB';
 import { useEffect, useState } from 'react';
 import AtlasIcon from 'assets/img/icon-atlas.png';
 import { LEGEND_TYPES } from '@carto/react-ui';
+import useCustomDataLoad from './hooks/useCustomDataLoad';
+import {
+  Feature,
+  FeatureCollection,
+  featureCollection,
+  point,
+} from '@turf/helpers';
+import { IconGroupConfig, iconGroupsConfig } from './utils/surveyIconGroup';
 
 export const SURVEY_TIMELINE_LAYER_ID = 'surveyTimelineLayer';
 
@@ -34,15 +41,35 @@ class TimelineSurvey extends CompositeLayer<any, any> {
     return loadedLayers[layer] ? true : false;
   }
 
-  checkVisibility(layer: string) {
-    const isLoaded = this.checkLayerConfig(layer);
-    if (isLoaded) {
-      //@ts-ignore
-      const { loadedLayers } = this.props;
-      return loadedLayers[layer].visible;
+  checkVisibility(d: any) {
+    const { loadedLayers } = this.props;
+    const visibleLayers = Object.values(loadedLayers)
+      .filter(({ visible }) => visible === true)
+      .map(({ id }: { id: string }) => id.split('-')[1]);
+    return visibleLayers.includes(d.properties.name);
+  }
+
+  aggregateFeatures(data: FeatureCollection, layerConfig: IconGroupConfig) {
+    let outputFeatures: Feature[] = [];
+    const features = data.features.map(({ properties }) => properties);
+
+    for (let {
+      name,
+      coordinatesAccessor,
+      filterFunction,
+      color,
+    } of layerConfig) {
+      const newFeature = features
+        //@ts-ignore
+        .filter(filterFunction)
+        //@ts-ignore
+        .map(coordinatesAccessor)
+        //@ts-ignore
+        .map((d) => point(d, { name, color }));
+      outputFeatures = [...outputFeatures, ...newFeature];
     }
 
-    return false;
+    return featureCollection(outputFeatures);
   }
 
   setCompositeLayerLegends() {
@@ -82,14 +109,28 @@ class TimelineSurvey extends CompositeLayer<any, any> {
   }
 
   //@ts-ignore
-  shouldUpdateState({ changeFlags }) {
-    return changeFlags.somethingChanged;
-  }
-
-  //@ts-ignore
   updateState({ props, oldProps, changeFlags }) {
     //@ts-ignore
-    if (this.shouldUpdateState && this.props.data) {
+    if (changeFlags.dataChanged && this.props.data) {
+      if (!this.state.data) {
+        const data = this.aggregateFeatures(this.props.data, iconGroupsConfig);
+        this.setState({
+          data,
+        });
+        this.props.onGeojsonLoad(data, {
+          propName: 'data',
+          layer: this,
+        });
+        return;
+      }
+
+      if (this.state.data) {
+        this.props.onGeojsonLoad(this.state.data, {
+          propName: 'data',
+          layer: this,
+        });
+        return;
+      }
     }
   }
 
@@ -105,29 +146,20 @@ class TimelineSurvey extends CompositeLayer<any, any> {
   }
 
   renderLayers() {
-    //@ts-ignore
-    const { iconGroups, data, id } = this.props;
+    const { data } = this.state;
 
-    let iconsLayerRenders: any[] = [];
-
-    for (let {
-      name,
-      coordinatesAccessor,
-      filterFunction,
-      color,
-    } of iconGroups) {
-      const layerId = `${id}-${name}`;
-      const iconLayer = new IconLayer(
+    return [
+      new GeoJsonLayer(
         //@ts-ignore
         this.getSubLayerProps({
-          id: name,
-          data: data.filter(filterFunction),
-          getPosition: coordinatesAccessor,
-          getColor: color,
+          data,
+          pointType: 'icon',
+          getIconColor: (d: any) =>
+            this.checkVisibility(d) ? d.properties.color : [0, 0, 0, 0],
           iconAtlas: AtlasIcon,
-          visible: this.checkVisibility(layerId),
-          getIcon: (d: any) => 'marker',
-          getSize: (d: any) => 4,
+          getIcon: () => 'marker',
+          getIconSize: () => 3,
+          // visible: this.checkVisibility(),
           iconMapping: {
             marker: {
               x: 0,
@@ -138,53 +170,17 @@ class TimelineSurvey extends CompositeLayer<any, any> {
               mask: true,
             },
           },
-          sizeScale: 8,
+          iconSizeScale: 8,
+          iconSizeUnits: 'pixels',
+          iconSizeMinPixels: 4,
+          updateTriggers: {
+            getIconColor: this.props.loadedLayers,
+          },
         }),
-      );
-      iconsLayerRenders = [...iconsLayerRenders, iconLayer];
-    }
-    return iconsLayerRenders;
+      ),
+    ];
   }
 }
-
-export const iconGroupsConfig = [
-  {
-    name: 'Push 1',
-    coordinatesAccessor: (d: any) => [+d['lon_mon'], +d['lat_mon']],
-    filterFunction: (d: any) => +d['lon_mon']! !== 99999,
-    color: d3Hex2RGB(1),
-  },
-  {
-    name: 'Push 2',
-    coordinatesAccessor: (d: any) => [+d['lon_mon2'], +d['lat_mon2']],
-    filterFunction: (d: any) => +d['lon_mon2'] !== 999999,
-    color: d3Hex2RGB(2),
-  },
-  {
-    name: 'Push 3',
-    coordinatesAccessor: (d: any) => [+d['lon_mon3'], +d['lat_mon3']],
-    filterFunction: (d: any) => +d['lon_mon3'] !== 999999,
-    color: d3Hex2RGB(3),
-  },
-  {
-    name: 'Push 4',
-    coordinatesAccessor: (d: any) => [+d['lon_mon4'], +d['lat_mon4']],
-    filterFunction: (d: any) => +d['lon_mon4'] !== 999999,
-    color: d3Hex2RGB(4),
-  },
-  {
-    name: 'Push 5',
-    coordinatesAccessor: (d: any) => [+d['lon_mon5'], +d['lat_mon5']],
-    filterFunction: (d: any) => +d['lon_mon5'] !== 999999,
-    color: d3Hex2RGB(5),
-  },
-  {
-    name: 'Push 6',
-    coordinatesAccessor: (d: any) => [+d['lon_mon6'], +d['lat_mon6']],
-    filterFunction: (d: any) => +d['lon_mon6'] !== 999999,
-    color: d3Hex2RGB(6),
-  },
-];
 
 export default function SurveyTimelineLayer() {
   const dispatch = useDispatch();
@@ -192,7 +188,7 @@ export default function SurveyTimelineLayer() {
   const { layers: loadedLayers } = useSelector(
     (state: RootState) => state.carto,
   );
-  const { hotSpotLayer, surveyTimelineLayer } = useSelector(
+  const { surveyTimelineLayer } = useSelector(
     (state: RootState) => state.carto.layers,
   );
   const source = useSelector((state) =>
@@ -204,7 +200,7 @@ export default function SurveyTimelineLayer() {
       const { data } = await fetchLayerData({
         ...timelineSource,
         source: timelineSource.data,
-        format: 'json',
+        format: 'geojson',
       });
       setData(data);
     })();
@@ -216,6 +212,8 @@ export default function SurveyTimelineLayer() {
   });
   //@ts-ignore
   delete cartoLayerProps.onDataLoad;
+
+  const [onGeojsonLoad] = useCustomDataLoad({ source });
 
   if (surveyTimelineLayer && source && data) {
     return new TimelineSurvey({
@@ -230,6 +228,7 @@ export default function SurveyTimelineLayer() {
       dispatch,
       source,
       loadedLayers,
+      onGeojsonLoad,
       iconGroups: [...iconGroupsConfig],
     });
   }

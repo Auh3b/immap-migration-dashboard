@@ -54,7 +54,7 @@ export default function useWidgetFetch({
     }),
     [source],
   );
-  
+
   useCustomCompareEffect(
     () => {
       setIsLoading(true);

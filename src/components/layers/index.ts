@@ -12,7 +12,6 @@ export const getLayers = () => {
     SurveyConcentrationsLayer(),
     ServicePointsLayer(),
     MigrationFlowLayer(),
-    // MigrationFlowAlternativeLayer(),
     PremiseServicesLayer(),
     SurveyTimelineLayer(),
     // [hygen] Add layer

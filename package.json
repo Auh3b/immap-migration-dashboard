@@ -33,6 +33,7 @@
     "@turf/boolean-intersects": "^6.5.0",
     "@turf/boolean-within": "^6.5.0",
     "@turf/distance": "^6.5.0",
+    "@turf/helpers": "^6.5.0",
     "@turf/turf": "^6.5.0",
     "@types/d3": "^7.4.0",
     "@types/node": "^16.4.13",
