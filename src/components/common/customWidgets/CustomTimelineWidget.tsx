@@ -12,6 +12,7 @@ import {
 import { useRef } from 'react';
 import { defaultCustomWidgetProps } from './customWidgetsType';
 import useWidgetFetch from './hooks/useWidgetFetch';
+import CustomWidgetWrapper from './CustomWidgetWrapper';
 
 export default function CustomTimelineWidget({
   id,
@@ -30,9 +31,9 @@ export default function CustomTimelineWidget({
   });
 
   return (
-    <WrapperWidgetUI title={title} isLoading={isLoading} expanded={false}>
+    <CustomWidgetWrapper title={title} isLoading={isLoading}>
       {data.length > 0 && !isLoading && <CustomTimelineUI data={data} />}
-    </WrapperWidgetUI>
+    </CustomWidgetWrapper>
   );
 }
 

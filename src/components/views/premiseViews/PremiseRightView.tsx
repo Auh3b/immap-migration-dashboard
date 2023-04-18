@@ -23,7 +23,6 @@ export default function PremiseRightView({ dataSources }: ViewSourceType) {
   return (
     <MainColumnView>
       {/* <AggreatedServices dataSource={premiseSource} /> */}
-     
 
       <LegalServices dataSource={premiseSource} />
       <FoodService dataSource={premiseSource} />

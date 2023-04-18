@@ -6,7 +6,8 @@ import WidgetNote from 'components/common/customWidgets/WidgetNote';
 import groupCategories from '../utils/groupCategories';
 import useWidgetEffect from '../utils/useWidgetEffect';
 
-const NOTE = 'Caracterización de la organización según su rol en la prestación del servicio';
+const NOTE =
+  'Caracterización de la organización según su rol en la prestación del servicio';
 const id = 'socialService';
 const title = 'Socios';
 const column = 'socio_tipo';

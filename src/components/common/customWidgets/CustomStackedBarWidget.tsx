@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react';
 import WidgetWithAlert from '../../indicators/WidgetWithAlert';
 import { defaultCustomWidgetProps } from './customWidgetsType';
 import useWidgetFetch from './hooks/useWidgetFetch';
+import CustomWidgetWrapper from './CustomWidgetWrapper';
 
 const useStyles = makeStyles((theme) => ({
   legendContainer: {
@@ -66,11 +67,10 @@ export default function CustomStackedBarWidget({
   }, [_data, colors]);
 
   return (
-    <WrapperWidgetUI
+    <CustomWidgetWrapper
       title={title}
       isLoading={isLoading}
       onError={error}
-      expanded={false}
     >
       <WidgetWithAlert dataSource={dataSource}>
         {yAxisData.length > 0 && !isLoading && (
@@ -106,6 +106,6 @@ export default function CustomStackedBarWidget({
           </Grid>
         )}
       </WidgetWithAlert>
-    </WrapperWidgetUI>
+    </CustomWidgetWrapper>
   );
 }

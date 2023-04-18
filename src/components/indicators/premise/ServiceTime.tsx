@@ -6,6 +6,7 @@ import CustomBarWidget from 'components/common/customWidgets/CustomBarWidget';
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
 import groupCategories from '../utils/groupCategories';
 import useWidgetEffect from '../utils/useWidgetEffect';
+import CustomWidgetWrapper from 'components/common/customWidgets/CustomWidgetWrapper';
 
 export const timeOrder = [
   '12:00 am',
@@ -64,11 +65,11 @@ const title = 'Hora de inicio/fin de servicio (lunes a viernes)';
 export default function ServiceTime({ dataSource }: BasicWidgetType) {
   return (
     <Grid item>
-      <WrapperWidgetUI title={title}>
+      <CustomWidgetWrapper title={title} isLoading={false}>
         <OpeningTime dataSource={dataSource} />
         <ClosingTime dataSource={dataSource} />
         <WidgetNote note={NOTE} />
-      </WrapperWidgetUI>
+      </CustomWidgetWrapper>
     </Grid>
   );
 }

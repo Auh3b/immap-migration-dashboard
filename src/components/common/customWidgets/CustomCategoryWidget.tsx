@@ -5,6 +5,7 @@ import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { defaultCustomWidgetProps } from './customWidgetsType';
 import useWidgetFilterValues from './hooks/useWidgetFilterValues';
+import CustomWidgetWrapper from './CustomWidgetWrapper';
 
 const EMPTY_ARRAY: [] = [];
 
@@ -59,11 +60,10 @@ export default function CustomCategoryWidget({
   });
 
   return (
-    <WrapperWidgetUI
+    <CustomWidgetWrapper
       title={title}
       isLoading={isLoading}
       onError={error}
-      expanded={false}
     >
       <CategoryWidgetUI
         onSelectedCategoriesChange={handleSelectedCategoriesChange}
@@ -71,6 +71,6 @@ export default function CustomCategoryWidget({
         labels={labels}
         data={data}
       />
-    </WrapperWidgetUI>
+    </CustomWidgetWrapper>
   );
 }

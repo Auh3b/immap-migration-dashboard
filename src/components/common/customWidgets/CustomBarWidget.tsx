@@ -7,6 +7,7 @@ import WidgetWithAlert from '../../indicators/WidgetWithAlert';
 import { defaultCustomWidgetProps } from './customWidgetsType';
 import useWidgetFetch from './hooks/useWidgetFetch';
 import useWidgetFilterValues from './hooks/useWidgetFilterValues';
+import CustomWidgetWrapper from './CustomWidgetWrapper';
 
 const EMPTY_ARRAY: [] = [];
 
@@ -93,11 +94,10 @@ export default function CustomBarWidget({
   );
 
   return (
-    <WrapperWidgetUI
+    <CustomWidgetWrapper
       title={title}
       isLoading={isLoading}
       onError={error}
-      expanded={false}
     >
       <WidgetWithAlert dataSource={dataSource}>
         {(!!sortedData || !isLoading) && (
@@ -112,6 +112,6 @@ export default function CustomBarWidget({
           />
         )}
       </WidgetWithAlert>
-    </WrapperWidgetUI>
+    </CustomWidgetWrapper>
   );
 }
