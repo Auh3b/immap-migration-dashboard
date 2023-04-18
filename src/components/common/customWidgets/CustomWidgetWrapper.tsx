@@ -1,5 +1,15 @@
 //@ts-nocheck
-import { Box, Button, Collapse, Grid, Icon, LinearProgress, Tooltip, Typography, makeStyles } from '@material-ui/core';
+import {
+  Box,
+  Button,
+  Collapse,
+  Grid,
+  Icon,
+  LinearProgress,
+  Tooltip,
+  Typography,
+  makeStyles,
+} from '@material-ui/core';
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
 import { ReactNode, createRef, useState } from 'react';
 
@@ -7,14 +17,15 @@ const useStyles = makeStyles((theme) => ({
   root: {
     position: 'relative',
     maxWidth: '100%',
-    padding: ({ margin }) => (margin !== undefined ? margin : theme.spacing(2, 2.5))
+    padding: ({ margin }) =>
+      margin !== undefined ? margin : theme.spacing(2, 2.5),
   },
   loading: {
     position: 'absolute',
     top: 0,
     left: 0,
     width: '100%',
-    height: theme.spacing(0.25)
+    height: theme.spacing(0.25),
   },
   header: ({ isOpen }) => ({
     display: 'flex',
@@ -22,30 +33,32 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'flex-start',
     justifyContent: 'space-between',
     width: '100%',
-    ...(isOpen ? { minHeight: theme.spacing(3) } : { height: theme.spacing(3) }),
-    padding: 0
+    ...(isOpen
+      ? { minHeight: theme.spacing(3) }
+      : { height: theme.spacing(3) }),
+    padding: 0,
   }),
   optionsMenu: {
     marginTop: theme.spacing(6),
     maxHeight: theme.spacing(21),
-    minWidth: theme.spacing(16)
+    minWidth: theme.spacing(16),
   },
   button: {
     flex: 1,
     padding: 0,
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
-    cursor: ({expandable}) => (expandable ? 'pointer' : 'default'),
+    cursor: ({ expandable }) => (expandable ? 'pointer' : 'default'),
     '& .MuiButton-label': {
       ...theme.typography.body1,
 
       '& .MuiButton-startIcon': {
-        marginRight: theme.spacing(1)
-      }
+        marginRight: theme.spacing(1),
+      },
     },
     '&:hover': {
-      background: 'none'
-    }
+      background: 'none',
+    },
   },
   buttonText: ({ isOpen }) => ({
     wordBreak: 'break-word',
@@ -53,12 +66,12 @@ const useStyles = makeStyles((theme) => ({
     ...(isOpen && {
       display: '-webkit-box',
       WebkitLineClamp: 2,
-      WebkitBoxOrient: 'vertical'
+      WebkitBoxOrient: 'vertical',
     }),
     ...(!isOpen && {
       whiteSpace: 'nowrap',
-      textOverflow: 'ellipsis'
-    })
+      textOverflow: 'ellipsis',
+    }),
   }),
   iconToggle: {
     display: 'flex',
@@ -66,17 +79,16 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     width: theme.spacing(3),
     height: theme.spacing(3),
-    color: theme.palette.text.secondary
+    color: theme.palette.text.secondary,
   },
   iconAction: {
     color: theme.palette.text.secondary,
-    margin: theme.spacing(-0.75, 0)
+    margin: theme.spacing(-0.75, 0),
   },
   content: {
-    paddingTop: theme.spacing(1.25)
-  }
+    paddingTop: theme.spacing(1.25),
+  },
 }));
-
 
 export default function CustomWidgetWrapper({
   title,
@@ -90,32 +102,34 @@ export default function CustomWidgetWrapper({
   children: ReactNode;
 }) {
   const wrapper = createRef();
-  const [isOpen, setIsOpen] = useState(false)
-  const classes = useStyles({isOpen, expandable: true})
-  const handleExpandClick =()=>{
-    setIsOpen((prev) => !prev)
-  }
+  const [isOpen, setIsOpen] = useState(false);
+  const classes = useStyles({ isOpen, expandable: true });
+  const handleExpandClick = () => {
+    setIsOpen((prev) => !prev);
+  };
   return (
-    <Box component={'section'}  arial={title} className={classes.root}>
+    <Box component={'section'} arial={title} className={classes.root}>
       {isLoading ? <LinearProgress className={classes.loading} /> : null}
       <Grid container className={classes.header}>
         <Button
           className={classes.button}
           startIcon={
-             (
-              <Icon>
-                {isOpen ? (
-                  <ExpandLess className={classes.iconToggle} />
-                ) : (
-                  <ExpandMore className={classes.iconToggle} />
-                )}
-              </Icon>
-            )
+            <Icon>
+              {isOpen ? (
+                <ExpandLess className={classes.iconToggle} />
+              ) : (
+                <ExpandMore className={classes.iconToggle} />
+              )}
+            </Icon>
           }
           onClick={handleExpandClick}
         >
           <Tooltip title={title} placement='top' arrow>
-            <Typography className={classes.buttonText} align='left' variant='subtitle1'>
+            <Typography
+              className={classes.buttonText}
+              align='left'
+              variant='subtitle1'
+            >
               {title}
             </Typography>
           </Tooltip>
@@ -125,5 +139,5 @@ export default function CustomWidgetWrapper({
         <Box className={classes.content}>{children}</Box>
       </Collapse>
     </Box>
-  )
+  );
 }

@@ -60,11 +60,7 @@ export default function CustomCategoryWidget({
   });
 
   return (
-    <CustomWidgetWrapper
-      title={title}
-      isLoading={isLoading}
-      onError={error}
-    >
+    <CustomWidgetWrapper title={title} isLoading={isLoading} onError={error}>
       <CategoryWidgetUI
         onSelectedCategoriesChange={handleSelectedCategoriesChange}
         selectedCategories={selectedCategories}

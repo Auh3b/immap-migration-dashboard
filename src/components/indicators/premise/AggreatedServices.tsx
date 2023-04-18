@@ -71,10 +71,10 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: theme.spacing(2),
   },
   menuItem: {},
-  content:{
+  content: {
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
-  }
+  },
 }));
 
 const id = 'aggregatedService';
@@ -97,21 +97,23 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
     methodParams,
   });
 
-  useMemo(()=>{
-    if(_data.length === 0){
+  useMemo(() => {
+    if (_data.length === 0) {
       return;
     }
 
-    if(selectedService){
-      const filterData = _data.filter(({service})=> selectedService === service)
-      setData(filterData)
+    if (selectedService) {
+      const filterData = _data.filter(
+        ({ service }) => selectedService === service,
+      );
+      setData(filterData);
       return;
     }
 
-    setData(_data)
-  }, [_data, selectedService])
+    setData(_data);
+  }, [_data, selectedService]);
 
-  console.log(data)
+  console.log(data);
 
   return (
     <Grid item className={classes.main}>
@@ -124,7 +126,7 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
           data={serviceSelection}
           selectService={setSelectedService}
         />
-        {(data && !isLoading) && <ConnectDotChart data={data} />}
+        {data && !isLoading && <ConnectDotChart data={data} />}
       </Grid>
     </Grid>
   );
@@ -158,21 +160,21 @@ function ServiceSelector({ data, selectService }: any) {
   );
 }
 
-
-function ConnectDotChart({data}:any){
-  const option = useMemo(()=> ({
-    yAxis:{
-      data: data.map((d:any)=>d['org-service']),
-    },
-    xAxis:{
-      type: 'value',
-    },
-    series:{
-      type: 'line',
-      data: data.map((d:any) => Object.values(d).at(-1))
-    }
-  }), [data])
-  return (
-    <ReactEchart option={option} />
-  )
+function ConnectDotChart({ data }: any) {
+  const option = useMemo(
+    () => ({
+      yAxis: {
+        data: data.map((d: any) => d['org-service']),
+      },
+      xAxis: {
+        type: 'value',
+      },
+      series: {
+        type: 'line',
+        data: data.map((d: any) => Object.values(d).at(-1)),
+      },
+    }),
+    [data],
+  );
+  return <ReactEchart option={option} />;
 }

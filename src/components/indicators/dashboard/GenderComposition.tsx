@@ -113,7 +113,10 @@ export default function GenderComposition({ dataSource }: BasicWidgetType) {
   return (
     <LazyLoadComponent fallback={<PageFallback />}>
       <Grid item className={classes.main}>
-        <CustomWidgetWrapper title='Porcentaje de género/edad' isLoading={isLoading}>
+        <CustomWidgetWrapper
+          title='Porcentaje de género/edad'
+          isLoading={isLoading}
+        >
           {data && (
             <>
               {Men}

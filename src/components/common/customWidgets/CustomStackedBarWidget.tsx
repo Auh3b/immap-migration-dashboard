@@ -67,11 +67,7 @@ export default function CustomStackedBarWidget({
   }, [_data, colors]);
 
   return (
-    <CustomWidgetWrapper
-      title={title}
-      isLoading={isLoading}
-      onError={error}
-    >
+    <CustomWidgetWrapper title={title} isLoading={isLoading} onError={error}>
       <WidgetWithAlert dataSource={dataSource}>
         {yAxisData.length > 0 && !isLoading && (
           <BarWidgetUI
