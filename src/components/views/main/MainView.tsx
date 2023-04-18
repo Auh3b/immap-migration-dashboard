@@ -86,7 +86,7 @@ const useStylesDesktop = makeStyles((theme) => ({
 }));
 
 function Desktop({ children }: { children: MainViewChildren }) {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const classes = useStylesDesktop();
   const handleToggleDrawer = () => {
     setIsOpen((existingValue) => !existingValue);

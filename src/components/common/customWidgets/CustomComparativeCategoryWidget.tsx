@@ -66,7 +66,7 @@ export default function CustomComparativeCategoryWidget({
   }, [_data, colorMap]);
 
   return (
-    <CustomWidgetWrapper title={title} isLoading={isLoading}>
+    <CustomWidgetWrapper title={title} isLoading={isLoading} expanded={false}>
       {data && names && (
         <ComparativeCategoryWidgetUI
           data={data}

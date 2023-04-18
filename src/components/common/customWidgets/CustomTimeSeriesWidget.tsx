@@ -165,6 +165,7 @@ defaultCustomWidgetProps) {
   return (
     <>
       <WrapperWidgetUI
+        expanded={false}
         title={title}
         isLoading={isLoading}
         {...wrapperProps}

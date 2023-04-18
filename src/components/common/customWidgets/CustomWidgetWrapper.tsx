@@ -13,7 +13,7 @@ export default function CustomWidgetWrapper({
   children: ReactNode;
 }) {
   return (
-    <WrapperWidgetUI title={title} isLoading={isLoading} onError={onError}>
+    <WrapperWidgetUI title={title} isLoading={isLoading} onError={onError} expanded={false} onExpandedChange={null}>
       {children}
     </WrapperWidgetUI>
   );

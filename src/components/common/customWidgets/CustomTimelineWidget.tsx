@@ -30,7 +30,7 @@ export default function CustomTimelineWidget({
   });
 
   return (
-    <WrapperWidgetUI title={title} isLoading={isLoading}>
+    <WrapperWidgetUI title={title} isLoading={isLoading} expanded={false}>
       {data.length > 0 && !isLoading && <CustomTimelineUI data={data} />}
     </WrapperWidgetUI>
   );
