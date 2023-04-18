@@ -42,6 +42,7 @@ class TimelineSurvey extends CompositeLayer<any, any> {
   }
 
   checkVisibility(d: any) {
+    //@ts-ignore
     const { loadedLayers } = this.props;
     const visibleLayers = Object.values(loadedLayers)
       .filter(({ visible }) => visible === true)
@@ -112,11 +113,13 @@ class TimelineSurvey extends CompositeLayer<any, any> {
   updateState({ props, oldProps, changeFlags }) {
     //@ts-ignore
     if (changeFlags.dataChanged && this.props.data) {
+      //@ts-ignore
       if (!this.state.data) {
         const data = this.aggregateFeatures(this.props.data, iconGroupsConfig);
         this.setState({
           data,
         });
+        //@ts-ignore
         this.props.onGeojsonLoad(data, {
           propName: 'data',
           layer: this,
@@ -124,7 +127,9 @@ class TimelineSurvey extends CompositeLayer<any, any> {
         return;
       }
 
+      //@ts-ignore
       if (this.state.data) {
+        //@ts-ignore
         this.props.onGeojsonLoad(this.state.data, {
           propName: 'data',
           layer: this,
@@ -174,6 +179,7 @@ class TimelineSurvey extends CompositeLayer<any, any> {
           iconSizeUnits: 'pixels',
           iconSizeMinPixels: 4,
           updateTriggers: {
+            //@ts-ignore
             getIconColor: this.props.loadedLayers,
           },
         }),
