@@ -1,7 +1,12 @@
-//@ts-ignore
+//@ts-nocheck
+
+/* 
+  This is a base layer that support multiple geometry types
+  similar to the carto-layer but will still allow widgets to work
+  if the dataset entries are more than 1,300 and blow zoom level 4.
+*/
+
 import { CompositeLayer, GeoJsonLayer } from 'deck.gl';
-//@ts-ignore
-// import { GeoJsonLayer } from '@deck.gl/layers';
 
 class CustomGeoJsonLayer extends CompositeLayer<any, any> {
   constructor(props: any) {
