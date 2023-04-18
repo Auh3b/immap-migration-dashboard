@@ -153,6 +153,7 @@ class TimelineSurvey extends CompositeLayer<any, any> {
   }
 
   renderLayers() {
+     //@ts-ignore
     const { data } = this.state;
 
     return [
