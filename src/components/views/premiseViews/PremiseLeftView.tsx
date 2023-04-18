@@ -13,6 +13,8 @@ import ViewSourceType from '../utils/viewSourceType';
 import SocialServices from 'components/indicators/premise/SocialServices';
 import ServicesProvided from 'components/indicators/premise/ServicesProvided';
 import OtherServiceTypes from 'components/indicators/premise/OtherServiceTypes';
+import WomenDiffServices from 'components/indicators/premise/WomenDiffServices';
+import WomenDiffServicesAvailability from 'components/indicators/premise/WomenDiffServicesAvailability';
 
 export default function PremiseLeftView({ dataSources }: ViewSourceType) {
   const { premiseSource } = dataSources;
@@ -24,6 +26,8 @@ export default function PremiseLeftView({ dataSources }: ViewSourceType) {
       <ServicesProvided dataSource={premiseSource} />
       <OtherServiceTypes dataSource={premiseSource} />
       <ServiceTime dataSource={premiseSource} />
+      <WomenDiffServicesAvailability dataSource={premiseSource} />
+      <WomenDiffServices dataSource={premiseSource} />
       {/* <ServiceLocation dataSource={premiseSource} /> */}
       {/* <LocationFeatures dataSource={premiseSource} /> */}
       {/* <DisabilityServices dataSource={premiseSource} /> */}
