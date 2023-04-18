@@ -8,21 +8,23 @@ import InformationService from 'components/indicators/premise/InformationService
 import LegalServices from 'components/indicators/premise/LegalServices';
 
 import OtherService from 'components/indicators/premise/OtherService';
-import OtherServiceTypes from 'components/indicators/premise/OtherServiceTypes';
+
 import PsychologicalService from 'components/indicators/premise/PsychologicalService';
 import SanitationServices from 'components/indicators/premise/SanitationServices';
-import ServicesProvided from 'components/indicators/premise/ServicesProvided';
+
 import TransportService from 'components/indicators/premise/TransportService';
 import WaterService from 'components/indicators/premise/WaterService';
 
 import ViewSourceType from '../utils/viewSourceType';
+import AggreatedServices from 'components/indicators/premise/AggreatedServices';
 
 export default function PremiseRightView({ dataSources }: ViewSourceType) {
   const { premiseSource } = dataSources;
   return (
     <MainColumnView>
-      <ServicesProvided dataSource={premiseSource} />
-      <OtherServiceTypes dataSource={premiseSource} />
+      {/* <AggreatedServices dataSource={premiseSource} /> */}
+     
+
       <LegalServices dataSource={premiseSource} />
       <FoodService dataSource={premiseSource} />
       <HealthService dataSource={premiseSource} />

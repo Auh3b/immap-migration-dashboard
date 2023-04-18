@@ -93,7 +93,12 @@ export default function CustomBarWidget({
   );
 
   return (
-    <WrapperWidgetUI title={title} isLoading={isLoading} onError={error} expanded={false}>
+    <WrapperWidgetUI
+      title={title}
+      isLoading={isLoading}
+      onError={error}
+      expanded={false}
+    >
       <WidgetWithAlert dataSource={dataSource}>
         {(!!sortedData || !isLoading) && (
           <BarWidgetUI
