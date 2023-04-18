@@ -115,7 +115,9 @@ class TimelineSurvey extends CompositeLayer<any, any> {
     if (changeFlags.dataChanged && this.props.data) {
       //@ts-ignore
       if (!this.state.data) {
+        //@ts-ignore
         const data = this.aggregateFeatures(this.props.data, iconGroupsConfig);
+        //@ts-ignore
         this.setState({
           data,
         });
