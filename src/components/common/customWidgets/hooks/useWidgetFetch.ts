@@ -1,9 +1,7 @@
 //@ts-nocheck
 import { selectAreFeaturesReadyForSource } from '@carto/react-redux';
-import { TILE_FORMATS } from '@deck.gl/carto';
 import { useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from 'store/store';
 import getTileFeatures from 'utils/methods/getTileFeatures';
 import useCustomCompareEffect from '../../../../hooks/useCustomCompareEffect';
 import { dequal } from 'dequal';

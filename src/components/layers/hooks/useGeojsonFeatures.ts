@@ -1,6 +1,6 @@
 //@ts-nocheck
 import { Methods, executeTask } from '@carto/react-workers';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect } from 'react';
 import useFeaturesCommons from './useFeaturesCommons';
 import { debounce } from '@carto/react-core';
 

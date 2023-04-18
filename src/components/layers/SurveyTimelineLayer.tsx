@@ -11,9 +11,9 @@ import {
 import { useCartoLayerProps } from '@carto/react-api';
 import { RootState } from 'store/store';
 //@ts-ignore
-import { IconLayer } from '@deck.gl/layers';
+import { GeoJsonLayer } from '@deck.gl/layers';
 //@ts-ignore
-import { CompositeLayer, GeoJsonLayer } from 'deck.gl';
+import { CompositeLayer } from 'deck.gl';
 import timelineSource from 'data/sources/timelineSource';
 import { useEffect, useState } from 'react';
 import AtlasIcon from 'assets/img/icon-atlas.png';

@@ -9,8 +9,6 @@ const CustomWidgetWrapper = lazy(
   () => import('components/common/customWidgets/CustomWidgetWrapper'),
 );
 
-const EMPTY_ARRAY = [];
-
 export default function CustomComparativeCategoryWidget({
   id,
   title,

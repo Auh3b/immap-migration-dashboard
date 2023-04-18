@@ -1,8 +1,7 @@
-import { UpdateStateInfo } from '@deck.gl/core/lib/layer';
 //@ts-ignore
-import { CompositeLayer } from 'deck.gl';
+import { CompositeLayer, GeoJsonLayer } from 'deck.gl';
 //@ts-ignore
-import { GeoJsonLayer } from '@deck.gl/layers';
+// import { GeoJsonLayer } from '@deck.gl/layers';
 
 class CustomGeoJsonLayer extends CompositeLayer<any, any> {
   constructor(props: any) {
@@ -13,12 +12,7 @@ class CustomGeoJsonLayer extends CompositeLayer<any, any> {
     this.props?.addLegend();
   }
 
-  updateState({
-    oldProps,
-    props,
-    context,
-    changeFlags,
-  }: UpdateStateInfo<any>): void {
+  updateState({ oldProps, props, context, changeFlags }: any): void {
     if (changeFlags.dataChanged && this.props.data) {
       if (!this.state.data) {
         this.setState({

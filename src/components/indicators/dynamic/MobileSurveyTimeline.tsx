@@ -13,7 +13,9 @@ const timelineValueAlt: MethodFunc = (input, column, params) => {
   let output: Record<string, any>[] = [];
 
   for (let { name, color } of iconGroupsConfig) {
-    const value = input.filter(({name: featureName})=> featureName === name).length;
+    const value = input.filter(
+      ({ name: featureName }) => featureName === name,
+    ).length;
     const outputItem = {
       id: name,
       name,

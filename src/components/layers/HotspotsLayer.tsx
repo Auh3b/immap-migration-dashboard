@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 // @ts-ignore
-import { CartoLayer, fetchLayerData } from '@deck.gl/carto';
+import { fetchLayerData } from '@deck.gl/carto';
 import { removeLayer, selectSourceById, updateLayer } from '@carto/react-redux';
 import { useCartoLayerProps } from '@carto/react-api';
 import { RootState } from 'store/store';

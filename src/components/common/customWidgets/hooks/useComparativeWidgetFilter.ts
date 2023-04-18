@@ -1,8 +1,6 @@
 import { _FilterTypes } from '@carto/react-core';
 import { selectSourceById } from '@carto/react-redux';
-import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from 'store/store';
 
 export default function useComparativeWidgetFilter({
   dataSource,
