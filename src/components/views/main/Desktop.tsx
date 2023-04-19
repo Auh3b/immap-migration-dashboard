@@ -43,12 +43,12 @@ export default function Desktop({ children }: { children: MainViewChildren }) {
 
   return (
     <>
-      <SideView direction={'left'} expandable={children.left.expandable}>
-        {children.left.element}
+      <SideView direction={'left'} expandable={children?.left?.expandable}>
+        {children?.left?.element}
       </SideView>
       <Grid xs container direction='column' item alignContent='stretch'>
         <MapContainer />
-        {children.middle.element && (
+        {children.middle && (
           <Grid className={classes.middleDrawer} item>
             <IconButton
               color='inherit'
@@ -63,8 +63,8 @@ export default function Desktop({ children }: { children: MainViewChildren }) {
           </Grid>
         )}
       </Grid>
-      <SideView direction={'right'} expandable={children.right.expandable}>
-        {children.right.element}
+      <SideView direction={'right'} expandable={children?.right?.expandable}>
+        {children?.right?.element}
       </SideView>
     </>
   );

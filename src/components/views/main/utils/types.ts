@@ -8,6 +8,6 @@ export interface MainViewChildren {
 }
 
 interface View {
-  element: ReactChild | ReactNode;
+  element?: ReactChild | ReactNode;
   expandable?: Boolean;
 }
