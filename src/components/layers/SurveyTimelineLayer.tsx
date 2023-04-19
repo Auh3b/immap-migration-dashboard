@@ -2,11 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 //@ts-ignore
 import { fetchLayerData } from '@deck.gl/carto';
 // @ts-ignore
-import {
-  addLayer,
-  removeLayer,
-  selectSourceById,
-} from '@carto/react-redux';
+import { addLayer, removeLayer, selectSourceById } from '@carto/react-redux';
 import { useCartoLayerProps } from '@carto/react-api';
 import { RootState } from 'store/store';
 //@ts-ignore
