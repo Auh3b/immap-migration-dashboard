@@ -241,6 +241,9 @@ function ConnectDotChart({ data: _data, groupName }: any) {
           verticalAlign: 'middle',
           fontWeight: 'bold',
         },
+        axisLabel: {
+          hideOverlap: true,
+        },
       },
       dataset: {
         dimensions: DATA_DIMENSIONS,
