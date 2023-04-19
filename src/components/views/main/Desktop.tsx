@@ -5,6 +5,7 @@ import { lazy, useState } from 'react';
 import { MainViewChildren } from './utils/types';
 import { Grid, makeStyles, IconButton, Collapse } from '@material-ui/core';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+import useGetPathname from 'hooks/useGetPathname';
 
 const MapContainer = lazy(() => import('./MapContainer'));
 
@@ -57,6 +58,7 @@ export default function Desktop({ children }: { children: MainViewChildren }) {
   const [isOpen, setIsOpen] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const classes = useStylesDesktop();
+  const pathname = useGetPathname()
 
   const handleDrawerExpand = () => {
     setExpanded((prev) => !prev);
@@ -110,13 +112,13 @@ export default function Desktop({ children }: { children: MainViewChildren }) {
             width: expanded ? '600px' : `${DRAWER_WIDTH}px`,
           }}
         >
-          <IconButton
+          {pathname === 'servicios' && <IconButton
             color='inherit'
             onClick={handleDrawerExpand}
             className={classes.rightDrawerToggle}
           >
             {isOpen ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-          </IconButton>
+          </IconButton>}
           {children.right}
         </Grid>
       )}

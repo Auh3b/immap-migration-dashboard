@@ -200,8 +200,6 @@ function ConnectDotChart({ data: _data, groupName }: any) {
     [_data],
   );
 
-  console.log(data);
-
   const option = useMemo(
     () => ({
       title: {
@@ -232,9 +230,6 @@ function ConnectDotChart({ data: _data, groupName }: any) {
       },
       xAxis: {
         type: 'value',
-      },
-      dataZoom: {
-        type: 'inside',
       },
       dataset: {
         dimensions: DATA_DIMENSIONS,
@@ -344,7 +339,7 @@ function ChartLegend(){
   return (
     <Grid item direction='column' container className={classes.root}>
       {legend.map(([title, color]) =>(
-        <Grid alignItems='center' item container className={classes.legendItem}>
+        <Grid key={title} alignItems='center' item container className={classes.legendItem}>
           <span className={classes.icon} style={{backgroundColor: color}}></span>
           <Typography variant='overline'>{title}</Typography>
         </Grid>
