@@ -182,12 +182,12 @@ function ChildrenOnAuroraPercentage({ data }: QuickStatProps) {
     AggregationTypes.SUM,
   ];
   const totalChildenPercent = useMemo(
-    () =>
-      percentValue({
-        input: data,
-        columns,
-        divider,
-      }),
+    () =>{
+      const dividerValue = aggregateColumns(data, [divider[0]])+ aggregateColumns(data, ['objectid'], AggregationTypes.COUNT)
+      const totalValue = aggregateColumns(data, [...columns[0]])
+
+      return  totalValue/dividerValue
+    },
     [data],
   );
   return (
@@ -282,12 +282,14 @@ function percentValue({
     targetColumns,
     columnAggregateType,
   );
+
+
   const dividerValue = aggregateColumns(
     input.length === 2 ? input[1] : input,
     [dividerColumn],
     dividerAggregateType,
   );
-
+  console.log(totalValue, dividerValue)
   percentageValue = totalValue / dividerValue;
 
   return percentageValue;

@@ -319,7 +319,8 @@ function ConnectDotChart({ data: _data, groupName }: any) {
         //@ts-ignore
         backgroundColor: theme.palette.other.tooltip,
         //@ts-ignore
-        formatter({ data }) {
+        formatter({ data, encode }) {
+          const {x: dimensionIndex} = encode
           return `<span 
             style='min-width: 35px;  display: flex; flex-direction: column;'
             >
@@ -339,7 +340,7 @@ function ConnectDotChart({ data: _data, groupName }: any) {
               style='display: flex; justify-content: space-between; gap: 10px; align-items: center;'
               >
               <span>Personas</span>
-              <span>${data[4]}</span>
+              <span>${data[dimensionIndex]}</span>
             </span>
           </span>`;
         },
