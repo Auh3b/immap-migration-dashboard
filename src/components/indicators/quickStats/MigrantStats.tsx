@@ -141,9 +141,9 @@ function MigrantsReportedAtServicePoint({ data }: QuickStatProps) {
   const title = 'Personas en los grupos de viaje validados';
   const note =
     'Número de migrantes reportados haciendo uso de los puntos de servicio';
-  const columns = ['e17__cua'];
+  const columns = [['e17__cua'],[ 'objectid']];
   const TotalReportedMigrants = useMemo(
-    () => aggregateColumns(data, columns) + 1 || 0,
+    () => (aggregateColumns(data, columns[0]) || 0) +(aggregateColumns(data, columns[1], AggregationTypes.COUNT) || 0),
     [data],
   );
   return (
