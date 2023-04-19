@@ -7,6 +7,7 @@ import {
   Select,
   Typography,
   makeStyles,
+  useTheme,
 } from '@material-ui/core';
 import ReactEchart from 'echarts-for-react';
 import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType';
@@ -14,7 +15,8 @@ import useWidgetFetch from 'components/common/customWidgets/hooks/useWidgetFetch
 import { useMemo, useRef, useState } from 'react';
 import MethodFunc from '../utils/methodType';
 import { SERVICES_KEY, SERVICE_STAT_COLUMNS } from './utils/services';
-import { EChartsOption, graphic } from 'echarts';
+import { graphic } from 'echarts';
+import { UNICEF_COLORS } from 'theme';
 
 const otherColumns = {
   country: 'ubicacion_',
@@ -29,6 +31,12 @@ const SERVICE_STAT_COLUMNS_NAME = [
   'Promedio diario',
 ];
 
+const STAT_CATEGORY_COLORS = new Map([
+  ['Capacidad diaria', UNICEF_COLORS[5]],
+  ['Personas atendidas ayer', UNICEF_COLORS[4]],
+  ['Promedio diario', UNICEF_COLORS[0]],
+]);
+
 const column = 'serv_tipo1';
 
 const method: MethodFunc = (input, column, params) => {
@@ -42,21 +50,20 @@ const method: MethodFunc = (input, column, params) => {
 
     services.forEach((service) => {
       const serviceColumns = SERVICE_STAT_COLUMNS.get(service);
-      for (let i = 0; i < serviceColumns.length; i++) {
-        const newEntry: any = {
-          service: SERVICES_KEY.get(service),
-          country: serviceEntry[otherColumns.country],
-          region: serviceEntry[otherColumns.region],
-          org: serviceEntry[otherColumns.organisation],
-          personas: serviceEntry[otherColumns.persons],
-          'org-service': `${
-            serviceEntry[otherColumns.organisation]
-          } - ${SERVICES_KEY.get(service)}`,
-        };
-        newEntry[SERVICE_STAT_COLUMNS_NAME[i]] =
-          serviceEntry[serviceColumns[i]];
-        output = [...output, newEntry];
+      let newEntry: any = [
+        SERVICES_KEY.get(service),
+        serviceEntry[otherColumns.country],
+        serviceEntry[otherColumns.region],
+        serviceEntry[otherColumns.organisation],
+        serviceEntry[otherColumns.persons],
+        `${serviceEntry[otherColumns.organisation]} - ${SERVICES_KEY.get(
+          service,
+        )}`,
+      ];
+      for (let i = 0; i < SERVICE_STAT_COLUMNS_NAME.length; i++) {
+        newEntry = [...newEntry, serviceEntry[serviceColumns[i]] || 0];
       }
+      output = [...output, newEntry];
     });
   }
 
@@ -103,9 +110,7 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
     }
 
     if (selectedService) {
-      const filterData = _data.filter(
-        ({ service }) => selectedService === service,
-      );
+      const filterData = _data.filter((d: any) => selectedService === d[0]);
       setData(filterData);
       return;
     }
@@ -113,7 +118,10 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
     setData(_data);
   }, [_data, selectedService]);
 
-  console.log(data);
+  const regions = useMemo(
+    () => data && Array.from(new Set(data.map((d: any) => d[2]))),
+    [data],
+  );
 
   return (
     <Grid item className={classes.main}>
@@ -126,7 +134,18 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
           data={serviceSelection}
           selectService={setSelectedService}
         />
-        {data && !isLoading && <ConnectDotChart data={data} />}
+        {data &&
+          !isLoading &&
+          regions &&
+          regions.map((groupName) => {
+            return (
+              <ConnectDotChart
+                key={groupName}
+                data={data}
+                groupName={groupName}
+              />
+            );
+          })}
       </Grid>
     </Grid>
   );
@@ -160,21 +179,132 @@ function ServiceSelector({ data, selectService }: any) {
   );
 }
 
-function ConnectDotChart({ data }: any) {
+function ConnectDotChart({ data: _data, groupName }: any) {
+  const theme = useTheme();
+  const DATA_DIMENSIONS = [
+    'service',
+    'country',
+    'region',
+    'organisation',
+    'personas',
+    'org/service',
+    'Capacidad diaria',
+    'Personas atendidas ayer',
+    'Promedio diario',
+  ];
+
+  const data = useMemo(
+    () => _data.filter((d: any) => d[2] === groupName),
+    [_data],
+  );
+
+  console.log(data);
+
   const option = useMemo(
     () => ({
+      title: {
+        show: true,
+        text: groupName,
+        // top: 'center',
+        // left: 'center',
+      },
+      grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true,
+      },
       yAxis: {
-        data: data.map((d: any) => d['org-service']),
+        type: 'category',
+        axisLabel: {
+          width: 150,
+          overflow: 'break',
+          formatter: (value: string) => {
+            const newLabel = value.split(' - ');
+            return `${newLabel[0]} \n ${newLabel[1]}`;
+          },
+        },
       },
       xAxis: {
         type: 'value',
       },
-      series: {
-        type: 'line',
-        data: data.map((d: any) => Object.values(d).at(-1)),
+      dataZoom: {
+        type: 'inside',
+      },
+      dataset: {
+        dimensions: DATA_DIMENSIONS,
+        source: data,
+      },
+      series: [
+        {
+          type: 'scatter',
+          encode: {
+            y: DATA_DIMENSIONS[5],
+            x: DATA_DIMENSIONS[6],
+          },
+        },
+        {
+          type: 'scatter',
+          encode: {
+            y: DATA_DIMENSIONS[5],
+            x: DATA_DIMENSIONS[7],
+          },
+        },
+        {
+          type: 'scatter',
+          encode: {
+            y: DATA_DIMENSIONS[5],
+            x: DATA_DIMENSIONS[8],
+          },
+        },
+      ],
+      tooltip: {
+        show: true,
+        position: 'top',
+        padding: [theme.spacing(0.5), theme.spacing(1)],
+        borderWidth: 0,
+        textStyle: {
+          ...theme.typography.caption,
+          fontSize: 12,
+          lineHeight: 16,
+          color: theme.palette.common.white,
+        },
+        //@ts-ignore
+        backgroundColor: theme.palette.other.tooltip,
+        //@ts-ignore
+        formatter({ data }) {
+          return `<span 
+            style='min-width: 35px; display: flex; flex-direction: column;'
+            >
+            <span 
+              style='display: flex; justify-content: space-between; align-items: center;'
+              >
+              <span>Servicio</span>
+              <span>${data[0]}</span>
+            </span>
+            <span 
+              style='display: flex; justify-content: space-between; align-items: center;'
+              >
+              <span>Organización</span>
+              <span>${data[3]}</span>
+            </span>
+            <span 
+              style='display: flex; justify-content: space-between; align-items: center;'
+              >
+              <span>Personas</span>
+              <span>${data[4]}</span>
+            </span>
+          </span>`;
+        },
       },
     }),
     [data],
   );
-  return <ReactEchart option={option} />;
+  return (
+    <ReactEchart
+      option={option}
+      style={{ height: '500px' }}
+      opts={{ renderer: 'svg' }}
+    />
+  );
 }
