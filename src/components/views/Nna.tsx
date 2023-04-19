@@ -61,8 +61,14 @@ export default function Nna() {
   return (
     <MainView>
       {{
-        left: <ChildrenLeftView dataSources={sources} classes={classes} />,
-        right: <ChildrenRightView dataSources={sources} classes={classes} />,
+        left: {
+          element: <ChildrenLeftView dataSources={sources} classes={classes} />,
+        },
+        right: {
+          element: (
+            <ChildrenRightView dataSources={sources} classes={classes} />
+          ),
+        },
       }}
     </MainView>
   );

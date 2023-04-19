@@ -47,12 +47,16 @@ export default function Services() {
   return (
     <MainView>
       {{
-        left: (
-          <ServiceLeftView classes={classes} dataSources={{ mainSource }} />
-        ),
-        right: (
-          <ServicesRightView classes={classes} dataSources={{ mainSource }} />
-        ),
+        left: {
+          element: (
+            <ServiceLeftView classes={classes} dataSources={{ mainSource }} />
+          ),
+        },
+        right: {
+          element: (
+            <ServicesRightView classes={classes} dataSources={{ mainSource }} />
+          ),
+        },
       }}
     </MainView>
   );

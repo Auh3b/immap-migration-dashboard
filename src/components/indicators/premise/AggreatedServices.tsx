@@ -16,7 +16,7 @@ import { useMemo, useRef, useState } from 'react';
 import MethodFunc from '../utils/methodType';
 import { SERVICES_KEY, SERVICE_STAT_COLUMNS } from './utils/services';
 import { graphic } from 'echarts';
-import theme, { UNICEF_COLORS } from 'theme';
+import { UNICEF_COLORS } from 'theme';
 
 const otherColumns = {
   country: 'ubicacion_',
@@ -165,7 +165,6 @@ function ServiceSelector({ data, selectService }: any) {
           <Typography variant='caption'>Select</Typography>
         </InputLabel>
         <Select value={currentService.current} onChange={handleChange}>
-          
           <MenuItem value={''}>
             <Typography variant='overline'>{'All'}</Typography>
           </MenuItem>
@@ -242,9 +241,9 @@ function ConnectDotChart({ data: _data, groupName }: any) {
             y: DATA_DIMENSIONS[5],
             x: DATA_DIMENSIONS[6],
           },
-          itemStyle:{
-            color: STAT_CATEGORY_COLORS.get(DATA_DIMENSIONS[6])
-          }
+          itemStyle: {
+            color: STAT_CATEGORY_COLORS.get(DATA_DIMENSIONS[6]),
+          },
         },
         {
           type: 'scatter',
@@ -252,9 +251,9 @@ function ConnectDotChart({ data: _data, groupName }: any) {
             y: DATA_DIMENSIONS[5],
             x: DATA_DIMENSIONS[7],
           },
-          itemStyle:{
-            color: STAT_CATEGORY_COLORS.get(DATA_DIMENSIONS[7])
-          }
+          itemStyle: {
+            color: STAT_CATEGORY_COLORS.get(DATA_DIMENSIONS[7]),
+          },
         },
         {
           type: 'scatter',
@@ -262,10 +261,22 @@ function ConnectDotChart({ data: _data, groupName }: any) {
             y: DATA_DIMENSIONS[5],
             x: DATA_DIMENSIONS[8],
           },
-          itemStyle:{
-            color: STAT_CATEGORY_COLORS.get(DATA_DIMENSIONS[8])
-          }
+          itemStyle: {
+            color: STAT_CATEGORY_COLORS.get(DATA_DIMENSIONS[8]),
+          },
         },
+        {
+          type:'custom',
+          renderItem:(params: any, api: any)=>{
+            const categoryIndex = api.value(5)
+            const x1 = api.value()
+            const startPoint = api.coord([])
+
+            return ({
+
+            })
+          }
+        }
       ],
       tooltip: {
         show: true,
@@ -318,32 +329,41 @@ function ConnectDotChart({ data: _data, groupName }: any) {
   );
 }
 
-const useLegendStyle = makeStyles((theme)=>({
-  root:{
+const useLegendStyle = makeStyles((theme) => ({
+  root: {
     marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2)
+    marginBottom: theme.spacing(2),
   },
-  legendItem:{
+  legendItem: {
     gap: theme.spacing(2),
   },
-  icon:{
-    width: '10px', 
-    height: '10px', 
+  icon: {
+    width: '10px',
+    height: '10px',
     borderRadius: '100%',
-  }
-}))
+  },
+}));
 
-function ChartLegend(){
-  const classes = useLegendStyle()
-  const legend = Array.from(STAT_CATEGORY_COLORS)
+function ChartLegend() {
+  const classes = useLegendStyle();
+  const legend = Array.from(STAT_CATEGORY_COLORS);
   return (
     <Grid item direction='column' container className={classes.root}>
-      {legend.map(([title, color]) =>(
-        <Grid key={title} alignItems='center' item container className={classes.legendItem}>
-          <span className={classes.icon} style={{backgroundColor: color}}></span>
+      {legend.map(([title, color]) => (
+        <Grid
+          key={title}
+          alignItems='center'
+          item
+          container
+          className={classes.legendItem}
+        >
+          <span
+            className={classes.icon}
+            style={{ backgroundColor: color }}
+          ></span>
           <Typography variant='overline'>{title}</Typography>
         </Grid>
       ))}
     </Grid>
-  )
+  );
 }

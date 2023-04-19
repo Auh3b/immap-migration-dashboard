@@ -37,17 +37,28 @@ export default function PremiseService() {
   return (
     <MainView>
       {{
-        left: (
-          <PremiseLeftView dataSources={{ premiseSource: premiseSource.id }} />
-        ),
-        right: (
-          <PremiseRightView dataSources={{ premiseSource: premiseSource.id }} />
-        ),
-        middle: (
-          <PremiseMiddleView
-            dataSources={{ premiseSource: premiseSource.id }}
-          />
-        ),
+        left: {
+          element: (
+            <PremiseLeftView
+              dataSources={{ premiseSource: premiseSource.id }}
+            />
+          ),
+        },
+        right: {
+          element: (
+            <PremiseRightView
+              dataSources={{ premiseSource: premiseSource.id }}
+            />
+          ),
+          expandable: true,
+        },
+        middle: {
+          element: (
+            <PremiseMiddleView
+              dataSources={{ premiseSource: premiseSource.id }}
+            />
+          ),
+        },
       }}
     </MainView>
   );

@@ -65,7 +65,7 @@ export default function DinámicaAurora() {
   return (
     <MainView>
       {{
-        left: <DinamicaLeftView dataSources={sources} />,
+        left: { element: <DinamicaLeftView dataSources={sources} /> },
       }}
     </MainView>
   );

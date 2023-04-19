@@ -5,24 +5,16 @@ import { lazy, useState } from 'react';
 import { MainViewChildren } from './utils/types';
 import { Grid, makeStyles, IconButton, Collapse } from '@material-ui/core';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
-import useGetPathname from 'hooks/useGetPathname';
 
 const MapContainer = lazy(() => import('./MapContainer'));
 
-const DRAWER_WIDTH = 300;
+const DRAWER_WIDTH_CLOSED = 300;
+const DRAWER_WIDTH_OPEN = 700;
+
 const MIDDLE_HEIGHT = 50;
 
 const useStylesDesktop = makeStyles((theme) => ({
-  drawer: {
-    width: DRAWER_WIDTH,
-    maxHeight: `calc(100vh - 54px)`,
-    overflow: 'auto',
-    position: 'relative',
-    transition: 'all 500ms ease-in-out',
-    zIndex: theme.zIndex.drawer + 1,
-  },
   drawerPaper: {
-    // width: DRAWER_WIDTH,
     position: 'relative',
   },
   middleDrawer: {
@@ -40,53 +32,23 @@ const useStylesDesktop = makeStyles((theme) => ({
       backgroundColor: theme.palette.grey[100],
     },
   },
-  rightDrawerToggle: {
-    position: 'absolute',
-    borderRadius: '100%',
-    backgroundColor: theme.palette.common.white,
-    boxShadow: theme.shadows[10],
-    top: '64px',
-    left: '-10px',
-    '&:hover': {
-      backgroundColor: theme.palette.grey[100],
-    },
-    zIndex: 100000,
-  },
 }));
 
 export default function Desktop({ children }: { children: MainViewChildren }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [expanded, setExpanded] = useState(false);
   const classes = useStylesDesktop();
-  const pathname = useGetPathname()
-
-  const handleDrawerExpand = () => {
-    setExpanded((prev) => !prev);
-  };
-
   const handleToggleDrawer = () => {
     setIsOpen((existingValue) => !existingValue);
   };
 
   return (
     <>
-      {children.left && (
-        <Grid
-          container
-          wrap='nowrap'
-          direction='column'
-          item
-          className={classes.drawer}
-          style={{
-            width: `${DRAWER_WIDTH}px`,
-          }}
-        >
-          {children.left}
-        </Grid>
-      )}
+      <SideView direction={'left'} expandable={children.left.expandable}>
+        {children.left.element}
+      </SideView>
       <Grid xs container direction='column' item alignContent='stretch'>
         <MapContainer />
-        {children.middle && (
+        {children.middle.element && (
           <Grid className={classes.middleDrawer} item>
             <IconButton
               color='inherit'
@@ -96,31 +58,99 @@ export default function Desktop({ children }: { children: MainViewChildren }) {
               {isOpen ? <ExpandMoreIcon /> : <ExpandLessIcon />}
             </IconButton>
             <Collapse in={isOpen} unmountOnExit>
-              {children.middle}
+              {children.middle.element}
             </Collapse>
           </Grid>
         )}
       </Grid>
-      {children.right && (
+      <SideView direction={'right'} expandable={children.right.expandable}>
+        {children.right.element}
+      </SideView>
+    </>
+  );
+}
+
+const useSideStyles = makeStyles((theme) => ({
+  root: {
+    width: ({ isOpen }: any) =>
+      isOpen ? DRAWER_WIDTH_OPEN : DRAWER_WIDTH_CLOSED,
+    maxHeight: `calc(100vh - 54px)`,
+    overflow: 'auto',
+    position: 'relative',
+    transition: 'width 250ms ease-in-out',
+    zIndex: theme.zIndex.drawer + 1,
+  },
+  button: {
+    position: 'relative',
+    alignSelf: ({ direction }: any) =>
+      direction === 'left' ? 'flex-end' : 'flex-start',
+    borderRadius: '100%',
+    backgroundColor: theme.palette.common.white,
+    boxShadow: theme.shadows[10],
+    '&:hover': {
+      backgroundColor: theme.palette.grey[100],
+    },
+  },
+}));
+
+function SideView({ direction, expandable, children }: any) {
+  const [isOpen, setIsOpen] = useState(false);
+  const classes = useSideStyles({ isOpen, direction });
+  const handleExpand = () => {
+    setIsOpen((prev) => !prev);
+  };
+  return (
+    <>
+      {children && (
         <Grid
-          container
-          wrap='nowrap'
           direction='column'
+          wrap='nowrap'
           item
-          className={classes.drawer}
-          style={{
-            width: expanded ? '600px' : `${DRAWER_WIDTH}px`,
-          }}
+          container
+          className={classes.root}
         >
-          {pathname === 'servicios' && <IconButton
-            color='inherit'
-            onClick={handleDrawerExpand}
-            className={classes.rightDrawerToggle}
-          >
-            {isOpen ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-          </IconButton>}
-          {children.right}
+          {expandable && (
+            <IconButton
+              color='inherit'
+              onClick={handleExpand}
+              className={classes.button}
+            >
+              <ExpandIcon isOpen={isOpen} direction={direction} />
+            </IconButton>
+          )}
+          {children}
         </Grid>
+      )}
+    </>
+  );
+}
+
+const iconDirection = (direction: 'left' | 'right') => {
+  switch (direction) {
+    case 'right':
+      return 'rotate(0deg)';
+    case 'left': {
+      return 'rotate(180deg)';
+    }
+    default:
+      return 'rotate(0deg)';
+  }
+};
+
+const useIconStyle = makeStyles((theme) => ({
+  root: {
+    transform: ({ direction }: any) => iconDirection(direction),
+  },
+}));
+
+function ExpandIcon({ direction, isOpen }: any) {
+  const classes = useIconStyle({ direction });
+  return (
+    <>
+      {isOpen ? (
+        <ChevronRightIcon className={classes.root} />
+      ) : (
+        <ChevronLeftIcon className={classes.root} />
       )}
     </>
   );
