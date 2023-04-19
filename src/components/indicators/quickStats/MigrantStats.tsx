@@ -127,7 +127,7 @@ function TotalAuroraSubscriber({ data }: QuickStatProps) {
 function ChildrenOnAurora({ data }: QuickStatProps) {
   const title = 'NNA reportados Aurora';
   const note = 'NNA reportados con Aurora';
-  const columns = ['e20__cua', 'e21__cua', 'e22__cua'];
+  const columns = ['e19_1__cu'];
   const totalChilden = useMemo(
     () => aggregateColumns(data, columns) || 0,
     [data],
