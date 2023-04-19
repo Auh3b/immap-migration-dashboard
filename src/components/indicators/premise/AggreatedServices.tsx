@@ -17,6 +17,7 @@ import MethodFunc from '../utils/methodType';
 import { SERVICES_KEY, SERVICE_STAT_COLUMNS } from './utils/services';
 import theme, { UNICEF_COLORS } from 'theme';
 import { ascending } from 'd3';
+import CustomWidgetWrapper from 'components/common/customWidgets/CustomWidgetWrapper';
 
 const otherColumns = {
   country: 'ubicacion_',
@@ -72,11 +73,8 @@ const method: MethodFunc = (input, column, params) => {
 
 const useStyles = makeStyles((theme) => ({
   main: {
-    padding: theme.spacing(2),
   },
-  title: {
-    paddingBottom: theme.spacing(2),
-  },
+
   menuItem: {},
   content: {
     marginTop: theme.spacing(2),
@@ -124,11 +122,8 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
   );
 
   return (
+  <CustomWidgetWrapper title={title} isLoading={isLoading}>
     <Grid item className={classes.main}>
-      <Typography variant='subtitle1' className={classes.title}>
-        {title}
-      </Typography>
-      <Divider />
       <Grid className={classes.content} direction='column' container>
         <ServiceSelector
           data={serviceSelection}
@@ -149,6 +144,7 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
           })}
       </Grid>
     </Grid>
+  </CustomWidgetWrapper>
   );
 }
 
@@ -231,12 +227,8 @@ function ConnectDotChart({ data: _data, groupName }: any) {
         boundaryGap: true,
         axisLabel: {
           hideOverlap: true,
-          width: 150,
+          width: 200,
           overflow: 'break',
-          formatter: (value: string) => {
-            const newLabel = value.split(' - ');
-            return `${newLabel[0]} \n ${newLabel[1]}`;
-          },
         },
       },
       xAxis: {
