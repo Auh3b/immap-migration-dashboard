@@ -22,9 +22,9 @@ export default function PremiseRightView({ dataSources }: ViewSourceType) {
   const { premiseSource } = dataSources;
   return (
     <MainColumnView>
-      <AggreatedServices dataSource={premiseSource} />
+      {/* <AggreatedServices dataSource={premiseSource} /> */}
 
-      {/* <LegalServices dataSource={premiseSource} />
+      <LegalServices dataSource={premiseSource} />
       <FoodService dataSource={premiseSource} />
       <HealthService dataSource={premiseSource} />
       <WaterService dataSource={premiseSource} />
@@ -34,7 +34,7 @@ export default function PremiseRightView({ dataSources }: ViewSourceType) {
       <InformationService dataSource={premiseSource} />
       <PsychologicalService dataSource={premiseSource} />
       <TransportService dataSource={premiseSource} />
-      <OtherService dataSource={premiseSource} /> */}
+      <OtherService dataSource={premiseSource} />
     </MainColumnView>
   );
 }

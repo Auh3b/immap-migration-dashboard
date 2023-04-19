@@ -16,7 +16,7 @@ import { useMemo, useRef, useState } from 'react';
 import MethodFunc from '../utils/methodType';
 import { SERVICES_KEY, SERVICE_STAT_COLUMNS } from './utils/services';
 import { graphic } from 'echarts';
-import { UNICEF_COLORS } from 'theme';
+import theme, { UNICEF_COLORS } from 'theme';
 
 const otherColumns = {
   country: 'ubicacion_',
@@ -134,6 +134,7 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
           data={serviceSelection}
           selectService={setSelectedService}
         />
+        <ChartLegend />
         {data &&
           !isLoading &&
           regions &&
@@ -164,6 +165,7 @@ function ServiceSelector({ data, selectService }: any) {
           <Typography variant='caption'>Select</Typography>
         </InputLabel>
         <Select value={currentService.current} onChange={handleChange}>
+          
           <MenuItem value={''}>
             <Typography variant='overline'>{'All'}</Typography>
           </MenuItem>
@@ -216,7 +218,10 @@ function ConnectDotChart({ data: _data, groupName }: any) {
       },
       yAxis: {
         type: 'category',
+        boundaryGap: true,
+        nameGap: 100,
         axisLabel: {
+          hideOverlap: true,
           width: 150,
           overflow: 'break',
           formatter: (value: string) => {
@@ -242,6 +247,9 @@ function ConnectDotChart({ data: _data, groupName }: any) {
             y: DATA_DIMENSIONS[5],
             x: DATA_DIMENSIONS[6],
           },
+          itemStyle:{
+            color: STAT_CATEGORY_COLORS.get(DATA_DIMENSIONS[6])
+          }
         },
         {
           type: 'scatter',
@@ -249,6 +257,9 @@ function ConnectDotChart({ data: _data, groupName }: any) {
             y: DATA_DIMENSIONS[5],
             x: DATA_DIMENSIONS[7],
           },
+          itemStyle:{
+            color: STAT_CATEGORY_COLORS.get(DATA_DIMENSIONS[7])
+          }
         },
         {
           type: 'scatter',
@@ -256,6 +267,9 @@ function ConnectDotChart({ data: _data, groupName }: any) {
             y: DATA_DIMENSIONS[5],
             x: DATA_DIMENSIONS[8],
           },
+          itemStyle:{
+            color: STAT_CATEGORY_COLORS.get(DATA_DIMENSIONS[8])
+          }
         },
       ],
       tooltip: {
@@ -277,19 +291,19 @@ function ConnectDotChart({ data: _data, groupName }: any) {
             style='min-width: 35px; display: flex; flex-direction: column;'
             >
             <span 
-              style='display: flex; justify-content: space-between; align-items: center;'
+              style='display: flex; justify-content: space-between; gap: 10px; align-items: center;'
               >
               <span>Servicio</span>
               <span>${data[0]}</span>
             </span>
             <span 
-              style='display: flex; justify-content: space-between; align-items: center;'
+              style='display: flex; justify-content: space-between; gap: 10px; align-items: center;'
               >
               <span>Organización</span>
               <span>${data[3]}</span>
             </span>
             <span 
-              style='display: flex; justify-content: space-between; align-items: center;'
+              style='display: flex; justify-content: space-between; gap: 10px; align-items: center;'
               >
               <span>Personas</span>
               <span>${data[4]}</span>
@@ -303,8 +317,38 @@ function ConnectDotChart({ data: _data, groupName }: any) {
   return (
     <ReactEchart
       option={option}
-      style={{ height: '500px' }}
+      style={{ height: '1000px' }}
       opts={{ renderer: 'svg' }}
     />
   );
+}
+
+const useLegendStyle = makeStyles((theme)=>({
+  root:{
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2)
+  },
+  legendItem:{
+    gap: theme.spacing(2),
+  },
+  icon:{
+    width: '10px', 
+    height: '10px', 
+    borderRadius: '100%',
+  }
+}))
+
+function ChartLegend(){
+  const classes = useLegendStyle()
+  const legend = Array.from(STAT_CATEGORY_COLORS)
+  return (
+    <Grid item direction='column' container className={classes.root}>
+      {legend.map(([title, color]) =>(
+        <Grid alignItems='center' item container className={classes.legendItem}>
+          <span className={classes.icon} style={{backgroundColor: color}}></span>
+          <Typography variant='overline'>{title}</Typography>
+        </Grid>
+      ))}
+    </Grid>
+  )
 }
