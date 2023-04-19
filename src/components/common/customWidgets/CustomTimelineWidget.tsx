@@ -1,4 +1,4 @@
-import { WrapperWidgetUI } from '@carto/react-ui';
+
 import { Typography } from '@material-ui/core';
 import {
   Timeline,

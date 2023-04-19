@@ -6,7 +6,6 @@ import {
   addLayer,
   removeLayer,
   selectSourceById,
-  updateLayer,
 } from '@carto/react-redux';
 import { useCartoLayerProps } from '@carto/react-api';
 import { RootState } from 'store/store';

@@ -1,5 +1,5 @@
 import { addFilter, removeFilter } from '@carto/react-redux';
-import { CategoryWidgetUI, WrapperWidgetUI } from '@carto/react-ui';
+import { CategoryWidgetUI } from '@carto/react-ui';
 import useWidgetFetch from './hooks/useWidgetFetch';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';

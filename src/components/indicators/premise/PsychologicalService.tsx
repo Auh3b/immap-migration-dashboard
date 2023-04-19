@@ -4,9 +4,7 @@ import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType
 import CustomStackedBarWidget from 'components/common/customWidgets/CustomStackedBarWidget';
 import { defaultCustomWidgetProps } from 'components/common/customWidgets/customWidgetsType';
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
-import groupedColumns from '../utils/groupedColumns';
 import useWidgetEffect from '../utils/useWidgetEffect';
-import stackedBarCategories from '../utils/stackedBarCategories';
 import singleStackBarValues from '../utils/singleStackBarValues';
 
 const title = 'servicio de apoyo o ayuda psicosocial';

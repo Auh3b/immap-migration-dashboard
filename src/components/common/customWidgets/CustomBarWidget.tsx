@@ -1,6 +1,6 @@
 import { FilterTypes } from '@carto/react-core/src/filters/FilterTypes';
 import { addFilter, removeFilter } from '@carto/react-redux';
-import { BarWidgetUI, WrapperWidgetUI } from '@carto/react-ui';
+import { BarWidgetUI } from '@carto/react-ui';
 import { useCallback, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import WidgetWithAlert from '../../indicators/WidgetWithAlert';

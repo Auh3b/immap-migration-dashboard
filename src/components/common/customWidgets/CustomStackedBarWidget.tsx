@@ -1,4 +1,4 @@
-import { BarWidgetUI, WrapperWidgetUI } from '@carto/react-ui';
+import { BarWidgetUI } from '@carto/react-ui';
 import { Grid, makeStyles, Typography } from '@material-ui/core';
 import { useMemo, useState } from 'react';
 import WidgetWithAlert from '../../indicators/WidgetWithAlert';
