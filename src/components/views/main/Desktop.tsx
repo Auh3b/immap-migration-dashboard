@@ -76,14 +76,15 @@ const useSideStyles = makeStyles((theme) => ({
       isOpen ? DRAWER_WIDTH_OPEN : DRAWER_WIDTH_CLOSED,
     maxHeight: `calc(100vh - 54px)`,
     overflow: 'auto',
-    position: 'relative',
+    // position: 'relative',
     transition: 'width 250ms ease-in-out',
     zIndex: theme.zIndex.drawer + 1,
   },
   button: {
-    position: 'relative',
+    position: 'absolute',
     alignSelf: ({ direction }: any) =>
       direction === 'left' ? 'flex-end' : 'flex-start',
+    transform: 'translate(-25px, 5px)',
     borderRadius: '100%',
     backgroundColor: theme.palette.common.white,
     boxShadow: theme.shadows[10],

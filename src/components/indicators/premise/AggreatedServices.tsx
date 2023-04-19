@@ -15,8 +15,8 @@ import useWidgetFetch from 'components/common/customWidgets/hooks/useWidgetFetch
 import { useMemo, useRef, useState } from 'react';
 import MethodFunc from '../utils/methodType';
 import { SERVICES_KEY, SERVICE_STAT_COLUMNS } from './utils/services';
-import { graphic } from 'echarts';
-import { UNICEF_COLORS } from 'theme';
+import theme, { UNICEF_COLORS } from 'theme';
+import { ascending } from 'd3';
 
 const otherColumns = {
   country: 'ubicacion_',
@@ -152,14 +152,22 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
   );
 }
 
+const useSelectSyles = makeStyles((theme)=>({
+  root:{
+    width: '50%',
+    alignSelf:'flex-start',
+  }
+}))
+
 function ServiceSelector({ data, selectService }: any) {
+  const classes = useSelectSyles()
   const currentService = useRef<string>('');
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     currentService.current = event.target.value as string;
     selectService(event.target.value as string);
   };
   return (
-    <Grid item>
+    <Grid item className={classes.root}>
       <FormControl>
         <InputLabel>
           <Typography variant='caption'>Select</Typography>
@@ -204,19 +212,23 @@ function ConnectDotChart({ data: _data, groupName }: any) {
       title: {
         show: true,
         text: groupName,
-        // top: 'center',
-        // left: 'center',
       },
       grid: {
-        left: '3%',
+        left: '5%',
         right: '4%',
         bottom: '3%',
         containLabel: true,
       },
       yAxis: {
         type: 'category',
+        name: 'Organización/Servicio',
+        nameLocation: 'end',
+        nameTextStyle: {
+          fontWeight: 'bold',
+          align: 'center',
+          verticalAlign: 'middle',
+        },
         boundaryGap: true,
-        nameGap: 100,
         axisLabel: {
           hideOverlap: true,
           width: 150,
@@ -229,12 +241,39 @@ function ConnectDotChart({ data: _data, groupName }: any) {
       },
       xAxis: {
         type: 'value',
+        name: 'Personas',
+        nameGap: 30,
+        nameLocation: 'middle',
+        nameTextStyle: {
+          align: 'center',
+          verticalAlign: 'middle',
+          fontWeight: 'bold',
+        },
       },
       dataset: {
         dimensions: DATA_DIMENSIONS,
         source: data,
       },
       series: [
+        {
+          type:'custom',
+          renderItem:(params: any, api: any)=>{
+            const categoryIndex = api.value(5)
+            const p1 = api.coord([api.value(6), categoryIndex])
+            const p2 = api.coord([api.value(7), categoryIndex])
+            const p3 = api.coord([api.value(8), categoryIndex]) 
+            const points = [p1,p2,p3].sort((a,b) => ascending(a[0], b[0]))
+            return ({
+              type: 'polyline',
+              shape: {
+                points,
+              },
+              style: api.style({
+                stroke: UNICEF_COLORS[6]
+              })
+            })
+          }
+        },
         {
           type: 'scatter',
           encode: {
@@ -265,22 +304,10 @@ function ConnectDotChart({ data: _data, groupName }: any) {
             color: STAT_CATEGORY_COLORS.get(DATA_DIMENSIONS[8]),
           },
         },
-        {
-          type:'custom',
-          renderItem:(params: any, api: any)=>{
-            const categoryIndex = api.value(5)
-            const x1 = api.value()
-            const startPoint = api.coord([])
-
-            return ({
-
-            })
-          }
-        }
+        
       ],
       tooltip: {
         show: true,
-        position: 'top',
         padding: [theme.spacing(0.5), theme.spacing(1)],
         borderWidth: 0,
         textStyle: {
@@ -294,7 +321,7 @@ function ConnectDotChart({ data: _data, groupName }: any) {
         //@ts-ignore
         formatter({ data }) {
           return `<span 
-            style='min-width: 35px; display: flex; flex-direction: column;'
+            style='min-width: 35px;  display: flex; flex-direction: column;'
             >
             <span 
               style='display: flex; justify-content: space-between; gap: 10px; align-items: center;'
