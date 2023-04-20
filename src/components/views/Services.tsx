@@ -2,6 +2,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import MainView from './main/MainView';
 import mainSource from 'data/sources/mainSource';
 import { lazy, useEffect } from 'react';
+import aggregateServicesSource from 'data/sources/aggregateServicesSource';
+import { AGGREGATE_SERVICE_LAYER_ID } from 'components/layers/AggregateServiceLayer';
 import {
   addLayer,
   addSource,
@@ -43,14 +45,31 @@ export default function Services() {
       dispatch(removeSource(mainSource.id));
     };
   }, [dispatch]);
+  useEffect(() => {
+    dispatch(addSource(aggregateServicesSource));
+
+    dispatch(
+      addLayer({
+        id: AGGREGATE_SERVICE_LAYER_ID,
+        source: aggregateServicesSource.id,
+      }),
+    );
+
+    return () => {
+      dispatch(removeLayer(AGGREGATE_SERVICE_LAYER_ID));
+      dispatch(removeSource(aggregateServicesSource.id));
+    };
+  }, [dispatch]);
+
   // [hygen] Add useEffect
   return (
     <MainView>
       {{
         left: {
           element: (
-            <ServiceLeftView classes={classes} dataSources={{ mainSource }} />
+            <ServiceLeftView classes={classes} dataSources={{ mainSource, aggregateServicesSource }}  />
           ),
+          expandable: true
         },
         right: {
           element: (

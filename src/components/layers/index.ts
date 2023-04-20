@@ -4,6 +4,7 @@ import MigrationFlowLayer from './MigrationFlowLayer';
 import SurveyConcentrationsLayer from './SurveyConcentrationsLayer';
 import PremiseServicesLayer from './PremiseServicesLayer';
 import SurveyTimelineLayer from './SurveyTimelineLayer';
+import AggregateServiceLayer from './AggregateServiceLayer';
 // [hygen] Import layers
 
 export const getLayers = () => {
@@ -14,6 +15,7 @@ export const getLayers = () => {
     MigrationFlowLayer(),
     PremiseServicesLayer(),
     SurveyTimelineLayer(),
+    AggregateServiceLayer(),
     // [hygen] Add layer
   ];
 };
