@@ -92,9 +92,10 @@ export default function Mobile({ children }: { children: MainViewChildren }) {
         }}
       >
         <div className={classes.bottomSheetContent}>
-          {children?.left}
-          {children?.right}
-          {children?.bottom}
+          {children?.left?.element}
+          {children?.right?.element}
+          {children?.middle?.element}
+          {children?.bottom?.element}
         </div>
       </SwipeableDrawer>
       <Fab

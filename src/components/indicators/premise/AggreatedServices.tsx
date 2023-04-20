@@ -72,8 +72,7 @@ const method: MethodFunc = (input, column, params) => {
 };
 
 const useStyles = makeStyles((theme) => ({
-  main: {
-  },
+  main: {},
 
   menuItem: {},
   content: {
@@ -122,41 +121,41 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
   );
 
   return (
-  <CustomWidgetWrapper title={title} isLoading={isLoading}>
-    <Grid item className={classes.main}>
-      <Grid className={classes.content} direction='column' container>
-        <ServiceSelector
-          data={serviceSelection}
-          selectService={setSelectedService}
-        />
-        <ChartLegend />
-        {data &&
-          !isLoading &&
-          regions &&
-          regions.map((groupName) => {
-            return (
-              <ConnectDotChart
-                key={groupName}
-                data={data}
-                groupName={groupName}
-              />
-            );
-          })}
+    <CustomWidgetWrapper title={title} isLoading={isLoading}>
+      <Grid item className={classes.main}>
+        <Grid className={classes.content} direction='column' container>
+          <ServiceSelector
+            data={serviceSelection}
+            selectService={setSelectedService}
+          />
+          <ChartLegend />
+          {data &&
+            !isLoading &&
+            regions &&
+            regions.map((groupName) => {
+              return (
+                <ConnectDotChart
+                  key={groupName}
+                  data={data}
+                  groupName={groupName}
+                />
+              );
+            })}
+        </Grid>
       </Grid>
-    </Grid>
-  </CustomWidgetWrapper>
+    </CustomWidgetWrapper>
   );
 }
 
-const useSelectSyles = makeStyles((theme)=>({
-  root:{
+const useSelectSyles = makeStyles((theme) => ({
+  root: {
     width: '50%',
-    alignSelf:'flex-start',
-  }
-}))
+    alignSelf: 'flex-start',
+  },
+}));
 
 function ServiceSelector({ data, selectService }: any) {
-  const classes = useSelectSyles()
+  const classes = useSelectSyles();
   const currentService = useRef<string>('');
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     currentService.current = event.target.value as string;
@@ -251,23 +250,23 @@ function ConnectDotChart({ data: _data, groupName }: any) {
       },
       series: [
         {
-          type:'custom',
-          renderItem:(params: any, api: any)=>{
-            const categoryIndex = api.value(5)
-            const p1 = api.coord([api.value(6), categoryIndex])
-            const p2 = api.coord([api.value(7), categoryIndex])
-            const p3 = api.coord([api.value(8), categoryIndex]) 
-            const points = [p1,p2,p3].sort((a,b) => ascending(a[0], b[0]))
-            return ({
+          type: 'custom',
+          renderItem: (params: any, api: any) => {
+            const categoryIndex = api.value(5);
+            const p1 = api.coord([api.value(6), categoryIndex]);
+            const p2 = api.coord([api.value(7), categoryIndex]);
+            const p3 = api.coord([api.value(8), categoryIndex]);
+            const points = [p1, p2, p3].sort((a, b) => ascending(a[0], b[0]));
+            return {
               type: 'polyline',
               shape: {
                 points,
               },
               style: api.style({
-                stroke: UNICEF_COLORS[6]
-              })
-            })
-          }
+                stroke: UNICEF_COLORS[6],
+              }),
+            };
+          },
         },
         {
           type: 'scatter',
@@ -299,7 +298,6 @@ function ConnectDotChart({ data: _data, groupName }: any) {
             color: STAT_CATEGORY_COLORS.get(DATA_DIMENSIONS[8]),
           },
         },
-        
       ],
       tooltip: {
         show: true,
@@ -315,7 +313,7 @@ function ConnectDotChart({ data: _data, groupName }: any) {
         backgroundColor: theme.palette.other.tooltip,
         //@ts-ignore
         formatter({ data, encode }) {
-          const {x: dimensionIndex} = encode
+          const { x: dimensionIndex } = encode;
           return `<span 
             style='min-width: 35px;  display: flex; flex-direction: column;'
             >

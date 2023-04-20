@@ -30,12 +30,17 @@ const layerConfig = {
 };
 
 export default function AggregateServiceLayer() {
-  const dispatch = useDispatch()
-  const { aggregateServiceLayer } = useSelector((state: RootState) => state.carto.layers);
+  const dispatch = useDispatch();
+  const { aggregateServiceLayer } = useSelector(
+    (state: RootState) => state.carto.layers,
+  );
   const source = useSelector((state) =>
     selectSourceById(state, aggregateServiceLayer?.source),
   );
-  const cartoLayerProps = useCartoLayerProps({ source, layerConfig: aggregateServiceLayer  });
+  const cartoLayerProps = useCartoLayerProps({
+    source,
+    layerConfig: aggregateServiceLayer,
+  });
 
   if (aggregateServiceLayer && source) {
     return new CartoLayer({
@@ -44,15 +49,15 @@ export default function AggregateServiceLayer() {
       getFillColor: AGGREGATE_SERVICE_COLORS.Punto,
       pointRadiusMinPixels: 3,
       pickable: true,
-      onDataLoad:(data:any)=>{
-         dispatch(
+      onDataLoad: (data: any) => {
+        dispatch(
           updateLayer({
             id: AGGREGATE_SERVICE_LAYER_ID,
             layerAttributes: { ...layerConfig },
           }),
         );
         cartoLayerProps.onDataLoad && cartoLayerProps.onDataLoad(data);
-      }
+      },
     });
   }
 }

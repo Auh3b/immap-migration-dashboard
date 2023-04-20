@@ -9,6 +9,7 @@ import { Grid, useMediaQuery } from '@material-ui/core';
 import { CustomTheme } from 'theme';
 import { LegendWidget } from '@carto/react-widgets';
 import QuickStats from 'components/indicators/quickStats/QuickStats';
+import InformationSection from 'components/common/InformationSection';
 
 const Map = lazy(
   () => import(/* webpackChunkName: 'map' */ 'components/common/map/Map'),
@@ -89,8 +90,9 @@ export default function MapContainer({ children }: { children?: ReactNode }) {
       <Map layers={layers} />
       {hidden ? null : (
         <ZoomControl className={classes.zoomControl} showCurrentZoom />
-      )}
+        )}
       {!isGmaps && <CartoLogoMap className={classes.cartoLogoMap} />}
+      <InformationSection />
       <QuickStats />
       {children && children}
       <LegendWidget initialCollapsed={true} className={classes.legend} />

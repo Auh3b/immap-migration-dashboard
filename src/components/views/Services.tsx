@@ -67,9 +67,12 @@ export default function Services() {
       {{
         left: {
           element: (
-            <ServiceLeftView classes={classes} dataSources={{ mainSource, aggregateServicesSource }}  />
+            <ServiceLeftView
+              classes={classes}
+              dataSources={{ mainSource, aggregateServicesSource }}
+            />
           ),
-          expandable: true
+          expandable: true,
         },
         right: {
           element: (

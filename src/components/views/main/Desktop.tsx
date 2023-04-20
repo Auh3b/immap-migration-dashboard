@@ -84,7 +84,8 @@ const useSideStyles = makeStyles((theme) => ({
     position: 'absolute',
     alignSelf: ({ direction }: any) =>
       direction === 'left' ? 'flex-end' : 'flex-start',
-    transform:({direction}:any)=> direction === 'left' ? 'translate(20px, 5px)' : 'translate(-25px, 5px)',
+    transform: ({ direction }: any) =>
+      direction === 'left' ? 'translate(20px, 5px)' : 'translate(-25px, 5px)',
     borderRadius: '100%',
     backgroundColor: theme.palette.common.white,
     boxShadow: theme.shadows[10],
