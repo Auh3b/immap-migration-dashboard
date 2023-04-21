@@ -19,7 +19,7 @@ export default function ChildrenPercentage({
   isLoading,
 }: {
   data: any[];
-  isLoading: Boolean; 
+  isLoading: Boolean;
 }) {
   const data = useMemo(() => {
     if (_data) {
@@ -37,7 +37,7 @@ export default function ChildrenPercentage({
       title={title}
       isLoading={isLoading}
       data={data}
-      formatter={(value:number)=> format('.2%')(value)}
+      formatter={(value: number) => format('.2%')(value)}
       icon={<Children style={iconStyles} />}
     />
   );

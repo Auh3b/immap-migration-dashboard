@@ -1,19 +1,17 @@
-import { makeStyles } from "@material-ui/core"
+import { makeStyles } from '@material-ui/core';
 
-const usePieStyles = makeStyles((theme)=>({
-  pieContainer:{
-    [theme.breakpoints.down('lg')]:{
-      height: '150px'
-    }
-  }
-}))
-
+const usePieStyles = makeStyles((theme) => ({
+  pieContainer: {
+    [theme.breakpoints.down('lg')]: {
+      height: '150px',
+    },
+  },
+}));
 
 export default function useElementStyle() {
-  const pieStyles = usePieStyles()
+  const pieStyles = usePieStyles();
 
-  
   return {
-    ...pieStyles
-  }
+    ...pieStyles,
+  };
 }

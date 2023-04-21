@@ -22,7 +22,7 @@ export default function TotalChronicPatients({
         valuesColumns: columns,
       });
       const yesValues =
-      groupValue[
+        groupValue[
           //@ts-ignore
           groupValue.findIndex((d) => d?.name.toLocaleLowerCase() === 'si')
         ];

@@ -57,6 +57,7 @@
     "lint-staged": "^11.1.2",
     "mapbox-gl": "npm:empty-npm-package@1.0.0",
     "maplibre-gl": "^2.1.9",
+    "popper.js": "^1.16.1",
     "prettier": "^2.4.1",
     "react": "^17.0.2",
     "react-app-polyfill": "^2.0.0",

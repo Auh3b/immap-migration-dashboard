@@ -16,7 +16,6 @@ export default function OrganisationCount({
 }) {
   const data = useMemo(() => {
     if (_data) {
-      console.log(_data);
       return aggregateColumns(_data, columns, AggregationTypes.COUNT);
     }
     return 0;
