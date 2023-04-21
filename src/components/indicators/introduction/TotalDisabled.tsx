@@ -1,5 +1,5 @@
 import AggregateIndicatorWidget from 'components/common/customWidgets/AggregateIndicatorWidget';
-import { ReactComponent as Disabled } from 'assets/img/People-with-physical-impairments.svg';
+import { ReactComponent as Disabled } from 'assets/img/disabled-2.svg';
 import { useMemo } from 'react';
 import { AggregationTypes, groupValuesByColumn } from '@carto/react-core';
 import iconStyles from './utils/iconStyles';

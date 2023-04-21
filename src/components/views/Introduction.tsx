@@ -1,5 +1,5 @@
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { Button, Fade, Grid, Typography } from '@material-ui/core';
+import { Button, Fade, Grid, IconButton, Typography } from '@material-ui/core';
 import { ReactComponent as UnicefLogo } from 'assets/img/unicef.svg';
 import { ReactComponent as ImmapLogo } from 'assets/img/immapLogoAlt.svg';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
@@ -25,6 +25,7 @@ import MigrantNationalities from 'components/indicators/introduction/MigrantNati
 import TopOrganisations from 'components/indicators/introduction/TopOrganisations';
 import TopSurveyLocation from 'components/indicators/introduction/TopSurveyLocation';
 import PrincipalsImplementor from 'components/indicators/introduction/PrincipalsImplementor';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 
 const useStyles = makeStyles((theme) => ({
   introduction: {
@@ -53,7 +54,6 @@ export default function Introduction() {
     <Grid container direction='column' wrap='nowrap' className={classes.introduction}>
       <IntroHeader />
       <IntroContent />
-      <ExitButton />
     </Grid>
   );
 }
@@ -62,11 +62,9 @@ const useHeaderStyles = makeStyles((theme) => ({
   logo: {
     
     [theme.breakpoints.down('md')]:{
-      width: '100%',
       height: theme.spacing(2),
     },
     [theme.breakpoints.up('md')]:{
-      width: '100%',
       height: theme.spacing(4),
     },
   },
@@ -104,13 +102,14 @@ function IntroHeader() {
           Costa Rica
         </Typography>
       </Grid>
-      <Grid xs={3} item container alignItems='center'>
-        <Grid xs={6} item>
+      <Grid xs={2} wrap='nowrap' item container alignItems='center' justifyContent='flex-end'>
+        <Grid item>
           <UnicefLogo className={classes.logo} />
         </Grid>
-        <Grid xs={6} item>
+        <Grid item>
           <ImmapLogo className={classes.logo} />
         </Grid>
+        <ExitButton />
       </Grid>
     </Grid>
   );
@@ -177,6 +176,8 @@ function IntroContent() {
 
 const useLeftStyles = makeStyles((theme) => ({
   root: {
+    overflowY: 'scroll',
+    height: '100%',
     padding: theme.spacing(2),
     BorderRight: `1px solid ${UNICEF_COLORS[0]}`,
   },
@@ -218,6 +219,8 @@ function LeftPanel() {
 
 const useMiddleStyles = makeStyles((theme) => ({
   root: {
+    overflowY: 'scroll',
+    height: '100%',
     padding: theme.spacing(2),
     flexGrow: 1,
   },
@@ -237,7 +240,7 @@ function MiddlePanel({ data, isLoading }: DataContentPanel) {
     return [null, null];
   }, [data]);
   return (
-    <Grid container direction='column' item className={classes.root}>
+    <Grid wrap='nowrap' container direction='column' item className={classes.root}>
       <Grid wrap='nowrap' item container>
         <TotalAurora data={Aurora} isLoading={isLoading} />
         <TotalMigrants data={Aurora} isLoading={isLoading} />
@@ -262,6 +265,9 @@ function MiddlePanel({ data, isLoading }: DataContentPanel) {
 
 const useRightStyles = makeStyles((theme) => ({
   root: {
+    overflowY: 'auto',
+    height: '100%',
+    maxHeight: '75vh',
     padding: theme.spacing(2),
     BorderLeft: `1px solid ${UNICEF_COLORS[0]}`,
   },
@@ -276,7 +282,7 @@ function RightPanel({ data, isLoading }: DataContentPanel) {
   }, [data]);
   const classes = useRightStyles();
   return (
-    <Grid container direction='column' item xs={3} className={classes.root}>
+    <Grid container wrap='nowrap' direction='column' item xs={3} className={classes.root}>
       <OrganisationCount data={Premise} isLoading={isLoading} />
       <TopSurveyLocation data={Premise} isLoading={isLoading} />
       <TopOrganisations data={Premise} isLoading={isLoading} />
@@ -287,10 +293,11 @@ function RightPanel({ data, isLoading }: DataContentPanel) {
 
 const useButtonStyles = makeStyles((theme) => ({
   root: {
-    padding: theme.spacing(2),
+    flexShrink: 1,
   },
   button: {
-    alignSelf: 'flex-end',
+    backgroundColor: UNICEF_COLORS[5],
+    color: theme.palette.background.paper,
   },
 }));
 
@@ -298,14 +305,13 @@ function ExitButton() {
   const classes = useButtonStyles();
   return (
     <Grid direction='column' container item className={classes.root}>
-      <Button
+      <IconButton
         component={NavLink}
         to={ROUTE_PATHS.DASHBOARD}
         className={classes.button}
-        startIcon={<ChevronRightIcon color={'primary'} />}
       >
-        <Typography>Explorar Más</Typography>
-      </Button>
+        <ArrowForwardIcon />
+      </IconButton>
     </Grid>
   );
 }

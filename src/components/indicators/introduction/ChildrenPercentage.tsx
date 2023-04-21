@@ -6,7 +6,7 @@ import { AggregationTypes } from '@carto/react-core';
 import iconStyles from './utils/iconStyles';
 import { format } from 'd3';
 
-const title = 'Tamaño promedio de los grupos de viaje';
+const title = 'Porcentaje NNA en grupos de viaje';
 
 const columns: [string[], AggregationTypes] = [
   ['e20__cua', 'e21__cua', 'e22__cua'],

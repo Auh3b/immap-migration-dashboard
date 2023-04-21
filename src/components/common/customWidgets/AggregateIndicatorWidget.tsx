@@ -2,26 +2,20 @@ import { Grid, Typography, makeStyles } from '@material-ui/core';
 import { FormulaWidgetUI } from '@carto/react-ui';
 import { numberFormatter } from 'utils/formatter';
 import { ReactNode } from 'react';
+import TitleWrapper, { TitleWrapperProps } from 'components/indicators/introduction/utils/TitleWrapper';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    padding: theme.spacing(2),
-  },
-}));
-
-export default function AggregateIndicatorWidget(props: {
-  title: string;
+interface AggregateIndicatorProps extends TitleWrapperProps{
   isLoading?: Boolean;
   data: number;
   icon: ReactNode;
   gridSize?: number | Boolean | string;
   formatter?: any
-}) {
-  const { title, data, isLoading = false, icon, formatter = numberFormatter } = props;
-  const classes = useStyles();
+}
+
+export default function AggregateIndicatorWidget(props: AggregateIndicatorProps) {
+  const { title, subtitle, data, isLoading = false, icon, formatter = numberFormatter } = props;
   return (
-    <Grid item container direction='column' className={classes.root}>
-      <Typography>{title}</Typography>
+    <TitleWrapper title={title} subtitle={subtitle}>
       <Grid spacing={1} wrap='nowrap' container alignItems='center'>
         <Grid item xs={3}>
           {icon}
@@ -32,6 +26,6 @@ export default function AggregateIndicatorWidget(props: {
           </Grid>
         )}
       </Grid>
-    </Grid>
+    </TitleWrapper>
   );
 }

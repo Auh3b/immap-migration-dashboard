@@ -1,13 +1,13 @@
 import { CategoryWidgetUI } from "@carto/react-ui";
-import { Grid, Typography } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import { useMemo } from "react";
-import groupCategories from "../utils/groupCategories";
-import { descending } from "d3";
 import aggregateColumns from "../utils/AggregateColumns";
 import { AggregationTypes } from "@carto/react-core";
+import TitleWrapper from "./utils/TitleWrapper";
 
 const title = 'Socios implementadores/Principales'
 const columns = [['org_pert1'],['org_pert2']]
+const subtitle = ''
 export default function PrincipalsImplementor(
   {
   data: _data,
@@ -34,13 +34,10 @@ export default function PrincipalsImplementor(
     }
   }, [_data])
   return (
-    <Grid item container direction='column'>
-      <Grid item>
-        <Typography>{title}</Typography>
-      </Grid>
+    <TitleWrapper title={title} subtitle={subtitle}>
       <Grid item>
         <CategoryWidgetUI data={data}/>
       </Grid>
-    </Grid>
+    </TitleWrapper>
   )
 }

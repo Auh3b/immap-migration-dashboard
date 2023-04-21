@@ -3,9 +3,11 @@ import { Grid, Typography } from "@material-ui/core";
 import { useMemo } from "react";
 import groupCategories from "../utils/groupCategories";
 import { descending } from "d3";
+import TitleWrapper from "./utils/TitleWrapper";
 
 const title = 'Top de 5 organizaciones'
 const column = 'org_pert1'
+const subtitle = ''
 export default function TopOrganisations(
   {
   data: _data,
@@ -24,13 +26,10 @@ export default function TopOrganisations(
     }
   }, [_data])
   return (
-    <Grid item container direction='column'>
-      <Grid item>
-        <Typography>{title}</Typography>
-      </Grid>
+   <TitleWrapper title={title} subtitle={subtitle}>
       <Grid item>
         <CategoryWidgetUI data={data}/>
       </Grid>
-    </Grid>
+    </TitleWrapper>
   )
 }

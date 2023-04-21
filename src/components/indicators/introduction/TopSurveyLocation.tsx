@@ -3,9 +3,11 @@ import { Grid, Typography } from "@material-ui/core";
 import { useMemo } from "react";
 import groupCategories from "../utils/groupCategories";
 import { descending } from "d3";
+import TitleWrapper from "./utils/TitleWrapper";
 
 const title = 'Total de encuestas por área de recolección'
 const column = 'erm'
+const subtitle = ''
 export default function TopSurveyLocation(
   {
   data: _data,
@@ -24,13 +26,10 @@ export default function TopSurveyLocation(
     }
   }, [_data])
   return (
-    <Grid item container direction='column'>
-      <Grid item>
-        <Typography>{title}</Typography>
-      </Grid>
+    <TitleWrapper title={title} subtitle={subtitle}>
       <Grid item>
         <CategoryWidgetUI data={data}/>
       </Grid>
-    </Grid>
+    </TitleWrapper>
   )
 }

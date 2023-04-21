@@ -1,10 +1,12 @@
 import { PieWidgetUI } from '@carto/react-ui';
 import { useMemo } from 'react'
 import groupCategories from '../utils/groupCategories';
-import { Grid, Typography } from '@material-ui/core';
+import { Grid, useMediaQuery, useTheme } from '@material-ui/core';
+import TitleWrapper from './utils/TitleWrapper';
 
 const title = 'Distribución por zona geográfica donde la  persona conectó'
 const column = 'e004_regio'
+const subtitle = ''
 
 export default function AuroraLocation({
   data: _data,
@@ -13,20 +15,22 @@ export default function AuroraLocation({
   data: any[];
   isLoading: Boolean;
 }) {
+  const theme = useTheme()
+  const lg = useMediaQuery(theme.breakpoints.down('lg'))
   const data = useMemo(()=>{
     if(_data){
       return groupCategories(_data, column)
     }
     return []
   }, [_data])
+
+
+
   return (
-    <Grid item container direction='column'>
+    <TitleWrapper title={title} subtitle={subtitle}>
       <Grid item>
-        <Typography>{title}</Typography>
+        <PieWidgetUI data={data} height={ lg ? '150px' : '225px'}/>
       </Grid>
-      <Grid item>
-        <PieWidgetUI data={data}/>
-      </Grid>
-    </Grid>
+    </TitleWrapper>
   )
 }
