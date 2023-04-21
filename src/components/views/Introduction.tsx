@@ -199,6 +199,16 @@ const useLeftStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     BorderRight: `1px solid ${UNICEF_COLORS[0]}`,
   },
+  subtitle:{
+    ...theme.typography.caption,
+    marginBottom: theme.spacing(2)
+  },
+  description:{
+    [theme.breakpoints.down('lg')]:{
+      ...theme.typography.body1,
+      fontSize: '0.75rem'
+    }
+  }
 }));
 
 function LeftPanel() {
@@ -214,8 +224,8 @@ function LeftPanel() {
     >
       <Grid item>
         <Typography variant='subtitle1'>Nota metodológica</Typography>
-        <Typography variant='caption'>A Aurora Chatbot</Typography>
-        <Typography variant='body1'>
+        <Typography className={classes.subtitle}>A Aurora Chatbot</Typography>
+        <Typography className={classes.description} >
           El propósito de este reporte es apoyar el seguimiento a la recolección
           de la información. En este sentido, toda la información contenida es
           preliminar y esta en proceso de revisión.
