@@ -93,6 +93,8 @@ const useStyles = makeStyles((theme) => ({
 export default function CustomWidgetWrapper({
   title,
   isLoading,
+  expandable,
+  expanded,
   onError,
   children,
 }: {
@@ -100,10 +102,12 @@ export default function CustomWidgetWrapper({
   onError?: any;
   isLoading: Boolean;
   children: ReactNode;
+  expandable?: Boolean;
+  expanded?: Boolean;
 }) {
   const wrapper = createRef();
-  const [isOpen, setIsOpen] = useState(false);
-  const classes = useStyles({ isOpen, expandable: true });
+  const [isOpen, setIsOpen] = useState(expandable ? false : true);
+  const classes = useStyles({ isOpen, expandable });
   const handleExpandClick = () => {
     setIsOpen((prev) => !prev);
   };

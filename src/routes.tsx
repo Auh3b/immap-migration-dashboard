@@ -15,6 +15,7 @@ const Dashboard = lazy(() => import('components/views/Dashboard'));
 const PremiseService = lazy(() => import('components/views/PremiseService'));
 const Nna = lazy(() => import('components/views/Nna'));
 const DinámicaAurora = lazy(() => import('components/views/DinámicaAurora'));
+const Introduction = lazy(() => import('components/views/Introduction'));
 // [hygen] Import views
 
 export const ROUTE_PATHS = {
@@ -28,6 +29,7 @@ export const ROUTE_PATHS = {
   PREMISE_SERVICE: '/servicios',
   CHILDREN: '/caracterizacion_grupo_de_viaje',
   DINÁMICA_AURORA: '/conexiones_en_la_ruta',
+  INTRODUCTION: '/intro',
   // [hygen] Add path routes
 };
 
@@ -53,6 +55,7 @@ const routes = [
       // [hygen] Add routes
     ],
   },
+  { path: ROUTE_PATHS.INTRODUCTION, element: <Introduction /> },
   { path: ROUTE_PATHS.LOGIN, element: <Login /> },
   {
     path: '*',

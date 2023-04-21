@@ -1,6 +1,13 @@
 import { AggregationTypes, aggregationFunctions } from '@carto/react-core';
 import { FormulaWidgetUI } from '@carto/react-ui';
-import { Box, Collapse, Grid, Paper, Typography, makeStyles } from '@material-ui/core';
+import {
+  Box,
+  Collapse,
+  Grid,
+  Paper,
+  Typography,
+  makeStyles,
+} from '@material-ui/core';
 import { ReactNode, useEffect, useMemo, useState } from 'react';
 import { defaultFilterFunction } from '../utils/miscelleniousFunctions';
 import { numberFormatter } from 'utils/formatter';
@@ -8,14 +15,14 @@ import { format } from 'd3';
 import { executeSQL } from '@carto/react-api';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store/store';
+import aggregateColumns from '../utils/AggregateColumns';
 
 const useStyles = makeStyles((theme) => ({
   statsContainer: {
-    maxWidth: theme.breakpoints.values.sm+50,
+    maxWidth: theme.breakpoints.values.sm + 50,
     padding: theme.spacing(1),
     gap: theme.spacing(1),
   },
-
 }));
 
 export default function MigrantStats({ isOpen }: { isOpen: boolean }) {
@@ -171,20 +178,20 @@ function ChildrenOnAuroraPercentage({ data }: QuickStatProps) {
   );
 }
 
-const useQuickStatStyles = makeStyles((theme)=>({
-  root:{
+const useQuickStatStyles = makeStyles((theme) => ({
+  root: {
     width: '200px',
     height: '200px',
   },
-  paper:{
+  paper: {
     width: '100%',
     height: '100%',
-    padding: theme.spacing(1)
+    padding: theme.spacing(1),
   },
   statTitle: {
-    marginBottom: theme.spacing(1)
+    marginBottom: theme.spacing(1),
   },
-}))
+}));
 
 function QuickStatFormulaWidget({
   data,
@@ -202,56 +209,34 @@ function QuickStatFormulaWidget({
   const classes = useQuickStatStyles();
   return (
     <>
-    { /*@ts-ignore */}
-    <Box
-      component={'div'}
-      className={classes.root}
-    >
-      <Paper elevation={0} variant={data ? 'outlined': 'elevation'} className={classes.paper}>
-        <Grid
-          direction='column'
-          item
-          container
-          justifyContent='space-between'
+      {/*@ts-ignore */}
+      <Box component={'div'} className={classes.root}>
+        <Paper
+          elevation={0}
+          variant={data ? 'outlined' : 'elevation'}
           className={classes.paper}
         >
-          <Grid item xs className={classes.statTitle}>
-            {title && <Typography variant='overline'>{title}</Typography>}
+          <Grid
+            direction='column'
+            item
+            container
+            justifyContent='space-between'
+            className={classes.paper}
+          >
+            <Grid item xs className={classes.statTitle}>
+              {title && <Typography variant='overline'>{title}</Typography>}
+            </Grid>
+            <Grid xs item>
+              {data && <FormulaWidgetUI data={data} formatter={formatter} />}
+            </Grid>
+            <Grid item xs>
+              {note && <Typography variant='caption'>{note}</Typography>}
+            </Grid>
           </Grid>
-          <Grid xs item>
-            {data && 
-            <FormulaWidgetUI data={data} formatter={formatter} />
-            }
-          </Grid>
-          <Grid item xs>
-            {note && 
-            (<Typography variant='caption'>
-              {note}
-            </Typography>)}
-          </Grid>
-        </Grid>
-      </Paper>
-    </Box>
-  </>
+        </Paper>
+      </Box>
+    </>
   );
-}
-
-function aggregateColumns(
-  input: any[],
-  columns: string[],
-  aggregateType: AggregationTypes = AggregationTypes.SUM,
-): number {
-  let totalValue: number = 0;
-  const aggFn = aggregationFunctions[aggregateType];
-  columns.forEach((column) => {
-    const filteredData = defaultFilterFunction(input, column);
-    //@ts-expect-error
-    const columnTotal = aggFn(filteredData, [column]);
-    //@ts-expect-error
-    totalValue += columnTotal;
-  });
-
-  return totalValue;
 }
 
 function percentValue({

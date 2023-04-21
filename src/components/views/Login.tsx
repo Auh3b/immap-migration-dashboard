@@ -180,20 +180,6 @@ function Content() {
       </Grid>
 
       <LoginButton />
-
-      {/* <Grid item className={classes.contact}>
-        <Typography variant='caption' color='inherit'>
-          Don't have an account yet?{' '}
-        </Typography>
-        <Link
-          variant='caption'
-          href='https://carto.com'
-          target='_blank'
-          color='inherit'
-        >
-          Contact
-        </Link>
-      </Grid> */}
     </Grid>
   );
 }

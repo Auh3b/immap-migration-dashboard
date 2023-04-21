@@ -38,9 +38,7 @@ const method: MethodFunc = (input, column, params) => {
       //@ts-ignore
       serviceValue[valueColumn] = serviceValue.value ?? 0;
       //@ts-ignore
-      const outputIndex = output.findIndex(
-        (d) => +d?.name === key,
-      );
+      const outputIndex = output.findIndex((d) => +d?.name === key);
       if (outputIndex >= 0) {
         const existing = output[outputIndex];
         const newObject = { ...existing, ...serviceValue };

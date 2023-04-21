@@ -90,7 +90,7 @@ export default function MapContainer({ children }: { children?: ReactNode }) {
       <Map layers={layers} />
       {hidden ? null : (
         <ZoomControl className={classes.zoomControl} showCurrentZoom />
-        )}
+      )}
       {!isGmaps && <CartoLogoMap className={classes.cartoLogoMap} />}
       <InformationSection />
       <QuickStats />
