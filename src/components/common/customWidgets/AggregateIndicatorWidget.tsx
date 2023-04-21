@@ -15,8 +15,9 @@ export default function AggregateIndicatorWidget(props: {
   data: number;
   icon: ReactNode;
   gridSize?: number | Boolean | string;
+  formatter?: any
 }) {
-  const { title, data, isLoading = false, icon } = props;
+  const { title, data, isLoading = false, icon, formatter = numberFormatter } = props;
   const classes = useStyles();
   return (
     <Grid item container direction='column' className={classes.root}>
@@ -27,7 +28,7 @@ export default function AggregateIndicatorWidget(props: {
         </Grid>
         {data && !isLoading && (
           <Grid xs={5} item>
-            <FormulaWidgetUI data={data} formatter={numberFormatter} />
+            <FormulaWidgetUI data={data} formatter={formatter} />
           </Grid>
         )}
       </Grid>

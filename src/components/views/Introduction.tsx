@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { Button, Fade, Grid, Typography } from '@material-ui/core';
 import { ReactComponent as UnicefLogo } from 'assets/img/unicef.svg';
 import { ReactComponent as ImmapLogo } from 'assets/img/immapLogoAlt.svg';
@@ -22,14 +22,25 @@ import TotalChildren from 'components/indicators/introduction/TotalChildren';
 import OrganisationCount from 'components/indicators/introduction/OrganisationCount';
 import AuroraLocation from 'components/indicators/introduction/AuroraLocation';
 import MigrantNationalities from 'components/indicators/introduction/MigrantNationalities';
+import TopOrganisations from 'components/indicators/introduction/TopOrganisations';
+import TopSurveyLocation from 'components/indicators/introduction/TopSurveyLocation';
+import PrincipalsImplementor from 'components/indicators/introduction/PrincipalsImplementor';
 
 const useStyles = makeStyles((theme) => ({
   introduction: {
     height: '100%',
-    paddingTop: theme.spacing(2),
-    paddingLeft: theme.spacing(2),
-    paddingRight: theme.spacing(2),
-    paddingBottom: theme.spacing(2),
+    [theme.breakpoints.down('lg')]:{
+      paddingTop: theme.spacing(1),
+      paddingLeft: theme.spacing(1),
+      paddingRight: theme.spacing(1),
+      paddingBottom: theme.spacing(1),
+    },
+    [theme.breakpoints.up('lg')]:{
+      paddingTop: theme.spacing(2),
+      paddingLeft: theme.spacing(2),
+      paddingRight: theme.spacing(2),
+      paddingBottom: theme.spacing(2),
+    }
   },
 }));
 
@@ -39,7 +50,7 @@ export default function Introduction() {
   // [hygen] Add useEffect
 
   return (
-    <Grid container direction='column' className={classes.introduction}>
+    <Grid container direction='column' wrap='nowrap' className={classes.introduction}>
       <IntroHeader />
       <IntroContent />
       <ExitButton />
@@ -49,11 +60,34 @@ export default function Introduction() {
 
 const useHeaderStyles = makeStyles((theme) => ({
   logo: {
-    width: '100%',
-    height: 75,
+    
+    [theme.breakpoints.down('md')]:{
+      width: '100%',
+      height: theme.spacing(2),
+    },
+    [theme.breakpoints.up('md')]:{
+      width: '100%',
+      height: theme.spacing(4),
+    },
+  },
+  headerText:{
+    paddingLeft: theme.spacing(2)
+  },
+  title:{
+    [theme.breakpoints.down('lg')]:{
+      ...theme.typography.h6,
+    },
+    [theme.breakpoints.up('lg')]:{
+      ...theme.typography.h5
+    },
+    [theme.breakpoints.up('xl')]:{
+      ...theme.typography.h4
+    }
   },
   subtitle: {
-    fontSize: '1.75em',
+    [theme.breakpoints.up('md')]:{
+      fontSize: '1em',
+    }
   },
 }));
 
@@ -61,11 +95,11 @@ function IntroHeader() {
   const classes = useHeaderStyles();
   return (
     <Grid container wrap='nowrap' justifyContent='space-between' item>
-      <Grid xs={6} item>
-        <Typography variant='h4' color='primary'>
+      <Grid xs={6} item className={classes.headerText}>
+        <Typography className={classes.title} color='primary'>
           Monitoreo a la Respuesta y Flujos Migratorios Mixtos
         </Typography>
-        <Typography variant='body1' className={classes.subtitle}>
+        <Typography className={classes.subtitle}>
           Recolección de datos: 6 de marzo a 04 de abril – Necoclí, Panamá y
           Costa Rica
         </Typography>
@@ -244,6 +278,9 @@ function RightPanel({ data, isLoading }: DataContentPanel) {
   return (
     <Grid container direction='column' item xs={3} className={classes.root}>
       <OrganisationCount data={Premise} isLoading={isLoading} />
+      <TopSurveyLocation data={Premise} isLoading={isLoading} />
+      <TopOrganisations data={Premise} isLoading={isLoading} />
+      <PrincipalsImplementor data={Premise} isLoading={isLoading} />
     </Grid>
   );
 }

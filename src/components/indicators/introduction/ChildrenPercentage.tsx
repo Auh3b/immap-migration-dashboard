@@ -4,6 +4,7 @@ import { useMemo } from 'react';
 import aggregateColumns from '../utils/AggregateColumns';
 import { AggregationTypes } from '@carto/react-core';
 import iconStyles from './utils/iconStyles';
+import { format } from 'd3';
 
 const title = 'Tamaño promedio de los grupos de viaje';
 
@@ -18,7 +19,7 @@ export default function ChildrenPercentage({
   isLoading,
 }: {
   data: any[];
-  isLoading: Boolean;
+  isLoading: Boolean; 
 }) {
   const data = useMemo(() => {
     if (_data) {
@@ -36,6 +37,7 @@ export default function ChildrenPercentage({
       title={title}
       isLoading={isLoading}
       data={data}
+      formatter={(value:number)=> format('.2%')(value)}
       icon={<Children style={iconStyles} />}
     />
   );

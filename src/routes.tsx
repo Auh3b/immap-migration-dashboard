@@ -44,7 +44,7 @@ const routes = [
       </ProtectedRoute>
     ),
     children: [
-      { path: '/', element: <Navigate to={ROUTE_PATHS.DASHBOARD} /> },
+      { path: '/', element: <Navigate to={ROUTE_PATHS.INTRODUCTION} /> },
       { path: ROUTE_PATHS.SERVICES, element: <Services /> },
       { path: ROUTE_PATHS.MIGRATION_FLOW, element: <MigrationFlow /> },
       { path: ROUTE_PATHS.MEDIA, element: <Media /> },
