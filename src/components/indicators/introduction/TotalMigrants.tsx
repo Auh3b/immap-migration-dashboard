@@ -6,7 +6,7 @@ import { AggregationTypes } from '@carto/react-core';
 import iconStyles from './utils/iconStyles';
 
 const title = 'Personas en los grupos de viaje';
-
+const subtitle = 'Validadas';
 const columns = [['e17__cua'], ['objectid']];
 
 export default function TotalMigrants({
@@ -30,6 +30,7 @@ export default function TotalMigrants({
       title={title}
       isLoading={isLoading}
       data={data}
+      subtitle={subtitle}
       icon={<People style={iconStyles} />}
     />
   );

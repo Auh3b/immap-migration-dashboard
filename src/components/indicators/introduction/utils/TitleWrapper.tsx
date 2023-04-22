@@ -6,7 +6,6 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
   },
   titleHead: {
-    marginBottom: theme.spacing(1),
     paddingBottom: theme.spacing(1),
   },
   title: {
@@ -14,15 +13,18 @@ const useStyles = makeStyles((theme) => ({
     height: theme.spacing(2),
     [theme.breakpoints.up('md')]: {
       ...theme.typography.overline,
+      fontWeight: 'bold',
     },
     [theme.breakpoints.down('md')]: {
       ...theme.typography.overline,
+      fontWeight: 'bold',
     },
   },
   subtitle: {
     color: 'inherit',
     [theme.breakpoints.up('md')]: {
       ...theme.typography.caption,
+      fontSize: '0.5rem',
     },
     [theme.breakpoints.down('md')]: {
       ...theme.typography.caption,
