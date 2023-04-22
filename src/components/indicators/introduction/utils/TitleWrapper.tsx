@@ -6,7 +6,8 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
   },
   titleHead: {
-    paddingBottom: theme.spacing(1),
+    marginBottom: theme.spacing(1),
+
   },
   title: {
     color: 'inherit',
@@ -31,6 +32,8 @@ const useStyles = makeStyles((theme) => ({
       fontSize: '0.5rem',
     },
   },
+  indicator:{
+  },
 }));
 
 export interface TitleWrapperProps extends PropsWithChildren<any> {
@@ -42,14 +45,14 @@ export default function TitleWrapper(props: TitleWrapperProps) {
   const classes = useStyles();
   const { title, subtitle, children } = props;
   return (
-    <Grid item container direction='column' className={classes.root}>
+    <Grid item container direction='column' justifyContent='space-between' className={classes.root}>
       <Grid item className={classes.titleHead}>
         <Typography className={classes.title}>{title}</Typography>
         {subtitle && (
           <Typography className={classes.subtitle}>{subtitle}</Typography>
         )}
       </Grid>
-      <Grid item>{children}</Grid>
+      <Grid item className={classes.indicator}>{children}</Grid>
     </Grid>
   );
 }
