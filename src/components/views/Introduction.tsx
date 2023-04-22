@@ -1,15 +1,7 @@
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import {
-  Button,
-  Fade,
-  Grid,
-  IconButton,
-  Tooltip,
-  Typography,
-} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { Button, Grid, Typography } from '@material-ui/core';
 import { ReactComponent as UnicefLogo } from 'assets/img/unicef.svg';
 import { ReactComponent as ImmapLogo } from 'assets/img/immapLogoAlt.svg';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import { useEffect, useMemo, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { ROUTE_PATHS } from 'routes';
@@ -36,12 +28,17 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 
 const useStyles = makeStyles((theme) => ({
   introduction: {
+    position: 'relative',
     height: '100%',
     [theme.breakpoints.down('lg')]: {
       paddingTop: theme.spacing(1),
       paddingLeft: theme.spacing(1),
       paddingRight: theme.spacing(1),
       paddingBottom: theme.spacing(1),
+    },
+    [theme.breakpoints.down('sm')]: {
+      maxHeight: '100vh',
+      overflowY: 'scroll',
     },
     [theme.breakpoints.up('lg')]: {
       paddingTop: theme.spacing(2),
@@ -71,6 +68,17 @@ export default function Introduction() {
 }
 
 const useHeaderStyles = makeStyles((theme) => ({
+  root: {
+    marginBottom: theme.spacing(2),
+    [theme.breakpoints.down('sm')]: {
+      flexDirection: 'column',
+    },
+  },
+  logoContainer: {
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
+    },
+  },
   logo: {
     [theme.breakpoints.down('md')]: {
       height: theme.spacing(2),
@@ -80,7 +88,7 @@ const useHeaderStyles = makeStyles((theme) => ({
     },
   },
   headerText: {
-    paddingLeft: theme.spacing(2),
+    flexGrow: 1,
   },
   title: {
     [theme.breakpoints.down('lg')]: {
@@ -103,8 +111,14 @@ const useHeaderStyles = makeStyles((theme) => ({
 function IntroHeader() {
   const classes = useHeaderStyles();
   return (
-    <Grid container wrap='nowrap' justifyContent='space-between' item>
-      <Grid xs={6} item className={classes.headerText}>
+    <Grid
+      container
+      wrap='nowrap'
+      justifyContent='space-between'
+      item
+      className={classes.root}
+    >
+      <Grid md={12} lg={8} item className={classes.headerText}>
         <Typography className={classes.title} color='primary'>
           Monitoreo a la Respuesta y Flujos Migratorios Mixtos
         </Typography>
@@ -114,12 +128,12 @@ function IntroHeader() {
         </Typography>
       </Grid>
       <Grid
-        xs={2}
         wrap='nowrap'
         item
         container
         alignItems='center'
         justifyContent='flex-end'
+        className={classes.logoContainer}
       >
         <Grid item>
           <UnicefLogo className={classes.logo} />
@@ -136,6 +150,10 @@ function IntroHeader() {
 const useContentStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    [theme.breakpoints.down('md')]: {
+      flexDirection: 'column',
+      flexGrow: 0,
+    },
   },
 }));
 
@@ -194,21 +212,24 @@ function IntroContent() {
 
 const useLeftStyles = makeStyles((theme) => ({
   root: {
-    overflowY: 'scroll',
-    height: '100%',
-    padding: theme.spacing(2),
+    paddingTop: theme.spacing(2),
+    paddingRight: theme.spacing(2),
     BorderRight: `1px solid ${UNICEF_COLORS[0]}`,
+    flexWrap: 'nowrap',
+    [theme.breakpoints.down('md')]: {
+      justifyContent: 'flex-start',
+    },
   },
-  subtitle:{
+  subtitle: {
     ...theme.typography.caption,
-    marginBottom: theme.spacing(2)
+    marginBottom: theme.spacing(2),
   },
-  description:{
-    [theme.breakpoints.down('lg')]:{
+  description: {
+    [theme.breakpoints.down('lg')]: {
       ...theme.typography.body1,
-      fontSize: '0.75rem'
-    }
-  }
+      fontSize: '0.75rem',
+    },
+  },
 }));
 
 function LeftPanel() {
@@ -219,13 +240,14 @@ function LeftPanel() {
       direction='column'
       justifyContent='space-between'
       item
-      xs={3}
+      lg={3}
+      md={12}
       className={classes.root}
     >
       <Grid item>
         <Typography variant='subtitle1'>Nota metodológica</Typography>
         <Typography className={classes.subtitle}>A Aurora Chatbot</Typography>
-        <Typography className={classes.description} >
+        <Typography className={classes.description}>
           El propósito de este reporte es apoyar el seguimiento a la recolección
           de la información. En este sentido, toda la información contenida es
           preliminar y esta en proceso de revisión.
@@ -247,10 +269,24 @@ function LeftPanel() {
 
 const useMiddleStyles = makeStyles((theme) => ({
   root: {
-    overflowY: 'scroll',
-    height: '100%',
-    padding: theme.spacing(2),
     flexGrow: 1,
+  },
+  indicatorsGroup: {
+    '&:first-child': {
+      backgroundColor: theme.palette.primary.main,
+      color: theme.palette.background.paper,
+      '& svg g': {
+        '& path, circle': {
+          fill: `${theme.palette.background.paper} !important`,
+        },
+      },
+      '& div[class*=makeStyles-indicatorValue] span': {
+        color: theme.palette.background.paper,
+      },
+    },
+    [theme.breakpoints.down('md')]: {
+      flexDirection: 'column',
+    },
   },
 }));
 
@@ -275,21 +311,21 @@ function MiddlePanel({ data, isLoading }: DataContentPanel) {
       item
       className={classes.root}
     >
-      <Grid wrap='nowrap' item container>
+      <Grid wrap='nowrap' item container className={classes.indicatorsGroup}>
         <TotalAurora data={Aurora} isLoading={isLoading} />
         <TotalMigrants data={Aurora} isLoading={isLoading} />
         <AverageGroupSize data={Aurora} isLoading={isLoading} />
         <ChildrenPercentage data={Aurora} isLoading={isLoading} />
       </Grid>
-      <Grid wrap='nowrap' item container>
+      <Grid wrap='nowrap' item container className={classes.indicatorsGroup}>
         <AuroraLocation data={Aurora} isLoading={isLoading} />
         <MigrantNationalities data={Aurora} isLoading={isLoading} />
       </Grid>
-      <Grid wrap='nowrap' item container>
+      <Grid wrap='nowrap' item container className={classes.indicatorsGroup}>
         <TotalChildren data={Aurora} isLoading={isLoading} />
         <TotalPregnant data={Aurora} isLoading={isLoading} />
       </Grid>
-      <Grid wrap='nowrap' item container>
+      <Grid wrap='nowrap' item container className={classes.indicatorsGroup}>
         <TotalDisabled data={Aurora} isLoading={isLoading} />
         <TotalChronicPatients data={Aurora} isLoading={isLoading} />
       </Grid>
@@ -301,9 +337,13 @@ const useRightStyles = makeStyles((theme) => ({
   root: {
     overflowY: 'auto',
     height: '100%',
-    maxHeight: '90vh',
-    padding: theme.spacing(2),
+    maxHeight: '85vh',
     BorderLeft: `1px solid ${UNICEF_COLORS[0]}`,
+    [theme.breakpoints.down('md')]: {
+      overflow: 'none',
+      height: 'none',
+      maxHeight: 'none',
+    },
   },
 }));
 
@@ -321,7 +361,8 @@ function RightPanel({ data, isLoading }: DataContentPanel) {
       wrap='nowrap'
       direction='column'
       item
-      xs={3}
+      md={12}
+      lg={3}
       className={classes.root}
     >
       <OrganisationCount data={Premise} isLoading={isLoading} />
@@ -334,27 +375,32 @@ function RightPanel({ data, isLoading }: DataContentPanel) {
 
 const useButtonStyles = makeStyles((theme) => ({
   root: {
-    flexShrink: 1,
+    [theme.breakpoints.down('sm')]: {
+      position: 'fixed',
+      bottom: theme.spacing(2),
+      right: theme.spacing(2),
+    },
   },
   button: {
-    backgroundColor: UNICEF_COLORS[5],
-    color: theme.palette.background.paper,
+    padding: theme.spacing(1),
+    borderRadius: '32px',
   },
 }));
 
 function ExitButton() {
   const classes = useButtonStyles();
   return (
-    <Grid direction='column' container item className={classes.root}>
-      <Tooltip arrow title='Explore More' placement='bottom'>
-        <IconButton
-          component={NavLink}
-          to={ROUTE_PATHS.DASHBOARD}
-          className={classes.button}
-        >
-          <ArrowForwardIcon />
-        </IconButton>
-      </Tooltip>
+    <Grid item className={classes.root}>
+      <Button
+        component={NavLink}
+        to={ROUTE_PATHS.DASHBOARD}
+        variant='contained'
+        size='large'
+        className={classes.button}
+        endIcon={<ArrowForwardIcon />}
+      >
+        Dashboard
+      </Button>
     </Grid>
   );
 }

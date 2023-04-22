@@ -3,17 +3,15 @@ import { PropsWithChildren } from 'react';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    [theme.breakpoints.up('xl')]: {
-      padding: theme.spacing(2),
-    },
-    [theme.breakpoints.down('xl')]: {
-      paddingBottom: theme.spacing(2),
-    },
+    padding: theme.spacing(2),
   },
   titleHead: {
     marginBottom: theme.spacing(1),
+    paddingBottom: theme.spacing(1),
   },
   title: {
+    color: 'inherit',
+    height: theme.spacing(2),
     [theme.breakpoints.up('md')]: {
       ...theme.typography.overline,
     },
@@ -22,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   subtitle: {
+    color: 'inherit',
     [theme.breakpoints.up('md')]: {
       ...theme.typography.caption,
     },

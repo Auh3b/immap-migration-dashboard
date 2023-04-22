@@ -1,6 +1,8 @@
 const iconStyles = {
   width: '100%',
-  height: '50px',
+  maxHeight: '32px',
+  color: 'inherit',
+  fill: 'inherit',
 };
 
 export default iconStyles;

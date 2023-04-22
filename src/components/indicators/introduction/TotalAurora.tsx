@@ -14,25 +14,11 @@ import {
 import { CategoryWidgetUI } from '@carto/react-ui';
 import groupCategories from '../utils/groupCategories';
 import { format, sum } from 'd3';
-import AddIcon from '@material-ui/icons/Add';
-import RemoveIcon from '@material-ui/icons/Remove';
+
 const title = 'Personas conectadas';
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    position: 'relative',
-  },
-  button: {
-    alignSelf: 'center',
-    // tranform: 'translate(10px, 10px)',
-    position: 'absolute',
-    // top: 50,
-    right: 70,
-  },
-  popper: {
-    zIndex: 1,
-    padding: theme.spacing(2),
-  },
+  root: {},
 }));
 
 export default function TotalAurora({
@@ -43,13 +29,7 @@ export default function TotalAurora({
   isLoading: Boolean;
 }) {
   const classes = useStyles();
-  const [anchor, setAnchor] = useState<null | HTMLButtonElement>(null);
-  const [isOpen, setIsOpen] = useState(false);
 
-  const handleToggle = (e: MouseEvent<HTMLButtonElement>) => {
-    setAnchor(e.currentTarget);
-    setIsOpen((prev) => !prev);
-  };
   const data = useMemo(() => {
     if (_data) {
       return _data.length;
@@ -71,7 +51,7 @@ export default function TotalAurora({
       total: null,
     };
   }, [_data]);
-  const tooltipTitle = isOpen ? '' : 'More details';
+
   return (
     <Grid item wrap='nowrap' container className={classes.root}>
       <AggregateIndicatorWidget
@@ -79,28 +59,15 @@ export default function TotalAurora({
         isLoading={isLoading}
         data={data}
         icon={<People style={iconStyles} />}
-      />
-      <Tooltip title={tooltipTitle} arrow>
-        <IconButton onClick={handleToggle} className={classes.button}>
-          {isOpen ? <RemoveIcon /> : <AddIcon />}
-        </IconButton>
-      </Tooltip>
-      <Popper open={isOpen} anchorEl={anchor} placement='bottom'>
-        {({ TransitionProps }) => {
-          return (
-            <Grid item>
-              <Paper className={classes.popper}>
-                <CategoryWidgetUI
-                  data={data2.dataset}
-                  formatter={(value: number) =>
-                    format('.0%')(value / data2.total)
-                  }
-                />
-              </Paper>
-            </Grid>
-          );
+        extraContent={{
+          child: (
+            <CategoryWidgetUI
+              data={data2.dataset}
+              formatter={(value: number) => format('.0%')(value / data2.total)}
+            />
+          ),
         }}
-      </Popper>
+      />
     </Grid>
   );
 }
