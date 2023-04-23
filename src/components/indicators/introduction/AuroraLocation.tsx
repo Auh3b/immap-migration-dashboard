@@ -27,7 +27,7 @@ export default function AuroraLocation({
   return (
     <TitleWrapper title={title} subtitle={subtitle}>
       <Grid item>
-        <PieWidgetUI data={data} height={'225px'} />
+        <PieWidgetUI data={data} /* height={ lg ? '150px' : '225px'}*/ />
       </Grid>
     </TitleWrapper>
   );

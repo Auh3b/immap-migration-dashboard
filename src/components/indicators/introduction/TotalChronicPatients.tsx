@@ -4,7 +4,6 @@ import { useMemo } from 'react';
 import { AggregationTypes, groupValuesByColumn } from '@carto/react-core';
 import iconStyles from './utils/iconStyles';
 const title = 'Personas con enfermedades crónicas';
-const subtitle = 'Reportadas en Chatbot'
 const columns = ['m02__en_t'];
 
 export default function TotalChronicPatients({
@@ -34,7 +33,6 @@ export default function TotalChronicPatients({
   return (
     <AggregateIndicatorWidget
       title={title}
-      subtitle={subtitle}
       isLoading={isLoading}
       data={data}
       icon={<SickPeople style={iconStyles} />}

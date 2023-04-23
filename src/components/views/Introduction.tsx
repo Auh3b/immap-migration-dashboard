@@ -76,11 +76,11 @@ const useHeaderStyles = makeStyles((theme) => ({
   },
   logoContainer: {
     [theme.breakpoints.down('sm')]: {
+      display: 'none',
     },
   },
   logo: {
     [theme.breakpoints.down('md')]: {
-      display: 'none',
       height: theme.spacing(2),
     },
     [theme.breakpoints.up('md')]: {
@@ -217,7 +217,6 @@ const useLeftStyles = makeStyles((theme) => ({
     BorderRight: `1px solid ${UNICEF_COLORS[0]}`,
     flexWrap: 'nowrap',
     [theme.breakpoints.down('md')]: {
-      padding: theme.spacing(2),
       justifyContent: 'flex-start',
     },
   },
@@ -378,7 +377,6 @@ const useButtonStyles = makeStyles((theme) => ({
   root: {
     [theme.breakpoints.down('sm')]: {
       position: 'fixed',
-      zIndex: 1,
       bottom: theme.spacing(2),
       right: theme.spacing(2),
     },
@@ -386,9 +384,6 @@ const useButtonStyles = makeStyles((theme) => ({
   button: {
     padding: theme.spacing(1),
     borderRadius: '32px',
-    [theme.breakpoints.down('sm')]:{
-      boxShadow: theme.shadows[5],
-    }
   },
 }));
 

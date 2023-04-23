@@ -1,9 +1,14 @@
 import AggregateIndicatorWidget from 'components/common/customWidgets/AggregateIndicatorWidget';
 import { ReactComponent as People } from 'assets/img/Group.svg';
-import { useMemo } from 'react';
+import { MouseEvent, useMemo, useState } from 'react';
 import iconStyles from './utils/iconStyles';
 import {
+  Button,
   Grid,
+  IconButton,
+  Paper,
+  Popper,
+  Tooltip,
   makeStyles,
 } from '@material-ui/core';
 import { CategoryWidgetUI } from '@carto/react-ui';
@@ -11,7 +16,7 @@ import groupCategories from '../utils/groupCategories';
 import { format, sum } from 'd3';
 
 const title = 'Personas conectadas';
-const subtitle = 'En Aurora Chatbot';
+
 const useStyles = makeStyles((theme) => ({
   root: {},
 }));
@@ -51,7 +56,6 @@ export default function TotalAurora({
     <Grid item wrap='nowrap' container className={classes.root}>
       <AggregateIndicatorWidget
         title={title}
-        subtitle={subtitle}
         isLoading={isLoading}
         data={data}
         icon={<People style={iconStyles} />}

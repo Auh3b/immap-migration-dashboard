@@ -4,7 +4,6 @@ import { useMemo } from 'react';
 import aggregateColumns from '../utils/AggregateColumns';
 import iconStyles from './utils/iconStyles';
 const title = 'NNA reportados en los grupos de viaje';
-const subtitle = 'Validados';
 const columns = ['e19_1__cu'];
 
 export default function TotalChildren({
@@ -24,7 +23,6 @@ export default function TotalChildren({
     <AggregateIndicatorWidget
       title={title}
       isLoading={isLoading}
-      subtitle={subtitle}
       data={data}
       icon={<Children style={iconStyles} />}
     />

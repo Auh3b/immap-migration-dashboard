@@ -4,7 +4,6 @@ import { useMemo } from 'react';
 import { AggregationTypes, groupValuesByColumn } from '@carto/react-core';
 import iconStyles from './utils/iconStyles';
 const title = 'Personas con condición de discapacidad';
-const subtitle = 'Reportadas en Chatbot'
 const columns = ['m03__dent'];
 
 export default function TotalDisabled({
@@ -34,7 +33,6 @@ export default function TotalDisabled({
   return (
     <AggregateIndicatorWidget
       title={title}
-      subtitle={subtitle}
       isLoading={isLoading}
       data={data}
       icon={<Disabled style={iconStyles} />}
