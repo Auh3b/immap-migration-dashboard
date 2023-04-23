@@ -282,7 +282,7 @@ const useMiddleStyles = makeStyles((theme) => ({
           fill: `${theme.palette.background.paper} !important`,
         },
       },
-      '& div[class*=makeStyles-indicatorValue] span': {
+      '& span': {
         color: theme.palette.background.paper,
       },
     },
