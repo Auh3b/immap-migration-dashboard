@@ -4,7 +4,10 @@ import { PropsWithChildren } from 'react';
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: theme.spacing(2),
-    gap: theme.spacing(1)
+    gap: theme.spacing(1),
+    [theme.breakpoints.down('lg')]:{
+      padding: theme.spacing(1),
+    },
   },
   titleHead: {
   },
