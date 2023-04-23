@@ -5,12 +5,11 @@ const useStyles = makeStyles((theme) => ({
   root: {
     padding: theme.spacing(2),
     gap: theme.spacing(1),
-    [theme.breakpoints.down('lg')]:{
+    [theme.breakpoints.down('lg')]: {
       padding: theme.spacing(1),
     },
   },
-  titleHead: {
-  },
+  titleHead: {},
   title: {
     color: 'inherit',
     [theme.breakpoints.up('md')]: {
@@ -24,15 +23,14 @@ const useStyles = makeStyles((theme) => ({
     color: 'inherit',
     [theme.breakpoints.up('md')]: {
       ...theme.typography.caption,
-        fontSize: '0.5rem',
+      fontSize: '0.5rem',
     },
     [theme.breakpoints.down('md')]: {
       ...theme.typography.caption,
       fontSize: '0.5rem',
     },
   },
-  indicator:{
-  },
+  indicator: {},
 }));
 
 export interface TitleWrapperProps extends PropsWithChildren<any> {
@@ -44,14 +42,22 @@ export default function TitleWrapper(props: TitleWrapperProps) {
   const classes = useStyles();
   const { title, subtitle, children } = props;
   return (
-    <Grid item container direction='column' justifyContent='space-between' className={classes.root}>
+    <Grid
+      item
+      container
+      direction='column'
+      justifyContent='space-between'
+      className={classes.root}
+    >
       <Grid item className={classes.titleHead}>
         <Typography className={classes.title}>{title}</Typography>
         {subtitle && (
           <Typography className={classes.subtitle}>{subtitle}</Typography>
         )}
       </Grid>
-      <Grid item className={classes.indicator}>{children}</Grid>
+      <Grid item className={classes.indicator}>
+        {children}
+      </Grid>
     </Grid>
   );
 }

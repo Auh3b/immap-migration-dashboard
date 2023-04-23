@@ -4,7 +4,7 @@ import { useMemo } from 'react';
 import { AggregationTypes, groupValuesByColumn } from '@carto/react-core';
 import iconStyles from './utils/iconStyles';
 const title = 'Mujeres gestantes en los grupos';
-const subtitle = 'Reportadas en Aurora Chatbot'
+const subtitle = 'Reportadas en Aurora Chatbot';
 const columns = ['m01__en_t'];
 
 export default function TotalPregnant({

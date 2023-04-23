@@ -74,17 +74,13 @@ const useHeaderStyles = makeStyles((theme) => ({
       flexDirection: 'column',
     },
   },
-  logoContainer: {
-    [theme.breakpoints.down('sm')]: {
-    },
-  },
+  logoContainer: {},
   logo: {
     [theme.breakpoints.down('md')]: {
       height: theme.spacing(2),
       display: 'none',
     },
     [theme.breakpoints.up('md')]: {
-      display: 'none',
       height: theme.spacing(4),
     },
   },
@@ -151,7 +147,7 @@ const useContentStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('md')]: {
       flexDirection: 'column',
       flexGrow: 0,
-      gap: theme.spacing(2)
+      gap: theme.spacing(2),
     },
   },
 }));
@@ -288,7 +284,7 @@ const useMiddleStyles = makeStyles((theme) => ({
     },
     [theme.breakpoints.down('md')]: {
       flexDirection: 'column',
-      gap: theme.spacing(2)
+      gap: theme.spacing(2),
     },
   },
 }));
@@ -390,15 +386,15 @@ const useButtonStyles = makeStyles((theme) => ({
     borderRadius: theme.spacing(4),
     color: theme.palette.primary.main,
     borderColor: theme.palette.primary.main,
-    '&:hover':{
+    '&:hover': {
       backgroundColor: theme.palette.primary.main,
       color: theme.palette.background.paper,
       opacity: 0.5,
     },
     [theme.breakpoints.down('sm')]: {
       backgroundColor: theme.palette.background.paper,
-      boxShadow: theme.shadows[5]
-    }
+      boxShadow: theme.shadows[5],
+    },
   },
 }));
 

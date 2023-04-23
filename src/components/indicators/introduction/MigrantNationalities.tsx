@@ -29,7 +29,7 @@ export default function MigrantNationalities({
   return (
     <TitleWrapper title={title} subtitle={subtitle}>
       <Grid item>
-        <PieWidgetUI data={data} height={ '225px'} />
+        <PieWidgetUI data={data} height={'225px'} />
       </Grid>
     </TitleWrapper>
   );

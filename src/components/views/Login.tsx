@@ -42,7 +42,6 @@ const useStyles = makeStyles((theme) => ({
     height: '100%',
     objectFit: 'contain',
   },
-
 }));
 
 export default function Login() {
@@ -84,25 +83,25 @@ const useStylesContent = makeStyles((theme) => ({
     '&h6': {
       color: theme.palette.primary.dark,
     },
-    [theme.breakpoints.up('lg')]:{
-      ...theme.typography.h4
+    [theme.breakpoints.up('lg')]: {
+      ...theme.typography.h4,
     },
-    [theme.breakpoints.down('lg')]:{
-      ...theme.typography.h5
-    }
+    [theme.breakpoints.down('lg')]: {
+      ...theme.typography.h5,
+    },
   },
   subtitle: {
-    [theme.breakpoints.down('lg')]:{
-      ...theme.typography.subtitle1
-    }
+    [theme.breakpoints.down('lg')]: {
+      ...theme.typography.subtitle1,
+    },
   },
   description: {
     marginTop: theme.spacing(2),
     color: '#777779',
-    [theme.breakpoints.down('lg')]:{
+    [theme.breakpoints.down('lg')]: {
       ...theme.typography.body1,
       fontSize: '0.75em',
-    }
+    },
   },
   contact: {
     marginTop: theme.spacing(2),
@@ -121,7 +120,7 @@ function Content() {
       justifyContent='space-between'
       className={classes.content}
     >
-      <Grid item >
+      <Grid item>
         <Typography color='inherit' className={classes.title}>
           Monitoreo Flujos Migratorios Mixtos
         </Typography>
@@ -217,7 +216,7 @@ const useStylesOrganisation = makeStyles((theme) => ({
   logo: {
     [theme.breakpoints.down('sm')]: {
       width: '100%',
-      height: theme.spacing(3)
+      height: theme.spacing(3),
     },
     [theme.breakpoints.up('md')]: {
       width: '100%',
@@ -241,39 +240,38 @@ export function Organisations() {
   );
 }
 
-
-const useFooterStyles = makeStyles((theme)=>({
-  text:{
+const useFooterStyles = makeStyles((theme) => ({
+  text: {
     ...theme.typography.caption,
     fontSize: '0.75em',
     marginBottom: theme.spacing(2),
-    [theme.breakpoints.down('lg')]:{
-      fontSize: '0.5em'
-    }
+    [theme.breakpoints.down('lg')]: {
+      fontSize: '0.5em',
+    },
   },
   copyright: {
     bottom: theme.spacing(3),
     color: theme.palette.common.black,
   },
-}))
+}));
 
-function LoginFooter(){
-  const classes = useFooterStyles()
-  return(
+function LoginFooter() {
+  const classes = useFooterStyles();
+  return (
     <>
-    <Grid item>
-      <Typography className={classes.text} display='block'>
-        El propósito de este reporte es apoyar el seguimiento a la
-        recolección de la información. En este sentido, toda la
-        información contenida es preliminar y esta en proceso de revisión.
-      </Typography>
-      <Typography className={classes.text} display='block'>
-        Fecha de actualización: 03/28/2023.
-      </Typography>
-      <Typography className={classes.text} display='block'>
-        &copy; iMMAP {new Date(Date.now()).getFullYear()}
-      </Typography>
-    </Grid>
+      <Grid item>
+        <Typography className={classes.text} display='block'>
+          El propósito de este reporte es apoyar el seguimiento a la recolección
+          de la información. En este sentido, toda la información contenida es
+          preliminar y esta en proceso de revisión.
+        </Typography>
+        <Typography className={classes.text} display='block'>
+          Fecha de actualización: 03/28/2023.
+        </Typography>
+        <Typography className={classes.text} display='block'>
+          &copy; iMMAP {new Date(Date.now()).getFullYear()}
+        </Typography>
+      </Grid>
     </>
-  )
+  );
 }

@@ -4,7 +4,7 @@ import { useMemo } from 'react';
 import aggregateColumns from '../utils/AggregateColumns';
 import iconStyles from './utils/iconStyles';
 const title = 'NNA reportados en los grupos de viaje';
-const subtitle = 'Validadas'
+const subtitle = 'Validadas';
 const columns = ['e19_1__cu'];
 
 export default function TotalChildren({
