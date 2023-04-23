@@ -88,14 +88,11 @@ const useHeaderStyles = makeStyles((theme) => ({
     },
   },
   headerText: {
-    flexGrow: 1,
+    flexGrow: 2,
   },
   title: {
-    [theme.breakpoints.down('lg')]: {
+    [theme.breakpoints.down('xl')]: {
       ...theme.typography.h6,
-    },
-    [theme.breakpoints.up('lg')]: {
-      ...theme.typography.h5,
     },
     [theme.breakpoints.up('xl')]: {
       ...theme.typography.h4,
@@ -216,6 +213,9 @@ const useLeftStyles = makeStyles((theme) => ({
     paddingRight: theme.spacing(2),
     BorderRight: `1px solid ${UNICEF_COLORS[0]}`,
     flexWrap: 'nowrap',
+    [theme.breakpoints.down('lg')]: {
+      paddingTop: theme.spacing(1),
+    },
     [theme.breakpoints.down('md')]: {
       justifyContent: 'flex-start',
     },
