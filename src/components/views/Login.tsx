@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   login: {
     [theme.breakpoints.up('md')]: {
       height: '100%',
-      padding: theme.spacing(6, 12, 6),
+      padding: theme.spacing(5, 10, 5),
     },
     [theme.breakpoints.down('sm')]: {
       padding: theme.spacing(4, 5, 4),
@@ -42,11 +42,7 @@ const useStyles = makeStyles((theme) => ({
     height: '100%',
     objectFit: 'contain',
   },
-  footer: {
-    // position: 'absolute',
-    bottom: theme.spacing(3),
-    color: theme.palette.common.black,
-  },
+
 }));
 
 export default function Login() {
@@ -69,24 +65,8 @@ export default function Login() {
           alignItems='flex-start'
         >
           <Content />
-
           <Organisations />
-          <Grid item>
-            <Typography variant='caption' display='block'>
-              El propósito de este reporte es apoyar el seguimiento a la
-              recolección de la información. En este sentido, toda la
-              información contenida es preliminar y esta en proceso de revisión.
-            </Typography>
-            <Typography variant='caption' display='block'>
-              Fecha de actualización: 03/28/2023.
-            </Typography>
-          </Grid>
-
-          <Grid item className={classes.footer}>
-            <Typography variant='caption' color='inherit'>
-              &copy; iMMAP {new Date(Date.now()).getFullYear()}
-            </Typography>
-          </Grid>
+          <LoginFooter />
         </Grid>
       </Grid>
       <Grid item md={6} className={classes.hero}>
@@ -98,26 +78,31 @@ export default function Login() {
 
 const useStylesContent = makeStyles((theme) => ({
   content: {
-    // [theme.breakpoints.up('md')]: {
-    //   marginTop: theme.spacing(12),
-    // },
-    // [theme.breakpoints.down('sm')]: {
-    //   marginTop: theme.spacing(7),
-    // },
-  },
-  subtitle: {
-    color: '#6d6e71',
+    color: theme.palette.primary.main,
   },
   title: {
-    marginTop: theme.spacing(1),
-    color: theme.palette.primary.main,
     '&h6': {
       color: theme.palette.primary.dark,
     },
+    [theme.breakpoints.up('lg')]:{
+      ...theme.typography.h4
+    },
+    [theme.breakpoints.down('lg')]:{
+      ...theme.typography.h5
+    }
+  },
+  subtitle: {
+    [theme.breakpoints.down('lg')]:{
+      ...theme.typography.subtitle1
+    }
   },
   description: {
     marginTop: theme.spacing(2),
     color: '#777779',
+    [theme.breakpoints.down('lg')]:{
+      ...theme.typography.body1,
+      fontSize: '0.75em',
+    }
   },
   contact: {
     marginTop: theme.spacing(2),
@@ -136,17 +121,17 @@ function Content() {
       justifyContent='space-between'
       className={classes.content}
     >
-      <Grid item className={classes.title}>
-        <Typography variant='h4' color='inherit'>
+      <Grid item >
+        <Typography color='inherit' className={classes.title}>
           Monitoreo Flujos Migratorios Mixtos
         </Typography>
-        <Typography variant='h5' color='inherit'>
+        <Typography color='inherit' className={classes.subtitle}>
           Colombia - Panamá - Costa Rica
         </Typography>
       </Grid>
 
-      <Grid item className={classes.description}>
-        <Typography variant='body2' color='inherit'>
+      <Grid item>
+        <Typography className={classes.description} color='inherit'>
           Los movimientos de población migrante por la frontera colombo-panameña
           hacia el norte del continente americano –atravesando la región del
           Darién– aumentaron significativamente en los meses de junio a octubre
@@ -155,8 +140,8 @@ function Content() {
         </Typography>
       </Grid>
 
-      <Grid item className={classes.description}>
-        <Typography variant='body2' color='inherit'>
+      <Grid item>
+        <Typography className={classes.description} color='inherit'>
           Los registros de 2022 indican movimientos de personas de 70
           nacionalidades, de las cuales el 60% corresponde a población
           proveniente de Venezuela. Solo en el mes de enero de 2023 han
@@ -164,8 +149,8 @@ function Content() {
           contabilizó a más de 4000 niños, niñas y adolescentes en tránsito.
         </Typography>
       </Grid>
-      <Grid item className={classes.description}>
-        <Typography variant='body2' color='inherit'>
+      <Grid item>
+        <Typography className={classes.description} color='inherit'>
           En este contexto, UNICEF junto con iMMAP proponen una metodología
           novedosa para la caracterización y monitoreo de la demanda y oferta de
           servicios humanitarios a población migrante en la ruta Colombia –
@@ -224,8 +209,6 @@ function LoginButton() {
   );
 }
 
-const organisationLogoHeight = 75;
-
 const useStylesOrganisation = makeStyles((theme) => ({
   organisations: {
     marginTop: theme.spacing(1),
@@ -234,11 +217,11 @@ const useStylesOrganisation = makeStyles((theme) => ({
   logo: {
     [theme.breakpoints.down('sm')]: {
       width: '100%',
-      height: organisationLogoHeight * 0.5,
+      height: theme.spacing(3)
     },
     [theme.breakpoints.up('md')]: {
       width: '100%',
-      height: organisationLogoHeight,
+      height: theme.spacing(5),
     },
     objectFit: 'contain',
   },
@@ -256,4 +239,41 @@ export function Organisations() {
       </Grid>
     </Grid>
   );
+}
+
+
+const useFooterStyles = makeStyles((theme)=>({
+  text:{
+    ...theme.typography.caption,
+    fontSize: '0.75em',
+    marginBottom: theme.spacing(2),
+    [theme.breakpoints.down('lg')]:{
+      fontSize: '0.5em'
+    }
+  },
+  copyright: {
+    bottom: theme.spacing(3),
+    color: theme.palette.common.black,
+  },
+}))
+
+function LoginFooter(){
+  const classes = useFooterStyles()
+  return(
+    <>
+    <Grid item>
+      <Typography className={classes.text} display='block'>
+        El propósito de este reporte es apoyar el seguimiento a la
+        recolección de la información. En este sentido, toda la
+        información contenida es preliminar y esta en proceso de revisión.
+      </Typography>
+      <Typography className={classes.text} display='block'>
+        Fecha de actualización: 03/28/2023.
+      </Typography>
+      <Typography className={classes.text} display='block'>
+        &copy; iMMAP {new Date(Date.now()).getFullYear()}
+      </Typography>
+    </Grid>
+    </>
+  )
 }
