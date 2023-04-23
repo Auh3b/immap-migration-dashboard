@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
     color: 'inherit',
     [theme.breakpoints.up('md')]: {
       ...theme.typography.caption,
+        fontSize: '0.5rem',
     },
     [theme.breakpoints.down('md')]: {
       ...theme.typography.caption,
