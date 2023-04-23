@@ -16,7 +16,7 @@ import groupCategories from '../utils/groupCategories';
 import { format, sum } from 'd3';
 
 const title = 'Personas conectadas';
-
+const subtitle = 'En Aurora Chatbot'
 const useStyles = makeStyles((theme) => ({
   root: {},
 }));
@@ -57,6 +57,7 @@ export default function TotalAurora({
       <AggregateIndicatorWidget
         title={title}
         isLoading={isLoading}
+        subtitle={subtitle}
         data={data}
         icon={<People style={iconStyles} />}
         extraContent={{

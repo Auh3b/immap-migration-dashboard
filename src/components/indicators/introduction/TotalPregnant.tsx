@@ -4,6 +4,7 @@ import { useMemo } from 'react';
 import { AggregationTypes, groupValuesByColumn } from '@carto/react-core';
 import iconStyles from './utils/iconStyles';
 const title = 'Mujeres gestantes en los grupos';
+const subtitle = 'Reportadas en Aurora Chatbot'
 const columns = ['m01__en_t'];
 
 export default function TotalPregnant({
@@ -33,6 +34,7 @@ export default function TotalPregnant({
   return (
     <AggregateIndicatorWidget
       title={title}
+      subtitle={subtitle}
       isLoading={isLoading}
       data={data}
       icon={<Pregnant style={iconStyles} />}
