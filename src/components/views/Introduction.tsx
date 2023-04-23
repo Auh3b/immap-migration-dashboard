@@ -384,6 +384,13 @@ const useButtonStyles = makeStyles((theme) => ({
   button: {
     padding: theme.spacing(1),
     borderRadius: '32px',
+    color: theme.palette.primary.main,
+    borderColor: theme.palette.primary.main,
+    '&:hover':{
+      backgroundColor: theme.palette.primary.main,
+      color: theme.palette.background.paper,
+      opacity: 0.5,
+    }
   },
 }));
 
@@ -394,7 +401,7 @@ function ExitButton() {
       <Button
         component={NavLink}
         to={ROUTE_PATHS.DASHBOARD}
-        variant='contained'
+        variant='outlined'
         size='large'
         className={classes.button}
         endIcon={<ArrowForwardIcon />}
