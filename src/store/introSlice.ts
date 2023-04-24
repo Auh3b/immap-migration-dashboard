@@ -35,8 +35,6 @@ const slice = createSlice({
 
 export default slice.reducer;
 
-console.log(slice);
-
 export const addIntroFilter = (payload: any) => ({
   type: 'intro/addIntroFilter',
   payload,
