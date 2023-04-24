@@ -9,6 +9,7 @@ import {
 } from 'redux';
 import appSlice from './appSlice';
 import mapSlice from './mapSlice';
+import introSlice from './introSlice';
 
 interface AppStore extends Store {
   asyncReducers: ReducersMapObject;
@@ -19,6 +20,7 @@ interface AppStore extends Store {
 const staticReducers = {
   app: appSlice,
   map: mapSlice,
+  intro: introSlice
 };
 
 let store: AppStore = {
