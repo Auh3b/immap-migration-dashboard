@@ -43,7 +43,6 @@ export interface TitleWrapperProps extends PropsWithChildren<any> {
 export default function TitleWrapper(props: TitleWrapperProps) {
   const classes = useStyles();
   const { title, subtitle, isLoading,children } = props;
-  console.log(isLoading)
   return (
     <Grid
       item
