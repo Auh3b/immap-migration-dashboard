@@ -5,10 +5,13 @@ import { Grid, useMediaQuery, useTheme } from '@material-ui/core';
 import TitleWrapper from './utils/TitleWrapper';
 import elementStyles from './utils/useElementStyle';
 import useElementStyle from './utils/useElementStyle';
+import useIntroCategoryChange from './hooks/useCategoryChange';
 
 const title = 'Nacionalidad de la persona conectada';
 const column = 'e08_pais_';
 const subtitle = '';
+const source = 'auroraData'
+const id = 'topOrganisations'
 
 export default function MigrantNationalities({
   data: _data,
@@ -26,10 +29,16 @@ export default function MigrantNationalities({
     return [];
   }, [_data]);
 
+  const handleSelectedCategoriesChange = useIntroCategoryChange({
+    source,
+    column,
+    owner: id,
+  })
+
   return (
     <TitleWrapper title={title} subtitle={subtitle}>
       <Grid item>
-        <PieWidgetUI data={data} height={'225px'} />
+        <PieWidgetUI onSelectedCategoriesChange={handleSelectedCategoriesChange} data={data} height={'225px'} />
       </Grid>
     </TitleWrapper>
   );
