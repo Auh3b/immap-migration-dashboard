@@ -25,6 +25,7 @@ import TopOrganisations from 'components/indicators/introduction/TopOrganisation
 import TopSurveyLocation from 'components/indicators/introduction/TopSurveyLocation';
 import PrincipalsImplementor from 'components/indicators/introduction/PrincipalsImplementor';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import useIntroData from 'components/indicators/introduction/hooks/useIntroData';
 
 const useStyles = makeStyles((theme) => ({
   introduction: {
@@ -51,9 +52,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Introduction() {
   const classes = useStyles();
-
-  // [hygen] Add useEffect
-
   return (
     <Grid
       container
@@ -153,54 +151,14 @@ const useContentStyles = makeStyles((theme) => ({
 }));
 
 function IntroContent() {
-  const classes = useContentStyles();
-  const [data, setData] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const credentials = useSelector(
-    (state: RootState) => state.carto.credentials,
-  );
-  const fetchPremise = async () => {
-    const result = await executeSQL({
-      credentials,
-      connection: 'carto_dw',
-      query: 'SELECT * FROM shared.Premise_22032023',
-      opts: {
-        format: 'json',
-      },
-    });
-    return result;
-  };
-  const fetchAurora = async () => {
-    const result = await executeSQL({
-      credentials,
-      connection: 'carto_dw',
-      query: 'SELECT * FROM shared.LACRO_Marzo_2023',
-      opts: {
-        format: 'json',
-      },
-    });
-    return result;
-  };
-  useEffect(() => {
-    setIsLoading(true);
-    Promise.all([fetchAurora(), fetchPremise()])
-      .then((data) => setData(data))
-      .catch((e) => setError(e.message))
-      .finally(() => setIsLoading(false));
-
-    return () => {
-      setData(null);
-      setError(null);
-      setIsLoading(false);
-    };
-  }, []);
+  const classes = useContentStyles()
+  const { auroraData, premiseData, isLoading } = useIntroData()
 
   return (
     <Grid container wrap='nowrap' item className={classes.root}>
       <LeftPanel />
-      <MiddlePanel data={data} isLoading={isLoading} />
-      <RightPanel data={data} isLoading={isLoading} />
+      <MiddlePanel data={auroraData} isLoading={isLoading} />
+      <RightPanel data={premiseData} isLoading={isLoading} />
     </Grid>
   );
 }
@@ -290,18 +248,12 @@ const useMiddleStyles = makeStyles((theme) => ({
 }));
 
 interface DataContentPanel {
-  data: any[];
+  data: any[] | null;
   isLoading?: Boolean;
 }
 
 function MiddlePanel({ data, isLoading }: DataContentPanel) {
   const classes = useMiddleStyles();
-  const [Aurora, Premise] = useMemo(() => {
-    if (data) {
-      return data;
-    }
-    return [null, null];
-  }, [data]);
   return (
     <Grid
       wrap='nowrap'
@@ -311,22 +263,22 @@ function MiddlePanel({ data, isLoading }: DataContentPanel) {
       className={classes.root}
     >
       <Grid wrap='nowrap' item container className={classes.indicatorsGroup}>
-        <TotalAurora data={Aurora} isLoading={isLoading} />
-        <TotalMigrants data={Aurora} isLoading={isLoading} />
-        <AverageGroupSize data={Aurora} isLoading={isLoading} />
-        <ChildrenPercentage data={Aurora} isLoading={isLoading} />
+        <TotalAurora data={data} isLoading={isLoading} />
+        <TotalMigrants data={data} isLoading={isLoading} />
+        <AverageGroupSize data={data} isLoading={isLoading} />
+        <ChildrenPercentage data={data} isLoading={isLoading} />
       </Grid>
       <Grid wrap='nowrap' item container className={classes.indicatorsGroup}>
-        <AuroraLocation data={Aurora} isLoading={isLoading} />
-        <MigrantNationalities data={Aurora} isLoading={isLoading} />
+        <AuroraLocation data={data} isLoading={isLoading} />
+        <MigrantNationalities data={data} isLoading={isLoading} />
       </Grid>
       <Grid wrap='nowrap' item container className={classes.indicatorsGroup}>
-        <TotalChildren data={Aurora} isLoading={isLoading} />
-        <TotalPregnant data={Aurora} isLoading={isLoading} />
+        <TotalChildren data={data} isLoading={isLoading} />
+        <TotalPregnant data={data} isLoading={isLoading} />
       </Grid>
       <Grid wrap='nowrap' item container className={classes.indicatorsGroup}>
-        <TotalDisabled data={Aurora} isLoading={isLoading} />
-        <TotalChronicPatients data={Aurora} isLoading={isLoading} />
+        <TotalDisabled data={data} isLoading={isLoading} />
+        <TotalChronicPatients data={data} isLoading={isLoading} />
       </Grid>
     </Grid>
   );
@@ -347,12 +299,6 @@ const useRightStyles = makeStyles((theme) => ({
 }));
 
 function RightPanel({ data, isLoading }: DataContentPanel) {
-  const [Aurora, Premise] = useMemo(() => {
-    if (data) {
-      return data;
-    }
-    return [null, null];
-  }, [data]);
   const classes = useRightStyles();
   return (
     <Grid
@@ -364,10 +310,10 @@ function RightPanel({ data, isLoading }: DataContentPanel) {
       lg={3}
       className={classes.root}
     >
-      <OrganisationCount data={Premise} isLoading={isLoading} />
-      <TopSurveyLocation data={Premise} isLoading={isLoading} />
-      <TopOrganisations data={Premise} isLoading={isLoading} />
-      <PrincipalsImplementor data={Premise} isLoading={isLoading} />
+      <OrganisationCount data={data} isLoading={isLoading} />
+      <TopSurveyLocation data={data} isLoading={isLoading} />
+      <TopOrganisations data={data} isLoading={isLoading} />
+      <PrincipalsImplementor data={data} isLoading={isLoading} />
     </Grid>
   );
 }
