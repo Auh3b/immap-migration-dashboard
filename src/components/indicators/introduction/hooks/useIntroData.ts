@@ -1,9 +1,9 @@
-import { executeSQL } from "@carto/react-api";
-import { useEffect, useMemo, useState } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "store/store";
+import { executeSQL } from '@carto/react-api';
+import { useEffect, useMemo, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { RootState } from 'store/store';
 
-function useFetchData(){
+function useFetchData() {
   const [premiseData, setPremiseData] = useState(null);
   const [auroraData, setAuroraData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -37,15 +37,15 @@ function useFetchData(){
     setIsLoading(true);
     Promise.all([fetchAurora(), fetchPremise()])
       .then(([aurora, premise]) => {
-        setAuroraData(aurora)
-        setPremiseData(premise)
+        setAuroraData(aurora);
+        setPremiseData(premise);
       })
       .catch((e) => setError(e.message))
       .finally(() => setIsLoading(false));
 
     return () => {
-      setAuroraData(null)
-      setPremiseData(null)
+      setAuroraData(null);
+      setPremiseData(null);
       setError(null);
       setIsLoading(false);
     };
@@ -54,47 +54,51 @@ function useFetchData(){
     auroraData,
     premiseData,
     isLoading,
-    error
-  }
+    error,
+  };
 }
 
-export function useIntroFilters(){
+export function useIntroFilters() {
   //@ts-ignore
-  const introFilters = useSelector((state)=> state.intro.filters)
-  return introFilters
+  const introFilters = useSelector((state) => state.intro.filters);
+  return introFilters;
 }
 
-function useFilteredData(input: any[], filters: any){
-  const filteredData = useMemo(()=>{
-    
-    let data: any[]  = input
-    
-    if(data && filters){
+function useFilteredData(input: any[], filters: any) {
+  const filteredData = useMemo(() => {
+    let data: any[] = input;
 
-      let _filters  = Object.entries(filters)
+    if (data && filters) {
+      let _filters = Object.entries(filters);
 
       //@ts-ignore
-      for( let [ chartId, {column, values} ] of _filters){
-        data = data.filter((d)=> d[column] === values[0])
+      for (let [chartId, { column, values }] of _filters) {
+        data = data.filter((d) => d[column] === values[0]);
       }
-      return data
+      return data;
     }
-    return data
-  }, [input, filters])
-  
-  return filteredData
+    return data;
+  }, [input, filters]);
+
+  return filteredData;
 }
 
 export default function useIntroData() {
-  const {auroraData: auroraFilters, premiseData: premiseFilters} = useIntroFilters()
-  const { auroraData: _auroraData, premiseData: _premiseData, isLoading, error } = useFetchData()
-  const auroraData = useFilteredData(_auroraData, auroraFilters)
-  const premiseData = useFilteredData(_premiseData, premiseFilters)
+  const { auroraData: auroraFilters, premiseData: premiseFilters } =
+    useIntroFilters();
+  const {
+    auroraData: _auroraData,
+    premiseData: _premiseData,
+    isLoading,
+    error,
+  } = useFetchData();
+  const auroraData = useFilteredData(_auroraData, auroraFilters);
+  const premiseData = useFilteredData(_premiseData, premiseFilters);
   return {
     auroraFilters,
     auroraData,
     premiseData,
     isLoading,
     error,
-  }
+  };
 }
