@@ -14,7 +14,7 @@ const useFallbackStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SkeletonTypography() {
+export default function PageFallback() {
   const classes = useFallbackStyles();
   return (
     <Grid container className={classes.main}>
