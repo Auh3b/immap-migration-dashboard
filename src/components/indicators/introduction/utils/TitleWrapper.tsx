@@ -35,14 +35,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export interface TitleWrapperProps extends PropsWithChildren<any> {
-  title: string;
+  title?: string;
   subtitle?: string;
-  isLoading?: Boolean
+  isLoading?: Boolean;
 }
 
 export default function TitleWrapper(props: TitleWrapperProps) {
   const classes = useStyles();
-  const { title, subtitle, isLoading,children } = props;
+  const { title, subtitle, isLoading, children } = props;
   return (
     <Grid
       item
@@ -52,18 +52,18 @@ export default function TitleWrapper(props: TitleWrapperProps) {
       className={classes.root}
     >
       <Grid item className={classes.titleHead}>
-        <Typography className={classes.title}>{title}</Typography>
+        {title && <Typography className={classes.title}>{title}</Typography>}
         {subtitle && (
           <Typography className={classes.subtitle}>{subtitle}</Typography>
         )}
       </Grid>
-      {isLoading ? 
-      <ComponentFallback />
-      :
-      <Grid item className={classes.indicator}>
-        {children}
-      </Grid>
-      }
+      {isLoading ? (
+        <ComponentFallback />
+      ) : (
+        <Grid item className={classes.indicator}>
+          {children}
+        </Grid>
+      )}
     </Grid>
   );
 }
