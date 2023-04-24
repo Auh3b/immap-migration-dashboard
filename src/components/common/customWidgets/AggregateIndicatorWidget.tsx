@@ -1,4 +1,5 @@
 import {
+  Fade,
   Grid,
   IconButton,
   Paper,
@@ -81,11 +82,13 @@ export default function AggregateIndicatorWidget(
             <Popper open={isOpen} anchorEl={anchor} placement='bottom'>
               {({ TransitionProps }) => {
                 return (
-                  <Grid item>
-                    <Paper className={classes.popper}>
-                      {extraContent.child}
-                    </Paper>
-                  </Grid>
+                  <Fade {...TransitionProps} in={isOpen} unmountOnExit={true}>
+                    <Grid item>
+                      <Paper className={classes.popper}>
+                        {extraContent.child}
+                      </Paper>
+                    </Grid>
+                  </Fade>
                 );
               }}
             </Popper>
