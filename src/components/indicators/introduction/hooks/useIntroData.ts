@@ -58,7 +58,7 @@ function useFetchData(){
   }
 }
 
-function useIntroFilters(){
+export function useIntroFilters(){
   //@ts-ignore
   const introFilters = useSelector((state)=> state.intro.filters)
   return introFilters
@@ -72,7 +72,6 @@ function useFilteredData(input: any[], filters: any){
     if(data && filters){
 
       let _filters  = Object.entries(filters)
-      console.log(_filters)
 
       //@ts-ignore
       for( let [ chartId, {column, values} ] of _filters){
