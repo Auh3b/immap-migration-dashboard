@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { Button, Grid, Typography } from '@material-ui/core';
+import { Button, Fab, Grid, Typography } from '@material-ui/core';
 import { ReactComponent as UnicefLogo } from 'assets/img/unicef.svg';
 import { ReactComponent as ImmapLogo } from 'assets/img/immapLogoAlt.svg';
 import { NavLink } from 'react-router-dom';
@@ -21,7 +21,8 @@ import TopOrganisations from 'components/indicators/introduction/TopOrganisation
 import TopSurveyLocation from 'components/indicators/introduction/TopSurveyLocation';
 import PrincipalsImplementor from 'components/indicators/introduction/PrincipalsImplementor';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-import useIntroData from 'components/indicators/introduction/hooks/useIntroData';
+import useIntroData, { useClearIntroFilters, useIntroFilters } from 'components/indicators/introduction/hooks/useIntroData';
+import ClearAllIcon from '@material-ui/icons/ClearAll';
 
 const useStyles = makeStyles((theme) => ({
   introduction: {
@@ -57,6 +58,7 @@ export default function Introduction() {
     >
       <IntroHeader />
       <IntroContent />
+      <ClearFiltersButton />
     </Grid>
   );
 }
@@ -356,4 +358,38 @@ function ExitButton() {
       </Button>
     </Grid>
   );
+}
+
+const useClearStyles = makeStyles((theme)=>({
+  root:{
+    position: 'fixed',
+    left: theme.spacing(4),
+    bottom: theme.spacing(8),
+    backgroundColor: theme.palette.error.main,
+    color: theme.palette.background.paper,
+    [theme.breakpoints.down('md')]:{
+      left: theme.spacing(2),
+      bottom: theme.spacing(2),
+    }
+  },
+  text:{
+    marginRight: theme.spacing(2)
+  }
+}))
+
+function ClearFiltersButton(){
+  const classes = useClearStyles()
+  const { hasFilters, clearAllIntroFilters } = useClearIntroFilters()
+  return (
+    <>
+      {hasFilters && 
+        <Fab onClick={clearAllIntroFilters} size='large' variant='extended' className={classes.root}>
+            <Typography  color='inherit' variant='overline' className={classes.text}>
+              Clear All
+            </Typography>
+            <ClearAllIcon />
+        </Fab>
+      }
+    </>
+  )
 }
