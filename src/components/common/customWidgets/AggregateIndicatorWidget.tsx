@@ -63,7 +63,7 @@ export default function AggregateIndicatorWidget(
   };
   const tooltipTitle = isOpen ? '' : 'More details';
   return (
-    <TitleWrapper title={title} subtitle={subtitle}>
+    <TitleWrapper title={title} subtitle={subtitle} isLoading={isLoading}>
       <Grid spacing={1} wrap='nowrap' container alignItems='center'>
         <Grid item>{icon}</Grid>
         {data && !isLoading && (

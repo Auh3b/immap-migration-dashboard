@@ -1,4 +1,5 @@
 import { Grid, Typography, makeStyles } from '@material-ui/core';
+import ComponentFallback from 'components/common/ComponentFallback';
 import { PropsWithChildren } from 'react';
 
 const useStyles = makeStyles((theme) => ({
@@ -36,11 +37,13 @@ const useStyles = makeStyles((theme) => ({
 export interface TitleWrapperProps extends PropsWithChildren<any> {
   title: string;
   subtitle?: string;
+  isLoading?: Boolean
 }
 
 export default function TitleWrapper(props: TitleWrapperProps) {
   const classes = useStyles();
-  const { title, subtitle, children } = props;
+  const { title, subtitle, isLoading,children } = props;
+  console.log(isLoading)
   return (
     <Grid
       item
@@ -55,9 +58,13 @@ export default function TitleWrapper(props: TitleWrapperProps) {
           <Typography className={classes.subtitle}>{subtitle}</Typography>
         )}
       </Grid>
+      {isLoading ? 
+      <ComponentFallback />
+      :
       <Grid item className={classes.indicator}>
         {children}
       </Grid>
+      }
     </Grid>
   );
 }
