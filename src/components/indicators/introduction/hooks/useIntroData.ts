@@ -65,25 +65,25 @@ export function useIntroFilters() {
   return introFilters;
 }
 
-export function useClearIntroFilters(){
-  const dispatch = useDispatch()
-  
-  const filters = useIntroFilters()
-  
-  const hasFilters = useMemo(()=>{
-    return Object.keys(filters).length > 0
-  },[dispatch, filters])
-  
-  console.log(hasFilters)
+export function useClearIntroFilters() {
+  const dispatch = useDispatch();
 
-  const clearAllIntroFilters = () =>{
-      dispatch(clearIntroFilters())
-  }
+  const filters = useIntroFilters();
+
+  const hasFilters = useMemo(() => {
+    return Object.keys(filters).length > 0;
+  }, [dispatch, filters]);
+
+  console.log(hasFilters);
+
+  const clearAllIntroFilters = () => {
+    dispatch(clearIntroFilters());
+  };
 
   return {
     hasFilters,
-    clearAllIntroFilters
-  }
+    clearAllIntroFilters,
+  };
 }
 
 function useFilteredData(input: any[], filters: any) {
