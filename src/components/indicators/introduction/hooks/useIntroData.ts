@@ -1,6 +1,7 @@
 import { executeSQL } from '@carto/react-api';
-import { useEffect, useMemo, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { clearIntroFilters } from 'store/introSlice';
 import { RootState } from 'store/store';
 
 function useFetchData() {
@@ -62,6 +63,27 @@ export function useIntroFilters() {
   //@ts-ignore
   const introFilters = useSelector((state) => state.intro.filters);
   return introFilters;
+}
+
+export function useClearIntroFilters(){
+  const dispatch = useDispatch()
+  
+  const filters = useIntroFilters()
+  
+  const hasFilters = useMemo(()=>{
+    return Object.keys(filters).length > 0
+  },[dispatch, filters])
+  
+  console.log(hasFilters)
+
+  const clearAllIntroFilters = () =>{
+      dispatch(clearIntroFilters())
+  }
+
+  return {
+    hasFilters,
+    clearAllIntroFilters
+  }
 }
 
 function useFilteredData(input: any[], filters: any) {
