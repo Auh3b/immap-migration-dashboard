@@ -1,27 +1,16 @@
+import IntroRightView from './introductionViews/IntroRightView';
+import IntroMiddleView from './introductionViews/IntroMiddleView';
+import IntroLeftView from './introductionViews/IntroLeftView';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, Fab, Grid, Typography } from '@material-ui/core';
 import { ReactComponent as UnicefLogo } from 'assets/img/unicef.svg';
 import { ReactComponent as ImmapLogo } from 'assets/img/immapLogoAlt.svg';
 import { NavLink } from 'react-router-dom';
 import { ROUTE_PATHS } from 'routes';
-import { UNICEF_COLORS } from 'theme';
-import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
-import TotalAurora from 'components/indicators/introduction/TotalAurora';
-import TotalMigrants from 'components/indicators/introduction/TotalMigrants';
-import AverageGroupSize from 'components/indicators/introduction/AverageGroupSize';
-import ChildrenPercentage from 'components/indicators/introduction/ChildrenPercentage';
-import TotalChronicPatients from 'components/indicators/introduction/TotalChronicPatients';
-import TotalDisabled from 'components/indicators/introduction/TotalDisabled';
-import TotalPregnant from 'components/indicators/introduction/TotalPregnant';
-import TotalChildren from 'components/indicators/introduction/TotalChildren';
-import OrganisationCount from 'components/indicators/introduction/OrganisationCount';
-import AuroraLocation from 'components/indicators/introduction/AuroraLocation';
-import MigrantNationalities from 'components/indicators/introduction/MigrantNationalities';
-import TopOrganisations from 'components/indicators/introduction/TopOrganisations';
-import TopSurveyLocation from 'components/indicators/introduction/TopSurveyLocation';
-import PrincipalsImplementor from 'components/indicators/introduction/PrincipalsImplementor';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-import useIntroData, { useClearIntroFilters, useIntroFilters } from 'components/indicators/introduction/hooks/useIntroData';
+import useIntroData, {
+  useClearIntroFilters,
+} from 'components/indicators/introduction/hooks/useIntroData';
 import ClearAllIcon from '@material-ui/icons/ClearAll';
 
 const useStyles = makeStyles((theme) => ({
@@ -154,164 +143,9 @@ function IntroContent() {
 
   return (
     <Grid container wrap='nowrap' item className={classes.root}>
-      <LeftPanel />
-      <MiddlePanel data={auroraData} isLoading={isLoading} />
-      <RightPanel data={premiseData} isLoading={isLoading} />
-    </Grid>
-  );
-}
-
-const useLeftStyles = makeStyles((theme) => ({
-  root: {
-    paddingTop: theme.spacing(2),
-    paddingRight: theme.spacing(2),
-    BorderRight: `1px solid ${UNICEF_COLORS[0]}`,
-    flexWrap: 'nowrap',
-    [theme.breakpoints.down('lg')]: {
-      paddingTop: theme.spacing(1),
-    },
-    [theme.breakpoints.down('md')]: {
-      justifyContent: 'flex-start',
-    },
-  },
-  subtitle: {
-    ...theme.typography.caption,
-    marginBottom: theme.spacing(2),
-  },
-  description: {
-    [theme.breakpoints.down('lg')]: {
-      ...theme.typography.body1,
-      fontSize: '0.75rem',
-    },
-  },
-}));
-
-function LeftPanel() {
-  const classes = useLeftStyles();
-  return (
-    <Grid
-      container
-      direction='column'
-      justifyContent='space-between'
-      item
-      lg={3}
-      md={12}
-      className={classes.root}
-    >
-      <Grid item>
-        <Typography variant='subtitle1'>Nota metodológica</Typography>
-        <Typography className={classes.subtitle}>A Aurora Chatbot</Typography>
-        <Typography className={classes.description}>
-          El propósito de este reporte es apoyar el seguimiento a la recolección
-          de la información. En este sentido, toda la información contenida es
-          preliminar y esta en proceso de revisión.
-        </Typography>
-      </Grid>
-      <Grid item container spacing={2} alignItems='center'>
-        <Grid item>
-          <CalendarTodayIcon />
-        </Grid>
-        <Grid item>
-          <Typography variant='overline'>
-            06 de marzo al 03 de abril.
-          </Typography>
-        </Grid>
-      </Grid>
-    </Grid>
-  );
-}
-
-const useMiddleStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  indicatorsGroup: {
-    '&:first-child': {
-      backgroundColor: theme.palette.primary.main,
-      color: theme.palette.background.paper,
-      '& svg g': {
-        '& path, circle': {
-          fill: `${theme.palette.background.paper} !important`,
-        },
-      },
-      '& span': {
-        color: theme.palette.background.paper,
-      },
-    },
-    [theme.breakpoints.down('md')]: {
-      flexDirection: 'column',
-      gap: theme.spacing(2),
-    },
-  },
-}));
-
-interface DataContentPanel {
-  data: any[] | null;
-  isLoading?: Boolean;
-}
-
-function MiddlePanel({ data, isLoading }: DataContentPanel) {
-  const classes = useMiddleStyles();
-  return (
-    <Grid
-      wrap='nowrap'
-      container
-      direction='column'
-      item
-      className={classes.root}
-    >
-      <Grid wrap='nowrap' item container className={classes.indicatorsGroup}>
-        <TotalAurora data={data} isLoading={isLoading} />
-        <TotalMigrants data={data} isLoading={isLoading} />
-        <AverageGroupSize data={data} isLoading={isLoading} />
-        <ChildrenPercentage data={data} isLoading={isLoading} />
-      </Grid>
-      <Grid wrap='nowrap' item container className={classes.indicatorsGroup}>
-        <AuroraLocation data={data} isLoading={isLoading} />
-        <MigrantNationalities data={data} isLoading={isLoading} />
-      </Grid>
-      <Grid wrap='nowrap' item container className={classes.indicatorsGroup}>
-        <TotalChildren data={data} isLoading={isLoading} />
-        <TotalPregnant data={data} isLoading={isLoading} />
-      </Grid>
-      <Grid wrap='nowrap' item container className={classes.indicatorsGroup}>
-        <TotalDisabled data={data} isLoading={isLoading} />
-        <TotalChronicPatients data={data} isLoading={isLoading} />
-      </Grid>
-    </Grid>
-  );
-}
-
-const useRightStyles = makeStyles((theme) => ({
-  root: {
-    overflowY: 'auto',
-    height: '100%',
-    maxHeight: '85vh',
-    BorderLeft: `1px solid ${UNICEF_COLORS[0]}`,
-    [theme.breakpoints.down('md')]: {
-      overflow: 'none',
-      height: 'none',
-      maxHeight: 'none',
-    },
-  },
-}));
-
-function RightPanel({ data, isLoading }: DataContentPanel) {
-  const classes = useRightStyles();
-  return (
-    <Grid
-      container
-      wrap='nowrap'
-      direction='column'
-      item
-      md={12}
-      lg={3}
-      className={classes.root}
-    >
-      <OrganisationCount data={data} isLoading={isLoading} />
-      <TopSurveyLocation data={data} isLoading={isLoading} />
-      <TopOrganisations data={data} isLoading={isLoading} />
-      <PrincipalsImplementor data={data} isLoading={isLoading} />
+      <IntroLeftView />
+      <IntroMiddleView data={auroraData} isLoading={isLoading} />
+      <IntroRightView data={premiseData} isLoading={isLoading} />
     </Grid>
   );
 }
@@ -360,36 +194,45 @@ function ExitButton() {
   );
 }
 
-const useClearStyles = makeStyles((theme)=>({
-  root:{
+const useClearStyles = makeStyles((theme) => ({
+  root: {
     position: 'fixed',
     left: theme.spacing(4),
     bottom: theme.spacing(8),
     backgroundColor: theme.palette.error.main,
     color: theme.palette.background.paper,
-    [theme.breakpoints.down('md')]:{
+    [theme.breakpoints.down('md')]: {
       left: theme.spacing(2),
       bottom: theme.spacing(2),
-    }
+    },
   },
-  text:{
-    marginRight: theme.spacing(2)
-  }
-}))
+  text: {
+    marginRight: theme.spacing(2),
+  },
+}));
 
-function ClearFiltersButton(){
-  const classes = useClearStyles()
-  const { hasFilters, clearAllIntroFilters } = useClearIntroFilters()
+function ClearFiltersButton() {
+  const classes = useClearStyles();
+  const { hasFilters, clearAllIntroFilters } = useClearIntroFilters();
   return (
     <>
-      {hasFilters && 
-        <Fab onClick={clearAllIntroFilters} size='large' variant='extended' className={classes.root}>
-            <Typography  color='inherit' variant='overline' className={classes.text}>
-              Clear All
-            </Typography>
-            <ClearAllIcon />
+      {hasFilters && (
+        <Fab
+          onClick={clearAllIntroFilters}
+          size='large'
+          variant='extended'
+          className={classes.root}
+        >
+          <Typography
+            color='inherit'
+            variant='overline'
+            className={classes.text}
+          >
+            Clear All
+          </Typography>
+          <ClearAllIcon />
         </Fab>
-      }
+      )}
     </>
-  )
+  );
 }
