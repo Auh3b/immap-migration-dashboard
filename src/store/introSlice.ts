@@ -4,36 +4,35 @@ import { createSlice } from '@reduxjs/toolkit';
 const slice = createSlice({
   name: 'intro',
   initialState: {
-    filters: {}
+    filters: {},
   },
   reducers: {
     addIntroFilter: (state, action) => {
-      const { owner, source } = action.payload
-      const dataSource = state.filters[source]
-      if(!dataSource){
-        state.filters[source]={}
-        if(!state.filters[source][owner]){
-          state.filters[source][owner]={}
+      const { owner, source } = action.payload;
+      const dataSource = state.filters[source];
+      if (!dataSource) {
+        state.filters[source] = {};
+        if (!state.filters[source][owner]) {
+          state.filters[source][owner] = {};
         }
       }
-      state.filters[source][owner] = {...action.payload}
-
+      state.filters[source][owner] = { ...action.payload };
     },
-    removeIntroFilter: (state, action) =>{
-      const { owner, source } = action.payload
-      const dataSource = state.filters[source]
-      if(dataSource){
-        if(dataSource[owner]){
-          delete dataSource[owner]
+    removeIntroFilter: (state, action) => {
+      const { owner, source } = action.payload;
+      const dataSource = state.filters[source];
+      if (dataSource) {
+        if (dataSource[owner]) {
+          delete dataSource[owner];
         }
       }
-    }
+    },
   },
 });
 
 export default slice.reducer;
 
-console.log(slice)
+console.log(slice);
 
 export const addIntroFilter = (payload: any) => ({
   type: 'intro/addIntroFilter',

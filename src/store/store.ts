@@ -20,7 +20,7 @@ interface AppStore extends Store {
 const staticReducers = {
   app: appSlice,
   map: mapSlice,
-  intro: introSlice
+  intro: introSlice,
 };
 
 let store: AppStore = {
