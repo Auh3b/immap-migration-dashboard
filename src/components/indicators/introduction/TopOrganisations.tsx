@@ -7,6 +7,7 @@ import TitleWrapper from './utils/TitleWrapper';
 import { useDispatch } from 'react-redux';
 import { addIntroFilter, removeIntroFilter } from 'store/introSlice';
 import useIntroCategoryChange from './hooks/useCategoryChange';
+import useIntroWidgetFilter from './hooks/useIntroWidgetFilter';
 
 const title = 'Top de 5 organizaciones';
 const column = 'org_pert1';
@@ -29,6 +30,11 @@ export default function TopOrganisations({
       return top5.slice(0, 5);
     }
   }, [_data]);
+  
+  const selectedCategories = useIntroWidgetFilter({
+    source,
+    owner: id
+  })
 
  const handleSelectedCategoriesChange = useIntroCategoryChange({
     source,
@@ -39,7 +45,7 @@ export default function TopOrganisations({
   return (
     <TitleWrapper title={title} subtitle={subtitle}>
       <Grid item>
-        <CategoryWidgetUI  onSelectedCategoriesChange={handleSelectedCategoriesChange} data={data} />
+        <CategoryWidgetUI  onSelectedCategoriesChange={handleSelectedCategoriesChange} selectedCategories={selectedCategories} data={data} />
       </Grid>
     </TitleWrapper>
   );

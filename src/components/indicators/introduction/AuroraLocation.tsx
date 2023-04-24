@@ -1,9 +1,10 @@
 import { PieWidgetUI } from '@carto/react-ui';
 import { useMemo } from 'react';
 import groupCategories from '../utils/groupCategories';
-import { Grid, useMediaQuery, useTheme } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import TitleWrapper from './utils/TitleWrapper';
 import useIntroCategoryChange from './hooks/useCategoryChange';
+import useIntroWidgetFilter from './hooks/useIntroWidgetFilter';
 
 const title = 'Distribución por zona geográfica donde la  persona conectó';
 const column = 'e004_regio';
@@ -18,15 +19,16 @@ export default function AuroraLocation({
   data: any[];
   isLoading: Boolean;
 }) {
-  const theme = useTheme();
-  const lg = useMediaQuery(theme.breakpoints.down('lg'));
   const data = useMemo(() => {
     if (_data) {
       return groupCategories(_data, column);
     }
     return [];
   }, [_data]);
-
+  const selectedCategories = useIntroWidgetFilter({
+    source,
+    owner: id
+  })
   const handleSelectedCategoriesChange = useIntroCategoryChange({
     source,
     column,
@@ -36,7 +38,7 @@ export default function AuroraLocation({
   return (
     <TitleWrapper title={title} subtitle={subtitle}>
       <Grid item>
-        <PieWidgetUI onSelectedCategoriesChange={handleSelectedCategoriesChange} data={data} height={'225px'} />
+        <PieWidgetUI onSelectedCategoriesChange={handleSelectedCategoriesChange} selectedCategories={selectedCategories} data={data} height={'225px'} />
       </Grid>
     </TitleWrapper>
   );

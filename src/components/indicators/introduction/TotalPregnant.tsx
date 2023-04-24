@@ -16,18 +16,22 @@ export default function TotalPregnant({
 }) {
   const data = useMemo(() => {
     if (_data) {
-      const groupValue = groupValuesByColumn({
-        data: _data,
-        keysColumn: columns[0],
-        operation: AggregationTypes.COUNT,
-        valuesColumns: columns,
-      });
-      const yesValues =
-        groupValue[
-          //@ts-ignore
-          groupValue.findIndex((d) => d?.name.toLocaleLowerCase() === 'si')
-        ];
-      return yesValues.value;
+      try {
+        const groupValue = groupValuesByColumn({
+          data: _data,
+          keysColumn: columns[0],
+          operation: AggregationTypes.COUNT,
+          valuesColumns: columns,
+        });
+        const yesValues =
+          groupValue[
+            //@ts-ignore
+            groupValue.findIndex((d) => d?.name.toLocaleLowerCase() === 'si')
+          ];
+        return yesValues.value;
+      } catch (error) {
+        return 0
+      }
     }
     return 0;
   }, [_data]);

@@ -4,6 +4,7 @@ import groupCategories from '../utils/groupCategories';
 import { Grid } from '@material-ui/core';
 import TitleWrapper from './utils/TitleWrapper';
 import useIntroCategoryChange from './hooks/useCategoryChange';
+import useIntroWidgetFilter from './hooks/useIntroWidgetFilter';
 
 const title = 'Nacionalidad de la persona conectada';
 const column = 'e08_pais_';
@@ -24,7 +25,10 @@ export default function MigrantNationalities({
     }
     return [];
   }, [_data]);
-
+  const selectedCategories = useIntroWidgetFilter({
+    source,
+    owner: id
+  })
   const handleSelectedCategoriesChange = useIntroCategoryChange({
     source,
     column,
@@ -34,7 +38,7 @@ export default function MigrantNationalities({
   return (
     <TitleWrapper title={title} subtitle={subtitle} isLoading={isLoading}>
       <Grid item>
-        <PieWidgetUI onSelectedCategoriesChange={handleSelectedCategoriesChange} data={data} height={'225px'} />
+        <PieWidgetUI onSelectedCategoriesChange={handleSelectedCategoriesChange} selectedCategories={selectedCategories} data={data} height={'225px'} />
       </Grid>
     </TitleWrapper>
   );

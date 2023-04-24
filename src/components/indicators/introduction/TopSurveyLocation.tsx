@@ -7,6 +7,7 @@ import TitleWrapper from './utils/TitleWrapper';
 import { useDispatch } from 'react-redux';
 import { addIntroFilter, removeIntroFilter } from 'store/introSlice';
 import useIntroCategoryChange from './hooks/useCategoryChange';
+import useIntroWidgetFilter from './hooks/useIntroWidgetFilter';
 
 const title = 'Total de encuestas por área de recolección';
 const column = 'erm';
@@ -30,6 +31,11 @@ export default function TopSurveyLocation({
     }
   }, [_data]);
 
+  const selectedCategories = useIntroWidgetFilter({
+    source,
+    owner: id
+  })
+
  const handleSelectedCategoriesChange = useIntroCategoryChange({
     source,
     column,
@@ -39,7 +45,7 @@ export default function TopSurveyLocation({
   return (
     <TitleWrapper title={title} subtitle={subtitle}>
       <Grid item>
-        <CategoryWidgetUI onSelectedCategoriesChange={handleSelectedCategoriesChange} data={data} />
+        <CategoryWidgetUI onSelectedCategoriesChange={handleSelectedCategoriesChange} selectedCategories={selectedCategories} data={data} />
       </Grid>
     </TitleWrapper>
   );
