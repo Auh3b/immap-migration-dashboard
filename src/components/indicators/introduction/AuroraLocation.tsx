@@ -9,8 +9,8 @@ import useIntroWidgetFilter from './hooks/useIntroWidgetFilter';
 const title = 'Distribución por zona geográfica donde la  persona conectó';
 const column = 'e004_regio';
 const subtitle = '';
-const source = 'auroraData'
-const id = 'auroraLocations'
+const source = 'auroraData';
+const id = 'auroraLocations';
 
 export default function AuroraLocation({
   data: _data,
@@ -27,18 +27,23 @@ export default function AuroraLocation({
   }, [_data]);
   const selectedCategories = useIntroWidgetFilter({
     source,
-    owner: id
-  })
+    owner: id,
+  });
   const handleSelectedCategoriesChange = useIntroCategoryChange({
     source,
     column,
     owner: id,
-  })
+  });
 
   return (
     <TitleWrapper title={title} subtitle={subtitle}>
       <Grid item>
-        <PieWidgetUI onSelectedCategoriesChange={handleSelectedCategoriesChange} selectedCategories={selectedCategories} data={data} height={'225px'} />
+        <PieWidgetUI
+          onSelectedCategoriesChange={handleSelectedCategoriesChange}
+          selectedCategories={selectedCategories}
+          data={data}
+          height={'225px'}
+        />
       </Grid>
     </TitleWrapper>
   );

@@ -12,8 +12,8 @@ import useIntroWidgetFilter from './hooks/useIntroWidgetFilter';
 const title = 'Total de encuestas por área de recolección';
 const column = 'erm';
 const subtitle = '';
-const source = 'premiseData'
-const id = 'topSurveySites'
+const source = 'premiseData';
+const id = 'topSurveySites';
 export default function TopSurveyLocation({
   data: _data,
   isLoading,
@@ -21,7 +21,7 @@ export default function TopSurveyLocation({
   data: any[];
   isLoading: Boolean;
 }) {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const data = useMemo(() => {
     if (_data) {
       const category = groupCategories(_data, column);
@@ -33,19 +33,23 @@ export default function TopSurveyLocation({
 
   const selectedCategories = useIntroWidgetFilter({
     source,
-    owner: id
-  })
+    owner: id,
+  });
 
- const handleSelectedCategoriesChange = useIntroCategoryChange({
+  const handleSelectedCategoriesChange = useIntroCategoryChange({
     source,
     column,
     owner: id,
-  })
+  });
 
   return (
     <TitleWrapper title={title} subtitle={subtitle}>
       <Grid item>
-        <CategoryWidgetUI onSelectedCategoriesChange={handleSelectedCategoriesChange} selectedCategories={selectedCategories} data={data} />
+        <CategoryWidgetUI
+          onSelectedCategoriesChange={handleSelectedCategoriesChange}
+          selectedCategories={selectedCategories}
+          data={data}
+        />
       </Grid>
     </TitleWrapper>
   );

@@ -9,8 +9,8 @@ import useIntroWidgetFilter from './hooks/useIntroWidgetFilter';
 const title = 'Nacionalidad de la persona conectada';
 const column = 'e08_pais_';
 const subtitle = '';
-const source = 'auroraData'
-const id = 'topOrganisations'
+const source = 'auroraData';
+const id = 'topOrganisations';
 
 export default function MigrantNationalities({
   data: _data,
@@ -27,18 +27,23 @@ export default function MigrantNationalities({
   }, [_data]);
   const selectedCategories = useIntroWidgetFilter({
     source,
-    owner: id
-  })
+    owner: id,
+  });
   const handleSelectedCategoriesChange = useIntroCategoryChange({
     source,
     column,
     owner: id,
-  })
+  });
 
   return (
     <TitleWrapper title={title} subtitle={subtitle} isLoading={isLoading}>
       <Grid item>
-        <PieWidgetUI onSelectedCategoriesChange={handleSelectedCategoriesChange} selectedCategories={selectedCategories} data={data} height={'225px'} />
+        <PieWidgetUI
+          onSelectedCategoriesChange={handleSelectedCategoriesChange}
+          selectedCategories={selectedCategories}
+          data={data}
+          height={'225px'}
+        />
       </Grid>
     </TitleWrapper>
   );

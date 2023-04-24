@@ -12,8 +12,8 @@ import useIntroWidgetFilter from './hooks/useIntroWidgetFilter';
 const title = 'Top de 5 organizaciones';
 const column = 'org_pert1';
 const subtitle = '';
-const source = 'premiseData'
-const id = 'topOrganisations'
+const source = 'premiseData';
+const id = 'topOrganisations';
 export default function TopOrganisations({
   data: _data,
   isLoading,
@@ -21,7 +21,7 @@ export default function TopOrganisations({
   data: any[];
   isLoading: Boolean;
 }) {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const data = useMemo(() => {
     if (_data) {
       const category = groupCategories(_data, column);
@@ -30,22 +30,26 @@ export default function TopOrganisations({
       return top5.slice(0, 5);
     }
   }, [_data]);
-  
+
   const selectedCategories = useIntroWidgetFilter({
     source,
-    owner: id
-  })
+    owner: id,
+  });
 
- const handleSelectedCategoriesChange = useIntroCategoryChange({
+  const handleSelectedCategoriesChange = useIntroCategoryChange({
     source,
     column,
     owner: id,
-  })
+  });
 
   return (
     <TitleWrapper title={title} subtitle={subtitle}>
       <Grid item>
-        <CategoryWidgetUI  onSelectedCategoriesChange={handleSelectedCategoriesChange} selectedCategories={selectedCategories} data={data} />
+        <CategoryWidgetUI
+          onSelectedCategoriesChange={handleSelectedCategoriesChange}
+          selectedCategories={selectedCategories}
+          data={data}
+        />
       </Grid>
     </TitleWrapper>
   );
