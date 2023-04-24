@@ -2,14 +2,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Button, Grid, Typography } from '@material-ui/core';
 import { ReactComponent as UnicefLogo } from 'assets/img/unicef.svg';
 import { ReactComponent as ImmapLogo } from 'assets/img/immapLogoAlt.svg';
-import { useEffect, useMemo, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { ROUTE_PATHS } from 'routes';
 import { UNICEF_COLORS } from 'theme';
 import CalendarTodayIcon from '@material-ui/icons/CalendarToday';
-import { RootState } from 'store/store';
-import { useSelector } from 'react-redux';
-import { executeSQL } from '@carto/react-api';
 import TotalAurora from 'components/indicators/introduction/TotalAurora';
 import TotalMigrants from 'components/indicators/introduction/TotalMigrants';
 import AverageGroupSize from 'components/indicators/introduction/AverageGroupSize';
@@ -151,8 +147,8 @@ const useContentStyles = makeStyles((theme) => ({
 }));
 
 function IntroContent() {
-  const classes = useContentStyles()
-  const { auroraData, premiseData, isLoading } = useIntroData()
+  const classes = useContentStyles();
+  const { auroraData, premiseData, isLoading } = useIntroData();
 
   return (
     <Grid container wrap='nowrap' item className={classes.root}>
