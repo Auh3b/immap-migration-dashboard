@@ -30,7 +30,7 @@ export default function TotalDisabled({
           ];
         return yesValues.value;
       } catch (error) {
-        return 0
+        return 0;
       }
     }
     return 0;

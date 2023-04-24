@@ -30,7 +30,7 @@ export default function TotalPregnant({
           ];
         return yesValues.value;
       } catch (error) {
-        return 0
+        return 0;
       }
     }
     return 0;
