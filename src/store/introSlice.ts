@@ -27,6 +27,9 @@ const slice = createSlice({
         }
       }
     },
+    clearIntroFilters: (state, action) =>{
+      state.filters = {}
+    }
   },
 });
 
@@ -42,3 +45,6 @@ export const removeIntroFilter = (payload: any) => ({
   type: 'intro/removeIntroFilter',
   payload,
 });
+export const clearIntroFilters = () =>({
+  type: 'intro/clearIntroFilters'
+})
