@@ -69,6 +69,7 @@ export default function HotspotsLayer() {
 
   if (hotspotsLayer && source && data) {
     return new CustomGeoJsonLayer({
+      ...cartoLayerProps,
       id: HOTSPOTS_LAYER_ID,
       data: new Promise((resolve, reject) => resolve(data)),
       getFillColor: HOTSPOT_COLOR,
