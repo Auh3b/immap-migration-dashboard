@@ -92,8 +92,8 @@ export default function MapContainer({ children }: { children?: ReactNode }) {
         <ZoomControl className={classes.zoomControl} showCurrentZoom />
       )}
       {!isGmaps && <CartoLogoMap className={classes.cartoLogoMap} />}
-      <InformationSection />
-      <QuickStats />
+      {/* <InformationSection /> */}
+      {/* <QuickStats /> */}
       {children && children}
       <LegendWidget initialCollapsed={true} className={classes.legend} />
     </Grid>

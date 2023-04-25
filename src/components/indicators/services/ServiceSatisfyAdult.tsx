@@ -36,8 +36,8 @@ const methodParams = {
 
 const extraProps = {
   labels,
-  colors
-}
+  colors,
+};
 
 const props = {
   id,

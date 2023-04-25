@@ -37,8 +37,8 @@ const methodParams = {
 };
 const extraProps = {
   labels,
-  colors
-}
+  colors,
+};
 
 const props = {
   id,
@@ -57,8 +57,9 @@ export default function ServiceAccessAdult({
   operation,
 }: BasicWidgetType) {
   const { widget } = useWidgetEffect(
-    <CustomColumnBarWidget {...props} dataSource={dataSource} />
-  , [dataSource, operation]);
+    <CustomColumnBarWidget {...props} dataSource={dataSource} />,
+    [dataSource, operation],
+  );
   return (
     <Grid item>
       {widget}
