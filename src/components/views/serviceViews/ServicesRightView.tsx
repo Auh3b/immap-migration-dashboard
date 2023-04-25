@@ -9,7 +9,7 @@ const ServiceAccessAdult = lazy(
 );
 
 export default function ServicesRightView({ dataSources, classes }: any) {
-  const { mainSource } = dataSources;
+  const { mainSource, aggregateServicesSource } = dataSources;
 
   return (
     <MainColumnView>

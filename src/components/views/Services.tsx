@@ -76,7 +76,7 @@ export default function Services() {
         },
         right: {
           element: (
-            <ServicesRightView classes={classes} dataSources={{ mainSource }} />
+            <ServicesRightView classes={classes} dataSources={{ mainSource, aggregateServicesSource }} />
           ),
           expandable: true,
         },
