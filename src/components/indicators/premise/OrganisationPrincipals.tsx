@@ -6,7 +6,7 @@ import WidgetNote from 'components/common/customWidgets/WidgetNote';
 import groupCategories from '../utils/groupCategories';
 import useWidgetEffect from '../utils/useWidgetEffect';
 
-const NOTE = 'Socio Principal';
+const NOTE = 'Nombre de la organización a la que pertenece el encuestado ';
 const id = 'organisationsPrincipals';
 const title = 'Socio Principal';
 const column = 'org_pert2';
