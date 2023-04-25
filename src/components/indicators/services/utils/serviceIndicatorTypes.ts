@@ -17,12 +17,12 @@ export const aidTypes = new Map([
 
 export const serviceLabels = new Map([
   [3, 'Difícil'],
-  [1, 'Fácil'],
   [2, 'Regular'],
+  [1, 'Fácil'],
 ]);
 
 export const serviceColors = new Map([
-  ['Fácil', UNICEF_COLORS[0]],
-  ['Regular', UNICEF_COLORS[4]],
-  ['Difícil', UNICEF_COLORS[3]],
+  ['Fácil','#f03b20' ],
+  ['Regular', '#feb24c'],
+  ['Difícil', '#ffeda0'],
 ]);
