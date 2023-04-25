@@ -14,7 +14,7 @@ export interface useWidgetFetchProps {
   column?: string;
   method?: MethodFunc | null;
   methodParams?: {};
-  global?: boolean;
+  global?: Boolean;
 }
 
 /**
@@ -49,6 +49,7 @@ export default function useWidgetFetch({
       filters: source.filters,
       filtersLogicalOperator: source.filtersLogicalOperator,
       limit: null,
+      global,
     }),
     [source],
   );
@@ -60,6 +61,7 @@ export default function useWidgetFetch({
         getTileFeatures({
           sourceId: source.id,
           params,
+          global
         })
           .then((data) => {
             if (data && data.length > 0) {

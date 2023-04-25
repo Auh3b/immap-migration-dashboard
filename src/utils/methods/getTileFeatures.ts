@@ -5,6 +5,7 @@ import { executeTask, Methods } from '@carto/react-workers';
 interface getTileFeaturesProps {
   sourceId: string;
   params: getTileFeaturesPropsParams;
+  global?: Boolean
 }
 
 interface getTileFeaturesPropsParams {
@@ -18,6 +19,7 @@ interface getTileFeaturesPropsParams {
 export default async function getTileFeatures({
   sourceId,
   params,
+  global
 }: getTileFeaturesProps) {
   const { data } = await executeTask(sourceId, Methods.FEATURES_RAW, params);
   return data;
