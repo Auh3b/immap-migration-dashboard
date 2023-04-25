@@ -22,7 +22,7 @@ export default function AggregateServicesChildrenLayer() {
     return new CartoLayer({
       ...cartoLayerProps,
       id: AGGREGATE_SERVICES_CHILDREN_LAYER_ID,
-      getFillColor: [124, 21, 12, 0],
+      getFillColor: [0, 0, 0, 0],
       pointRadiusMinPixels: 2,
       pickable: true,
       stroked: false,
