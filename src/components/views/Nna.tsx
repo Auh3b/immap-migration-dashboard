@@ -80,12 +80,13 @@ export default function Nna() {
     <MainView>
       {{
         left: {
-          element: <ChildrenLeftView dataSources={sources} classes={classes} />,
+          element: <ChildrenLeftView dataSources={sources} classes={classes} />, expandable:true
         },
         right: {
           element: (
             <ChildrenRightView dataSources={sources} classes={classes} />
           ),
+           expandable:true
         },
       }}
     </MainView>

@@ -57,7 +57,8 @@ export default function PremiseService() {
             <PremiseMiddleView
               dataSources={{ premiseSource: premiseSource.id }}
             />
-          ),
+          )
+          , expandable:true
         },
       }}
     </MainView>
