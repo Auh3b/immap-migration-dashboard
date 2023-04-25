@@ -39,7 +39,7 @@ const props = {
   labels,
   extraProps,
   parentKey: aidTypes,
-  global: false
+  global: false,
 };
 
 export default function ServiceSatisfyAdult({
