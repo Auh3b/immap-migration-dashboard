@@ -5,6 +5,7 @@ const stackedGroupCategoriesAlt = (
   column: string,
   methodParams?: Record<string, unknown>,
 ) => {
+  console.log(input)
   //@ts-ignore
   const { aidTypes, labels, valueColumn } = methodParams;
   const values: any[] = [];
