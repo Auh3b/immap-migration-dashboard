@@ -14,6 +14,8 @@ import TotalGenders from 'components/indicators/introduction/TotalGenders';
 
 export const useMiddleStyles = makeStyles((theme) => ({
   root: {
+    maxHeight: '85vh',
+    overflowY: 'auto',
     flexGrow: 1,
   },
   indicatorsGroup: {
