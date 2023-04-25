@@ -1,4 +1,4 @@
-import { UNICEF_COLORS } from "theme";
+import { UNICEF_COLORS } from 'theme';
 
 export const aidTypes = new Map([
   [0, 'Ninguna'],
