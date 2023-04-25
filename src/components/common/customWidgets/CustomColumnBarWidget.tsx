@@ -13,7 +13,7 @@ export default function CustomColumnBarWidget({
   method,
   methodParams,
   column,
-  extraProps
+  extraProps,
 }: defaultCustomWidgetProps) {
   const { data, isLoading } = useWidgetFetch({
     id,
@@ -22,33 +22,40 @@ export default function CustomColumnBarWidget({
     column,
     methodParams,
   });
-  const { labels, colors, height } = extraProps
+  const { labels, colors, height } = extraProps;
   return (
     <CustomWidgetWrapper title={title} isLoading={isLoading}>
-      {data.length > 0 && !isLoading && <ColumnBarChart data={data} labels={labels} colors={colors} height={height}/>}
+      {data.length > 0 && !isLoading && (
+        <ColumnBarChart
+          data={data}
+          labels={labels}
+          colors={colors}
+          height={height}
+        />
+      )}
     </CustomWidgetWrapper>
   );
 }
 
 function ColumnBarChart({ data, labels, colors, height }: any) {
   const theme = useTheme();
-  const series = useMemo(()=>{
-    let seriesGroups: any[] =[]
-    const _labels = Array.from(labels).map(([key, value])=> value)
-    for (let label of _labels){
+  const series = useMemo(() => {
+    let seriesGroups: any[] = [];
+    const _labels = Array.from(labels).map(([key, value]) => value);
+    for (let label of _labels) {
       const seriesGroup = {
-          type: 'bar',
-          name: label,
-          data: data.map((d:any) => d[label]),
-          stack: 'percentage',
-          itemStyle: {
-            color: colors.get(label),
-          },
-        }
-        seriesGroups = [ ...seriesGroups, seriesGroup]
-      }
-      return seriesGroups
-    }, [data, labels, colors])
+        type: 'bar',
+        name: label,
+        data: data.map((d: any) => d[label]),
+        stack: 'percentage',
+        itemStyle: {
+          color: colors.get(label),
+        },
+      };
+      seriesGroups = [...seriesGroups, seriesGroup];
+    }
+    return seriesGroups;
+  }, [data, labels, colors]);
 
   const option = useMemo(
     () => ({
@@ -79,9 +86,9 @@ function ColumnBarChart({ data, labels, colors, height }: any) {
           hideOverlap: true,
           width: 100,
           overflow: 'break',
-          formatter(value:number){
-            return format('.0%')(value)
-          }
+          formatter(value: number) {
+            return format('.0%')(value);
+          },
         },
       },
       tooltip: {
