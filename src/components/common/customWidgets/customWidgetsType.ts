@@ -40,4 +40,5 @@ export interface defaultCustomWidgetProps {
   yAxisFormatter?: Function;
   parentKey?: any;
   extraProps?: Record<string, unknown>;
+  global?: Boolean;
 }
