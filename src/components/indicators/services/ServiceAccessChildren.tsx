@@ -10,14 +10,15 @@ import {
 } from './utils/serviceIndicatorTypes';
 import CustomColumnBarWidget from 'components/common/customWidgets/CustomColumnBarWidget';
 import stackedGroupCategoriesAlt from '../utils/stackedGroupCategoryAlt';
+import stackedGroupCategoriesAlt2 from '../utils/stackedGroupCategoriesAlt2';
 
 const NOTE = 'Percepción de accesibilidad a servicios humanitarios';
 const id = 'accessServicesAdult';
 const title = 'Accesibilidad';
 const column = 'm18_me_con';
-const valueColumn = 'm19_respec';
+const valueColumn = 'm19';
 const filterType = _FilterTypes.IN;
-const method = stackedGroupCategoriesAlt;
+const method = stackedGroupCategoriesAlt2;
 const methodParams = {
   aidTypes,
   labels,

@@ -10,14 +10,15 @@ import {
 } from './utils/serviceIndicatorTypes';
 import CustomColumnBarWidget from 'components/common/customWidgets/CustomColumnBarWidget';
 import stackedGroupCategoriesAlt from '../utils/stackedGroupCategoryAlt';
+import stackedGroupCategoriesAlt2 from '../utils/stackedGroupCategoriesAlt2';
 
 const NOTE = 'Nivel de satisfacción del servicio prestado al migrante';
 const id = 'serviceQualityAdult';
 const title = 'Calidad del servicio';
 const column = 'm18_me_con';
-const valueColumn = 'm20__que';
+const valueColumn = 'm20';
 const filterType = _FilterTypes.IN;
-const method = stackedGroupCategoriesAlt;
+const method = stackedGroupCategoriesAlt2;
 const methodParams = {
   aidTypes,
   labels,
