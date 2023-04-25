@@ -14,6 +14,7 @@ export default function CustomColumnBarWidget({
   methodParams,
   column,
   extraProps,
+  global,
 }: defaultCustomWidgetProps) {
   const { data, isLoading } = useWidgetFetch({
     id,
@@ -21,6 +22,7 @@ export default function CustomColumnBarWidget({
     method,
     column,
     methodParams,
+    global,
   });
   const { labels, colors, height } = extraProps;
   return (
