@@ -5,7 +5,7 @@ import CustomCategoryWidget from 'components/common/customWidgets/CustomCategory
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
 import concatenatedValues from '../utils/concatenatedValues';
 import useWidgetEffect from '../utils/useWidgetEffect';
-import aidTypes from './utils/aidTypes';
+import {aidTypes} from './utils/serviceIndicatorTypes';
 
 const NOTE = 'Ayudas humanitarias recibidas según zona de tránsito';
 const id = 'serviceTypeAdult';

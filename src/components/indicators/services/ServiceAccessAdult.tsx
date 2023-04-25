@@ -1,27 +1,11 @@
 import { _FilterTypes } from '@carto/react-core';
 import { Grid } from '@material-ui/core';
 import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType';
-import CustomComparativeCategoryWidget from 'components/common/customWidgets/CustomComparativeCategoryWidget';
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
-import stackedGroupCategories from '../utils/stackedGroupCategories';
 import useWidgetEffect from '../utils/useWidgetEffect';
-import aidTypes from './utils/aidTypes';
+import {aidTypes, serviceColors as colors, serviceLabels as labels} from './utils/serviceIndicatorTypes';
 import stackedGroupCategoriesAlt from '../utils/stackedGroupCategoryAlt';
 import CustomColumnBarWidget from 'components/common/customWidgets/CustomColumnBarWidget';
-
-const labels = new Map([
-  [1, 'Fácil'],
-  [2, 'Regular'],
-  [3, 'Difícil'],
-  [0, 'No calificado'],
-]);
-
-const colors = new Map([
-  ['No calificado', '#bcbcbc'],
-  ['Fácil', '#32a852'],
-  ['Regular', '#fa0'],
-  ['Difícil', '#f27'],
-]);
 
 const NOTE = 'Percepción de accesibilidad a servicios humanitarios';
 const id = 'accessServicesAdult';
