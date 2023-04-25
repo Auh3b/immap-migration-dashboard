@@ -77,7 +77,8 @@ export default function Services() {
         right: {
           element: (
             <ServicesRightView classes={classes} dataSources={{ mainSource }} />
-          ),
+            ),
+          expandable: true,
         },
       }}
     </MainView>
