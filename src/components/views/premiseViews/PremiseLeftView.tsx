@@ -5,14 +5,14 @@ import { MainColumnView } from 'components/common/MainColumnView';
 import OrgSurveyed from 'components/indicators/premise/OrgSurveyed';
 // import PremiseGenderComposition from 'components/indicators/premise/PremiseGenderComposition';
 // import ServiceLocation from 'components/indicators/premise/ServiceLocation';
-import ServiceTime from 'components/indicators/premise/ServiceTime';
+// import ServiceTime from 'components/indicators/premise/ServiceTime';
 // import WasteManagement from 'components/indicators/premise/WasteManagement';
 import ComplaintReporting from 'components/indicators/premise/ComplaintReporting';
 // import OtherLanguges from 'components/indicators/premise/OtherLanguges';
 import ViewSourceType from '../utils/viewSourceType';
-import SocialServices from 'components/indicators/premise/SocialServices';
+// import SocialServices from 'components/indicators/premise/SocialServices';
 import ServicesProvided from 'components/indicators/premise/ServicesProvided';
-import OtherServiceTypes from 'components/indicators/premise/OtherServiceTypes';
+// import OtherServiceTypes from 'components/indicators/premise/OtherServiceTypes';
 import WomenDiffServices from 'components/indicators/premise/WomenDiffServices';
 import WomenDiffServicesAvailability from 'components/indicators/premise/WomenDiffServicesAvailability';
 
@@ -21,11 +21,11 @@ export default function PremiseLeftView({ dataSources }: ViewSourceType) {
   return (
     <MainColumnView>
       {/* <PremiseGenderComposition dataSource={premiseSource} /> */}
-      <SocialServices dataSource={premiseSource} />
+      {/* <SocialServices dataSource={premiseSource} /> */}
       <OrgSurveyed dataSource={premiseSource} />
       <ServicesProvided dataSource={premiseSource} />
-      <OtherServiceTypes dataSource={premiseSource} />
-      <ServiceTime dataSource={premiseSource} />
+      {/* <OtherServiceTypes dataSource={premiseSource} /> */}
+      {/* <ServiceTime dataSource={premiseSource} /> */}
       <WomenDiffServicesAvailability dataSource={premiseSource} />
       <WomenDiffServices dataSource={premiseSource} />
       {/* <ServiceLocation dataSource={premiseSource} /> */}
