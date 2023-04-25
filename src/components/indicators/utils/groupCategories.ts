@@ -4,6 +4,7 @@ import {
   groupValuesByColumn,
 } from '@carto/react-core';
 import { defaultFilterFunction } from './miscelleniousFunctions';
+import { ascending } from 'd3';
 
 export default function groupCategories(
   input: any[],
@@ -17,7 +18,7 @@ export default function groupCategories(
     operation: AggregationTypes.COUNT,
   });
   if (groups) {
-    return groups;
+    return groups.sort((a, b)=> ascending(a.name, b.name));
   }
 
   return [];
