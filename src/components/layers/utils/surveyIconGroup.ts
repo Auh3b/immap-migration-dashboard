@@ -46,4 +46,16 @@ export const iconGroupsConfig: IconGroupConfig = [
     filterFunction: (d: any) => +d['lon_mon6'] !== 999999,
     color: d3Hex2RGB(6),
   },
+  {
+    name: 'Push 7',
+    coordinatesAccessor: (d: any) => [+d['lon_mon7'], +d['lat_mon7']],
+    filterFunction: (d: any) => +d['lon_mon7'] !== 999999,
+    color: d3Hex2RGB(7),
+  },
+  {
+    name: 'Push 8',
+    coordinatesAccessor: (d: any) => [+d['lon_mon8'], +d['lat_mon8']],
+    filterFunction: (d: any) => +d['lon_mon8'] !== 999999,
+    color: d3Hex2RGB(0),
+  },
 ];
