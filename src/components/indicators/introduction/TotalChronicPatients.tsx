@@ -4,7 +4,7 @@ import { useMemo } from 'react';
 import { AggregationTypes, groupValuesByColumn } from '@carto/react-core';
 import iconStyles from './utils/iconStyles';
 const title = 'Personas con enfermedades crónicas';
-const subtitle = 'Reportadas en Aurora Chatbot';
+const subtitle = 'Reportadas en Chatbot';
 const columns = ['m02__en_t'];
 
 export default function TotalChronicPatients({

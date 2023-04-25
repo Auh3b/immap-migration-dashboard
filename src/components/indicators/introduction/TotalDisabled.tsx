@@ -4,7 +4,7 @@ import { useMemo } from 'react';
 import { AggregationTypes, groupValuesByColumn } from '@carto/react-core';
 import iconStyles from './utils/iconStyles';
 const title = 'Personas con condición de discapacidad';
-const subtitle = 'Reportadas en Aurora Chatbot';
+const subtitle = 'Reportadas en Chatbot';
 const columns = ['m03__dent'];
 
 export default function TotalDisabled({

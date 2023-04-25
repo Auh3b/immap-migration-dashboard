@@ -1,5 +1,4 @@
 import {
-  Divider,
   FormControl,
   Grid,
   InputLabel,
@@ -67,7 +66,6 @@ const method: MethodFunc = (input, column, params) => {
       output = [...output, newEntry];
     });
   }
-
   return output;
 };
 

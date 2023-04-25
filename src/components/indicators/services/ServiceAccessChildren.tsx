@@ -6,15 +6,17 @@ import WidgetNote from 'components/common/customWidgets/WidgetNote';
 import stackedGroupCategories from '../utils/stackedGroupCategories';
 import useWidgetEffect from '../utils/useWidgetEffect';
 import aidTypes from './utils/aidTypes';
+import CustomColumnBarWidget from 'components/common/customWidgets/CustomColumnBarWidget';
+import stackedGroupCategoriesAlt from '../utils/stackedGroupCategoryAlt';
 
 const labels = new Map([
-  [0, 'No calificado'],
   [1, 'Fácil'],
   [2, 'Regular'],
   [3, 'Difícil'],
+  [0, 'No calificado'],
 ]);
 
-const colorMap = new Map([
+const colors = new Map([
   ['No calificado', '#bcbcbc'],
   ['Fácil', '#32a852'],
   ['Regular', '#fa0'],
@@ -27,12 +29,17 @@ const title = 'Accesibilidad';
 const column = 'm18_me_con';
 const valueColumn = 'm19_respec';
 const filterType = _FilterTypes.IN;
-const method = stackedGroupCategories;
+const method = stackedGroupCategoriesAlt;
 const methodParams = {
   aidTypes,
   labels,
   valueColumn,
 };
+
+const extraProps = {
+  labels,
+  colors
+}
 
 const props = {
   id,
@@ -42,7 +49,7 @@ const props = {
   method,
   methodParams,
   labels,
-  colorMap,
+  extraProps,
   parentKey: aidTypes,
 };
 
@@ -51,7 +58,7 @@ export default function ServiceAccessChildren({
   operation,
 }: BasicWidgetType) {
   const { widget } = useWidgetEffect(
-    <CustomComparativeCategoryWidget {...props} dataSource={dataSource} />,
+    <CustomColumnBarWidget {...props} dataSource={dataSource} />,
     [dataSource, operation],
   );
   return (
