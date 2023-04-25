@@ -6,10 +6,10 @@ import WidgetNote from 'components/common/customWidgets/WidgetNote';
 import groupCategories from '../utils/groupCategories';
 import useWidgetEffect from '../utils/useWidgetEffect';
 
-const NOTE = 'Nombre de la organización a la que pertenece el encuestado';
-const id = 'organisationsSurveyed';
-const title = ' Socio implementador';
-const column = 'org_pert1';
+const NOTE = 'Socio Principal';
+const id = 'organisationsPrincipals';
+const title = 'Socio Principal';
+const column = 'org_pert2';
 const filterType = _FilterTypes.IN;
 const method = groupCategories;
 
@@ -21,7 +21,7 @@ const props = {
   method,
 };
 
-export default function OrgSurveyed({
+export default function OrganisationPrincipals({
   dataSource,
   operation,
 }: BasicWidgetType) {

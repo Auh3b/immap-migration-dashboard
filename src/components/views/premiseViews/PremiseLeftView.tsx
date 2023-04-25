@@ -15,6 +15,7 @@ import ServicesProvided from 'components/indicators/premise/ServicesProvided';
 // import OtherServiceTypes from 'components/indicators/premise/OtherServiceTypes';
 import WomenDiffServices from 'components/indicators/premise/WomenDiffServices';
 import WomenDiffServicesAvailability from 'components/indicators/premise/WomenDiffServicesAvailability';
+import OrganisationPrincipals from 'components/indicators/premise/OrganisationPrincipals';
 
 export default function PremiseLeftView({ dataSources }: ViewSourceType) {
   const { premiseSource } = dataSources;
@@ -23,6 +24,7 @@ export default function PremiseLeftView({ dataSources }: ViewSourceType) {
       {/* <PremiseGenderComposition dataSource={premiseSource} /> */}
       {/* <SocialServices dataSource={premiseSource} /> */}
       <OrgSurveyed dataSource={premiseSource} />
+      <OrganisationPrincipals dataSource={premiseSource}/>
       <ServicesProvided dataSource={premiseSource} />
       {/* <OtherServiceTypes dataSource={premiseSource} /> */}
       {/* <ServiceTime dataSource={premiseSource} /> */}
