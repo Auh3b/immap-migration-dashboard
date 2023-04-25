@@ -1,13 +1,13 @@
-import { descending, rollup } from "d3";
+import { descending, rollup } from 'd3';
 
 export default function stackCategoryTotals({
-input,
-labels,
-}:{
-  input: {key: string, value: string}[]
-  labels: any
+  input,
+  labels,
+}: {
+  input: { key: string; value: string }[];
+  labels: any;
 }) {
-   const _groups = Array.from(
+  const _groups = Array.from(
     rollup(
       input,
       (v) => v.length,
@@ -34,5 +34,5 @@ labels,
     });
     groups = [...groups, Object.fromEntries(newValue)];
   }
-  return groups.sort((a, b) => descending(a.name, b.name))
+  return groups.sort((a, b) => descending(a.name, b.name));
 }
