@@ -46,18 +46,19 @@ export default function AggregateServiceLayer() {
     return new CartoLayer({
       ...cartoLayerProps,
       id: AGGREGATE_SERVICE_LAYER_ID,
-      getFillColor: AGGREGATE_SERVICE_COLORS.Punto,
-      pointRadiusMinPixels: 3,
+      getFillColor: [124, 21, 12, 0],
+      pointRadiusMinPixels: 2,
       pickable: true,
-      onDataLoad: (data: any) => {
-        dispatch(
-          updateLayer({
-            id: AGGREGATE_SERVICE_LAYER_ID,
-            layerAttributes: { ...layerConfig },
-          }),
-        );
-        cartoLayerProps.onDataLoad && cartoLayerProps.onDataLoad(data);
-      },
+      stroked: false,
+      // onDataLoad: (data: any) => {
+      //   dispatch(
+      //     updateLayer({
+      //       id: AGGREGATE_SERVICE_LAYER_ID,
+      //       layerAttributes: { ...layerConfig },
+      //     }),
+      //   );
+      //   cartoLayerProps.onDataLoad && cartoLayerProps.onDataLoad(data);
+      // },
     });
   }
 }
