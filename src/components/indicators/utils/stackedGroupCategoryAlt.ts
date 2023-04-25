@@ -31,33 +31,35 @@ const stackedGroupCategoriesAlt = (
     }
   }
 
-  const _groups = Array.from(rollup(
-    values,
-    (v) => v.length,
-    (d) => d.key,
-    (d) => d.value,
-  ));
+  const _groups = Array.from(
+    rollup(
+      values,
+      (v) => v.length,
+      (d) => d.key,
+      (d) => d.value,
+    ),
+  );
 
-  let groups: any[] = []
+  let groups: any[] = [];
 
-  for (let [name, valueMap] of _groups){
-    let newValue: any[] = [['name', name]]
-    let total = 0
+  for (let [name, valueMap] of _groups) {
+    let newValue: any[] = [['name', name]];
+    let total = 0;
     //@ts-ignore
-    Array.from(labels).forEach(([key,value]) => {
-      newValue = [...newValue, [value, valueMap.get(value) ?? 0]]
-      total += valueMap.get(value) ?? 0
+    Array.from(labels).forEach(([key, value]) => {
+      newValue = [...newValue, [value, valueMap.get(value) ?? 0]];
+      total += valueMap.get(value) ?? 0;
     });
-    newValue = newValue.map(([key, value], index)=> {
-      if(index === 0){
-        return [key, value]
+    newValue = newValue.map(([key, value], index) => {
+      if (index === 0) {
+        return [key, value];
       }
-      return [key, value/total]
-    })
-    groups = [...groups, Object.fromEntries(newValue)]
+      return [key, value / total];
+    });
+    groups = [...groups, Object.fromEntries(newValue)];
   }
 
-  return groups
+  return groups;
 };
 
 export default stackedGroupCategoriesAlt;
