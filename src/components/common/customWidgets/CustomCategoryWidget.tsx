@@ -17,6 +17,7 @@ export default function CustomCategoryWidget({
   column,
   filterType,
   labels = {},
+  order = 'ranking',
 }: defaultCustomWidgetProps) {
   const dispatch = useDispatch();
   const selectedCategories =
@@ -62,6 +63,7 @@ export default function CustomCategoryWidget({
   return (
     <CustomWidgetWrapper title={title} isLoading={isLoading} onError={error}>
       <CategoryWidgetUI
+        order={order}
         onSelectedCategoriesChange={handleSelectedCategoriesChange}
         selectedCategories={selectedCategories}
         labels={labels}
