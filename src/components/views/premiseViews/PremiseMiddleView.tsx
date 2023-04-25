@@ -15,10 +15,10 @@ export default function PremiseMiddleView({ dataSources }: ViewSourceType) {
   const { premiseSource } = dataSources;
   return (
     <Grid container item justifyContent='center'>
-      <Grid item xs={3} className={classes.divider}>
+      <Grid item xs={12} lg={6} className={classes.divider}>
         <SickPeoplePremise dataSource={premiseSource} />
       </Grid>
-      <Grid item xs={3} className={classes.divider}>
+      <Grid item xs={12} lg={6} className={classes.divider}>
         <LocationCapacity dataSource={premiseSource} />
       </Grid>
       {/* <Grid item xs={3} className={classes.divider}>
