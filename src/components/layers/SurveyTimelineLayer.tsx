@@ -162,7 +162,6 @@ class TimelineSurvey extends CompositeLayer<any, any> {
           iconAtlas: AtlasIcon,
           getIcon: () => 'marker',
           getIconSize: () => 3,
-          // visible: this.checkVisibility(),
           iconMapping: {
             marker: {
               x: 0,
