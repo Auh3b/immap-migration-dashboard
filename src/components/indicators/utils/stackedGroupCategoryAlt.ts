@@ -5,7 +5,6 @@ const stackedGroupCategoriesAlt = (
   column: string,
   methodParams?: Record<string, unknown>,
 ) => {
-  console.log(input)
   //@ts-ignore
   const { aidTypes, labels, valueColumn } = methodParams;
   const values: any[] = [];
@@ -60,7 +59,7 @@ const stackedGroupCategoriesAlt = (
     groups = [...groups, Object.fromEntries(newValue)];
   }
 
-  return groups.sort((a,b) => descending(a.name, b.name));
+  return groups.sort((a, b) => descending(a.name, b.name));
 };
 
 export default stackedGroupCategoriesAlt;

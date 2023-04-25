@@ -1,61 +1,69 @@
-import { AggregationTypes, groupValuesByColumn } from "@carto/react-core";
-import MethodFunc from "./methodType";
+import { AggregationTypes, groupValuesByColumn } from '@carto/react-core';
+import MethodFunc from './methodType';
+import { descending, rollup } from 'd3';
 
-const stackedGroupCategoriesAlt2: MethodFunc = (input, column, params) => {
-  let output: any[] = [];
-  const { columns: valueColumns } = params;
+const stackedGroupCategoriesAlt2: MethodFunc = (
+  input: any[],
+  column: string,
+  methodParams?: Record<string, unknown>,
+) => {
+  //@ts-ignore
+  const { aidTypes, labels, valueColumn } = methodParams;
+  //@ts-ignore
+  const values: any[] = input.map((d)=> ({key: aidTypes.get(d[column]) , value: labels.get(d[valueColumn]) }))
+  // for (let f of input) {
+  //   //@ts-ignore
+  //   const value = f[valueColumn].split(',');
+  //   const key = f[column].split(',');
+  //   for (let i = 0; i < key.length; i++) {
+  //     if (value[i]) {
+  //       values.push({
+  //         //@ts-ignore
+  //         key: aidTypes.get(+key[i]),
+  //         //@ts-ignore
+  //         value: +value[i] === 999999 ? labels.get(0) : labels.get(+value[i]),
+  //       });
+  //     } else {
+  //       values.push({
+  //         //@ts-ignore
+  //         key: aidTypes.get(+key[i]),
+  //         //@ts-ignore
+  //         value: labels.get(0),
+  //       });
+  //     }
+  //   }
+  // }
 
-  const services = new Map(
-    Array.from(
-      new Set(input.map((d) => d[column] + '_' + d[column + '_1'])),
-    ).map((d) => {
-      const [key, name] = d.split('_');
-      return [+key, name];
-    }),
+  const _groups = Array.from(
+    rollup(
+      values,
+      (v) => v.length,
+      (d) => d.key,
+      (d) => d.value,
+    ),
   );
 
-  for (let valueColumn of valueColumns) {
-    const aggregatedValueByColumn = groupValuesByColumn({
-      data: input,
-      keysColumn: column,
-      valuesColumns: [valueColumn],
-      operation: AggregationTypes.SUM,
-    });
+  let groups: any[] = [];
 
-    for (let [key, service] of Array.from(services)) {
-      const serviceValue = aggregatedValueByColumn.filter(
-        ({ name }) => name === key,
-      )[0];
-      //@ts-ignore
-      serviceValue[valueColumn] = serviceValue.value ?? 0;
-      //@ts-ignore
-      const outputIndex = output.findIndex((d) => +d?.name === key);
-      if (outputIndex >= 0) {
-        const existing = output[outputIndex];
-        const newObject = { ...existing, ...serviceValue };
-        output[outputIndex] = newObject;
-      } else {
-        output = [...output, serviceValue];
+  for (let [name, valueMap] of _groups) {
+    let newValue: any[] = [['name', name]];
+    let total = 0;
+    //@ts-ignore
+    Array.from(labels).forEach(([key, value]) => {
+      newValue = [...newValue, [value, valueMap.get(value) ?? 0]];
+      total += valueMap.get(value) ?? 0;
+    });
+    newValue = newValue.map(([key, value], index) => {
+      if (index === 0) {
+        return [key, value];
       }
-    }
+      return [key, value / total];
+    });
+    groups = [...groups, Object.fromEntries(newValue)];
   }
 
-  output = output.map((d) => {
-    const total = d[valueColumns[0]] + d[valueColumns[1]] + d[valueColumns[2]];
-    const m14 = d['m14'] / total;
-    const m15 = d['m15'] / total;
-    const m16 = d['m16'] / total;
-
-    return {
-      ...d,
-      id: d.name,
-      name: services.get(d.name),
-      m14,
-      m15,
-      m16,
-    };
-  });
-  return output;
+  return groups.sort((a, b) => descending(a.name, b.name));
 };
 
-export default stackedGroupCategoriesAlt2
+
+export default stackedGroupCategoriesAlt2;
