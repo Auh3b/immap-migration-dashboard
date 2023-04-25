@@ -3,7 +3,11 @@ import { Grid } from '@material-ui/core';
 import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType';
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
 import useWidgetEffect from '../utils/useWidgetEffect';
-import {aidTypes, serviceColors as colors, serviceLabels as labels} from './utils/serviceIndicatorTypes';
+import {
+  aidTypes,
+  serviceColors as colors,
+  serviceLabels as labels,
+} from './utils/serviceIndicatorTypes';
 import CustomColumnBarWidget from 'components/common/customWidgets/CustomColumnBarWidget';
 import stackedGroupCategoriesAlt from '../utils/stackedGroupCategoryAlt';
 

@@ -3,17 +3,21 @@ import { Grid } from '@material-ui/core';
 import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType';
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
 import useWidgetEffect from '../utils/useWidgetEffect';
-import {aidTypes, serviceColors as colors, serviceLabels as labels} from './utils/serviceIndicatorTypes';
-import stackedGroupCategoriesAlt from '../utils/stackedGroupCategoryAlt';
+import {
+  aidTypes,
+  serviceColors as colors,
+  serviceLabels as labels,
+} from './utils/serviceIndicatorTypes';
 import CustomColumnBarWidget from 'components/common/customWidgets/CustomColumnBarWidget';
+import stackedGroupCategoriesAlt2 from '../utils/stackedGroupCategoriesAlt2';
 
 const NOTE = 'Percepción de accesibilidad a servicios humanitarios';
 const id = 'accessServicesAdult';
 const title = 'Accesibilidad';
-const column = 'e23__cua';
-const valueColumn = 'm14_respec';
+const column = 'm12';
+const valueColumn = 'm14';
 const filterType = _FilterTypes.IN;
-const method = stackedGroupCategoriesAlt;
+const method = stackedGroupCategoriesAlt2;
 const methodParams = {
   aidTypes,
   labels,
@@ -34,6 +38,7 @@ const props = {
   labels,
   parentKey: aidTypes,
   extraProps,
+  global: false,
 };
 
 export default function ServiceAccessAdult({

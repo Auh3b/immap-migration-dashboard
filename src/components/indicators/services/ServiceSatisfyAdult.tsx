@@ -3,17 +3,21 @@ import { Grid } from '@material-ui/core';
 import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType';
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
 import useWidgetEffect from '../utils/useWidgetEffect';
-import {aidTypes, serviceColors as colors, serviceLabels as labels} from './utils/serviceIndicatorTypes';
+import {
+  aidTypes,
+  serviceColors as colors,
+  serviceLabels as labels,
+} from './utils/serviceIndicatorTypes';
 import CustomColumnBarWidget from 'components/common/customWidgets/CustomColumnBarWidget';
-import stackedGroupCategoriesAlt from '../utils/stackedGroupCategoryAlt';
+import stackedGroupCategoriesAlt2 from '../utils/stackedGroupCategoriesAlt2';
 
 const NOTE = 'Disposición para recomendar el servicio tomado    ';
 const id = 'serviceSatisfaction';
 const title = 'Recomendación del servicio';
-const column = 'e23__cua';
-const valueColumn = 'm16_de_acu';
+const column = 'm12';
+const valueColumn = 'm16';
 const filterType = _FilterTypes.IN;
-const method = stackedGroupCategoriesAlt;
+const method = stackedGroupCategoriesAlt2;
 const methodParams = {
   aidTypes,
   labels,
@@ -35,6 +39,7 @@ const props = {
   labels,
   extraProps,
   parentKey: aidTypes,
+  global: false
 };
 
 export default function ServiceSatisfyAdult({
