@@ -16,6 +16,7 @@ export const useMiddleStyles = makeStyles((theme) => ({
   root: {
     maxHeight: '85vh',
     overflowY: 'auto',
+    overflowX: 'hidden',
     flexGrow: 1,
   },
   indicatorsGroup: {
