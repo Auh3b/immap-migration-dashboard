@@ -6,15 +6,15 @@ import TitleWrapper from './utils/TitleWrapper';
 import useIntroWidgetFilter from './hooks/useIntroWidgetFilter';
 import useIntroCategoryChange from './hooks/useCategoryChange';
 import { Grid, makeStyles } from '@material-ui/core';
-import ReactEchart from 'echarts-for-react'
+import ReactEchart from 'echarts-for-react';
 
-const useStyles = makeStyles((theme)=> ({
-  root:{
-    '& div':{
-      backgroundGolor: theme.palette.background.paper
-    }
-  }
-}))
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& div': {
+      backgroundGolor: theme.palette.background.paper,
+    },
+  },
+}));
 
 const title = '';
 const subtitle = '';
@@ -29,64 +29,66 @@ export default function TotalGenders({
   data: any[];
   isLoading: Boolean;
 }) {
-  const classes = useStyles()
+  const classes = useStyles();
   const data = useMemo(() => {
     if (_data) {
       const dataset = groupCategories(_data, column);
       //@ts-ignore
-      return dataset.sort((a,b)=> ascending(a.value, b.value))
+      return dataset.sort((a, b) => ascending(a.value, b.value));
     }
-    return []
+    return [];
   }, [_data]);
 
-  const option = useMemo(()=>({
-    grid: {
-      top: '0%',
-      left: '5%',
-      right: '0%',
-      bottom: '0%',
-      containLabel: true,
-    },
-    xAxis:{
-      show:false,
-      type: 'value',
-    },
-    yAxis: {
-      type: 'category',
-      data: data.map(({name})=> name),
-      axisLabel:{
-        color: 'white',
-        fontFamily: 'Barlow'
+  const option = useMemo(
+    () => ({
+      grid: {
+        top: '0%',
+        left: '5%',
+        right: '0%',
+        bottom: '0%',
+        containLabel: true,
       },
-      splitLine:{
-        show: false
+      xAxis: {
+        show: false,
+        type: 'value',
       },
-      axisLine:{
-        lineStyle:{
+      yAxis: {
+        type: 'category',
+        data: data.map(({ name }) => name),
+        axisLabel: {
           color: 'white',
-        }
+          fontFamily: 'Barlow',
+        },
+        splitLine: {
+          show: false,
+        },
+        axisLine: {
+          lineStyle: {
+            color: 'white',
+          },
+        },
+        axisTick: {
+          show: false,
+        },
       },
-      axisTick:{
-        show: false
+      series: {
+        type: 'bar',
+        data: data.map(({ value }) => value),
+        itemStyle: {
+          color: 'white',
+        },
+        label: {
+          show: true,
+          color: 'white',
+          position: 'outside',
+          fontFamily: 'Barlow',
+        },
       },
-    },
-    series:{
-      type: 'bar',
-      data:  data.map(({value})=> value),
-      itemStyle:{
-        color: 'white',
-      },
-      label:{
-        show: true,
-        color: 'white',
-        position: 'outside',
-        fontFamily: 'Barlow'
+    }),
+    [data],
+  );
 
-      }
-    }
-  }), [data])
-
-  console.log(option)
+  console.log(option);
 
   const selectedCategories = useIntroWidgetFilter({
     source,
@@ -101,8 +103,17 @@ export default function TotalGenders({
 
   return (
     <Grid item lg={3}>
-      <TitleWrapper className={classes.root} title={title} subtitle={subtitle} isLoading={isLoading}>
-        <ReactEchart option={option} opts={{renderer: 'svg'}} style={{height: '100px'}} />
+      <TitleWrapper
+        className={classes.root}
+        title={title}
+        subtitle={subtitle}
+        isLoading={isLoading}
+      >
+        <ReactEchart
+          option={option}
+          opts={{ renderer: 'svg' }}
+          style={{ height: '100px' }}
+        />
         {/* <CategoryWidgetUI
           onSelectedCategoriesChange={handleSelectedCategoriesChange}
           selectedCategories={selectedCategories}

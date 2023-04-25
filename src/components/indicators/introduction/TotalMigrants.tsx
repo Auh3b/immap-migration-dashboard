@@ -28,12 +28,12 @@ export default function TotalMigrants({
   }, [_data]);
   return (
     <Grid item lg={3}>
-        <AggregateIndicatorWidget
-          title={title}
-          isLoading={isLoading}
-          data={data}
-          icon={<People style={iconStyles} />}
-        />
+      <AggregateIndicatorWidget
+        title={title}
+        isLoading={isLoading}
+        data={data}
+        icon={<People style={iconStyles} />}
+      />
     </Grid>
   );
 }
