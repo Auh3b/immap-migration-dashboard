@@ -19,7 +19,7 @@ export default function groupCategories(
   });
   if (groups) {
     //@ts-ignore
-    return groups.sort((a, b)=> ascending(a.name, b.name));
+    return groups.sort((a, b) => ascending(a.name, b.name));
   }
 
   return [];
