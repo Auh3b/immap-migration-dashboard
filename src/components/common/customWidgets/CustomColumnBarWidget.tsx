@@ -3,7 +3,6 @@ import CustomWidgetWrapper from './CustomWidgetWrapper';
 import { defaultCustomWidgetProps } from './customWidgetsType';
 import useWidgetFetch from './hooks/useWidgetFetch';
 import ReactEchart from 'echarts-for-react';
-import { UNICEF_COLORS } from 'theme';
 import { format } from 'd3';
 import { useTheme } from '@material-ui/core';
 
@@ -14,6 +13,7 @@ export default function CustomColumnBarWidget({
   method,
   methodParams,
   column,
+  extraProps
 }: defaultCustomWidgetProps) {
   const { data, isLoading } = useWidgetFetch({
     id,
@@ -22,15 +22,34 @@ export default function CustomColumnBarWidget({
     column,
     methodParams,
   });
+  const { labels, colors, height } = extraProps
   return (
     <CustomWidgetWrapper title={title} isLoading={isLoading}>
-      {data.length > 0 && !isLoading && <ColumnBarChart data={data} />}
+      {data.length > 0 && !isLoading && <ColumnBarChart data={data} labels={labels} colors={colors} height={height}/>}
     </CustomWidgetWrapper>
   );
 }
 
-function ColumnBarChart({ data }: any) {
+function ColumnBarChart({ data, labels, colors, height }: any) {
   const theme = useTheme();
+  const series = useMemo(()=>{
+    let seriesGroups: any[] =[]
+    const _labels = Array.from(labels).map(([key, value])=> value)
+    for (let label of _labels){
+      const seriesGroup = {
+          type: 'bar',
+          name: label,
+          data: data.map((d:any) => d[label]),
+          stack: 'percentage',
+          itemStyle: {
+            color: colors.get(label),
+          },
+        }
+        seriesGroups = [ ...seriesGroups, seriesGroup]
+      }
+      return seriesGroups
+    }, [data, labels, colors])
+
   const option = useMemo(
     () => ({
       grid: {
@@ -60,9 +79,9 @@ function ColumnBarChart({ data }: any) {
           hideOverlap: true,
           width: 100,
           overflow: 'break',
-          formatter(value: number, index: number) {
-            return format('.0%')(value);
-          },
+          formatter(value:number){
+            return format('.0%')(value)
+          }
         },
       },
       tooltip: {
@@ -93,37 +112,9 @@ function ColumnBarChart({ data }: any) {
           </span>`;
         },
       },
-      series: [
-        {
-          type: 'bar',
-          name: 'Facil',
-          data: data.map(({ m14 }: any) => m14),
-          stack: 'percentage',
-          itemStyle: {
-            color: UNICEF_COLORS[0],
-          },
-        },
-        {
-          type: 'bar',
-          name: 'Deficil',
-          data: data.map(({ m15 }: any) => m15),
-          stack: 'percentage',
-          itemStyle: {
-            color: UNICEF_COLORS[4],
-          },
-        },
-        {
-          type: 'bar',
-          name: 'Regular',
-          data: data.map(({ m16 }: any) => m16),
-          stack: 'percentage',
-          itemStyle: {
-            color: UNICEF_COLORS[3],
-          },
-        },
-      ],
+      series,
     }),
-    [data],
+    [series],
   );
-  return <ReactEchart option={option} style={{ height: '600px' }} />;
+  return <ReactEchart option={option} style={{ height: height ?? '400px' }} />;
 }
