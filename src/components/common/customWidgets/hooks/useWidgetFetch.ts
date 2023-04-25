@@ -61,7 +61,7 @@ export default function useWidgetFetch({
         getTileFeatures({
           sourceId: source.id,
           params,
-          global
+          global,
         })
           .then((data) => {
             if (data && data.length > 0) {
