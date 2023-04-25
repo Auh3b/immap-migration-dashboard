@@ -39,4 +39,5 @@ export interface defaultCustomWidgetProps {
   xAxisFormatter?: Function;
   yAxisFormatter?: Function;
   parentKey?: any;
+  extraProps?:  Record<string, unknown>;
 }
