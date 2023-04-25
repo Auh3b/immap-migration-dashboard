@@ -123,5 +123,5 @@ function ColumnBarChart({ data, labels, colors, height }: any) {
     }),
     [series],
   );
-  return <ReactEchart option={option} style={{ height: height ?? '400px' }} />;
+  return <ReactEchart option={option} style={{ height: height ?? '600px' }} />;
 }
