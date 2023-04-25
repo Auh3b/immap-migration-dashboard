@@ -1,4 +1,4 @@
-import { rollup } from 'd3';
+import { ascending, descending, rollup } from 'd3';
 
 const stackedGroupCategoriesAlt = (
   input: any[],
@@ -59,7 +59,7 @@ const stackedGroupCategoriesAlt = (
     groups = [...groups, Object.fromEntries(newValue)];
   }
 
-  return groups;
+  return groups.sort((a,b) => descending(a.name, b.name));
 };
 
 export default stackedGroupCategoriesAlt;
