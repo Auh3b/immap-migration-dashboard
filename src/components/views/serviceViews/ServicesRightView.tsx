@@ -13,8 +13,8 @@ export default function ServicesRightView({ dataSources, classes }: any) {
 
   return (
     <MainColumnView>
-      <ServiceAccessAdult dataSource={mainSource.id} />
-      <ServiceSatisfyAdult dataSource={mainSource.id} />
+      <ServiceAccessAdult dataSource={aggregateServicesSource.id} />
+      <ServiceSatisfyAdult dataSource={aggregateServicesSource.id} />
     </MainColumnView>
   );
 }
