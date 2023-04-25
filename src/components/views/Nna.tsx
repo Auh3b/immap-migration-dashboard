@@ -15,6 +15,7 @@ import MainView from './main/MainView';
 import ChildrenLeftView from './childrenViews/ChildrenLeftView';
 import ChildrenRightView from './childrenViews/ChildrenRightView';
 import mainSource from 'data/sources/mainSource';
+import aggreagateServicesChildrenSource from 'data/sources/aggreateServiceChildrenSource'
 import { HOTSPOTS_LAYER_ID } from 'components/layers/HotspotsLayer';
 
 const useViewStyle = makeStyles((theme) => ({
@@ -33,6 +34,7 @@ export default function Nna() {
   const sources = {
     mainSource: mainSource.id,
     premiseSource: premiseSource.id,
+    aggreagateChildren: aggreagateServicesChildrenSource.id
   };
 
   useEffect(() => {
@@ -80,13 +82,14 @@ export default function Nna() {
     <MainView>
       {{
         left: {
-          element: <ChildrenLeftView dataSources={sources} classes={classes} />, expandable:true
+          element: <ChildrenLeftView dataSources={sources} classes={classes} />,
+          expandable: true,
         },
         right: {
           element: (
             <ChildrenRightView dataSources={sources} classes={classes} />
           ),
-           expandable:true
+          expandable: true,
         },
       }}
     </MainView>
