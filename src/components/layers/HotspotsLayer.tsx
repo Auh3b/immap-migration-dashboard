@@ -92,25 +92,5 @@ export default function HotspotsLayer() {
         dispatch(removeLayer(HOTSPOTS_LAYER_ID));
       },
     });
-    // return new CartoLayer({
-    //   ...cartoLayerProps,
-    //   id: HOTSPOTS_LAYER_ID,
-    //   getFillColor: HOTSPOT_COLOR,
-    //   stroked: true,
-    //   pointRadiusUnits: 'pixels',
-    //   lineWidthUnits: 'pixels',
-    //   pickable: true,
-    //   getLineColor: [124, 33, 62],
-    //   pointRadiusMinPixels: 3,
-    //   onDataLoad: (data: any) => {
-    //     dispatch(
-    //       updateLayer({
-    //         id: HOTSPOTS_LAYER_ID,
-    //         layerAttributes: { ...layerConfig },
-    //       }),
-    //     );
-    //     cartoLayerProps.onDataLoad && cartoLayerProps.onDataLoad(data);
-    //   },
-    // });
   }
 }
