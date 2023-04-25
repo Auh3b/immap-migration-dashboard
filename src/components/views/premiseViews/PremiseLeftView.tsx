@@ -24,7 +24,7 @@ export default function PremiseLeftView({ dataSources }: ViewSourceType) {
       {/* <PremiseGenderComposition dataSource={premiseSource} /> */}
       {/* <SocialServices dataSource={premiseSource} /> */}
       <OrgSurveyed dataSource={premiseSource} />
-      <OrganisationPrincipals dataSource={premiseSource}/>
+      <OrganisationPrincipals dataSource={premiseSource} />
       <ServicesProvided dataSource={premiseSource} />
       {/* <OtherServiceTypes dataSource={premiseSource} /> */}
       {/* <ServiceTime dataSource={premiseSource} /> */}
