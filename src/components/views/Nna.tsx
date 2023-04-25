@@ -7,6 +7,8 @@ import {
   removeSource,
 } from '@carto/react-redux';
 import { useEffect } from 'react';
+import aggreateServiceChildrenSource from 'data/sources/aggreateServiceChildrenSource';
+import { AGGREGATE_SERVICES_CHILDREN_LAYER_ID } from 'components/layers/AggregateServicesChildrenLayer';
 import premiseSource from 'data/sources/premiseSource';
 import { PREMISE_SERVICES_LAYER_ID } from 'components/layers/PremiseServicesLayer';
 import MainView from './main/MainView';
@@ -53,6 +55,22 @@ export default function Nna() {
       dispatch(removeLayer(PREMISE_SERVICES_LAYER_ID));
       dispatch(removeSource(premiseSource.id));
       dispatch(removeSource(mainSource.id));
+    };
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(addSource(aggreateServiceChildrenSource));
+
+    dispatch(
+      addLayer({
+        id: AGGREGATE_SERVICES_CHILDREN_LAYER_ID,
+        source: aggreateServiceChildrenSource.id,
+      }),
+    );
+
+    return () => {
+      dispatch(removeLayer(AGGREGATE_SERVICES_CHILDREN_LAYER_ID));
+      dispatch(removeSource(aggreateServiceChildrenSource.id));
     };
   }, [dispatch]);
 
