@@ -18,6 +18,7 @@ export default function groupCategories(
     operation: AggregationTypes.COUNT,
   });
   if (groups) {
+    //@ts-ignore
     return groups.sort((a, b)=> ascending(a.name, b.name));
   }
 
