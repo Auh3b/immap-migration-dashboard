@@ -43,6 +43,7 @@ export default function PremiseService() {
               dataSources={{ premiseSource: premiseSource.id }}
             />
           ),
+          expandable: true,
         },
         right: {
           element: (
@@ -57,8 +58,8 @@ export default function PremiseService() {
             <PremiseMiddleView
               dataSources={{ premiseSource: premiseSource.id }}
             />
-          )
-          , expandable:true
+          ),
+          expandable: true,
         },
       }}
     </MainView>
