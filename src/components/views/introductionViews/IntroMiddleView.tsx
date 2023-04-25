@@ -10,6 +10,7 @@ import TotalChildren from 'components/indicators/introduction/TotalChildren';
 import AuroraLocation from 'components/indicators/introduction/AuroraLocation';
 import MigrantNationalities from 'components/indicators/introduction/MigrantNationalities';
 import { IndicatorProps } from 'components/indicators/introduction/utils/introductionTypes';
+import TotalGenders from 'components/indicators/introduction/TotalGenders';
 
 export const useMiddleStyles = makeStyles((theme) => ({
   root: {
@@ -45,11 +46,12 @@ export default function IntroMiddleView({ data, isLoading }: IndicatorProps) {
       item
       className={classes.root}
     >
-      <Grid wrap='nowrap' item container className={classes.indicatorsGroup}>
+      <Grid item container className={classes.indicatorsGroup}>
         <TotalAurora data={data} isLoading={isLoading} />
         <TotalMigrants data={data} isLoading={isLoading} />
         <AverageGroupSize data={data} isLoading={isLoading} />
         <ChildrenPercentage data={data} isLoading={isLoading} />
+        <TotalGenders data={data} isLoading={isLoading} />
       </Grid>
       <Grid wrap='nowrap' item container className={classes.indicatorsGroup}>
         <AuroraLocation data={data} isLoading={isLoading} />

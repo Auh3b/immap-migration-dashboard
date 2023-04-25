@@ -31,13 +31,16 @@ export const useLeftStyles = makeStyles((theme) => ({
   },
   subtitle: {
     ...theme.typography.caption,
-    textAlign: 'left',
+    textAlign: 'justify',
   },
   collapse: {
     maxHeight: '70vh',
     overflowY: 'auto',
   },
   description: {
+    textAlign: 'justify',
+    marginRight: theme.spacing(1),
+    marginLeft: theme.spacing(1),
     marginBottom: theme.spacing(2),
     [theme.breakpoints.down('lg')]: {
       ...theme.typography.body1,

@@ -1,16 +1,14 @@
 import { CategoryWidgetUI } from '@carto/react-ui';
-import { Grid, Typography } from '@material-ui/core';
-import { useCallback, useMemo } from 'react';
+import { Grid } from '@material-ui/core';
+import { useMemo } from 'react';
 import groupCategories from '../utils/groupCategories';
 import { descending } from 'd3';
 import TitleWrapper from './utils/TitleWrapper';
-import { useDispatch } from 'react-redux';
-import { addIntroFilter, removeIntroFilter } from 'store/introSlice';
 import useIntroCategoryChange from './hooks/useCategoryChange';
 import useIntroWidgetFilter from './hooks/useIntroWidgetFilter';
 
 const title = 'Top de 5 organizaciones';
-const column = 'org_pert1';
+const column = 'org_pert';
 const subtitle = '';
 const source = 'premiseData';
 const id = 'topOrganisations';
@@ -21,7 +19,6 @@ export default function TopOrganisations({
   data: any[];
   isLoading: Boolean;
 }) {
-  const dispatch = useDispatch();
   const data = useMemo(() => {
     if (_data) {
       const category = groupCategories(_data, column);

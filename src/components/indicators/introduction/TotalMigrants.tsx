@@ -4,6 +4,7 @@ import { useMemo } from 'react';
 import aggregateColumns from '../utils/AggregateColumns';
 import { AggregationTypes } from '@carto/react-core';
 import iconStyles from './utils/iconStyles';
+import { Grid } from '@material-ui/core';
 
 const title = 'Personas en los grupos de viaje';
 
@@ -26,11 +27,13 @@ export default function TotalMigrants({
     return 0;
   }, [_data]);
   return (
-    <AggregateIndicatorWidget
-      title={title}
-      isLoading={isLoading}
-      data={data}
-      icon={<People style={iconStyles} />}
-    />
+    <Grid item lg={3}>
+        <AggregateIndicatorWidget
+          title={title}
+          isLoading={isLoading}
+          data={data}
+          icon={<People style={iconStyles} />}
+        />
+    </Grid>
   );
 }

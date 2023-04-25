@@ -27,16 +27,13 @@ export default function TotalAurora({
   }, [_data]);
 
   return (
-    <Grid item wrap='nowrap' container className={classes.root}>
+    <Grid lg={3} direction='column' item wrap='nowrap' container className={classes.root}>
       <AggregateIndicatorWidget
         title={title}
         isLoading={isLoading}
         subtitle={subtitle}
         data={data}
         icon={<People style={iconStyles} />}
-        extraContent={{
-          child: <TotalGenders data={_data} isLoading={isLoading} />,
-        }}
       />
     </Grid>
   );

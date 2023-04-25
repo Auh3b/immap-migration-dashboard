@@ -74,8 +74,6 @@ export function useClearIntroFilters() {
     return Object.keys(filters).length > 0;
   }, [dispatch, filters]);
 
-  console.log(hasFilters);
-
   const clearAllIntroFilters = () => {
     dispatch(clearIntroFilters());
   };

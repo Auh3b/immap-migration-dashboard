@@ -5,6 +5,7 @@ import aggregateColumns from '../utils/AggregateColumns';
 import { AggregationTypes } from '@carto/react-core';
 import iconStyles from './utils/iconStyles';
 import { format } from 'd3';
+import { Grid } from '@material-ui/core';
 
 const title = 'Porcentaje NNA en grupos de viaje';
 
@@ -33,12 +34,14 @@ export default function ChildrenPercentage({
     return 0;
   }, [_data]);
   return (
-    <AggregateIndicatorWidget
-      title={title}
-      isLoading={isLoading}
-      data={data}
-      formatter={(value: number) => format('.2%')(value)}
-      icon={<Children style={iconStyles} />}
-    />
+    <Grid item lg={3}>
+      <AggregateIndicatorWidget
+        title={title}
+        isLoading={isLoading}
+        data={data}
+        formatter={(value: number) => format('.2%')(value)}
+        icon={<Children style={iconStyles} />}
+      />
+    </Grid>
   );
 }
