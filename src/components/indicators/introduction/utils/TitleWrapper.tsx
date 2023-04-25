@@ -13,12 +13,8 @@ const useStyles = makeStyles((theme) => ({
   titleHead: {},
   title: {
     color: 'inherit',
-    [theme.breakpoints.up('md')]: {
-      ...theme.typography.overline,
-    },
-    [theme.breakpoints.down('md')]: {
-      ...theme.typography.overline,
-    },
+    ...theme.typography.overline,
+    fontWeight: 'bold',
   },
   subtitle: {
     color: 'inherit',
