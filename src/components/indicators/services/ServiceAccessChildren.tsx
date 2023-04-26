@@ -27,6 +27,8 @@ const methodParams = {
 const extraProps = {
   labels,
   colors,
+  parentSource: 'mainSource',
+  parentColumn: 'm18_me_con',
 };
 
 const props = {
