@@ -7,15 +7,15 @@ export default function ColumnBarChart({ data, labels, colors, height }: any) {
   const theme = useTheme();
   const series = useMemo(() => {
     let seriesGroups: any[] = [];
-    const _labels = Array.from(labels).map(([key, value]) => value);
-    for (let label of _labels) {
+    const _labels: [number, string][] = Array.from(labels);
+    for (let [key, value] of _labels) {
       const seriesGroup = {
         type: 'bar',
-        name: label,
-        data: data.map((d: any) => d[label]),
+        name: value,
+        data: data.map((d: any) => d[value]),
         stack: 'percentage',
         itemStyle: {
-          color: colors.get(label),
+          color: colors.get(key),
         },
       };
       seriesGroups = [...seriesGroups, seriesGroup];
