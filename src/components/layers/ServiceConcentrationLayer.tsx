@@ -65,6 +65,7 @@ export default function ServiceConcentrationLayer() {
                 colors: [
                   d3Hex2RGB('#ffffb2'), d3Hex2RGB('#bd0026')
                 ],
+                collapsible: false,
             },
           }
         }))

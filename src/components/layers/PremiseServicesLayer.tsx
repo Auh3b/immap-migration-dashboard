@@ -27,6 +27,7 @@ const layerConfig = {
     type: LEGEND_TYPES.CATEGORY,
     labels: DATA.map((data) => data.label),
     colors: DATA.map((data) => data.color),
+    collapsible: false,
   },
 };
 
