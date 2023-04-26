@@ -247,8 +247,8 @@ function NavigationMenu({ column = false }: { column?: boolean }) {
           to={ROUTE_PATHS.PREMISE_SERVICE}
         />
         <Tab
-          label='Feedback Sobre Servicios'
-          value='feedback_sobre_servicios'
+          label='Feedback Servicios'
+          value='feedback_servicios'
           component={NavLink}
           to={ROUTE_PATHS.SERVICES}
         />
@@ -259,8 +259,8 @@ function NavigationMenu({ column = false }: { column?: boolean }) {
           to={ROUTE_PATHS.MIGRATION_FLOW}
         />
         <Tab
-          label='Caracterización grupo de viaje'
-          value='caracterizacion_grupo_de_viaje'
+          label='NNA'
+          value='nna'
           component={NavLink}
           to={ROUTE_PATHS.CHILDREN}
         />
