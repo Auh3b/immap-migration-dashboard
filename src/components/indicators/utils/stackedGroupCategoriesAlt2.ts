@@ -8,7 +8,6 @@ const stackedGroupCategoriesAlt2: MethodFunc = (
   column: string,
   methodParams?: Record<string, unknown>,
 ) => {
-
   //@ts-ignore
   const { aidTypes, labels, valueColumn } = methodParams;
   //@ts-ignore
