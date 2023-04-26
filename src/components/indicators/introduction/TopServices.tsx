@@ -26,8 +26,8 @@ export default function TopServices({
     if (_data) {
       const category = groupCategories(_data, column);
       //@ts-ignore
-      const top5 = category.sort((a, b) => descending(a.value, b.value));
-      return top5.slice(0, 3);
+      const services = category.sort((a, b) => descending(a.value, b.value));
+      return services
     }
   }, [_data]);
 
