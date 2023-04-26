@@ -26,28 +26,28 @@ export default function CustomColumnBarWidget({
   });
   const { labels, colors, height, parentSource, parentColumn } = extraProps;
 
-   const _comparativeSelection = useComparativeWidgetFilter({
+  const _comparativeSelection = useComparativeWidgetFilter({
     dataSource: parentSource as string,
     column: parentColumn as string,
   });
 
   const selectParentCategory = useMemo(
-    () => _comparativeSelection.map((d:string | number) => aidTypes.get(+d)),
+    () => _comparativeSelection.map((d: string | number) => aidTypes.get(+d)),
     [_comparativeSelection],
   );
- 
-  const data = useMemo(()=>{
-    let output: any[] = []
-    if(selectParentCategory.length > 0 && selectParentCategory[0]){
-      for (let category of selectParentCategory){
-        const qualifiedData = _data.filter(({name})=> name === category)
-        output = [...output, ...qualifiedData]
+
+  const data = useMemo(() => {
+    let output: any[] = [];
+    if (selectParentCategory.length > 0 && selectParentCategory[0]) {
+      for (let category of selectParentCategory) {
+        const qualifiedData = _data.filter(({ name }) => name === category);
+        output = [...output, ...qualifiedData];
       }
-      return output
+      return output;
     }
-    output = _data
-    return output
-  }, [_data, _comparativeSelection, selectParentCategory])
+    output = _data;
+    return output;
+  }, [_data, _comparativeSelection, selectParentCategory]);
 
   return (
     <CustomWidgetWrapper title={title} isLoading={isLoading}>
