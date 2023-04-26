@@ -89,5 +89,14 @@ export default function ColumnBarChart({ data, labels, colors, height }: any) {
     }),
     [series],
   );
-  return <ReactEchart option={option} style={{ minHeight: '200px', maxHeight: '600px', height: height ?? '500px' }} />;
+  return (
+    <ReactEchart
+      option={option}
+      style={{
+        minHeight: '200px',
+        maxHeight: '600px',
+        height: height ?? '500px',
+      }}
+    />
+  );
 }

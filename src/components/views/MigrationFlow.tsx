@@ -43,14 +43,14 @@ export default function MigrationFlow() {
       }),
     );
 
-    dispatch(setPageInfo({location: 'migrationFlow'}))
-    
+    dispatch(setPageInfo({ location: 'migrationFlow' }));
+
     return () => {
       dispatch(removeLayer(MIGRATION_FLOW_LAYER_ID));
       dispatch(removeLayer(HOTSPOTS_LAYER_ID));
       dispatch(removeSource(mainSource.id));
       dispatch(setViewState(initialState.viewState));
-      dispatch(setPageInfo({}))
+      dispatch(setPageInfo({}));
     };
   }, [dispatch]);
 

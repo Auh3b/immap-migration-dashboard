@@ -88,8 +88,6 @@ export default function TotalGenders({
     [data],
   );
 
-  console.log(option);
-
   const selectedCategories = useIntroWidgetFilter({
     source,
     owner: id,

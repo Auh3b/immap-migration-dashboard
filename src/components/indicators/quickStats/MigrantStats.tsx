@@ -264,7 +264,6 @@ function percentValue({
     [dividerColumn],
     dividerAggregateType,
   );
-  console.log(totalValue, dividerValue);
   percentageValue = totalValue / dividerValue;
 
   return percentageValue;

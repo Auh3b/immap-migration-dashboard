@@ -27,7 +27,7 @@ export default function TopServices({
       const category = groupCategories(_data, column);
       //@ts-ignore
       const services = category.sort((a, b) => descending(a.value, b.value));
-      return services
+      return services;
     }
   }, [_data]);
 
