@@ -3,18 +3,25 @@ import { createSlice } from '@reduxjs/toolkit';
 const slice = createSlice({
   name: 'map',
   initialState: {
-    ref: null,
+    pageInfo: {},
   },
   reducers: {
-    setMapRef: (state, action) => {
-      state.ref = action.payload;
+    setPageInfo: (state, action) => {
+      state.pageInfo = action.payload;
+    },
+    removePageInfo: (state) => {
+      state.pageInfo = {};
     },
   },
 });
 
 export default slice.reducer;
 
-export const setMapRef = (payload: any) => ({
-  type: 'app/SetMapRef',
+export const setPageInfo = (payload: any) => ({
+  type: 'map/setPageInfo',
   payload,
+});
+
+export const removePageInfo = () => ({
+  type: 'map/removePageInfo',
 });

@@ -10,6 +10,7 @@ import { useState } from 'react';
 import ErrorIcon from '@material-ui/icons/Error';
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 import { UNICEF_COLORS } from 'theme';
+import usePageInfo from 'hooks/usePageInfo';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,11 +26,17 @@ export default function InformationSection() {
   const handleToggle = () => {
     setIsOpen((prev) => !prev);
   };
+  const {location} = usePageInfo()
   return (
-    <Grid container className={classes.root}>
-      <InfoButtion isOpen={isOpen} handleToggle={handleToggle} />
-      <InfoContent isOpen={isOpen} />
-    </Grid>
+    <>
+    {location && (
+      <Grid container className={classes.root}>
+        <InfoButtion isOpen={isOpen} handleToggle={handleToggle} />
+        <InfoContent  isOpen={isOpen} />
+      </Grid>
+      )
+    }
+    </>
   );
 }
 
