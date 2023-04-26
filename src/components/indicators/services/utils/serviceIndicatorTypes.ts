@@ -33,7 +33,7 @@ export const serviceLabels3 = new Map([
 ]);
 
 export const serviceColors = new Map([
-  [1, '#f03b20'],
+  [3, '#f03b20'],
   [2, '#feb24c'],
-  [3, '#ffeda0'],
+  [1, '#ffeda0'],
 ]);
