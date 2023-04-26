@@ -14,7 +14,7 @@ import stackedGroupCategoriesAlt2 from '../utils/stackedGroupCategoriesAlt2';
 const NOTE = 'Nivel de satisfacción del servicio tomado';
 const id = 'serviceSatisfactionChildren';
 const title = 'Satisfacción del servicio';
-const column = 'm18_me_con';
+const column = 'm18_1';
 const valueColumn = 'm21';
 const filterType = _FilterTypes.IN;
 const method = stackedGroupCategoriesAlt2;
