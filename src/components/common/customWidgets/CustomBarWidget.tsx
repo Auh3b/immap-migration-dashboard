@@ -15,6 +15,7 @@ export default function CustomBarWidget({
   id,
   title,
   method,
+  methodParams,
   dataSource,
   column,
   filterType,
@@ -32,6 +33,7 @@ export default function CustomBarWidget({
     dataSource,
     method,
     column,
+    methodParams,
   });
 
   const sortedData = useMemo(() => {
