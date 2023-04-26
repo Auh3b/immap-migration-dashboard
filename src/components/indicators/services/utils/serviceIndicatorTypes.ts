@@ -15,14 +15,26 @@ export const aidTypes = new Map([
   [11, 'Otro'],
 ]);
 
-export const serviceLabels = new Map([
+export const serviceLabels1 = new Map([
   [3, 'Difícil'],
   [2, 'Regular'],
   [1, 'Fácil'],
 ]);
 
+export const serviceLabels2 = new Map([
+  [3, 'Insatisfecho'],
+  [2, 'Algo Satisfecho'],
+  [1, 'Satisfecho'],
+]);
+
+export const serviceLabels3 = new Map([
+  [3, 'No recomendaría'],
+  [2, 'No estoy seguro(a)'],
+  [1, 'Sí recomendaría'],
+]);
+
 export const serviceColors = new Map([
-  ['Fácil','#f03b20' ],
-  ['Regular', '#feb24c'],
-  ['Difícil', '#ffeda0'],
+  [1, '#f03b20'],
+  [2, '#feb24c'],
+  [3, '#ffeda0'],
 ]);
