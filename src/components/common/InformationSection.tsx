@@ -1,9 +1,10 @@
 import {
+  Fab,
   Grid,
   Grow,
   IconButton,
   Paper,
-  Typography,
+  Tooltip,
   makeStyles,
 } from '@material-ui/core';
 import { useState } from 'react';
@@ -11,12 +12,17 @@ import ErrorIcon from '@material-ui/icons/Error';
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 import { UNICEF_COLORS } from 'theme';
 import usePageInfo from 'hooks/usePageInfo';
+import MigrationPageInfo from 'components/views/migrationViews/MigrationPageInfo';
+import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     position: 'absolute',
     top: theme.spacing(4),
     left: theme.spacing(4),
+    [theme.breakpoints.down('md')]:{
+      flexDirection: 'column',
+    }
   },
 }));
 
@@ -32,7 +38,7 @@ export default function InformationSection() {
     {location && (
       <Grid container className={classes.root}>
         <InfoButtion isOpen={isOpen} handleToggle={handleToggle} />
-        <InfoContent  isOpen={isOpen} />
+        <InfoContent content={location} handleToggle={handleToggle}  isOpen={isOpen} />
       </Grid>
       )
     }
@@ -43,6 +49,9 @@ export default function InformationSection() {
 const usebuttonStyle = makeStyles((theme) => ({
   root: {
     alignSelf: 'flex-start',
+    [theme.breakpoints.down('md')]:{
+      display: ({isOpen}:any)=> isOpen ? 'none' : 'block'
+    }
   },
   open: {
     color: UNICEF_COLORS[0],
@@ -50,34 +59,59 @@ const usebuttonStyle = makeStyles((theme) => ({
 }));
 
 function InfoButtion({ isOpen, handleToggle }: any) {
-  const classes = usebuttonStyle();
+  const classes = usebuttonStyle({isOpen});
   return (
     <Paper className={classes.root}>
-      <IconButton onClick={handleToggle}>
-        {isOpen ? <ErrorIcon className={classes.open} /> : <ErrorOutlineIcon />}
-      </IconButton>
+      <Tooltip title='Contexto de página'>
+        <IconButton onClick={handleToggle}>
+          {isOpen ? <ErrorIcon className={classes.open} /> : <ErrorOutlineIcon />}
+        </IconButton>
+      </Tooltip>
     </Paper>
   );
 }
 
 const useContentStyles = makeStyles((theme) => ({
   root: {
-    maxWidth: theme.breakpoints.values.sm,
+    position: 'relative',
+    maxWidth: theme.breakpoints.values.sm - 200,
     padding: theme.spacing(2),
     marginLeft: theme.spacing(2),
+    overflowY: 'scroll',
+    maxHeight: 500,
+    [theme.breakpoints.down('md')]:{
+      maxWidth: '85%',
+      maxHeight: 300,
+      marginLeft: theme.spacing(0),
+    }
   },
+  closeButton:{
+    display: 'none',
+    [theme.breakpoints.down('md')]:{
+      color: theme.palette.background.paper,
+      position: 'absolute',
+      top: theme.spacing(0.5),
+      right: theme.spacing(0.5),
+      display: 'block',
+      backgroundColor: UNICEF_COLORS[5]
+    }
+  }
 }));
 
-function InfoContent({ content = '', isOpen }: any) {
+const CONTENT_KEY = new Map([
+  ['migrationFlow', <MigrationPageInfo />]
+])
+
+function InfoContent({ content = '', isOpen, handleToggle }: any) {
   const classes = useContentStyles();
   return (
     <Grow mountOnEnter={true} unmountOnExit={true} in={isOpen}>
       <Paper className={classes.root}>
+      <Fab onClick={handleToggle} className={classes.closeButton}>
+        <CloseIcon />
+      </Fab>
         <Grid container direction='column' item>
-          <Typography variant='overline'>
-            Este espacio está reservado para información perteneciente a la
-            sección que está viendo actualmente.
-          </Typography>
+          {content && CONTENT_KEY.get(content)}
         </Grid>
       </Paper>
     </Grow>

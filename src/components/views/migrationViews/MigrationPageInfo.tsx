@@ -1,6 +1,5 @@
 import { Box, Grid, ListItem, ListItemText, Typography, makeStyles } from '@material-ui/core'
-import { List } from 'echarts'
-import React from 'react'
+
 const useStyles = makeStyles((theme)=>({
   root:{
     padding: theme.spacing(2)
@@ -28,7 +27,7 @@ export default function MigrationPageInfo() {
         <Typography variant='subtitle1'>
           Nota metodológica
         </Typography>
-        <Typography>
+        <Typography className={classes.body}>
           En este dashboard se visualizan distintos flujos migratorios de las personas que se conectaron a Aurora Chatbot. Los datos presentados son los siguientes:
         </Typography>
         <ul>
@@ -43,10 +42,10 @@ export default function MigrationPageInfo() {
           </li>
         </ul>
 
-        <Typography>
+        <Typography className={classes.body}>
           Cabe señalar que estos datos se unen a la ubicación (con latitud y longitud) de la primera conexión de la persona migrante con Aurora. En ese sentido, las líneas conectadas directamente con Necoclí, Panamá o Costa Rica no implican un viaje directo hasta estos puntos, sino el lugar de conexión del usuario.
         </Typography>
-        <Typography>
+        <Typography className={classes.body}>
           Para filtrar la información de interés hacer click sobre la gráfica de anillos, sobre los indicadores o sobre los layers en el mapa.
         </Typography>
       </Box>

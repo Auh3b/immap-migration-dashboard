@@ -4,7 +4,6 @@ import useWidgetFetch from './hooks/useWidgetFetch';
 import ColumnBarChart from './ColumnBarChart';
 import { useMemo } from 'react';
 import useComparativeWidgetFilter from './hooks/useComparativeWidgetFilter';
-import { SERVICES_KEY } from 'components/indicators/premise/utils/services';
 import { aidTypes } from 'components/indicators/services/utils/serviceIndicatorTypes';
 
 export default function CustomColumnBarWidget({
@@ -50,7 +49,6 @@ export default function CustomColumnBarWidget({
     return output
   }, [_data, _comparativeSelection, selectParentCategory])
 
-  console.log(_data,_comparativeSelection, selectParentCategory)
   return (
     <CustomWidgetWrapper title={title} isLoading={isLoading}>
       {data.length > 0 && !isLoading && (

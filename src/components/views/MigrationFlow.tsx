@@ -14,6 +14,7 @@ import {
 import { MIGRATION_FLOW_LAYER_ID } from 'components/layers/MigrationFlowLayer';
 import { HOTSPOTS_LAYER_ID } from 'components/layers/HotspotsLayer';
 import { initialState } from 'store/initialStateSlice';
+import { setPageInfo } from 'store/mapSlice';
 
 export default function MigrationFlow() {
   const dispatch = useDispatch();
@@ -42,11 +43,14 @@ export default function MigrationFlow() {
       }),
     );
 
+    dispatch(setPageInfo({location: 'migrationFlow'}))
+    
     return () => {
       dispatch(removeLayer(MIGRATION_FLOW_LAYER_ID));
       dispatch(removeLayer(HOTSPOTS_LAYER_ID));
       dispatch(removeSource(mainSource.id));
       dispatch(setViewState(initialState.viewState));
+      dispatch(setPageInfo({}))
     };
   }, [dispatch]);
 
