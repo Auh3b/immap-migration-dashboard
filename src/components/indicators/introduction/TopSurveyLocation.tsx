@@ -1,11 +1,10 @@
 import { CategoryWidgetUI } from '@carto/react-ui';
-import { Grid, Typography } from '@material-ui/core';
-import { useCallback, useMemo } from 'react';
+import { Grid } from '@material-ui/core';
+import { useMemo } from 'react';
 import groupCategories from '../utils/groupCategories';
 import { descending } from 'd3';
 import TitleWrapper from './utils/TitleWrapper';
 import { useDispatch } from 'react-redux';
-import { addIntroFilter, removeIntroFilter } from 'store/introSlice';
 import useIntroCategoryChange from './hooks/useCategoryChange';
 import useIntroWidgetFilter from './hooks/useIntroWidgetFilter';
 
