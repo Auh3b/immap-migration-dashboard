@@ -23,10 +23,7 @@ export default function MigrantNationalities({
 }) {
   const data = useMemo(() => {
     if (_data) {
-      //@ts-ignore
-      return groupCategories(_data, column).sort((a, b) =>
-        descending(a.value, b.value),
-      );
+      return groupCategories(_data, column)
     }
     return [];
   }, [_data]);
