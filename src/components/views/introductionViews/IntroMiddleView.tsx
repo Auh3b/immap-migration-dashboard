@@ -14,6 +14,8 @@ import TotalGenders from 'components/indicators/introduction/TotalGenders';
 
 export const useMiddleStyles = makeStyles((theme) => ({
   root: {
+    paddingRight: theme.spacing(2),
+    paddingLeft: theme.spacing(2),
     maxHeight: '85vh',
     overflowY: 'auto',
     overflowX: 'hidden',
