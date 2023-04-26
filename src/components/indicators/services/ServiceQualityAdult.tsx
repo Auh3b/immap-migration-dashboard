@@ -6,7 +6,7 @@ import useWidgetEffect from '../utils/useWidgetEffect';
 import {
   aidTypes,
   serviceColors as colors,
-  serviceLabels as labels,
+  serviceLabels2 as labels,
 } from './utils/serviceIndicatorTypes';
 import CustomColumnBarWidget from 'components/common/customWidgets/CustomColumnBarWidget';
 import stackedGroupCategoriesAlt from '../utils/stackedGroupCategoryAlt';

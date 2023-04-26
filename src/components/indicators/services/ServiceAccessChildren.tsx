@@ -6,10 +6,9 @@ import useWidgetEffect from '../utils/useWidgetEffect';
 import {
   aidTypes,
   serviceColors as colors,
-  serviceLabels as labels,
+  serviceLabels1 as labels,
 } from './utils/serviceIndicatorTypes';
 import CustomColumnBarWidget from 'components/common/customWidgets/CustomColumnBarWidget';
-import stackedGroupCategoriesAlt from '../utils/stackedGroupCategoryAlt';
 import stackedGroupCategoriesAlt2 from '../utils/stackedGroupCategoriesAlt2';
 
 const NOTE = 'Percepción de accesibilidad a servicios humanitarios';
