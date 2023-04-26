@@ -53,7 +53,7 @@ export default function MobileSurveyTimeline({
   operation,
 }: BasicWidgetType) {
   const { widget } = useWidgetEffect(
-    <CustomTimelineWidget dataSource={'timelineSource'} {...props} />,
+    <CustomTimelineWidget dataSource={dataSource} {...props} />,
     [dataSource],
   );
   return (
