@@ -5,6 +5,8 @@ import { Grid } from '@material-ui/core';
 import TitleWrapper from './utils/TitleWrapper';
 import useIntroCategoryChange from './hooks/useCategoryChange';
 import useIntroWidgetFilter from './hooks/useIntroWidgetFilter';
+import IntroPieChart from './utils/IntroPieChart';
+import { descending } from 'd3';
 
 const title = 'Distribución por zona geográfica donde la  persona conectó';
 const column = 'e004_regio';
@@ -38,12 +40,13 @@ export default function AuroraLocation({
   return (
     <TitleWrapper title={title} subtitle={subtitle}>
       <Grid item>
-        <PieWidgetUI
+        <IntroPieChart data={data} />
+        {/* <PieWidgetUI
           onSelectedCategoriesChange={handleSelectedCategoriesChange}
           selectedCategories={selectedCategories}
           data={data}
           height={'225px'}
-        />
+        /> */}
       </Grid>
     </TitleWrapper>
   );
