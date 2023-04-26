@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { SERVICE_CONCENTRATION_LAYER_ID } from 'components/layers/ServiceConcentrationLayer';
 import premiseSource from 'data/sources/premiseSource';
 import { PREMISE_SERVICES_LAYER_ID } from 'components/layers/PremiseServicesLayer';
 import { useDispatch } from 'react-redux';
@@ -18,6 +19,12 @@ export default function PremiseService() {
 
   useEffect(() => {
     dispatch(addSource(premiseSource));
+    dispatch(
+      addLayer({
+        id: SERVICE_CONCENTRATION_LAYER_ID,
+        source: premiseSource.id,
+      }),
+    );
 
     dispatch(
       addLayer({
@@ -28,6 +35,7 @@ export default function PremiseService() {
 
     return () => {
       dispatch(removeLayer(PREMISE_SERVICES_LAYER_ID));
+      dispatch(removeLayer(SERVICE_CONCENTRATION_LAYER_ID));
       dispatch(removeSource(premiseSource.id));
     };
   }, [dispatch]);

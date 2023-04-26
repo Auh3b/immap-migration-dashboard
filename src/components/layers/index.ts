@@ -6,6 +6,7 @@ import PremiseServicesLayer from './PremiseServicesLayer';
 import SurveyTimelineLayer from './SurveyTimelineLayer';
 import AggregateServiceLayer from './AggregateServiceLayer';
 import AggregateServicesChildrenLayer from './AggregateServicesChildrenLayer';
+import ServiceConcentrationLayer from './ServiceConcentrationLayer';
 // [hygen] Import layers
 
 export const getLayers = () => {
@@ -18,6 +19,7 @@ export const getLayers = () => {
     SurveyTimelineLayer(),
     AggregateServiceLayer(),
     AggregateServicesChildrenLayer(),
+    ServiceConcentrationLayer(),
     // [hygen] Add layer
   ];
 };
