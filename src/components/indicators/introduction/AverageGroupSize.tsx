@@ -21,7 +21,8 @@ export default function AverageGroupSize({
     if (_data) {
       return (
         ((aggregateColumns(_data, columns[0]) || 0) +
-        (aggregateColumns(_data, columns[1], AggregationTypes.COUNT) || 0))/ _data.length
+          (aggregateColumns(_data, columns[1], AggregationTypes.COUNT) || 0)) /
+        _data.length
       );
     }
     return 0;
