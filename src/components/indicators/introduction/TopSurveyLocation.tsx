@@ -20,14 +20,12 @@ export default function TopSurveyLocation({
   data: any[];
   isLoading: Boolean;
 }) {
-  const dispatch = useDispatch();
   const data = useMemo(() => {
     if (_data) {
       const category = groupCategories(_data, column);
-      //@ts-ignore
-      const top5 = category.sort((a, b) => descending(a.value, b.value));
-      return top5.slice(0, 5);
+      return category;
     }
+    return [];
   }, [_data]);
 
   const selectedCategories = useIntroWidgetFilter({
