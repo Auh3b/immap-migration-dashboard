@@ -2,9 +2,9 @@ import AggregateIndicatorWidget from 'components/common/customWidgets/AggregateI
 import { ReactComponent as People } from 'assets/img/Group.svg';
 import { useMemo } from 'react';
 import aggregateColumns from '../utils/AggregateColumns';
-import { AggregationTypes } from '@carto/react-core';
 import iconStyles from './utils/iconStyles';
 import { Grid } from '@material-ui/core';
+import { format } from 'd3';
 
 const title = 'Tamaño promedio de los grupos de viaje';
 
@@ -33,6 +33,7 @@ export default function AverageGroupSize({
       <AggregateIndicatorWidget
         title={title}
         isLoading={isLoading}
+        formatter={(value:number)=> format('.3')(value)}
         data={data}
         icon={<People style={iconStyles} />}
       />
