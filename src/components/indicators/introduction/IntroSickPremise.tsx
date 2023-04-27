@@ -9,6 +9,7 @@ import IntroPieChart from './utils/IntroPieChart';
 import { descending } from 'd3';
 import concatenatedValues from '../utils/concatenatedValues';
 import { SICK_CATEGORY_ABREVATIONS } from '../premise/utils/services';
+import IntroHalfPieChart from './utils/IntroHalfPieChart';
 
 const title = 'Retos del punto de servici';
 const column = 'princ_re_1';
@@ -45,7 +46,7 @@ export default function IntroSickPremise({
   return (
     <TitleWrapper title={title} subtitle={subtitle} isLoading={isLoading}>
       <Grid item>
-        <IntroPieChart data={data} />
+        <IntroHalfPieChart data={data} />
       </Grid>
     </TitleWrapper>
   );
