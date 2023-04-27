@@ -130,7 +130,7 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
           {data &&
             !isLoading &&
             regions &&
-            regions.slice(0,1).map((groupName) => {
+            regions.map((groupName) => {
               return (
                 <ConnectDotChart
                   key={groupName}
