@@ -61,14 +61,14 @@ export default function PremiseService() {
           ),
           expandable: false,
         },
-        middle: {
-          element: (
-            <PremiseMiddleView
-              dataSources={{ premiseSource: premiseSource.id }}
-            />
-          ),
-          expandable: true,
-        },
+        // middle: {
+        //   element: (
+        //     <PremiseMiddleView
+        //       dataSources={{ premiseSource: premiseSource.id }}
+        //     />
+        //   ),
+        //   expandable: true,
+        // },
       }}
     </MainView>
   );
