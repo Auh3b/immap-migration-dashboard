@@ -119,7 +119,7 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
   );
 
   return (
-    <CustomWidgetWrapper title={title} isLoading={isLoading}>
+    <CustomWidgetWrapper expandable={false} title={title} isLoading={isLoading}>
       <Grid item className={classes.main}>
         <Grid className={classes.content} direction='column' container>
           <ServiceSelector
