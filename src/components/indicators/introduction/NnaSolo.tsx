@@ -19,11 +19,12 @@ export default function NnaSolo({
   const data = useMemo(() => {
     if (_data) {
       const category = groupCategories(_data, column);
+      //@ts-ignore
       return category.sort((a, b) => ascending(a.value, b.value))
     }
     return []
   }, [_data]);
-  console.log(data)
+
   return (
     <Grid item lg={3}>
       <TitleWrapper title={title} subtitle={subtitle} isLoading={isLoading}>
