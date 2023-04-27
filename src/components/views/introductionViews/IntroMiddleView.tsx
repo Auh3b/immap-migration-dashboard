@@ -11,6 +11,8 @@ import AuroraLocation from 'components/indicators/introduction/AuroraLocation';
 import MigrantNationalities from 'components/indicators/introduction/MigrantNationalities';
 import { IndicatorProps } from 'components/indicators/introduction/utils/introductionTypes';
 import TotalGenders from 'components/indicators/introduction/TotalGenders';
+import NnaSolo from 'components/indicators/introduction/NnaSolo';
+import NnaCountry from 'components/indicators/introduction/NnaCountry';
 
 export const useMiddleStyles = makeStyles((theme) => ({
   root: {
@@ -57,18 +59,24 @@ export default function IntroMiddleView({ data, isLoading }: IndicatorProps) {
         <AverageGroupSize data={data} isLoading={isLoading} />
         <ChildrenPercentage data={data} isLoading={isLoading} />
         <TotalGenders data={data} isLoading={isLoading} />
+        {/* <NnaSolo data={data} isLoading={isLoading}/> */}
       </Grid>
       <Grid wrap='nowrap' item container className={classes.indicatorsGroup}>
         <AuroraLocation data={data} isLoading={isLoading} />
         <MigrantNationalities data={data} isLoading={isLoading} />
       </Grid>
-      <Grid wrap='nowrap' item container className={classes.indicatorsGroup}>
-        <TotalChildren data={data} isLoading={isLoading} />
-        <TotalPregnant data={data} isLoading={isLoading} />
-      </Grid>
-      <Grid wrap='nowrap' item container className={classes.indicatorsGroup}>
-        <TotalDisabled data={data} isLoading={isLoading} />
-        <TotalChronicPatients data={data} isLoading={isLoading} />
+      <Grid item wrap='nowrap' container className={classes.indicatorsGroup}>
+        <Grid wrap='nowrap' lg={4} item container direction='column'>
+          <TotalChildren data={data} isLoading={isLoading} />
+          <TotalDisabled data={data} isLoading={isLoading} />
+        </Grid>
+        <Grid wrap='nowrap' lg={4} direction='column' item container>
+          <TotalPregnant data={data} isLoading={isLoading} />
+          <TotalChronicPatients data={data} isLoading={isLoading} />
+        </Grid>
+        <Grid item lg={4}>
+          <NnaCountry data={data} isLoading={isLoading} />
+        </Grid>
       </Grid>
     </Grid>
   );

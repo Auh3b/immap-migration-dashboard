@@ -8,7 +8,7 @@ export default function InvertedBarChart({
 }: {
   data: { name: string; value: number }[];
   styles?: CSSProperties;
-  renderer: 'svg' | 'canvas';
+  renderer?: 'svg' | 'canvas';
 }) {
   const option = useMemo(
     () => ({
