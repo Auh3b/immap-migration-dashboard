@@ -144,7 +144,7 @@ function IntroContent() {
   return (
     <Grid container wrap='nowrap' item className={classes.root}>
       <IntroLeftView />
-      <IntroMiddleView data={auroraData} isLoading={isLoading} />
+      <IntroMiddleView data={[auroraData, premiseData]} isLoading={isLoading} />
       <IntroRightView data={premiseData} isLoading={isLoading} />
     </Grid>
   );
