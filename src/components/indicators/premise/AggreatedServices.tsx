@@ -52,7 +52,7 @@ const method: MethodFunc = (input, column, params) => {
       const serviceColumns = SERVICE_STAT_COLUMNS.get(service);
       let newEntry: any = [
         SERVICES_KEY.get(service),
-        serviceEntry[otherColumns.country],
+       '',
         serviceEntry[otherColumns.region],
         serviceEntry[otherColumns.organisation],
         serviceEntry[otherColumns.persons],
@@ -130,7 +130,7 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
           {data &&
             !isLoading &&
             regions &&
-            regions.map((groupName) => {
+            regions.slice(0,1).map((groupName) => {
               return (
                 <ConnectDotChart
                   key={groupName}
@@ -255,6 +255,7 @@ function ConnectDotChart({ data: _data, groupName }: any) {
             const p2 = api.coord([api.value(7), categoryIndex]);
             const p3 = api.coord([api.value(8), categoryIndex]);
             const points = [p1, p2, p3].sort((a, b) => ascending(a[0], b[0]));
+            console.log(categoryIndex)
             return {
               type: 'polyline',
               shape: {
