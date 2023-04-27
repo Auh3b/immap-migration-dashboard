@@ -3,7 +3,6 @@ import { ReactComponent as People } from 'assets/img/Group.svg';
 import { useMemo } from 'react';
 import iconStyles from './utils/iconStyles';
 import { Grid, makeStyles } from '@material-ui/core';
-import TotalGenders from './TotalGenders';
 
 const title = 'Personas conectadas';
 const subtitle = 'En Aurora Chatbot';
