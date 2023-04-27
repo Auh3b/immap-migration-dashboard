@@ -53,7 +53,6 @@ export default function ServiceConcentrationLayer() {
             layerAttributes: {
               title: 'Service Concentration',
               legend: {
-                attr: 'hotspot',
                 type: LEGEND_TYPES.CONTINUOUS_RAMP,
                 labels: [
                   {
