@@ -1,9 +1,6 @@
 import {
-  Button,
-  Collapse,
   Grid,
   IconButton,
-  Slide,
   Tooltip,
   Typography,
   makeStyles,
@@ -38,8 +35,9 @@ export const useLeftStyles = makeStyles((theme) => ({
   toggleButton: {
     borderRadius: '100%',
     padding: theme.spacing(0.5),
+    boxShadow: theme.shadows[1],
     backgroundColor: ({ isOpen }: any) =>
-      isOpen ? UNICEF_COLORS[0] : 'inherit',
+      isOpen ? UNICEF_COLORS[0] :theme.palette.grey[100] ,
     color: ({ isOpen }: any) =>
       isOpen ? theme.palette.background.paper : 'inherit',
     '&:hover': {
@@ -47,7 +45,7 @@ export const useLeftStyles = makeStyles((theme) => ({
         isOpen ? theme.palette.background.paper : 'inherit',
       backgroundColor: ({ isOpen }: any) =>
         isOpen ? UNICEF_COLORS[0] : 'inherit',
-      boxShadow: theme.shadows[1],
+      boxShadow: theme.shadows[10],
     },
   },
   button: {
