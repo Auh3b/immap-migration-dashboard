@@ -51,7 +51,7 @@ export default function ServiceConcentrationLayer() {
           updateLayer({
             id: SERVICE_CONCENTRATION_LAYER_ID,
             layerAttributes: {
-              title: 'Service Concentration',
+              title: 'Alertas por servicio',
               legend: {
                 type: LEGEND_TYPES.CONTINUOUS_RAMP,
                 labels: [
@@ -60,7 +60,7 @@ export default function ServiceConcentrationLayer() {
                     value: 0,
                   },
                   {
-                    label: 'Bajo',
+                    label: 'sobrepasando',
                     value: 1,
                   },
                 ],
