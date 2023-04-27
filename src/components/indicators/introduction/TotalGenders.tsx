@@ -23,6 +23,7 @@ export default function TotalGenders({
   const data = useMemo(() => {
     if (_data) {
       const dataset = groupCategories(_data, column);
+      //@ts-ignore
       return dataset.sort((a, b) => ascending(a.value, b.value))
     }
     return [];
