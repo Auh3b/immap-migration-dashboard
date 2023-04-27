@@ -28,8 +28,8 @@ export default function ChildrenLeftView({ dataSources, classes }: any) {
   return (
     <MainColumnView>
       <ChildTravelerAges dataSource={mainSource} />
-      <ChildrenTravelAlone dataSource={mainSource} />
-      <PlacesChildrenTravelAlone dataSource={mainSource} />
+      {/* <ChildrenTravelAlone dataSource={mainSource} />
+      <PlacesChildrenTravelAlone dataSource={mainSource} /> */}
       <ServiceTypeChildren dataSource={mainSource} />
       <ServiceAccessChildren dataSource={aggreagateChildren} />
       <ServiceQualityChildren dataSource={aggreagateChildren} />
