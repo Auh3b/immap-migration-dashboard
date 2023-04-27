@@ -20,7 +20,7 @@ const DATA = Object.entries(PREMISE_SERVICES_COLORS).map(([label, color]) => ({
 }));
 
 const layerConfig = {
-  title: 'Services',
+  title: 'Punto de servicio',
   visible: true,
   legend: {
     type: LEGEND_TYPES.CATEGORY,
