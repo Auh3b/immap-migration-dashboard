@@ -27,7 +27,7 @@ export default function TotalMigrants({
     }
     return 0;
   }, [_data]);
-  console.log(_data);
+
   return (
     <Grid item lg={3}>
       <AggregateIndicatorWidget
