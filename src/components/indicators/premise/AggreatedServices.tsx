@@ -255,7 +255,6 @@ function ConnectDotChart({ data: _data, groupName }: any) {
             const p2 = api.coord([api.value(7), categoryIndex]);
             const p3 = api.coord([api.value(8), categoryIndex]);
             const points = [p1, p2, p3].sort((a, b) => ascending(a[0], b[0]));
-            console.log(categoryIndex)
             return {
               type: 'polyline',
               shape: {
