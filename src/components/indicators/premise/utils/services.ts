@@ -14,6 +14,16 @@ export const SERVICES_KEY = new Map([
   [13, 'Otro'],
 ]);
 
+export const SICK_CATEGORY_ABREVATIONS = new Map([
+  [1, 'Conseguir la financiación necesaria'],
+  [2, 'Mejorar la capacidad de los servicios ofrecidos'],
+  [3, 'Ampliar y mejorar la colaboración con otras entidades'],
+  [4, 'Mejorar la visibilidad del trabajo realizado'],
+  [5, 'Medir y comunicar el impacto social de los servicios prestados '],
+  [6, 'Comunicación con los usuarios '],
+  [7, 'Otro'],
+]);
+
 export const SERVICE_STAT_COLUMNS = new Map([
   [1, ['cap_serv_l', 'cap_serv_1', 'prom_legal']],
   [2, ['tipo_alime', 'pers_alim', 'prom_pers_']],
