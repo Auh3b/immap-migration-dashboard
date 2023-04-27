@@ -13,6 +13,7 @@ import { IndicatorProps } from 'components/indicators/introduction/utils/introdu
 import TotalGenders from 'components/indicators/introduction/TotalGenders';
 import NnaSolo from 'components/indicators/introduction/NnaSolo';
 import NnaCountry from 'components/indicators/introduction/NnaCountry';
+import IntroSickPremise from 'components/indicators/introduction/IntroSickPremise';
 
 export const useMiddleStyles = makeStyles((theme) => ({
   root: {
@@ -54,28 +55,29 @@ export default function IntroMiddleView({ data, isLoading }: IndicatorProps) {
       className={classes.root}
     >
       <Grid item container className={classes.indicatorsGroup}>
-        <TotalAurora data={data} isLoading={isLoading} />
-        <TotalMigrants data={data} isLoading={isLoading} />
-        <AverageGroupSize data={data} isLoading={isLoading} />
-        <ChildrenPercentage data={data} isLoading={isLoading} />
-        <TotalGenders data={data} isLoading={isLoading} />
-        <NnaSolo data={data} isLoading={isLoading} />
+        <TotalAurora data={data[0]} isLoading={isLoading} />
+        <TotalMigrants data={data[0]} isLoading={isLoading} />
+        <AverageGroupSize data={data[0]} isLoading={isLoading} />
+        <ChildrenPercentage data={data[0]} isLoading={isLoading} />
+        <TotalGenders data={data[0]} isLoading={isLoading} />
+        <NnaSolo data={data[0]} isLoading={isLoading} />
       </Grid>
       <Grid wrap='nowrap' item container className={classes.indicatorsGroup}>
-        <AuroraLocation data={data} isLoading={isLoading} />
-        <MigrantNationalities data={data} isLoading={isLoading} />
+        <AuroraLocation data={data[0]} isLoading={isLoading} />
+        <MigrantNationalities data={data[0]} isLoading={isLoading} />
+        <IntroSickPremise data={data[1]} isLoading={isLoading}/>
       </Grid>
       <Grid item wrap='nowrap' container className={classes.indicatorsGroup}>
         <Grid wrap='nowrap' lg={4} item container direction='column'>
-          <TotalChildren data={data} isLoading={isLoading} />
-          <TotalDisabled data={data} isLoading={isLoading} />
+          <TotalChildren data={data[0]} isLoading={isLoading} />
+          <TotalDisabled data={data[0]} isLoading={isLoading} />
         </Grid>
         <Grid wrap='nowrap' lg={4} direction='column' item container>
-          <TotalPregnant data={data} isLoading={isLoading} />
-          <TotalChronicPatients data={data} isLoading={isLoading} />
+          <TotalPregnant data={data[0]} isLoading={isLoading} />
+          <TotalChronicPatients data={data[0]} isLoading={isLoading} />
         </Grid>
         <Grid item lg={4}>
-          <NnaCountry data={data} isLoading={isLoading} />
+          <NnaCountry data={data[0]} isLoading={isLoading} />
         </Grid>
       </Grid>
     </Grid>
