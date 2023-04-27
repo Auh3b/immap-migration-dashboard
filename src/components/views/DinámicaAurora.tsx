@@ -67,7 +67,7 @@ export default function DinámicaAurora() {
       {{
         left: {
           element: <DinamicaLeftView dataSources={sources} />,
-          expandable: true,
+          expandable: false,
         },
       }}
     </MainView>

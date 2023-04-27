@@ -49,11 +49,11 @@ export default function Dashboard() {
       {{
         left: {
           element: <DashboardLeftView dataSources={{ mainSource }} />,
-          expandable: true,
+          expandable: false,
         },
         right: {
           element: <DashboardRightView dataSources={{ mainSource }} />,
-          expandable: true,
+          expandable: false,
         },
         middle: { element: <SurveyDates dataSource={mainSource.id} /> },
       }}

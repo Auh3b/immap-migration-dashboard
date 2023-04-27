@@ -72,7 +72,7 @@ export default function Services() {
               dataSources={{ mainSource, aggregateServicesSource }}
             />
           ),
-          expandable: true,
+          expandable: false,
         },
         right: {
           element: (
@@ -81,7 +81,7 @@ export default function Services() {
               dataSources={{ mainSource, aggregateServicesSource }}
             />
           ),
-          expandable: true,
+          expandable: false,
         },
       }}
     </MainView>

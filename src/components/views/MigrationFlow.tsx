@@ -61,11 +61,11 @@ export default function MigrationFlow() {
       {{
         left: {
           element: <MigrationLeftView dataSources={{ mainSource }} />,
-          expandable: true,
+          expandable: false,
         },
         right: {
           element: <MigrationRightView dataSources={{ mainSource }} />,
-          expandable: true,
+          expandable: false,
         },
       }}
     </MainView>

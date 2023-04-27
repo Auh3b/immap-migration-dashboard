@@ -83,13 +83,13 @@ export default function Nna() {
       {{
         left: {
           element: <ChildrenLeftView dataSources={sources} classes={classes} />,
-          expandable: true,
+          expandable: false,
         },
         right: {
           element: (
             <ChildrenRightView dataSources={sources} classes={classes} />
           ),
-          expandable: true,
+          expandable: false,
         },
       }}
     </MainView>

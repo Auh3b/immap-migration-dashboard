@@ -51,7 +51,7 @@ export default function PremiseService() {
               dataSources={{ premiseSource: premiseSource.id }}
             />
           ),
-          expandable: true,
+          expandable: false,
         },
         right: {
           element: (
@@ -59,7 +59,7 @@ export default function PremiseService() {
               dataSources={{ premiseSource: premiseSource.id }}
             />
           ),
-          expandable: true,
+          expandable: false,
         },
         middle: {
           element: (
