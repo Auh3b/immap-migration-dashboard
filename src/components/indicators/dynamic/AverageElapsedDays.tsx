@@ -29,7 +29,7 @@ export default function AverageElapsedDays({ dataSource }: BasicWidgetType) {
   });
 
   //@ts-expect-error
-  const data = useMemo(() => format('.2')(_data), [_data]);
+  const data = useMemo(() => format('.4')(_data), [_data]);
 
   return (
     <Grid item>
