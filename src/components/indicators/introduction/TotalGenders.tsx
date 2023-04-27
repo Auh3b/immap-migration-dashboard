@@ -3,7 +3,7 @@ import groupCategories from '../utils/groupCategories';
 import TitleWrapper from './utils/TitleWrapper';
 import useIntroWidgetFilter from './hooks/useIntroWidgetFilter';
 import useIntroCategoryChange from './hooks/useCategoryChange';
-import { Grid} from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import InvertedBarChart from './utils/InvertedBarChart';
 import { ascending } from 'd3';
 
@@ -24,7 +24,7 @@ export default function TotalGenders({
     if (_data) {
       const dataset = groupCategories(_data, column);
       //@ts-ignore
-      return dataset.sort((a, b) => ascending(a.value, b.value))
+      return dataset.sort((a, b) => ascending(a.value, b.value));
     }
     return [];
   }, [_data]);
@@ -42,12 +42,8 @@ export default function TotalGenders({
 
   return (
     <Grid item lg={3}>
-      <TitleWrapper
-        title={title}
-        subtitle={subtitle}
-        isLoading={isLoading}
-      >
-        <InvertedBarChart data={data} styles={{height: '100px',}} />
+      <TitleWrapper title={title} subtitle={subtitle} isLoading={isLoading}>
+        <InvertedBarChart data={data} styles={{ height: '100px' }} />
       </TitleWrapper>
     </Grid>
   );

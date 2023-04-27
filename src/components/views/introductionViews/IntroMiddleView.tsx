@@ -59,7 +59,7 @@ export default function IntroMiddleView({ data, isLoading }: IndicatorProps) {
         <AverageGroupSize data={data} isLoading={isLoading} />
         <ChildrenPercentage data={data} isLoading={isLoading} />
         <TotalGenders data={data} isLoading={isLoading} />
-        <NnaSolo data={data} isLoading={isLoading}/>
+        <NnaSolo data={data} isLoading={isLoading} />
       </Grid>
       <Grid wrap='nowrap' item container className={classes.indicatorsGroup}>
         <AuroraLocation data={data} isLoading={isLoading} />

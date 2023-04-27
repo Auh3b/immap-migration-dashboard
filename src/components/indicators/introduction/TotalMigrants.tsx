@@ -20,14 +20,14 @@ export default function TotalMigrants({
   const data = useMemo(() => {
     if (_data) {
       return (
-        (aggregateColumns(_data, columns[0]) || 0) 
+        aggregateColumns(_data, columns[0]) || 0
         // +
         // (aggregateColumns(_data, columns[1], AggregationTypes.COUNT) || 0)
       );
     }
     return 0;
   }, [_data]);
-  console.log(_data)
+  console.log(_data);
   return (
     <Grid item lg={3}>
       <AggregateIndicatorWidget

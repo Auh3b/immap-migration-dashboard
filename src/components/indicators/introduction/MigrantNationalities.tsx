@@ -23,7 +23,7 @@ export default function MigrantNationalities({
 }) {
   const data = useMemo(() => {
     if (_data) {
-      return groupCategories(_data, column)
+      return groupCategories(_data, column);
     }
     return [];
   }, [_data]);

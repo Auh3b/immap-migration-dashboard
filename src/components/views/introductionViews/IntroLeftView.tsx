@@ -37,7 +37,7 @@ export const useLeftStyles = makeStyles((theme) => ({
     padding: theme.spacing(0.5),
     boxShadow: theme.shadows[1],
     backgroundColor: ({ isOpen }: any) =>
-      isOpen ? UNICEF_COLORS[0] :theme.palette.grey[100] ,
+      isOpen ? UNICEF_COLORS[0] : theme.palette.grey[100],
     color: ({ isOpen }: any) =>
       isOpen ? theme.palette.background.paper : 'inherit',
     '&:hover': {

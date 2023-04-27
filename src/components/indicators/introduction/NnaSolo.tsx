@@ -20,16 +20,16 @@ export default function NnaSolo({
     if (_data) {
       const category = groupCategories(_data, column);
       //@ts-ignore
-      return category.sort((a, b) => ascending(a.value, b.value))
+      return category.sort((a, b) => ascending(a.value, b.value));
     }
-    return []
+    return [];
   }, [_data]);
 
   return (
     <Grid item lg={3}>
       <TitleWrapper title={title} subtitle={subtitle} isLoading={isLoading}>
         <Grid item>
-          <InvertedBarChart data={data} styles={{height: '100px'}}/>
+          <InvertedBarChart data={data} styles={{ height: '100px' }} />
         </Grid>
       </TitleWrapper>
     </Grid>

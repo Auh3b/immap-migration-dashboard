@@ -21,8 +21,8 @@ export default function NnaCountry({
   const data = useMemo(() => {
     if (_data) {
       const category = groupCategories(_data, column);
-     
-      return category
+
+      return category;
     }
   }, [_data]);
 
