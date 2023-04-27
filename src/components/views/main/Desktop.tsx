@@ -8,7 +8,7 @@ import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 
 const MapContainer = lazy(() => import('./MapContainer'));
 
-const DRAWER_WIDTH_CLOSED = 300;
+const DRAWER_WIDTH_CLOSED = 500;
 const DRAWER_WIDTH_OPEN = 600;
 
 const MIDDLE_HEIGHT = 50;
