@@ -42,7 +42,6 @@ export default function DeckGLComponent({ layers }: { layers: any[] }) {
       onHover={handleHover}
       getCursor={handleCursor}
       getTooltip={handleTooltip as any}
-      pickingRadius={isMobile ? 10 : 0}
     >
       <Map
         mapLib={maplibregl}
