@@ -2,81 +2,89 @@ import { useDispatch, useSelector } from 'react-redux';
 //@ts-ignore
 import { HeatmapLayer } from '@deck.gl/aggregation-layers';
 // @ts-ignore
-import { fetchLayerData } from '@deck.gl/carto';
-import { removeLayer, updateLayer } from '@carto/react-redux';
+import { TILE_FORMATS } from '@deck.gl/carto';
+import { removeLayer, selectSourceById, updateLayer } from '@carto/react-redux';
 import { RootState } from 'store/store';
-import premiseSource from 'data/sources/premiseSource';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { LEGEND_TYPES } from '@carto/react-ui';
 import d3Hex2RGB from 'utils/d3Hex2RGB';
-import useWidgetFetch from 'components/common/customWidgets/hooks/useWidgetFetch';
-import { SURVEY_CONCENTRATIONS_LAYER_ID } from './SurveyConcentrationsLayer';
+import getTileFeatures from 'utils/methods/getTileFeatures';
 
 export const SERVICE_CONCENTRATION_LAYER_ID = 'serviceConcentrationLayer';
 
+const legendConfig = {
+  id: SERVICE_CONCENTRATION_LAYER_ID,
+  layerAttributes: {
+    title: 'Alertas por servicio',
+    legend: {
+      type: LEGEND_TYPES.CONTINUOUS_RAMP,
+      labels: [
+        {
+          label: 'Bajo',
+          value: 0,
+        },
+        {
+          label: 'sobrepasando',
+          value: 1,
+        },
+      ],
+      colors: [d3Hex2RGB('#ffffb2'), d3Hex2RGB('#bd0026')],
+      collapsible: false,
+    },
+  },
+};
+
 export default function ServiceConcentrationLayer() {
   const dispatch = useDispatch();
-  // const [data, setData] = useState(null);
-  const { serviceConcentrationLayer } = useSelector(
+  const { viewport } = useSelector((state: RootState) => state.carto);
+  const { serviceConcentrationLayer, premiseServicesLayer } = useSelector(
     (state: RootState) => state.carto.layers,
   );
 
-  // const fetchData = async () => {
-  //   const { data } = await fetchLayerData({
-  //     ...premiseSource,
-  //     source: premiseSource.data,
-  //     format: 'json',
-  //   });
-  //   setData(data);
-  // };
+  const source = useSelector((state) =>
+    selectSourceById(state, serviceConcentrationLayer?.source),
+  );
 
-  const {data} = useWidgetFetch({
-    id: SURVEY_CONCENTRATIONS_LAYER_ID,
-    dataSource: premiseSource.id
-  })
+  async function fetchData() {
+    const data = await getTileFeatures({
+      sourceId: source.id,
+      params: {
+        viewport,
+        tileFormat: TILE_FORMATS.JSON,
+        limit: null,
+        filters: source.filters,
+        filtersLogicalOperator: source.filtersLogicalOperator,
+      },
+    });
+    return data;
+  }
 
   useEffect(() => {
-    // fetchData();
-     dispatch(
-          updateLayer({
-            id: SERVICE_CONCENTRATION_LAYER_ID,
-            layerAttributes: {
-              title: 'Alertas por servicio',
-              legend: {
-                type: LEGEND_TYPES.CONTINUOUS_RAMP,
-                labels: [
-                  {
-                    label: 'Bajo',
-                    value: 0,
-                  },
-                  {
-                    label: 'sobrepasando',
-                    value: 1,
-                  },
-                ],
-                colors: [d3Hex2RGB('#ffffb2'), d3Hex2RGB('#bd0026')],
-                collapsible: false,
-              },
-            },
-          }),
-        );
+    dispatch(updateLayer(legendConfig));
     return () => {
       dispatch(removeLayer(SERVICE_CONCENTRATION_LAYER_ID));
     };
   }, []);
 
-  console.log(data)
-
-  if (serviceConcentrationLayer && data.length> 0) {
+  if (serviceConcentrationLayer && premiseServicesLayer && source) {
     return new HeatmapLayer({
       id: SERVICE_CONCENTRATION_LAYER_ID,
-      data: new Promise((resolve) => resolve(data)),
+      data: fetchData(),
       opacity: 0.8,
       getPosition: (d: any) => [d.long, d.lat],
       getWeight: (d: any) => d.porc_sobre,
       intensity: 1,
       visible: serviceConcentrationLayer.visible,
       threshold: 0.3,
+      onDataLoad: (data: any) => {
+        console.log(
+          data.map(({ long, lat, porc_sobre }: any) => ({
+            long,
+            lat,
+            porc_sobre,
+          })),
+        );
+      },
     });
   }
 }
