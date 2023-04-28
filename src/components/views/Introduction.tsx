@@ -74,7 +74,7 @@ const useHeaderStyles = makeStyles((theme) => ({
   },
   title: {
     [theme.breakpoints.down('xl')]: {
-      ...theme.typography.h6,
+      ...theme.typography.h4,
     },
     [theme.breakpoints.up('xl')]: {
       ...theme.typography.h4,
@@ -97,7 +97,7 @@ function IntroHeader() {
       item
       className={classes.root}
     >
-      <Grid md={12} lg={8} item className={classes.headerText}>
+      <Grid md={12} lg={10} item className={classes.headerText}>
         <Typography className={classes.title} color='primary'>
           Monitoreo a la Respuesta y Flujos Migratorios Mixtos
         </Typography>
