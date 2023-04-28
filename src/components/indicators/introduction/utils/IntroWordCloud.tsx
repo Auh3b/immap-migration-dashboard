@@ -12,8 +12,8 @@ const useStyles = makeStyles((theme)=>({
   }
 }))
 
-const width = 400
-const height = 400
+const width = 450
+const height = 300
 
 const margin = {
   top: 0,
