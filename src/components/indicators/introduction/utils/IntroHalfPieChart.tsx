@@ -53,12 +53,16 @@ export default function IntroHalfPieChart({
         top: "0%",
         left: "0%",
         icon: 'circle',
+        textStyle: {
+          // width: 100,
+          overflow: "truncate"
+        }
       },
       series: [
         {
           type: 'pie',
           radius: ['40%', '70%'],
-          center: ['50%', '70%'],
+          center: ['50%', '90%'],
           startAngle: 180,
           avoidLabelOverlap: false,
           label: {
