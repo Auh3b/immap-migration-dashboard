@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { HeatmapLayer } from '@deck.gl/aggregation-layers';
 // @ts-ignore
 import { fetchLayerData } from '@deck.gl/carto';
-import { addLayer, removeLayer, updateLayer } from '@carto/react-redux';
+import { removeLayer, updateLayer } from '@carto/react-redux';
 import { RootState } from 'store/store';
 import premiseSource from 'data/sources/premiseSource';
 import { useEffect, useState } from 'react';
@@ -30,24 +30,7 @@ export default function ServiceConcentrationLayer() {
 
   useEffect(() => {
     fetchData();
-    return () => {
-      dispatch(removeLayer(SERVICE_CONCENTRATION_LAYER_ID));
-    };
-  }, []);
-
-  if (serviceConcentrationLayer && data) {
-    return new HeatmapLayer({
-      id: SERVICE_CONCENTRATION_LAYER_ID,
-      data: new Promise((resolve) => resolve(data)),
-      pickable: false,
-      opacity: 0.8,
-      getPosition: (d: any) => d.geom.coordinates,
-      getWeight: (d: any) => d.porc_sobre,
-      intensity: 1,
-      visible: serviceConcentrationLayer.visible,
-      threshold: 0.3,
-      onDataLoad: () => {
-        dispatch(
+     dispatch(
           updateLayer({
             id: SERVICE_CONCENTRATION_LAYER_ID,
             layerAttributes: {
@@ -70,7 +53,21 @@ export default function ServiceConcentrationLayer() {
             },
           }),
         );
-      },
+    return () => {
+      dispatch(removeLayer(SERVICE_CONCENTRATION_LAYER_ID));
+    };
+  }, []);
+
+  if (serviceConcentrationLayer && data) {
+    return new HeatmapLayer({
+      id: SERVICE_CONCENTRATION_LAYER_ID,
+      data: new Promise((resolve) => resolve(data)),
+      opacity: 0.8,
+      getPosition: (d: any) => d.geom.coordinates,
+      getWeight: (d: any) => d.porc_sobre,
+      intensity: 1,
+      visible: serviceConcentrationLayer.visible,
+      threshold: 0.3,
     });
   }
 }
