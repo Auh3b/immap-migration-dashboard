@@ -15,10 +15,10 @@ export const getLayers = () => {
     SurveyConcentrationsLayer(),
     ServicePointsLayer(),
     MigrationFlowLayer(),
-    PremiseServicesLayer(),
     SurveyTimelineLayer(),
     AggregateServiceLayer(),
     AggregateServicesChildrenLayer(),
+    PremiseServicesLayer(),
     ServiceConcentrationLayer(),
     // [hygen] Add layer
   ];
