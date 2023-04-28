@@ -41,8 +41,6 @@ export default function IntroSickPremise({
     owner: id,
   });
 
-  console.log(data)
-
   return (
     <TitleWrapper title={title} subtitle={subtitle} isLoading={isLoading}>
       <Grid item>
