@@ -104,7 +104,6 @@ export default function PremiseServicesLayer() {
       onHover: (info: any) => {
         if (info?.object) {
           const {org_pert1: implementor , org_pert2: principal, id_photo: url } = info?.object?.properties
-          console.log(info?.object?.properties)
           info.object = {
             // @ts-ignore
             html: popContext(implementor, principal, url),
