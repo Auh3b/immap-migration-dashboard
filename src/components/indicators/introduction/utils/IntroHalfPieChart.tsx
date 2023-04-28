@@ -64,7 +64,9 @@ export default function IntroHalfPieChart({
           label: {
             show: false,
             position: 'center',
-            formatter: '{per|{d}%}\n{b|{b}}',
+            formatter({name, value}:any){
+              return `{per|${value*2}%}\n{b|${name}}`
+            },
             rich: {
               b: {
                 //@ts-ignore
@@ -99,11 +101,11 @@ export default function IntroHalfPieChart({
     }),
     [data],
   );
-    console.log(data)
+
   return (
     <>
     {data && 
-      <ReactEchart option={option} style={styles} />
+      <ReactEchart option={option} opts={{renderer}} style={styles} />
     }
     </>
   );
