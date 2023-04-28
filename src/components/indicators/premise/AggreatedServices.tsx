@@ -342,7 +342,7 @@ function ConnectDotChart({ data: _data, groupName }: any) {
   return (
     <ReactEchart
       option={option}
-      style={{ height: '1000px' }}
+      style={{ height: '600px' }}
       opts={{ renderer: 'svg' }}
     />
   );
