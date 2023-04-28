@@ -5,6 +5,7 @@ import groupCategories from '../utils/groupCategories';
 import TitleWrapper from './utils/TitleWrapper';
 import useIntroCategoryChange from './hooks/useCategoryChange';
 import useIntroWidgetFilter from './hooks/useIntroWidgetFilter';
+import IntroWordCloud from './utils/IntroWordCloud';
 
 const title = 'Identificación NNA solos';
 const column = 'm07__en_q';
@@ -26,6 +27,8 @@ export default function NnaCountry({
     }
   }, [_data]);
 
+  
+
   const selectedCategories = useIntroWidgetFilter({
     source,
     owner: id,
@@ -40,11 +43,12 @@ export default function NnaCountry({
   return (
     <TitleWrapper title={title} subtitle={subtitle}>
       <Grid item>
-        <CategoryWidgetUI
+        {/* <CategoryWidgetUI
           onSelectedCategoriesChange={handleSelectedCategoriesChange}
           selectedCategories={selectedCategories}
           data={data}
-        />
+        /> */}
+      <IntroWordCloud data={data}/>
       </Grid>
     </TitleWrapper>
   );
