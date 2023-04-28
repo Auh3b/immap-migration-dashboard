@@ -21,17 +21,17 @@ export default function PremiseService() {
     dispatch(addSource(premiseSource));
     dispatch(
       addLayer({
+        id: PREMISE_SERVICES_LAYER_ID,
+        source: premiseSource.id,
+      }),
+    );
+    dispatch(
+      addLayer({
         id: SERVICE_CONCENTRATION_LAYER_ID,
         source: premiseSource.id,
       }),
     );
 
-    dispatch(
-      addLayer({
-        id: PREMISE_SERVICES_LAYER_ID,
-        source: premiseSource.id,
-      }),
-    );
 
     return () => {
       dispatch(removeLayer(PREMISE_SERVICES_LAYER_ID));
