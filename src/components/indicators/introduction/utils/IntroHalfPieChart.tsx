@@ -69,7 +69,7 @@ export default function IntroHalfPieChart({
             show: false,
             position: 'center',
             formatter({name, value}:any){
-              return `{per|${value*2}%}\n{b|${name}}`
+              return `{per|${value}}\n{b|${name}}`
             },
             rich: {
               b: {
