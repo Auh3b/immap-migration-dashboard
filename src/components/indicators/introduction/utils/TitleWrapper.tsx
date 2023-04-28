@@ -15,13 +15,13 @@ const useStyles = makeStyles((theme) => ({
     color: 'inherit',
     ...theme.typography.overline,
     fontWeight: 'bold',
-    fontSize: theme.spacing(2)
+    fontSize: theme.spacing(2),
   },
   subtitle: {
     color: 'inherit',
     [theme.breakpoints.up('md')]: {
       ...theme.typography.caption,
-      fontSize: theme.spacing(2)
+      fontSize: theme.spacing(2),
     },
     [theme.breakpoints.down('md')]: {
       ...theme.typography.caption,

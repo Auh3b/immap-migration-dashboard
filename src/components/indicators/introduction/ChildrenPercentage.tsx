@@ -24,8 +24,7 @@ export default function ChildrenPercentage({
 }) {
   const data = useMemo(() => {
     if (_data) {
-      const dividerValue =
-        aggregateColumns(_data, [divider[0]])
+      const dividerValue = aggregateColumns(_data, [divider[0]]);
       const totalValue = aggregateColumns(_data, [...columns[0]]);
       return totalValue / dividerValue;
     }

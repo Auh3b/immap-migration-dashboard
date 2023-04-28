@@ -52,7 +52,7 @@ const method: MethodFunc = (input, column, params) => {
       const serviceColumns = SERVICE_STAT_COLUMNS.get(service);
       let newEntry: any = [
         SERVICES_KEY.get(service),
-       '',
+        '',
         serviceEntry[otherColumns.region],
         serviceEntry[otherColumns.organisation],
         serviceEntry[otherColumns.persons],

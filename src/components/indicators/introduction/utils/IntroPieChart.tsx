@@ -29,9 +29,9 @@ export default function IntroPieChart({
       },
       legend: {
         type: 'scroll',
-        orient: "vertical",
-        top: "0%",
-        left: "0%",
+        orient: 'vertical',
+        top: '0%',
+        left: '0%',
         icon: 'circle',
       },
       series: [

@@ -27,7 +27,12 @@ export default function IntroSickPremise({
   const data = useMemo(() => {
     if (_data) {
       //@ts-ignore
-      return concatenatedValues(_data, column).map(({name, value})=>({value, name: SICK_CATEGORY_ABREVATIONS.get(+name)})).sort((a, b) => descending(a.value, b.value));
+      return concatenatedValues(_data, column)
+        .map(({ name, value }) => ({
+          value,
+          name: SICK_CATEGORY_ABREVATIONS.get(+name),
+        }))
+        .sort((a, b) => descending(a.value, b.value));
     }
     return [];
   }, [_data]);

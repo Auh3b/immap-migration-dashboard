@@ -20,10 +20,10 @@ export default function AverageGroupSize({
   const data = useMemo(() => {
     if (_data) {
       return (
-        ((aggregateColumns(_data, columns[0]) || 0)) 
+        (aggregateColumns(_data, columns[0]) || 0) /
         // +
-        //   (aggregateColumns(_data, columns[1], AggregationTypes.COUNT) || 0)) 
-          / _data.length
+        //   (aggregateColumns(_data, columns[1], AggregationTypes.COUNT) || 0))
+        _data.length
       );
     }
     return 0;
@@ -33,7 +33,7 @@ export default function AverageGroupSize({
       <AggregateIndicatorWidget
         title={title}
         isLoading={isLoading}
-        formatter={(value:number)=> format('.3')(value)}
+        formatter={(value: number) => format('.3')(value)}
         data={data}
         icon={<People style={iconStyles} />}
       />

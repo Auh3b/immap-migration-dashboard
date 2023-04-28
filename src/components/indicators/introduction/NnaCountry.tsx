@@ -27,8 +27,6 @@ export default function NnaCountry({
     }
   }, [_data]);
 
-  
-
   const selectedCategories = useIntroWidgetFilter({
     source,
     owner: id,
@@ -48,7 +46,7 @@ export default function NnaCountry({
           selectedCategories={selectedCategories}
           data={data}
         /> */}
-      <IntroWordCloud data={data}/>
+        <IntroWordCloud data={data} />
       </Grid>
     </TitleWrapper>
   );

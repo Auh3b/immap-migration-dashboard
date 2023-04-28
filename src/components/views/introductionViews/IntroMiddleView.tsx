@@ -65,7 +65,7 @@ export default function IntroMiddleView({ data, isLoading }: IndicatorProps) {
       <Grid wrap='nowrap' item container className={classes.indicatorsGroup}>
         <AuroraLocation data={data[0]} isLoading={isLoading} />
         <MigrantNationalities data={data[0]} isLoading={isLoading} />
-        <IntroSickPremise data={data[1]} isLoading={isLoading}/>
+        <IntroSickPremise data={data[1]} isLoading={isLoading} />
       </Grid>
       <Grid item wrap='nowrap' container className={classes.indicatorsGroup}>
         <Grid wrap='nowrap' lg={4} item container direction='column'>

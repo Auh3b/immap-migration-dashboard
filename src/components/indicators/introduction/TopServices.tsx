@@ -24,8 +24,8 @@ export default function TopServices({
 }: IndicatorProps) {
   const data = useMemo(() => {
     if (_data) {
-      const category = groupCategories(_data, column, {filter: false});
-      return category
+      const category = groupCategories(_data, column, { filter: false });
+      return category;
     }
   }, [_data]);
 
@@ -46,7 +46,7 @@ export default function TopServices({
           onSelectedCategoriesChange={handleSelectedCategoriesChange}
           selectedCategories={selectedCategories}
           data={data}
-          labels={{'999999': 'No responde'}}
+          labels={{ '999999': 'No responde' }}
         />
       </Grid>
     </TitleWrapper>

@@ -9,11 +9,11 @@ import { descending } from 'd3';
 export default function groupCategories(
   input: any[],
   column: string,
-  params?: Record<string, any>
+  params?: Record<string, any>,
 ): GroupByFeature | [] {
   const groups = groupValuesByColumn({
     //@ts-ignore
-    data: defaultFilterFunction(input, column,params),
+    data: defaultFilterFunction(input, column, params),
     keysColumn: column,
     valuesColumns: [column],
     operation: AggregationTypes.COUNT,

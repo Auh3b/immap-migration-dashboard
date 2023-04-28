@@ -9,7 +9,8 @@ import useIntroWidgetFilter from './hooks/useIntroWidgetFilter';
 
 const title = 'Top de 5 organizaciones';
 const column = 'org_pert';
-const subtitle = 'Top 5 de organizaciones implementadoras de servicios, (Para ver todas las organizaciones, diríjase a la pestaña de servicios)';
+const subtitle =
+  'Top 5 de organizaciones implementadoras de servicios, (Para ver todas las organizaciones, diríjase a la pestaña de servicios)';
 const source = 'premiseData';
 const id = 'topOrganisations';
 export default function TopOrganisations({

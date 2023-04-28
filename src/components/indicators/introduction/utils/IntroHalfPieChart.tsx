@@ -13,25 +13,25 @@ export default function IntroHalfPieChart({
   renderer?: 'svg' | 'canvas';
 }) {
   const theme = useTheme();
-  const data = useMemo(()=>{
-    if(_data.length > 0){
+  const data = useMemo(() => {
+    if (_data.length > 0) {
       const lastItem = {
-        value: sum(_data, d => d.value),
+        value: sum(_data, (d) => d.value),
         itemStyle: {
           color: 'none',
           decal: {
-            symbol: 'none'
-          }
+            symbol: 'none',
+          },
         },
         label: {
-          show: false
-        }
-      }
-      
-      return [..._data, lastItem]
+          show: false,
+        },
+      };
+
+      return [..._data, lastItem];
     }
-    return []
-  }, [_data])
+    return [];
+  }, [_data]);
   const option = useMemo(
     () => ({
       tooltip: {
@@ -49,14 +49,14 @@ export default function IntroHalfPieChart({
       },
       legend: {
         type: 'scroll',
-        orient: "vertical",
-        top: "0%",
-        left: "0%",
+        orient: 'vertical',
+        top: '0%',
+        left: '0%',
         icon: 'circle',
         textStyle: {
           // width: 100,
-          overflow: "truncate"
-        }
+          overflow: 'truncate',
+        },
       },
       series: [
         {
@@ -68,8 +68,8 @@ export default function IntroHalfPieChart({
           label: {
             show: false,
             position: 'center',
-            formatter({name, value}:any){
-              return `{per|${value}}\n{b|${name}}`
+            formatter({ name, value }: any) {
+              return `{per|${value}}\n{b|${name}}`;
             },
             rich: {
               b: {
@@ -108,9 +108,9 @@ export default function IntroHalfPieChart({
 
   return (
     <>
-    {data && 
-      <ReactEchart option={option} opts={{renderer}} style={styles} />
-    }
+      {data && (
+        <ReactEchart option={option} opts={{ renderer }} style={styles} />
+      )}
     </>
   );
 }

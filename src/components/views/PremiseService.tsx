@@ -32,7 +32,6 @@ export default function PremiseService() {
       }),
     );
 
-
     return () => {
       dispatch(removeLayer(PREMISE_SERVICES_LAYER_ID));
       dispatch(removeLayer(SERVICE_CONCENTRATION_LAYER_ID));

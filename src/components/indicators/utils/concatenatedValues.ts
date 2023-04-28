@@ -25,7 +25,7 @@ function concatenatedValues(data: any[], column: string): any[] {
   //@ts-ignore
   const values = data.map((f) => f[column]).filter((i) => i !== 'null');
   const valueString: string = values.join(',');
-  const valuesArray: any[] = valueString.split(',').map((i)=>i.trim());
+  const valuesArray: any[] = valueString.split(',').map((i) => i.trim());
   const pivotedData = valuesArray
     .filter((i: string) => i.length > 0)
     .map((i: any) => Object.fromEntries(new Map([[column, i]])));
@@ -38,6 +38,5 @@ function concatenatedValues(data: any[], column: string): any[] {
   });
   return groupData;
 }
-
 
 export default concatenatedValues;
