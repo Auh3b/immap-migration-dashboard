@@ -46,8 +46,8 @@ export default function useWidgetFetch({
 
   const params = useMemo(
     () => ({
-      filters: source.filters,
-      filtersLogicalOperator: source.filtersLogicalOperator,
+      filters: source?.filters,
+      filtersLogicalOperator: source?.filtersLogicalOperator,
       limit: null,
       global,
     }),
