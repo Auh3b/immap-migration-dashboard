@@ -12,13 +12,13 @@ import ServiceConcentrationLayer from './ServiceConcentrationLayer';
 export const getLayers = () => {
   return [
     HotspotsLayer(),
+    PremiseServicesLayer(),
     SurveyConcentrationsLayer(),
     ServicePointsLayer(),
     MigrationFlowLayer(),
     SurveyTimelineLayer(),
     AggregateServiceLayer(),
     AggregateServicesChildrenLayer(),
-    PremiseServicesLayer(),
     ServiceConcentrationLayer(),
     // [hygen] Add layer
   ];
