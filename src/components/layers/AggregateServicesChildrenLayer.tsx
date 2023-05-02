@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { CartoLayer } from '@deck.gl/carto';
 import { selectSourceById, updateLayer } from '@carto/react-redux';
 import { useCartoLayerProps } from '@carto/react-api';
-import htmlForFeature from 'utils/htmlForFeature';
 import d3Hex2RGB from 'utils/d3Hex2RGB';
 import { LEGEND_TYPES } from '@carto/react-ui';
 import { RootState } from 'store/store';
@@ -38,7 +37,7 @@ export default function AggregateServicesChildrenLayer() {
   const source = useSelector((state) =>
     selectSourceById(state, aggregateServicesChildrenLayer?.source),
   );
-  const cartoLayerProps = useCartoLayerProps({ source });
+  const cartoLayerProps = useCartoLayerProps({ source, layerConfig: aggregateServicesChildrenLayer });
 
   if (aggregateServicesChildrenLayer && source) {
     return new CartoLayer({
