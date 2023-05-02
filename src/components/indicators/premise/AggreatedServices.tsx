@@ -186,20 +186,18 @@ function ServiceSelector({ data, filters, addFilter }: any) {
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     const value = event.target.value as string;
-    if (value) {
-      addFilter((prev: any) => {
-        const newFilters = { ...prev };
-        newFilters[id] = { id, type, field, value };
-
-        return newFilters;
-      });
-    } else {
-      addFilter((prev: any) => {
-        delete prev[id];
-        return prev;
-      });
-    }
+    
+    addFilter((prev:any)=>{
+      if(value){
+        const newFilter:any = {id, value, type, field}
+        prev[id] = newFilter
+        return {...prev}
+      }
+      delete prev[id]
+      return {...prev}
+    })
   };
+
   return (
     <Grid item className={classes.root}>
       <FormControl>
@@ -235,26 +233,19 @@ function LocationSelector({ data, filters, addFilter }: any) {
 
     return 0;
   }, [filters]);
-  console.log(filters);
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     const value = event.target.value as string;
-
-    if (value) {
-      addFilter((prev: any) => {
-        const newFilters = { ...prev };
-        newFilters[id] = { id, type, field, value };
-
-        return newFilters;
-      });
-      return;
-    }
-
-    addFilter((prev: any) => {
-      const newFilters = prev;
-      delete newFilters[id];
-      return newFilters;
-    });
+    
+    addFilter((prev:any)=>{
+      if(value){
+        const newFilter:any = {id, value, type, field}
+        prev[id] = newFilter
+        return {...prev}
+      }
+      delete prev[id]
+      return {...prev}
+    })
   };
 
   return (
