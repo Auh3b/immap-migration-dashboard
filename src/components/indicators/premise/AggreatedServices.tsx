@@ -7,16 +7,13 @@ import {
   Select,
   Typography,
   makeStyles,
-  useTheme,
 } from '@material-ui/core';
-import ReactEchart from 'echarts-for-react';
 import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType';
 import useWidgetFetch from 'components/common/customWidgets/hooks/useWidgetFetch';
-import { useMemo, useRef, useState } from 'react';
+import { useMemo, useState } from 'react';
 import MethodFunc from '../utils/methodType';
 import { SERVICES_KEY, SERVICE_STAT_COLUMNS } from './utils/services';
 import { UNICEF_COLORS } from 'theme';
-import { ascending } from 'd3';
 import CustomWidgetWrapper from 'components/common/customWidgets/CustomWidgetWrapper';
 import { filterItem, filterValues } from 'utils/filterFunctions';
 import { _FilterTypes } from '@carto/react-core';
@@ -82,9 +79,9 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
   },
-  selectors:{
+  selectors: {
     position: 'relative',
-  }
+  },
 }));
 
 const id = 'aggregatedService';
@@ -95,7 +92,7 @@ const methodParams = {
 };
 
 export default function AggreatedServices({ dataSource }: BasicWidgetType) {
-  const [filters, setFilters] = useState<{id: string, value: string, field: string, type: _FilterTypes}[]>([]);
+  const [filters, setFilters] = useState<Record<string, filterItem>>({});
   const serviceSelection = Array.from(SERVICES_KEY.values());
   const classes = useStyles();
   const { data: _data, isLoading } = useWidgetFetch({
@@ -106,23 +103,23 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
     methodParams,
   });
 
-  const data = useMemo(()=>{
-    if(_data.length === 0){return []}
-    if(filters.length === 0){return _data}
-    
-    const filteredData = filterValues(_data, filters)
-    console.log(filteredData)
-    return filteredData
-  }, [_data, filters])
+  const data = useMemo(() => {
+    const filteredData = filterValues(_data, filters);
+    return filteredData;
+  }, [_data, filters]);
 
-  const locationSelection = useMemo(()=>{
-    if(_data.length === 0){
-      return []
+  const locationSelection = useMemo(() => {
+    if (_data.length === 0) {
+      return [];
     }
-    return Array.from(new Set(_data.map(d => {
-      return d[2]
-    })))
-  }, [_data])
+    return Array.from(
+      new Set(
+        _data.map((d) => {
+          return d[2];
+        }),
+      ),
+    );
+  }, [_data]);
 
   const regions = useMemo(
     () => data && Array.from(new Set(data.map((d: any) => d[2]))),
@@ -136,10 +133,12 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
           <Grid container spacing={5} className={classes.selectors}>
             <ServiceSelector
               data={serviceSelection}
+              filters={filters}
               addFilter={setFilters}
-              />
-            <LocationSelector 
+            />
+            <LocationSelector
               data={locationSelection}
+              filters={filters}
               addFilter={setFilters}
             />
             <ClearFilters filters={filters} clearFilters={setFilters} />
@@ -170,21 +169,35 @@ const useSelectSyles = makeStyles((theme) => ({
   },
 }));
 
-function ServiceSelector({ data, addFilter }: any) {
-  const id = 'serviceSelector'
-  const field = 0
-  const type = _FilterTypes.IN
+function ServiceSelector({ data, filters, addFilter }: any) {
+  const id = 'serviceSelector';
+  const field = 0;
+  const type = _FilterTypes.IN;
   const classes = useSelectSyles();
-  const currentService = useRef<string>('');
+
+  const currentService = useMemo(() => {
+    const filter = filters[id];
+    if (filter) {
+      return filter.value;
+    }
+
+    return 0;
+  }, [filters]);
+
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    currentService.current = event.target.value as string;
-    if(currentService.current){
-      addFilter((prev: filterItem[]) => {
-        const existing = prev.filter(({id: itemId})=> itemId !== id)
-        return [...existing, {id, field, type, value: currentService.current}]
+    const value = event.target.value as string;
+    if (value) {
+      addFilter((prev: any) => {
+        const newFilters = { ...prev };
+        newFilters[id] = { id, type, field, value };
+
+        return newFilters;
       });
-    }else{
-      addFilter((prev: filterItem[]) => prev.filter(({id: itemId})=> itemId !== id ))
+    } else {
+      addFilter((prev: any) => {
+        delete prev[id];
+        return prev;
+      });
     }
   };
   return (
@@ -193,8 +206,8 @@ function ServiceSelector({ data, addFilter }: any) {
         <InputLabel>
           <Typography variant='caption'>Select</Typography>
         </InputLabel>
-        <Select value={currentService.current} onChange={handleChange}>
-          <MenuItem value={''}>
+        <Select value={currentService} onChange={handleChange}>
+          <MenuItem value={0}>
             <Typography variant='overline'>{'All'}</Typography>
           </MenuItem>
           {data &&
@@ -209,31 +222,49 @@ function ServiceSelector({ data, addFilter }: any) {
   );
 }
 
-function LocationSelector({ data, addFilter }: any) {
-  const id = 'locationSelector'
-  const field = 2
-  const type = _FilterTypes.IN
+function LocationSelector({ data, filters, addFilter }: any) {
+  const id = 'locationSelector';
+  const field = 2;
+  const type = _FilterTypes.IN;
   const classes = useSelectSyles();
-  const currentService = useRef<string>('');
-  const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    currentService.current = event.target.value as string;
-    if(currentService.current){
-      addFilter((prev: filterItem[]) => {
-        const existing = prev.filter(({id: itemId})=> itemId !== id)
-        return [...existing, {id, field, type, value: currentService.current}]
-      });
-    }else{
-      addFilter((prev: filterItem[]) => prev.filter(({id: itemId})=> itemId !== id ))
+  const currentLocation = useMemo(() => {
+    const filter = filters[id];
+    if (filter) {
+      return filter.value;
     }
+
+    return 0;
+  }, [filters]);
+  console.log(filters);
+
+  const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    const value = event.target.value as string;
+
+    if (value) {
+      addFilter((prev: any) => {
+        const newFilters = { ...prev };
+        newFilters[id] = { id, type, field, value };
+
+        return newFilters;
+      });
+      return;
+    }
+
+    addFilter((prev: any) => {
+      const newFilters = prev;
+      delete newFilters[id];
+      return newFilters;
+    });
   };
+
   return (
     <Grid item className={classes.root}>
       <FormControl>
         <InputLabel>
           <Typography variant='caption'>Select</Typography>
         </InputLabel>
-        <Select value={currentService.current} onChange={handleChange}>
-          <MenuItem value={''}>
+        <Select value={currentLocation} onChange={handleChange}>
+          <MenuItem value={0}>
             <Typography variant='overline'>{'All'}</Typography>
           </MenuItem>
           {data &&
@@ -247,7 +278,6 @@ function LocationSelector({ data, addFilter }: any) {
     </Grid>
   );
 }
-
 
 const useClearStyles = makeStyles((theme) => ({
   root: {
@@ -266,15 +296,12 @@ const useClearStyles = makeStyles((theme) => ({
   },
 }));
 
-function ClearFilters({
-  filters,
-  clearFilters
-}: any) {
+function ClearFilters({ filters, clearFilters }: any) {
   const classes = useClearStyles();
-  const hasFilters = useMemo(()=> filters.length > 0, [filters])
-  const handleClearFilters = ()=>{
-    clearFilters([])
-  }
+  const hasFilters = useMemo(() => Object.keys(filters).length > 0, [filters]);
+  const handleClearFilters = () => {
+    clearFilters({});
+  };
   return (
     <>
       {hasFilters && (

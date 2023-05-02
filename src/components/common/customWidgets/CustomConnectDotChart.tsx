@@ -1,7 +1,7 @@
-import { useTheme } from "@material-ui/core";
-import { ascending } from "d3";
-import { useMemo } from "react";
-import { UNICEF_COLORS } from "theme";
+import { useTheme } from '@material-ui/core';
+import { ascending } from 'd3';
+import { useMemo } from 'react';
+import { UNICEF_COLORS } from 'theme';
 import ReactEchart from 'echarts-for-react';
 
 const STAT_CATEGORY_COLORS = new Map([
@@ -9,7 +9,6 @@ const STAT_CATEGORY_COLORS = new Map([
   ['Personas atendidas ayer', UNICEF_COLORS[4]],
   ['Promedio diario', UNICEF_COLORS[0]],
 ]);
-
 
 export default function CustomConnectDotChart({ data: _data, groupName }: any) {
   const theme = useTheme();

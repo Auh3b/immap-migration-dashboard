@@ -94,7 +94,7 @@ export default function PremiseServicesLayer() {
         if (info?.object) {
           info.object = {
             // @ts-ignore
-            html: premisePopup({data: info?.object?.properties}),
+            html: premisePopup({ data: info?.object?.properties }),
             style: {},
           };
         }

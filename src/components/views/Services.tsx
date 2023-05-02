@@ -63,7 +63,7 @@ export default function Services() {
     };
   }, [dispatch]);
 
-    useEffect(() => {
+  useEffect(() => {
     dispatch(addSource(aggreateServiceChildrenSource));
 
     dispatch(
@@ -96,7 +96,11 @@ export default function Services() {
           element: (
             <ServicesRightView
               classes={classes}
-              dataSources={{ mainSource, aggregateServicesSource, aggreateServiceChildrenSource }}
+              dataSources={{
+                mainSource,
+                aggregateServicesSource,
+                aggreateServiceChildrenSource,
+              }}
             />
           ),
           expandable: false,

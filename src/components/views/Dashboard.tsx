@@ -39,9 +39,10 @@ export default function Dashboard() {
       }),
     );
 
-    dispatch(addLayer({
-      id: PREMISE_SERVICES_LAYER_ID,
-      source: premiseSource.id,
+    dispatch(
+      addLayer({
+        id: PREMISE_SERVICES_LAYER_ID,
+        source: premiseSource.id,
       }),
     );
 
@@ -63,7 +64,9 @@ export default function Dashboard() {
           expandable: false,
         },
         right: {
-          element: <DashboardRightView dataSources={{ mainSource, premiseSource }} />,
+          element: (
+            <DashboardRightView dataSources={{ mainSource, premiseSource }} />
+          ),
           expandable: false,
         },
         middle: { element: <SurveyDates dataSource={mainSource.id} /> },
