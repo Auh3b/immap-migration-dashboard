@@ -33,20 +33,20 @@ export default function Services() {
   const dispatch = useDispatch();
   const classes = useViewStyle();
 
-  useEffect(() => {
-    dispatch(addSource(mainSource));
-    dispatch(
-      addLayer({
-        id: HOTSPOTS_LAYER_ID,
-        source: mainSource.id,
-      }),
-    );
+  // useEffect(() => {
+  //   dispatch(addSource(mainSource));
+  //   dispatch(
+  //     addLayer({
+  //       id: HOTSPOTS_LAYER_ID,
+  //       source: mainSource.id,
+  //     }),
+  //   );
 
-    return () => {
-      dispatch(removeLayer(HOTSPOTS_LAYER_ID));
-      dispatch(removeSource(mainSource.id));
-    };
-  }, [dispatch]);
+  //   return () => {
+  //     dispatch(removeLayer(HOTSPOTS_LAYER_ID));
+  //     dispatch(removeSource(mainSource.id));
+  //   };
+  // }, [dispatch]);
   useEffect(() => {
     dispatch(addSource(aggregateServicesSource));
 
