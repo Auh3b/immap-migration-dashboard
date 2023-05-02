@@ -258,12 +258,12 @@ function NavigationMenu({ column = false }: { column?: boolean }) {
           component={NavLink}
           to={ROUTE_PATHS.MIGRATION_FLOW}
         />
-        <Tab
+        {/* <Tab
           label='NNA'
           value='nna'
           component={NavLink}
           to={ROUTE_PATHS.CHILDREN}
-        />
+        /> */}
         <Tab
           label='Conexiones en la ruta'
           value='conexiones_en_la_ruta'
