@@ -76,15 +76,6 @@ export default function ServiceConcentrationLayer() {
       intensity: 1,
       visible: serviceConcentrationLayer.visible,
       threshold: 0.3,
-      onDataLoad: (data: any) => {
-        console.log(
-          data.map(({ long, lat, porc_sobre }: any) => ({
-            long,
-            lat,
-            porc_sobre,
-          })),
-        );
-      },
     });
   }
 }
