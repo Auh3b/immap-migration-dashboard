@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 // @ts-ignore
 import { CartoLayer } from '@deck.gl/carto';
-import { selectSourceById } from '@carto/react-redux';
+import { selectSourceById, updateLayer } from '@carto/react-redux';
 import { useCartoLayerProps } from '@carto/react-api';
 import { RootState } from 'store/store';
 import d3Hex2RGB from 'utils/d3Hex2RGB';
@@ -10,7 +10,7 @@ import { LEGEND_TYPES } from '@carto/react-ui';
 export const AGGREGATE_SERVICE_LAYER_ID = 'aggregateServiceLayer';
 
 export const AGGREGATE_SERVICE_COLORS = {
-  Punto: d3Hex2RGB(7),
+  Adultos: d3Hex2RGB(7),
 };
 
 const DATA = Object.entries(AGGREGATE_SERVICE_COLORS).map(([label, color]) => ({
@@ -19,7 +19,7 @@ const DATA = Object.entries(AGGREGATE_SERVICE_COLORS).map(([label, color]) => ({
 }));
 
 const layerConfig = {
-  title: 'Punto de servicio',
+  title: 'Servicios para adultos',
   visible: true,
   legend: {
     type: LEGEND_TYPES.CATEGORY,
@@ -46,10 +46,19 @@ export default function AggregateServiceLayer() {
     return new CartoLayer({
       ...cartoLayerProps,
       id: AGGREGATE_SERVICE_LAYER_ID,
-      getFillColor: [124, 21, 12, 0],
-      pointRadiusMinPixels: 2,
+      getFillColor: AGGREGATE_SERVICE_COLORS.Adultos,
+      pointRadiusMinPixels: 4,
       pickable: true,
       stroked: false,
+      onDataLoad: (data: any) => {
+        dispatch(
+          updateLayer({
+            id: AGGREGATE_SERVICE_LAYER_ID,
+            layerAttributes: { ...layerConfig },
+          }),
+        );
+        cartoLayerProps.onDataLoad && cartoLayerProps.onDataLoad(data);
+      },
     });
   }
 }
