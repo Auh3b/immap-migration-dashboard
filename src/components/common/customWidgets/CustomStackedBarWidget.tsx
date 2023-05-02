@@ -74,8 +74,6 @@ export default function CustomStackedBarWidget({
       }));
   }, [_data, colors]);
 
-  console.log(id, _data, yAxisData);
-
   return (
     <CustomWidgetWrapper title={title} isLoading={isLoading} onError={error}>
       <WidgetWithAlert dataSource={dataSource}>

@@ -1,5 +1,4 @@
 export default function premisePopup({ data }: any) {
-  console.log(data);
   const {
     org_pert1: implementor,
     org_pert2: principal,
