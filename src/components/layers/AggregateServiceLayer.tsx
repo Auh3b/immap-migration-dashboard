@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 // @ts-ignore
 import { CartoLayer } from '@deck.gl/carto';
-import { selectSourceById, updateLayer } from '@carto/react-redux';
+import { selectSourceById } from '@carto/react-redux';
 import { useCartoLayerProps } from '@carto/react-api';
 import { RootState } from 'store/store';
 import d3Hex2RGB from 'utils/d3Hex2RGB';
@@ -50,15 +50,6 @@ export default function AggregateServiceLayer() {
       pointRadiusMinPixels: 2,
       pickable: true,
       stroked: false,
-      // onDataLoad: (data: any) => {
-      //   dispatch(
-      //     updateLayer({
-      //       id: AGGREGATE_SERVICE_LAYER_ID,
-      //       layerAttributes: { ...layerConfig },
-      //     }),
-      //   );
-      //   cartoLayerProps.onDataLoad && cartoLayerProps.onDataLoad(data);
-      // },
     });
   }
 }

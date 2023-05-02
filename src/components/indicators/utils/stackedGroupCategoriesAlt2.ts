@@ -1,6 +1,4 @@
-import { AggregationTypes, groupValuesByColumn } from '@carto/react-core';
 import MethodFunc from './methodType';
-import { descending, rollup } from 'd3';
 import stackCategoryTotals from './stackCategoryTotals';
 
 const stackedGroupCategoriesAlt2: MethodFunc = (

@@ -1,11 +1,6 @@
-import { PieWidgetUI } from '@carto/react-ui';
 import { useMemo } from 'react';
-import groupCategories from '../utils/groupCategories';
 import { Grid } from '@material-ui/core';
 import TitleWrapper from './utils/TitleWrapper';
-import useIntroCategoryChange from './hooks/useCategoryChange';
-import useIntroWidgetFilter from './hooks/useIntroWidgetFilter';
-import IntroPieChart from './utils/IntroPieChart';
 import { descending } from 'd3';
 import concatenatedValues from '../utils/concatenatedValues';
 import { SICK_CATEGORY_ABREVATIONS } from '../premise/utils/services';
@@ -14,8 +9,6 @@ import IntroHalfPieChart from './utils/IntroHalfPieChart';
 const title = 'Retos del punto de servicio';
 const column = 'princ_re_1';
 const subtitle = '';
-const source = 'premiseData';
-const id = 'topOrganisations';
 
 export default function IntroSickPremise({
   data: _data,
@@ -36,15 +29,6 @@ export default function IntroSickPremise({
     }
     return [];
   }, [_data]);
-  const selectedCategories = useIntroWidgetFilter({
-    source,
-    owner: id,
-  });
-  const handleSelectedCategoriesChange = useIntroCategoryChange({
-    source,
-    column,
-    owner: id,
-  });
 
   return (
     <TitleWrapper title={title} subtitle={subtitle} isLoading={isLoading}>

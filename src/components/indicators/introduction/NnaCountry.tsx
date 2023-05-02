@@ -1,17 +1,13 @@
-import { CategoryWidgetUI } from '@carto/react-ui';
 import { Grid } from '@material-ui/core';
 import { useMemo } from 'react';
 import groupCategories from '../utils/groupCategories';
 import TitleWrapper from './utils/TitleWrapper';
-import useIntroCategoryChange from './hooks/useCategoryChange';
-import useIntroWidgetFilter from './hooks/useIntroWidgetFilter';
 import IntroWordCloud from './utils/IntroWordCloud';
 
 const title = 'Identificación NNA solos';
 const column = 'm07__en_q';
 const subtitle = '';
-const source = 'auroraData';
-const id = 'nnaCountry';
+
 export default function NnaCountry({
   data: _data,
   isLoading,
@@ -27,25 +23,9 @@ export default function NnaCountry({
     }
   }, [_data]);
 
-  const selectedCategories = useIntroWidgetFilter({
-    source,
-    owner: id,
-  });
-
-  const handleSelectedCategoriesChange = useIntroCategoryChange({
-    source,
-    column,
-    owner: id,
-  });
-
   return (
-    <TitleWrapper title={title} subtitle={subtitle}>
+    <TitleWrapper title={title} subtitle={subtitle} isLoading={isLoading}>
       <Grid item>
-        {/* <CategoryWidgetUI
-          onSelectedCategoriesChange={handleSelectedCategoriesChange}
-          selectedCategories={selectedCategories}
-          data={data}
-        /> */}
         <IntroWordCloud data={data} />
       </Grid>
     </TitleWrapper>
