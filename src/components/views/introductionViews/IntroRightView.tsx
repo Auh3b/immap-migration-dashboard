@@ -34,7 +34,7 @@ export default function IntroRightView({ data, isLoading }: IndicatorProps) {
       <OrganisationCount data={data} isLoading={isLoading} />
       <TopServices data={data} isLoading={isLoading} />
       <TopSurveyLocation data={data} isLoading={isLoading} />
-      <TopOrganisations data={data} isLoading={isLoading} />
+      {/* <TopOrganisations data={data} isLoading={isLoading} /> */}
     </Grid>
   );
 }

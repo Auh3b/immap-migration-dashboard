@@ -21,8 +21,7 @@ function popContext(implementor: string, principal: string, url: string) {
   return `<div style='display: flex; flex-direction: column; width: 150px;'>
     <p>Organización</p>
     <p>Socio Implementador: ${implementor}</p>
-    <p>Socio Principal: ${principal}</p>
-    <img src='https://firebasestorage.googleapis.com/v0/b/immap-migration.appspot.com/o/images%2Fmigration-reformed.png?alt=media&token=3f8c3c88-056c-4b44-8bad-3318818f44c6' style='width: 100%; height: 100px; object-fit: cover;'/>  
+    <p>Socio Principal: ${principal}</p> 
   </div>`;
 }
 

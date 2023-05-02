@@ -1,19 +1,19 @@
 import { MainColumnView } from 'components/common/MainColumnView';
-import EducationService from 'components/indicators/premise/EducationService';
-import FoodService from 'components/indicators/premise/FoodService';
-import HealthService from 'components/indicators/premise/HealthService';
-import HygieneService from 'components/indicators/premise/HygieneService';
+// import EducationService from 'components/indicators/premise/EducationService';
+// import FoodService from 'components/indicators/premise/FoodService';
+// import HealthService from 'components/indicators/premise/HealthService';
+// import HygieneService from 'components/indicators/premise/HygieneService';
 
-import InformationService from 'components/indicators/premise/InformationService';
-import LegalServices from 'components/indicators/premise/LegalServices';
+// import InformationService from 'components/indicators/premise/InformationService';
+// import LegalServices from 'components/indicators/premise/LegalServices';
 
-import OtherService from 'components/indicators/premise/OtherService';
+// import OtherService from 'components/indicators/premise/OtherService';
 
-import PsychologicalService from 'components/indicators/premise/PsychologicalService';
-import SanitationServices from 'components/indicators/premise/SanitationServices';
+// import PsychologicalService from 'components/indicators/premise/PsychologicalService';
+// import SanitationServices from 'components/indicators/premise/SanitationServices';
 
-import TransportService from 'components/indicators/premise/TransportService';
-import WaterService from 'components/indicators/premise/WaterService';
+// import TransportService from 'components/indicators/premise/TransportService';
+// import WaterService from 'components/indicators/premise/WaterService';
 
 import ViewSourceType from '../utils/viewSourceType';
 import AggreatedServices from 'components/indicators/premise/AggreatedServices';

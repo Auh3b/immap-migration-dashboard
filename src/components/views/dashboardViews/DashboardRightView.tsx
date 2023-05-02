@@ -1,4 +1,8 @@
 import LazyLoadComponent from 'components/common/LazyLoadComponent';
+import ChildrenDiffServices from 'components/indicators/premise/ChildrenDiffServices';
+import ChildrenTravelParty from 'components/indicators/premise/ChildrenTravelParty';
+import ChildrenTravelPartyComposition from 'components/indicators/premise/ChildrenTravelPartyComposition';
+import ChildrenUnderCare from 'components/indicators/premise/ChildrenUnderCare';
 import { MainColumnView } from 'components/common/MainColumnView';
 import { lazy } from 'react';
 
@@ -21,14 +25,18 @@ export default function DashboardRightView({
 }: {
   dataSources: any;
 }) {
-  const { mainSource } = dataSources;
+  const { mainSource, premiseSource } = dataSources;
   return (
     <LazyLoadComponent>
       <MainColumnView>
-        <SleepOutDoor dataSource={mainSource.id} />
-        <RestrictedFood dataSource={mainSource.id} />
-        <SickPeople dataSource={mainSource.id} />
-        <PregnantWoment dataSource={mainSource.id} />
+        <ChildrenDiffServices dataSource={premiseSource.id} />
+        <ChildrenTravelParty dataSource={premiseSource.id} />
+        <ChildrenTravelPartyComposition dataSource={premiseSource.id} />
+        {/* <ChildrenUnderCare dataSource={premiseSource.id} /> */}
+        {/* <SleepOutDoor dataSource={mainSource.id} />
+        <RestrictedFood dataSource={mainSource.id} /> */}
+        {/* <SickPeople dataSource={mainSource.id} />
+        <PregnantWoment dataSource={mainSource.id} /> */}
       </MainColumnView>
     </LazyLoadComponent>
   );

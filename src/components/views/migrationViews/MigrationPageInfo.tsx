@@ -1,11 +1,4 @@
-import {
-  Box,
-  Grid,
-  ListItem,
-  ListItemText,
-  Typography,
-  makeStyles,
-} from '@material-ui/core';
+import { Box, Typography, makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {

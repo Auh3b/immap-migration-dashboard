@@ -3,6 +3,7 @@ import MainView from './main/MainView';
 import mainSource from 'data/sources/mainSource';
 import { lazy, useEffect } from 'react';
 import aggregateServicesSource from 'data/sources/aggregateServicesSource';
+import aggreateServiceChildrenSource from 'data/sources/aggreateServiceChildrenSource';
 import { AGGREGATE_SERVICE_LAYER_ID } from 'components/layers/AggregateServiceLayer';
 import {
   addLayer,
@@ -12,6 +13,7 @@ import {
 } from '@carto/react-redux';
 import { useDispatch } from 'react-redux';
 import { HOTSPOTS_LAYER_ID } from 'components/layers/HotspotsLayer';
+import { AGGREGATE_SERVICES_CHILDREN_LAYER_ID } from 'components/layers/AggregateServicesChildrenLayer';
 
 const ServiceLeftView = lazy(() => import('./serviceViews/ServiceLeftView'));
 const ServicesRightView = lazy(
@@ -61,6 +63,22 @@ export default function Services() {
     };
   }, [dispatch]);
 
+    useEffect(() => {
+    dispatch(addSource(aggreateServiceChildrenSource));
+
+    dispatch(
+      addLayer({
+        id: AGGREGATE_SERVICES_CHILDREN_LAYER_ID,
+        source: aggreateServiceChildrenSource.id,
+      }),
+    );
+
+    return () => {
+      dispatch(removeLayer(AGGREGATE_SERVICES_CHILDREN_LAYER_ID));
+      dispatch(removeSource(aggreateServiceChildrenSource.id));
+    };
+  }, [dispatch]);
+
   // [hygen] Add useEffect
   return (
     <MainView>
@@ -78,7 +96,7 @@ export default function Services() {
           element: (
             <ServicesRightView
               classes={classes}
-              dataSources={{ mainSource, aggregateServicesSource }}
+              dataSources={{ mainSource, aggregateServicesSource, aggreateServiceChildrenSource }}
             />
           ),
           expandable: false,
