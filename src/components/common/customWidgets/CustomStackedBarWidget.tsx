@@ -51,20 +51,31 @@ export default function CustomStackedBarWidget({
       setXAxisData(_data.map((d) => d.name)[0]);
       setYAxisData(_data.map((d) => d.value)[0]);
       setColors(_data.map((d) => d.color)[0]);
+      return;
     }
+    setXAxisData([]);
+    setYAxisData([]);
+    setColors([]);
   }, [_data]);
 
   const legend: { name: string; color: string }[] = useMemo(() => {
-    if (colors.length > 0) {
-      return _data
-        .map((d) => d.legend)[0]
-        .map((d: string, i: number) => ({
-          name: d,
-          color: colors[i],
-        }));
+    if(_data.length === 0){
+      return [];
     }
-    return [];
+
+    if(colors.length === 0){
+      return []
+    }
+    return _data
+      .map((d) => d.legend)[0]
+      .map((d: string, i: number) => ({
+        name: d,
+        color: colors[i],
+      }));
+
   }, [_data, colors]);
+
+  console.log(id, _data, yAxisData)
 
   return (
     <CustomWidgetWrapper title={title} isLoading={isLoading} onError={error}>
