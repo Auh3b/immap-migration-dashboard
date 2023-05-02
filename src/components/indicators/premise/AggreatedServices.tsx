@@ -144,9 +144,9 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
             <ClearFilters filters={filters} clearFilters={setFilters} />
           </Grid>
           <ChartLegend />
-          {data &&
+          {(data.length > 0 &&
             !isLoading &&
-            regions &&
+            regions) ?
             regions.map((groupName) => {
               return (
                 <CustomConnectDotChart
@@ -155,7 +155,12 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
                   groupName={groupName}
                 />
               );
-            })}
+            })
+          :
+          <Typography>
+            No hay datos disponibles con los filtros seleccionados
+          </Typography>
+          }
         </Grid>
       </Grid>
     </CustomWidgetWrapper>
