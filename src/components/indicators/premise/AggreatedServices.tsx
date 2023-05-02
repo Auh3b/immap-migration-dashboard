@@ -1,4 +1,5 @@
 import {
+  Fab,
   FormControl,
   Grid,
   InputLabel,
@@ -14,9 +15,13 @@ import useWidgetFetch from 'components/common/customWidgets/hooks/useWidgetFetch
 import { useMemo, useRef, useState } from 'react';
 import MethodFunc from '../utils/methodType';
 import { SERVICES_KEY, SERVICE_STAT_COLUMNS } from './utils/services';
-import theme, { UNICEF_COLORS } from 'theme';
+import { UNICEF_COLORS } from 'theme';
 import { ascending } from 'd3';
 import CustomWidgetWrapper from 'components/common/customWidgets/CustomWidgetWrapper';
+import { filterItem, filterValues } from 'utils/filterFunctions';
+import { _FilterTypes } from '@carto/react-core';
+import ClearAllIcon from '@material-ui/icons/ClearAll';
+import CustomConnectDotChart from 'components/common/customWidgets/CustomConnectDotChart';
 
 const otherColumns = {
   country: 'ubicacion_',
@@ -77,6 +82,9 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
   },
+  selectors:{
+    position: 'relative',
+  }
 }));
 
 const id = 'aggregatedService';
@@ -87,8 +95,7 @@ const methodParams = {
 };
 
 export default function AggreatedServices({ dataSource }: BasicWidgetType) {
-  const [selectedService, setSelectedService] = useState('');
-  const [data, setData] = useState(null);
+  const [filters, setFilters] = useState<{id: string, value: string, field: string, type: _FilterTypes}[]>([]);
   const serviceSelection = Array.from(SERVICES_KEY.values());
   const classes = useStyles();
   const { data: _data, isLoading } = useWidgetFetch({
@@ -99,19 +106,23 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
     methodParams,
   });
 
-  useMemo(() => {
-    if (_data.length === 0) {
-      return;
-    }
+  const data = useMemo(()=>{
+    if(_data.length === 0){return []}
+    if(filters.length === 0){return _data}
+    
+    const filteredData = filterValues(_data, filters)
+    console.log(filteredData)
+    return filteredData
+  }, [_data, filters])
 
-    if (selectedService) {
-      const filterData = _data.filter((d: any) => selectedService === d[0]);
-      setData(filterData);
-      return;
+  const locationSelection = useMemo(()=>{
+    if(_data.length === 0){
+      return []
     }
-
-    setData(_data);
-  }, [_data, selectedService]);
+    return Array.from(new Set(_data.map(d => {
+      return d[2]
+    })))
+  }, [_data])
 
   const regions = useMemo(
     () => data && Array.from(new Set(data.map((d: any) => d[2]))),
@@ -122,17 +133,24 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
     <CustomWidgetWrapper expandable={false} title={title} isLoading={isLoading}>
       <Grid item className={classes.main}>
         <Grid className={classes.content} direction='column' container>
-          <ServiceSelector
-            data={serviceSelection}
-            selectService={setSelectedService}
-          />
+          <Grid container spacing={5} className={classes.selectors}>
+            <ServiceSelector
+              data={serviceSelection}
+              addFilter={setFilters}
+              />
+            <LocationSelector 
+              data={locationSelection}
+              addFilter={setFilters}
+            />
+            <ClearFilters filters={filters} clearFilters={setFilters} />
+          </Grid>
           <ChartLegend />
           {data &&
             !isLoading &&
             regions &&
             regions.map((groupName) => {
               return (
-                <ConnectDotChart
+                <CustomConnectDotChart
                   key={groupName}
                   data={data}
                   groupName={groupName}
@@ -152,12 +170,22 @@ const useSelectSyles = makeStyles((theme) => ({
   },
 }));
 
-function ServiceSelector({ data, selectService }: any) {
+function ServiceSelector({ data, addFilter }: any) {
+  const id = 'serviceSelector'
+  const field = 0
+  const type = _FilterTypes.IN
   const classes = useSelectSyles();
   const currentService = useRef<string>('');
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     currentService.current = event.target.value as string;
-    selectService(event.target.value as string);
+    if(currentService.current){
+      addFilter((prev: filterItem[]) => {
+        const existing = prev.filter(({id: itemId})=> itemId !== id)
+        return [...existing, {id, field, type, value: currentService.current}]
+      });
+    }else{
+      addFilter((prev: filterItem[]) => prev.filter(({id: itemId})=> itemId !== id ))
+    }
   };
   return (
     <Grid item className={classes.root}>
@@ -181,170 +209,92 @@ function ServiceSelector({ data, selectService }: any) {
   );
 }
 
-function ConnectDotChart({ data: _data, groupName }: any) {
-  const theme = useTheme();
-  const DATA_DIMENSIONS = [
-    'service',
-    'country',
-    'region',
-    'organisation',
-    'personas',
-    'org/service',
-    'Capacidad diaria',
-    'Personas atendidas ayer',
-    'Promedio diario',
-  ];
-
-  const data = useMemo(
-    () => _data.filter((d: any) => d[2] === groupName),
-    [_data],
-  );
-
-  const option = useMemo(
-    () => ({
-      title: {
-        show: true,
-        text: groupName,
-      },
-      grid: {
-        left: '5%',
-        right: '4%',
-        bottom: '3%',
-        containLabel: true,
-      },
-      yAxis: {
-        type: 'category',
-        name: 'Organización/Servicio',
-        nameLocation: 'end',
-        nameTextStyle: {
-          fontWeight: 'bold',
-          align: 'center',
-          verticalAlign: 'middle',
-        },
-        boundaryGap: true,
-        axisLabel: {
-          hideOverlap: true,
-          width: 200,
-          overflow: 'break',
-        },
-      },
-      xAxis: {
-        type: 'value',
-        name: 'Personas',
-        nameGap: 30,
-        nameLocation: 'middle',
-        nameTextStyle: {
-          align: 'center',
-          verticalAlign: 'middle',
-          fontWeight: 'bold',
-        },
-        axisLabel: {
-          hideOverlap: true,
-        },
-      },
-      dataset: {
-        dimensions: DATA_DIMENSIONS,
-        source: data,
-      },
-      series: [
-        {
-          type: 'custom',
-          renderItem: (params: any, api: any) => {
-            const categoryIndex = api.value(5);
-            const p1 = api.coord([api.value(6), categoryIndex]);
-            const p2 = api.coord([api.value(7), categoryIndex]);
-            const p3 = api.coord([api.value(8), categoryIndex]);
-            const points = [p1, p2, p3].sort((a, b) => ascending(a[0], b[0]));
-            return {
-              type: 'polyline',
-              shape: {
-                points,
-              },
-              style: api.style({
-                stroke: UNICEF_COLORS[6],
-              }),
-            };
-          },
-        },
-        {
-          type: 'scatter',
-          encode: {
-            y: DATA_DIMENSIONS[5],
-            x: DATA_DIMENSIONS[6],
-          },
-          itemStyle: {
-            color: STAT_CATEGORY_COLORS.get(DATA_DIMENSIONS[6]),
-          },
-        },
-        {
-          type: 'scatter',
-          encode: {
-            y: DATA_DIMENSIONS[5],
-            x: DATA_DIMENSIONS[7],
-          },
-          itemStyle: {
-            color: STAT_CATEGORY_COLORS.get(DATA_DIMENSIONS[7]),
-          },
-        },
-        {
-          type: 'scatter',
-          encode: {
-            y: DATA_DIMENSIONS[5],
-            x: DATA_DIMENSIONS[8],
-          },
-          itemStyle: {
-            color: STAT_CATEGORY_COLORS.get(DATA_DIMENSIONS[8]),
-          },
-        },
-      ],
-      tooltip: {
-        show: true,
-        padding: [theme.spacing(0.5), theme.spacing(1)],
-        borderWidth: 0,
-        textStyle: {
-          ...theme.typography.caption,
-          fontSize: 12,
-          lineHeight: 16,
-          color: theme.palette.common.white,
-        },
-        //@ts-ignore
-        backgroundColor: theme.palette.other.tooltip,
-        //@ts-ignore
-        formatter({ data, encode }) {
-          const { x: dimensionIndex } = encode;
-          return `<span 
-            style='min-width: 35px;  display: flex; flex-direction: column;'
-            >
-            <span 
-              style='display: flex; justify-content: space-between; gap: 10px; align-items: center;'
-              >
-              <span>Servicio</span>
-              <span>${data[0]}</span>
-            </span>
-            <span 
-              style='display: flex; justify-content: space-between; gap: 10px; align-items: center;'
-              >
-              <span>Organización</span>
-              <span>${data[3]}</span>
-            </span>
-            <span 
-              style='display: flex; justify-content: space-between; gap: 10px; align-items: center;'
-              >
-              <span>Personas</span>
-              <span>${data[dimensionIndex]}</span>
-            </span>
-          </span>`;
-        },
-      },
-    }),
-    [data],
-  );
+function LocationSelector({ data, addFilter }: any) {
+  const id = 'locationSelector'
+  const field = 2
+  const type = _FilterTypes.IN
+  const classes = useSelectSyles();
+  const currentService = useRef<string>('');
+  const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    currentService.current = event.target.value as string;
+    if(currentService.current){
+      addFilter((prev: filterItem[]) => {
+        const existing = prev.filter(({id: itemId})=> itemId !== id)
+        return [...existing, {id, field, type, value: currentService.current}]
+      });
+    }else{
+      addFilter((prev: filterItem[]) => prev.filter(({id: itemId})=> itemId !== id ))
+    }
+  };
   return (
-    <ReactEchart
-      option={option}
-      style={{ height: '600px' }}
-      opts={{ renderer: 'svg' }}
-    />
+    <Grid item className={classes.root}>
+      <FormControl>
+        <InputLabel>
+          <Typography variant='caption'>Select</Typography>
+        </InputLabel>
+        <Select value={currentService.current} onChange={handleChange}>
+          <MenuItem value={''}>
+            <Typography variant='overline'>{'All'}</Typography>
+          </MenuItem>
+          {data &&
+            data.map((d: string, index: number) => (
+              <MenuItem value={d} key={index}>
+                <Typography variant='overline'>{d}</Typography>
+              </MenuItem>
+            ))}
+        </Select>
+      </FormControl>
+    </Grid>
+  );
+}
+
+
+const useClearStyles = makeStyles((theme) => ({
+  root: {
+    position: 'absolute',
+    right: theme.spacing(2),
+    bottom: theme.spacing(4) * -1,
+    backgroundColor: theme.palette.error.main,
+    color: theme.palette.background.paper,
+    [theme.breakpoints.down('md')]: {
+      left: theme.spacing(2),
+      bottom: theme.spacing(2),
+    },
+  },
+  text: {
+    marginRight: theme.spacing(2),
+  },
+}));
+
+function ClearFilters({
+  filters,
+  clearFilters
+}: any) {
+  const classes = useClearStyles();
+  const hasFilters = useMemo(()=> filters.length > 0, [filters])
+  const handleClearFilters = ()=>{
+    clearFilters([])
+  }
+  return (
+    <>
+      {hasFilters && (
+        <Fab
+          onClick={handleClearFilters}
+          size='large'
+          variant='extended'
+          className={classes.root}
+        >
+          <Typography
+            color='inherit'
+            variant='overline'
+            className={classes.text}
+          >
+            Clear Filters
+          </Typography>
+          <ClearAllIcon />
+        </Fab>
+      )}
+    </>
   );
 }
 
