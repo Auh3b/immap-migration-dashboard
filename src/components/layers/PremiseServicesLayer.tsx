@@ -11,19 +11,9 @@ import CustomGeoJsonLayer from './CustomLayer/CustomGeoJsonLayer';
 import useCustomDataLoad from './hooks/useCustomDataLoad';
 import { useEffect, useState } from 'react';
 import premiseSource from 'data/sources/premiseSource';
+import premisePopup from './utils/premisePopup';
 
 export const PREMISE_SERVICES_LAYER_ID = 'premiseServicesLayer';
-
-const premiseToken =
-  'token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ4IjoiaGVsbG8iLCJpYXQiOjE2ODE4MjY4NTEsImV4cCI6MTY5MDQ2Njg1MSwiaXNzIjoiaHR0cHM6Ly9hcGkubXkucHJlbWlzZS5jb20vZXhwb3J0cyIsInN1YiI6ImMxYzdhNGMyLTg3YWUtNDU4ZC05ZTI3LTQyZWM2MjkyNmFkOCJ9.SXTBwx0J0MMMlSJM7dERy5R7QzwRCtyuaH23BfNGLTk';
-
-function popContext(implementor: string, principal: string, url: string) {
-  return `<div style='display: flex; flex-direction: column; width: 150px;'>
-    <p>Organización</p>
-    <p>Socio Implementador: ${implementor}</p>
-    <p>Socio Principal: ${principal}</p> 
-  </div>`;
-}
 
 export const PREMISE_SERVICES_COLORS = {
   Punto: [...Object.values(color(UNICEF_COLORS[0])).slice(0, -1)],
@@ -109,7 +99,7 @@ export default function PremiseServicesLayer() {
           } = info?.object?.properties;
           info.object = {
             // @ts-ignore
-            html: popContext(implementor, principal, url),
+            html: premisePopup({data: info?.object?.properties}),
             style: {},
           };
         }
