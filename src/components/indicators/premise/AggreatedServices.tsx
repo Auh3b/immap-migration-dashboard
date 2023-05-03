@@ -178,7 +178,7 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
       dispatch(setViewState({
         latitude,
         longitude,
-        zoom
+        zoom,
       }))
 
       return;
