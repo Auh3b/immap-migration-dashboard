@@ -10,20 +10,21 @@ const STAT_CATEGORY_COLORS = new Map([
   ['Promedio diario', UNICEF_COLORS[0]],
 ]);
 
+const DATA_DIMENSIONS = [
+  'service',
+  'country',
+  'region',
+  'organisation',
+  'personas',
+  'org/service',
+  'geom',
+  'Capacidad diaria',
+  'Personas atendidas ayer',
+  'Promedio diario',
+];
+
 export default function CustomConnectDotChart({ data: _data, groupName }: any) {
   const theme = useTheme();
-  const DATA_DIMENSIONS = [
-    'service',
-    'country',
-    'region',
-    'organisation',
-    'personas',
-    'org/service',
-    'geom',
-    'Capacidad diaria',
-    'Personas atendidas ayer',
-    'Promedio diario',
-  ];
 
   const data = useMemo(
     () => _data.filter((d: any) => d[2] === groupName),
