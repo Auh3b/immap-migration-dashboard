@@ -6,6 +6,8 @@ import { BASEMAPS } from '@carto/react-basemaps';
 import { Map } from 'react-map-gl';
 import { RootState } from 'store/store';
 import { useMapHooks } from './useMapHooks';
+//@ts-ignore
+import {LinearInterpolator, FlyToInterpolator} from '@deck.gl/core';
 // @ts-ignore
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import maplibregl from '!maplibre-gl';
@@ -14,8 +16,15 @@ import maplibreglWorker from 'maplibre-gl/dist/maplibre-gl-csp-worker';
 // @ts-ignore
 maplibregl.workerClass = maplibreglWorker;
 
+
+// const transitionInterpolator = new LinearInterpolator({transitionProps: ['longitude', 'latitude', 'zoom']});
+const transitionInterpolator = new FlyToInterpolator();
+const transitionDuration = 0;
+
 export default function DeckGLComponent({ layers }: { layers: any[] }) {
   const viewState = useSelector((state: RootState) => state.carto.viewState);
+  // @ts-ignore
+  const transition = useSelector((state) => state.map.transition)
   const basemap = useSelector(
     // @ts-ignore
     (state: RootState) => BASEMAPS[state.carto.basemap],
@@ -33,7 +42,7 @@ export default function DeckGLComponent({ layers }: { layers: any[] }) {
   return (
     // @ts-ignore
     <DeckGL
-      viewState={{ ...viewState }}
+      viewState={{ ...viewState, transitionDuration: transition ?? 0, transitionInterpolator }}
       controller={true}
       layers={layers}
       onViewStateChange={handleViewStateChange}
