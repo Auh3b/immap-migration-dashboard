@@ -43,7 +43,6 @@ let store: AppStore = {
     store.asyncReducers[key] = asyncReducer;
     const reducer = createReducer(store.asyncReducers);
     const rootReducer = reduceReducers(reducer, setCustomViewport);
-    console.log(rootReducer);
     store.replaceReducer(rootReducer);
   },
 };
