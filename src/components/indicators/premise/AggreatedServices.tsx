@@ -25,6 +25,7 @@ import { bbox } from '@turf/turf';
 //@ts-ignore
 import {WebMercatorViewport} from '@deck.gl/core';
 import { initialState } from 'store/initialStateSlice';
+import { removeTransition, setTransition } from 'store/mapSlice';
 
 const otherColumns = {
   country: 'ubicacion_',
@@ -143,7 +144,6 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
 
   const handleServiceChange = useCallback(
     ({ id, field, currentSelection }) => {
-      console.log(currentSelection);
       if (currentSelection) {
         dispatch(
           addFilter({
@@ -174,17 +174,20 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
       const [minLong, minLat, maxLong, maxLat] = bbox(geojson)
       const boundbox = [[minLong, minLat], [maxLong, maxLat]]
       const {latitude, longitude, zoom} = new WebMercatorViewport().fitBounds(boundbox)
-
-      dispatch(setViewState({
-        latitude,
-        longitude,
-        zoom,
-      }))
-
+      dispatch(setTransition(500))
+      dispatch(setViewState({latitude,longitude,zoom}))
+      setTimeout(()=>{
+        dispatch(removeTransition())
+      }, 1000)
       return;
     }
+    
     const {latitude, longitude, zoom} = initialState.viewState
-    dispatch(setViewState({latitude, longitude, zoom}))
+    dispatch(setTransition(500))
+    dispatch(setViewState({latitude,longitude,zoom}))
+    setTimeout(()=>{
+      dispatch(removeTransition())
+    }, 1000)
   }, [dispatch])
 
   return (
