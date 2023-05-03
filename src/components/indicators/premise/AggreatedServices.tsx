@@ -1,5 +1,5 @@
+import ClearFiltersButton from 'components/common/ClearFiltersButton';
 import {
-  Fab,
   FormControl,
   Grid,
   InputLabel,
@@ -10,14 +10,13 @@ import {
 } from '@material-ui/core';
 import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType';
 import useWidgetFetch from 'components/common/customWidgets/hooks/useWidgetFetch';
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import MethodFunc from '../utils/methodType';
 import { SERVICES_KEY, SERVICE_STAT_COLUMNS } from './utils/services';
-import { UNICEF_COLORS } from 'theme';
 import CustomWidgetWrapper from 'components/common/customWidgets/CustomWidgetWrapper';
 import { filterItem, filterValues } from 'utils/filterFunctions';
 import { _FilterTypes } from '@carto/react-core';
-import ClearAllIcon from '@material-ui/icons/ClearAll';
+
 import CustomConnectDotChart from 'components/common/customWidgets/CustomConnectDotChart';
 
 const otherColumns = {
@@ -25,6 +24,8 @@ const otherColumns = {
   region: 'lugar_enc',
   organisation: 'org_pert',
   persons: 'nna_atend',
+  lat: 'lat',
+  long: 'long'
 };
 
 const SERVICE_STAT_COLUMNS_NAME = [
@@ -32,12 +33,6 @@ const SERVICE_STAT_COLUMNS_NAME = [
   'Personas atendidas ayer',
   'Promedio diario',
 ];
-
-const STAT_CATEGORY_COLORS = new Map([
-  ['Capacidad diaria', UNICEF_COLORS[5]],
-  ['Personas atendidas ayer', UNICEF_COLORS[4]],
-  ['Promedio diario', UNICEF_COLORS[0]],
-]);
 
 const column = 'serv_tipo1';
 
@@ -61,6 +56,7 @@ const method: MethodFunc = (input, column, params) => {
         `${serviceEntry[otherColumns.organisation]} - ${SERVICES_KEY.get(
           service,
         )}`,
+        [serviceEntry[otherColumns.long],serviceEntry[otherColumns.lat]]
       ];
       for (let i = 0; i < SERVICE_STAT_COLUMNS_NAME.length; i++) {
         newEntry = [...newEntry, serviceEntry[serviceColumns[i]] || 0];
@@ -68,6 +64,8 @@ const method: MethodFunc = (input, column, params) => {
       output = [...output, newEntry];
     });
   }
+
+  console.log(output)
   return output;
 };
 
@@ -82,6 +80,10 @@ const useStyles = makeStyles((theme) => ({
   selectors: {
     position: 'relative',
   },
+  error:{
+    marginTop: theme.spacing(8),
+    padding: theme.spacing(2),
+  }
 }));
 
 const id = 'aggregatedService';
@@ -131,22 +133,26 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
       <Grid item className={classes.main}>
         <Grid className={classes.content} direction='column' container>
           <Grid container spacing={5} className={classes.selectors}>
-            <ServiceSelector
+            <Selector
+              id='serviceSelector'
+              field={0}
               data={serviceSelection}
               filters={filters}
               addFilter={setFilters}
             />
-            <LocationSelector
+            <Selector
+              id='locationSelector'
+              field={2}
               data={locationSelection}
               filters={filters}
               addFilter={setFilters}
             />
-            <ClearFilters filters={filters} clearFilters={setFilters} />
+            <ClearFiltersButton
+              filtersCallback={() => Object.keys(filters).length > 0}
+              clearCallback={() => setFilters({})}
+            />
           </Grid>
-          <ChartLegend />
-          {(data.length > 0 &&
-            !isLoading &&
-            regions) ?
+          {data.length > 0 && !isLoading && regions ? (
             regions.map((groupName) => {
               return (
                 <CustomConnectDotChart
@@ -156,11 +162,13 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
                 />
               );
             })
-          :
-          <Typography>
-            No hay datos disponibles con los filtros seleccionados
-          </Typography>
-          }
+          ) : (
+            <Grid item className={classes.error}>
+              <Typography>
+                No hay datos disponibles con los filtros seleccionados
+              </Typography>
+            </Grid>
+          )}
         </Grid>
       </Grid>
     </CustomWidgetWrapper>
@@ -174,13 +182,26 @@ const useSelectSyles = makeStyles((theme) => ({
   },
 }));
 
-function ServiceSelector({ data, filters, addFilter }: any) {
-  const id = 'serviceSelector';
-  const field = 0;
-  const type = _FilterTypes.IN;
+function Selector({
+  id,
+  field,
+  type = _FilterTypes.IN,
+  data,
+  filters,
+  addFilter,
+  callback,
+}: {
+  id: string;
+  field: string | number;
+  type?: _FilterTypes;
+  data: any[];
+  filters: Record<string, filterItem>;
+  addFilter: any;
+  callback?: Function;
+}) {
   const classes = useSelectSyles();
 
-  const currentService = useMemo(() => {
+  const currentSelection = useMemo(() => {
     const filter = filters[id];
     if (filter) {
       return filter.value;
@@ -191,67 +212,23 @@ function ServiceSelector({ data, filters, addFilter }: any) {
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     const value = event.target.value as string;
-    
-    addFilter((prev:any)=>{
-      if(value){
-        const newFilter:any = {id, value, type, field}
-        prev[id] = newFilter
-        return {...prev}
+
+    addFilter((prev: any) => {
+      if (value) {
+        const newFilter: any = { id, value, type, field };
+        prev[id] = newFilter;
+        return { ...prev };
       }
-      delete prev[id]
-      return {...prev}
-    })
+      delete prev[id];
+      return { ...prev };
+    });
   };
 
-  return (
-    <Grid item className={classes.root}>
-      <FormControl>
-        <InputLabel>
-          <Typography variant='caption'>Select</Typography>
-        </InputLabel>
-        <Select value={currentService} onChange={handleChange}>
-          <MenuItem value={0}>
-            <Typography variant='overline'>{'All'}</Typography>
-          </MenuItem>
-          {data &&
-            data.map((d: string, index: number) => (
-              <MenuItem value={d} key={index}>
-                <Typography variant='overline'>{d}</Typography>
-              </MenuItem>
-            ))}
-        </Select>
-      </FormControl>
-    </Grid>
-  );
-}
-
-function LocationSelector({ data, filters, addFilter }: any) {
-  const id = 'locationSelector';
-  const field = 2;
-  const type = _FilterTypes.IN;
-  const classes = useSelectSyles();
-  const currentLocation = useMemo(() => {
-    const filter = filters[id];
-    if (filter) {
-      return filter.value;
+  useCallback(() => {
+    if (callback) {
+      callback(currentSelection);
     }
-
-    return 0;
-  }, [filters]);
-
-  const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    const value = event.target.value as string;
-    
-    addFilter((prev:any)=>{
-      if(value){
-        const newFilter:any = {id, value, type, field}
-        prev[id] = newFilter
-        return {...prev}
-      }
-      delete prev[id]
-      return {...prev}
-    })
-  };
+  }, [currentSelection]);
 
   return (
     <Grid item className={classes.root}>
@@ -259,9 +236,9 @@ function LocationSelector({ data, filters, addFilter }: any) {
         <InputLabel>
           <Typography variant='caption'>Select</Typography>
         </InputLabel>
-        <Select value={currentLocation} onChange={handleChange}>
+        <Select value={currentSelection} onChange={handleChange}>
           <MenuItem value={0}>
-            <Typography variant='overline'>{'All'}</Typography>
+            <Typography variant='overline'>All</Typography>
           </MenuItem>
           {data &&
             data.map((d: string, index: number) => (
@@ -271,91 +248,6 @@ function LocationSelector({ data, filters, addFilter }: any) {
             ))}
         </Select>
       </FormControl>
-    </Grid>
-  );
-}
-
-const useClearStyles = makeStyles((theme) => ({
-  root: {
-    position: 'absolute',
-    right: theme.spacing(2),
-    bottom: theme.spacing(4) * -1,
-    backgroundColor: theme.palette.error.main,
-    color: theme.palette.background.paper,
-    [theme.breakpoints.down('md')]: {
-      left: theme.spacing(2),
-      bottom: theme.spacing(2),
-    },
-  },
-  text: {
-    marginRight: theme.spacing(2),
-  },
-}));
-
-function ClearFilters({ filters, clearFilters }: any) {
-  const classes = useClearStyles();
-  const hasFilters = useMemo(() => Object.keys(filters).length > 0, [filters]);
-  const handleClearFilters = () => {
-    clearFilters({});
-  };
-  return (
-    <>
-      {hasFilters && (
-        <Fab
-          onClick={handleClearFilters}
-          size='large'
-          variant='extended'
-          className={classes.root}
-        >
-          <Typography
-            color='inherit'
-            variant='overline'
-            className={classes.text}
-          >
-            Clear Filters
-          </Typography>
-          <ClearAllIcon />
-        </Fab>
-      )}
-    </>
-  );
-}
-
-const useLegendStyle = makeStyles((theme) => ({
-  root: {
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2),
-  },
-  legendItem: {
-    gap: theme.spacing(2),
-  },
-  icon: {
-    width: '10px',
-    height: '10px',
-    borderRadius: '100%',
-  },
-}));
-
-function ChartLegend() {
-  const classes = useLegendStyle();
-  const legend = Array.from(STAT_CATEGORY_COLORS);
-  return (
-    <Grid item direction='column' container className={classes.root}>
-      {legend.map(([title, color]) => (
-        <Grid
-          key={title}
-          alignItems='center'
-          item
-          container
-          className={classes.legendItem}
-        >
-          <span
-            className={classes.icon}
-            style={{ backgroundColor: color }}
-          ></span>
-          <Typography variant='overline'>{title}</Typography>
-        </Grid>
-      ))}
     </Grid>
   );
 }

@@ -1,5 +1,5 @@
-import { Fab, Typography, makeStyles } from "@material-ui/core";
-import { useMemo } from "react";
+import { Fab, Typography, makeStyles } from '@material-ui/core';
+import { useMemo } from 'react';
 import ClearAllIcon from '@material-ui/icons/ClearAll';
 
 const useClearStyles = makeStyles((theme) => ({
@@ -13,6 +13,10 @@ const useClearStyles = makeStyles((theme) => ({
       left: theme.spacing(2),
       bottom: theme.spacing(2),
     },
+    '&:hover': {
+      backgroundColor: theme.palette.error.main,
+      color: theme.palette.background.paper,
+    },
   },
   text: {
     marginRight: theme.spacing(2),
@@ -21,7 +25,7 @@ const useClearStyles = makeStyles((theme) => ({
 
 export default function ClearFiltersButton({
   filtersCallback,
-  clearCallback
+  clearCallback,
 }: {
   filtersCallback: Function;
   clearCallback: Function;
@@ -30,16 +34,27 @@ export default function ClearFiltersButton({
   const hasFilters = useMemo(() => filtersCallback(), [filtersCallback]);
 
   const handleClearFilters = () => {
-    clearCallback()
+    clearCallback();
   };
 
-  return <>
-      {hasFilters && <Fab onClick={handleClearFilters} size='large' variant='extended' className={classes.root}>
-          <Typography color='inherit' variant='overline' className={classes.text}>
+  return (
+    <>
+      {hasFilters && (
+        <Fab
+          onClick={handleClearFilters}
+          variant='extended'
+          className={classes.root}
+        >
+          <Typography
+            color='inherit'
+            variant='overline'
+            className={classes.text}
+          >
             Clear Filters
           </Typography>
           <ClearAllIcon />
-        </Fab>}
-    </>;
+        </Fab>
+      )}
+    </>
+  );
 }
-  

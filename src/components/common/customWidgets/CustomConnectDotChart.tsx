@@ -1,4 +1,4 @@
-import { useTheme } from '@material-ui/core';
+import { Grid, Typography, makeStyles, useTheme } from '@material-ui/core';
 import { ascending } from 'd3';
 import { useMemo } from 'react';
 import { UNICEF_COLORS } from 'theme';
@@ -19,6 +19,7 @@ export default function CustomConnectDotChart({ data: _data, groupName }: any) {
     'organisation',
     'personas',
     'org/service',
+    'geom',
     'Capacidad diaria',
     'Personas atendidas ayer',
     'Promedio diario',
@@ -80,9 +81,9 @@ export default function CustomConnectDotChart({ data: _data, groupName }: any) {
           type: 'custom',
           renderItem: (params: any, api: any) => {
             const categoryIndex = api.value(5);
-            const p1 = api.coord([api.value(6), categoryIndex]);
-            const p2 = api.coord([api.value(7), categoryIndex]);
-            const p3 = api.coord([api.value(8), categoryIndex]);
+            const p1 = api.coord([api.value(7), categoryIndex]);
+            const p2 = api.coord([api.value(8), categoryIndex]);
+            const p3 = api.coord([api.value(9), categoryIndex]);
             const points = [p1, p2, p3].sort((a, b) => ascending(a[0], b[0]));
             return {
               type: 'polyline',
@@ -93,16 +94,6 @@ export default function CustomConnectDotChart({ data: _data, groupName }: any) {
                 stroke: UNICEF_COLORS[6],
               }),
             };
-          },
-        },
-        {
-          type: 'scatter',
-          encode: {
-            y: DATA_DIMENSIONS[5],
-            x: DATA_DIMENSIONS[6],
-          },
-          itemStyle: {
-            color: STAT_CATEGORY_COLORS.get(DATA_DIMENSIONS[6]),
           },
         },
         {
@@ -123,6 +114,16 @@ export default function CustomConnectDotChart({ data: _data, groupName }: any) {
           },
           itemStyle: {
             color: STAT_CATEGORY_COLORS.get(DATA_DIMENSIONS[8]),
+          },
+        },
+        {
+          type: 'scatter',
+          encode: {
+            y: DATA_DIMENSIONS[5],
+            x: DATA_DIMENSIONS[9],
+          },
+          itemStyle: {
+            color: STAT_CATEGORY_COLORS.get(DATA_DIMENSIONS[9]),
           },
         },
       ],
@@ -169,10 +170,52 @@ export default function CustomConnectDotChart({ data: _data, groupName }: any) {
     [data],
   );
   return (
-    <ReactEchart
-      option={option}
-      style={{ height: '600px' }}
-      opts={{ renderer: 'svg' }}
-    />
+    <>
+      <ChartLegend />
+      <ReactEchart
+        option={option}
+        style={{ height: '600px' }}
+        opts={{ renderer: 'svg' }}
+      />
+    </>
+  );
+}
+
+const useLegendStyle = makeStyles((theme) => ({
+  root: {
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+  },
+  legendItem: {
+    gap: theme.spacing(2),
+  },
+  icon: {
+    width: '10px',
+    height: '10px',
+    borderRadius: '100%',
+  },
+}));
+
+function ChartLegend() {
+  const classes = useLegendStyle();
+  const legend = Array.from(STAT_CATEGORY_COLORS);
+  return (
+    <Grid item direction='column' container className={classes.root}>
+      {legend.map(([title, color]) => (
+        <Grid
+          key={title}
+          alignItems='center'
+          item
+          container
+          className={classes.legendItem}
+        >
+          <span
+            className={classes.icon}
+            style={{ backgroundColor: color }}
+          ></span>
+          <Typography variant='overline'>{title}</Typography>
+        </Grid>
+      ))}
+    </Grid>
   );
 }
