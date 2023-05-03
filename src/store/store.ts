@@ -51,8 +51,8 @@ function getCustomMiddleware(
       ignoredPaths: ['carto.viewportFeatures'],
     },
     serializableCheck: {
-      ignoredPaths: ['carto.viewportFeatures', 'map.ref'],
-      ignoredActions: ['carto/setViewportFeatures', 'app/setMapRef'],
+      ignoredPaths: ['carto.viewportFeatures'],
+      ignoredActions: ['carto/setViewportFeatures'],
     },
   };
 
