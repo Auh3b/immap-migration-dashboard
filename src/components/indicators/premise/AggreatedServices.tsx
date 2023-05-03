@@ -174,7 +174,7 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
       const [minLong, minLat, maxLong, maxLat] = bbox(geojson)
       const boundbox = [[minLong, minLat], [maxLong, maxLat]]
       const {latitude, longitude, zoom} = new WebMercatorViewport().fitBounds(boundbox)
-      dispatch(setTransition(500))
+      dispatch(setTransition(250))
       dispatch(setViewState({latitude,longitude,zoom}))
       setTimeout(()=>{
         dispatch(removeTransition())
@@ -183,7 +183,7 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
     }
     
     const {latitude, longitude, zoom} = initialState.viewState
-    dispatch(setTransition(500))
+    dispatch(setTransition(250))
     dispatch(setViewState({latitude,longitude,zoom}))
     setTimeout(()=>{
       dispatch(removeTransition())

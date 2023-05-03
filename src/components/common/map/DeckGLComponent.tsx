@@ -17,8 +17,8 @@ import maplibreglWorker from 'maplibre-gl/dist/maplibre-gl-csp-worker';
 maplibregl.workerClass = maplibreglWorker;
 
 
-// const transitionInterpolator = new LinearInterpolator({transitionProps: ['longitude', 'latitude', 'zoom']});
-const transitionInterpolator = new FlyToInterpolator();
+const transitionInterpolator = new LinearInterpolator({transitionProps: ['longitude', 'latitude', 'zoom']});
+// const transitionInterpolator = new FlyToInterpolator();
 const transitionDuration = 0;
 
 export default function DeckGLComponent({ layers }: { layers: any[] }) {
