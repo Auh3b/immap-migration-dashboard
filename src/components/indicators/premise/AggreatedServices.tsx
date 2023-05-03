@@ -19,7 +19,12 @@ import { _FilterTypes } from '@carto/react-core';
 
 import CustomConnectDotChart from 'components/common/customWidgets/CustomConnectDotChart';
 import { useDispatch } from 'react-redux';
-import { addFilter, removeFilter } from '@carto/react-redux';
+import { addFilter, removeFilter, setViewState } from '@carto/react-redux';
+import { featureCollection, point } from '@turf/helpers';
+import { bbox } from '@turf/turf';
+//@ts-ignore
+import {WebMercatorViewport} from '@deck.gl/core';
+import { initialState } from 'store/initialStateSlice';
 
 const otherColumns = {
   country: 'ubicacion_',
@@ -136,7 +141,7 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
     [data],
   );
 
-  const handleSelectionChange = useCallback(
+  const handleServiceChange = useCallback(
     ({ id, field, currentSelection }) => {
       console.log(currentSelection);
       if (currentSelection) {
@@ -162,6 +167,26 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
     [dispatch],
   );
 
+  const handleLocationChange = useCallback( ({ id, field, currentSelection, callbackProps })=>{
+    if(currentSelection){
+      const { data } = callbackProps
+      const geojson = featureCollection(data.filter((d:any) => d[field] === currentSelection).map((d:any)=> point(d[6]))) 
+      const [minLong, minLat, maxLong, maxLat] = bbox(geojson)
+      const boundbox = [[minLong, minLat], [maxLong, maxLat]]
+      const {latitude, longitude, zoom} = new WebMercatorViewport().fitBounds(boundbox)
+
+      dispatch(setViewState({
+        latitude,
+        longitude,
+        zoom
+      }))
+
+      return;
+    }
+    const {latitude, longitude, zoom} = initialState.viewState
+    dispatch(setViewState({latitude, longitude, zoom}))
+  }, [dispatch])
+
   return (
     <CustomWidgetWrapper expandable={false} title={title} isLoading={isLoading}>
       <Grid item className={classes.main}>
@@ -174,7 +199,7 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
               data={serviceSelection}
               filters={filters}
               addFilter={setFilters}
-              callback={handleSelectionChange}
+              callback={handleServiceChange}
             />
             {/* Location Selector */}
             <Selector
@@ -183,6 +208,8 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
               data={locationSelection}
               filters={filters}
               addFilter={setFilters}
+              callback={handleLocationChange}
+              callbackProps={{data}}
             />
             <ClearFiltersButton
               filtersCallback={() => Object.keys(filters).length > 0}
@@ -227,6 +254,7 @@ function Selector({
   filters,
   addFilter,
   callback,
+  callbackProps
 }: {
   id: string;
   field: string | number;
@@ -235,6 +263,7 @@ function Selector({
   filters: Record<string, filterItem>;
   addFilter: any;
   callback?: Function;
+  callbackProps?: Record<string, unknown>;
 }) {
   const classes = useSelectSyles();
 
@@ -263,7 +292,7 @@ function Selector({
 
   useEffect(() => {
     if (callback) {
-      callback({ id, type, field, currentSelection });
+      callback({ id, type, field, currentSelection, callbackProps });
     }
   }, [currentSelection, callback]);
 
