@@ -37,7 +37,10 @@ export default function AggregateServicesChildrenLayer() {
   const source = useSelector((state) =>
     selectSourceById(state, aggregateServicesChildrenLayer?.source),
   );
-  const cartoLayerProps = useCartoLayerProps({ source, layerConfig: aggregateServicesChildrenLayer });
+  const cartoLayerProps = useCartoLayerProps({
+    source,
+    layerConfig: aggregateServicesChildrenLayer,
+  });
 
   if (aggregateServicesChildrenLayer && source) {
     return new CartoLayer({
