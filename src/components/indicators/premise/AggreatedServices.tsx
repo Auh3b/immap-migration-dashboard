@@ -10,7 +10,7 @@ import {
 } from '@material-ui/core';
 import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType';
 import useWidgetFetch from 'components/common/customWidgets/hooks/useWidgetFetch';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import MethodFunc from '../utils/methodType';
 import { SERVICES_KEY, SERVICE_STAT_COLUMNS } from './utils/services';
 import CustomWidgetWrapper from 'components/common/customWidgets/CustomWidgetWrapper';
@@ -18,6 +18,8 @@ import { filterItem, filterValues } from 'utils/filterFunctions';
 import { _FilterTypes } from '@carto/react-core';
 
 import CustomConnectDotChart from 'components/common/customWidgets/CustomConnectDotChart';
+import { useDispatch } from 'react-redux';
+import { addFilter, removeFilter } from '@carto/react-redux';
 
 const otherColumns = {
   country: 'ubicacion_',
@@ -25,7 +27,7 @@ const otherColumns = {
   organisation: 'org_pert',
   persons: 'nna_atend',
   lat: 'lat',
-  long: 'long'
+  long: 'long',
 };
 
 const SERVICE_STAT_COLUMNS_NAME = [
@@ -34,7 +36,13 @@ const SERVICE_STAT_COLUMNS_NAME = [
   'Promedio diario',
 ];
 
-const column = 'serv_tipo1';
+const column: string = 'serv_tipo1';
+const columnAlt: string = 'serv_tipo';
+
+const COLUNM_MAP = new Map([
+  [0, columnAlt],
+  [3, Object.values(otherColumns)[1]],
+]);
 
 const method: MethodFunc = (input, column, params) => {
   let output: any[] = [];
@@ -56,7 +64,7 @@ const method: MethodFunc = (input, column, params) => {
         `${serviceEntry[otherColumns.organisation]} - ${SERVICES_KEY.get(
           service,
         )}`,
-        [serviceEntry[otherColumns.long],serviceEntry[otherColumns.lat]]
+        [serviceEntry[otherColumns.long], serviceEntry[otherColumns.lat]],
       ];
       for (let i = 0; i < SERVICE_STAT_COLUMNS_NAME.length; i++) {
         newEntry = [...newEntry, serviceEntry[serviceColumns[i]] || 0];
@@ -65,7 +73,6 @@ const method: MethodFunc = (input, column, params) => {
     });
   }
 
-  console.log(output)
   return output;
 };
 
@@ -80,10 +87,10 @@ const useStyles = makeStyles((theme) => ({
   selectors: {
     position: 'relative',
   },
-  error:{
+  error: {
     marginTop: theme.spacing(8),
     padding: theme.spacing(2),
-  }
+  },
 }));
 
 const id = 'aggregatedService';
@@ -94,6 +101,7 @@ const methodParams = {
 };
 
 export default function AggreatedServices({ dataSource }: BasicWidgetType) {
+  const dispatch = useDispatch();
   const [filters, setFilters] = useState<Record<string, filterItem>>({});
   const serviceSelection = Array.from(SERVICES_KEY.values());
   const classes = useStyles();
@@ -128,18 +136,47 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
     [data],
   );
 
+  const handleSelectionChange = useCallback(
+    ({ id, field, currentSelection }) => {
+      console.log(currentSelection);
+      if (currentSelection) {
+        dispatch(
+          addFilter({
+            id: dataSource,
+            column: COLUNM_MAP.get(field),
+            type: _FilterTypes.STRING_SEARCH,
+            values: [currentSelection],
+            owner: id,
+          }),
+        );
+      } else {
+        dispatch(
+          removeFilter({
+            id: dataSource,
+            column: COLUNM_MAP.get(field),
+            owner: id,
+          }),
+        );
+      }
+    },
+    [dispatch],
+  );
+
   return (
     <CustomWidgetWrapper expandable={false} title={title} isLoading={isLoading}>
       <Grid item className={classes.main}>
         <Grid className={classes.content} direction='column' container>
           <Grid container spacing={5} className={classes.selectors}>
+            {/* Services Selector */}
             <Selector
               id='serviceSelector'
               field={0}
               data={serviceSelection}
               filters={filters}
               addFilter={setFilters}
+              callback={handleSelectionChange}
             />
+            {/* Location Selector */}
             <Selector
               id='locationSelector'
               field={2}
@@ -224,11 +261,11 @@ function Selector({
     });
   };
 
-  useCallback(() => {
+  useEffect(() => {
     if (callback) {
-      callback(currentSelection);
+      callback({ id, type, field, currentSelection });
     }
-  }, [currentSelection]);
+  }, [currentSelection, callback]);
 
   return (
     <Grid item className={classes.root}>
