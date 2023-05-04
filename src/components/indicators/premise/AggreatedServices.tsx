@@ -198,6 +198,7 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
             {/* Services Selector */}
             <Selector
               id='serviceSelector'
+              name='servicio'
               field={0}
               data={serviceSelection}
               filters={filters}
@@ -207,6 +208,7 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
             {/* Location Selector */}
             <Selector
               id='locationSelector'
+              name='ubicación'
               field={2}
               data={locationSelection}
               filters={filters}
@@ -252,6 +254,7 @@ const useSelectSyles = makeStyles((theme) => ({
 function Selector({
   id,
   field,
+  name,
   type = _FilterTypes.IN,
   data,
   filters,
@@ -260,6 +263,7 @@ function Selector({
   callbackProps
 }: {
   id: string;
+  name?: string;
   field: string | number;
   type?: _FilterTypes;
   data: any[];
@@ -302,8 +306,8 @@ function Selector({
   return (
     <Grid item className={classes.root}>
       <FormControl>
-        <InputLabel>
-          <Typography variant='caption'>Select</Typography>
+        <InputLabel >
+          <Typography variant='overline'>Seleccionar {name}</Typography>
         </InputLabel>
         <Select value={currentSelection} onChange={handleChange}>
           <MenuItem value={0}>

@@ -5,9 +5,9 @@ import { UNICEF_COLORS } from 'theme';
 import ReactEchart from 'echarts-for-react';
 
 const STAT_CATEGORY_COLORS = new Map([
-  ['Capacidad diaria', UNICEF_COLORS[5]],
-  ['Personas atendidas ayer', UNICEF_COLORS[4]],
-  ['Promedio diario', UNICEF_COLORS[0]],
+  ['Capacidad diaria', '#f03b20'],
+  ['Personas atendidas ayer', '#feb24c'],
+  ['Promedio diario', '#ffeda0'],
 ]);
 
 const DATA_DIMENSIONS = [
