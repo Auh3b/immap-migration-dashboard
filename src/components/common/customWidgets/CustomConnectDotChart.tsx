@@ -31,53 +31,8 @@ export default function CustomConnectDotChart({ data: _data, groupName }: any) {
     [_data],
   );
 
-  const option = useMemo(
-    () => ({
-      title: {
-        show: true,
-        text: groupName,
-      },
-      grid: {
-        left: '5%',
-        right: '4%',
-        bottom: '3%',
-        containLabel: true,
-      },
-      yAxis: {
-        type: 'category',
-        name: 'Organización/Servicio',
-        nameLocation: 'end',
-        nameTextStyle: {
-          fontWeight: 'bold',
-          align: 'center',
-          verticalAlign: 'middle',
-        },
-        boundaryGap: true,
-        axisLabel: {
-          hideOverlap: true,
-          width: 200,
-          overflow: 'break',
-        },
-      },
-      xAxis: {
-        type: 'value',
-        name: 'Personas',
-        nameGap: 30,
-        nameLocation: 'middle',
-        nameTextStyle: {
-          align: 'center',
-          verticalAlign: 'middle',
-          fontWeight: 'bold',
-        },
-        axisLabel: {
-          hideOverlap: true,
-        },
-      },
-      dataset: {
-        dimensions: DATA_DIMENSIONS,
-        source: data,
-      },
-      series: [
+  const series = useMemo(()=>{
+    return  ([
         {
           type: 'custom',
           renderItem: (params: any, api: any) => {
@@ -127,7 +82,56 @@ export default function CustomConnectDotChart({ data: _data, groupName }: any) {
             color: STAT_CATEGORY_COLORS.get(DATA_DIMENSIONS[9]),
           },
         },
-      ],
+      ])
+  }, [data])
+
+  const option = useMemo(
+    () => ({
+      title: {
+        show: true,
+        text: groupName,
+      },
+      grid: {
+        left: '5%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true,
+      },
+      yAxis: {
+        type: 'category',
+        name: 'Organización/Servicio',
+        nameLocation: 'end',
+        nameTextStyle: {
+          fontWeight: 'bold',
+          align: 'center',
+          verticalAlign: 'middle',
+        },
+        boundaryGap: true,
+        axisLabel: {
+          hideOverlap: true,
+          width: 200,
+          overflow: 'break',
+        },
+      },
+      xAxis: {
+        type: 'value',
+        name: 'Personas',
+        nameGap: 30,
+        nameLocation: 'middle',
+        nameTextStyle: {
+          align: 'center',
+          verticalAlign: 'middle',
+          fontWeight: 'bold',
+        },
+        axisLabel: {
+          hideOverlap: true,
+        },
+      },
+      dataset: {
+        dimensions: DATA_DIMENSIONS,
+        source: data,
+      },
+      series,
       tooltip: {
         show: true,
         padding: [theme.spacing(0.5), theme.spacing(1)],
@@ -168,7 +172,7 @@ export default function CustomConnectDotChart({ data: _data, groupName }: any) {
         },
       },
     }),
-    [data],
+    [series],
   );
   return (
     <>
