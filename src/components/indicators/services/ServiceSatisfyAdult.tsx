@@ -1,37 +1,34 @@
 import { _FilterTypes } from '@carto/react-core';
 import { Grid } from '@material-ui/core';
 import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType';
-import CustomComparativeCategoryWidget from 'components/common/customWidgets/CustomComparativeCategoryWidget';
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
-import stackedGroupCategories from '../utils/stackedGroupCategories';
 import useWidgetEffect from '../utils/useWidgetEffect';
-import aidTypes from './utils/aidTypes';
-
-const labels = new Map([
-  [0, 'No calificado'],
-  [1, 'Sí recomendaría'],
-  [2, 'No estoy seguro(a)'],
-  [3, 'No recomendaría'],
-]);
-
-const colorMap = new Map([
-  ['No calificado', '#bcbcbc'],
-  ['Sí recomendaría', '#32a852'],
-  ['No estoy seguro(a)', '#fa0'],
-  ['No recomendaría', '#f27'],
-]);
+import {
+  aidTypes,
+  serviceColors as colors,
+  serviceLabels3 as labels,
+} from './utils/serviceIndicatorTypes';
+import CustomColumnBarWidget from 'components/common/customWidgets/CustomColumnBarWidget';
+import stackedGroupCategoriesAlt2 from '../utils/stackedGroupCategoriesAlt2';
 
 const NOTE = 'Disposición para recomendar el servicio tomado    ';
 const id = 'serviceSatisfaction';
 const title = 'Recomendación del servicio';
-const column = 'e23__cua';
-const valueColumn = 'm16_de_acu';
+const column = 'm12';
+const valueColumn = 'm16';
 const filterType = _FilterTypes.IN;
-const method = stackedGroupCategories;
+const method = stackedGroupCategoriesAlt2;
 const methodParams = {
   aidTypes,
   labels,
   valueColumn,
+};
+
+const extraProps = {
+  labels,
+  colors,
+  parentSource: 'mainSource',
+  parentColumn: 'e23__cua',
 };
 
 const props = {
@@ -42,8 +39,9 @@ const props = {
   method,
   methodParams,
   labels,
-  colorMap,
+  extraProps,
   parentKey: aidTypes,
+  global: false,
 };
 
 export default function ServiceSatisfyAdult({
@@ -51,7 +49,7 @@ export default function ServiceSatisfyAdult({
   operation,
 }: BasicWidgetType) {
   const { widget } = useWidgetEffect(
-    <CustomComparativeCategoryWidget {...props} dataSource={dataSource} />,
+    <CustomColumnBarWidget {...props} dataSource={dataSource} />,
     [dataSource, operation],
   );
   return (

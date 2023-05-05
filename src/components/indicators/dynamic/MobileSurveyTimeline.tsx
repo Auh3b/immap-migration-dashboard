@@ -3,17 +3,19 @@ import { Grid } from '@material-ui/core';
 import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType';
 import CustomTimelineWidget from 'components/common/customWidgets/CustomTimelineWidget';
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
-import { iconGroupsConfig } from 'components/layers/SurveyTimelineLayer';
 import MethodFunc from '../utils/methodType';
 import useWidgetEffect from '../utils/useWidgetEffect';
+import { iconGroupsConfig } from 'components/layers/utils/surveyIconGroup';
 
 const timelineValueAlt: MethodFunc = (input, column, params) => {
   const { iconGroupsConfig } = params;
 
   let output: Record<string, any>[] = [];
 
-  for (let { name, filterFunction, color } of iconGroupsConfig) {
-    const value = input.filter(filterFunction).length;
+  for (let { name, color } of iconGroupsConfig) {
+    const value = input.filter(
+      ({ name: featureName }) => featureName === name,
+    ).length;
     const outputItem = {
       id: name,
       name,

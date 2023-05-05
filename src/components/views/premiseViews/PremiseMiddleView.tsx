@@ -1,10 +1,8 @@
 import { Grid, makeStyles } from '@material-ui/core';
 
-import WomenDiffServices from 'components/indicators/premise/WomenDiffServices';
 import SickPeoplePremise from 'components/indicators/premise/SickPeoplePremise';
 import ViewSourceType from '../utils/viewSourceType';
 import LocationCapacity from 'components/indicators/premise/LocationCapacity';
-import WomenDiffServicesAvailability from 'components/indicators/premise/WomenDiffServicesAvailability';
 
 const useStyles = makeStyles((theme) => ({
   divider: {
@@ -16,19 +14,19 @@ export default function PremiseMiddleView({ dataSources }: ViewSourceType) {
   const classes = useStyles();
   const { premiseSource } = dataSources;
   return (
-    <Grid container item>
-      <Grid item xs={3} className={classes.divider}>
+    <Grid container item justifyContent='center'>
+      <Grid item xs={12} lg={6} className={classes.divider}>
         <SickPeoplePremise dataSource={premiseSource} />
       </Grid>
-      <Grid item xs={3} className={classes.divider}>
+      <Grid item xs={12} lg={6} className={classes.divider}>
         <LocationCapacity dataSource={premiseSource} />
       </Grid>
-      <Grid item xs={3} className={classes.divider}>
-        <WomenDiffServicesAvailability dataSource={premiseSource} />
+      {/* <Grid item xs={3} className={classes.divider}>
+        
       </Grid>
       <Grid item xs={3} className={classes.divider}>
-        <WomenDiffServices dataSource={premiseSource} />
-      </Grid>
+        
+      </Grid> */}
     </Grid>
   );
 }

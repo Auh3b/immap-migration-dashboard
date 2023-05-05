@@ -8,8 +8,8 @@ import useWidgetEffect from '../utils/useWidgetEffect';
 
 const NOTE = 'Nombre de la organización a la que pertenece el encuestado';
 const id = 'organisationsSurveyed';
-const title = 'Organización que atiende la encuesta';
-const column = 'org_pert';
+const title = ' Socio implementador';
+const column = 'org_pert1';
 const filterType = _FilterTypes.IN;
 const method = groupCategories;
 

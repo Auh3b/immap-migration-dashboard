@@ -1,12 +1,13 @@
 import { FilterTypes } from '@carto/react-core/src/filters/FilterTypes';
 import { addFilter, removeFilter } from '@carto/react-redux';
-import { BarWidgetUI, WrapperWidgetUI } from '@carto/react-ui';
+import { BarWidgetUI } from '@carto/react-ui';
 import { useCallback, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import WidgetWithAlert from '../../indicators/WidgetWithAlert';
 import { defaultCustomWidgetProps } from './customWidgetsType';
 import useWidgetFetch from './hooks/useWidgetFetch';
 import useWidgetFilterValues from './hooks/useWidgetFilterValues';
+import CustomWidgetWrapper from './CustomWidgetWrapper';
 
 const EMPTY_ARRAY: [] = [];
 
@@ -14,6 +15,7 @@ export default function CustomBarWidget({
   id,
   title,
   method,
+  methodParams,
   dataSource,
   column,
   filterType,
@@ -31,6 +33,7 @@ export default function CustomBarWidget({
     dataSource,
     method,
     column,
+    methodParams,
   });
 
   const sortedData = useMemo(() => {
@@ -93,7 +96,7 @@ export default function CustomBarWidget({
   );
 
   return (
-    <WrapperWidgetUI title={title} isLoading={isLoading} onError={error}>
+    <CustomWidgetWrapper title={title} isLoading={isLoading} onError={error}>
       <WidgetWithAlert dataSource={dataSource}>
         {(!!sortedData || !isLoading) && (
           <BarWidgetUI
@@ -107,6 +110,6 @@ export default function CustomBarWidget({
           />
         )}
       </WidgetWithAlert>
-    </WrapperWidgetUI>
+    </CustomWidgetWrapper>
   );
 }

@@ -1,10 +1,11 @@
 import { addFilter, removeFilter } from '@carto/react-redux';
-import { CategoryWidgetUI, WrapperWidgetUI } from '@carto/react-ui';
+import { CategoryWidgetUI } from '@carto/react-ui';
 import useWidgetFetch from './hooks/useWidgetFetch';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { defaultCustomWidgetProps } from './customWidgetsType';
 import useWidgetFilterValues from './hooks/useWidgetFilterValues';
+import CustomWidgetWrapper from './CustomWidgetWrapper';
 
 const EMPTY_ARRAY: [] = [];
 
@@ -16,6 +17,7 @@ export default function CustomCategoryWidget({
   column,
   filterType,
   labels = {},
+  order = 'ranking',
 }: defaultCustomWidgetProps) {
   const dispatch = useDispatch();
   const selectedCategories =
@@ -59,13 +61,14 @@ export default function CustomCategoryWidget({
   });
 
   return (
-    <WrapperWidgetUI title={title} isLoading={isLoading} onError={error}>
+    <CustomWidgetWrapper title={title} isLoading={isLoading} onError={error}>
       <CategoryWidgetUI
+        order={order}
         onSelectedCategoriesChange={handleSelectedCategoriesChange}
         selectedCategories={selectedCategories}
         labels={labels}
         data={data}
       />
-    </WrapperWidgetUI>
+    </CustomWidgetWrapper>
   );
 }

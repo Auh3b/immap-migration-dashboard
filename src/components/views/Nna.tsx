@@ -7,12 +7,15 @@ import {
   removeSource,
 } from '@carto/react-redux';
 import { useEffect } from 'react';
+import aggreateServiceChildrenSource from 'data/sources/aggreateServiceChildrenSource';
+import { AGGREGATE_SERVICES_CHILDREN_LAYER_ID } from 'components/layers/AggregateServicesChildrenLayer';
 import premiseSource from 'data/sources/premiseSource';
 import { PREMISE_SERVICES_LAYER_ID } from 'components/layers/PremiseServicesLayer';
 import MainView from './main/MainView';
 import ChildrenLeftView from './childrenViews/ChildrenLeftView';
 import ChildrenRightView from './childrenViews/ChildrenRightView';
 import mainSource from 'data/sources/mainSource';
+import aggreagateServicesChildrenSource from 'data/sources/aggreateServiceChildrenSource';
 import { HOTSPOTS_LAYER_ID } from 'components/layers/HotspotsLayer';
 
 const useViewStyle = makeStyles((theme) => ({
@@ -31,6 +34,7 @@ export default function Nna() {
   const sources = {
     mainSource: mainSource.id,
     premiseSource: premiseSource.id,
+    aggreagateChildren: aggreagateServicesChildrenSource.id,
   };
 
   useEffect(() => {
@@ -56,13 +60,37 @@ export default function Nna() {
     };
   }, [dispatch]);
 
+  useEffect(() => {
+    dispatch(addSource(aggreateServiceChildrenSource));
+
+    dispatch(
+      addLayer({
+        id: AGGREGATE_SERVICES_CHILDREN_LAYER_ID,
+        source: aggreateServiceChildrenSource.id,
+      }),
+    );
+
+    return () => {
+      dispatch(removeLayer(AGGREGATE_SERVICES_CHILDREN_LAYER_ID));
+      dispatch(removeSource(aggreateServiceChildrenSource.id));
+    };
+  }, [dispatch]);
+
   // [hygen] Add useEffect
 
   return (
     <MainView>
       {{
-        left: <ChildrenLeftView dataSources={sources} classes={classes} />,
-        right: <ChildrenRightView dataSources={sources} classes={classes} />,
+        left: {
+          element: <ChildrenLeftView dataSources={sources} classes={classes} />,
+          expandable: false,
+        },
+        right: {
+          element: (
+            <ChildrenRightView dataSources={sources} classes={classes} />
+          ),
+          expandable: false,
+        },
       }}
     </MainView>
   );

@@ -15,19 +15,21 @@ const Dashboard = lazy(() => import('components/views/Dashboard'));
 const PremiseService = lazy(() => import('components/views/PremiseService'));
 const Nna = lazy(() => import('components/views/Nna'));
 const DinámicaAurora = lazy(() => import('components/views/DinámicaAurora'));
+const Introduction = lazy(() => import('components/views/Introduction'));
 // [hygen] Import views
 
 export const ROUTE_PATHS = {
   LOGIN: '/login',
   DEFAULT: '/',
   NOT_FOUND: '/404',
-  SERVICES: '/feedback_sobre_servicios',
+  SERVICES: '/feedback_servicios',
   MIGRATION_FLOW: '/flujos_migratorios',
   MEDIA: '/redes_sociales',
   DASHBOARD: '/inicio',
   PREMISE_SERVICE: '/servicios',
-  CHILDREN: '/caracterizacion_grupo_de_viaje',
+  CHILDREN: '/nna',
   DINÁMICA_AURORA: '/conexiones_en_la_ruta',
+  INTRODUCTION: '/intro',
   // [hygen] Add path routes
 };
 
@@ -42,7 +44,7 @@ const routes = [
       </ProtectedRoute>
     ),
     children: [
-      { path: '/', element: <Navigate to={ROUTE_PATHS.DASHBOARD} /> },
+      { path: '/', element: <Navigate to={ROUTE_PATHS.INTRODUCTION} /> },
       { path: ROUTE_PATHS.SERVICES, element: <Services /> },
       { path: ROUTE_PATHS.MIGRATION_FLOW, element: <MigrationFlow /> },
       { path: ROUTE_PATHS.MEDIA, element: <Media /> },
@@ -53,6 +55,7 @@ const routes = [
       // [hygen] Add routes
     ],
   },
+  { path: ROUTE_PATHS.INTRODUCTION, element: <Introduction /> },
   { path: ROUTE_PATHS.LOGIN, element: <Login /> },
   {
     path: '*',

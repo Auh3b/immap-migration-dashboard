@@ -1,4 +1,3 @@
-import { Divider, Grid, Typography } from '@material-ui/core';
 import { MainColumnView } from 'components/common/MainColumnView';
 import { lazy } from 'react';
 
@@ -25,16 +24,16 @@ const ServiceSatisfyChildren = lazy(
 );
 
 export default function ChildrenLeftView({ dataSources, classes }: any) {
-  const { mainSource } = dataSources;
+  const { mainSource, aggreagateChildren } = dataSources;
   return (
     <MainColumnView>
       <ChildTravelerAges dataSource={mainSource} />
-      <ChildrenTravelAlone dataSource={mainSource} />
-      <PlacesChildrenTravelAlone dataSource={mainSource} />
+      {/* <ChildrenTravelAlone dataSource={mainSource} />
+      <PlacesChildrenTravelAlone dataSource={mainSource} /> */}
       <ServiceTypeChildren dataSource={mainSource} />
-      <ServiceAccessChildren dataSource={mainSource} />
-      <ServiceQualityChildren dataSource={mainSource} />
-      <ServiceSatisfyChildren dataSource={mainSource} />
+      <ServiceAccessChildren dataSource={aggreagateChildren} />
+      <ServiceQualityChildren dataSource={aggreagateChildren} />
+      <ServiceSatisfyChildren dataSource={aggreagateChildren} />
     </MainColumnView>
   );
 }

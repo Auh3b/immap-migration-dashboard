@@ -14,7 +14,7 @@ const NOTE =
   'Tipo de información requerida sobre la ayuda humanitaria en la ruta';
 const id = 'transitInformation';
 const title = 'Necesidades de información';
-const column = 'm26_inform';
+const column = 'm28__que';
 const filterType = _FilterTypes.IN;
 const method = groupCategories;
 

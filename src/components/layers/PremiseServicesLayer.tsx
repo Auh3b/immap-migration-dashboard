@@ -1,12 +1,17 @@
 import { useDispatch, useSelector } from 'react-redux';
 // @ts-ignore
-import { CartoLayer } from '@deck.gl/carto';
-import { selectSourceById, updateLayer } from '@carto/react-redux';
+import { fetchLayerData } from '@deck.gl/carto';
+import { removeLayer, selectSourceById, updateLayer } from '@carto/react-redux';
 import { useCartoLayerProps } from '@carto/react-api';
 import { RootState } from 'store/store';
 import { LEGEND_TYPES } from '@carto/react-ui';
 import { UNICEF_COLORS } from 'theme';
 import { color } from 'd3';
+import CustomGeoJsonLayer from './CustomLayer/CustomGeoJsonLayer';
+import useCustomDataLoad from './hooks/useCustomDataLoad';
+import { useEffect, useState } from 'react';
+import premiseSource from 'data/sources/premiseSource';
+import premisePopup from './utils/premisePopup';
 
 export const PREMISE_SERVICES_LAYER_ID = 'premiseServicesLayer';
 
@@ -31,6 +36,7 @@ const layerConfig = {
 };
 
 export default function PremiseServicesLayer() {
+  const [data, setData] = useState(null);
   const dispatch = useDispatch();
   const { premiseServicesLayer } = useSelector(
     (state: RootState) => state.carto.layers,
@@ -38,27 +44,60 @@ export default function PremiseServicesLayer() {
   const source = useSelector((state) =>
     selectSourceById(state, premiseServicesLayer?.source),
   );
+
+  useEffect(() => {
+    (async function fetchData() {
+      const { data } = await fetchLayerData({
+        ...premiseSource,
+        source: premiseSource.data,
+        format: 'geojson',
+      });
+      setData(data);
+    })();
+  }, []);
+
   const cartoLayerProps = useCartoLayerProps({
     source,
     layerConfig: premiseServicesLayer,
   });
+  delete cartoLayerProps.onDataLoad;
+
+  const [onGeojsonDataLoad] = useCustomDataLoad({ source });
 
   if (premiseServicesLayer && source) {
-    return new CartoLayer({
+    return new CustomGeoJsonLayer({
       ...cartoLayerProps,
       id: PREMISE_SERVICES_LAYER_ID,
+      data: new Promise((resolve, reject) => resolve(data)),
       getFillColor: PREMISE_SERVICES_COLORS.Punto,
       stroked: false,
-      pointRadiusMinPixels: 3,
+      pointRadiusUnits: 'pixels',
+      lineWidthUnits: 'pixels',
       pickable: true,
-      onDataLoad: (data: any) => {
+      getLineColor: [124, 33, 62, 0],
+      getPointRadius: 1000,
+      pointRadiusScale: 5,
+      pointRadiusMinPixels: 5,
+      onGeojsonDataLoad,
+      addLegend: () => {
         dispatch(
           updateLayer({
             id: PREMISE_SERVICES_LAYER_ID,
             layerAttributes: { ...layerConfig },
           }),
         );
-        cartoLayerProps.onDataLoad && cartoLayerProps.onDataLoad(data);
+      },
+      removeLegend: () => {
+        dispatch(removeLayer(PREMISE_SERVICES_LAYER_ID));
+      },
+      onHover: (info: any) => {
+        if (info?.object) {
+          info.object = {
+            // @ts-ignore
+            html: premisePopup({ data: info?.object?.properties }),
+            style: {},
+          };
+        }
       },
     });
   }

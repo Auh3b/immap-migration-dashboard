@@ -2,6 +2,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import MainView from './main/MainView';
 import mainSource from 'data/sources/mainSource';
 import { lazy, useEffect } from 'react';
+import aggregateServicesSource from 'data/sources/aggregateServicesSource';
+import aggreateServiceChildrenSource from 'data/sources/aggreateServiceChildrenSource';
+import { AGGREGATE_SERVICE_LAYER_ID } from 'components/layers/AggregateServiceLayer';
 import {
   addLayer,
   addSource,
@@ -10,6 +13,7 @@ import {
 } from '@carto/react-redux';
 import { useDispatch } from 'react-redux';
 import { HOTSPOTS_LAYER_ID } from 'components/layers/HotspotsLayer';
+import { AGGREGATE_SERVICES_CHILDREN_LAYER_ID } from 'components/layers/AggregateServicesChildrenLayer';
 
 const ServiceLeftView = lazy(() => import('./serviceViews/ServiceLeftView'));
 const ServicesRightView = lazy(
@@ -29,30 +33,78 @@ export default function Services() {
   const dispatch = useDispatch();
   const classes = useViewStyle();
 
+  // useEffect(() => {
+  //   dispatch(addSource(mainSource));
+  //   dispatch(
+  //     addLayer({
+  //       id: HOTSPOTS_LAYER_ID,
+  //       source: mainSource.id,
+  //     }),
+  //   );
+
+  //   return () => {
+  //     dispatch(removeLayer(HOTSPOTS_LAYER_ID));
+  //     dispatch(removeSource(mainSource.id));
+  //   };
+  // }, [dispatch]);
   useEffect(() => {
-    dispatch(addSource(mainSource));
+    dispatch(addSource(aggregateServicesSource));
+
     dispatch(
       addLayer({
-        id: HOTSPOTS_LAYER_ID,
-        source: mainSource.id,
+        id: AGGREGATE_SERVICE_LAYER_ID,
+        source: aggregateServicesSource.id,
       }),
     );
 
     return () => {
-      dispatch(removeLayer(HOTSPOTS_LAYER_ID));
-      dispatch(removeSource(mainSource.id));
+      dispatch(removeLayer(AGGREGATE_SERVICE_LAYER_ID));
+      dispatch(removeSource(aggregateServicesSource.id));
     };
   }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(addSource(aggreateServiceChildrenSource));
+
+    dispatch(
+      addLayer({
+        id: AGGREGATE_SERVICES_CHILDREN_LAYER_ID,
+        source: aggreateServiceChildrenSource.id,
+      }),
+    );
+
+    return () => {
+      dispatch(removeLayer(AGGREGATE_SERVICES_CHILDREN_LAYER_ID));
+      dispatch(removeSource(aggreateServiceChildrenSource.id));
+    };
+  }, [dispatch]);
+
   // [hygen] Add useEffect
   return (
     <MainView>
       {{
-        left: (
-          <ServiceLeftView classes={classes} dataSources={{ mainSource }} />
-        ),
-        right: (
-          <ServicesRightView classes={classes} dataSources={{ mainSource }} />
-        ),
+        left: {
+          element: (
+            <ServiceLeftView
+              classes={classes}
+              dataSources={{ mainSource, aggregateServicesSource }}
+            />
+          ),
+          expandable: false,
+        },
+        right: {
+          element: (
+            <ServicesRightView
+              classes={classes}
+              dataSources={{
+                mainSource,
+                aggregateServicesSource,
+                aggreateServiceChildrenSource,
+              }}
+            />
+          ),
+          expandable: false,
+        },
       }}
     </MainView>
   );

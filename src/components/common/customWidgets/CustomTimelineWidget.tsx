@@ -1,4 +1,3 @@
-import { WrapperWidgetUI } from '@carto/react-ui';
 import { Typography } from '@material-ui/core';
 import {
   Timeline,
@@ -12,9 +11,7 @@ import {
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { defaultCustomWidgetProps } from './customWidgetsType';
 import useWidgetFetch from './hooks/useWidgetFetch';
-import timelineSource from 'data/sources/timelineSource';
-//@ts-ignore
-import { fetchLayerData } from '@deck.gl/carto';
+import CustomWidgetWrapper from './CustomWidgetWrapper';
 
 export default function CustomTimelineWidget({
   id,
@@ -50,9 +47,9 @@ export default function CustomTimelineWidget({
   }, [_data]);
 
   return (
-    <WrapperWidgetUI title={title} isLoading={isLoading}>
+    <CustomWidgetWrapper title={title} isLoading={isLoading}>
       {data.length > 0 && !isLoading && <CustomTimelineUI data={data} />}
-    </WrapperWidgetUI>
+    </CustomWidgetWrapper>
   );
 }
 

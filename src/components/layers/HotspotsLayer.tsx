@@ -1,13 +1,16 @@
 import { useDispatch, useSelector } from 'react-redux';
 // @ts-ignore
-import { CartoLayer } from '@deck.gl/carto';
-import { selectSourceById, updateLayer } from '@carto/react-redux';
+import { fetchLayerData } from '@deck.gl/carto';
+import { removeLayer, selectSourceById, updateLayer } from '@carto/react-redux';
 import { useCartoLayerProps } from '@carto/react-api';
 import { RootState } from 'store/store';
 import { LEGEND_TYPES } from '@carto/react-ui';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import useGetPathname from 'hooks/useGetPathname';
 import { ROUTE_PATHS } from 'routes';
+import CustomGeoJsonLayer from './CustomLayer/CustomGeoJsonLayer';
+import useCustomDataLoad from './hooks/useCustomDataLoad';
+import mainSource from 'data/sources/mainSource';
 
 export const HOTSPOTS_LAYER_ID = 'hotspotsLayer';
 
@@ -18,6 +21,7 @@ const HOTSPOT_LABEL = new Map([
 ]);
 
 export default function HotspotsLayer() {
+  const [data, setData] = useState(null);
   const dispatch = useDispatch();
   const pathname = useGetPathname();
   const { hotspotsLayer } = useSelector(
@@ -26,6 +30,17 @@ export default function HotspotsLayer() {
   const source = useSelector((state) =>
     selectSourceById(state, hotspotsLayer?.source),
   );
+
+  useEffect(() => {
+    (async function fetchData() {
+      const { data } = await fetchLayerData({
+        ...mainSource,
+        source: mainSource.data,
+        format: 'geojson',
+      });
+      setData(data);
+    })();
+  }, []);
 
   const layerConfig = useMemo(
     () => ({
@@ -48,10 +63,15 @@ export default function HotspotsLayer() {
     layerConfig: hotspotsLayer,
   });
 
-  if (hotspotsLayer && source) {
-    return new CartoLayer({
+  delete cartoLayerProps.onDataLoad;
+
+  const [onGeojsonDataLoad] = useCustomDataLoad({ source });
+
+  if (hotspotsLayer && source && data) {
+    return new CustomGeoJsonLayer({
       ...cartoLayerProps,
       id: HOTSPOTS_LAYER_ID,
+      data: new Promise((resolve, reject) => resolve(data)),
       getFillColor: HOTSPOT_COLOR,
       stroked: true,
       pointRadiusUnits: 'pixels',
@@ -59,14 +79,17 @@ export default function HotspotsLayer() {
       pickable: true,
       getLineColor: [124, 33, 62],
       pointRadiusMinPixels: 3,
-      onDataLoad: (data: any) => {
+      onGeojsonDataLoad,
+      addLegend: () => {
         dispatch(
           updateLayer({
             id: HOTSPOTS_LAYER_ID,
             layerAttributes: { ...layerConfig },
           }),
         );
-        cartoLayerProps.onDataLoad && cartoLayerProps.onDataLoad(data);
+      },
+      removeLegend: () => {
+        dispatch(removeLayer(HOTSPOTS_LAYER_ID));
       },
     });
   }

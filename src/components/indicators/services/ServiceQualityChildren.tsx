@@ -1,37 +1,34 @@
 import { _FilterTypes } from '@carto/react-core';
 import { Grid } from '@material-ui/core';
 import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType';
-import CustomComparativeCategoryWidget from 'components/common/customWidgets/CustomComparativeCategoryWidget';
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
-import stackedGroupCategories from '../utils/stackedGroupCategories';
 import useWidgetEffect from '../utils/useWidgetEffect';
-import aidTypes from './utils/aidTypes';
-
-const labels = new Map([
-  [0, 'No calificado'],
-  [1, 'Satisfecho'],
-  [2, 'Algo satisfecho'],
-  [3, 'Insatisfecho'],
-]);
-
-const colorMap = new Map([
-  ['No calificado', '#bcbcbc'],
-  ['Satisfecho', '#32a852'],
-  ['Algo satisfecho', '#fa0'],
-  ['Insatisfecho', '#f27'],
-]);
+import {
+  aidTypes,
+  serviceColors as colors,
+  serviceLabels2 as labels,
+} from './utils/serviceIndicatorTypes';
+import CustomColumnBarWidget from 'components/common/customWidgets/CustomColumnBarWidget';
+import stackedGroupCategoriesAlt2 from '../utils/stackedGroupCategoriesAlt2';
 
 const NOTE = 'Nivel de satisfacción del servicio prestado al migrante';
 const id = 'serviceQualityAdult';
 const title = 'Calidad del servicio';
-const column = 'm18_me_con';
-const valueColumn = 'm20__que';
+const column = 'm18_1';
+const valueColumn = 'm20';
 const filterType = _FilterTypes.IN;
-const method = stackedGroupCategories;
+const method = stackedGroupCategoriesAlt2;
 const methodParams = {
   aidTypes,
   labels,
   valueColumn,
+};
+
+const extraProps = {
+  labels,
+  colors,
+  parentSource: 'mainSource',
+  parentColumn: 'm18_me_con',
 };
 
 const props = {
@@ -42,7 +39,7 @@ const props = {
   method,
   methodParams,
   labels,
-  colorMap,
+  extraProps,
   parentKey: aidTypes,
 };
 
@@ -51,7 +48,7 @@ export default function ServiceQualityChildren({
   operation,
 }: BasicWidgetType) {
   const { widget } = useWidgetEffect(
-    <CustomComparativeCategoryWidget {...props} dataSource={dataSource} />,
+    <CustomColumnBarWidget {...props} dataSource={dataSource} />,
     [dataSource, operation],
   );
   return (

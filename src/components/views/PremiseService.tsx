@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { SERVICE_CONCENTRATION_LAYER_ID } from 'components/layers/ServiceConcentrationLayer';
 import premiseSource from 'data/sources/premiseSource';
 import { PREMISE_SERVICES_LAYER_ID } from 'components/layers/PremiseServicesLayer';
 import { useDispatch } from 'react-redux';
@@ -18,16 +19,22 @@ export default function PremiseService() {
 
   useEffect(() => {
     dispatch(addSource(premiseSource));
-
     dispatch(
       addLayer({
         id: PREMISE_SERVICES_LAYER_ID,
         source: premiseSource.id,
       }),
     );
+    dispatch(
+      addLayer({
+        id: SERVICE_CONCENTRATION_LAYER_ID,
+        source: premiseSource.id,
+      }),
+    );
 
     return () => {
       dispatch(removeLayer(PREMISE_SERVICES_LAYER_ID));
+      dispatch(removeLayer(SERVICE_CONCENTRATION_LAYER_ID));
       dispatch(removeSource(premiseSource.id));
     };
   }, [dispatch]);
@@ -37,17 +44,30 @@ export default function PremiseService() {
   return (
     <MainView>
       {{
-        left: (
-          <PremiseLeftView dataSources={{ premiseSource: premiseSource.id }} />
-        ),
-        right: (
-          <PremiseRightView dataSources={{ premiseSource: premiseSource.id }} />
-        ),
-        middle: (
-          <PremiseMiddleView
-            dataSources={{ premiseSource: premiseSource.id }}
-          />
-        ),
+        left: {
+          element: (
+            <PremiseLeftView
+              dataSources={{ premiseSource: premiseSource.id }}
+            />
+          ),
+          expandable: false,
+        },
+        right: {
+          element: (
+            <PremiseRightView
+              dataSources={{ premiseSource: premiseSource.id }}
+            />
+          ),
+          expandable: false,
+        },
+        // middle: {
+        //   element: (
+        //     <PremiseMiddleView
+        //       dataSources={{ premiseSource: premiseSource.id }}
+        //     />
+        //   ),
+        //   expandable: true,
+        // },
       }}
     </MainView>
   );

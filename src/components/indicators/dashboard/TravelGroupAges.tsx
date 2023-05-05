@@ -19,6 +19,7 @@ const props = {
   column,
   filterType,
   method,
+  order: 'fixed',
 };
 
 export default function TravelGroupAges({ dataSource }: BasicWidgetType) {

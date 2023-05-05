@@ -16,6 +16,7 @@ import {
   SvgIcon,
   Typography,
 } from '@material-ui/core';
+import CustomWidgetWrapper from './CustomWidgetWrapper';
 
 const STEP_SIZE_RANGE_MAPPING = {
   [GroupDateTypes.YEARS]: 60 * 60 * 24 * 365 * 1000,
@@ -164,7 +165,7 @@ defaultCustomWidgetProps) {
 
   return (
     <>
-      <WrapperWidgetUI
+      <CustomWidgetWrapper
         title={title}
         isLoading={isLoading}
         {...wrapperProps}
@@ -203,7 +204,7 @@ defaultCustomWidgetProps) {
             onTimeWindowUpdate={handleTimeWindowUpdate}
           />
         )}
-      </WrapperWidgetUI>
+      </CustomWidgetWrapper>
       <Menu
         anchorEl={anchorEl}
         keepMounted

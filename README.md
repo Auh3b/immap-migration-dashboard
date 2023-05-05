@@ -2,6 +2,18 @@
 
 This application build using `Carto for React` template 3 with typescript, and uses `yarn` as the package manager. Make sure your using `Node v16.13.0` for compatibility in development.
 
+## Required Packages
+
+Make sure the following packages are install in their correct version
+
+### `carto-react v1.5.1`
+
+### `deck.gl v8`
+
+### `mui v4`
+
+### `react v17`
+
 ## Project Setup
 
 install project using yarn

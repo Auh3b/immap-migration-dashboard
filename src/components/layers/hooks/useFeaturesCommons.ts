@@ -35,7 +35,7 @@ export default function useFeaturesCommons({ source }) {
         dispatch(setFeaturesReady({ sourceId, ready }));
       }
     },
-    [dispatch, sourceId]
+    [dispatch, sourceId],
   );
 
   return [
@@ -44,6 +44,6 @@ export default function useFeaturesCommons({ source }) {
     setDataLoaded,
     clearDebounce,
     stopAnyCompute,
-    setSourceFeaturesReady
+    setSourceFeaturesReady,
   ];
 }

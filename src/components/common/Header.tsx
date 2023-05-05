@@ -1,4 +1,4 @@
-import { MouseEvent, useEffect, useMemo, useState } from 'react';
+import { MouseEvent, useEffect, useState } from 'react';
 import {
   AppBar,
   Drawer,
@@ -229,6 +229,12 @@ function NavigationMenu({ column = false }: { column?: boolean }) {
       >
         {/* [hygen] Import links */}
         <Tab
+          label='Intro'
+          value='intro'
+          component={NavLink}
+          to={ROUTE_PATHS.INTRODUCTION}
+        />
+        <Tab
           label='Inicio'
           value='inicio'
           component={NavLink}
@@ -241,8 +247,8 @@ function NavigationMenu({ column = false }: { column?: boolean }) {
           to={ROUTE_PATHS.PREMISE_SERVICE}
         />
         <Tab
-          label='Feedback Sobre Servicios'
-          value='feedback_sobre_servicios'
+          label='Feedback Servicios'
+          value='feedback_servicios'
           component={NavLink}
           to={ROUTE_PATHS.SERVICES}
         />
@@ -252,12 +258,12 @@ function NavigationMenu({ column = false }: { column?: boolean }) {
           component={NavLink}
           to={ROUTE_PATHS.MIGRATION_FLOW}
         />
-        <Tab
-          label='Caracterización grupo de viaje'
-          value='caracterizacion_grupo_de_viaje'
+        {/* <Tab
+          label='NNA'
+          value='nna'
           component={NavLink}
           to={ROUTE_PATHS.CHILDREN}
-        />
+        /> */}
         <Tab
           label='Conexiones en la ruta'
           value='conexiones_en_la_ruta'

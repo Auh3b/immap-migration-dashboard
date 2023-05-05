@@ -14,7 +14,7 @@ export interface defaultCustomWidgetProps {
   colorMap?: any;
   isLoading?: boolean;
   bins?: number;
-  order?: string[];
+  order?: string[] | string;
   chartType?: TIME_SERIES_CHART_TYPES;
   min?: number;
   stepSize?: GroupDateTypes;
@@ -39,4 +39,6 @@ export interface defaultCustomWidgetProps {
   xAxisFormatter?: Function;
   yAxisFormatter?: Function;
   parentKey?: any;
+  extraProps?: Record<string, unknown>;
+  global?: Boolean;
 }

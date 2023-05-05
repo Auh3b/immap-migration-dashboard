@@ -1,24 +1,35 @@
-import { configureStore, ThunkAction } from '@reduxjs/toolkit';
+import { configureStore, ThunkAction, combineReducers } from '@reduxjs/toolkit';
 import { CurriedGetDefaultMiddleware } from '@reduxjs/toolkit/dist/getDefaultMiddleware';
-import {
-  Action,
-  combineReducers,
-  Reducer,
-  ReducersMapObject,
-  Store,
-} from 'redux';
+import { Action, Reducer, ReducersMapObject, Store } from 'redux';
 import appSlice from './appSlice';
 import mapSlice from './mapSlice';
+import introSlice from './introSlice';
+import reduceReducers from 'reduce-reducers';
 
 interface AppStore extends Store {
   asyncReducers: ReducersMapObject;
   injectReducer: (key: string, reducer: Reducer) => void;
 }
 
+export const setCustomViewport: Reducer = (state, action) => {
+  if (action.type === 'SET_CUSTOM_VIEWPORT') {
+    console.log(action.payload);
+    state = {
+      ...state,
+      carto: {
+        ...state.carto,
+        viewport: action.payload,
+      },
+    };
+  }
+  return state;
+};
+
 // Define the Reducers that will always be present in the application
 const staticReducers = {
   app: appSlice,
   map: mapSlice,
+  intro: introSlice,
 };
 
 let store: AppStore = {
@@ -30,7 +41,9 @@ let store: AppStore = {
   asyncReducers: {},
   injectReducer: (key: string, asyncReducer: Reducer) => {
     store.asyncReducers[key] = asyncReducer;
-    store.replaceReducer(createReducer(store.asyncReducers));
+    const reducer = createReducer(store.asyncReducers);
+    const rootReducer = reduceReducers(reducer, setCustomViewport);
+    store.replaceReducer(rootReducer);
   },
 };
 
@@ -49,8 +62,8 @@ function getCustomMiddleware(
       ignoredPaths: ['carto.viewportFeatures'],
     },
     serializableCheck: {
-      ignoredPaths: ['carto.viewportFeatures', 'map.ref'],
-      ignoredActions: ['carto/setViewportFeatures', 'app/setMapRef'],
+      ignoredPaths: ['carto.viewportFeatures'],
+      ignoredActions: ['carto/setViewportFeatures'],
     },
   };
 

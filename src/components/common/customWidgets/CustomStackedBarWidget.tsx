@@ -1,10 +1,10 @@
-import { BarWidgetUI, WrapperWidgetUI } from '@carto/react-ui';
+import { BarWidgetUI } from '@carto/react-ui';
 import { Grid, makeStyles, Typography } from '@material-ui/core';
 import { useMemo, useState } from 'react';
-import { UNICEF_COLORS } from 'theme';
 import WidgetWithAlert from '../../indicators/WidgetWithAlert';
 import { defaultCustomWidgetProps } from './customWidgetsType';
 import useWidgetFetch from './hooks/useWidgetFetch';
+import CustomWidgetWrapper from './CustomWidgetWrapper';
 
 const useStyles = makeStyles((theme) => ({
   legendContainer: {
@@ -51,23 +51,31 @@ export default function CustomStackedBarWidget({
       setXAxisData(_data.map((d) => d.name)[0]);
       setYAxisData(_data.map((d) => d.value)[0]);
       setColors(_data.map((d) => d.color)[0]);
+      return;
     }
+    setXAxisData([]);
+    setYAxisData([]);
+    setColors([]);
   }, [_data]);
 
   const legend: { name: string; color: string }[] = useMemo(() => {
-    if (colors.length > 0) {
-      return _data
-        .map((d) => d.legend)[0]
-        .map((d: string, i: number) => ({
-          name: d,
-          color: colors[i],
-        }));
+    if (_data.length === 0) {
+      return [];
     }
-    return [];
+
+    if (colors.length === 0) {
+      return [];
+    }
+    return _data
+      .map((d) => d.legend)[0]
+      .map((d: string, i: number) => ({
+        name: d,
+        color: colors[i],
+      }));
   }, [_data, colors]);
 
   return (
-    <WrapperWidgetUI title={title} isLoading={isLoading} onError={error}>
+    <CustomWidgetWrapper title={title} isLoading={isLoading} onError={error}>
       <WidgetWithAlert dataSource={dataSource}>
         {yAxisData.length > 0 && !isLoading && (
           <BarWidgetUI
@@ -102,6 +110,6 @@ export default function CustomStackedBarWidget({
           </Grid>
         )}
       </WidgetWithAlert>
-    </WrapperWidgetUI>
+    </CustomWidgetWrapper>
   );
 }

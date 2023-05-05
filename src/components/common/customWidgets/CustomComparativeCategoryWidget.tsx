@@ -9,8 +9,6 @@ const CustomWidgetWrapper = lazy(
   () => import('components/common/customWidgets/CustomWidgetWrapper'),
 );
 
-const EMPTY_ARRAY = [];
-
 export default function CustomComparativeCategoryWidget({
   id,
   title,
@@ -68,7 +66,7 @@ export default function CustomComparativeCategoryWidget({
   }, [_data, colorMap]);
 
   return (
-    <CustomWidgetWrapper title={title} isLoading={isLoading}>
+    <CustomWidgetWrapper title={title} isLoading={isLoading} expanded={false}>
       {data && names && (
         <ComparativeCategoryWidgetUI
           data={data}

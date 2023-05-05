@@ -1,9 +1,7 @@
 //@ts-nocheck
 import { selectAreFeaturesReadyForSource } from '@carto/react-redux';
-import { TILE_FORMATS } from '@deck.gl/carto';
 import { useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { RootState } from 'store/store';
 import getTileFeatures from 'utils/methods/getTileFeatures';
 import useCustomCompareEffect from '../../../../hooks/useCustomCompareEffect';
 import { dequal } from 'dequal';
@@ -16,7 +14,7 @@ export interface useWidgetFetchProps {
   column?: string;
   method?: MethodFunc | null;
   methodParams?: {};
-  global?: boolean;
+  global?: Boolean;
 }
 
 /**
@@ -48,13 +46,14 @@ export default function useWidgetFetch({
 
   const params = useMemo(
     () => ({
-      filters: source.filters,
-      filtersLogicalOperator: source.filtersLogicalOperator,
+      filters: source?.filters,
+      filtersLogicalOperator: source?.filtersLogicalOperator,
       limit: null,
+      global,
     }),
     [source],
   );
-  
+
   useCustomCompareEffect(
     () => {
       setIsLoading(true);
@@ -62,6 +61,7 @@ export default function useWidgetFetch({
         getTileFeatures({
           sourceId: source.id,
           params,
+          global,
         })
           .then((data) => {
             if (data && data.length > 0) {
