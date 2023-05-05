@@ -31,59 +31,59 @@ export default function CustomConnectDotChart({ data: _data, groupName }: any) {
     [_data],
   );
 
-  const series = useMemo(()=>{
-    return  ([
-        {
-          type: 'custom',
-          renderItem: (params: any, api: any) => {
-            const categoryIndex = api.value(5);
-            const p1 = api.coord([api.value(7), categoryIndex]);
-            const p2 = api.coord([api.value(8), categoryIndex]);
-            const p3 = api.coord([api.value(9), categoryIndex]);
-            const points = [p1, p2, p3].sort((a, b) => ascending(a[0], b[0]));
-            return {
-              type: 'polyline',
-              shape: {
-                points,
-              },
-              style: api.style({
-                stroke: UNICEF_COLORS[6],
-              }),
-            };
-          },
+  const series = useMemo(() => {
+    return [
+      {
+        type: 'custom',
+        renderItem: (params: any, api: any) => {
+          const categoryIndex = api.value(5);
+          const p1 = api.coord([api.value(7), categoryIndex]);
+          const p2 = api.coord([api.value(8), categoryIndex]);
+          const p3 = api.coord([api.value(9), categoryIndex]);
+          const points = [p1, p2, p3].sort((a, b) => ascending(a[0], b[0]));
+          return {
+            type: 'polyline',
+            shape: {
+              points,
+            },
+            style: api.style({
+              stroke: UNICEF_COLORS[6],
+            }),
+          };
         },
-        {
-          type: 'scatter',
-          encode: {
-            y: DATA_DIMENSIONS[5],
-            x: DATA_DIMENSIONS[7],
-          },
-          itemStyle: {
-            color: STAT_CATEGORY_COLORS.get(DATA_DIMENSIONS[7]),
-          },
+      },
+      {
+        type: 'scatter',
+        encode: {
+          y: DATA_DIMENSIONS[5],
+          x: DATA_DIMENSIONS[7],
         },
-        {
-          type: 'scatter',
-          encode: {
-            y: DATA_DIMENSIONS[5],
-            x: DATA_DIMENSIONS[8],
-          },
-          itemStyle: {
-            color: STAT_CATEGORY_COLORS.get(DATA_DIMENSIONS[8]),
-          },
+        itemStyle: {
+          color: STAT_CATEGORY_COLORS.get(DATA_DIMENSIONS[7]),
         },
-        {
-          type: 'scatter',
-          encode: {
-            y: DATA_DIMENSIONS[5],
-            x: DATA_DIMENSIONS[9],
-          },
-          itemStyle: {
-            color: STAT_CATEGORY_COLORS.get(DATA_DIMENSIONS[9]),
-          },
+      },
+      {
+        type: 'scatter',
+        encode: {
+          y: DATA_DIMENSIONS[5],
+          x: DATA_DIMENSIONS[8],
         },
-      ])
-  }, [data])
+        itemStyle: {
+          color: STAT_CATEGORY_COLORS.get(DATA_DIMENSIONS[8]),
+        },
+      },
+      {
+        type: 'scatter',
+        encode: {
+          y: DATA_DIMENSIONS[5],
+          x: DATA_DIMENSIONS[9],
+        },
+        itemStyle: {
+          color: STAT_CATEGORY_COLORS.get(DATA_DIMENSIONS[9]),
+        },
+      },
+    ];
+  }, [data]);
 
   const option = useMemo(
     () => ({

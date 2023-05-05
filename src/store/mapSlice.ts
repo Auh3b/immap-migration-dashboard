@@ -4,7 +4,7 @@ const slice = createSlice({
   name: 'map',
   initialState: {
     pageInfo: {},
-    transition: null
+    transition: null,
   },
   reducers: {
     setPageInfo: (state, action) => {
@@ -13,12 +13,12 @@ const slice = createSlice({
     removePageInfo: (state) => {
       state.pageInfo = {};
     },
-    setTransition: (state, action)=>{
-      state.transition = action.payload
+    setTransition: (state, action) => {
+      state.transition = action.payload;
     },
-    removeTransition: (state, action)=>{
-      state.transition = null
-    }
+    removeTransition: (state, action) => {
+      state.transition = null;
+    },
   },
 });
 
@@ -33,10 +33,10 @@ export const removePageInfo = () => ({
   type: 'map/removePageInfo',
 });
 
-export const setTransition = (payload: number) =>({
+export const setTransition = (payload: number) => ({
   type: 'map/setTransition',
-  payload
-})
+  payload,
+});
 
 export const removeTransition = () => ({
   type: 'map/removeTransition',
