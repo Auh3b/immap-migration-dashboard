@@ -10,8 +10,10 @@ import {
 } from '@material-ui/lab';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { defaultCustomWidgetProps } from './customWidgetsType';
-import useWidgetFetch from './hooks/useWidgetFetch';
+//@ts-ignore
+import {fetchLayerData} from '@deck.gl/carto'
 import CustomWidgetWrapper from './CustomWidgetWrapper';
+import timelineSource from 'data/sources/timelineSource'
 
 export default function CustomTimelineWidget({
   id,

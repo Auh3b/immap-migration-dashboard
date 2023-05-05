@@ -16,6 +16,10 @@ import { executeSQL } from '@carto/react-api';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store/store';
 import aggregateColumns from '../utils/AggregateColumns';
+//@ts-ignore
+import {fetchLayerData, FORMATS} from '@deck.gl/carto'
+import premiseSource from 'data/sources/premiseSource'
+import mainSource from 'data/sources/mainSource'
 
 const useStyles = makeStyles((theme) => ({
   statsContainer: {

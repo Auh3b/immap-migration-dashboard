@@ -20,7 +20,8 @@ import {
   featureCollection,
   point,
 } from '@turf/helpers';
-import { IconGroupConfig, iconGroupsConfig } from './utils/surveyIconGroup';
+import { IconGroupConfig } from './utils/surveyIconGroup';
+import d3Hex2RGB from 'utils/d3Hex2RGB';
 
 export const SURVEY_TIMELINE_LAYER_ID = 'surveyTimelineLayer';
 
