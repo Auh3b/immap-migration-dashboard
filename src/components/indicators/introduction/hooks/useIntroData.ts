@@ -1,8 +1,12 @@
 import { executeSQL } from '@carto/react-api';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearIntroFilters } from 'store/introSlice';
 import { RootState } from 'store/store';
+//@ts-ignore
+import {fetchLayerData, FORMATS} from '@deck.gl/carto'
+import premiseSource from 'data/sources/premiseSource'
+import mainSource from 'data/sources/mainSource'
 
 function useFetchData() {
   const [premiseData, setPremiseData] = useState(null);
@@ -12,25 +16,22 @@ function useFetchData() {
   const credentials = useSelector(
     (state: RootState) => state.carto.credentials,
   );
+  console.log(credentials)
   const fetchPremise = async () => {
-    const result = await executeSQL({
-      credentials,
-      connection: 'carto_dw',
-      query: 'SELECT * FROM shared.Premise_22032023',
-      opts: {
-        format: 'json',
-      },
+    const { data: result } = await fetchLayerData({
+      source: premiseSource.data,
+      type: premiseSource.type,
+      connection: premiseSource.connection,
+      format: FORMATS.JSON,
     });
     return result;
   };
   const fetchAurora = async () => {
-    const result = await executeSQL({
-      credentials,
-      connection: 'carto_dw',
-      query: 'SELECT * FROM shared.LACRO_Marzo_2023',
-      opts: {
-        format: 'json',
-      },
+    const { data: result } = await fetchLayerData({
+      source: mainSource.data,
+      type: mainSource.type,
+      connection: mainSource.connection,
+      format: FORMATS.JSON,
     });
     return result;
   };
