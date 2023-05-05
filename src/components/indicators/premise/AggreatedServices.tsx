@@ -18,7 +18,7 @@ import { filterItem, filterValues } from 'utils/filterFunctions';
 import { _FilterTypes } from '@carto/react-core';
 
 import CustomConnectDotChart from 'components/common/customWidgets/CustomConnectDotChart';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addFilter, removeFilter, setViewState } from '@carto/react-redux';
 import { featureCollection, point } from '@turf/helpers';
 import { bbox } from '@turf/turf';
@@ -26,6 +26,7 @@ import { bbox } from '@turf/turf';
 import {WebMercatorViewport} from '@deck.gl/core';
 import { initialState } from 'store/initialStateSlice';
 import { removeTransition, setTransition } from 'store/mapSlice';
+import { RootState } from 'store/store';
 
 const otherColumns = {
   country: 'ubicacion_',
@@ -109,6 +110,7 @@ const methodParams = {
 export default function AggreatedServices({ dataSource }: BasicWidgetType) {
   const dispatch = useDispatch();
   const [filters, setFilters] = useState<Record<string, filterItem>>({});
+  const { width, height } = useSelector((state: RootState)=> state.carto.viewState)
   const serviceSelection = Array.from(SERVICES_KEY.values());
   const classes = useStyles();
   const { data: _data, isLoading } = useWidgetFetch({
@@ -169,21 +171,22 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
 
   const handleLocationChange = useCallback( ({ id, field, currentSelection, callbackProps })=>{
     if(currentSelection){
-      const { data } = callbackProps
+      const { data, width, height } = callbackProps
+      const padding = 100
       const geojson = featureCollection(data.filter((d:any) => d[field] === currentSelection).map((d:any)=> point(d[6]))) 
       const [minLong, minLat, maxLong, maxLat] = bbox(geojson)
       const boundbox = [[minLong, minLat], [maxLong, maxLat]]
-      const {latitude, longitude, zoom} = new WebMercatorViewport().fitBounds(boundbox)
-      dispatch(setTransition(250))
+      const {latitude, longitude, zoom} = new WebMercatorViewport().fitBounds(boundbox, { width, height, padding })
+      dispatch(setTransition(1000))
       dispatch(setViewState({latitude,longitude,zoom}))
       setTimeout(()=>{
         dispatch(removeTransition())
-      }, 1000)
+      }, 1500)
       return;
     }
     
     const {latitude, longitude, zoom} = initialState.viewState
-    dispatch(setTransition(250))
+    dispatch(setTransition(500))
     dispatch(setViewState({latitude,longitude,zoom}))
     setTimeout(()=>{
       dispatch(removeTransition())
@@ -214,7 +217,7 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
               filters={filters}
               addFilter={setFilters}
               callback={handleLocationChange}
-              callbackProps={{data}}
+              callbackProps={{data, width, height}}
             />
             <ClearFiltersButton
               filtersCallback={() => Object.keys(filters).length > 0}
