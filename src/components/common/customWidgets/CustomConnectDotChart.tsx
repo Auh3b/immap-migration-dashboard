@@ -2,7 +2,7 @@ import { Grid, Typography, makeStyles, useTheme } from '@material-ui/core';
 import { ascending } from 'd3';
 import { useMemo } from 'react';
 import { UNICEF_COLORS } from 'theme';
-import ReactEchart from 'echarts-for-react';
+import ReactEchart from 'components/common/customCharts/ReactEcharts';
 
 const STAT_CATEGORY_COLORS = new Map([
   ['Capacidad diaria', '#f03b20'],
