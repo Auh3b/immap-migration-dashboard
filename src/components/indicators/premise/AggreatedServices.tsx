@@ -145,7 +145,8 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
   );
 
   const handleServiceChange = useCallback(
-    ({ id, field, currentSelection }) => {
+    ({ id, field, currentSelection, callbackProps }) => {
+      const { owner } = callbackProps
       if (currentSelection) {
         dispatch(
           addFilter({
@@ -153,7 +154,7 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
             column: COLUNM_MAP.get(field),
             type: _FilterTypes.STRING_SEARCH,
             values: [currentSelection],
-            owner: id,
+            owner,
           }),
         );
       } else {
@@ -161,7 +162,7 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
           removeFilter({
             id: dataSource,
             column: COLUNM_MAP.get(field),
-            owner: id,
+            owner,
           }),
         );
       }
@@ -207,6 +208,7 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
               filters={filters}
               addFilter={setFilters}
               callback={handleServiceChange}
+              callbackProps={{owner: id}}
             />
             {/* Location Selector */}
             <Selector
@@ -263,7 +265,7 @@ function Selector({
   filters,
   addFilter,
   callback,
-  callbackProps
+  callbackProps,
 }: {
   id: string;
   name?: string;
