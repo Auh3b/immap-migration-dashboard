@@ -48,14 +48,12 @@ export default function CustomStackedBarWidget({
 
   useMemo(() => {
     if (_data.length > 0) {
-      setXAxisData(_data.map((d) => d.name)[0]);
-      setYAxisData(_data.map((d) => d.value)[0]);
-      setColors(_data.map((d) => d.color)[0]);
+      const { name, value, color} = _data[0]
+      setXAxisData(name);
+      setYAxisData(value);
+      setColors(color);
       return;
     }
-    setXAxisData([]);
-    setYAxisData([]);
-    setColors([]);
   }, [_data]);
 
   const legend: { name: string; color: string }[] = useMemo(() => {
@@ -66,13 +64,27 @@ export default function CustomStackedBarWidget({
     if (colors.length === 0) {
       return [];
     }
-    return _data
-      .map((d) => d.legend)[0]
-      .map((d: string, i: number) => ({
-        name: d,
-        color: colors[i],
-      }));
+    const { legend: _legend } = _data[0]
+    
+    if(stacked){
+      return _legend
+    }
+    
+    let output: any[] = []
+
+    for(let i = 0; i < _legend?.length ?? 2; i++){
+      const item = {
+        name: _legend[i],
+        color: colors[i]
+      }
+
+      output = [...output, item]
+    }
+
+    return  output
+
   }, [_data, colors]);
+  
 
   return (
     <CustomWidgetWrapper title={title} isLoading={isLoading} onError={error}>
@@ -82,15 +94,14 @@ export default function CustomStackedBarWidget({
             stacked={stacked}
             labels={labels}
             colors={colors}
-            series={stacked ? labels : legend.map(({ name }) => name) || []}
+            series={stacked ? labels : legend.map(({ name }) => name) || xAxisData}
             //@ts-ignore
             xAxisData={xAxisData}
             //@ts-ignore
             yAxisData={yAxisData}
-            xAxisFormatter={stacked ? xAxisFormatter : (value: string) => ''}
           />
         )}
-        {legend.length > 0 && !stacked && (
+        {(legend.length > 0 && !stacked) && (
           <Grid container item>
             {legend.map(({ name, color }) => (
               <Grid
