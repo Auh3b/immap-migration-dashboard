@@ -7,18 +7,18 @@ export type filterType = _FilterTypes;
 
 export interface filterItem {
   id: filterId;
-  value: filterValue;
-  field: filterField;
+  values: filterValue[];
+  column: filterField;
   type: filterType;
 }
 
-function filterIn(field: string | number, value: number | string) {
-  return (d: any) => d[field] === value;
+function filterIn(column: string | number, value: number | string) {
+  return (d: any) => d[column] === value;
 }
 
-function filterSearch(field: string | number, value: string) {
+function filterSearch(column: string | number, value: string) {
   return (d: any) => {
-    const dataValue = d[field] as string;
+    const dataValue = d[column] as string;
     const startIndex = dataValue.search(value);
 
     if (startIndex === -1) {
@@ -53,8 +53,8 @@ export function filterValues(
 
   let output: any[] = data;
 
-  for (let { value, field, type } of filters) {
-    output = output.filter(filterFunctions(type)(field, value));
+  for (let { values, column, type } of filters) {
+    output = output.filter(filterFunctions(type)(column, values[0]));
   }
 
   return output;

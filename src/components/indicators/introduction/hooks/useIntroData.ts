@@ -90,12 +90,7 @@ function useFilteredData(input: any[], filters: any) {
     let data: any[] = input;
 
     if (data && filters) {
-      let _filters = Object.entries(filters);
-
-      //@ts-ignore
-      for (let [chartId, { column, values }] of _filters) {
-        data = data.filter((d) => d[column] === values[0]);
-      }
+      data = [...filterValues(input, filters)]
       return data;
     }
     return data;

@@ -1,23 +1,25 @@
-import { CSSProperties, useMemo, useState } from 'react';
+import { CSSProperties, useCallback, useMemo, useState } from 'react';
 import ReactEchart from 'components/common/customCharts/ReactEcharts';
 import { useTheme } from '@material-ui/core';
 
 export default function IntroPieChart({
   data,
   styles,
+  filterable,
   selectedCategories,
   onSelectedCategoriesChange,
 }: {
   data: { name: string; value: number }[];
+  filterable?: Boolean;
   styles?: CSSProperties;
   renderer?: 'svg' | 'canvas';
-  selectedCategories?: string[],
-  onSelectedCategoriesChange?: Function,
+  selectedCategories?: string[];
+  onSelectedCategoriesChange?: Function;
 }) {
   const [showLabel, setShowLabel] = useState(true);
   const [showTooltip, setShowTooltip] = useState(true);
   const theme = useTheme();
-    // Series
+  // Series
   const labelOptions = useMemo(
     () => ({
       formatter: '{per|{d}%}\n{b|{b}}',
@@ -29,18 +31,44 @@ export default function IntroPieChart({
           fontSize: theme.spacing(1.75),
           lineHeight: theme.spacing(1.75),
           fontWeight: 'normal',
-          color: theme.palette.text.primary
+          color: theme.palette.text.primary,
         },
         per: {
           ...theme.typography,
           fontSize: theme.spacing(3),
           lineHeight: theme.spacing(4.5),
           fontWeight: 600,
-          color: theme.palette.text.primary
-        }
-      }
+          color: theme.palette.text.primary,
+        },
+      },
     }),
-    [theme]
+    [theme],
+  );
+
+  const seriesOptions = useMemo(
+    () => [
+      {
+        type: 'pie',
+        radius: ['40%', '70%'],
+        avoidLabelOverlap: false,
+        label: {
+          show: showLabel,
+          ...labelOptions,
+        },
+        emphasis: {
+          label: {
+            show: true,
+            fontSize: 40,
+            fontWeight: 'bold',
+          },
+        },
+        labelLine: {
+          show: false,
+        },
+        data,
+      },
+    ],
+    [showLabel, labelOptions, data],
   );
 
   const option = useMemo(
@@ -66,33 +94,32 @@ export default function IntroPieChart({
         left: '0%',
         icon: 'circle',
       },
-      series: [
-        {
-          type: 'pie',
-          radius: ['40%', '70%'],
-          avoidLabelOverlap: false,
-          label: {
-            show: showLabel,
-            ...labelOptions
-          },
-          emphasis: {
-            label: {
-              show: true,
-              fontSize: 40,
-              fontWeight: 'bold',
-            },
-          },
-          labelLine: {
-            show: false,
-          },
-          data,
-        },
-      ],
+      series: seriesOptions,
     }),
-    [data, labelOptions, showTooltip],
+    [seriesOptions, labelOptions, showTooltip],
   );
 
-    const onEvents = {
+  const clickEvent = useCallback(
+    (params) => {
+      if (onSelectedCategoriesChange) {
+        const newSelectedCategories = [...selectedCategories];
+        const { name } = data[params.dataIndex];
+
+        const selectedCategoryIdx = newSelectedCategories.indexOf(name);
+        if (selectedCategoryIdx === -1) {
+          newSelectedCategories.push(name);
+        } else {
+          newSelectedCategories.splice(selectedCategoryIdx, 1);
+        }
+
+        onSelectedCategoriesChange(newSelectedCategories);
+      }
+    },
+    [data, onSelectedCategoriesChange, selectedCategories],
+  );
+
+  const onEvents = {
+    ...(filterable && { click: clickEvent }),
     mouseover: () => {
       setShowLabel(false);
       setShowTooltip(true);
@@ -100,7 +127,7 @@ export default function IntroPieChart({
     mouseout: () => {
       setShowLabel(true);
       setShowTooltip(false);
-    }
+    },
   };
 
   return <ReactEchart option={option} onEvents={onEvents} style={styles} />;

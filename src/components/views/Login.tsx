@@ -246,7 +246,7 @@ const useFooterStyles = makeStyles((theme) => ({
     fontSize: '0.75em',
     marginBottom: theme.spacing(2),
     [theme.breakpoints.down('lg')]: {
-      fontSize: '0.5em',
+      fontSize: '0.75em',
     },
   },
   copyright: {
