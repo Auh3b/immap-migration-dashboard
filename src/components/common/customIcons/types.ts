@@ -1,3 +1,1 @@
-export interface CustomIconProps {
-
-}
+export interface CustomIconProps {}

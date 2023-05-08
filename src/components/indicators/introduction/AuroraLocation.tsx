@@ -11,7 +11,7 @@ const column = 'e004_regio';
 const subtitle = '';
 const id = 'auroraLocations';
 const source = 'auroraData';
-const filterable =  true
+const filterable = true;
 
 export default function AuroraLocation({
   data: _data,
@@ -38,7 +38,12 @@ export default function AuroraLocation({
   });
 
   return (
-    <TitleWrapper title={title} subtitle={subtitle} isLoading={isLoading} filterable={filterable}>
+    <TitleWrapper
+      title={title}
+      subtitle={subtitle}
+      isLoading={isLoading}
+      filterable={filterable}
+    >
       <Grid item>
         <IntroPieChart
           data={data}

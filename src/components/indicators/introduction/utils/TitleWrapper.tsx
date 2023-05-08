@@ -51,18 +51,24 @@ export default function TitleWrapper(props: TitleWrapperProps) {
       justifyContent='space-between'
       className={classes.root}
     >
-      <Grid item container spacing={2} wrap='nowrap' className={classes.titleHead}>
-        <Grid item xs={11} style={{flexGrow: 1}}>
+      <Grid
+        item
+        container
+        spacing={2}
+        wrap='nowrap'
+        className={classes.titleHead}
+      >
+        <Grid item xs={11} style={{ flexGrow: 1 }}>
           {title && <Typography className={classes.title}>{title}</Typography>}
           {subtitle && (
             <Typography className={classes.subtitle}>{subtitle}</Typography>
           )}
         </Grid>
-        
+
         {filterable && (
-        <Grid item xs style={{justifySelf: 'flex-start'}}>
-          <FilterableIcon fill='#D0D0D0' height={20} width={'100%'} />
-        </Grid>
+          <Grid item xs style={{ justifySelf: 'flex-start' }}>
+            <FilterableIcon fill='#D0D0D0' height={15} width={'100%'} />
+          </Grid>
         )}
       </Grid>
       {isLoading ? (
