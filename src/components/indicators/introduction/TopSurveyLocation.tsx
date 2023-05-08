@@ -40,7 +40,7 @@ export default function TopSurveyLocation({
   });
 
   return (
-    <TitleWrapper title={title} subtitle={subtitle}>
+    <TitleWrapper title={title} subtitle={subtitle} filterable={true}>
       <Grid item>
         <CategoryWidgetUI
           onSelectedCategoriesChange={handleSelectedCategoriesChange}

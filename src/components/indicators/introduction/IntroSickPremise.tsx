@@ -54,7 +54,7 @@ export default function IntroSickPremise({
 
 
   return (
-    <TitleWrapper title={title} subtitle={subtitle} isLoading={isLoading}>
+    <TitleWrapper title={title} subtitle={subtitle} isLoading={isLoading} filterable={filterable} >
       <Grid item>
         <IntroHalfPieChart filterable={filterable}  data={data} onSelectedCategoriesChange={handleSelectedCategoriesChange} selectedCategories={selectedCategories} />
       </Grid>
