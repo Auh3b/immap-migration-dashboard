@@ -1,7 +1,7 @@
 //@ts-nocheck
 
-import _ReactEcharts from 'echarts-for-react'
-import isEqual from 'fast-deep-equal'
+import _ReactEcharts from 'echarts-for-react';
+import isEqual from 'fast-deep-equal';
 
 export default class ReactEcharts extends _ReactEcharts {
   componentDidUpdate(prevProps) {
@@ -10,7 +10,10 @@ export default class ReactEcharts extends _ReactEcharts {
      * default is true
      */
     const { shouldSetOption } = this.props;
-    if (isFunction(shouldSetOption) && !shouldSetOption?.(prevProps, this.props)) {
+    if (
+      isFunction(shouldSetOption) &&
+      !shouldSetOption?.(prevProps, this.props)
+    ) {
       return;
     }
 
@@ -35,7 +38,13 @@ export default class ReactEcharts extends _ReactEcharts {
     }
 
     // when these props are not isEqual, update echarts
-    const pickKeys = ['option', 'notMerge', 'lazyUpdate', 'showLoading', 'loadingOption'];
+    const pickKeys = [
+      'option',
+      'notMerge',
+      'lazyUpdate',
+      'showLoading',
+      'loadingOption',
+    ];
     if (!isEqual(pick(this.props, pickKeys), pick(prevProps, pickKeys))) {
       this.updateEChartsOption();
     }
