@@ -299,7 +299,7 @@ function Selector({
   const currentSelection = useMemo(() => {
     const filter = filters[id];
     if (filter) {
-      return filter.value;
+      return filter.values[0];
     }
 
     return 0;

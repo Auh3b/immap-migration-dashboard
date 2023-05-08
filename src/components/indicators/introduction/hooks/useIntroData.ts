@@ -3,6 +3,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearIntroFilters } from 'store/introSlice';
 import { RootState } from 'store/store';
+import { filterValues } from 'utils/filterFunctions';
 
 function useFetchData() {
   const [premiseData, setPremiseData] = useState(null);
@@ -89,12 +90,7 @@ function useFilteredData(input: any[], filters: any) {
     let data: any[] = input;
 
     if (data && filters) {
-      let _filters = Object.entries(filters);
-
-      //@ts-ignore
-      for (let [chartId, { column, values }] of _filters) {
-        data = data.filter((d) => d[column] === values[0]);
-      }
+      data = [...filterValues(input, filters)]
       return data;
     }
     return data;
