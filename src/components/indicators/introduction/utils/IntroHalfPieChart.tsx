@@ -1,5 +1,5 @@
-import { CSSProperties, useMemo } from 'react';
-import ReactEchart from 'echarts-for-react';
+import { CSSProperties, useCallback, useMemo, useState } from 'react';
+import ReactEchart from 'components/common/customCharts/ReactEcharts';
 import { useTheme } from '@material-ui/core';
 import { sum } from 'd3';
 
@@ -7,12 +7,22 @@ export default function IntroHalfPieChart({
   data: _data,
   styles,
   renderer = 'svg',
+  filterable,
+  selectedCategories,
+  onSelectedCategoriesChange,
 }: {
   data: any[];
   styles?: CSSProperties;
   renderer?: 'svg' | 'canvas';
+  filterable?: Boolean;
+  selectedCategories?: string[];
+  onSelectedCategoriesChange?: Function;
 }) {
+  const [showLabel, setShowLabel] = useState(true);
+  const [showTooltip, setShowTooltip] = useState(true);
+
   const theme = useTheme();
+
   const data = useMemo(() => {
     if (_data.length > 0) {
       const lastItem = {
@@ -32,9 +42,66 @@ export default function IntroHalfPieChart({
     }
     return [];
   }, [_data]);
+
+const labelOptions = useMemo(
+    () => ({
+      position: 'center',
+      formatter({ name, value }: any) {
+        return `{per|${value}}\n{b|${name}}`;
+      },
+      rich: {
+        b: {
+          //@ts-ignore
+          ...theme.typography.overline,
+          fontSize: theme.spacing(1.75),
+          lineHeight: theme.spacing(1.75),
+          fontWeight: 'normal',
+          color: theme.palette.text.primary,
+        },
+        per: {
+          ...theme.typography.overline,
+          fontSize: theme.spacing(3),
+          lineHeight: theme.spacing(4.5),
+          fontWeight: 600,
+          color: theme.palette.text.primary,
+        },
+      },
+    }),
+    [theme],
+  );
+
+    const seriesOptions = useMemo(
+    () => [
+        {
+          type: 'pie',
+          radius: ['40%', '70%'],
+          center: ['50%', '90%'],
+          startAngle: 180,
+          avoidLabelOverlap: false,
+          label: {
+            show: showLabel,
+            ...labelOptions
+          },
+          emphasis: {
+            label: {
+              show: true,
+              fontSize: 40,
+              fontWeight: 'bold',
+            },
+          },
+          labelLine: {
+            show: false,
+          },
+          data,
+        },
+      ],
+    [showLabel, labelOptions, data],
+  );
+
   const option = useMemo(
     () => ({
       tooltip: {
+        show: showTooltip,
         trigger: 'item',
         padding: [theme.spacing(0.5), theme.spacing(1)],
         borderWidth: 0,
@@ -58,58 +125,51 @@ export default function IntroHalfPieChart({
           overflow: 'truncate',
         },
       },
-      series: [
-        {
-          type: 'pie',
-          radius: ['40%', '70%'],
-          center: ['50%', '90%'],
-          startAngle: 180,
-          avoidLabelOverlap: false,
-          label: {
-            show: false,
-            position: 'center',
-            formatter({ name, value }: any) {
-              return `{per|${value}}\n{b|${name}}`;
-            },
-            rich: {
-              b: {
-                //@ts-ignore
-                ...theme.typography.overline,
-                fontSize: theme.spacing(1.75),
-                lineHeight: theme.spacing(1.75),
-                fontWeight: 'normal',
-                color: theme.palette.text.primary,
-              },
-              per: {
-                ...theme.typography.overline,
-                fontSize: theme.spacing(3),
-                lineHeight: theme.spacing(4.5),
-                fontWeight: 600,
-                color: theme.palette.text.primary,
-              },
-            },
-          },
-          emphasis: {
-            label: {
-              show: true,
-              fontSize: 40,
-              fontWeight: 'bold',
-            },
-          },
-          labelLine: {
-            show: false,
-          },
-          data,
-        },
-      ],
+      series: seriesOptions,
     }),
-    [data],
+    [seriesOptions],
   );
+
+  const clickEvent = useCallback(
+    (params) => {
+      if (onSelectedCategoriesChange) {
+        const newSelectedCategories = [...selectedCategories];
+        const { name } = data[params.dataIndex];
+
+        const selectedCategoryIdx = newSelectedCategories.indexOf(name);
+        if (selectedCategoryIdx === -1) {
+          newSelectedCategories.push(name);
+        } else {
+          newSelectedCategories.splice(selectedCategoryIdx, 1);
+        }
+
+        onSelectedCategoriesChange(newSelectedCategories);
+      }
+    },
+    [data, onSelectedCategoriesChange, selectedCategories],
+  );
+
+  const onEvents = {
+    ...(filterable && { click: clickEvent }),
+    mouseover: () => {
+      setShowLabel(false);
+      setShowTooltip(true);
+    },
+    mouseout: () => {
+      setShowLabel(true);
+      setShowTooltip(false);
+    },
+  };
 
   return (
     <>
       {data && (
-        <ReactEchart option={option} opts={{ renderer }} style={styles} />
+        <ReactEchart
+          onEvents={onEvents}
+          option={option}
+          opts={{ renderer }}
+          style={styles}
+        />
       )}
     </>
   );
