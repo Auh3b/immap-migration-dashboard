@@ -1,4 +1,3 @@
-import { executeSQL } from '@carto/react-api';
 import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearIntroFilters } from 'store/introSlice';
@@ -7,16 +6,14 @@ import { RootState } from 'store/store';
 import {fetchLayerData, FORMATS} from '@deck.gl/carto'
 import premiseSource from 'data/sources/premiseSource'
 import mainSource from 'data/sources/mainSource'
+import { filterValues } from 'utils/filterFunctions';
 
 function useFetchData() {
   const [premiseData, setPremiseData] = useState(null);
   const [auroraData, setAuroraData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const credentials = useSelector(
-    (state: RootState) => state.carto.credentials,
-  );
-  console.log(credentials)
+
   const fetchPremise = async () => {
     const { data: result } = await fetchLayerData({
       source: premiseSource.data,
