@@ -28,35 +28,49 @@ export default function IntroSickPremise({
   });
 
   const data = useMemo(() => {
-    let output: any[] = [] 
+    let output: any[] = [];
     if (_data) {
       //@ts-ignore
-      output = [...concatenatedValues(_data, column)
-        .sort((a, b) => descending(a.value, b.value))];
-      
-      if(selectedCategories.length > 0){
-        output = [...output.filter(({name, value})=> +name === +selectedCategories[0])]
+      output = [
+        ...concatenatedValues(_data, column).sort((a, b) =>
+          descending(a.value, b.value),
+        ),
+      ];
+
+      if (selectedCategories.length > 0) {
+        output = [
+          ...output.filter(
+            ({ name, value }) => +name === +selectedCategories[0],
+          ),
+        ];
       }
 
-      return output
+      return output;
     }
     return [];
   }, [_data]);
-
-
 
   const handleSelectedCategoriesChange = useIntroCategoryChange({
     source,
     column,
     owner: id,
-    type: _FilterTypes.STRING_SEARCH
+    type: _FilterTypes.STRING_SEARCH,
   });
 
-
   return (
-    <TitleWrapper title={title} subtitle={subtitle} isLoading={isLoading} filterable={filterable} >
+    <TitleWrapper
+      title={title}
+      subtitle={subtitle}
+      isLoading={isLoading}
+      filterable={filterable}
+    >
       <Grid item>
-        <IntroHalfPieChart filterable={filterable}  data={data} onSelectedCategoriesChange={handleSelectedCategoriesChange} selectedCategories={selectedCategories} />
+        <IntroHalfPieChart
+          filterable={filterable}
+          data={data}
+          onSelectedCategoriesChange={handleSelectedCategoriesChange}
+          selectedCategories={selectedCategories}
+        />
       </Grid>
     </TitleWrapper>
   );

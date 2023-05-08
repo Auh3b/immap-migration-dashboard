@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { clearIntroFilters } from 'store/introSlice';
 import { RootState } from 'store/store';
 //@ts-ignore
-import {fetchLayerData, FORMATS} from '@deck.gl/carto'
-import premiseSource from 'data/sources/premiseSource'
-import mainSource from 'data/sources/mainSource'
+import { fetchLayerData, FORMATS } from '@deck.gl/carto';
+import premiseSource from 'data/sources/premiseSource';
+import mainSource from 'data/sources/mainSource';
 import { filterValues } from 'utils/filterFunctions';
 
 function useFetchData() {
@@ -87,7 +87,7 @@ function useFilteredData(input: any[], filters: any) {
     let data: any[] = input;
 
     if (data && filters) {
-      data = [...filterValues(input, filters)]
+      data = [...filterValues(input, filters)];
       return data;
     }
     return data;

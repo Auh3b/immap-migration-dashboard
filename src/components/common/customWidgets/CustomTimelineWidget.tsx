@@ -11,9 +11,9 @@ import {
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { defaultCustomWidgetProps } from './customWidgetsType';
 //@ts-ignore
-import {fetchLayerData} from '@deck.gl/carto'
+import { fetchLayerData } from '@deck.gl/carto';
 import CustomWidgetWrapper from './CustomWidgetWrapper';
-import timelineSource from 'data/sources/timelineSource'
+import timelineSource from 'data/sources/timelineSource';
 
 export default function CustomTimelineWidget({
   id,
