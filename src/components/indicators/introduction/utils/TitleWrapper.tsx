@@ -1,5 +1,6 @@
 import { Grid, Typography, makeStyles } from '@material-ui/core';
 import ComponentFallback from 'components/common/ComponentFallback';
+import FilterableIcon from 'components/common/customIcons/FilterableIcon';
 import { PropsWithChildren } from 'react';
 
 const useStyles = makeStyles((theme) => ({
@@ -35,23 +36,33 @@ export interface TitleWrapperProps extends PropsWithChildren<any> {
   title?: string;
   subtitle?: string;
   isLoading?: Boolean;
+  filterable?: Boolean;
 }
 
 export default function TitleWrapper(props: TitleWrapperProps) {
   const classes = useStyles();
-  const { title, subtitle, isLoading, children } = props;
+  const { title, subtitle, isLoading, children, filterable } = props;
   return (
     <Grid
       item
       container
+      wrap='nowrap'
       direction='column'
       justifyContent='space-between'
       className={classes.root}
     >
-      <Grid item className={classes.titleHead}>
-        {title && <Typography className={classes.title}>{title}</Typography>}
-        {subtitle && (
-          <Typography className={classes.subtitle}>{subtitle}</Typography>
+      <Grid item container spacing={2} wrap='nowrap' className={classes.titleHead}>
+        <Grid item xs={11} style={{flexGrow: 1}}>
+          {title && <Typography className={classes.title}>{title}</Typography>}
+          {subtitle && (
+            <Typography className={classes.subtitle}>{subtitle}</Typography>
+          )}
+        </Grid>
+        
+        {filterable && (
+        <Grid item xs style={{justifySelf: 'flex-start'}}>
+          <FilterableIcon fill='#D0D0D0' height={20} width={'100%'} />
+        </Grid>
         )}
       </Grid>
       {isLoading ? (

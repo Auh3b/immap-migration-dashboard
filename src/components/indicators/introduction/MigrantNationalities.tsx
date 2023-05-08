@@ -11,6 +11,7 @@ const column = 'e08_pais_';
 const subtitle = '';
 const source = 'auroraData';
 const id = 'topOrganisations';
+const filterable = true
 
 export default function MigrantNationalities({
   data: _data,
@@ -36,9 +37,14 @@ export default function MigrantNationalities({
   });
 
   return (
-    <TitleWrapper title={title} subtitle={subtitle} isLoading={isLoading}>
+    <TitleWrapper title={title} subtitle={subtitle} isLoading={isLoading} filterable={filterable ?? false}>
       <Grid item>
-        <IntroPieChart data={data} />
+        <IntroPieChart
+          data={data}
+          filterable={filterable ?? false}
+          selectedCategories={selectedCategories}
+          onSelectedCategoriesChange={handleSelectedCategoriesChange}
+        />
       </Grid>
     </TitleWrapper>
   );
