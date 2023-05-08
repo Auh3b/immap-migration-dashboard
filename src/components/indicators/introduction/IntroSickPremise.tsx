@@ -3,15 +3,15 @@ import { Grid } from '@material-ui/core';
 import TitleWrapper from './utils/TitleWrapper';
 import { descending } from 'd3';
 import concatenatedValues from '../utils/concatenatedValues';
-import { SICK_CATEGORY_ABREVATIONS } from '../premise/utils/services';
 import IntroHalfPieChart from './utils/IntroHalfPieChart';
 import useIntroWidgetFilter from './hooks/useIntroWidgetFilter';
 import useIntroCategoryChange from './hooks/useCategoryChange';
+import { _FilterTypes } from '@carto/react-core';
 
 const title = 'Retos del punto de servicio';
 const column = 'princ_re_1';
 const subtitle = '';
-const filterable = false;
+const filterable = true;
 const source = 'premiseData';
 const id = 'sickPremise';
 
@@ -22,27 +22,34 @@ export default function IntroSickPremise({
   data: any[];
   isLoading: Boolean;
 }) {
-  const data = useMemo(() => {
-    if (_data) {
-      //@ts-ignore
-      return concatenatedValues(_data, column)
-        .map(({ name, value }) => ({
-          value,
-          name: SICK_CATEGORY_ABREVATIONS.get(+name),
-        }))
-        .sort((a, b) => descending(a.value, b.value));
-    }
-    return [];
-  }, [_data]);
-
   const selectedCategories = useIntroWidgetFilter({
     source,
     owner: id,
   });
+
+  const data = useMemo(() => {
+    let output: any[] = [] 
+    if (_data) {
+      //@ts-ignore
+      output = [...concatenatedValues(_data, column)
+        .sort((a, b) => descending(a.value, b.value))];
+      
+      if(selectedCategories.length > 0){
+        output = [...output.filter(({name, value})=> +name === +selectedCategories[0])]
+      }
+
+      return output
+    }
+    return [];
+  }, [_data]);
+
+
+
   const handleSelectedCategoriesChange = useIntroCategoryChange({
     source,
     column,
     owner: id,
+    type: _FilterTypes.STRING_SEARCH
   });
 
 

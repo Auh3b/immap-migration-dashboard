@@ -2,6 +2,7 @@ import { CSSProperties, useCallback, useMemo, useState } from 'react';
 import ReactEchart from 'components/common/customCharts/ReactEcharts';
 import { useTheme } from '@material-ui/core';
 import { sum } from 'd3';
+import { SICK_CATEGORY_ABREVATIONS } from 'components/indicators/premise/utils/services';
 
 export default function IntroHalfPieChart({
   data: _data,
@@ -46,8 +47,8 @@ export default function IntroHalfPieChart({
 const labelOptions = useMemo(
     () => ({
       position: 'center',
-      formatter({ name, value }: any) {
-        return `{per|${value}}\n{b|${name}}`;
+      formatter({ name, percent }: any) {
+        return `{per|${percent * 2}%}\n{b|${SICK_CATEGORY_ABREVATIONS.get(+name) }}`;
       },
       rich: {
         b: {
@@ -101,10 +102,11 @@ const labelOptions = useMemo(
   const option = useMemo(
     () => ({
       tooltip: {
-        show: showTooltip,
+        show: false,
         trigger: 'item',
         padding: [theme.spacing(0.5), theme.spacing(1)],
         borderWidth: 0,
+        
         textStyle: {
           ...theme.typography.caption,
           fontSize: 12,
@@ -120,6 +122,9 @@ const labelOptions = useMemo(
         top: '0%',
         left: '0%',
         icon: 'circle',
+        formatter(name: any){
+          return SICK_CATEGORY_ABREVATIONS.get(+name)
+        },
         textStyle: {
           // width: 100,
           overflow: 'truncate',
@@ -151,7 +156,8 @@ const labelOptions = useMemo(
 
   const onEvents = {
     ...(filterable && { click: clickEvent }),
-    mouseover: () => {
+    mouseover: (params: any) => {
+      console.log(params)
       setShowLabel(false);
       setShowTooltip(true);
     },
