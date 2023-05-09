@@ -147,13 +147,13 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
   );
 
   const handleServiceChange = useCallback(
-    ({ id, field, currentSelection, callbackProps }) => {
+    ({ id, column, currentSelection, callbackProps }) => {
       const { owner } = callbackProps;
       if (currentSelection) {
         dispatch(
           addFilter({
             id: dataSource,
-            column: COLUNM_MAP.get(field),
+            column: COLUNM_MAP.get(column),
             type: _FilterTypes.STRING_SEARCH,
             values: [currentSelection],
             owner,
@@ -163,7 +163,7 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
         dispatch(
           removeFilter({
             id: dataSource,
-            column: COLUNM_MAP.get(field),
+            column: COLUNM_MAP.get(column),
             owner,
           }),
         );
@@ -173,13 +173,13 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
   );
 
   const handleLocationChange = useCallback(
-    ({ id, field, currentSelection, callbackProps }) => {
+    ({ id, column, currentSelection, callbackProps }) => {
       if (currentSelection) {
         const { data, width, height } = callbackProps;
         const padding = 100;
         const geojson = featureCollection(
           data
-            .filter((d: any) => d[field] === currentSelection)
+            .filter((d: any) => d[column] === currentSelection)
             .map((d: any) => point(d[6])),
         );
         const [minLong, minLat, maxLong, maxLat] = bbox(geojson);
@@ -220,7 +220,7 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
             <Selector
               id='serviceSelector'
               name='servicio'
-              field={0}
+              column={0}
               data={serviceSelection}
               filters={filters}
               addFilter={setFilters}
@@ -231,7 +231,7 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
             <Selector
               id='locationSelector'
               name='ubicación'
-              field={2}
+              column={2}
               data={locationSelection}
               filters={filters}
               addFilter={setFilters}
@@ -275,7 +275,7 @@ const useSelectSyles = makeStyles((theme) => ({
 
 function Selector({
   id,
-  field,
+  column,
   name,
   type = _FilterTypes.IN,
   data,
@@ -286,7 +286,7 @@ function Selector({
 }: {
   id: string;
   name?: string;
-  field: string | number;
+  column: string | number;
   type?: _FilterTypes;
   data: any[];
   filters: Record<string, filterItem>;
@@ -310,7 +310,7 @@ function Selector({
 
     addFilter((prev: any) => {
       if (value) {
-        const newFilter: any = { id, value, type, field };
+        const newFilter: any = { id, values: [value], type, column };
         prev[id] = newFilter;
         return { ...prev };
       }
@@ -321,7 +321,7 @@ function Selector({
 
   useEffect(() => {
     if (callback) {
-      callback({ id, type, field, currentSelection, callbackProps });
+      callback({ id, type, column, currentSelection, callbackProps });
     }
   }, [currentSelection, callback]);
 

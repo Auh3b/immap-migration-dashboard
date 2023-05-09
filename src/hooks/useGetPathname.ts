@@ -5,7 +5,7 @@ export default function useGetPathname() {
   const location = useLocation();
 
   const pathname = useMemo(
-    () => location.pathname.split('/')[1] || '',
+    () => location.pathname.split('/').at(-1) || '',
     [location],
   );
 
