@@ -90,7 +90,7 @@ function useFilteredData(input: any[], filters: any) {
     let data: any[] = input;
 
     if (data && filters) {
-      data = [...filterValues(input, filters)]
+      data = [...filterValues(input, filters)];
       return data;
     }
     return data;
