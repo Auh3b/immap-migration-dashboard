@@ -5,6 +5,7 @@ const slice = createSlice({
   initialState: {
     error: null,
     bottomSheetOpen: false,
+    showChartModule: true,
   },
   reducers: {
     setError: (state, action) => {
@@ -12,6 +13,9 @@ const slice = createSlice({
     },
     setBottomSheetOpen: (state, action) => {
       state.bottomSheetOpen = action.payload;
+    },
+    setChartModule: (state, action) => {
+      state.showChartModule = action.payload;
     },
   },
 });
@@ -24,5 +28,9 @@ export const setError = (payload: string | null) => ({
 });
 export const setBottomSheetOpen = (payload: boolean) => ({
   type: 'app/setBottomSheetOpen',
+  payload,
+});
+export const setChartModule = (payload: boolean) => ({
+  type: 'app/setChartModule',
   payload,
 });

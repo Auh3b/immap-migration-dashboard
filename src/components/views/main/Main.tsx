@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import LazyLoadComponent from 'components/common/LazyLoadComponent';
 import { Grid } from '@material-ui/core';
 import PageFallback from 'components/common/PageFallback';
+import ChartModule from 'components/common/ChartModule';
 
 const OutletView = lazy(
   () =>
@@ -42,6 +43,7 @@ export default function Main() {
       <LazyLoadComponent fallback={<PageFallback />}>
         <OutletView />
         <ErrorSnackbar />
+        <ChartModule />
       </LazyLoadComponent>
     </Grid>
   );
