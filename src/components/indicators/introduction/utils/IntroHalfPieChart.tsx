@@ -44,11 +44,13 @@ export default function IntroHalfPieChart({
     return [];
   }, [_data]);
 
-const labelOptions = useMemo(
+  const labelOptions = useMemo(
     () => ({
       position: 'center',
       formatter({ name, percent }: any) {
-        return `{per|${percent * 2}%}\n{b|${SICK_CATEGORY_ABREVATIONS.get(+name) }}`;
+        return `{per|${percent * 2}%}\n{b|${SICK_CATEGORY_ABREVATIONS.get(
+          +name,
+        )}}`;
       },
       rich: {
         b: {
@@ -71,31 +73,32 @@ const labelOptions = useMemo(
     [theme],
   );
 
-    const seriesOptions = useMemo(
+  const seriesOptions = useMemo(
     () => [
-        {
-          type: 'pie',
-          radius: ['40%', '70%'],
-          center: ['50%', '90%'],
-          startAngle: 180,
-          avoidLabelOverlap: false,
-          label: {
-            show: showLabel,
-            ...labelOptions
-          },
-          emphasis: {
-            label: {
-              show: true,
-              fontSize: 40,
-              fontWeight: 'bold',
-            },
-          },
-          labelLine: {
-            show: false,
-          },
-          data,
+      {
+        type: 'pie',
+        radius: ['40%', '70%'],
+        center: ['50%', '90%'],
+        startAngle: 180,
+        avoidLabelOverlap: false,
+        label: {
+          show: false,
+          ...labelOptions,
         },
-      ],
+        emphasis: {
+          scale: false,
+          label: {
+            show: true,
+            fontSize: 40,
+            fontWeight: 'bold',
+          },
+        },
+        labelLine: {
+          show: false,
+        },
+        data,
+      },
+    ],
     [showLabel, labelOptions, data],
   );
 
@@ -106,7 +109,7 @@ const labelOptions = useMemo(
         trigger: 'item',
         padding: [theme.spacing(0.5), theme.spacing(1)],
         borderWidth: 0,
-        
+
         textStyle: {
           ...theme.typography.caption,
           fontSize: 12,
@@ -122,8 +125,8 @@ const labelOptions = useMemo(
         top: '0%',
         left: '0%',
         icon: 'circle',
-        formatter(name: any){
-          return SICK_CATEGORY_ABREVATIONS.get(+name)
+        formatter(name: any) {
+          return SICK_CATEGORY_ABREVATIONS.get(+name);
         },
         textStyle: {
           // width: 100,
@@ -156,8 +159,7 @@ const labelOptions = useMemo(
 
   const onEvents = {
     ...(filterable && { click: clickEvent }),
-    mouseover: (params: any) => {
-      console.log(params)
+    mouseover: () => {
       setShowLabel(false);
       setShowTooltip(true);
     },

@@ -56,6 +56,7 @@ export default function IntroPieChart({
           ...labelOptions,
         },
         emphasis: {
+          scale: false,
           label: {
             show: true,
             fontSize: 40,
