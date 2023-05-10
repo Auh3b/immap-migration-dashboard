@@ -33,6 +33,7 @@ const method: MethodFunc = (input, column, params) => {
 
     for (let [key, service] of Array.from(services)) {
       const serviceValue = aggregatedValueByColumn.filter(
+        //@ts-ignore
         ({ name }) => name === key,
       )[0];
       //@ts-ignore
