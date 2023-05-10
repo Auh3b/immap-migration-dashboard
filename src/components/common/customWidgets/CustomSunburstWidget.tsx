@@ -77,9 +77,6 @@ export default function CustomSunburstWidget({
           show: true,
           trigger: 'item',
         },
-        label: {
-          show: true,
-        },
         labelLayout: {
           hideOverlap: true,
         },
