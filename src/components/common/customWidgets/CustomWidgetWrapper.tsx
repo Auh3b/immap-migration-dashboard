@@ -141,7 +141,7 @@ export default function CustomWidgetWrapper({
           </Tooltip>
         </Button>
         {actions && (
-          <Grid xs={2} container wrap='nowrap' alignItems='center'>
+          <Grid xs={2} item container wrap='nowrap' alignItems='center'>
             {actions.map((icon, index) => (
               <Grid key={`action-${index}`} item xs>
                 {icon}
