@@ -43,7 +43,6 @@ function getOrdinalColorScale(domain: string[]) {
 
 function getSequantialColorScale(range: [number, number]) {
   const scale = scaleSequential(interpolateSinebow).domain(range);
-  console.log(scale(6));
   return scale;
 }
 
@@ -109,7 +108,6 @@ function getHierarchy(input: any[], column: string, params?: Record<any, any>) {
   //@ts-ignore
   const levels = [column, lv2, lv3];
   const colors = getColors(input, levels, colorScaleType);
-  console.log(colors);
   const children1 = groupCategories(input, column);
   const childrenNamesLv1 = children1.map(({ name }) => name);
 
@@ -197,12 +195,16 @@ const props = {
 export default function CountryFlow({ dataSource }: BasicWidgetType) {
   const { widget } = useWidgetEffect(
     <CustomSunburstWidget
-      actions={[<ExpandChartButton />]}
+      actions={[
+        <ExpandChartButton chartUrl='indicators/migration/CountryFlow' />,
+      ]}
       dataSource={dataSource}
       {...props}
     />,
+
     [dataSource],
   );
+  
   return (
     <Grid item>
       {widget}
