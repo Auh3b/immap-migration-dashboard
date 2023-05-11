@@ -75,8 +75,6 @@ export default function CustomCategoryWidget({
     return defaultMax
   }, [data])
 
-  console.log(maxItems)
-
   return (
     <CustomWidgetWrapper title={title} isLoading={isLoading} onError={error}>
       <CategoryWidgetUI
