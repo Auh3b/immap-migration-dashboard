@@ -8,12 +8,10 @@ import {
   TimelineOppositeContent,
   TimelineSeparator,
 } from '@material-ui/lab';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useRef } from 'react';
 import { defaultCustomWidgetProps } from './customWidgetsType';
-//@ts-ignore
-import { fetchLayerData } from '@deck.gl/carto';
+import useWidgetFetch from './hooks/useWidgetFetch';
 import CustomWidgetWrapper from './CustomWidgetWrapper';
-import timelineSource from 'data/sources/timelineSource';
 
 export default function CustomTimelineWidget({
   id,
@@ -23,30 +21,13 @@ export default function CustomTimelineWidget({
   column,
   methodParams,
 }: defaultCustomWidgetProps) {
-  const [isLoading, setIsLoading] = useState(false);
-  const [_data, setData] = useState([]);
-
-  useEffect(() => {
-    setIsLoading(true);
-    fetchLayerData({
-      ...timelineSource,
-      source: timelineSource.data,
-      format: 'json',
-    })
-      .then(({ data }: any) => {
-        setData(data);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, []);
-
-  const data: any = useMemo(() => {
-    if (_data.length > 0) {
-      return method(_data, column, methodParams);
-    }
-    return [];
-  }, [_data]);
+  const { data, isLoading } = useWidgetFetch({
+    id,
+    method,
+    column,
+    dataSource,
+    methodParams,
+  });
 
   return (
     <CustomWidgetWrapper title={title} isLoading={isLoading}>

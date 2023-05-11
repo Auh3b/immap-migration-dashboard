@@ -20,8 +20,7 @@ import {
   featureCollection,
   point,
 } from '@turf/helpers';
-import { IconGroupConfig } from './utils/surveyIconGroup';
-import d3Hex2RGB from 'utils/d3Hex2RGB';
+import { IconGroupConfig, iconGroupsConfig } from './utils/surveyIconGroup';
 
 export const SURVEY_TIMELINE_LAYER_ID = 'surveyTimelineLayer';
 
@@ -183,45 +182,6 @@ class TimelineSurvey extends CompositeLayer<any, any> {
     ];
   }
 }
-
-export const iconGroupsConfig = [
-  {
-    name: 'Push 1',
-    coordinatesAccessor: (d: any) => [+d['lon_mon'], +d['lat_mon']],
-    filterFunction: (d: any) => +d['lon_mon']! !== 99999,
-    color: d3Hex2RGB(1),
-  },
-  {
-    name: 'Push 2',
-    coordinatesAccessor: (d: any) => [+d['lon_mon2'], +d['lat_mon2']],
-    filterFunction: (d: any) => +d['lon_mon2'] !== 999999,
-    color: d3Hex2RGB(2),
-  },
-  {
-    name: 'Push 3',
-    coordinatesAccessor: (d: any) => [+d['lon_mon3'], +d['lat_mon3']],
-    filterFunction: (d: any) => +d['lon_mon3'] !== 999999,
-    color: d3Hex2RGB(3),
-  },
-  {
-    name: 'Push 4',
-    coordinatesAccessor: (d: any) => [+d['lon_mon4'], +d['lat_mon4']],
-    filterFunction: (d: any) => +d['lon_mon4'] !== 999999,
-    color: d3Hex2RGB(4),
-  },
-  {
-    name: 'Push 5',
-    coordinatesAccessor: (d: any) => [+d['lon_mon5'], +d['lat_mon5']],
-    filterFunction: (d: any) => +d['lon_mon5'] !== 999999,
-    color: d3Hex2RGB(5),
-  },
-  {
-    name: 'Push 6',
-    coordinatesAccessor: (d: any) => [+d['lon_mon6'], +d['lat_mon6']],
-    filterFunction: (d: any) => +d['lon_mon6'] !== 999999,
-    color: d3Hex2RGB(6),
-  },
-];
 
 export default function SurveyTimelineLayer() {
   const dispatch = useDispatch();
