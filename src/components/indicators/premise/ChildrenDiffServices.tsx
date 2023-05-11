@@ -7,7 +7,6 @@ import concatenatedValues from '../utils/concatenatedValues';
 import useWidgetEffect from '../utils/useWidgetEffect';
 
 const CATEGORY_ABREVATIONS = new Map([
-  [0, 'Ninguna'],
   [1, 'Apoyo Psicosocial'],
   [2, 'Gestión de casos de violencias basadas en género'],
   [3, 'Entrega de kits'],
