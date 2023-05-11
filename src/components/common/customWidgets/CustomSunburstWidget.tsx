@@ -68,6 +68,7 @@ export default function CustomSunburstWidget({
         bottom: '0%',
         containLabel: true,
       },
+      // animation: false,
       series: {
         type: 'sunburst',
         //@ts-ignore
@@ -77,8 +78,10 @@ export default function CustomSunburstWidget({
           show: true,
           trigger: 'item',
         },
-        labelLayout: {
-          hideOverlap: true,
+        labelLayout(params){
+          return{
+            hideOverlap: true,
+          }
         },
         levels: [
           {},
@@ -90,6 +93,9 @@ export default function CustomSunburstWidget({
               overflow: 'break',
               align: 'right',
             },
+            emphasis:{
+              disabled: true
+            },
           },
           {
             r0: '35%',
@@ -99,12 +105,18 @@ export default function CustomSunburstWidget({
               overflow: 'break',
               align: 'right',
             },
+            emphasis:{
+              disabled: true
+            },
           },
           {
             r0: '65%',
             r: '70%',
             label: {
               position: 'outside',
+            },
+            emphasis:{
+              disabled: true
             },
           },
         ],
