@@ -4,7 +4,7 @@ import { useMemo } from 'react';
 import aggregateColumns from '../utils/AggregateColumns';
 import iconStyles from './utils/iconStyles';
 import { AggregationTypes } from '@carto/react-core';
-const title = 'Servicios caracterizados';
+const title = 'PUNTOS DE SERVICIOS CARACTERIZADOS';
 const columns = ['org_pert'];
 
 export default function OrganisationCount({

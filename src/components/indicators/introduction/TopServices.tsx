@@ -7,7 +7,7 @@ import useIntroCategoryChange from './hooks/useCategoryChange';
 import useIntroWidgetFilter from './hooks/useIntroWidgetFilter';
 import groupCategories from '../utils/groupCategories';
 
-const title = 'Servicios sobrepasados en su capacidad';
+const title = 'PUNTOS DE SERVICIOS SOBREPASADOS EN SU CAPACIDAD';
 const subtitle = '';
 const column = 'sobrepasa_';
 const id = 'topServices';
@@ -35,7 +35,7 @@ export default function TopServices({
     owner: id,
   });
   return (
-    <TitleWrapper title={title} subtitle={subtitle} filterable={true}>
+    <TitleWrapper title={title} subtitle={subtitle} filterable={true} isLoading={isLoading}>
       <Grid item>
         <CategoryWidgetUI
           onSelectedCategoriesChange={handleSelectedCategoriesChange}
