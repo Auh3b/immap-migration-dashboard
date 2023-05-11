@@ -19,8 +19,8 @@ export default function ServiceLeftView({ dataSources }: any) {
   return (
     <MainColumnView>
       <ServiceTypeAdult dataSource={aggregateServicesSource.id} />
-      <ServiceQualityAdult dataSource={aggregateServicesSource.id} />
       <ServiceAccessAdult dataSource={aggregateServicesSource.id} />
+      <ServiceQualityAdult dataSource={aggregateServicesSource.id} />
       <ServiceSatisfyAdult dataSource={aggregateServicesSource.id} />
     </MainColumnView>
   );
