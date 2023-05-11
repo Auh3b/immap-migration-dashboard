@@ -7,7 +7,7 @@ import ReactEchart from 'components/common/customCharts/ReactEcharts';
 const STAT_CATEGORY_COLORS = new Map([
   ['Capacidad diaria', '#f03b20'],
   ['Personas atendidas ayer', '#feb24c'],
-  ['Promedio diario', '#ffeda0'],
+  ['PROMEDIO DIARIO SEMANA PASADA', '#ffeda0'],
 ]);
 
 const DATA_DIMENSIONS = [
@@ -20,7 +20,7 @@ const DATA_DIMENSIONS = [
   'geom',
   'Capacidad diaria',
   'Personas atendidas ayer',
-  'Promedio diario',
+  'PROMEDIO DIARIO SEMANA PASADA',
 ];
 
 export default function CustomConnectDotChart({ data: _data, groupName }: any) {

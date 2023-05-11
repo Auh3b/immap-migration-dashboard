@@ -41,7 +41,7 @@ const otherColumns = {
 const SERVICE_STAT_COLUMNS_NAME = [
   'Capacidad diaria',
   'Personas atendidas ayer',
-  'Promedio diario',
+  'PROMEDIO DIARIO SEMANA PASADA',
 ];
 
 const column: string = 'serv_tipo1';
