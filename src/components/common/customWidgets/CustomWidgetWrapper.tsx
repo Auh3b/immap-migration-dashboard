@@ -96,7 +96,7 @@ const useStyles = makeStyles((theme) => ({
 export default function CustomWidgetWrapper({
   title,
   isLoading,
-  expandable = true,
+  expandable = false,
   expanded,
   onError,
   children,
