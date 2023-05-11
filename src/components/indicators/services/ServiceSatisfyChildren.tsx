@@ -4,7 +4,7 @@ import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
 import useWidgetEffect from '../utils/useWidgetEffect';
 import {
-  aidTypes,
+  serviceTypeChildren,
   serviceColors as colors,
   serviceLabels3 as labels,
 } from './utils/serviceIndicatorTypes';
@@ -13,13 +13,13 @@ import stackedGroupCategoriesAlt2 from '../utils/stackedGroupCategoriesAlt2';
 
 const NOTE = 'Nivel de satisfacción del servicio tomado';
 const id = 'serviceSatisfactionChildren';
-const title = 'Satisfacción del servicio';
+const title = 'Recomendación del servicio';
 const column = 'm18_1';
 const valueColumn = 'm21';
 const filterType = _FilterTypes.IN;
 const method = stackedGroupCategoriesAlt2;
 const methodParams = {
-  aidTypes,
+  aidTypes: serviceTypeChildren,
   labels,
   valueColumn,
 };
@@ -40,7 +40,7 @@ const props = {
   methodParams,
   labels,
   extraProps,
-  parentKey: aidTypes,
+  parentKey: serviceTypeChildren,
 };
 
 export default function ServiceSatisfyChildren({

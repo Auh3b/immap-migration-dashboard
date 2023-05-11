@@ -1,7 +1,7 @@
 import { addFilter, removeFilter } from '@carto/react-redux';
 import { CategoryWidgetUI } from '@carto/react-ui';
 import useWidgetFetch from './hooks/useWidgetFetch';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import { defaultCustomWidgetProps } from './customWidgetsType';
 import useWidgetFilterValues from './hooks/useWidgetFilterValues';
@@ -60,9 +60,25 @@ export default function CustomCategoryWidget({
     column,
   });
 
+  const maxItems = useMemo(()=>{
+    let defaultMax = 5
+    if(data.length === 0){
+      return defaultMax
+    }
+
+    const dataCount = data.length
+
+    if(dataCount === (defaultMax+1)){
+      return defaultMax-1
+    }
+    
+    return defaultMax
+  }, [data])
+
   return (
     <CustomWidgetWrapper title={title} isLoading={isLoading} onError={error}>
       <CategoryWidgetUI
+        maxItems={maxItems}
         order={order}
         onSelectedCategoriesChange={handleSelectedCategoriesChange}
         selectedCategories={selectedCategories}

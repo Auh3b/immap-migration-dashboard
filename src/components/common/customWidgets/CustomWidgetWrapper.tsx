@@ -61,6 +61,8 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   buttonText: ({ isOpen }) => ({
+    ...theme.typography.subtitle1,
+    fontSize: theme.spacing(2.3),
     wordBreak: 'break-word',
     overflow: 'hidden',
     ...(isOpen && {
@@ -86,6 +88,7 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(-0.75, 0),
   },
   content: {
+    backgroundColor: theme.palette.grey[50],
     paddingTop: theme.spacing(1.25),
   },
 }));
@@ -93,7 +96,7 @@ const useStyles = makeStyles((theme) => ({
 export default function CustomWidgetWrapper({
   title,
   isLoading,
-  expandable = true,
+  expandable = false,
   expanded,
   onError,
   children,
@@ -134,7 +137,6 @@ export default function CustomWidgetWrapper({
             <Typography
               className={classes.buttonText}
               align='left'
-              variant='subtitle1'
             >
               {title}
             </Typography>

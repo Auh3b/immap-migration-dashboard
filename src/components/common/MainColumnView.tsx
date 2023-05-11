@@ -1,5 +1,16 @@
 import { ReactNode } from 'react';
+import MainColumnTitle, {MainColumnTitleProps} from './MainColumnTitle';
 
-export const MainColumnView = ({ children }: { children: ReactNode }) => {
-  return <>{children}</>;
+
+export interface MainColumnViewProps {
+  children?: ReactNode
+}
+
+export const MainColumnView = ({ children }: MainColumnViewProps) => {
+  return (
+  <>
+    <MainColumnTitle />
+    {children}
+  </>
+  );
 };
