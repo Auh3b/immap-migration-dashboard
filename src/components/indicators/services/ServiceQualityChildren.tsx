@@ -4,7 +4,7 @@ import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
 import useWidgetEffect from '../utils/useWidgetEffect';
 import {
-  aidTypes,
+  serviceTypeChildren,
   serviceColors as colors,
   serviceLabels2 as labels,
 } from './utils/serviceIndicatorTypes';
@@ -19,7 +19,7 @@ const valueColumn = 'm20';
 const filterType = _FilterTypes.IN;
 const method = stackedGroupCategoriesAlt2;
 const methodParams = {
-  aidTypes,
+  aidTypes: serviceTypeChildren,
   labels,
   valueColumn,
 };
@@ -40,7 +40,7 @@ const props = {
   methodParams,
   labels,
   extraProps,
-  parentKey: aidTypes,
+  parentKey: serviceTypeChildren,
 };
 
 export default function ServiceQualityChildren({
