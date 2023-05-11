@@ -1,5 +1,4 @@
 import { MainColumnView } from 'components/common/MainColumnView';
-import ServiceAvailability from 'components/indicators/services/ServiceAvailability';
 import { lazy } from 'react';
 
 const ServiceQualityAdult = lazy(
@@ -15,11 +14,10 @@ const ServiceAccessAdult = lazy(
   () => import('components/indicators/services/ServiceAccessAdult'),
 );
 
-export default function ServiceLeftView({ dataSources, classes }: any) {
-  const { mainSource, aggregateServicesSource } = dataSources;
+export default function ServiceLeftView({ dataSources }: any) {
+  const { aggregateServicesSource } = dataSources;
   return (
     <MainColumnView>
-      {/* <ServiceAvailability dataSource={aggregateServicesSource.id} /> */}
       <ServiceTypeAdult dataSource={aggregateServicesSource.id} />
       <ServiceQualityAdult dataSource={aggregateServicesSource.id} />
       <ServiceAccessAdult dataSource={aggregateServicesSource.id} />

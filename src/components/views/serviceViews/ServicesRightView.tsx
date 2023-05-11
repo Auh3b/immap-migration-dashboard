@@ -1,12 +1,6 @@
 import { MainColumnView } from 'components/common/MainColumnView';
 import { lazy } from 'react';
 
-const ServiceSatisfyAdult = lazy(
-  () => import('components/indicators/services/ServiceSatisfyAdult'),
-);
-const ServiceAccessAdult = lazy(
-  () => import('components/indicators/services/ServiceAccessAdult'),
-);
 const ServiceTypeChildren = lazy(
   () => import('components/indicators/services/ServiceTypeChildren'),
 );
@@ -20,18 +14,16 @@ const ServiceSatisfyChildren = lazy(
   () => import('components/indicators/services/ServiceSatisfyChildren'),
 );
 
-export default function ServicesRightView({ dataSources, classes }: any) {
-  const { mainSource, aggregateServicesSource, aggreateServiceChildrenSource } =
+export default function ServicesRightView({ dataSources }: any) {
+  const { aggreateServiceChildrenSource } =
     dataSources;
 
   return (
     <MainColumnView>
       <ServiceTypeChildren dataSource={aggreateServiceChildrenSource.id} />
-      <ServiceAccessChildren dataSource={aggreateServiceChildrenSource.id} />
       <ServiceQualityChildren dataSource={aggreateServiceChildrenSource.id} />
+      <ServiceAccessChildren dataSource={aggreateServiceChildrenSource.id} />
       <ServiceSatisfyChildren dataSource={aggreateServiceChildrenSource.id} />
-      {/* <ServiceAccessAdult dataSource={aggregateServicesSource.id} />
-      <ServiceSatisfyAdult dataSource={aggregateServicesSource.id} /> */}
     </MainColumnView>
   );
 }
