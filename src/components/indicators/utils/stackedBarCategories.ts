@@ -33,7 +33,7 @@ const stackedBarCategories: MethodFunc = (input, column, params) => {
       color: [UNICEF_COLORS[0], UNICEF_COLORS[4], UNICEF_COLORS[3]],
     },
   ];
-  console.log(input, output)
+
   return output;
 };
 
