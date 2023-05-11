@@ -60,8 +60,6 @@ class TimelineSurvey extends CompositeLayer<any, any> {
         //@ts-ignore
         .filter(filterFunction)
         //@ts-ignore
-        // .map(coordinatesAccessor)
-        //@ts-ignore
         .map((d) => point(coordinatesAccessor(d), { ...d, name, color }));
       outputFeatures = [...outputFeatures, ...newFeature];
     }

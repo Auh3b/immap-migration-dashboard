@@ -27,6 +27,7 @@ import { WebMercatorViewport } from '@deck.gl/core';
 import { initialState } from 'store/initialStateSlice';
 import { removeTransition, setTransition } from 'store/mapSlice';
 import { RootState } from 'store/store';
+import handleMapTransitions from './hooks/handleMapTransitions';
 
 const otherColumns = {
   country: 'ubicacion_',
@@ -193,20 +194,30 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
             height,
             padding,
           });
-        dispatch(setTransition(1000));
-        dispatch(setViewState({ latitude, longitude, zoom }));
-        setTimeout(() => {
-          dispatch(removeTransition());
-        }, 1500);
+        handleMapTransitions({
+          start: 1000,
+          end: 1500,
+          params: {
+            latitude,
+            longitude,
+            zoom,
+          },
+          dispatch,
+        });
         return;
       }
 
       const { latitude, longitude, zoom } = initialState.viewState;
-      dispatch(setTransition(500));
-      dispatch(setViewState({ latitude, longitude, zoom }));
-      setTimeout(() => {
-        dispatch(removeTransition());
-      }, 1000);
+      handleMapTransitions({
+        start: 500,
+        end: 1000,
+        params: {
+          latitude,
+          longitude,
+          zoom,
+        },
+        dispatch,
+      });
     },
     [dispatch],
   );

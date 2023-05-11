@@ -18,18 +18,24 @@ const DinámicaAurora = lazy(() => import('components/views/DinámicaAurora'));
 const Introduction = lazy(() => import('components/views/Introduction'));
 // [hygen] Import views
 
+const DEFAULT_ROUTE = '/board';
+
+const BOARD_ROUTES = {
+  SERVICES: DEFAULT_ROUTE + '/feedback_servicios',
+  MIGRATION_FLOW: DEFAULT_ROUTE + '/flujos_migratorios',
+  MEDIA: DEFAULT_ROUTE + '/redes_sociales',
+  DASHBOARD: DEFAULT_ROUTE + '/inicio',
+  PREMISE_SERVICE: DEFAULT_ROUTE + '/servicios',
+  CHILDREN: DEFAULT_ROUTE + '/nna',
+  DINÁMICA_AURORA: DEFAULT_ROUTE + '/conexiones_en_la_ruta',
+};
+
 export const ROUTE_PATHS = {
   LOGIN: '/login',
   DEFAULT: '/',
   NOT_FOUND: '/404',
-  SERVICES: '/feedback_servicios',
-  MIGRATION_FLOW: '/flujos_migratorios',
-  MEDIA: '/redes_sociales',
-  DASHBOARD: '/inicio',
-  PREMISE_SERVICE: '/servicios',
-  CHILDREN: '/nna',
-  DINÁMICA_AURORA: '/conexiones_en_la_ruta',
   INTRODUCTION: '/intro',
+  ...BOARD_ROUTES,
   // [hygen] Add path routes
 };
 

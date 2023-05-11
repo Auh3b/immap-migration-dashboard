@@ -25,6 +25,7 @@ export const useMiddleStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   indicatorsGroup: {
+    marginBottom: theme.spacing(1),
     '&:first-child': {
       backgroundColor: theme.palette.primary.main,
       color: theme.palette.background.paper,
@@ -35,6 +36,14 @@ export const useMiddleStyles = makeStyles((theme) => ({
       },
       '& span': {
         color: theme.palette.background.paper,
+      },
+    },
+    '&nth-child(2)': {},
+    '&:not(:first-child)': {
+      gap: theme.spacing(1),
+      '& > div': {
+        borderRadius: theme.shape.borderRadius,
+        boxShadow: theme.shadows[3],
       },
     },
     [theme.breakpoints.down('md')]: {

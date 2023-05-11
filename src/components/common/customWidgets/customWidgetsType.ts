@@ -1,6 +1,7 @@
 import { GroupDateTypes, _FilterTypes } from '@carto/react-core';
 import { TIME_SERIES_CHART_TYPES } from '@carto/react-ui';
 import MethodFunc from 'components/indicators/utils/methodType';
+import { ReactNode } from 'react';
 
 export interface defaultCustomWidgetProps {
   title: string;
@@ -41,4 +42,5 @@ export interface defaultCustomWidgetProps {
   parentKey?: any;
   extraProps?: Record<string, unknown>;
   global?: Boolean;
+  actions?: ReactNode[];
 }

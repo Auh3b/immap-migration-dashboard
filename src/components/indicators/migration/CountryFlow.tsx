@@ -3,21 +3,23 @@ import { Grid } from '@material-ui/core';
 import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType';
 import CustomSunburstWidget from 'components/common/customWidgets/CustomSunburstWidget';
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
-import { scaleOrdinal, sum } from 'd3';
+import {
+  ascending,
+  color,
+  interpolateSinebow,
+  scaleOrdinal,
+  scaleSequential,
+  sum,
+} from 'd3';
 import groupCategories from '../utils/groupCategories';
 import useWidgetEffect from '../utils/useWidgetEffect';
+import { UNICEF_COLORS } from 'theme';
+import ExpandChartButton from 'components/common/ExpandChartButton';
 
-const CUSTOM_COLOR_RANGE = [
-  '#1CABE2',
-  '#00833D',
-  '#FFC20E',
-  '#F26A21',
-  '#961A49',
-  '#6A1E74',
-  '#374EA2',
-  '#777779',
-  '#80BD41',
-];
+const COLOR_SCALE_TYPE = {
+  SEQUENTIAL: 'sequential',
+  ORDINAL: 'ordinal',
+};
 
 function getChildrenLength(input: any[]): number {
   return sum(input, (v) => v.value);
@@ -35,39 +37,81 @@ function getFilteredInput(input: any[], column: string, value: string): any[] {
   return filterUnwantedValues(input, column).filter((d) => d[column] === value);
 }
 
-function getColorScale(range: string[]) {
-  return scaleOrdinal().domain(range).range(CUSTOM_COLOR_RANGE);
+function getOrdinalColorScale(domain: string[]) {
+  return scaleOrdinal().domain(domain).range(UNICEF_COLORS);
 }
 
-function getColors(input: any[], columns: string[]) {
-  const values: string[] = [];
+function getSequantialColorScale(range: [number, number]) {
+  const scale = scaleSequential(interpolateSinebow).domain(range);
+  return scale;
+}
 
+const getColorScale = new Map<string, Function>([
+  ['ordinal', getOrdinalColorScale],
+  ['sequential', getSequantialColorScale],
+]);
+
+function getUniqueValue(input: any[], columns: string[]) {
+  let values = new Set<string>();
   for (let column of columns) {
     for (let i = 0; i < input.length; i++) {
-      values.push(input[i][column]);
+      values.add(input[i][column]);
     }
   }
+  const uniqueValues = Array.from(values).sort((a, b) => ascending(a, b));
+  return uniqueValues;
+}
 
-  const uniqueValues = Array.from(new Set(values));
-  const colorScale = getColorScale(uniqueValues);
-
+function getColorMap(
+  values: string[],
+  colorScale: Function,
+  colorScaleType: string,
+) {
   const valueColor = new Map();
-
-  for (let value of uniqueValues) {
-    valueColor.set(value, colorScale(value));
+  const { ORDINAL, SEQUENTIAL } = COLOR_SCALE_TYPE;
+  switch (colorScaleType) {
+    case ORDINAL: {
+      for (let value of values) {
+        valueColor.set(
+          value,
+          color(colorScale(value)).copy({ opacity: 0.1 }).formatHex(),
+        );
+      }
+      break;
+    }
+    case SEQUENTIAL: {
+      for (let i = 0; i < values.length; i++) {
+        valueColor.set(
+          values[i],
+          color(colorScale(i)).copy({ opacity: 0.1 }).formatHex(),
+        );
+      }
+      break;
+    }
   }
-
   return valueColor;
 }
 
+function getColors(input: any[], columns: string[], colorScaleType: string) {
+  const uniqueValues = getUniqueValue(input, columns);
+  const colorScale = getColorScale.get(colorScaleType)(
+    colorScaleType === COLOR_SCALE_TYPE.SEQUENTIAL
+      ? [0, uniqueValues.length]
+      : uniqueValues,
+  );
+  const colorMap = getColorMap(uniqueValues, colorScale, colorScaleType);
+  return colorMap;
+}
+
 function getHierarchy(input: any[], column: string, params?: Record<any, any>) {
+  const { lv2, lv3, colorScaleType } = params;
   //@ts-ignore
-  const levels = [column, params.lv2, params.lv3];
-  const colors = getColors(input, levels);
+  const levels = [column, lv2, lv3];
+  const colors = getColors(input, levels, colorScaleType);
   const children1 = groupCategories(input, column);
   const childrenNamesLv1 = children1.map(({ name }) => name);
 
-  const nest: any[] = [];
+  let nest: any[] = [];
 
   for (let i = 0; i < childrenNamesLv1.length; i++) {
     const name = childrenNamesLv1[i];
@@ -78,7 +122,7 @@ function getHierarchy(input: any[], column: string, params?: Record<any, any>) {
     const itemStyle = {
       color: colors.get(name) || '#999999',
     };
-    const newChildren: any[] = [];
+    let newChildren: any[] = [];
 
     for (let j = 0; j < childrenNamesLv2.length; j++) {
       const name = childrenNamesLv2[j];
@@ -120,6 +164,7 @@ function getHierarchy(input: any[], column: string, params?: Record<any, any>) {
       });
     }
   });
+
   return {
     data: nest,
     legend,
@@ -135,6 +180,7 @@ const method = getHierarchy;
 const methodParams = {
   lv2: 'e12_pais_',
   lv3: 'e10_pais_',
+  colorScaleType: COLOR_SCALE_TYPE.SEQUENTIAL,
 };
 
 const props = {
@@ -148,9 +194,17 @@ const props = {
 
 export default function CountryFlow({ dataSource }: BasicWidgetType) {
   const { widget } = useWidgetEffect(
-    <CustomSunburstWidget dataSource={dataSource} {...props} />,
+    <CustomSunburstWidget
+      actions={[
+        <ExpandChartButton chartUrl='indicators/migration/CountryFlow' />,
+      ]}
+      dataSource={dataSource}
+      {...props}
+    />,
+
     [dataSource],
   );
+  
   return (
     <Grid item>
       {widget}

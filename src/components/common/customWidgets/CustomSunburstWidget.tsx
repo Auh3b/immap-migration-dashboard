@@ -46,6 +46,7 @@ export default function CustomSunburstWidget({
   column,
   method,
   methodParams,
+  actions,
 }: defaultCustomWidgetProps) {
   const classes = useStyle();
   const theme = useTheme();
@@ -60,18 +61,65 @@ export default function CustomSunburstWidget({
 
   const option = useMemo(
     () => ({
+      grid: {
+        top: '0%',
+        left: '5%',
+        right: '0%',
+        bottom: '0%',
+        containLabel: true,
+      },
+      // animation: false,
       series: {
         type: 'sunburst',
         //@ts-ignore
         data: data.data,
-        radius: [30, '90%'],
+        radius: [20, '90%'],
         toolTip: {
           show: true,
           trigger: 'item',
         },
-        label: {
-          show: false,
+        labelLayout(params){
+          return{
+            hideOverlap: true,
+          }
         },
+        levels: [
+          {},
+          {
+            r0: '15%',
+            r: '35%',
+            label: {
+              width: 50,
+              overflow: 'break',
+              align: 'right',
+            },
+            emphasis:{
+              disabled: true
+            },
+          },
+          {
+            r0: '35%',
+            r: '65%',
+            label: {
+              width: 50,
+              overflow: 'break',
+              align: 'right',
+            },
+            emphasis:{
+              disabled: true
+            },
+          },
+          {
+            r0: '65%',
+            r: '70%',
+            label: {
+              position: 'outside',
+            },
+            emphasis:{
+              disabled: true
+            },
+          },
+        ],
       },
       tooltip: {
         show: true,
@@ -113,8 +161,12 @@ export default function CustomSunburstWidget({
     setIsOpen(!isOpen);
   };
   return (
-    <CustomWidgetWrapper title={title} isLoading={isLoading}>
-      {data && <ReactEchart option={option} />}
+    <CustomWidgetWrapper
+      title={title}
+      isLoading={isLoading}
+      actions={[...actions]}
+    >
+      {data && <ReactEchart style={{ height: 600 }} option={option} />}
       {data.legend && (
         <Grid container className={classes.legendContainer}>
           {data.legend.map(({ name, color }, index) => (

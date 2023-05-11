@@ -85,9 +85,11 @@ function Desktop() {
     ...useStylesDesktop(),
   };
 
-  const hidden = useMediaQuery((theme: CustomTheme) =>
-    theme.breakpoints.down('xs'),
-  );
+  const location = useGetPathname();
+
+  const hidden =
+    useMediaQuery((theme: CustomTheme) => theme.breakpoints.down('xs')) ||
+    location === '';
 
   return hidden ? null : (
     <>
@@ -368,9 +370,9 @@ function UserMenu() {
         className={classes.menu}
       >
         <MenuItem onClick={handleLogout}>Logout</MenuItem>
-        <MenuItem>
+        {/* <MenuItem>
           <Link href='https://app.carto.com'>Go to CARTO</Link>
-        </MenuItem>
+        </MenuItem> */}
       </Menu>
     </>
   );

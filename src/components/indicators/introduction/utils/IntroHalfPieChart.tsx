@@ -82,10 +82,11 @@ export default function IntroHalfPieChart({
         startAngle: 180,
         avoidLabelOverlap: false,
         label: {
-          show: showLabel,
+          show: false,
           ...labelOptions,
         },
         emphasis: {
+          scale: false,
           label: {
             show: true,
             fontSize: 40,
@@ -158,8 +159,7 @@ export default function IntroHalfPieChart({
 
   const onEvents = {
     ...(filterable && { click: clickEvent }),
-    mouseover: (params: any) => {
-      console.log(params);
+    mouseover: () => {
       setShowLabel(false);
       setShowTooltip(true);
     },

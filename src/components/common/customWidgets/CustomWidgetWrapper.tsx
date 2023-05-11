@@ -97,6 +97,7 @@ export default function CustomWidgetWrapper({
   expanded,
   onError,
   children,
+  actions,
 }: {
   title: string;
   onError?: any;
@@ -104,6 +105,7 @@ export default function CustomWidgetWrapper({
   children: ReactNode;
   expandable?: Boolean;
   expanded?: Boolean;
+  actions?: ReactNode[];
 }) {
   const wrapper = createRef();
   const [isOpen, setIsOpen] = useState(expandable ? false : true);
@@ -138,6 +140,15 @@ export default function CustomWidgetWrapper({
             </Typography>
           </Tooltip>
         </Button>
+        {actions && (
+          <Grid xs={2} item container wrap='nowrap' alignItems='center'>
+            {actions.map((icon, index) => (
+              <Grid key={`action-${index}`} item xs>
+                {icon}
+              </Grid>
+            ))}
+          </Grid>
+        )}
       </Grid>
       <Collapse ref={wrapper} in={isOpen} timeout='auto' unmountOnExit>
         <Box className={classes.content}>{children}</Box>
