@@ -260,24 +260,18 @@ function NavigationMenu({ column = false }: { column?: boolean }) {
           component={NavLink}
           to={ROUTE_PATHS.MIGRATION_FLOW}
         />
-        {/* <Tab
-          label='NNA'
-          value='nna'
-          component={NavLink}
-          to={ROUTE_PATHS.CHILDREN}
-        /> */}
         <Tab
           label='Conexiones en la ruta'
           value='conexiones_en_la_ruta'
           component={NavLink}
           to={ROUTE_PATHS.DINÁMICA_AURORA}
         />
-        <Tab
+        {/* <Tab
           label='Redes sociales'
           value='redes_sociales'
           component={NavLink}
           to={ROUTE_PATHS.MEDIA}
-        />
+        /> */}
       </Tabs>
     </Grid>
   );

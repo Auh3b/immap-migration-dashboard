@@ -7,6 +7,7 @@ import useCustomCompareEffect from '../../../../hooks/useCustomCompareEffect';
 import { dequal } from 'dequal';
 import useWidgetSource from './useWidgetSource';
 import MethodFunc from 'components/indicators/utils/methodType';
+import { defaultFilterFunction } from 'components/indicators/utils/miscelleniousFunctions';
 
 export interface useWidgetFetchProps {
   id: string;
@@ -67,7 +68,7 @@ export default function useWidgetFetch({
             if (data && data.length > 0) {
               setData(
                 method(
-                  data.filter((i) => +i[column] !== 999999),
+                  [...defaultFilterFunction(data,  column)],
                   column,
                   methodParams,
                 ),
