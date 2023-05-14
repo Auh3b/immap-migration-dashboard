@@ -266,12 +266,12 @@ function NavigationMenu({ column = false }: { column?: boolean }) {
           component={NavLink}
           to={ROUTE_PATHS.DINÁMICA_AURORA}
         />
-        {/* <Tab
+        <Tab
           label='Redes sociales'
           value='redes_sociales'
           component={NavLink}
           to={ROUTE_PATHS.MEDIA}
-        /> */}
+        />
       </Tabs>
     </Grid>
   );
