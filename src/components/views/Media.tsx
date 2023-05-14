@@ -28,9 +28,13 @@ const useStyles = makeStyles((theme) => ({
 export default function Media() {
   const classes = useStyles();
 
+  
+
+
+
   return (
     <Grid item className={classes.mapWrapper}>
-      <MainView>{{}}</MainView>
+      
     </Grid>
   );
 }
