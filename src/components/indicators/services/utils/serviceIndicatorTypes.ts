@@ -24,7 +24,7 @@ export const serviceTypeChildren = new Map([
   [7, 'Espacios educativos o de cuidado'],
   [8, 'Salud, primeros auxilios o atención médica'],
   [9, 'Otro'],
-])
+]);
 
 export const serviceLabels1 = new Map([
   [3, 'Difícil'],

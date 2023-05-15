@@ -21,9 +21,9 @@ const slice = createSlice({
     setModalUrl: (state, action) => {
       state.modalUrl = action.payload;
     },
-    removeModalUrl:(state)=>{
-      state.modalUrl = ''
-    }
+    removeModalUrl: (state) => {
+      state.modalUrl = '';
+    },
   },
 });
 

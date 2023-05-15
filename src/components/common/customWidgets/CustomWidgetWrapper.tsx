@@ -134,10 +134,7 @@ export default function CustomWidgetWrapper({
           onClick={handleExpandClick}
         >
           <Tooltip title={title} placement='top' arrow>
-            <Typography
-              className={classes.buttonText}
-              align='left'
-            >
+            <Typography className={classes.buttonText} align='left'>
               {title}
             </Typography>
           </Tooltip>

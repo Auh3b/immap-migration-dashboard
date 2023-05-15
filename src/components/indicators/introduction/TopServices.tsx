@@ -35,7 +35,12 @@ export default function TopServices({
     owner: id,
   });
   return (
-    <TitleWrapper title={title} subtitle={subtitle} filterable={true} isLoading={isLoading}>
+    <TitleWrapper
+      title={title}
+      subtitle={subtitle}
+      filterable={true}
+      isLoading={isLoading}
+    >
       <Grid item>
         <CategoryWidgetUI
           onSelectedCategoriesChange={handleSelectedCategoriesChange}

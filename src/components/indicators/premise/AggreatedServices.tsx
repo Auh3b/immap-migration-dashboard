@@ -188,6 +188,7 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
           [minLong, minLat],
           [maxLong, maxLat],
         ];
+        //@ts-ignore
         const { latitude, longitude, zoom } =
           new WebMercatorViewport().fitBounds(boundbox, {
             width,

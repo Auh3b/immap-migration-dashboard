@@ -14,11 +14,7 @@ const useNoteStyle = makeStyles((theme) => ({
 export default function WidgetNote({ note }: { note: string }) {
   const classes = useNoteStyle();
   return (
-    <Typography
-      className={classes.root}
-      display='block'
-      gutterBottom
-    >
+    <Typography className={classes.root} display='block' gutterBottom>
       {note}
     </Typography>
   );

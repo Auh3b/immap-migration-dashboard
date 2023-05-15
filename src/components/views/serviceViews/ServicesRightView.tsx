@@ -15,8 +15,7 @@ const ServiceSatisfyChildren = lazy(
 );
 
 export default function ServicesRightView({ dataSources }: any) {
-  const { aggreateServiceChildrenSource } =
-    dataSources;
+  const { aggreateServiceChildrenSource } = dataSources;
 
   return (
     <MainColumnView>

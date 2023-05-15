@@ -68,7 +68,7 @@ export default function useWidgetFetch({
             if (data && data.length > 0) {
               setData(
                 method(
-                  [...defaultFilterFunction(data,  column)],
+                  [...defaultFilterFunction(data, column)],
                   column,
                   methodParams,
                 ),

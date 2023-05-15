@@ -4,7 +4,7 @@ import { ReactNode, Suspense, lazy, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeModalUrl, setChartModal } from 'store/appSlice';
 import ComponentFallback from './ComponentFallback';
-import mainSource from 'data/sources/mainSource'
+import mainSource from 'data/sources/mainSource';
 import ChartLoadFail from './ChartLoadFail';
 //@ts-ignore
 import loadable from '@loadable/component';
@@ -37,41 +37,44 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     top: theme.spacing(2),
     right: theme.spacing(2),
-    zIndex: theme.zIndex.modal + 500
+    zIndex: theme.zIndex.modal + 500,
   },
 }));
 
 //@ts-ignore
-const importChart = (url: string) => lazy(()=> import(`components/${url}`).catch(()=><ChartLoadFail />))
+const importChart = (url: string) =>
+  lazy(() => import(`components/${url}`).catch(() => <ChartLoadFail />));
 
 export default function ChartModal() {
-  const [chart, setChart] = useState<ReactNode>(null)
+  const [chart, setChart] = useState<ReactNode>(null);
   const dispatch = useDispatch();
   //@ts-ignore
   const showChartModal = useSelector((state) => state.app.showChartModal);
   //@ts-ignore
-  const modalUrl = useSelector((state)=> state.app.modalUrl)
+  const modalUrl = useSelector((state) => state.app.modalUrl);
   const classes = useStyles({ show: showChartModal });
-  const zoomLevel = useSelector((state: RootState)=> state.carto.viewState.zoom)
+  const zoomLevel = useSelector(
+    (state: RootState) => state.carto.viewState.zoom,
+  );
   const handleModalClose = () => {
     dispatch(setChartModal(false));
-    dispatch(removeModalUrl())
+    dispatch(removeModalUrl());
   };
 
   const loadChart = async () => {
-    if(modalUrl){
-      const Chart = await importChart(modalUrl)
-      setChart(<Chart dataSource={mainSource.id}/>) 
-      dispatch(setViewState({zoom: zoomLevel*randBtwn(0.99, 1.01)}))
+    if (modalUrl) {
+      const Chart = await importChart(modalUrl);
+      setChart(<Chart dataSource={mainSource.id} />);
+      dispatch(setViewState({ zoom: zoomLevel * randBtwn(0.99, 1.01) }));
     }
-  }  
+  };
 
-  useEffect(()=>{
-    loadChart()
-    return ()=>{
-      setChart(null)
-    }
-  }, [modalUrl])
+  useEffect(() => {
+    loadChart();
+    return () => {
+      setChart(null);
+    };
+  }, [modalUrl]);
 
   return (
     <div className={classes.root}>
@@ -79,9 +82,7 @@ export default function ChartModal() {
         <IconButton className={classes.close} onClick={handleModalClose}>
           <CloseIcon />
         </IconButton>
-        <Suspense fallback={<ComponentFallback/>}>
-          {chart}
-        </Suspense>
+        <Suspense fallback={<ComponentFallback />}>{chart}</Suspense>
       </Paper>
     </div>
   );

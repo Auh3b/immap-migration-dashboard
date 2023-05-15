@@ -204,7 +204,7 @@ export default function CountryFlow({ dataSource }: BasicWidgetType) {
 
     [dataSource],
   );
-  
+
   return (
     <Grid item>
       {widget}
