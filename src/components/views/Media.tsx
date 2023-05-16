@@ -9,6 +9,7 @@ import { fireStorage } from 'firedb';
 import MediaIndicators from './mediaViews/utils/MediaIndicators';
 import MediaOrigin from 'components/indicators/media/MediaOrigin';
 import TopPhrases from 'components/indicators/media/TopPhrases';
+import SentimentPresentages from 'components/indicators/media/SentimentPresentages';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -44,7 +45,7 @@ export default function Media() {
   };
 
   useEffect(() => {
-    fetchMediaData();
+    // fetchMediaData();
     return () => {
       setData([]);
     };
@@ -64,6 +65,7 @@ export default function Media() {
       <MediaIndicators isLoading={isLoading}>
         <MediaOrigin data={data} isLoading={isLoading} />
         <TopPhrases data={data} isLoading={isLoading} />
+        <SentimentPresentages data={data} isLoading={isLoading} />
       </MediaIndicators>
     </Grid>
   );
