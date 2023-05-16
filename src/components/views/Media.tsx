@@ -10,6 +10,7 @@ import MediaIndicators from './mediaViews/utils/MediaIndicators';
 import MediaOrigin from 'components/indicators/media/MediaOrigin';
 import TopPhrases from 'components/indicators/media/TopPhrases';
 import SentimentPresentages from 'components/indicators/media/SentimentPresentages';
+import SentimentTimeline from 'components/indicators/media/SentimentTimeline';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,13 +46,12 @@ export default function Media() {
   };
 
   useEffect(() => {
-    // fetchMediaData();
+    fetchMediaData();
     return () => {
       setData([]);
     };
   }, []);
 
-  console.log(data);
   return (
     <Grid
       container
@@ -63,9 +63,14 @@ export default function Media() {
       <MediaFilterToolbar />
       <MediaAggregateIndicators data={data} isLoading={isLoading} />
       <MediaIndicators isLoading={isLoading}>
-        <MediaOrigin data={data} isLoading={isLoading} />
-        <TopPhrases data={data} isLoading={isLoading} />
-        <SentimentPresentages data={data} isLoading={isLoading} />
+        <Grid item xs={12} container>
+          <MediaOrigin data={data} isLoading={isLoading} />
+          <TopPhrases data={data} isLoading={isLoading} />
+          <SentimentPresentages data={data} isLoading={isLoading} />
+        </Grid>
+        <Grid item xs={12} container>
+          <SentimentTimeline data={data} isLoading={isLoading} />
+        </Grid>
       </MediaIndicators>
     </Grid>
   );
