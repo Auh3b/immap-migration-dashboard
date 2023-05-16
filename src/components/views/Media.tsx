@@ -6,24 +6,30 @@ import { useEffect, useState } from 'react';
 import { setError } from 'store/appSlice';
 import { getDownloadURL, ref } from 'firebase/storage';
 import { fireStorage } from 'firedb';
+import MediaIndicators from './mediaViews/utils/MediaIndicators';
+import MediaOrigin from 'components/indicators/media/MediaOrigin';
+import TopPhrases from 'components/indicators/media/TopPhrases';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: theme.spacing(2),
     width: '100%',
     height: '100%',
-    maxHeight: `cal(100vh - ${theme.mixins.toolbar.minHeight}px)`,
+    maxHeight: `calc(100vh - ${theme.mixins.toolbar.minHeight}px)`,
     overflowY: 'auto',
+    '& > *': {
+      marginBottom: theme.spacing(2),
+    },
   },
 }));
 
 export default function Media() {
   const classes = useStyles();
   const [data, setData] = useState([]);
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true);
 
   const fetchMediaData = async () => {
-    setIsLoading(true)
+    setIsLoading(true);
     try {
       const dataRef = ref(fireStorage, 'data/summarised_meltwater_data.json');
       const dataUrl = await getDownloadURL(dataRef);
@@ -32,13 +38,13 @@ export default function Media() {
       setData(dataRes);
     } catch (error) {
       setError(error.message);
-    } finally{
-      setIsLoading(false)
+    } finally {
+      setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    // fetchMediaData()
+    fetchMediaData();
     return () => {
       setData([]);
     };
@@ -46,17 +52,19 @@ export default function Media() {
 
   console.log(data);
   return (
-    <div style={{ width: '100%' }}>
-      <Grid
-        container
-        spacing={2}
-        direction='column'
-        item
-        className={classes.root}
-      >
-        <MediaFilterToolbar />
-        <MediaAggregateIndicators data={data} isLoading={isLoading}/>
-      </Grid>
-    </div>
+    <Grid
+      container
+      direction='column'
+      item
+      wrap='nowrap'
+      className={classes.root}
+    >
+      <MediaFilterToolbar />
+      <MediaAggregateIndicators data={data} isLoading={isLoading} />
+      <MediaIndicators isLoading={isLoading}>
+        <MediaOrigin data={data} isLoading={isLoading} />
+        <TopPhrases data={data} isLoading={isLoading} />
+      </MediaIndicators>
+    </Grid>
   );
 }
