@@ -1,7 +1,7 @@
 import CustomWidgetWrapper from './CustomWidgetWrapper';
 import { defaultCustomWidgetProps } from './customWidgetsType';
 import useWidgetFetch from './hooks/useWidgetFetch';
-import ColumnBarChart from './ColumnBarChart';
+import ColumnBarChart from '../customCharts/ColumnBarChart';
 import { useMemo } from 'react';
 import useComparativeWidgetFilter from './hooks/useComparativeWidgetFilter';
 import { aidTypes } from 'components/indicators/services/utils/serviceIndicatorTypes';
