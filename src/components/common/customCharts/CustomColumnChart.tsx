@@ -46,5 +46,5 @@ export default function CustomColumnChart({
     }),
     [series],
   );
-  return <ReactEcharts option={option} style={{ height: 550 }} />;
+  return <ReactEcharts option={option} style={{ height: 400 }} />;
 }
