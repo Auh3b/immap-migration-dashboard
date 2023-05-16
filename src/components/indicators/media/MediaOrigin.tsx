@@ -9,7 +9,7 @@ export default function MediaOrigin({
   isLoading,
 }: {
   data: any[];
-  isLoading: Boolean;
+  isLoading?: Boolean;
 }) {
   const data = useMemo(() => {
     if (_data.length === 0) {
