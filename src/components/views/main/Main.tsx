@@ -34,6 +34,7 @@ export default function Main() {
   return (
     <Grid
       container
+      wrap='nowrap'
       direction='row'
       alignItems='stretch'
       item
