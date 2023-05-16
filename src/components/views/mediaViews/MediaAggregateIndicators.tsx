@@ -1,7 +1,6 @@
-import { Grid, Paper, makeStyles } from '@material-ui/core';
+import { Grid, Paper, makeStyles, useTheme } from '@material-ui/core';
 import SourceIndictor from 'components/indicators/media/utils/SourceIndictor';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHashtag } from '@fortawesome/free-solid-svg-icons';
 import { useMemo } from 'react';
 import { sum } from 'd3';
 import ComponentFallback from 'components/common/ComponentFallback';
@@ -27,6 +26,7 @@ export default function MediaAggregateIndicators({
   data: _data,
   isLoading,
 }: any) {
+  const theme = useTheme();
   const classes = useStyles();
   const data = useMemo<{ name: string; value: number }[] | null>(() => {
     if (_data.length === 0) {
@@ -67,6 +67,7 @@ export default function MediaAggregateIndicators({
                   <FontAwesomeIcon
                     className={classes.icon}
                     icon={FA_MAP.get(name)}
+                    style={{ color: theme.palette.grey[100] }}
                   />
                 }
                 data={value}
