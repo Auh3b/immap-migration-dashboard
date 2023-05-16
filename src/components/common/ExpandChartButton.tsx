@@ -16,7 +16,7 @@ export default function ExpandChartButton({ chartUrl }: { chartUrl: string }) {
     dispatch(setModalUrl(chartUrl));
   };
   const showChartModal =
-  //@ts-ignore
+    //@ts-ignore
     useSelector((state) => state.app.showChartModal) ?? false;
   const classes = useStyles({ show: showChartModal });
   return (

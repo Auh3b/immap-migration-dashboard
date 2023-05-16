@@ -16,7 +16,7 @@ const stackedBarCategories: MethodFunc = (input, column, params) => {
       operation: AggregationTypes.COUNT,
     });
     const _group_column_values = group_column_values.sort((a, b) =>
-    //@ts-ignore
+      //@ts-ignore
       ascending(a.name, b.name),
     );
     valueUnique = [
