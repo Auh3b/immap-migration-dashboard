@@ -40,7 +40,7 @@ export default function MediaOrigin({
         keysColumn: 'name',
         operation: AggregationTypes.SUM,
       })
-      //@ts-ignore
+        //@ts-ignore
         .sort((a, b) => descending(a.value, b.value))
         .slice(0, 9);
       //@ts-ignore
