@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme) => ({
   content: {
     width: '100%',
     height: '100%',
+    padding: theme.spacing(2)
   },
 }));
 export default function MediaIndicators({ isLoading, children }: any) {
