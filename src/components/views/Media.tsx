@@ -65,11 +65,11 @@ export default function Media() {
       <MediaIndicators isLoading={isLoading}>
         <Grid item xs={12} container>
           <MediaOrigin data={data} isLoading={isLoading} />
-          <TopPhrases data={data} isLoading={isLoading} />
+          {/* <TopPhrases data={data} isLoading={isLoading} /> */}
           <SentimentPresentages data={data} isLoading={isLoading} />
+          <SentimentTimeline data={data} isLoading={isLoading} />
         </Grid>
         <Grid item xs={12} container>
-          <SentimentTimeline data={data} isLoading={isLoading} />
         </Grid>
       </MediaIndicators>
     </Grid>
