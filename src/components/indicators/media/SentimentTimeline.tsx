@@ -1,7 +1,14 @@
 import { AggregationTypes, groupValuesByColumn } from '@carto/react-core';
-import { Grid, useTheme } from '@material-ui/core';
+import { Grid, Typography, makeStyles, useTheme } from '@material-ui/core';
+import TitleWrapper from 'components/common/TitleWrapper';
 import ReactEcharts from 'components/common/customCharts/ReactEcharts';
 import { useMemo } from 'react';
+
+const useStyles = makeStyles((theme)=> ({
+  title:{
+    textTransform: 'uppercase'
+  }
+}))
 
 export default function SentimentTimeline({
   data: _data,
@@ -10,6 +17,7 @@ export default function SentimentTimeline({
   data: any[];
   isLoading?: Boolean;
 }) {
+  const classes = useStyles()
   const theme = useTheme();
 
   const data = useMemo(() => {
@@ -94,7 +102,7 @@ export default function SentimentTimeline({
       legend: {},
       dataZoom: [{ type: 'inside' }],
       tooltip: {
-        // padding: [theme.spacing(0.5), theme.spacing(1)],
+        padding: [theme.spacing(0.5), theme.spacing(1)],
         trigger: 'axis',
         borderWidth: 0,
         textStyle: {
@@ -105,17 +113,6 @@ export default function SentimentTimeline({
         },
         //@ts-ignore
         backgroundColor: theme.palette.other.tooltip,
-        // formatter({value, seriesName, color}:any){
-        //   return (
-        //    `<span style='display: flex; flex-direction: column; min-width: 100px;'>
-        //       <span>${seriesName}</span>
-        //       <span style='display: flex; width: 100%; justify-content: space-between; align-items: center;'>
-        //         <span style='background-color: ${color}; width: 10px; height: 10px; border-radius: 100%;'></span>
-        //         <span>${value}</span>
-        //       </span>
-        //     </span>`
-        //   )
-        // }
       },
       yAxis: {},
       xAxis: {
@@ -128,8 +125,10 @@ export default function SentimentTimeline({
   );
 
   return (
-    <Grid item xs={4}>
-      <ReactEcharts option={option} />
+    <Grid item xs={6}>
+      <TitleWrapper title='Serie histórica de sentimiento' isLoading={isLoading}>
+        <ReactEcharts option={option} style={{height: 400}}/>
+      </TitleWrapper>
     </Grid>
   );
 }

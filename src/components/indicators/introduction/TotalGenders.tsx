@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import groupCategories from '../utils/groupCategories';
-import TitleWrapper from './utils/TitleWrapper';
+import TitleWrapper from '../../common/TitleWrapper';
 import useIntroWidgetFilter from './hooks/useIntroWidgetFilter';
 import useIntroCategoryChange from './hooks/useCategoryChange';
 import { Grid } from '@material-ui/core';

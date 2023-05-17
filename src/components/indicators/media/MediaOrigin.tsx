@@ -1,8 +1,9 @@
-import { Grid } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 import CustomColumnChart from 'components/common/customCharts/CustomColumnChart';
 import { useMemo } from 'react';
 import { AggregationTypes, groupValuesByColumn } from '@carto/react-core';
 import { ascending, descending } from 'd3';
+import TitleWrapper from 'components/common/TitleWrapper';
 const regionName = new Intl.DisplayNames(['en'], { type: 'region' });
 export default function MediaOrigin({
   data: _data,
@@ -52,13 +53,15 @@ export default function MediaOrigin({
   }, [_data]);
 
   return (
-    <Grid item lg={4}>
-      {data.length > 0 && !isLoading && (
-        <CustomColumnChart
-          data={data}
-          labelFormater={(name: string) => regionName.of(name.toUpperCase())}
-        />
-      )}
+    <Grid item xs={3}>
+      <TitleWrapper title='¿De dónde escribe?' isLoading={isLoading} >
+        {data.length > 0 && !isLoading && (
+          <CustomColumnChart
+            data={data}
+            labelFormater={(name: string) => regionName.of(name.toUpperCase())}
+          />
+        )}
+      </TitleWrapper>
     </Grid>
   );
 }

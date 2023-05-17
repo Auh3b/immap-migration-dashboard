@@ -1,5 +1,6 @@
 import { AggregationTypes, groupValuesByColumn } from '@carto/react-core';
-import { Grid, useTheme } from '@material-ui/core';
+import { Grid, Typography, useTheme } from '@material-ui/core';
+import TitleWrapper from 'components/common/TitleWrapper';
 import ReactEcharts from 'components/common/customCharts/ReactEcharts';
 import { MEDIA_SOURCES_NAMES } from 'components/views/mediaViews/utils/mediaUtils';
 import { sum } from 'd3';
@@ -8,9 +9,11 @@ import { useMemo } from 'react';
 export default function SentimentPresentages({
   data: _data,
   isLoading,
+  title,
 }: {
   data: any[];
   isLoading?: Boolean;
+  title?: string
 }) {
   const theme = useTheme();
 
@@ -113,6 +116,12 @@ export default function SentimentPresentages({
 
   const option = useMemo(
     () => ({
+      title:{
+        show: title ? true : false,
+        text: title,
+        textAlign: 'left',
+        textVerticalAlign: 'bottom',
+      },
       grid: {
         containLabel: true,
       },
@@ -154,7 +163,9 @@ export default function SentimentPresentages({
 
   return (
     <Grid item xs={3}>
-      <ReactEcharts option={option} style={{ height: 400 }} />
+      <TitleWrapper title='Sentimiento por tipo de red social' isLoading={isLoading}>
+        <ReactEcharts option={option} style={{ height: 400 }} />
+      </TitleWrapper>
     </Grid>
   );
 }

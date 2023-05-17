@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { Grid } from '@material-ui/core';
-import TitleWrapper from './utils/TitleWrapper';
+import TitleWrapper from '../../common/TitleWrapper';
 import { descending } from 'd3';
 import concatenatedValues from '../utils/concatenatedValues';
 import IntroHalfPieChart from './utils/IntroHalfPieChart';

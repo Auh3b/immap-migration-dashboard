@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import TitleWrapper from './utils/TitleWrapper';
+import TitleWrapper from '../../common/TitleWrapper';
 import { IndicatorProps } from './utils/introductionTypes';
 import { CategoryWidgetUI } from '@carto/react-ui';
 import { Grid } from '@material-ui/core';

@@ -3,7 +3,7 @@ import { Grid } from '@material-ui/core';
 import { useMemo } from 'react';
 import groupCategories from '../utils/groupCategories';
 import { descending } from 'd3';
-import TitleWrapper from './utils/TitleWrapper';
+import TitleWrapper from '../../common/TitleWrapper';
 import useIntroCategoryChange from './hooks/useCategoryChange';
 import useIntroWidgetFilter from './hooks/useIntroWidgetFilter';
 
