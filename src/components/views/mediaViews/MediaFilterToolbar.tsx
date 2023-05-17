@@ -40,7 +40,7 @@ function DatePicker({ id, start, label }: DatePickerProps) {
     dateFormat(new Date(...(start as [])), 'yyyy-MM-dd'),
   );
   const handleDateChange = (event: any) => {
-    setDate(event.target.value);
+    // setDate(event.target.value);
   };
   return (
     <Grid item>
@@ -48,7 +48,7 @@ function DatePicker({ id, start, label }: DatePickerProps) {
         id={id}
         label={label}
         type='date'
-        defaultValue={date}
+        value={date}
         onChange={handleDateChange}
       />
     </Grid>
