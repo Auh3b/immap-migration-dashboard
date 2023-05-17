@@ -127,6 +127,7 @@ export default function SentimentPresentages({
       },
       legend: {},
       tooltip: {
+        trigger: 'axis',
         padding: [theme.spacing(0.5), theme.spacing(1)],
         borderWidth: 0,
         textStyle: {
@@ -137,14 +138,24 @@ export default function SentimentPresentages({
         },
         //@ts-ignore
         backgroundColor: theme.palette.other.tooltip,
-        formatter({ value, seriesName, color }: any) {
-          return `<span style='display: flex; flex-direction: column; min-width: 100px;'>
-            <span>${seriesName}</span>
-            <span style='display: flex; width: 100%; justify-content: space-between; align-items: center;'>
-              <span style='background-color: ${color}; width: 10px; height: 10px; border-radius: 100%;'></span>
-              <span>${Math.round(value * 100)}%</span>
-            </span>
-          </span>`;
+        formatter(params: any[]) {
+          const {axisValue} = params[0]
+          const axisName = MEDIA_SOURCES_NAMES.get(axisValue)
+          const legends = params.map(({color, seriesName: name, value}:any) => (`
+            <span style='display: flex; align-items: center; justify-content: space-between; min-width: 100px; width: 100%;'>
+              <span style='display: flex; align-items: center; justify-content: space-between;'>
+                <span style='background-color: ${color}; width:  10px; height: 10px; margin-right: 10px; border-radius: 100%;'></span>
+                <span> ${name}</span>
+              </span>
+              <span>${Math.round(value*100)}%</span>
+            </span>`
+        )).join('')
+          return (
+            `<span style='width: 150px; height: 100%; display:flex; flex-direction: column; gap: 5px;'>
+              <span>${axisName}</span>
+              ${legends}
+            </span>`
+          )
         },
       },
       xAxis: {
