@@ -60,20 +60,20 @@ export default function CustomCategoryWidget({
     column,
   });
 
-  const maxItems = useMemo(()=>{
-    let defaultMax = 5
-    if(data.length === 0){
-      return defaultMax
+  const maxItems = useMemo(() => {
+    let defaultMax = 5;
+    if (data.length === 0) {
+      return defaultMax;
     }
 
-    const dataCount = data.length
+    const dataCount = data.length;
 
-    if(dataCount === (defaultMax+1)){
-      return defaultMax-1
+    if (dataCount === defaultMax + 1) {
+      return defaultMax - 1;
     }
-    
-    return defaultMax
-  }, [data])
+
+    return defaultMax;
+  }, [data]);
 
   return (
     <CustomWidgetWrapper title={title} isLoading={isLoading} onError={error}>

@@ -15,13 +15,18 @@ const stackedBarCategories: MethodFunc = (input, column, params) => {
       keysColumn: target_column,
       operation: AggregationTypes.COUNT,
     });
-    //@ts-ignore
-    const _group_column_values = group_column_values.sort((a,b)=> ascending(a.name, b.name))
+    const _group_column_values = group_column_values.sort((a, b) =>
+      //@ts-ignore
+      ascending(a.name, b.name),
+    );
     valueUnique = [
       ...valueUnique,
       ..._group_column_values.map(({ name }) => name),
     ];
-    valueGroup = [...valueGroup, _group_column_values.map(({ value }) => value)];
+    valueGroup = [
+      ...valueGroup,
+      _group_column_values.map(({ value }) => value),
+    ];
   }
 
   valueUnique = Array.from(new Set(valueUnique));

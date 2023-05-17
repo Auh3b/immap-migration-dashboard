@@ -10,11 +10,9 @@ import {
 import { FormulaWidgetUI } from '@carto/react-ui';
 import { numberFormatter } from 'utils/formatter';
 import { MouseEvent, ReactNode, useState } from 'react';
-import TitleWrapper, {
-  TitleWrapperProps,
-} from 'components/indicators/introduction/utils/TitleWrapper';
 import AddIcon from '@material-ui/icons/Add';
 import RemoveIcon from '@material-ui/icons/Remove';
+import TitleWrapper, { TitleWrapperProps } from '../TitleWrapper';
 
 const useStyles = makeStyles((theme) => ({
   root: {

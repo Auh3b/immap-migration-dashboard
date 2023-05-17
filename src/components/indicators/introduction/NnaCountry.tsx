@@ -1,7 +1,7 @@
 import { Grid } from '@material-ui/core';
 import { useMemo } from 'react';
 import groupCategories from '../utils/groupCategories';
-import TitleWrapper from './utils/TitleWrapper';
+import TitleWrapper from '../../common/TitleWrapper';
 import IntroWordCloud from './utils/IntroWordCloud';
 
 const title = 'Identificación NNA solos';
