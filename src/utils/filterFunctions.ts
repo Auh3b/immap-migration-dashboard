@@ -63,7 +63,6 @@ export function filterValues(data: any[], _filters: Filters) {
   }
 
   let output: any[] = data;
-
   for (let { values, column, type } of filters) {
     output = output.filter(filterFunctions(type)(column, values[0]));
   }
