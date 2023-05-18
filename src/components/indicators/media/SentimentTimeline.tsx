@@ -49,6 +49,10 @@ export default function SentimentTimeline({
   const option = useMemo(
     () => ({
       grid: {
+        top: '10%',
+        left: '5%',
+        right: '5%',
+        bottom: '5%',
         containLabel: true,
       },
       legend: {},
