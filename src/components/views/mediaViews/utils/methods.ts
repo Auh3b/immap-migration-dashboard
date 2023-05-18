@@ -27,8 +27,11 @@ export function getMediaAggregateIndicators(input: any) {
   const { sources, summary } = input;
   output = [
     ...output,
-    //@ts-ignore
-    { name: MEDIA_SOURCES.MENCIONES_TOTALES, value: sum(sources, (d) => d.volume) },
+    {
+      name: MEDIA_SOURCES.MENCIONES_TOTALES,
+      //@ts-ignore
+      value: sum(sources, (d) => d.volume),
+    },
   ];
   const sourceList = summary.sources;
   for (let sourceName of sourceList) {
@@ -102,14 +105,13 @@ export function getSentimentPercentages(input: any) {
         return [name, value / sentimanetTotal];
       }),
     );
-    
-    if(negative || positive || neutral || notRated ){
+
+    if (negative || positive || neutral || notRated) {
       _data2 = [
         ..._data2,
         [sourceName, negative ?? 0, neutral ?? 0, positive ?? 0, notRated ?? 0],
       ];
     }
-
   }
 
   return _data2;

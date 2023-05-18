@@ -65,7 +65,6 @@ export default function SentimentPresentages({
 
   const option = useMemo(
     () => ({
-      
       title: {
         show: title ? true : false,
         text: title,

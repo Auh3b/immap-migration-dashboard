@@ -11,7 +11,7 @@ export default function CustomColumnChart({
   data: Record<string, string | number>[];
   labelFormater: Function;
 }) {
-  const theme = useTheme()
+  const theme = useTheme();
   const series = useMemo(
     () => [
       {
@@ -23,7 +23,7 @@ export default function CustomColumnChart({
   );
   const option = useMemo(
     () => ({
-      tooltip:{
+      tooltip: {
         padding: [theme.spacing(0.5), theme.spacing(1)],
         borderWidth: 0,
         textStyle: {
@@ -34,8 +34,10 @@ export default function CustomColumnChart({
         },
         //@ts-ignore
         backgroundColor: theme.palette.other.tooltip,
-         formatter({value}: any) {
-          return `<span style='padding: 16px; font-weight: bold;'>${numberFormatter(value)}</span>`;
+        formatter({ value }: any) {
+          return `<span style='padding: 16px; font-weight: bold;'>${numberFormatter(
+            value,
+          )}</span>`;
         },
       },
       grid: {

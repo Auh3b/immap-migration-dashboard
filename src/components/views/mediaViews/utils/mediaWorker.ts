@@ -17,8 +17,8 @@ const funcMap = new Map([
   [METHOD_NAMES.MEDIA_TOP_PHRASES, getTopPhrases],
 ]);
 
-interface Params{
-  filters: Filters
+interface Params {
+  filters: Filters;
 }
 
 let mediaData: any;
@@ -34,31 +34,31 @@ function getMediaData() {
   }
 }
 
-function setFilters(filters: Filters){
-  if(Object.keys(filters).length >  0){
-    currentfilters = filters 
+function setFilters(filters: Filters) {
+  if (Object.keys(filters).length > 0) {
+    currentfilters = filters;
   }
 }
 
-function applyFiltersToData(filters: Filters){
-  if(!mediaData){
-    return []
+function applyFiltersToData(filters: Filters) {
+  if (!mediaData) {
+    return [];
   }
 
-  if(Object.keys(filters).length === 0){
-    return mediaData
+  if (Object.keys(filters).length === 0) {
+    return mediaData;
   }
 
-  const filteredData = filterValues(mediaData.sources, filters)
-  return {...mediaData, sources: filteredData}
+  const filteredData = filterValues(mediaData.sources, filters);
+  return { ...mediaData, sources: filteredData };
 }
 
 function runTransform(funcName: string, params: Partial<Params>) {
-  const {filters} = params
+  const { filters } = params;
   if (mediaData) {
-    const filteredData = applyFiltersToData(filters)
+    const filteredData = applyFiltersToData(filters);
     const execute = funcMap.get(funcName);
-    console.log(filteredData)
+    console.log(filteredData);
     const results = execute(filteredData);
     return results;
   }
