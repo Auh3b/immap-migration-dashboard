@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import ReactEcharts from './ReactEcharts';
 import { format } from 'd3';
 import { useTheme } from '@material-ui/core';
+import { numberFormatter } from 'utils/formatter';
 
 export default function CustomColumnChart({
   data,
@@ -33,6 +34,9 @@ export default function CustomColumnChart({
         },
         //@ts-ignore
         backgroundColor: theme.palette.other.tooltip,
+         formatter({value}: any) {
+          return `<span style='padding: 16px; font-weight: bold;'>${numberFormatter(value)}</span>`;
+        },
       },
       grid: {
         top: '10%',
