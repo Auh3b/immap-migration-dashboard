@@ -1,5 +1,5 @@
 import { executeSQL } from '@carto/react-api';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearIntroFilters } from 'store/introSlice';
 import { RootState } from 'store/store';
