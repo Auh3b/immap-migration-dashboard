@@ -12,6 +12,8 @@ import TopPhrases from 'components/indicators/media/TopPhrases';
 import SentimentPresentages from 'components/indicators/media/SentimentPresentages';
 import SentimentTimeline from 'components/indicators/media/SentimentTimeline';
 import { wrap } from 'comlink';
+import { useSelector } from 'react-redux';
+import { filter } from 'd3';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,8 +35,10 @@ const MediaWorker = new Worker('./mediaViews/utils/mediaWorker', {
 
 export default function Media() {
   //@ts-ignore
-  const { setMediaData, getMediaData, runTransform } = wrap(MediaWorker);
+  const { setMediaData, getMediaData, runTransform, setFilters } = wrap(MediaWorker);
   const classes = useStyles();
+  //@ts-ignore
+  const filters = useSelector((state)=> state.media.filters)
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -64,6 +68,10 @@ export default function Media() {
     };
   }, []);
 
+  useEffect(()=>{
+    setFilters(filters)
+  }, [filters])
+ 
   useEffect(() => {
     (async function () {
       if (!isLoading) {
@@ -71,7 +79,7 @@ export default function Media() {
       }
     })();
   }, [isLoading]);
-  console.log(data);
+
   return (
     <Grid
       container
@@ -82,11 +90,11 @@ export default function Media() {
     >
       <MediaFilterToolbar />
       <MediaAggregateIndicators
-        data={data}
+        deps={[data, filters]}
         isLoading={isLoading}
         transform={runTransform}
       />
-      <MediaIndicators isLoading={isLoading}>
+      {/* <MediaIndicators isLoading={isLoading}>
         <Grid item xs={12} container>
           <MediaOrigin
             data={data}
@@ -107,7 +115,7 @@ export default function Media() {
         <Grid item xs={12} container>
           <TopPhrases data={data} isLoading={isLoading} transform={runTransform}  />
         </Grid>
-      </MediaIndicators>
+      </MediaIndicators> */}
     </Grid>
   );
 }
