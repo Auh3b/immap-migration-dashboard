@@ -2,7 +2,8 @@ import { useCallback, useMemo } from 'react';
 import ReactEcharts from './ReactEcharts';
 import cloud from 'd3-cloud';
 import { makeStyles, useTheme } from '@material-ui/core';
-import { extent, interpolateCividis, scaleSequential } from 'd3';
+import { extent, interpolateSinebow, scaleSequential } from 'd3';
+import { numberFormatter } from 'utils/formatter';
 
 const width = 450;
 const height = 400;
@@ -42,6 +43,7 @@ export default function CustomWordCloud({
     const words = _data.map(({ name: text, value: size }) => ({
       text,
       size,
+      value: size,
     }));
     const wCloud = cloud()
       .size([
@@ -52,23 +54,24 @@ export default function CustomWordCloud({
       .rotate(0)
       .padding(5)
       .font('Barlow')
-      .fontSize((d) => Math.sqrt(d.size / 1000) * 15)
-      .on('word', ({ x, y, text, size, font }: any) => {
-        output = [...output, [x, y, text, size, font]];
+      .fontSize((d) => Math.sqrt(d.size / 10000) * 15)
+      .on('word', ({ x, y, text, size, font, value }: any) => {
+        output = [...output, [x, y, text, size, font, value]];
       });
     wCloud.start();
 
     return output;
   }, [_data]);
 
+  console.log(data);
   const getColor = useCallback(
     (value) => {
-      const colorScale = scaleSequential(interpolateCividis).domain(
+      const colorScale = scaleSequential(interpolateSinebow).domain(
         extent(data, (d) => d[3]),
       );
       return colorScale(value);
     },
-    [_data],
+    [data],
   );
 
   const series = useMemo(
@@ -113,7 +116,7 @@ export default function CustomWordCloud({
         borderWidth: 0,
         textStyle: {
           ...theme.typography.caption,
-          fontSize: 12,
+          fontSize: 16,
           lineHeight: 16,
           color: theme.palette.common.white,
         },
@@ -121,7 +124,9 @@ export default function CustomWordCloud({
         backgroundColor: theme.palette.other.tooltip,
         formatter(params: any) {
           console.log(params);
-          return `<span>${params.value}</span>`;
+          return `<span style='padding: 16px; font-weight: bold;'>${numberFormatter(
+            params.value.at(-1),
+          )}</span>`;
         },
       },
       series,
