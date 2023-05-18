@@ -88,7 +88,7 @@ export default function Media() {
       />
       <MediaIndicators isLoading={isLoading}>
         <Grid item xs={12} container>
-          {/* <MediaOrigin
+          <MediaOrigin
             data={data}
             isLoading={isLoading}
             transform={runTransform}
@@ -102,10 +102,10 @@ export default function Media() {
             data={data}
             isLoading={isLoading}
             transform={runTransform}
-          /> */}
+          />
         </Grid>
         <Grid item xs={12} container>
-          {/* <TopPhrases data={data} isLoading={isLoading} transform={runTransform}  /> */}
+          <TopPhrases data={data} isLoading={isLoading} transform={runTransform}  />
         </Grid>
       </MediaIndicators>
     </Grid>
