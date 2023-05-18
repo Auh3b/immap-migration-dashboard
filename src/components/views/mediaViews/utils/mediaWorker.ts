@@ -58,7 +58,6 @@ function runTransform(funcName: string, params: Partial<Params>) {
   if (mediaData) {
     const filteredData = applyFiltersToData(filters);
     const execute = funcMap.get(funcName);
-    console.log(filteredData);
     const results = execute(filteredData);
     return results;
   }
