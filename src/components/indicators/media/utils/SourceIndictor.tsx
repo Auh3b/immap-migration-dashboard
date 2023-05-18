@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.secondary.light,
     fontSize: theme.spacing(2.5),
     textTransform: 'uppercase',
+    textAlign: 'left',
   },
   icon: {
     height: '100%',
