@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { setError } from 'store/appSlice';
 import { getDownloadURL, ref } from 'firebase/storage';
 import { fireStorage } from 'firedb';
-import MediaIndicators from './mediaViews/utils/MediaIndicators';
+import MediaIndicators from './mediaViews/MediaIndicators';
 import MediaOrigin from 'components/indicators/media/MediaOrigin';
 import TopPhrases from 'components/indicators/media/TopPhrases';
 import SentimentPresentages from 'components/indicators/media/SentimentPresentages';
