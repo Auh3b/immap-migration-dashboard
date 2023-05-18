@@ -2,6 +2,7 @@ import { FormulaWidgetUI } from '@carto/react-ui';
 import { Grid, Paper, Typography, makeStyles } from '@material-ui/core';
 import { ReactNode } from 'react';
 import { UNICEF_COLORS } from 'theme';
+import { numberFormatter } from 'utils/formatter';
 
 interface SourceIndictorProps {
   title: string;
@@ -11,9 +12,7 @@ interface SourceIndictorProps {
 }
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    margin: theme.spacing(2),
-  },
+  root: {},
   paper: {
     padding: theme.spacing(2),
   },
@@ -40,12 +39,12 @@ export default function SourceIndictor({
   title: _title,
   data,
   icon,
-  formatter,
+  formatter = numberFormatter,
 }: SourceIndictorProps) {
   const classes = useStyles();
   const title = _title === 'all' ? 'news' : _title;
   return (
-    <Grid item xs={12} md={4} lg={2} className={classes.root}>
+    <Grid item className={classes.root}>
       <Paper variant='outlined' className={classes.paper}>
         <Grid spacing={2} wrap='nowrap' container alignItems='center'>
           <Grid item className={classes.icon}>
