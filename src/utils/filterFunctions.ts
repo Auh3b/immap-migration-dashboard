@@ -12,6 +12,8 @@ export interface filterItem {
   type: filterType;
 }
 
+export type Filters = Record<string, filterItem>;
+
 function filterIn(column: string | number, value: number | string) {
   return (d: any) => d[column] === value;
 }
@@ -29,18 +31,21 @@ function filterSearch(column: string | number, value: string) {
   };
 }
 
+function filterRange(column: string, value: [number, number]) {
+  const [start, end] = value;
+  return (d: any) => d[column] >= start && d[column] <= end;
+}
+
 export function filterFunctions(type: filterType) {
-  const filterMap = new Map([
+  const filterMap = new Map<string, Function>([
     [_FilterTypes.IN, filterIn],
     [_FilterTypes.STRING_SEARCH, filterSearch],
+    [_FilterTypes.BETWEEN, filterRange],
   ]);
   return filterMap.get(type);
 }
 
-export function filterValues(
-  data: any[],
-  _filters: Record<string, filterItem>,
-) {
+export function filterValues(data: any[], _filters: Filters) {
   if (data.length === 0) {
     return data;
   }
