@@ -30,70 +30,6 @@ export default function SentimentPresentages({
     };
   }, [_data]);
 
-  // const data = useMemo(() => {
-  //   if (_data.length === 0) {
-  //     return [];
-  //   }
-  //   try {
-  //     //@ts-ignore
-  //     const { sources: _sources } = _data;
-  //     let _data2: any[] = [];
-  //     const sources = Object.entries(_sources);
-  //     for (let [sourceName, sourceValue] of sources) {
-  //       //@ts-ignore
-  //       const valueByDate = Object.values(sourceValue);
-  //       let sourceSentiment: any[] = [];
-  //       if (valueByDate.length !== 0) {
-  //         for (let { sentiment } of Object.values(valueByDate)) {
-  //           //@ts-ignore
-  //           for (let [key, { count }] of Object.entries(sentiment)) {
-  //             sourceSentiment = [
-  //               ...sourceSentiment,
-  //               { name: key, value: count },
-  //             ];
-  //           }
-  //         }
-  //         const sourceSentimentGroup = groupValuesByColumn({
-  //           data: sourceSentiment,
-  //           valuesColumns: ['value'],
-  //           keysColumn: 'name',
-  //           operation: AggregationTypes.SUM,
-  //         });
-
-  //         const sentimanetTotal = sum(
-  //           sourceSentimentGroup,
-  //           ({ value }) => value,
-  //         );
-  //         const {
-  //           negative,
-  //           positive,
-  //           neutral,
-  //           unknown: notRated,
-  //         } = Object.fromEntries(
-  //           sourceSentimentGroup.map(({ name, value }) => {
-  //             return [name, value / sentimanetTotal];
-  //           }),
-  //         );
-
-  //         _data2 = [
-  //           ..._data2,
-  //           [
-  //             sourceName,
-  //             negative ?? 0,
-  //             neutral ?? 0,
-  //             positive ?? 0,
-  //             notRated ?? 0,
-  //           ],
-  //         ];
-  //       }
-  //     }
-
-  //     return _data2;
-  //   } catch (error) {
-  //     console.log(error);
-  //     return [];
-  //   }
-  // }, [_data]);
   const groupKey = ['name', 'Negative', 'Neutral', 'Positive', 'Not Rated'];
   const colorKey = ['#333333', '#f03b20', '#feb24c', '#ffeda0', '#999999'];
 
@@ -129,6 +65,7 @@ export default function SentimentPresentages({
 
   const option = useMemo(
     () => ({
+      
       title: {
         show: title ? true : false,
         text: title,
@@ -136,6 +73,10 @@ export default function SentimentPresentages({
         textVerticalAlign: 'bottom',
       },
       grid: {
+        top: '10%',
+        left: '5%',
+        right: '5%',
+        bottom: '5%',
         containLabel: true,
       },
       legend: {},
