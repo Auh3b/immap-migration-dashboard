@@ -12,8 +12,10 @@ import TopPhrases from 'components/indicators/media/TopPhrases';
 import SentimentPresentages from 'components/indicators/media/SentimentPresentages';
 import SentimentTimeline from 'components/indicators/media/SentimentTimeline';
 import { wrap } from 'comlink';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { filter } from 'd3';
+import ClearFiltersButton from 'components/common/ClearFiltersButton';
+import { clearMediaFilters, removeMediaFilter } from 'store/mediaSlice';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,11 +36,13 @@ const MediaWorker = new Worker('./mediaViews/utils/mediaWorker', {
 });
 
 export default function Media() {
+  const dispatch = useDispatch();
   //@ts-ignore
-  const { setMediaData, getMediaData, runTransform, setFilters } = wrap(MediaWorker);
+  const { setMediaData, getMediaData, runTransform, setFilters } =
+    wrap(MediaWorker);
   const classes = useStyles();
   //@ts-ignore
-  const filters = useSelector((state)=> state.media.filters)
+  const filters = useSelector((state) => state.media.filters);
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -68,10 +72,10 @@ export default function Media() {
     };
   }, []);
 
-  useEffect(()=>{
-    setFilters(filters)
-  }, [filters])
- 
+  useEffect(() => {
+    setFilters(filters);
+  }, [filters]);
+
   useEffect(() => {
     (async function () {
       if (!isLoading) {
@@ -88,6 +92,10 @@ export default function Media() {
       wrap='nowrap'
       className={classes.root}
     >
+      <ClearFiltersButton
+        clearCallback={() => dispatch(clearMediaFilters())}
+        filtersCallback={() => Object.keys(filters).length > 0}
+      />
       <MediaFilterToolbar />
       <MediaAggregateIndicators
         deps={[data, filters]}
