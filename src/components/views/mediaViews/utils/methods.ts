@@ -27,7 +27,8 @@ export function getMediaAggregateIndicators(input: any) {
   const { sources, summary } = input;
   output = [
     ...output,
-    { name: MEDIA_SOURCES.MENCIONES_TOTALES, value: summary.volume },
+    //@ts-ignore
+    { name: MEDIA_SOURCES.MENCIONES_TOTALES, value: sum(sources, (d) => d.volume) },
   ];
   const sourceList = summary.sources;
   for (let sourceName of sourceList) {
