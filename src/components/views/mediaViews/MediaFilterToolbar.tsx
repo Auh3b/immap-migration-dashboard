@@ -5,6 +5,7 @@ import { addMediaFilter } from 'store/mediaSlice';
 import { _FilterTypes } from '@carto/react-core';
 import { dequal } from 'dequal';
 import { UNICEF_COLORS } from 'theme';
+import { deepOrange } from '@material-ui/core/colors';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -12,10 +13,10 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
   },
   clear: {
-    backgroundColor: UNICEF_COLORS[4],
+    backgroundColor: deepOrange[500],
     color: 'white',
     '&:hover': {
-      backgroundColor: UNICEF_COLORS[4],
+      backgroundColor: deepOrange[800],
       color: 'white',
     },
   },
