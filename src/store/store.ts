@@ -5,6 +5,7 @@ import appSlice from './appSlice';
 import mapSlice from './mapSlice';
 import introSlice from './introSlice';
 import reduceReducers from 'reduce-reducers';
+import mediaSlice from './mediaSlice';
 
 interface AppStore extends Store {
   asyncReducers: ReducersMapObject;
@@ -30,6 +31,7 @@ const staticReducers = {
   app: appSlice,
   map: mapSlice,
   intro: introSlice,
+  media: mediaSlice,
 };
 
 let store: AppStore = {

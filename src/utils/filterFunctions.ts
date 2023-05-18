@@ -1,9 +1,15 @@
-import { _FilterTypes } from '@carto/react-core';
+export enum FilterTypes {
+  IN = 'in',
+  BETWEEN = 'between', // [a, b] both are included
+  CLOSED_OPEN = 'closed_open', // [a, b) a is included, b is not
+  TIME = 'time',
+  STRING_SEARCH = 'stringSearch',
+}
 
 export type filterId = string | number;
 export type filterValue = string | number;
 export type filterField = string | number;
-export type filterType = _FilterTypes;
+export type filterType = FilterTypes;
 
 export interface filterItem {
   id: filterId;
@@ -11,6 +17,8 @@ export interface filterItem {
   column: filterField;
   type: filterType;
 }
+
+export type Filters = Record<string, filterItem>;
 
 function filterIn(column: string | number, value: number | string) {
   return (d: any) => d[column] === value;
@@ -29,18 +37,21 @@ function filterSearch(column: string | number, value: string) {
   };
 }
 
+function filterRange(column: string, value: [number, number]) {
+  const [start, end] = value;
+  return (d: any) => d[column] >= start && d[column] <= end;
+}
+
 export function filterFunctions(type: filterType) {
-  const filterMap = new Map([
-    [_FilterTypes.IN, filterIn],
-    [_FilterTypes.STRING_SEARCH, filterSearch],
+  const filterMap = new Map<string, Function>([
+    [FilterTypes.IN, filterIn],
+    [FilterTypes.STRING_SEARCH, filterSearch],
+    [FilterTypes.BETWEEN, filterRange],
   ]);
   return filterMap.get(type);
 }
 
-export function filterValues(
-  data: any[],
-  _filters: Record<string, filterItem>,
-) {
+export function filterValues(data: any[], _filters: Filters) {
   if (data.length === 0) {
     return data;
   }
@@ -52,7 +63,6 @@ export function filterValues(
   }
 
   let output: any[] = data;
-
   for (let { values, column, type } of filters) {
     output = output.filter(filterFunctions(type)(column, values[0]));
   }

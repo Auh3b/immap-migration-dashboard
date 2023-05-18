@@ -3,84 +3,35 @@ import { Grid, Typography, useTheme } from '@material-ui/core';
 import TitleWrapper from 'components/common/TitleWrapper';
 import ReactEcharts from 'components/common/customCharts/ReactEcharts';
 import { MEDIA_SOURCES_NAMES } from 'components/views/mediaViews/utils/mediaUtils';
+import { METHOD_NAMES } from 'components/views/mediaViews/utils/methodName';
 import { sum } from 'd3';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 export default function SentimentPresentages({
-  data: _data,
+  deps,
   isLoading,
-  title,
+  transform,
 }: {
-  data: any[];
+  deps: any[];
   isLoading?: Boolean;
-  title?: string
+  transform?: Function;
 }) {
   const theme = useTheme();
+  const [data, setData] = useState([]);
 
-  const data = useMemo(() => {
-    if (_data.length === 0) {
-      return [];
-    }
-    try {
-      //@ts-ignore
-      const { sources: _sources } = _data;
-      let _data2: any[] = [];
-      const sources = Object.entries(_sources);
-      for (let [sourceName, sourceValue] of sources) {
-        //@ts-ignore
-        const valueByDate = Object.values(sourceValue);
-        let sourceSentiment: any[] = [];
-        if (valueByDate.length !== 0) {
-          for (let { sentiment } of Object.values(valueByDate)) {
-            //@ts-ignore
-            for (let [key, { count }] of Object.entries(sentiment)) {
-              sourceSentiment = [
-                ...sourceSentiment,
-                { name: key, value: count },
-              ];
-            }
-          }
-          const sourceSentimentGroup = groupValuesByColumn({
-            data: sourceSentiment,
-            valuesColumns: ['value'],
-            keysColumn: 'name',
-            operation: AggregationTypes.SUM,
-          });
+  useEffect(() => {
+    (async function () {
+      setData(
+        await transform(METHOD_NAMES.MEDIA_SENTIMENT_PERCENTAGES, {
+          filters: deps[1].meltwater ?? {},
+        }),
+      );
+    })();
+    return () => {
+      setData([]);
+    };
+  }, [...deps]);
 
-          const sentimanetTotal = sum(
-            sourceSentimentGroup,
-            ({ value }) => value,
-          );
-          const {
-            negative,
-            positive,
-            neutral,
-            unknown: notRated,
-          } = Object.fromEntries(
-            sourceSentimentGroup.map(({ name, value }) => {
-              return [name, value / sentimanetTotal];
-            }),
-          );
-
-          _data2 = [
-            ..._data2,
-            [
-              sourceName,
-              negative ?? 0,
-              neutral ?? 0,
-              positive ?? 0,
-              notRated ?? 0,
-            ],
-          ];
-        }
-      }
-
-      return _data2;
-    } catch (error) {
-      console.log(error);
-      return [];
-    }
-  }, [_data]);
   const groupKey = ['name', 'Negative', 'Neutral', 'Positive', 'Not Rated'];
   const colorKey = ['#333333', '#f03b20', '#feb24c', '#ffeda0', '#999999'];
 
@@ -116,13 +67,11 @@ export default function SentimentPresentages({
 
   const option = useMemo(
     () => ({
-      title:{
-        show: title ? true : false,
-        text: title,
-        textAlign: 'left',
-        textVerticalAlign: 'bottom',
-      },
       grid: {
+        top: '10%',
+        left: '5%',
+        right: '5%',
+        bottom: '5%',
         containLabel: true,
       },
       legend: {},
@@ -139,23 +88,24 @@ export default function SentimentPresentages({
         //@ts-ignore
         backgroundColor: theme.palette.other.tooltip,
         formatter(params: any[]) {
-          const {axisValue} = params[0]
-          const axisName = MEDIA_SOURCES_NAMES.get(axisValue)
-          const legends = params.map(({color, seriesName: name, value}:any) => (`
+          const { axisValue } = params[0];
+          const axisName = MEDIA_SOURCES_NAMES.get(axisValue);
+          const legends = params
+            .map(
+              ({ color, seriesName: name, value }: any) => `
             <span style='display: flex; align-items: center; justify-content: space-between; min-width: 100px; width: 100%;'>
               <span style='display: flex; align-items: center; justify-content: space-between;'>
                 <span style='background-color: ${color}; width:  10px; height: 10px; margin-right: 10px; border-radius: 100%;'></span>
                 <span> ${name}</span>
               </span>
-              <span>${Math.round(value*100)}%</span>
-            </span>`
-        )).join('')
-          return (
-            `<span style='width: 150px; height: 100%; display:flex; flex-direction: column; gap: 5px;'>
+              <span>${Math.round(value * 100)}%</span>
+            </span>`,
+            )
+            .join('');
+          return `<span style='width: 150px; height: 100%; display:flex; flex-direction: column; gap: 5px;'>
               <span>${axisName}</span>
               ${legends}
-            </span>`
-          )
+            </span>`;
         },
       },
       xAxis: {
@@ -174,7 +124,10 @@ export default function SentimentPresentages({
 
   return (
     <Grid item xs={3}>
-      <TitleWrapper title='Sentimiento por tipo de red social' isLoading={isLoading}>
+      <TitleWrapper
+        title='Sentimiento por tipo de red social'
+        isLoading={isLoading}
+      >
         <ReactEcharts option={option} style={{ height: 400 }} />
       </TitleWrapper>
     </Grid>

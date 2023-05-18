@@ -1,18 +1,10 @@
 import { Grid, Paper, makeStyles } from '@material-ui/core';
 import ComponentFallback from 'components/common/ComponentFallback';
 const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '100%',
-    height: '100%',
-  },
-  paper: {
-    width: '100%',
-    height: '100%',
-  },
+  root: {},
+  paper: {},
   content: {
-    width: '100%',
-    height: '100%',
-    padding: theme.spacing(2)
+    padding: theme.spacing(2),
   },
 }));
 export default function MediaIndicators({ isLoading, children }: any) {
