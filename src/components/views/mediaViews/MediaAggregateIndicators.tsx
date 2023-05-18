@@ -1,4 +1,4 @@
-import { Grid, Paper, makeStyles, useTheme } from '@material-ui/core';
+import { Grid, Paper, Typography, makeStyles, useTheme } from '@material-ui/core';
 import SourceIndictor from 'components/indicators/media/utils/SourceIndictor';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
@@ -10,9 +10,12 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
   },
-  paper: {
-    height: '100%',
-    width: '100%',
+  paper: {},
+  title:{
+    ...theme.typography.subtitle1,
+    textTransform: 'uppercase',
+    fontSize: theme.spacing(2),
+    padding: theme.spacing(2),
   },
   indicatorContainer: {
     height: '100%',
@@ -23,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function MediaAggregateIndicators({
-  data: _data,
+  deps,
   isLoading,
   transform,
 }: any) {
@@ -33,16 +36,19 @@ export default function MediaAggregateIndicators({
 
   useEffect(() => {
     (async function () {
-      setData(await transform(METHOD_NAMES.MEDIA_AGGREGATES));
+      setData(await transform(METHOD_NAMES.MEDIA_AGGREGATES, {filters: deps[1].meltwater ?? {}}));
     })();
     return () => {
       setData([]);
     };
-  }, [_data]);
+  }, [...deps]);
 
   return (
     <Grid item className={classes.root}>
       <Paper className={classes.paper}>
+        <Typography className={classes.title}>
+          Número de menciones por red social relacionadas con migración en la región
+        </Typography>
         <Grid
           container
           justifyContent='space-between'
