@@ -5,11 +5,11 @@ import TitleWrapper from 'components/common/TitleWrapper';
 import { METHOD_NAMES } from 'components/views/mediaViews/utils/methodName';
 const regionName = new Intl.DisplayNames(['en'], { type: 'region' });
 export default function MediaOrigin({
-  data: _data,
+  deps,
   isLoading,
   transform,
 }: {
-  data: any[];
+  deps: any[];
   isLoading?: Boolean;
   transform?: Function;
 }) {
@@ -17,12 +17,16 @@ export default function MediaOrigin({
 
   useEffect(() => {
     (async function () {
-      setData(await transform(METHOD_NAMES.MEDIA_ORIGINS));
+      setData(
+        await transform(METHOD_NAMES.MEDIA_ORIGINS, {
+          filters: deps[1].meltwater ?? {},
+        }),
+      );
     })();
     return () => {
       setData([]);
     };
-  }, [_data]);
+  }, [...deps]);
 
   return (
     <Grid item xs={3}>

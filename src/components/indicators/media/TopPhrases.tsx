@@ -5,26 +5,28 @@ import { METHOD_NAMES } from 'components/views/mediaViews/utils/methodName';
 import { useEffect, useState } from 'react';
 
 export default function TopPhrases({
-  data: _data,
+  deps,
   isLoading,
-  title,
   transform,
 }: {
-  data: any[];
+  deps: any[];
   isLoading?: Boolean;
-  title?: string;
   transform?: Function;
 }) {
   const [data, setData] = useState([]);
 
   useEffect(() => {
     (async function () {
-      setData(await transform(METHOD_NAMES.MEDIA_TOP_PHRASES));
+      setData(
+        await transform(METHOD_NAMES.MEDIA_TOP_PHRASES, {
+          filters: deps[1].meltwater ?? {},
+        }),
+      );
     })();
     return () => {
       setData([]);
     };
-  }, [_data]);
+  }, [...deps]);
 
   return (
     <Grid xs={3} item>

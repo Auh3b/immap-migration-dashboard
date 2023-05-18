@@ -5,13 +5,12 @@ import { METHOD_NAMES } from 'components/views/mediaViews/utils/methodName';
 import { useEffect, useMemo, useState } from 'react';
 
 export default function SentimentTimeline({
-  data: _data,
+  deps,
   isLoading,
   transform,
 }: {
-  data: any[];
+  deps: any[];
   isLoading?: Boolean;
-  title?: string;
   transform?: Function;
 }) {
   const theme = useTheme();
@@ -19,12 +18,16 @@ export default function SentimentTimeline({
 
   useEffect(() => {
     (async function () {
-      setData(await transform(METHOD_NAMES.MEDIA_SENTIMENT_HISTORY));
+      setData(
+        await transform(METHOD_NAMES.MEDIA_SENTIMENT_HISTORY, {
+          filters: deps[1].meltwater ?? {},
+        }),
+      );
     })();
     return () => {
       setData([]);
     };
-  }, [_data]);
+  }, [...deps]);
 
   const groupKey = ['name', 'Negative', 'Neutral', 'Positive', 'Not Rated'];
   const colorKey = ['#333333', '#f03b20', '#feb24c', '#ffeda0', '#999999'];

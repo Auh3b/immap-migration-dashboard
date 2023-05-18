@@ -8,14 +8,12 @@ import { sum } from 'd3';
 import { useEffect, useMemo, useState } from 'react';
 
 export default function SentimentPresentages({
-  data: _data,
+  deps,
   isLoading,
-  title,
   transform,
 }: {
-  data: any[];
+  deps: any[];
   isLoading?: Boolean;
-  title?: string;
   transform?: Function;
 }) {
   const theme = useTheme();
@@ -23,12 +21,16 @@ export default function SentimentPresentages({
 
   useEffect(() => {
     (async function () {
-      setData(await transform(METHOD_NAMES.MEDIA_SENTIMENT_PERCENTAGES));
+      setData(
+        await transform(METHOD_NAMES.MEDIA_SENTIMENT_PERCENTAGES, {
+          filters: deps[1].meltwater ?? {},
+        }),
+      );
     })();
     return () => {
       setData([]);
     };
-  }, [_data]);
+  }, [...deps]);
 
   const groupKey = ['name', 'Negative', 'Neutral', 'Positive', 'Not Rated'];
   const colorKey = ['#333333', '#f03b20', '#feb24c', '#ffeda0', '#999999'];
@@ -65,12 +67,6 @@ export default function SentimentPresentages({
 
   const option = useMemo(
     () => ({
-      title: {
-        show: title ? true : false,
-        text: title,
-        textAlign: 'left',
-        textVerticalAlign: 'bottom',
-      },
       grid: {
         top: '10%',
         left: '5%',
