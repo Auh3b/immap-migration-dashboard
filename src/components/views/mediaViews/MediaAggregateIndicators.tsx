@@ -1,10 +1,10 @@
 import { Grid, Paper, makeStyles, useTheme } from '@material-ui/core';
 import SourceIndictor from 'components/indicators/media/utils/SourceIndictor';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useMemo } from 'react';
-import { sum } from 'd3';
+import { useEffect, useState } from 'react';
 import ComponentFallback from 'components/common/ComponentFallback';
-import { FA_MAP, MEDIA_SOURCES } from './utils/mediaUtils';
+import { FA_MAP } from './utils/mediaUtils';
+import { METHOD_NAMES } from './utils/methodName';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,37 +25,29 @@ const useStyles = makeStyles((theme) => ({
 export default function MediaAggregateIndicators({
   data: _data,
   isLoading,
+  transform,
 }: any) {
   const theme = useTheme();
   const classes = useStyles();
-  const data = useMemo<{ name: string; value: number }[] | null>(() => {
-    if (_data.length === 0) {
-      return [];
-    }
+  const [data, setData] = useState([]);
 
-    let output: any = [];
-    const { sources, summary } = _data;
-    output = [
-      ...output,
-      { name: MEDIA_SOURCES.MENCIONES_TOTALES, value: summary.volume },
-    ];
-    const sourceList = summary.sources;
-    for (let source of sourceList) {
-      const currentSource = sources[source];
-      const currentSourceCount = sum(
-        Object.values(currentSource).map(({ volume }: any) => volume),
-      );
-      if (currentSourceCount) {
-        output = [...output, { name: source, value: currentSourceCount }];
-      }
-    }
-
-    return output;
+  useEffect(() => {
+    (async function () {
+      setData(await transform(METHOD_NAMES.MEDIA_AGGREGATES));
+    })();
+    return () => {
+      setData([]);
+    };
   }, [_data]);
+
   return (
     <Grid item className={classes.root}>
       <Paper className={classes.paper}>
-        <Grid container className={classes.indicatorContainer}>
+        <Grid
+          container
+          justifyContent='space-between'
+          className={classes.indicatorContainer}
+        >
           {data.length > 0 &&
             !isLoading &&
             data.map(({ name, value }, i) => (

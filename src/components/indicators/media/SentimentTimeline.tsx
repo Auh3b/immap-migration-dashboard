@@ -1,77 +1,29 @@
-import { AggregationTypes, groupValuesByColumn } from '@carto/react-core';
-import { Grid, Typography, makeStyles, useTheme } from '@material-ui/core';
+import { Grid, useTheme } from '@material-ui/core';
 import TitleWrapper from 'components/common/TitleWrapper';
 import ReactEcharts from 'components/common/customCharts/ReactEcharts';
-import { useMemo } from 'react';
-
-const useStyles = makeStyles((theme)=> ({
-  title:{
-    textTransform: 'uppercase'
-  }
-}))
+import { METHOD_NAMES } from 'components/views/mediaViews/utils/methodName';
+import { useEffect, useMemo, useState } from 'react';
 
 export default function SentimentTimeline({
   data: _data,
   isLoading,
+  transform,
 }: {
   data: any[];
   isLoading?: Boolean;
+  title?: string;
+  transform?: Function;
 }) {
-  const classes = useStyles()
   const theme = useTheme();
+  const [data, setData] = useState([]);
 
-  const data = useMemo(() => {
-    if (_data.length === 0) {
-      return [];
-    }
-    try {
-      //@ts-ignore
-      const { sources: _sources } = _data;
-      let _data2: any[] = [];
-      const sources = Object.entries(_sources);
-      for (let [sourceName, sourceValue] of sources) {
-        //@ts-ignore
-        const valueByDate = Object.entries(sourceValue);
-        if (valueByDate.length !== 0) {
-          for (let [date, { sentiment }] of Object.values(valueByDate)) {
-            let sourceSentiment: any[] = [];
-            //@ts-ignore
-            for (let [key, { count }] of Object.entries(sentiment)) {
-              sourceSentiment = [
-                ...sourceSentiment,
-                { name: key, value: count },
-              ];
-            }
-            const sourceSentimentGroup = groupValuesByColumn({
-              data: sourceSentiment,
-              valuesColumns: ['value'],
-              keysColumn: 'name',
-              operation: AggregationTypes.SUM,
-            });
-
-            const {
-              negative,
-              positive,
-              neutral,
-              unknown: notRated,
-            } = Object.fromEntries(
-              sourceSentimentGroup.map(({ name, value }) => {
-                return [name, value];
-              }),
-            );
-            _data2 = [
-              ..._data2,
-              [date, negative ?? 0, neutral ?? 0, positive ?? 0, notRated ?? 0],
-            ];
-          }
-        }
-      }
-
-      return _data2;
-    } catch (error) {
-      console.log(error);
-      return [];
-    }
+  useEffect(() => {
+    (async function () {
+      setData(await transform(METHOD_NAMES.MEDIA_SENTIMENT_HISTORY));
+    })();
+    return () => {
+      setData([]);
+    };
   }, [_data]);
 
   const groupKey = ['name', 'Negative', 'Neutral', 'Positive', 'Not Rated'];
@@ -126,8 +78,11 @@ export default function SentimentTimeline({
 
   return (
     <Grid item xs={6}>
-      <TitleWrapper title='Serie histórica de sentimiento' isLoading={isLoading}>
-        <ReactEcharts option={option} style={{height: 400}}/>
+      <TitleWrapper
+        title='Serie histórica de sentimiento'
+        isLoading={isLoading}
+      >
+        <ReactEcharts option={option} style={{ height: 400 }} />
       </TitleWrapper>
     </Grid>
   );

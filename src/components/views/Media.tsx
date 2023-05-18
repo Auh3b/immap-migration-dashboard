@@ -11,6 +11,7 @@ import MediaOrigin from 'components/indicators/media/MediaOrigin';
 import TopPhrases from 'components/indicators/media/TopPhrases';
 import SentimentPresentages from 'components/indicators/media/SentimentPresentages';
 import SentimentTimeline from 'components/indicators/media/SentimentTimeline';
+import { wrap } from 'comlink';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,7 +26,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const MediaWorker = new Worker('./mediaViews/utils/mediaWorker', {
+  name: 'MediaWorker',
+  type: 'module',
+});
+
 export default function Media() {
+  //@ts-ignore
+  const { setMediaData, getMediaData, runTransform } = wrap(MediaWorker);
   const classes = useStyles();
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -33,11 +41,15 @@ export default function Media() {
   const fetchMediaData = async () => {
     setIsLoading(true);
     try {
-      const dataRef = ref(fireStorage, 'data/summarised_meltwater_data.json');
+      const dataRef = ref(
+        fireStorage,
+        'data/summarised_meltwater_data_v2.json',
+      );
       const dataUrl = await getDownloadURL(dataRef);
       const dataReq = await fetch(dataUrl);
       const dataRes = await dataReq.json();
-      setData(dataRes);
+      // setData(dataRes);
+      await setMediaData(dataRes);
     } catch (error) {
       setError(error.message);
     } finally {
@@ -52,6 +64,14 @@ export default function Media() {
     };
   }, []);
 
+  useEffect(() => {
+    (async function () {
+      if (!isLoading) {
+        setData(await getMediaData());
+      }
+    })();
+  }, [isLoading]);
+  console.log(data);
   return (
     <Grid
       container
@@ -61,15 +81,31 @@ export default function Media() {
       className={classes.root}
     >
       <MediaFilterToolbar />
-      <MediaAggregateIndicators data={data} isLoading={isLoading} />
+      <MediaAggregateIndicators
+        data={data}
+        isLoading={isLoading}
+        transform={runTransform}
+      />
       <MediaIndicators isLoading={isLoading}>
         <Grid item xs={12} container>
-          <MediaOrigin data={data} isLoading={isLoading} />
-          {/* <TopPhrases data={data} isLoading={isLoading} /> */}
-          <SentimentPresentages data={data} isLoading={isLoading} />
-          <SentimentTimeline data={data} isLoading={isLoading} />
+          {/* <MediaOrigin
+            data={data}
+            isLoading={isLoading}
+            transform={runTransform}
+          />
+          <SentimentPresentages
+            data={data}
+            isLoading={isLoading}
+            transform={runTransform}
+          />
+          <SentimentTimeline
+            data={data}
+            isLoading={isLoading}
+            transform={runTransform}
+          /> */}
         </Grid>
         <Grid item xs={12} container>
+          {/* <TopPhrases data={data} isLoading={isLoading} transform={runTransform}  /> */}
         </Grid>
       </MediaIndicators>
     </Grid>
