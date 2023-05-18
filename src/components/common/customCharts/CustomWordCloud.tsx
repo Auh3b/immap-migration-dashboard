@@ -14,25 +14,25 @@ const margin = {
   bottom: 0,
 };
 
-const useStyles = makeStyles((theme)=>({
-  root:{
-    '& svg':{
+const useStyles = makeStyles((theme) => ({
+  root: {
+    '& svg': {
       // height: ({height}:any) => height ? height : 300,
     },
-    '& text':{
+    '& text': {
       dominantBaseline: 'unset',
-      y: '0'
-    }
-  }
-}))
+      y: '0',
+    },
+  },
+}));
 
 export default function CustomWordCloud({
   data: _data,
 }: {
   data: { name: string; value: number }[];
 }) {
-  const classes = useStyles({height})
-  const theme = useTheme()
+  const classes = useStyles({ height });
+  const theme = useTheme();
   const data = useMemo(() => {
     if (_data.length === 0) {
       return [];
@@ -52,7 +52,7 @@ export default function CustomWordCloud({
       .rotate(0)
       .padding(5)
       .font('Barlow')
-      .fontSize((d) => Math.sqrt(d.size/1000) * 15)
+      .fontSize((d) => Math.sqrt(d.size / 1000) * 15)
       .on('word', ({ x, y, text, size, font }: any) => {
         output = [...output, [x, y, text, size, font]];
       });
@@ -61,10 +61,15 @@ export default function CustomWordCloud({
     return output;
   }, [_data]);
 
-  const getColor = useCallback((value)=>{
-    const colorScale = scaleSequential(interpolateCividis).domain(extent(data, d=> d[3]))
-    return colorScale(value)
-  }, [_data])
+  const getColor = useCallback(
+    (value) => {
+      const colorScale = scaleSequential(interpolateCividis).domain(
+        extent(data, (d) => d[3]),
+      );
+      return colorScale(value);
+    },
+    [_data],
+  );
 
   const series = useMemo(
     () => [
@@ -76,13 +81,13 @@ export default function CustomWordCloud({
           const y = api.value(1);
           const text = api.value(2);
           const size = api.value(3);
-          const fontFamily = api.value(4)
+          const fontFamily = api.value(4);
           const font = api.font({
             fontSize: size,
             fontFamily,
             fontWeight: 'bold',
           });
- 
+
           return {
             type: 'text',
             x,
@@ -103,24 +108,22 @@ export default function CustomWordCloud({
   );
   const option = useMemo(
     () => ({
-      tooltip:{
-      padding: [theme.spacing(0.5), theme.spacing(1)],
-      borderWidth: 0,
-      textStyle: {
-        ...theme.typography.caption,
-        fontSize: 12,
-        lineHeight: 16,
-        color: theme.palette.common.white,
+      tooltip: {
+        padding: [theme.spacing(0.5), theme.spacing(1)],
+        borderWidth: 0,
+        textStyle: {
+          ...theme.typography.caption,
+          fontSize: 12,
+          lineHeight: 16,
+          color: theme.palette.common.white,
+        },
+        //@ts-ignore
+        backgroundColor: theme.palette.other.tooltip,
+        formatter(params: any) {
+          console.log(params);
+          return `<span>${params.value}</span>`;
+        },
       },
-      //@ts-ignore
-      backgroundColor: theme.palette.other.tooltip,
-      formatter(params:any){
-        console.log(params)
-        return (
-         `<span>${params.value}</span>`
-        )
-      }
-    },
       series,
     }),
     [series],
