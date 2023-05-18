@@ -13,9 +13,8 @@ import SentimentPresentages from 'components/indicators/media/SentimentPresentag
 import SentimentTimeline from 'components/indicators/media/SentimentTimeline';
 import { wrap } from 'comlink';
 import { useDispatch, useSelector } from 'react-redux';
-import { filter } from 'd3';
 import ClearFiltersButton from 'components/common/ClearFiltersButton';
-import { clearMediaFilters, removeMediaFilter } from 'store/mediaSlice';
+import { clearMediaFilters } from 'store/mediaSlice';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -102,28 +101,32 @@ export default function Media() {
         isLoading={isLoading}
         transform={runTransform}
       />
-      {/* <MediaIndicators isLoading={isLoading}>
+      <MediaIndicators isLoading={isLoading}>
         <Grid item xs={12} container>
           <MediaOrigin
-            data={data}
+            deps={[data, filters]}
             isLoading={isLoading}
             transform={runTransform}
           />
           <SentimentPresentages
-            data={data}
+            deps={[data, filters]}
             isLoading={isLoading}
             transform={runTransform}
           />
           <SentimentTimeline
-            data={data}
+            deps={[data, filters]}
             isLoading={isLoading}
             transform={runTransform}
           />
         </Grid>
         <Grid item xs={12} container>
-          <TopPhrases data={data} isLoading={isLoading} transform={runTransform}  />
+          <TopPhrases
+            deps={[data, filters]}
+            isLoading={isLoading}
+            transform={runTransform}
+          />
         </Grid>
-      </MediaIndicators> */}
+      </MediaIndicators>
     </Grid>
   );
 }
