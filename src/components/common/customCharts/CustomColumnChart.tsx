@@ -1,5 +1,7 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import ReactEcharts from './ReactEcharts';
+import { format } from 'd3';
+import { useTheme } from '@material-ui/core';
 
 export default function CustomColumnChart({
   data,
@@ -8,6 +10,7 @@ export default function CustomColumnChart({
   data: Record<string, string | number>[];
   labelFormater: Function;
 }) {
+  const theme = useTheme()
   const series = useMemo(
     () => [
       {
@@ -19,6 +22,18 @@ export default function CustomColumnChart({
   );
   const option = useMemo(
     () => ({
+      tooltip:{
+        padding: [theme.spacing(0.5), theme.spacing(1)],
+        borderWidth: 0,
+        textStyle: {
+          ...theme.typography.caption,
+          fontSize: 16,
+          lineHeight: 16,
+          color: theme.palette.common.white,
+        },
+        //@ts-ignore
+        backgroundColor: theme.palette.other.tooltip,
+      },
       grid: {
         top: '10%',
         left: '5%',
@@ -28,6 +43,11 @@ export default function CustomColumnChart({
       },
       xAxis: {
         type: 'value',
+        axisLabel: {
+          formatter(value: number) {
+            return format('~s')(value);
+          },
+        },
       },
       yAxis: {
         type: 'category',
