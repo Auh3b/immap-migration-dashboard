@@ -15,6 +15,7 @@ import { wrap } from 'comlink';
 import { useDispatch, useSelector } from 'react-redux';
 import ClearFiltersButton from 'components/common/ClearFiltersButton';
 import { clearMediaFilters } from 'store/mediaSlice';
+import MediaEngagement from 'components/indicators/media/MediaEngagement';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -102,7 +103,7 @@ export default function Media() {
         transform={runTransform}
       />
       <MediaIndicators isLoading={isLoading}>
-        <Grid item xs={12} container>
+        {/* <Grid item xs={12} container> */}
           <MediaOrigin
             deps={[data, filters]}
             isLoading={isLoading}
@@ -113,19 +114,24 @@ export default function Media() {
             isLoading={isLoading}
             transform={runTransform}
           />
-          <SentimentTimeline
-            deps={[data, filters]}
-            isLoading={isLoading}
-            transform={runTransform}
-          />
-        </Grid>
-        <Grid item xs={12} container>
+        {/* </Grid> */}
           <TopPhrases
             deps={[data, filters]}
             isLoading={isLoading}
             transform={runTransform}
           />
-        </Grid>
+          <SentimentTimeline
+            deps={[data, filters]}
+            isLoading={isLoading}
+            transform={runTransform}
+          />
+          <MediaEngagement
+            deps={[data, filters]}
+            isLoading={isLoading}
+            transform={runTransform}
+          />
+        {/* <Grid item xs={12} container>
+        </Grid> */}
       </MediaIndicators>
     </Grid>
   );

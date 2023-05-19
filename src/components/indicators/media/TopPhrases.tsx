@@ -29,7 +29,7 @@ export default function TopPhrases({
   }, [...deps]);
 
   return (
-    <Grid xs={3} item>
+    <Grid xs={12} lg={4} item>
       <TitleWrapper title='Palabras asociadas' isLoading={isLoading}>
         <CustomWordCloud data={data} />
       </TitleWrapper>

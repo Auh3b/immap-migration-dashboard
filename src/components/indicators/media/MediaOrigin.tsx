@@ -29,7 +29,7 @@ export default function MediaOrigin({
   }, [...deps]);
 
   return (
-    <Grid item xs={3}>
+    <Grid item xs={12} lg={4}>
       <TitleWrapper title='¿De dónde escribe?' isLoading={isLoading}>
         {data.length > 0 && !isLoading && (
           <CustomColumnChart
