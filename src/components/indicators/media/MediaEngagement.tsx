@@ -27,7 +27,7 @@ export default function MediaEngagement({
       setData([]);
     };
   }, [...deps]);
-  console.log(data);
+
   return (
     <Grid item xs={12}>
       <TitleWrapper title='Serie de compromiso histórico'>
