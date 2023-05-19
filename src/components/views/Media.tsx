@@ -12,9 +12,7 @@ import TopPhrases from 'components/indicators/media/TopPhrases';
 import SentimentPresentages from 'components/indicators/media/SentimentPresentages';
 import SentimentTimeline from 'components/indicators/media/SentimentTimeline';
 import { wrap } from 'comlink';
-import { useDispatch, useSelector } from 'react-redux';
-import ClearFiltersButton from 'components/common/ClearFiltersButton';
-import { clearMediaFilters } from 'store/mediaSlice';
+import { useSelector } from 'react-redux';
 import MediaEngagement from 'components/indicators/media/MediaEngagement';
 
 const useStyles = makeStyles((theme) => ({
@@ -36,7 +34,6 @@ const MediaWorker = new Worker('./mediaViews/utils/mediaWorker', {
 });
 
 export default function Media() {
-  const dispatch = useDispatch();
   //@ts-ignore
   const { setMediaData, getMediaData, runTransform, setFilters } =
     wrap(MediaWorker);
@@ -56,7 +53,6 @@ export default function Media() {
       const dataUrl = await getDownloadURL(dataRef);
       const dataReq = await fetch(dataUrl);
       const dataRes = await dataReq.json();
-      // setData(dataRes);
       await setMediaData(dataRes);
     } catch (error) {
       setError(error.message);
@@ -99,35 +95,31 @@ export default function Media() {
         transform={runTransform}
       />
       <MediaIndicators isLoading={isLoading}>
-        {/* <Grid item xs={12} container> */}
-          <MediaOrigin
-            deps={[data, filters]}
-            isLoading={isLoading}
-            transform={runTransform}
-          />
-          <SentimentPresentages
-            deps={[data, filters]}
-            isLoading={isLoading}
-            transform={runTransform}
-          />
-        {/* </Grid> */}
-          <TopPhrases
-            deps={[data, filters]}
-            isLoading={isLoading}
-            transform={runTransform}
-          />
-          <SentimentTimeline
-            deps={[data, filters]}
-            isLoading={isLoading}
-            transform={runTransform}
-          />
-          <MediaEngagement
-            deps={[data, filters]}
-            isLoading={isLoading}
-            transform={runTransform}
-          />
-        {/* <Grid item xs={12} container>
-        </Grid> */}
+        <MediaOrigin
+          deps={[data, filters]}
+          isLoading={isLoading}
+          transform={runTransform}
+        />
+        <SentimentPresentages
+          deps={[data, filters]}
+          isLoading={isLoading}
+          transform={runTransform}
+        />
+        <TopPhrases
+          deps={[data, filters]}
+          isLoading={isLoading}
+          transform={runTransform}
+        />
+        <SentimentTimeline
+          deps={[data, filters]}
+          isLoading={isLoading}
+          transform={runTransform}
+        />
+        <MediaEngagement
+          deps={[data, filters]}
+          isLoading={isLoading}
+          transform={runTransform}
+        />
       </MediaIndicators>
     </Grid>
   );
