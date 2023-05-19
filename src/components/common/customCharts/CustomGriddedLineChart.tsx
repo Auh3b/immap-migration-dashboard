@@ -167,6 +167,6 @@ export default function CustomGriddedLineChart({
     }),
     [series, grid, xAxis, yAxis],
   );
-  console.log(option);
+
   return <ReactEcharts option={option} opts={opts} style={style} />;
 }
