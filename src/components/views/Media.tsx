@@ -92,11 +92,7 @@ export default function Media() {
       wrap='nowrap'
       className={classes.root}
     >
-      <ClearFiltersButton
-        clearCallback={() => dispatch(clearMediaFilters())}
-        filtersCallback={() => Object.keys(filters).length > 0}
-      />
-      <MediaFilterToolbar />
+      <MediaFilterToolbar filters={filters} />
       <MediaAggregateIndicators
         deps={[data, filters]}
         isLoading={isLoading}
