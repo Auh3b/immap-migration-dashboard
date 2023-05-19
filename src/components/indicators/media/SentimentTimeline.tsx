@@ -84,7 +84,7 @@ export default function SentimentTimeline({
   );
 
   return (
-    <Grid item xs={6}>
+    <Grid item xs={12}>
       <TitleWrapper
         title='Serie histórica de sentimiento'
         isLoading={isLoading}

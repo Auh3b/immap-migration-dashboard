@@ -1,12 +1,13 @@
 import { expose } from 'comlink';
 import { METHOD_NAMES } from './methodName';
 import {
+  getHistoricalEngagementBySource,
   getMediaAggregateIndicators,
   getMediaOrigins,
   getSentimentHistory,
   getSentimentPercentages,
   getTopPhrases,
-} from './methods';
+} from './mediaWorkerMethods';
 import { Filters, filterValues } from 'utils/filterFunctions';
 
 const funcMap = new Map([
@@ -15,6 +16,7 @@ const funcMap = new Map([
   [METHOD_NAMES.MEDIA_SENTIMENT_HISTORY, getSentimentHistory],
   [METHOD_NAMES.MEDIA_SENTIMENT_PERCENTAGES, getSentimentPercentages],
   [METHOD_NAMES.MEDIA_TOP_PHRASES, getTopPhrases],
+  [METHOD_NAMES.MEDIA_ENGAGEMENT_HISTORY, getHistoricalEngagementBySource],
 ]);
 
 interface Params {

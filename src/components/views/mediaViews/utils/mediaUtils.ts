@@ -1,6 +1,7 @@
 import {
   faHashtag,
   faNewspaper,
+  faSquareRss,
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
 import {
@@ -20,6 +21,7 @@ export const MEDIA_SOURCES = {
   YOUTUBE: 'youtube',
   FORUMS: 'forums',
   REDDIT: 'reddit',
+  SOCIAL_BLOGS: 'social_blogs',
 };
 
 export const MEDIA_SOURCES_NAMES = new Map([
@@ -30,6 +32,7 @@ export const MEDIA_SOURCES_NAMES = new Map([
   [MEDIA_SOURCES.REDDIT, 'Reddit'],
   [MEDIA_SOURCES.YOUTUBE, 'Youtube'],
   [MEDIA_SOURCES.FORUMS, 'Forums'],
+  [MEDIA_SOURCES.SOCIAL_BLOGS, 'Social Blogs'],
 ]);
 
 export const FA_MAP = new Map([
@@ -41,4 +44,5 @@ export const FA_MAP = new Map([
   [MEDIA_SOURCES.YOUTUBE, faYoutube],
   [MEDIA_SOURCES.FORUMS, faUser],
   [MEDIA_SOURCES.MENCIONES_TOTALES, faHashtag],
+  [MEDIA_SOURCES.SOCIAL_BLOGS, faSquareRss],
 ]);

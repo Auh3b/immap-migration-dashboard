@@ -63,7 +63,6 @@ export default function CustomWordCloud({
     return output;
   }, [_data]);
 
-  console.log(data);
   const getColor = useCallback(
     (value) => {
       const colorScale = scaleSequential(interpolateSinebow).domain(

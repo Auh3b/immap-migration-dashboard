@@ -1,56 +1,59 @@
-import { ascending, descending, rollup, sum } from 'd3';
+import { ascending, descending, flatRollup, sum } from 'd3';
 import { MEDIA_SOURCES } from './mediaUtils';
+import groupByValue from 'utils/groupByValue';
 
-function groupByColumn({
-  input,
-  keyColumn,
-  valueColumn,
-}: {
-  input: any[];
-  keyColumn: string;
-  valueColumn: string;
-}) {
-  const outputMap = rollup(
-    input,
-    (v) => sum(v, (d) => d[valueColumn]),
-    (d) => d[keyColumn],
-  );
-  const output = Array.from(outputMap).map(([name, value]) => ({
-    name,
-    value,
-  }));
-  return output;
+interface Summary {
+  volume: number;
+  sources: string[];
 }
 
-export function getMediaAggregateIndicators(input: any) {
+type FieldValues = [string, number];
+
+interface SourceField {
+  date: string;
+  source: string;
+  volume: number;
+  topPhrases: FieldValues;
+  sentiment: FieldValues;
+  country: FieldValues;
+  languages: FieldValues;
+  views: number;
+}
+
+type Sources = Partial<SourceField[]>;
+
+interface Input {
+  summary: Partial<Summary>;
+  sources: Sources;
+}
+
+export function getMediaAggregateIndicators(input: Partial<Input>) {
   let output: any[] = [];
   const { sources, summary } = input;
   output = [
     ...output,
     {
       name: MEDIA_SOURCES.MENCIONES_TOTALES,
-      //@ts-ignore
+
       value: sum(sources, (d) => d.volume),
     },
   ];
   const sourceList = summary.sources;
   for (let sourceName of sourceList) {
     const currentSourceData = sources.filter(
-      //@ts-ignore
       ({ source }) => source === sourceName,
     );
-    //@ts-ignore
+
     const currentSourceCount = sum(currentSourceData, (d) => d.volume);
     if (currentSourceCount) {
       output = [...output, { name: sourceName, value: currentSourceCount }];
     }
   }
-  //@ts-ignore
+
   return output.sort((a, b) => descending(a.value, b.value));
 }
 
-export function getMediaOrigins(input: any) {
-  //@ts-ignore
+export function getMediaOrigins(input: Partial<Input>) {
   const { sources: _sources } = input;
   let _data2: any[] = [];
   const groupsArray = _sources.map(({ countries }: any) => countries);
@@ -60,20 +63,18 @@ export function getMediaOrigins(input: any) {
     }
   }
 
-  const output = groupByColumn({
+  const output = groupByValue({
     input: _data2,
     valueColumn: 'value',
     keyColumn: 'name',
   })
-    //@ts-ignore
     .sort((a, b) => descending(a.value, b.value))
     .slice(0, 10);
-  //@ts-ignore
+
   return output.sort((a, b) => ascending(a.value, b.value));
 }
 
-export function getSentimentPercentages(input: any) {
-  //@ts-ignore
+export function getSentimentPercentages(input: Partial<Input>) {
   const { sources: _sources, summary } = input;
   let _data2: any[] = [];
   const sources = summary.sources;
@@ -88,7 +89,7 @@ export function getSentimentPercentages(input: any) {
       }
     }
 
-    const sourceSentimentGroup = groupByColumn({
+    const sourceSentimentGroup = groupByValue({
       input: groupSentiment,
       valueColumn: 'value',
       keyColumn: 'name',
@@ -117,8 +118,8 @@ export function getSentimentPercentages(input: any) {
   return _data2;
 }
 
-export function getSentimentHistory(input: any) {
-  //     //@ts-ignore
+export function getSentimentHistory(input: Partial<Input>) {
+  //
   const { sources: _sources } = input;
   let _data2: any[] = [];
   let dates = Array.from(new Set(_sources.map(({ date }: any) => date)));
@@ -132,7 +133,7 @@ export function getSentimentHistory(input: any) {
         groupSentiment = [...groupSentiment, { name, value }];
       }
     }
-    const sourceSentimentGroup = groupByColumn({
+    const sourceSentimentGroup = groupByValue({
       input: groupSentiment,
       valueColumn: 'value',
       keyColumn: 'name',
@@ -157,8 +158,38 @@ export function getSentimentHistory(input: any) {
   return _data2.sort((a, b) => ascending(a[0], b[0]));
 }
 
-export function getTopPhrases(input: any) {
-  //@ts-ignore
+export function getHistoricalEngagementBySource(input: Partial<Input>) {
+  const { sources: _sources } = input;
+  let output: any[] = [];
+  const sourcesWithViews = Array.from(
+    new Set(
+      _sources.filter(({ views }) => views !== 0).map(({ source }) => source),
+    ),
+  );
+
+  for (let source of sourcesWithViews) {
+    const dataBySource = _sources.filter(
+      ({ source: parentSource }) => parentSource === source,
+    );
+    const views = flatRollup(
+      dataBySource,
+      (v) => sum(v, (v) => v.views),
+      (d) => d.date,
+      (d) => d.source,
+    ).sort((a, b) => ascending(a[0], b[0]));
+    const volume = flatRollup(
+      dataBySource,
+      (v) => sum(v, (v) => v.volume),
+      (d) => d.date,
+      (d) => d.source,
+    ).sort((a, b) => ascending(a[0], b[0]));
+    output = [...output, [views, volume]];
+  }
+
+  return output;
+}
+
+export function getTopPhrases(input: Partial<Input>) {
   const { sources: _sources } = input;
   let _data2: any[] = [];
   const groupsArray = _sources.map(({ topPhrases }: any) => topPhrases);
@@ -168,14 +199,13 @@ export function getTopPhrases(input: any) {
     }
   }
 
-  const output = groupByColumn({
+  const output = groupByValue({
     input: _data2,
     valueColumn: 'value',
     keyColumn: 'name',
   })
-    //@ts-ignore
     .sort((a, b) => descending(a.value, b.value))
     .slice(0, 20);
-  //@ts-ignore
+
   return output.sort((a, b) => ascending(a.value, b.value));
 }

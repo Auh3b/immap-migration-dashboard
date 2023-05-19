@@ -6,10 +6,8 @@ import { removeModalUrl, setChartModal } from 'store/appSlice';
 import ComponentFallback from './ComponentFallback';
 import mainSource from 'data/sources/mainSource';
 import ChartLoadFail from './ChartLoadFail';
-//@ts-ignore
-import loadable from '@loadable/component';
 import { RootState } from 'store/store';
-import { setFeaturesReady, setViewState } from '@carto/react-redux';
+import { setViewState } from '@carto/react-redux';
 import randBtwn from 'utils/randBtwn';
 
 const useStyles = makeStyles((theme) => ({

@@ -4,9 +4,6 @@ import ClearAllIcon from '@material-ui/icons/ClearAll';
 
 const useClearStyles = makeStyles((theme) => ({
   root: {
-    position: 'absolute',
-    right: theme.spacing(2),
-    bottom: theme.spacing(4) * -1,
     backgroundColor: theme.palette.error.main,
     color: theme.palette.background.paper,
     [theme.breakpoints.down('md')]: {
@@ -24,9 +21,11 @@ const useClearStyles = makeStyles((theme) => ({
 }));
 
 export default function ClearFiltersButton({
+  className,
   filtersCallback,
   clearCallback,
 }: {
+  className?: string;
   filtersCallback: Function;
   clearCallback: Function;
 }) {
@@ -38,7 +37,7 @@ export default function ClearFiltersButton({
   };
 
   return (
-    <>
+    <span className={className}>
       {hasFilters && (
         <Fab
           onClick={handleClearFilters}
@@ -55,6 +54,6 @@ export default function ClearFiltersButton({
           <ClearAllIcon />
         </Fab>
       )}
-    </>
+    </span>
   );
 }

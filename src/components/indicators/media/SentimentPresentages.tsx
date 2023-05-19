@@ -123,7 +123,7 @@ export default function SentimentPresentages({
   );
 
   return (
-    <Grid item xs={3}>
+    <Grid item xs={12} lg={4}>
       <TitleWrapper
         title='Sentimiento por tipo de red social'
         isLoading={isLoading}

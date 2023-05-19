@@ -1,11 +1,12 @@
 import { Fab, Grid, Paper, TextField, makeStyles } from '@material-ui/core';
 import { useMemo, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addMediaFilter } from 'store/mediaSlice';
+import { addMediaFilter, clearMediaFilters } from 'store/mediaSlice';
 import { _FilterTypes } from '@carto/react-core';
 import { dequal } from 'dequal';
 import { UNICEF_COLORS } from 'theme';
 import { deepOrange } from '@material-ui/core/colors';
+import ClearFiltersButton from 'components/common/ClearFiltersButton';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,12 +23,27 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function MediaFilterToolbar() {
+export default function MediaFilterToolbar({
+  filters,
+}: {
+  filters: Record<string, unknown>;
+}) {
+  const dispatch = useDispatch();
   const classes = useStyles();
   return (
     <Paper variant='outlined' className={classes.root}>
-      <Grid container item>
+      <Grid
+        container
+        item
+        wrap='nowrap'
+        alignItems='center'
+        justifyContent='space-between'
+      >
         <DateFilter />
+        <ClearFiltersButton
+          clearCallback={() => dispatch(clearMediaFilters())}
+          filtersCallback={() => Object.keys(filters).length > 0}
+        />
       </Grid>
     </Paper>
   );
