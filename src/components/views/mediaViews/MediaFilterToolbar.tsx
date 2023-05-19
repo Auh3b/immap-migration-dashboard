@@ -24,15 +24,21 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function MediaFilterToolbar({
-  filters
-}:{
-  filters: Record<string, unknown>
+  filters,
+}: {
+  filters: Record<string, unknown>;
 }) {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const classes = useStyles();
   return (
     <Paper variant='outlined' className={classes.root}>
-      <Grid container item wrap='nowrap' alignItems='center' justifyContent='space-between'>
+      <Grid
+        container
+        item
+        wrap='nowrap'
+        alignItems='center'
+        justifyContent='space-between'
+      >
         <DateFilter />
         <ClearFiltersButton
           clearCallback={() => dispatch(clearMediaFilters())}

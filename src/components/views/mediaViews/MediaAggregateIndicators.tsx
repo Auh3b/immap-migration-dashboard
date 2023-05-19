@@ -81,8 +81,8 @@ export default function MediaAggregateIndicators({
     event: MouseEvent<HTMLElement>,
     newSource: string,
   ) => {
-    if(!newSource){
-      setSource(MEDIA_SOURCES.MENCIONES_TOTALES)
+    if (!newSource) {
+      setSource(MEDIA_SOURCES.MENCIONES_TOTALES);
       dispatch(
         removeMediaFilter({
           source: 'meltwater',
@@ -90,7 +90,7 @@ export default function MediaAggregateIndicators({
           owner: id,
         }),
       );
-    }else if (newSource === source) {
+    } else if (newSource === source) {
       dispatch(
         removeMediaFilter({
           source: 'meltwater',
@@ -98,8 +98,8 @@ export default function MediaAggregateIndicators({
           owner: id,
         }),
       );
-      setSource(MEDIA_SOURCES.MENCIONES_TOTALES)
-    }else if (newSource === MEDIA_SOURCES.MENCIONES_TOTALES) {
+      setSource(MEDIA_SOURCES.MENCIONES_TOTALES);
+    } else if (newSource === MEDIA_SOURCES.MENCIONES_TOTALES) {
       dispatch(
         removeMediaFilter({
           source: 'meltwater',
@@ -107,8 +107,8 @@ export default function MediaAggregateIndicators({
           owner: id,
         }),
       );
-      setSource(MEDIA_SOURCES.MENCIONES_TOTALES)
-    }else{
+      setSource(MEDIA_SOURCES.MENCIONES_TOTALES);
+    } else {
       dispatch(
         addMediaFilter({
           source: 'meltwater',
@@ -118,9 +118,9 @@ export default function MediaAggregateIndicators({
           type: _FilterTypes.IN,
         }),
       );
-      setSource(newSource)
+      setSource(newSource);
     }
-    console.log(newSource)
+    console.log(newSource);
   };
 
   return (

@@ -10,7 +10,7 @@ interface CustomChartProps extends EChartsReactProps {
 
 export default function CustomGriddedLineChart({
   data: _data = [],
-  style = {height: 300},
+  style = { height: 300 },
   opts,
 }: Partial<CustomChartProps>) {
   const theme = useTheme();
@@ -89,7 +89,9 @@ export default function CustomGriddedLineChart({
     for (let i = 0; i < _data.length; i++) {
       for (let j = 0; j < _data[i].length; j++) {
         const name = _data[i][j][0][1];
-        const seriesName = `${name.toUpperCase()} ${j === 0 ? 'Views' : 'Posts'}`;
+        const seriesName = `${name.toUpperCase()} ${
+          j === 0 ? 'Views' : 'Posts'
+        }`;
         const seriesConfig = {
           xAxisIndex: i,
           yAxisIndex: i,
@@ -103,19 +105,19 @@ export default function CustomGriddedLineChart({
     return output;
   }, [_data]);
 
-  const dataZoom = useMemo(()=>{
+  const dataZoom = useMemo(() => {
     let output: any[] = [];
     for (let i = 0; i < _data.length; i++) {
       const zoomConfig = {
-          xAxisIndex: i,
-          type: 'inside',
+        xAxisIndex: i,
+        type: 'inside',
       };
       output = [...output, zoomConfig];
     }
     return output;
-  }, [_data])
+  }, [_data]);
 
-  const legend = useMemo(()=>{
+  const legend = useMemo(() => {
     const layout = [
       { left: '7%', top: '0%' },
       { left: '43%', top: '0%' },
@@ -124,19 +126,21 @@ export default function CustomGriddedLineChart({
     let output: any[] = [];
     for (let i = 0; i < _data.length; i++) {
       let legendConfig = {
-          ...layout[i],
+        ...layout[i],
       };
-      let data: any[] = []
+      let data: any[] = [];
       for (let j = 0; j < _data[i].length; j++) {
         const name = _data[i][j][0][1];
-        const seriesName = `${name.toUpperCase()} ${j === 0 ? 'Views' : 'Posts'}`;
-        data = [...data, {name: seriesName, icon: 'circle'}]
+        const seriesName = `${name.toUpperCase()} ${
+          j === 0 ? 'Views' : 'Posts'
+        }`;
+        data = [...data, { name: seriesName, icon: 'circle' }];
       }
 
-      output = [...output, {...legendConfig, data}];
+      output = [...output, { ...legendConfig, data }];
     }
     return output;
-  }, [_data, ])
+  }, [_data]);
 
   const staticOptions = {
     tooltip: {

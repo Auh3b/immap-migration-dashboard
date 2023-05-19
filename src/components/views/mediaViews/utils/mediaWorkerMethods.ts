@@ -176,13 +176,13 @@ export function getHistoricalEngagementBySource(input: Partial<Input>) {
       (v) => sum(v, (v) => v.views),
       (d) => d.date,
       (d) => d.source,
-    ).sort((a,b) => ascending(a[0], b[0]));
+    ).sort((a, b) => ascending(a[0], b[0]));
     const volume = flatRollup(
       dataBySource,
       (v) => sum(v, (v) => v.volume),
       (d) => d.date,
       (d) => d.source,
-    ).sort((a,b) => ascending(a[0], b[0]));
+    ).sort((a, b) => ascending(a[0], b[0]));
     output = [...output, [views, volume]];
   }
 
