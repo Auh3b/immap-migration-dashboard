@@ -6,7 +6,7 @@ import {
   getSentimentHistory,
   getSentimentPercentages,
   getTopPhrases,
-} from './methods';
+} from './mediaWorkerMethods';
 import { Filters, filterValues } from 'utils/filterFunctions';
 
 const funcMap = new Map([
