@@ -6,16 +6,13 @@ const useClearStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.error.main,
     color: theme.palette.background.paper,
-    [theme.breakpoints.down('md')]: {
-      left: theme.spacing(2),
-      bottom: theme.spacing(2),
-    },
     '&:hover': {
       backgroundColor: theme.palette.error.main,
       color: theme.palette.background.paper,
     },
   },
   text: {
+    width: '100%',
     marginRight: theme.spacing(2),
   },
 }));
@@ -40,8 +37,9 @@ export default function ClearFiltersButton({
     <span className={className}>
       {hasFilters && (
         <Fab
-          onClick={handleClearFilters}
+          size='large'
           variant='extended'
+          onClick={handleClearFilters}
           className={classes.root}
         >
           <Typography
