@@ -3,7 +3,6 @@ import {
   Fab,
   Grid,
   IconButton,
-  Menu,
   MenuItem,
   MenuList,
   Paper,
@@ -12,18 +11,17 @@ import {
   Typography,
   makeStyles,
 } from '@material-ui/core';
-import { useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addMediaFilter, clearMediaFilters, removeMediaFilter } from 'store/mediaSlice';
 import { _FilterTypes } from '@carto/react-core';
 import { dequal } from 'dequal';
 import { deepOrange } from '@material-ui/core/colors';
 import ClearFiltersButton from 'components/common/ClearFiltersButton';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFilter } from '@fortawesome/free-solid-svg-icons';
-import theme, { UNICEF_COLORS } from 'theme';
+import { UNICEF_COLORS } from 'theme';
 import { Filters } from 'utils/filterFunctions';
 import CloseIcon from '@material-ui/icons/Close';
+import FilterListIcon from '@material-ui/icons/FilterList';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -150,6 +148,7 @@ function ApplyDateFilter({ onClick }: any) {
 
 const useFilterStyles = makeStyles((theme) => ({
   root: {
+    marginLeft: theme.spacing(2),
   },
   button: {
     padding: theme.spacing(2),
@@ -166,6 +165,14 @@ function ActiveFilters({ filters }: { filters: Filters }) {
     setAnchorEl(event.currentTarget);
   };
 
+  const disabled = useMemo(()=>Object.keys(filters).length === 0, [filters])
+
+  useEffect(()=>{
+    if(disabled){
+      setAnchorEl(null)
+    }
+  }, [disabled])
+
   const classes = useFilterStyles({ isOpen: Boolean(anchorEl) });
 
   const handleClose = () => {
@@ -174,8 +181,8 @@ function ActiveFilters({ filters }: { filters: Filters }) {
 
   return (
     <div className={classes.root}>
-      <IconButton disabled={Object.keys(filters).length === 0} onClick={handleClick}>
-        <FontAwesomeIcon icon={faFilter} className={classes.button} />
+      <IconButton className={classes.button} disabled={disabled} onClick={handleClick}>
+        <FilterListIcon />
       </IconButton>
       <FilterMenu
         filters={filters}
