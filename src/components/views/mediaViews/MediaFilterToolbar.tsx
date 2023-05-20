@@ -48,6 +48,8 @@ export default function MediaFilterToolbar() {
   const classes = useStyles();
   //@ts-ignore
   const filters = useSelector((state) => state.media.filters);
+  const disabled = useMemo(()=>Object.keys(filters?.meltwater ?? {}).length === 0, [filters])
+
   return (
     <Paper variant='outlined' className={classes.root}>
       <Grid
@@ -61,9 +63,9 @@ export default function MediaFilterToolbar() {
         <div className={classes.filters}>
           <ClearFiltersButton
             clearCallback={() => dispatch(clearMediaFilters())}
-            filtersCallback={() => Object.keys(filters).length > 0}
+            disabled={disabled}
           />
-          <ActiveFilters filters={filters?.meltwater ?? {}} />
+          <ActiveFilters disabled={disabled} filters={filters?.meltwater ?? {}} />
         </div>
       </Grid>
     </Paper>
@@ -92,7 +94,7 @@ function DateFilter() {
         source: 'meltwater',
         column: 'date',
         values: [[start, end]],
-        owner: 'dateFilter',
+        owner: 'fecha_filtro',
         type: _FilterTypes.BETWEEN,
       }),
     );
@@ -158,14 +160,12 @@ const useFilterStyles = makeStyles((theme) => ({
   },
 }));
 
-function ActiveFilters({ filters }: { filters: Filters }) {
+function ActiveFilters({ filters, disabled }: { disabled: any, filters: Filters }) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
-
-  const disabled = useMemo(()=>Object.keys(filters).length === 0, [filters])
 
   useEffect(()=>{
     if(disabled){
@@ -196,6 +196,23 @@ function ActiveFilters({ filters }: { filters: Filters }) {
 const useMenuStyles = makeStyles((theme)=>({
   paper:{
     padding: theme.spacing(1)
+  },
+  menuItem:{
+    '&:hover':{
+      backgroundColor: 'none',
+    }
+  },
+  menuText:{
+    display: 'flex',
+    flexDirection:'column',
+  },
+  itemClose:{
+    marginLeft: theme.spacing(2),
+    borderRadius: '100%',
+    '&:hover':{
+      backgroundColor: theme.palette.error.main,
+      color: theme.palette.common.white,
+    },
   }
 }))
 
@@ -233,14 +250,14 @@ function FilterMenu({
           <MenuList>
               {Object.entries(filters).map(([name, { owner, type, values, column, source }]: any) => (
                 <MenuItem key={name}>
-                  <Grid container alignItems='center'>
-                    <div>
-                      <Typography variant='overline'>{name}</Typography>
+                  <Grid container alignItems='center' >
+                    <div className={classes.menuText}>
+                      <Typography variant='overline'>{name.replace('_', ' ')}</Typography>
                       <Typography variant='overline'>
-                        {type === _FilterTypes.BETWEEN ? values.join(' - ') : values.join(', ')}
+                        {type === _FilterTypes.BETWEEN ? values[0].join(' - ') : values.join(', ')}
                       </Typography>
                     </div>
-                    <IconButton onClick={()=> {handleRemove({owner, column, source })}}>
+                    <IconButton className={classes.itemClose} onClick={()=> {handleRemove({owner, column, source })}}>
                       <CloseIcon />
                     </IconButton>
                   </Grid>
