@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
   icon: {},
 }));
 
-const id = 'sourceAggregrate';
+const id = 'Menciones_sociales';
 
 export default function MediaAggregateIndicators({ isLoading }: any) {
   const dispatch = useDispatch();
