@@ -1,12 +1,29 @@
-import { Fab, Grid, Paper, TextField, makeStyles } from '@material-ui/core';
+import {
+  ClickAwayListener,
+  Fab,
+  Grid,
+  IconButton,
+  Menu,
+  MenuItem,
+  MenuList,
+  Paper,
+  Popper,
+  TextField,
+  Typography,
+  makeStyles,
+} from '@material-ui/core';
 import { useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addMediaFilter, clearMediaFilters } from 'store/mediaSlice';
+import { addMediaFilter, clearMediaFilters, removeMediaFilter } from 'store/mediaSlice';
 import { _FilterTypes } from '@carto/react-core';
 import { dequal } from 'dequal';
-import { UNICEF_COLORS } from 'theme';
 import { deepOrange } from '@material-ui/core/colors';
 import ClearFiltersButton from 'components/common/ClearFiltersButton';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFilter } from '@fortawesome/free-solid-svg-icons';
+import theme, { UNICEF_COLORS } from 'theme';
+import { Filters } from 'utils/filterFunctions';
+import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,6 +37,11 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: deepOrange[800],
       color: 'white',
     },
+  },
+  filters: {
+    display: 'flex',
+    alignItems: 'center',
+    flexWrap: 'nowrap',
   },
 }));
 
@@ -38,10 +60,13 @@ export default function MediaFilterToolbar() {
         justifyContent='space-between'
       >
         <DateFilter />
-        <ClearFiltersButton
-          clearCallback={() => dispatch(clearMediaFilters())}
-          filtersCallback={() => Object.keys(filters).length > 0}
-        />
+        <div className={classes.filters}>
+          <ClearFiltersButton
+            clearCallback={() => dispatch(clearMediaFilters())}
+            filtersCallback={() => Object.keys(filters).length > 0}
+          />
+          <ActiveFilters filters={filters?.meltwater ?? {}} />
+        </div>
       </Grid>
     </Paper>
   );
@@ -120,5 +145,103 @@ function ApplyDateFilter({ onClick }: any) {
     <Fab className={classes.clear} onClick={onClick}>
       Apply
     </Fab>
+  );
+}
+
+const useFilterStyles = makeStyles((theme) => ({
+  root: {
+  },
+  button: {
+    padding: theme.spacing(2),
+    borderRadius: '100%',
+    color: ({ isOpen }: any) =>
+      isOpen ? UNICEF_COLORS[0] : theme.palette.grey[100],
+  },
+}));
+
+function ActiveFilters({ filters }: { filters: Filters }) {
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const classes = useFilterStyles({ isOpen: Boolean(anchorEl) });
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  return (
+    <div className={classes.root}>
+      <IconButton disabled={Object.keys(filters).length === 0} onClick={handleClick}>
+        <FontAwesomeIcon icon={faFilter} className={classes.button} />
+      </IconButton>
+      <FilterMenu
+        filters={filters}
+        anchorEl={anchorEl}
+        handleClose={handleClose}
+      />
+    </div>
+  );
+}
+
+const useMenuStyles = makeStyles((theme)=>({
+  paper:{
+    padding: theme.spacing(1)
+  }
+}))
+
+function FilterMenu({
+  filters,
+  anchorEl,
+  handleClose,
+}: {
+  filters: Record<string, unknown>;
+  anchorEl: null | HTMLElement;
+  handleClose: any;
+}) {
+  const classes = useMenuStyles()
+  const dispatch = useDispatch()
+  
+  const handleRemove = ({owner, column, source}:any) => {
+    dispatch(
+      removeMediaFilter({
+        owner,
+        column,
+        source
+      })
+    )
+  }
+  
+  return (
+    <Popper
+      id='mediaFilterMenu'
+      open={Boolean(anchorEl)}
+      anchorEl={anchorEl}
+      placement='bottom'
+    >
+      <Paper className={classes.paper}>
+        <ClickAwayListener onClickAway={handleClose} >
+          <MenuList>
+              {Object.entries(filters).map(([name, { owner, type, values, column, source }]: any) => (
+                <MenuItem key={name}>
+                  <Grid container alignItems='center'>
+                    <div>
+                      <Typography variant='overline'>{name}</Typography>
+                      <Typography variant='overline'>
+                        {type === _FilterTypes.BETWEEN ? values.join(' - ') : values.join(', ')}
+                      </Typography>
+                    </div>
+                    <IconButton onClick={()=> {handleRemove({owner, column, source })}}>
+                      <CloseIcon />
+                    </IconButton>
+                  </Grid>
+                </MenuItem>
+              ))}
+          </MenuList>
+        </ClickAwayListener>
+      </Paper>
+    </Popper>
   );
 }
