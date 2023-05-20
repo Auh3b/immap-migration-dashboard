@@ -8,6 +8,7 @@ import {
   Paper,
   Popper,
   TextField,
+  Tooltip,
   Typography,
   makeStyles,
 } from '@material-ui/core';
@@ -82,7 +83,8 @@ export default function MediaFilterToolbar() {
   );
 }
 
-function DateFilter() {
+function DateFilter({filters}:any) {
+  const id = 'fecha_filtro'
   const dispatch = useDispatch();
   const [start, setStart] = useState('2022-05-12');
   const [end, setEnd] = useState('2023-05-12');
@@ -104,7 +106,7 @@ function DateFilter() {
         source: 'meltwater',
         column: 'date',
         values: [[start, end]],
-        owner: 'fecha_filtro',
+        owner: id,
         type: _FilterTypes.BETWEEN,
       }),
     );
@@ -165,6 +167,7 @@ const useFilterStyles = makeStyles((theme) => ({
   button: {
     padding: theme.spacing(2),
     borderRadius: '100%',
+    border: ({hasFilters}:any)=> hasFilters && `solid 1px ${theme.palette.grey[100]}`,
     color: ({ isOpen }: any) =>
       isOpen ? UNICEF_COLORS[0] : theme.palette.grey[100],
   },
@@ -189,7 +192,7 @@ function ActiveFilters({
     }
   }, [disabled]);
 
-  const classes = useFilterStyles({ isOpen: Boolean(anchorEl) });
+  const classes = useFilterStyles({ isOpen: Boolean(anchorEl), hasFilters: !disabled });
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -197,13 +200,17 @@ function ActiveFilters({
 
   return (
     <div className={classes.root}>
-      <IconButton
-        className={classes.button}
-        disabled={disabled}
-        onClick={handleClick}
-      >
-        <FilterListIcon />
-      </IconButton>
+      <Tooltip title='Filtros'>
+        <span>
+          <IconButton
+            className={classes.button}
+            disabled={disabled}
+            onClick={handleClick}
+          >
+            <FilterListIcon />
+          </IconButton>
+        </span>
+      </Tooltip>
       <FilterMenu
         filters={filters}
         anchorEl={anchorEl}
