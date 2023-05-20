@@ -1,4 +1,4 @@
-import { AggregationTypes, aggregationFunctions } from '@carto/react-core';
+import { AggregationTypes } from '@carto/react-core';
 import { FormulaWidgetUI } from '@carto/react-ui';
 import {
   Box,
@@ -9,7 +9,6 @@ import {
   makeStyles,
 } from '@material-ui/core';
 import { ReactNode, useEffect, useMemo, useState } from 'react';
-import { defaultFilterFunction } from '../utils/miscelleniousFunctions';
 import { numberFormatter } from 'utils/formatter';
 import { format } from 'd3';
 import { executeSQL } from '@carto/react-api';

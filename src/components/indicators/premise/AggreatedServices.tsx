@@ -16,16 +16,14 @@ import { SERVICES_KEY, SERVICE_STAT_COLUMNS } from './utils/services';
 import CustomWidgetWrapper from 'components/common/customWidgets/CustomWidgetWrapper';
 import { filterItem, filterValues } from 'utils/filterFunctions';
 import { _FilterTypes } from '@carto/react-core';
-
 import CustomConnectDotChart from 'components/common/customWidgets/CustomConnectDotChart';
 import { useDispatch, useSelector } from 'react-redux';
-import { addFilter, removeFilter, setViewState } from '@carto/react-redux';
+import { addFilter, removeFilter } from '@carto/react-redux';
 import { featureCollection, point } from '@turf/helpers';
 import { bbox } from '@turf/turf';
 //@ts-ignore
 import { WebMercatorViewport } from '@deck.gl/core';
 import { initialState } from 'store/initialStateSlice';
-import { removeTransition, setTransition } from 'store/mapSlice';
 import { RootState } from 'store/store';
 import handleMapTransitions from './hooks/handleMapTransitions';
 
@@ -251,7 +249,7 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
               callbackProps={{ data, width, height }}
             />
             <ClearFiltersButton
-              filtersCallback={() => Object.keys(filters).length > 0}
+              disabled={Object.keys(filters).length === 0}
               clearCallback={() => setFilters({})}
             />
           </Grid>

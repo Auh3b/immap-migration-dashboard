@@ -7,7 +7,7 @@ import {
 } from '@material-ui/core';
 import SourceIndictor from 'components/indicators/media/utils/SourceIndictor';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { MouseEvent, useEffect, useMemo, useState } from 'react';
+import { MouseEvent, useMemo } from 'react';
 import ComponentFallback from 'components/common/ComponentFallback';
 import { FA_MAP, MEDIA_SOURCES } from './utils/mediaUtils';
 import { METHOD_NAMES } from './utils/methodName';
