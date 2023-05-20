@@ -16,8 +16,6 @@ export default function SentimentPresentages() {
     methodName: METHOD_NAMES.MEDIA_SENTIMENT_PERCENTAGES,
   });
 
-  console.log(data)
-
   const groupKey = ['name', 'Negative', 'Neutral', 'Positive', 'Not Rated'];
   const colorKey = ['#333333', '#f03b20', '#feb24c', '#ffeda0', '#999999'];
 
@@ -98,7 +96,7 @@ export default function SentimentPresentages() {
         type: 'value',
         axisLabel: {
           formatter(value: number) {
-            return Math.round(value * 100)+'%';
+            return Math.round(value * 100) + '%';
           },
         },
       },
