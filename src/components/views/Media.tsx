@@ -7,13 +7,10 @@ import { setError } from 'store/appSlice';
 import { getDownloadURL, ref } from 'firebase/storage';
 import { fireStorage } from 'firedb';
 import MediaIndicators from './mediaViews/MediaIndicators';
-import MediaOrigin from 'components/indicators/media/MediaOrigin';
-import TopPhrases from 'components/indicators/media/TopPhrases';
-import SentimentPresentages from 'components/indicators/media/SentimentPresentages';
-import SentimentTimeline from 'components/indicators/media/SentimentTimeline';
-import { wrap } from 'comlink';
-import { useSelector } from 'react-redux';
-import MediaEngagement from 'components/indicators/media/MediaEngagement';
+import { useDispatch } from 'react-redux';
+import executeMethod from 'components/indicators/media/hooks/executeMethod';
+import { METHOD_NAMES } from './mediaViews/utils/methodName';
+import { setIsMediaDataReady } from 'store/mediaSlice';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,19 +25,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MediaWorker = new Worker('./mediaViews/utils/mediaWorker', {
-  name: 'MediaWorker',
-  type: 'module',
-});
-
 export default function Media() {
-  //@ts-ignore
-  const { setMediaData, getMediaData, runTransform, setFilters } =
-    wrap(MediaWorker);
+  const dispatch = useDispatch();
   const classes = useStyles();
-  //@ts-ignore
-  const filters = useSelector((state) => state.media.filters);
-  const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const fetchMediaData = async () => {
@@ -52,8 +39,12 @@ export default function Media() {
       );
       const dataUrl = await getDownloadURL(dataRef);
       const dataReq = await fetch(dataUrl);
-      const dataRes = await dataReq.json();
-      await setMediaData(dataRes);
+      const data = await dataReq.json();
+      const result = await executeMethod(METHOD_NAMES.SET_MEDIA_DATA, { data });
+      if (!result) {
+        throw 'Something went wrong when loading data';
+      }
+      dispatch(setIsMediaDataReady({ loadingState: result }));
     } catch (error) {
       setError(error.message);
     } finally {
@@ -63,22 +54,7 @@ export default function Media() {
 
   useEffect(() => {
     fetchMediaData();
-    return () => {
-      setData([]);
-    };
   }, []);
-
-  useEffect(() => {
-    setFilters(filters);
-  }, [filters]);
-
-  useEffect(() => {
-    (async function () {
-      if (!isLoading) {
-        setData(await getMediaData());
-      }
-    })();
-  }, [isLoading]);
 
   return (
     <Grid
@@ -88,39 +64,9 @@ export default function Media() {
       wrap='nowrap'
       className={classes.root}
     >
-      <MediaFilterToolbar filters={filters} />
-      <MediaAggregateIndicators
-        deps={[data, filters]}
-        isLoading={isLoading}
-        transform={runTransform}
-      />
-      <MediaIndicators isLoading={isLoading}>
-        <MediaOrigin
-          deps={[data, filters]}
-          isLoading={isLoading}
-          transform={runTransform}
-        />
-        <SentimentPresentages
-          deps={[data, filters]}
-          isLoading={isLoading}
-          transform={runTransform}
-        />
-        <TopPhrases
-          deps={[data, filters]}
-          isLoading={isLoading}
-          transform={runTransform}
-        />
-        <SentimentTimeline
-          deps={[data, filters]}
-          isLoading={isLoading}
-          transform={runTransform}
-        />
-        <MediaEngagement
-          deps={[data, filters]}
-          isLoading={isLoading}
-          transform={runTransform}
-        />
-      </MediaIndicators>
+      <MediaFilterToolbar />
+      <MediaAggregateIndicators isLoading={isLoading} />
+      <MediaIndicators isLoading={isLoading} />
     </Grid>
   );
 }
