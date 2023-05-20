@@ -56,7 +56,13 @@ export default function SourceIndictor({
           <Grid item className={classes.icon}>
             {icon}
           </Grid>
-          <Grid item container direction='column' justifyContent='space-between' alignItems='flex-start'>
+          <Grid
+            item
+            container
+            direction='column'
+            justifyContent='space-between'
+            alignItems='flex-start'
+          >
             <Typography noWrap={true} className={classes.title}>
               {title.replaceAll('_', ' ')}
             </Typography>

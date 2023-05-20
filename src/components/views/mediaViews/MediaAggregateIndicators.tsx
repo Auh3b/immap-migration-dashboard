@@ -58,7 +58,6 @@ export default function MediaAggregateIndicators({ isLoading }: any) {
     event: MouseEvent<HTMLElement>,
     newSource: string,
   ) => {
-    console.log(newSource)
     if (!newSource) {
       setSource(MEDIA_SOURCES.MENCIONES_TOTALES);
       dispatch(
@@ -70,7 +69,7 @@ export default function MediaAggregateIndicators({ isLoading }: any) {
       );
       return;
     }
-    
+
     if (newSource === MEDIA_SOURCES.MENCIONES_TOTALES) {
       setSource(MEDIA_SOURCES.MENCIONES_TOTALES);
       dispatch(
@@ -80,7 +79,7 @@ export default function MediaAggregateIndicators({ isLoading }: any) {
           owner: id,
         }),
       );
-    return;
+      return;
     }
 
     dispatch(
@@ -92,7 +91,7 @@ export default function MediaAggregateIndicators({ isLoading }: any) {
         type: _FilterTypes.IN,
       }),
     );
-    setSource(newSource); 
+    setSource(newSource);
   };
 
   return (

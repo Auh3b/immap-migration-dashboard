@@ -16,8 +16,8 @@ export default function useMediaData({
   const dispatch = useDispatch();
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  
-  const filters = useIndicatorFilters({id})
+
+  const filters = useIndicatorFilters({ id });
   //@ts-ignore
   const isMediaDataReady = useSelector((state) => state.media.isMediaDataReady);
 
