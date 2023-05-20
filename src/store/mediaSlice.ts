@@ -4,9 +4,14 @@ import { createSlice } from '@reduxjs/toolkit';
 const slice = createSlice({
   name: 'media',
   initialState: {
+    isMediaDataReady: false,
     filters: {},
   },
   reducers: {
+    setIsMediaDataReady: (state, action) => {
+      const { loadingState } = action.payload;
+      state.isMediaDataReady = loadingState;
+    },
     addMediaFilter: (state, action) => {
       const { owner, source } = action.payload;
       const dataSource = state.filters[source];
@@ -45,4 +50,8 @@ export const removeMediaFilter = (payload: any) => ({
 });
 export const clearMediaFilters = () => ({
   type: 'media/clearMediaFilters',
+});
+export const setIsMediaDataReady = (payload: any) => ({
+  type: 'media/setIsMediaDataReady',
+  payload,
 });
