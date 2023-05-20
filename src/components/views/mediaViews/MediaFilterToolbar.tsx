@@ -1,6 +1,6 @@
 import { Fab, Grid, Paper, TextField, makeStyles } from '@material-ui/core';
 import { useMemo, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addMediaFilter, clearMediaFilters } from 'store/mediaSlice';
 import { _FilterTypes } from '@carto/react-core';
 import { dequal } from 'dequal';
@@ -23,13 +23,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function MediaFilterToolbar({
-  filters,
-}: {
-  filters: Record<string, unknown>;
-}) {
+export default function MediaFilterToolbar() {
   const dispatch = useDispatch();
   const classes = useStyles();
+  //@ts-ignore
+  const filters = useSelector((state) => state.media.filters);
   return (
     <Paper variant='outlined' className={classes.root}>
       <Grid
