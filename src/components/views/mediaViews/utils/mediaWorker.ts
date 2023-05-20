@@ -3,14 +3,18 @@ import { METHOD_NAMES } from './methodName';
 import {
   getHistoricalEngagementBySource,
   getMediaAggregateIndicators,
+  getMediaData,
   getMediaOrigins,
   getSentimentHistory,
   getSentimentPercentages,
   getTopPhrases,
+  setMediaData,
 } from './mediaWorkerMethods';
-import { Filters, filterValues } from 'utils/filterFunctions';
+import { Params } from 'react-router-dom';
 
-const funcMap = new Map([
+const methodMap = new Map<string, Function>([
+  [METHOD_NAMES.SET_MEDIA_DATA, setMediaData],
+  [METHOD_NAMES.GET_MEDIA_DATA, getMediaData],
   [METHOD_NAMES.MEDIA_AGGREGATES, getMediaAggregateIndicators],
   [METHOD_NAMES.MEDIA_ORIGINS, getMediaOrigins],
   [METHOD_NAMES.MEDIA_SENTIMENT_HISTORY, getSentimentHistory],
@@ -19,52 +23,19 @@ const funcMap = new Map([
   [METHOD_NAMES.MEDIA_ENGAGEMENT_HISTORY, getHistoricalEngagementBySource],
 ]);
 
-interface Params {
-  filters: Filters;
-}
-
-let mediaData: any;
-let currentfilters: Filters;
-
-function setMediaData(data: any) {
-  mediaData = data;
-}
-
-function getMediaData() {
-  if (mediaData) {
-    return mediaData;
+function runTransform(methodName: string, params: Partial<Params>) {
+  try {
+    let result: any = null;
+    let method = methodMap.get(methodName);
+    if (!method) {
+      throw new Error(`Invalid web worker name: ${methodName}`);
+    }
+    result = method(params);
+    return { result: result === undefined ? true : result };
+  } catch (error) {
+    console.log(error);
+    return { error: String(error) };
   }
 }
 
-function setFilters(filters: Filters) {
-  if (Object.keys(filters).length > 0) {
-    currentfilters = filters;
-  }
-}
-
-function applyFiltersToData(filters: Filters) {
-  if (!mediaData) {
-    return [];
-  }
-
-  if (Object.keys(filters).length === 0) {
-    return mediaData;
-  }
-
-  const filteredData = filterValues(mediaData.sources, filters);
-  return { ...mediaData, sources: filteredData };
-}
-
-function runTransform(funcName: string, params: Partial<Params>) {
-  const { filters } = params;
-  if (mediaData) {
-    const filteredData = applyFiltersToData(filters);
-    const execute = funcMap.get(funcName);
-    const results = execute(filteredData);
-    return results;
-  }
-
-  return [];
-}
-
-expose({ setMediaData, getMediaData, runTransform, setFilters });
+expose({ runTransform });
