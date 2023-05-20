@@ -12,14 +12,19 @@ interface SourceIndictorProps {
 }
 
 const useStyles = makeStyles((theme) => ({
-  root: {},
+  root: {
+    width: '100%',
+    height: '100%',
+  },
   paper: {
+    width: '100%',
+    height: '100%',
     padding: theme.spacing(2),
   },
   title: {
     ...theme.typography.subtitle1,
     color: theme.palette.secondary.light,
-    fontSize: theme.spacing(2.5),
+    fontSize: theme.spacing(2.4),
     textTransform: 'uppercase',
     textAlign: 'left',
   },
@@ -51,8 +56,8 @@ export default function SourceIndictor({
           <Grid item className={classes.icon}>
             {icon}
           </Grid>
-          <Grid item>
-            <Typography className={classes.title}>
+          <Grid item container direction='column' justifyContent='space-between' alignItems='flex-start'>
+            <Typography noWrap={true} className={classes.title}>
               {title.replaceAll('_', ' ')}
             </Typography>
             <span className={classes.value}>
