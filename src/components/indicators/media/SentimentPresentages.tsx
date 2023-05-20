@@ -1,36 +1,22 @@
-import { AggregationTypes, groupValuesByColumn } from '@carto/react-core';
-import { Grid, Typography, useTheme } from '@material-ui/core';
+import { Grid, useTheme } from '@material-ui/core';
 import TitleWrapper from 'components/common/TitleWrapper';
 import ReactEcharts from 'components/common/customCharts/ReactEcharts';
 import { MEDIA_SOURCES_NAMES } from 'components/views/mediaViews/utils/mediaUtils';
 import { METHOD_NAMES } from 'components/views/mediaViews/utils/methodName';
-import { sum } from 'd3';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
+import useMediaData from './hooks/useMediaData';
 
-export default function SentimentPresentages({
-  deps,
-  isLoading,
-  transform,
-}: {
-  deps: any[];
-  isLoading?: Boolean;
-  transform?: Function;
-}) {
+const id = 'sentimentPercentages';
+
+export default function SentimentPresentages() {
   const theme = useTheme();
-  const [data, setData] = useState([]);
 
-  useEffect(() => {
-    (async function () {
-      setData(
-        await transform(METHOD_NAMES.MEDIA_SENTIMENT_PERCENTAGES, {
-          filters: deps[1].meltwater ?? {},
-        }),
-      );
-    })();
-    return () => {
-      setData([]);
-    };
-  }, [...deps]);
+  const { data, isLoading } = useMediaData({
+    id,
+    methodName: METHOD_NAMES.MEDIA_SENTIMENT_PERCENTAGES,
+  });
+
+  console.log(data)
 
   const groupKey = ['name', 'Negative', 'Neutral', 'Positive', 'Not Rated'];
   const colorKey = ['#333333', '#f03b20', '#feb24c', '#ffeda0', '#999999'];
@@ -112,7 +98,7 @@ export default function SentimentPresentages({
         type: 'value',
         axisLabel: {
           formatter(value: number) {
-            return Math.round(value * 100);
+            return Math.round(value * 100)+'%';
           },
         },
       },
