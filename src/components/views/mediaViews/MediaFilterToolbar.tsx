@@ -13,7 +13,11 @@ import {
 } from '@material-ui/core';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addMediaFilter, clearMediaFilters, removeMediaFilter } from 'store/mediaSlice';
+import {
+  addMediaFilter,
+  clearMediaFilters,
+  removeMediaFilter,
+} from 'store/mediaSlice';
 import { _FilterTypes } from '@carto/react-core';
 import { dequal } from 'dequal';
 import { deepOrange } from '@material-ui/core/colors';
@@ -48,7 +52,10 @@ export default function MediaFilterToolbar() {
   const classes = useStyles();
   //@ts-ignore
   const filters = useSelector((state) => state.media.filters);
-  const disabled = useMemo(()=>Object.keys(filters?.meltwater ?? {}).length === 0, [filters])
+  const disabled = useMemo(
+    () => Object.keys(filters?.meltwater ?? {}).length === 0,
+    [filters],
+  );
 
   return (
     <Paper variant='outlined' className={classes.root}>
@@ -65,7 +72,10 @@ export default function MediaFilterToolbar() {
             clearCallback={() => dispatch(clearMediaFilters())}
             disabled={disabled}
           />
-          <ActiveFilters disabled={disabled} filters={filters?.meltwater ?? {}} />
+          <ActiveFilters
+            disabled={disabled}
+            filters={filters?.meltwater ?? {}}
+          />
         </div>
       </Grid>
     </Paper>
@@ -160,18 +170,24 @@ const useFilterStyles = makeStyles((theme) => ({
   },
 }));
 
-function ActiveFilters({ filters, disabled }: { disabled: any, filters: Filters }) {
+function ActiveFilters({
+  filters,
+  disabled,
+}: {
+  disabled: any;
+  filters: Filters;
+}) {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
-  useEffect(()=>{
-    if(disabled){
-      setAnchorEl(null)
+  useEffect(() => {
+    if (disabled) {
+      setAnchorEl(null);
     }
-  }, [disabled])
+  }, [disabled]);
 
   const classes = useFilterStyles({ isOpen: Boolean(anchorEl) });
 
@@ -181,7 +197,11 @@ function ActiveFilters({ filters, disabled }: { disabled: any, filters: Filters 
 
   return (
     <div className={classes.root}>
-      <IconButton className={classes.button} disabled={disabled} onClick={handleClick}>
+      <IconButton
+        className={classes.button}
+        disabled={disabled}
+        onClick={handleClick}
+      >
         <FilterListIcon />
       </IconButton>
       <FilterMenu
@@ -193,28 +213,28 @@ function ActiveFilters({ filters, disabled }: { disabled: any, filters: Filters 
   );
 }
 
-const useMenuStyles = makeStyles((theme)=>({
-  paper:{
-    padding: theme.spacing(1)
+const useMenuStyles = makeStyles((theme) => ({
+  paper: {
+    padding: theme.spacing(1),
   },
-  menuItem:{
-    '&:hover':{
+  menuItem: {
+    '&:hover': {
       backgroundColor: 'none',
-    }
+    },
   },
-  menuText:{
+  menuText: {
     display: 'flex',
-    flexDirection:'column',
+    flexDirection: 'column',
   },
-  itemClose:{
+  itemClose: {
     marginLeft: theme.spacing(2),
     borderRadius: '100%',
-    '&:hover':{
+    '&:hover': {
       backgroundColor: theme.palette.error.main,
       color: theme.palette.common.white,
     },
-  }
-}))
+  },
+}));
 
 function FilterMenu({
   filters,
@@ -225,19 +245,19 @@ function FilterMenu({
   anchorEl: null | HTMLElement;
   handleClose: any;
 }) {
-  const classes = useMenuStyles()
-  const dispatch = useDispatch()
-  
-  const handleRemove = ({owner, column, source}:any) => {
+  const classes = useMenuStyles();
+  const dispatch = useDispatch();
+
+  const handleRemove = ({ owner, column, source }: any) => {
     dispatch(
       removeMediaFilter({
         owner,
         column,
-        source
-      })
-    )
-  }
-  
+        source,
+      }),
+    );
+  };
+
   return (
     <Popper
       id='mediaFilterMenu'
@@ -246,23 +266,34 @@ function FilterMenu({
       placement='bottom'
     >
       <Paper className={classes.paper}>
-        <ClickAwayListener onClickAway={handleClose} >
+        <ClickAwayListener onClickAway={handleClose}>
           <MenuList>
-              {Object.entries(filters).map(([name, { owner, type, values, column, source }]: any) => (
+            {Object.entries(filters).map(
+              ([name, { owner, type, values, column, source }]: any) => (
                 <MenuItem key={name}>
-                  <Grid container alignItems='center' >
+                  <Grid container alignItems='center'>
                     <div className={classes.menuText}>
-                      <Typography variant='overline'>{name.replace('_', ' ')}</Typography>
                       <Typography variant='overline'>
-                        {type === _FilterTypes.BETWEEN ? values[0].join(' - ') : values.join(', ')}
+                        {name.replace('_', ' ')}
+                      </Typography>
+                      <Typography variant='overline'>
+                        {type === _FilterTypes.BETWEEN
+                          ? values[0].join(' - ')
+                          : values.join(', ')}
                       </Typography>
                     </div>
-                    <IconButton className={classes.itemClose} onClick={()=> {handleRemove({owner, column, source })}}>
+                    <IconButton
+                      className={classes.itemClose}
+                      onClick={() => {
+                        handleRemove({ owner, column, source });
+                      }}
+                    >
                       <CloseIcon />
                     </IconButton>
                   </Grid>
                 </MenuItem>
-              ))}
+              ),
+            )}
           </MenuList>
         </ClickAwayListener>
       </Paper>
