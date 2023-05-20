@@ -13,10 +13,11 @@ import { FA_MAP, MEDIA_SOURCES } from './utils/mediaUtils';
 import { METHOD_NAMES } from './utils/methodName';
 import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
 import { addMediaFilter, removeMediaFilter } from 'store/mediaSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { _FilterTypes } from '@carto/react-core';
 import useMediaData from 'components/indicators/media/hooks/useMediaData';
 import TopLoading from 'components/common/TopLoading';
+import getSourceFilter from 'components/indicators/media/utils/getSourceFilter';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,13 +42,22 @@ const useStyles = makeStyles((theme) => ({
   icon: {},
 }));
 
-const id = 'Menciones_sociales';
+const id = 'menciones_sociales';
 
 export default function MediaAggregateIndicators({ isLoading }: any) {
   const dispatch = useDispatch();
   const theme = useTheme();
   const classes = useStyles();
-  const [source, setSource] = useState(MEDIA_SOURCES.MENCIONES_TOTALES);
+
+  const { meltwater: filters = {} } = useSelector(
+    //@ts-ignore
+    (state) => state.media.filters,
+  );
+
+  const source = useMemo(
+    () => getSourceFilter(id, filters) ?? MEDIA_SOURCES.MENCIONES_TOTALES,
+    [filters],
+  );
 
   const { data, isLoading: isLoadingWidget } = useMediaData({
     id,
@@ -59,7 +69,6 @@ export default function MediaAggregateIndicators({ isLoading }: any) {
     newSource: string,
   ) => {
     if (!newSource) {
-      setSource(MEDIA_SOURCES.MENCIONES_TOTALES);
       dispatch(
         removeMediaFilter({
           source: 'meltwater',
@@ -71,7 +80,6 @@ export default function MediaAggregateIndicators({ isLoading }: any) {
     }
 
     if (newSource === MEDIA_SOURCES.MENCIONES_TOTALES) {
-      setSource(MEDIA_SOURCES.MENCIONES_TOTALES);
       dispatch(
         removeMediaFilter({
           source: 'meltwater',
@@ -91,7 +99,6 @@ export default function MediaAggregateIndicators({ isLoading }: any) {
         type: _FilterTypes.IN,
       }),
     );
-    setSource(newSource);
   };
 
   return (
