@@ -19,15 +19,14 @@ const useClearStyles = makeStyles((theme) => ({
 
 export default function ClearFiltersButton({
   className,
-  filtersCallback,
+  disabled,
   clearCallback,
 }: {
   className?: string;
-  filtersCallback: Function;
+  disabled: Boolean;
   clearCallback: Function;
 }) {
   const classes = useClearStyles();
-  const hasFilters = useMemo(() => filtersCallback(), [filtersCallback]);
 
   const handleClearFilters = () => {
     clearCallback();
@@ -35,7 +34,7 @@ export default function ClearFiltersButton({
 
   return (
     <span className={className}>
-      {hasFilters && (
+      {!disabled && (
         <Fab
           size='large'
           variant='extended'
