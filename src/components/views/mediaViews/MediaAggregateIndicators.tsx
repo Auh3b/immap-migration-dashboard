@@ -55,7 +55,7 @@ export default function MediaAggregateIndicators({ isLoading }: any) {
   );
 
   const source = useMemo(
-    () => getSourceFilter(id, filters) ?? MEDIA_SOURCES.MENCIONES_TOTALES,
+    () => getSourceFilter(id, filters)[0] ?? MEDIA_SOURCES.MENCIONES_TOTALES,
     [filters],
   );
 
