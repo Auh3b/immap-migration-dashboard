@@ -7,18 +7,22 @@ import {
 } from '@material-ui/core';
 import SourceIndictor from 'components/indicators/media/utils/SourceIndictor';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { MouseEvent, useEffect, useMemo, useState } from 'react';
+import { MouseEvent, useMemo } from 'react';
 import ComponentFallback from 'components/common/ComponentFallback';
 import { FA_MAP, MEDIA_SOURCES } from './utils/mediaUtils';
 import { METHOD_NAMES } from './utils/methodName';
 import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
 import { addMediaFilter, removeMediaFilter } from 'store/mediaSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { _FilterTypes } from '@carto/react-core';
+import useMediaData from 'components/indicators/media/hooks/useMediaData';
+import TopLoading from 'components/common/TopLoading';
+import getSourceFilter from 'components/indicators/media/utils/getSourceFilter';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
+    position: 'relative',
   },
   paper: {},
   title: {
@@ -38,51 +42,33 @@ const useStyles = makeStyles((theme) => ({
   icon: {},
 }));
 
-const id = 'sourceAggregrate';
+const id = 'menciones_sociales';
 
-export default function MediaAggregateIndicators({
-  deps,
-  isLoading,
-  transform,
-}: any) {
+export default function MediaAggregateIndicators({ isLoading }: any) {
   const dispatch = useDispatch();
   const theme = useTheme();
   const classes = useStyles();
-  const [source, setSource] = useState(MEDIA_SOURCES.MENCIONES_TOTALES);
-  const [data, setData] = useState([]);
 
-  const filters = useMemo(() => {
-    const currentFilters = { ...deps[1].meltwater };
-    if (!currentFilters) {
-      return {};
-    }
+  const { meltwater: filters = {} } = useSelector(
+    //@ts-ignore
+    (state) => state.media.filters,
+  );
 
-    if (!currentFilters[id]) {
-      return currentFilters;
-    }
-    delete currentFilters[id];
-    return currentFilters;
-  }, [deps]);
+  const source = useMemo(
+    () => getSourceFilter(id, filters)[0] ?? MEDIA_SOURCES.MENCIONES_TOTALES,
+    [filters],
+  );
 
-  useEffect(() => {
-    (async function () {
-      setData(
-        await transform(METHOD_NAMES.MEDIA_AGGREGATES, {
-          filters: filters ?? {},
-        }),
-      );
-    })();
-    return () => {
-      setData([]);
-    };
-  }, [...deps, dispatch]);
+  const { data, isLoading: isLoadingWidget } = useMediaData({
+    id,
+    methodName: METHOD_NAMES.MEDIA_AGGREGATES,
+  });
 
   const handleSourceChange = (
     event: MouseEvent<HTMLElement>,
     newSource: string,
   ) => {
     if (!newSource) {
-      setSource(MEDIA_SOURCES.MENCIONES_TOTALES);
       dispatch(
         removeMediaFilter({
           source: 'meltwater',
@@ -90,41 +76,34 @@ export default function MediaAggregateIndicators({
           owner: id,
         }),
       );
-    } else if (newSource === source) {
-      dispatch(
-        removeMediaFilter({
-          source: 'meltwater',
-          column: 'source',
-          owner: id,
-        }),
-      );
-      setSource(MEDIA_SOURCES.MENCIONES_TOTALES);
-    } else if (newSource === MEDIA_SOURCES.MENCIONES_TOTALES) {
-      dispatch(
-        removeMediaFilter({
-          source: 'meltwater',
-          column: 'source',
-          owner: id,
-        }),
-      );
-      setSource(MEDIA_SOURCES.MENCIONES_TOTALES);
-    } else {
-      dispatch(
-        addMediaFilter({
-          source: 'meltwater',
-          column: 'source',
-          values: [newSource],
-          owner: id,
-          type: _FilterTypes.IN,
-        }),
-      );
-      setSource(newSource);
+      return;
     }
-    console.log(newSource);
+
+    if (newSource === MEDIA_SOURCES.MENCIONES_TOTALES) {
+      dispatch(
+        removeMediaFilter({
+          source: 'meltwater',
+          column: 'source',
+          owner: id,
+        }),
+      );
+      return;
+    }
+
+    dispatch(
+      addMediaFilter({
+        source: 'meltwater',
+        column: 'source',
+        values: [newSource],
+        owner: id,
+        type: _FilterTypes.IN,
+      }),
+    );
   };
 
   return (
     <Grid item className={classes.root}>
+      {isLoadingWidget && <TopLoading />}
       <Paper className={classes.paper}>
         <Typography className={classes.title}>
           Número de menciones por red social relacionadas con migración en la

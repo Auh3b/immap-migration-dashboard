@@ -1,10 +1,11 @@
 import { Grid, Typography, makeStyles } from '@material-ui/core';
-import ComponentFallback from 'components/common/ComponentFallback';
 import FilterableIcon from 'components/common/customIcons/FilterableIcon';
 import { PropsWithChildren } from 'react';
+import TopLoading from './TopLoading';
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    position: 'relative',
     padding: theme.spacing(2),
     gap: theme.spacing(1),
     [theme.breakpoints.down('lg')]: {
@@ -71,13 +72,10 @@ export default function TitleWrapper(props: TitleWrapperProps) {
           </Grid>
         )}
       </Grid>
-      {isLoading ? (
-        <ComponentFallback />
-      ) : (
-        <Grid item className={classes.indicator}>
-          {children}
-        </Grid>
-      )}
+      {isLoading && <TopLoading />}
+      <Grid item className={classes.indicator}>
+        {children}
+      </Grid>
     </Grid>
   );
 }

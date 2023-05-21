@@ -2,35 +2,19 @@ import { Grid } from '@material-ui/core';
 import TitleWrapper from 'components/common/TitleWrapper';
 import CustomGriddedLineChart from 'components/common/customCharts/CustomGriddedLineChart';
 import { METHOD_NAMES } from 'components/views/mediaViews/utils/methodName';
-import { useEffect, useState } from 'react';
+import useMediaData from './hooks/useMediaData';
 
-export default function MediaEngagement({
-  deps,
-  isLoading,
-  transform,
-}: {
-  deps: [any[], Record<string, unknown>];
-  isLoading?: Boolean;
-  transform?: Function;
-}) {
-  const [data, setData] = useState([]);
+const id = 'mediaEngagement';
 
-  useEffect(() => {
-    (async function () {
-      setData(
-        await transform(METHOD_NAMES.MEDIA_ENGAGEMENT_HISTORY, {
-          filters: deps[1].meltwater ?? {},
-        }),
-      );
-    })();
-    return () => {
-      setData([]);
-    };
-  }, [...deps]);
+export default function MediaEngagement() {
+  const { data, isLoading } = useMediaData({
+    id,
+    methodName: METHOD_NAMES.MEDIA_ENGAGEMENT_HISTORY,
+  });
 
   return (
     <Grid item xs={12}>
-      <TitleWrapper title='Serie de compromiso histórico'>
+      <TitleWrapper title='Serie de compromiso histórico' isLoading={isLoading}>
         <CustomGriddedLineChart data={data} />
       </TitleWrapper>
     </Grid>

@@ -3,7 +3,7 @@ import {
   groupValuesByColumn,
   _FilterTypes,
 } from '@carto/react-core';
-import { PieWidgetUI, WrapperWidgetUI } from '@carto/react-ui';
+import { PieWidgetUI } from '@carto/react-ui';
 import { Grid, makeStyles } from '@material-ui/core';
 import { ReactComponent as Woman } from 'assets/img/person-0.svg';
 import { ReactComponent as Man } from 'assets/img/person-1.svg';
@@ -16,7 +16,6 @@ import WidgetNote from 'components/common/customWidgets/WidgetNote';
 import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType';
 import LazyLoadComponent from 'components/common/LazyLoadComponent';
 import PageFallback from 'components/common/PageFallback';
-import TopLoading from 'components/common/TopLoading';
 import MethodFunc from '../utils/methodType';
 import CustomWidgetWrapper from 'components/common/customWidgets/CustomWidgetWrapper';
 

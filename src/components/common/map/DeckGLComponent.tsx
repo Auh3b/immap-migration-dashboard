@@ -7,7 +7,7 @@ import { Map } from 'react-map-gl';
 import { RootState } from 'store/store';
 import { useMapHooks } from './useMapHooks';
 //@ts-ignore
-import { LinearInterpolator, FlyToInterpolator } from '@deck.gl/core';
+import { FlyToInterpolator } from '@deck.gl/core';
 // @ts-ignore
 // eslint-disable-next-line import/no-webpack-loader-syntax
 import maplibregl from '!maplibre-gl';
@@ -16,11 +16,7 @@ import maplibreglWorker from 'maplibre-gl/dist/maplibre-gl-csp-worker';
 // @ts-ignore
 maplibregl.workerClass = maplibreglWorker;
 
-// const transitionInterpolator = new LinearInterpolator({
-//   transitionProps: ['longitude', 'latitude', 'zoom'],
-// });
 const transitionInterpolator = new FlyToInterpolator();
-const transitionDuration = 0;
 
 export default function DeckGLComponent({ layers }: { layers: any[] }) {
   const viewState = useSelector((state: RootState) => state.carto.viewState);
@@ -31,7 +27,7 @@ export default function DeckGLComponent({ layers }: { layers: any[] }) {
     (state: RootState) => BASEMAPS[state.carto.basemap],
   );
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
+  // const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
   const {
     handleCursor,
     handleHover,

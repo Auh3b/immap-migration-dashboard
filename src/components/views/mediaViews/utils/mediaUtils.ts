@@ -11,6 +11,7 @@ import {
   faTwitter,
   faYoutube,
 } from '@fortawesome/free-brands-svg-icons';
+import { Filters } from 'utils/filterFunctions';
 
 export const MEDIA_SOURCES = {
   MENCIONES_TOTALES: 'menciones_totales',
@@ -46,3 +47,33 @@ export const FA_MAP = new Map([
   [MEDIA_SOURCES.MENCIONES_TOTALES, faHashtag],
   [MEDIA_SOURCES.SOCIAL_BLOGS, faSquareRss],
 ]);
+
+interface Summary {
+  volume: number;
+  sources: string[];
+}
+
+type FieldValues = [string, number];
+
+interface SourceField {
+  date: string;
+  source: string;
+  volume: number;
+  topPhrases: FieldValues;
+  sentiment: FieldValues;
+  country: FieldValues;
+  languages: FieldValues;
+  views: number;
+}
+
+type Sources = Partial<SourceField[]>;
+
+export interface Input {
+  summary: Partial<Summary>;
+  sources: Sources;
+}
+
+export interface Params {
+  data?: Partial<Input>;
+  filters?: Filters;
+}

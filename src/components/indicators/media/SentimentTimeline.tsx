@@ -2,32 +2,17 @@ import { Grid, useTheme } from '@material-ui/core';
 import TitleWrapper from 'components/common/TitleWrapper';
 import ReactEcharts from 'components/common/customCharts/ReactEcharts';
 import { METHOD_NAMES } from 'components/views/mediaViews/utils/methodName';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
+import useMediaData from './hooks/useMediaData';
 
-export default function SentimentTimeline({
-  deps,
-  isLoading,
-  transform,
-}: {
-  deps: any[];
-  isLoading?: Boolean;
-  transform?: Function;
-}) {
+const id = 'sentimentTimeline';
+
+export default function SentimentTimeline() {
   const theme = useTheme();
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    (async function () {
-      setData(
-        await transform(METHOD_NAMES.MEDIA_SENTIMENT_HISTORY, {
-          filters: deps[1].meltwater ?? {},
-        }),
-      );
-    })();
-    return () => {
-      setData([]);
-    };
-  }, [...deps]);
+  const { data, isLoading } = useMediaData({
+    id,
+    methodName: METHOD_NAMES.MEDIA_SENTIMENT_HISTORY,
+  });
 
   const groupKey = ['name', 'Negative', 'Neutral', 'Positive', 'Not Rated'];
   const colorKey = ['#333333', '#f03b20', '#feb24c', '#ffeda0', '#999999'];
