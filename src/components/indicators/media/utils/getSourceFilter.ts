@@ -1,5 +1,5 @@
 export default function getSourceFilter(id: string, _filters: any) {
-  const filters = {..._filters}
+  const filters = { ..._filters };
   if (!filters[id]) {
     return [null, null];
   }
