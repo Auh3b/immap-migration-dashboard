@@ -24,18 +24,20 @@ export const SICK_CATEGORY_ABREVATIONS = new Map([
   [7, 'Otro'],
 ]);
 
+// [daily capacity, yesterday count, daily average ]
+
 export const SERVICE_STAT_COLUMNS = new Map([
-  [1, ['cap_serv_l', 'cap_serv_1', 'prom_legal']],
-  [2, ['tipo_alime', 'pers_alim', 'prom_pers_']],
-  [3, ['pers_atien', 'serv_sal_1', 'prom_serv_']],
-  [4, ['prom_agua_', 'serv_agua', 'prom_agua1']],
-  [5, ['serv_san_d', 'serv_san_a', 'prom_serv1']],
-  [6, ['serv_hig_d', 'serv_hig_a', 'prom_ser_h']],
+  [1, ['cap_serv_l', 'cap_serv_1']],
+  [2, ['tipo_alime', 'pers_alim']],
+  [3, ['pers_atien', 'serv_sal_1']],
+  [4, ['prom_agua_', 'serv_agua']],
+  [5, ['serv_san_d', 'serv_san_a']],
+  [6, ['serv_hig_d', 'serv_hig_a']],
   [7, ['serv_tra_2']],
-  [8, ['serv_edu_d', 'serv_edu_a', 'prom_ser_1']],
-  [9, ['serv_aloj', 'serv_aloj_', 'serv_aloj1']],
-  [10, ['serv_ruta_', 'serv_ruta1', 'prom_ser_2']],
-  [11, ['serv_psico', 'serv_psi_1', 'prom_ser_3']],
-  [12, ['serv_trans', 'serv_tra_1', 'prom_ser_4']],
-  [13, ['serv_tra_2', 'atend_serv', 'atend_ser_']],
+  [8, ['serv_edu_d', 'serv_edu_a']],
+  [9, ['serv_aloj', 'serv_aloj_']],
+  [10, ['serv_ruta_', 'serv_ruta1']],
+  [11, ['serv_psico', 'serv_psi_1']],
+  [12, ['serv_trans', 'serv_tra_1']],
+  [13, ['serv_tra_2', 'atend_serv']],
 ]);
