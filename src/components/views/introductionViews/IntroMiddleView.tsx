@@ -94,7 +94,7 @@ export default function IntroMiddleView({ data, isLoading }: IndicatorProps) {
         </Grid>
       </Grid>
       <Grid item wrap='nowrap' container className={classes.indicatorsGroup}>
-        <IntroChildTravelParty data={data[1]}/>
+        <IntroChildTravelParty data={data[1]} />
         <IntroChildTravelCompositition data={data[1]} />
       </Grid>
     </Grid>
