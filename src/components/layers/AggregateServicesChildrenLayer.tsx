@@ -10,7 +10,7 @@ import { RootState } from 'store/store';
 export const AGGREGATE_SERVICES_CHILDREN_LAYER_ID =
   'aggregateServicesChildrenLayer';
 export const AGGREGATE_SERVICE_COLORS = {
-  NNA: d3Hex2RGB(5),
+  'Persona que viaja sin NNA': d3Hex2RGB(5),
 };
 
 const DATA = Object.entries(AGGREGATE_SERVICE_COLORS).map(([label, color]) => ({
@@ -19,11 +19,11 @@ const DATA = Object.entries(AGGREGATE_SERVICE_COLORS).map(([label, color]) => ({
 }));
 
 const layerConfig = {
-  title: 'Servicios para NNA',
+  title: 'Persona que viaja sin NNA',
   visible: true,
   legend: {
     type: LEGEND_TYPES.CATEGORY,
-    labels: DATA.map((data) => data.label),
+    labels: [''],
     colors: DATA.map((data) => data.color),
     collapsible: false,
   },
@@ -46,7 +46,7 @@ export default function AggregateServicesChildrenLayer() {
     return new CartoLayer({
       ...cartoLayerProps,
       id: AGGREGATE_SERVICES_CHILDREN_LAYER_ID,
-      getFillColor: AGGREGATE_SERVICE_COLORS.NNA,
+      getFillColor: AGGREGATE_SERVICE_COLORS['Persona que viaja sin NNA'],
       pointRadiusMinPixels: 4,
       pickable: true,
       stroked: false,
