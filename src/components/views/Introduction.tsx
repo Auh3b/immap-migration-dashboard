@@ -182,7 +182,7 @@ function ExitButton() {
     <Grid item className={classes.root}>
       <Button
         component={NavLink}
-        to={ROUTE_PATHS.DASHBOARD}
+        to={ROUTE_PATHS.PREMISE_SERVICE}
         variant='outlined'
         size='large'
         className={classes.button}
