@@ -1,13 +1,16 @@
-import { Grid, Typography, makeStyles, useTheme } from '@material-ui/core';
-import { ascending } from 'd3';
+import { useTheme } from '@material-ui/core';
+import {
+  ascending,
+  format,
+  interpolateRdYlBu,
+  scaleSequential,
+} from 'd3';
 import { useMemo } from 'react';
-import { UNICEF_COLORS } from 'theme';
 import ReactEchart from 'components/common/customCharts/ReactEcharts';
 
 const STAT_CATEGORY_COLORS = new Map([
   ['Capacidad diaria', '#f03b20'],
   ['Personas atendidas ayer', '#feb24c'],
-  ['PROMEDIO DIARIO SEMANA PASADA', '#ffeda0'],
 ]);
 
 const DATA_DIMENSIONS = [
@@ -20,8 +23,23 @@ const DATA_DIMENSIONS = [
   'geom',
   'Capacidad diaria',
   'Personas atendidas ayer',
-  'PROMEDIO DIARIO SEMANA PASADA',
 ];
+
+function getDifference(primary: number = 0, secondary: number = 0) {
+  const diff = primary / secondary;
+  if (primary >= secondary) {
+    return diff;
+  }
+
+  const adjustedDiff = 1 - diff;
+  return adjustedDiff * -1;
+}
+
+function getDifferenceColor(value: number) {
+  const scale = scaleSequential(interpolateRdYlBu).domain([-1, 1]);
+  const color = scale(value);
+  return color;
+}
 
 export default function CustomConnectDotChart({ data: _data, groupName }: any) {
   const theme = useTheme();
@@ -37,29 +55,45 @@ export default function CustomConnectDotChart({ data: _data, groupName }: any) {
         type: 'custom',
         renderItem: (params: any, api: any) => {
           const categoryIndex = api.value(5);
-          const p1 = api.coord([api.value(7), categoryIndex]);
-          const p2 = api.coord([api.value(8), categoryIndex]);
-          const p3 = api.coord([api.value(9), categoryIndex]);
-          const points = [p1, p2, p3].sort((a, b) => ascending(a[0], b[0]));
+          const dailyCapacity = api.value(7);
+          const yesterdayCount = api.value(8);
+          const p1 = api.coord([dailyCapacity, categoryIndex]);
+          const p2 = api.coord([yesterdayCount, categoryIndex]);
+          const points = [p1, p2].sort((a, b) => ascending(a[0], b[0]));
+          const [x, y] = points.at(-1);
+          const difference = getDifference(dailyCapacity, yesterdayCount);
+          const stroke = getDifferenceColor(difference);
+          const lineStyle = api.style({
+            stroke,
+            lineWidth: 10,
+          });
+          const font = api.font({
+            fontSize: 14,
+            fontFamily: 'Barlow',
+          });
+          console.log({ dailyCapacity, yesterdayCount, difference });
           return {
-            type: 'polyline',
-            shape: {
-              points,
-            },
-            style: api.style({
-              stroke: UNICEF_COLORS[6],
-            }),
+            type: 'group',
+            children: [
+              {
+                type: 'polyline',
+                shape: {
+                  points,
+                },
+                style: lineStyle,
+              },
+              {
+                type: 'text',
+                x: x + x * 0.025,
+                y: y,
+                style: {
+                  text: format('.0%')(difference),
+                  textVerticalAlign: 'middle',
+                  font,
+                },
+              },
+            ],
           };
-        },
-      },
-      {
-        type: 'scatter',
-        encode: {
-          y: DATA_DIMENSIONS[5],
-          x: DATA_DIMENSIONS[7],
-        },
-        itemStyle: {
-          color: STAT_CATEGORY_COLORS.get(DATA_DIMENSIONS[7]),
         },
       },
       {
@@ -76,10 +110,10 @@ export default function CustomConnectDotChart({ data: _data, groupName }: any) {
         type: 'scatter',
         encode: {
           y: DATA_DIMENSIONS[5],
-          x: DATA_DIMENSIONS[9],
+          x: DATA_DIMENSIONS[7],
         },
         itemStyle: {
-          color: STAT_CATEGORY_COLORS.get(DATA_DIMENSIONS[9]),
+          color: STAT_CATEGORY_COLORS.get(DATA_DIMENSIONS[7]),
         },
       },
     ];
@@ -92,8 +126,8 @@ export default function CustomConnectDotChart({ data: _data, groupName }: any) {
         text: groupName,
       },
       grid: {
-        left: '5%',
-        right: '4%',
+        left: '0%',
+        right: '10%',
         bottom: '3%',
         containLabel: true,
       },
@@ -176,51 +210,11 @@ export default function CustomConnectDotChart({ data: _data, groupName }: any) {
   );
   return (
     <>
-      <ChartLegend />
       <ReactEchart
         option={option}
-        style={{ height: '600px' }}
+        style={{ height: '650px' }}
         opts={{ renderer: 'svg' }}
       />
     </>
-  );
-}
-
-const useLegendStyle = makeStyles((theme) => ({
-  root: {
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2),
-  },
-  legendItem: {
-    gap: theme.spacing(2),
-  },
-  icon: {
-    width: '10px',
-    height: '10px',
-    borderRadius: '100%',
-  },
-}));
-
-function ChartLegend() {
-  const classes = useLegendStyle();
-  const legend = Array.from(STAT_CATEGORY_COLORS);
-  return (
-    <Grid item direction='column' container className={classes.root}>
-      {legend.map(([title, color]) => (
-        <Grid
-          key={title}
-          alignItems='center'
-          item
-          container
-          className={classes.legendItem}
-        >
-          <span
-            className={classes.icon}
-            style={{ backgroundColor: color }}
-          ></span>
-          <Typography variant='overline'>{title}</Typography>
-        </Grid>
-      ))}
-    </Grid>
   );
 }
