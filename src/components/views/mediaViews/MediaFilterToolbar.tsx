@@ -42,7 +42,9 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   filters: {
+    width: '25%',
     display: 'flex',
+    justifyContent: 'flex-end',
     alignItems: 'center',
     flexWrap: 'nowrap',
   },
@@ -83,8 +85,8 @@ export default function MediaFilterToolbar() {
   );
 }
 
-function DateFilter({filters}:any) {
-  const id = 'fecha_filtro'
+function DateFilter({ filters }: any) {
+  const id = 'fecha_filtro';
   const dispatch = useDispatch();
   const [start, setStart] = useState('2022-05-12');
   const [end, setEnd] = useState('2023-05-12');
@@ -167,7 +169,8 @@ const useFilterStyles = makeStyles((theme) => ({
   button: {
     padding: theme.spacing(2),
     borderRadius: '100%',
-    border: ({hasFilters}:any)=> hasFilters && `solid 1px ${theme.palette.grey[100]}`,
+    border: ({ hasFilters }: any) =>
+      hasFilters && `solid 1px ${theme.palette.grey[100]}`,
     color: ({ isOpen }: any) =>
       isOpen ? UNICEF_COLORS[0] : theme.palette.grey[100],
   },
@@ -192,7 +195,10 @@ function ActiveFilters({
     }
   }, [disabled]);
 
-  const classes = useFilterStyles({ isOpen: Boolean(anchorEl), hasFilters: !disabled });
+  const classes = useFilterStyles({
+    isOpen: Boolean(anchorEl),
+    hasFilters: !disabled,
+  });
 
   const handleClose = () => {
     setAnchorEl(null);
