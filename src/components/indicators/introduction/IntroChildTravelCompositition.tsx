@@ -21,56 +21,69 @@ const methodParams = {
   aggregateType: AggregationTypes.SUM,
 };
 
-export default function IntroChildTravelCompositition({
-  data:_data
-}: any) {
-  const theme = useTheme()
+export default function IntroChildTravelCompositition({ data: _data }: any) {
+  const theme = useTheme();
 
-  const data = useMemo(()=> {
-    if(_data){
+  const data = useMemo(() => {
+    if (_data) {
       //@ts-ignore
-      return method(_data, column, methodParams)[0]
+      return method(_data, column, methodParams)[0];
     }
-  } 
-  , [_data])
+  }, [_data]);
 
-  const series = useMemo(()=>[
-    {
-      type: 'bar',
-      data: data?.value,
-      itemStyle: {}
-    }
-  ], [data])
-
-  const option = useMemo(()=>({
-    color: UNICEF_COLORS,
-    tooltip:{
-      trigger: 'axis',
-      padding: [theme.spacing(0.5), theme.spacing(1)],
-      borderWidth: 0,
-      textStyle: {
-        ...theme.typography.caption,
-        fontSize: 16,
-        lineHeight: 16,
-        color: theme.palette.common.white,
+  const series = useMemo(
+    () => [
+      {
+        type: 'bar',
+        data: data?.value,
+        itemStyle: {},
       },
-      //@ts-ignore
-      backgroundColor: theme.palette.other.tooltip,
-    },
-    xAxis:{
-      type: 'category',
-      data: data?.name,
-    },
-    yAxis:{
-      type: 'value',
-    },
-    series,
-  }), [series])
+    ],
+    [data],
+  );
+
+  const option = useMemo(
+    () => ({
+      color: UNICEF_COLORS,
+      grid: {
+        top: '13%',
+        left: '5%',
+        right: '5%',
+        bottom: '17%',
+        containLabels: true,
+      },
+      tooltip: {
+        trigger: 'axis',
+        padding: [theme.spacing(0.5), theme.spacing(1)],
+        borderWidth: 0,
+        textStyle: {
+          ...theme.typography.caption,
+          fontSize: 16,
+          lineHeight: 16,
+          color: theme.palette.common.white,
+        },
+        //@ts-ignore
+        backgroundColor: theme.palette.other.tooltip,
+      },
+      xAxis: {
+        type: 'category',
+        data: data?.name,
+        axisTick: {
+          show: false,
+        },
+      },
+      yAxis: {
+        type: 'value',
+      },
+      series,
+    }),
+    [series],
+  );
 
   return (
     <TitleWrapper title={title}>
-      <ReactEcharts option={option}  opts={{renderer: 'svg'}}/>
-      <WidgetNote note={NOTE}/>
+      <ReactEcharts option={option} opts={{ renderer: 'svg' }} />
+      <WidgetNote note={NOTE} />
     </TitleWrapper>
-  )
+  );
 }
