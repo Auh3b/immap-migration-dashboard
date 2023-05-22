@@ -6,7 +6,7 @@ import TopLoading from './TopLoading';
 const useStyles = makeStyles((theme) => ({
   root: {
     position: 'relative',
-    padding: theme.spacing(2),
+    padding: theme.spacing(4),
     gap: theme.spacing(1),
     [theme.breakpoints.down('lg')]: {
       padding: theme.spacing(1),

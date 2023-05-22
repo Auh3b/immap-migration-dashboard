@@ -10,7 +10,7 @@ import { LEGEND_TYPES } from '@carto/react-ui';
 export const AGGREGATE_SERVICE_LAYER_ID = 'aggregateServiceLayer';
 
 export const AGGREGATE_SERVICE_COLORS = {
-  Adultos: d3Hex2RGB(7),
+  'Persona que viaja con NNA': d3Hex2RGB(7),
 };
 
 const DATA = Object.entries(AGGREGATE_SERVICE_COLORS).map(([label, color]) => ({
@@ -19,11 +19,11 @@ const DATA = Object.entries(AGGREGATE_SERVICE_COLORS).map(([label, color]) => ({
 }));
 
 const layerConfig = {
-  title: 'Servicios para adultos',
+  title: 'Persona que viaja con NNA',
   visible: true,
   legend: {
     type: LEGEND_TYPES.CATEGORY,
-    labels: DATA.map((data) => data.label),
+    labels: [''],
     colors: DATA.map((data) => data.color),
     collapsible: false,
   },
@@ -46,7 +46,7 @@ export default function AggregateServiceLayer() {
     return new CartoLayer({
       ...cartoLayerProps,
       id: AGGREGATE_SERVICE_LAYER_ID,
-      getFillColor: AGGREGATE_SERVICE_COLORS.Adultos,
+      getFillColor: AGGREGATE_SERVICE_COLORS['Persona que viaja con NNA'],
       pointRadiusMinPixels: 4,
       pickable: true,
       stroked: false,

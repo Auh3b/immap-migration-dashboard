@@ -3,6 +3,7 @@ import ReactEcharts from './ReactEcharts';
 import { EChartsReactProps } from 'echarts-for-react';
 import { format } from 'd3';
 import { useTheme } from '@material-ui/core';
+import { UNICEF_COLORS } from 'theme';
 
 interface CustomChartProps extends EChartsReactProps {
   data: [[string, string, number][], [string, string, number][]][];
@@ -10,16 +11,27 @@ interface CustomChartProps extends EChartsReactProps {
 
 export default function CustomGriddedLineChart({
   data: _data = [],
-  style = { height: 300 },
+  style = { height: 600 },
   opts,
 }: Partial<CustomChartProps>) {
   const theme = useTheme();
 
   const grid = useMemo(() => {
+    if (_data.length === 0) {
+      return [];
+    }
     let output: any[] = [
       {
         left: '3%',
         top: '15%',
+        width: '25%',
+        height: '35%',
+        containLabels: true,
+      },
+      {
+        left: '3%',
+        top: '65%',
+        bottom: '5%',
         width: '25%',
         containLabels: true,
       },
@@ -27,11 +39,27 @@ export default function CustomGriddedLineChart({
         left: '35%',
         top: '15%',
         width: '25%',
+        height: '35%',
+        containLabels: true,
+      },
+      {
+        left: '35%',
+        top: '65%',
+        bottom: '5%',
+        width: '25%',
         containLabels: true,
       },
       {
         left: '70%',
         top: '15%',
+        width: '25%',
+        height: '35%',
+        containLabels: true,
+      },
+      {
+        left: '70%',
+        top: '65%',
+        bottom: '5%',
         width: '25%',
         containLabels: true,
       },
@@ -41,7 +69,7 @@ export default function CustomGriddedLineChart({
 
   const yAxis = useMemo(() => {
     let output: any[] = [];
-    for (let i = 0; i < _data.length; i++) {
+    for (let i = 0; i < _data.length * 2; i++) {
       const axisConfig = {
         gridIndex: i,
         type: 'value',
@@ -59,14 +87,15 @@ export default function CustomGriddedLineChart({
   const xAxis = useMemo(() => {
     let output: any[] = [];
     for (let i = 0; i < _data.length; i++) {
-      const axisConfig = {
-        gridIndex: i,
-        type: 'category',
-        data: _data[i][0].map((d) => d[0]),
-      };
-      output = [...output, axisConfig];
+      for (let j = 0; j < _data[i].length; j++) {
+        const axisConfig = {
+          type: 'category',
+          data: _data[i][j].map((d) => d[0]),
+        };
+        output = [...output, axisConfig];
+      }
     }
-    return output;
+    return output.map((d, i) => ({ ...d, gridIndex: i }));
   }, [_data]);
 
   const title = useMemo(() => {
@@ -93,8 +122,8 @@ export default function CustomGriddedLineChart({
           j === 0 ? 'Views' : 'Posts'
         }`;
         const seriesConfig = {
-          xAxisIndex: i,
-          yAxisIndex: i,
+          xAxisIndex: i * (j + 1),
+          yAxisIndex: i * (j + 1),
           type: 'line',
           name: seriesName,
           data: _data[i][j].map((d) => d[2]),
@@ -102,12 +131,12 @@ export default function CustomGriddedLineChart({
         output = [...output, seriesConfig];
       }
     }
-    return output;
+    return output.map((d, i) => ({ ...d, xAxisIndex: i, yAxisIndex: i }));
   }, [_data]);
 
   const dataZoom = useMemo(() => {
     let output: any[] = [];
-    for (let i = 0; i < _data.length; i++) {
+    for (let i = 0; i < _data.length * 2; i++) {
       const zoomConfig = {
         xAxisIndex: i,
         type: 'inside',
@@ -158,8 +187,13 @@ export default function CustomGriddedLineChart({
     },
   };
 
-  const option = useMemo(
-    () => ({
+  const option = useMemo(() => {
+    if (_data.length === 0) {
+      return {};
+    }
+
+    return {
+      color: UNICEF_COLORS,
       title,
       legend,
       grid,
@@ -168,9 +202,15 @@ export default function CustomGriddedLineChart({
       xAxis,
       series,
       ...staticOptions,
-    }),
-    [series, grid, xAxis, yAxis],
-  );
+    };
+  }, [series, grid, xAxis, yAxis, title, legend, dataZoom]);
 
-  return <ReactEcharts option={option} opts={opts} style={style} />;
+  return (
+    <ReactEcharts
+      option={option}
+      notMerge={true}
+      opts={{ renderer: 'svg' }}
+      style={style}
+    />
+  );
 }

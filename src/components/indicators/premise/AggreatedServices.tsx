@@ -26,6 +26,7 @@ import { WebMercatorViewport } from '@deck.gl/core';
 import { initialState } from 'store/initialStateSlice';
 import { RootState } from 'store/store';
 import handleMapTransitions from './hooks/handleMapTransitions';
+import AggreatedServicesLegend from './utils/AggreatedServicesLegend';
 
 const otherColumns = {
   country: 'ubicacion_',
@@ -39,7 +40,6 @@ const otherColumns = {
 const SERVICE_STAT_COLUMNS_NAME = [
   'Capacidad diaria',
   'Personas atendidas ayer',
-  'PROMEDIO DIARIO SEMANA PASADA',
 ];
 
 const column: string = 'serv_tipo1';
@@ -253,6 +253,7 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
               clearCallback={() => setFilters({})}
             />
           </Grid>
+          <AggreatedServicesLegend />
           {data.length > 0 && !isLoading && regions ? (
             regions.map((groupName) => {
               return (
@@ -276,7 +277,7 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
   );
 }
 
-const useSelectSyles = makeStyles((theme) => ({
+const useSelectSyles = makeStyles(() => ({
   root: {
     width: '50%',
     alignSelf: 'flex-start',
