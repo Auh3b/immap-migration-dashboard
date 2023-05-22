@@ -67,7 +67,6 @@ function RangeDifferenceScale() {
   const [negative, neutral, positive] = [1, 2, 3].map((a, i) =>
     scaleSequential(interpolateRdYlBu).domain([0, 2])(i),
   );
-  console.log(negative, neutral, positive);
   const classes = useRangeStyles({ negative, neutral, positive });
   return (
     <Grid container item direction='column' className={classes.root}>
