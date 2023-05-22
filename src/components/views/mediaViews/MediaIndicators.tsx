@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
   },
 }));
-export default function MediaIndicators({ isLoading, children }: any) {
+export default function MediaIndicators({ isLoading }: any) {
   const classes = useStyles();
   return (
     <Grid item className={classes.root}>
@@ -24,7 +24,7 @@ export default function MediaIndicators({ isLoading, children }: any) {
             <>
               <MediaOrigin />
               <SentimentPresentages />
-              {/* <TopPhrases /> */}
+              <TopPhrases />
               <SentimentTimeline />
               <MediaEngagement />
             </>
