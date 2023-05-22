@@ -4,12 +4,6 @@ import { lazy } from 'react';
 const ChildTravelerAges = lazy(
   () => import('components/indicators/dashboard/ChildTravelerAges'),
 );
-const ChildrenTravelAlone = lazy(
-  () => import('components/indicators/dashboard/ChildrenTravelAlone'),
-);
-const PlacesChildrenTravelAlone = lazy(
-  () => import('components/indicators/dashboard/PlacesChildrenTravelAlone'),
-);
 const ServiceTypeChildren = lazy(
   () => import('components/indicators/services/ServiceTypeChildren'),
 );
@@ -28,8 +22,6 @@ export default function ChildrenLeftView({ dataSources, classes }: any) {
   return (
     <MainColumnView>
       <ChildTravelerAges dataSource={mainSource} />
-      {/* <ChildrenTravelAlone dataSource={mainSource} />
-      <PlacesChildrenTravelAlone dataSource={mainSource} /> */}
       <ServiceTypeChildren dataSource={mainSource} />
       <ServiceAccessChildren dataSource={aggreagateChildren} />
       <ServiceQualityChildren dataSource={aggreagateChildren} />
