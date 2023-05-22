@@ -17,8 +17,8 @@ export default function CustomGriddedLineChart({
   const theme = useTheme();
 
   const grid = useMemo(() => {
-    if(_data.length === 0){
-      return []
+    if (_data.length === 0) {
+      return [];
     }
     let output: any[] = [
       {
@@ -86,7 +86,7 @@ export default function CustomGriddedLineChart({
 
   const xAxis = useMemo(() => {
     let output: any[] = [];
-    for (let i = 0; i < _data.length ; i++) {
+    for (let i = 0; i < _data.length; i++) {
       for (let j = 0; j < _data[i].length; j++) {
         const axisConfig = {
           type: 'category',
@@ -95,7 +95,7 @@ export default function CustomGriddedLineChart({
         output = [...output, axisConfig];
       }
     }
-    return output.map((d, i) =>({...d, gridIndex: i}));
+    return output.map((d, i) => ({ ...d, gridIndex: i }));
   }, [_data]);
 
   const title = useMemo(() => {
@@ -122,8 +122,8 @@ export default function CustomGriddedLineChart({
           j === 0 ? 'Views' : 'Posts'
         }`;
         const seriesConfig = {
-          xAxisIndex: i*(j+ 1),
-          yAxisIndex: i*(j+ 1),
+          xAxisIndex: i * (j + 1),
+          yAxisIndex: i * (j + 1),
           type: 'line',
           name: seriesName,
           data: _data[i][j].map((d) => d[2]),
@@ -131,7 +131,7 @@ export default function CustomGriddedLineChart({
         output = [...output, seriesConfig];
       }
     }
-    return output.map((d, i) =>({...d, xAxisIndex: i,yAxisIndex: i,}));
+    return output.map((d, i) => ({ ...d, xAxisIndex: i, yAxisIndex: i }));
   }, [_data]);
 
   const dataZoom = useMemo(() => {
@@ -187,26 +187,30 @@ export default function CustomGriddedLineChart({
     },
   };
 
-  const option = useMemo(
-    () => {
-      if(_data.length === 0){
-        return {}
-      }
-      
-      return {
-        color: UNICEF_COLORS,
-        title,
-        legend,
-        grid,
-        dataZoom,
-        yAxis,
-        xAxis,
-        series,
-        ...staticOptions,
-      }
-    },
-    [series, grid, xAxis, yAxis, title, legend, dataZoom],
-  );
+  const option = useMemo(() => {
+    if (_data.length === 0) {
+      return {};
+    }
 
-  return <ReactEcharts option={option} notMerge={true} opts={{renderer: 'svg'}} style={style} />;
+    return {
+      color: UNICEF_COLORS,
+      title,
+      legend,
+      grid,
+      dataZoom,
+      yAxis,
+      xAxis,
+      series,
+      ...staticOptions,
+    };
+  }, [series, grid, xAxis, yAxis, title, legend, dataZoom]);
+
+  return (
+    <ReactEcharts
+      option={option}
+      notMerge={true}
+      opts={{ renderer: 'svg' }}
+      style={style}
+    />
+  );
 }

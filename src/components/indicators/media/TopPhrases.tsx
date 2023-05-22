@@ -13,7 +13,7 @@ export default function TopPhrases() {
     methodName: METHOD_NAMES.MEDIA_TOP_PHRASES,
   });
   //@ts-ignore
-  const filters = useSelector((state) => state.media.filters?.meltwater) || {}
+  const filters = useSelector((state) => state.media.filters?.meltwater) || {};
 
   return (
     <Grid xs={12} lg={4} item>

@@ -4,7 +4,7 @@ export enum FilterTypes {
   CLOSED_OPEN = 'closed_open', // [a, b) a is included, b is not
   TIME = 'time',
   STRING_SEARCH = 'stringSearch',
-  WORD_CLOUD_IN = 'word_cloud_in'
+  WORD_CLOUD_IN = 'word_cloud_in',
 }
 
 export type filterId = string | number;
@@ -43,11 +43,13 @@ function filterRange(column: string, value: [number, number]) {
   return (d: any) => d[column] >= start && d[column] <= end;
 }
 
-function filterWordCloud(column: string, value: string){
-  return (d: any) => { 
-    const words:string = d[column].map(([word,count]: [string, number]) => word).join(',')
-    return words.search(value) === -1 ? false : true
-  }
+function filterWordCloud(column: string, value: string) {
+  return (d: any) => {
+    const words: string = d[column]
+      .map(([word, count]: [string, number]) => word)
+      .join(',');
+    return words.search(value) === -1 ? false : true;
+  };
 }
 
 export function filterFunctions(type: filterType) {

@@ -1,10 +1,5 @@
 import { useTheme } from '@material-ui/core';
-import {
-  ascending,
-  format,
-  interpolateRdYlBu,
-  scaleSequential,
-} from 'd3';
+import { ascending, format, interpolateRdYlBu, scaleSequential } from 'd3';
 import { useMemo } from 'react';
 import ReactEchart from 'components/common/customCharts/ReactEcharts';
 

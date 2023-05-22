@@ -2,7 +2,14 @@ import { useCallback, useMemo } from 'react';
 import ReactEcharts from './ReactEcharts';
 import cloud from 'd3-cloud';
 import { makeStyles, useTheme } from '@material-ui/core';
-import { extent, interpolateYlGnBu, interpolateYlOrRd, max, median, scaleSequential } from 'd3';
+import {
+  extent,
+  interpolateYlGnBu,
+  interpolateYlOrRd,
+  max,
+  median,
+  scaleSequential,
+} from 'd3';
 import { numberFormatter } from 'utils/formatter';
 import { useDispatch } from 'react-redux';
 import getSourceFilter from 'components/indicators/media/utils/getSourceFilter';
@@ -21,8 +28,7 @@ const margin = {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    '& svg': {
-    },
+    '& svg': {},
     '& text': {
       dominantBaseline: 'unset',
       y: '0',
@@ -33,16 +39,16 @@ const useStyles = makeStyles((theme) => ({
 export default function CustomWordCloud({
   data: _data,
   filters,
-  id
+  id,
 }: {
   data: { name: string; value: number }[];
-  filters?: any
-  id?:string
+  filters?: any;
+  id?: string;
 }) {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const classes = useStyles({ height });
   const theme = useTheme();
-  const [selectedWord = ''] = getSourceFilter(id, filters)
+  const [selectedWord = ''] = getSourceFilter(id, filters);
 
   const data = useMemo(() => {
     if (_data.length === 0) {
@@ -55,7 +61,9 @@ export default function CustomWordCloud({
       size,
       value: size,
     }));
-    const exponent = Math.floor(Math.log10(median(_data.map(({value})=>value))))
+    const exponent = Math.floor(
+      Math.log10(median(_data.map(({ value }) => value))),
+    );
 
     const wCloud = cloud()
       .size([
@@ -66,7 +74,7 @@ export default function CustomWordCloud({
       .rotate(0)
       .padding(5)
       .font('Barlow')
-      .fontSize((d) => Math.sqrt(d.size / (10**exponent)) * 15)
+      .fontSize((d) => Math.sqrt(d.size / 10 ** exponent) * 15)
       .on('word', ({ x, y, text, size, font, value }: any) => {
         output = [...output, [x, y, text, size, font, value]];
       });
@@ -77,9 +85,9 @@ export default function CustomWordCloud({
 
   const getColor = useCallback(
     (value) => {
-      const colorScale = scaleSequential(['#fd8d3c', '#800026']).domain(
-        [...extent(data, (d) => d[3])],
-      );
+      const colorScale = scaleSequential(['#fd8d3c', '#800026']).domain([
+        ...extent(data, (d) => d[3]),
+      ]);
       return colorScale(value);
     },
     [data],
@@ -111,7 +119,7 @@ export default function CustomWordCloud({
               font,
               textAlign: 'middle',
               textVerticalAlign: 'middle',
-              fill: selectedWord === text ? '#253494' :getColor(size),
+              fill: selectedWord === text ? '#253494' : getColor(size),
             },
           };
         },
@@ -143,23 +151,26 @@ export default function CustomWordCloud({
     }),
     [series],
   );
-  
-  const onClick = useCallback(({value}:any)=>{
-    const [x,y, text, ...rest] = value
-    dispatch(
-      addMediaFilter({
-        owner: id,
-        source: 'meltwater',
-        values: [text],
-        column: 'topPhrases',
-        type: FilterTypes.WORD_CLOUD_IN
-      })
-    )
-  }, [data, dispatch])
+
+  const onClick = useCallback(
+    ({ value }: any) => {
+      const [x, y, text, ...rest] = value;
+      dispatch(
+        addMediaFilter({
+          owner: id,
+          source: 'meltwater',
+          values: [text],
+          column: 'topPhrases',
+          type: FilterTypes.WORD_CLOUD_IN,
+        }),
+      );
+    },
+    [data, dispatch],
+  );
 
   return (
     <ReactEcharts
-      onEvents={{click: onClick}}
+      onEvents={{ click: onClick }}
       opts={{ renderer: 'svg' }}
       option={option}
       className={classes.root}
