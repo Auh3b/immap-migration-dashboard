@@ -1,5 +1,5 @@
-import { ascending, descending, flatRollup, sum } from 'd3';
-import { MEDIA_SOURCES, Input, Params } from './mediaUtils';
+import { ascending, descending, flatRollup, maxIndex, minIndex, sum } from 'd3';
+import { MEDIA_SOURCES, Input, Params, POST_URL_MAP } from './mediaUtils';
 import groupByValue from 'utils/groupByValue';
 import { Filters, filterValues } from 'utils/filterFunctions';
 
@@ -243,6 +243,44 @@ export function getTopPhrases({ filters }: Params) {
       .slice(0, 20);
 
     return output.sort((a, b) => ascending(a.value, b.value));
+  }
+
+  return null;
+}
+
+export function getTopPosts({ filters }: Params) {
+  if (mediaData) {
+    const data = applyFiltersToData(mediaData, filters);
+
+    const { sources: _sources } = data;
+    let _data2: any[] = [];
+
+    const groupsArray = _sources
+      .map(({ topPosts, source }) => ({ source, topPosts }))
+      .filter(({ topPosts }) => topPosts.length !== 0);
+    const sources = Array.from(
+      new Set(groupsArray.map(({ source }) => source)),
+    );
+
+    let output: any[] = [];
+
+    for (let source of sources) {
+      const listBySource = groupsArray.filter(
+        ({ source: parent }) => parent === source,
+      );
+      let _output: any = [];
+      for (let { source, topPosts } of listBySource) {
+        for (let [name, value] of topPosts) {
+          const url = POST_URL_MAP.get(source)(name);
+          _output = [..._output, { source, name, value, url }];
+        }
+      }
+      //@ts-ignore
+      const targetIndex = maxIndex(_output, (d) => d.value);
+      output = [...output, { ..._output[targetIndex] }];
+    }
+
+    return output;
   }
 
   return null;

@@ -8,6 +8,7 @@ import {
   getSentimentHistory,
   getSentimentPercentages,
   getTopPhrases,
+  getTopPosts,
   setMediaData,
 } from './mediaWorkerMethods';
 import { Params } from 'react-router-dom';
@@ -21,6 +22,7 @@ const methodMap = new Map<string, Function>([
   [METHOD_NAMES.MEDIA_SENTIMENT_PERCENTAGES, getSentimentPercentages],
   [METHOD_NAMES.MEDIA_TOP_PHRASES, getTopPhrases],
   [METHOD_NAMES.MEDIA_ENGAGEMENT_HISTORY, getHistoricalEngagementBySource],
+  [METHOD_NAMES.MEDIA_TOP_POSTS, getTopPosts],
 ]);
 
 function runTransform(methodName: string, params: Partial<Params>) {

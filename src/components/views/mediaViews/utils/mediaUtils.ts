@@ -48,6 +48,19 @@ export const FA_MAP = new Map([
   [MEDIA_SOURCES.SOCIAL_BLOGS, faSquareRss],
 ]);
 
+export const POST_URL_MAP = new Map([
+  [
+    MEDIA_SOURCES.TWITTER,
+    (value: string) =>
+      `https://twitter.com/Interior/status/${value}`,
+  ],
+  [
+    MEDIA_SOURCES.TIKTOK,
+    (value: string) => `https://www.tiktok.com/oembed?url=${value}`,
+  ],
+  [MEDIA_SOURCES.YOUTUBE, (value: string) => value],
+]);
+
 interface Summary {
   volume: number;
   sources: string[];
@@ -59,10 +72,11 @@ interface SourceField {
   date: string;
   source: string;
   volume: number;
-  topPhrases: FieldValues;
-  sentiment: FieldValues;
-  country: FieldValues;
-  languages: FieldValues;
+  topPhrases: FieldValues[];
+  sentiment: FieldValues[];
+  country: FieldValues[];
+  languages: FieldValues[];
+  topPosts: FieldValues[];
   views: number;
 }
 
