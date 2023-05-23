@@ -11,6 +11,19 @@ export default function TreeMapChart({ data: _data }: any) {
       {
         type: 'treemap',
         leafDepth: 1,
+        left: 'center',
+        top: 'top',
+        width: '95%',
+        height: '95%',
+        drillDownIcon: '',
+        label: {
+          show: true,
+          position: "insideTopLeft",
+          distance: 5,
+          formatter: '{b} - {c}',
+          fontFamily: 'Barlow',
+          fontSize: 16,
+        },
         levels: [
           { itemStyle: { gapWidth: 5 } },
           { itemStyle: { gapWidth: 1 } },
@@ -22,7 +35,6 @@ export default function TreeMapChart({ data: _data }: any) {
 
   const option = useMemo(
     () => ({
-      // color: UNICEF_COLORS,
       tooltip: {
         show: true,
         padding: [theme.spacing(0.5), theme.spacing(1)],
@@ -40,5 +52,5 @@ export default function TreeMapChart({ data: _data }: any) {
     }),
     [series, theme],
   );
-  return <ReactEcharts option={option} />;
+  return <ReactEcharts option={option} opts={{renderer: 'svg'}} style={{height: 600}} />;
 }

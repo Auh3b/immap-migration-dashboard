@@ -9,6 +9,7 @@ export default function TreeMapWidget({
   method,
   methodParams,
   dataSource,
+  actions,
   column,
   filterType,
 }: defaultCustomWidgetProps) {
@@ -19,7 +20,7 @@ export default function TreeMapWidget({
     methodParams,
   });
   return (
-    <CustomWidgetWrapper title={title} isLoading={isLoading}>
+    <CustomWidgetWrapper actions={actions} title={title} isLoading={isLoading}>
       <TreeMapChart data={data} />
     </CustomWidgetWrapper>
   );

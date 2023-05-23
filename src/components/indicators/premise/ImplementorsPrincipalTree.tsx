@@ -6,6 +6,7 @@ import groupCategories from '../utils/groupCategories';
 import useWidgetEffect from '../utils/useWidgetEffect';
 import TreeMapWidget from 'components/common/customWidgets/TreeMapWidget';
 import getHierarchy from '../utils/getHierarchy';
+import ExpandChartButton from 'components/common/ExpandChartButton';
 
 const NOTE = 'Nombre de la organización a la que pertenece el encuestado ';
 const id = 'organisationsPrincipals';
@@ -30,7 +31,13 @@ export default function ImplementorsPrincipalTree({
   dataSource,
 }: BasicWidgetType) {
   const { widget } = useWidgetEffect(
-    <TreeMapWidget dataSource={dataSource} {...props} />,
+    <TreeMapWidget 
+      actions={[
+        <ExpandChartButton dataSource={dataSource} chartUrl='indicators/premise/ImplementorsPrincipalTree' />,
+      ]} 
+      dataSource={dataSource} 
+      {...props} 
+    />,
     [dataSource],
   );
   return (
