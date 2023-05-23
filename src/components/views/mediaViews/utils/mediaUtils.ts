@@ -51,13 +51,9 @@ export const FA_MAP = new Map([
 export const POST_URL_MAP = new Map([
   [
     MEDIA_SOURCES.TWITTER,
-    (value: string) =>
-      `https://twitter.com/Interior/status/${value}`,
+    (value: string) => `https://twitter.com/Interior/status/${value}`,
   ],
-  [
-    MEDIA_SOURCES.TIKTOK,
-    (value: string) => `https://www.tiktok.com/oembed?url=${value}`,
-  ],
+  [MEDIA_SOURCES.TIKTOK, (value: string) => value],
   [MEDIA_SOURCES.YOUTUBE, (value: string) => value],
 ]);
 
