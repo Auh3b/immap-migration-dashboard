@@ -2,7 +2,7 @@ import IntroRightView from './introductionViews/IntroRightView';
 import IntroMiddleView from './introductionViews/IntroMiddleView';
 import IntroLeftView from './introductionViews/IntroLeftView';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button, Fab, Grid, Typography } from '@material-ui/core';
+import { AppBar, Button, Divider, Fab, Grid, Toolbar, Typography } from '@material-ui/core';
 import { ReactComponent as UnicefLogo } from 'assets/img/unicef.svg';
 import { ReactComponent as ImmapLogo } from 'assets/img/immapLogoAlt.svg';
 import { NavLink } from 'react-router-dom';
@@ -53,8 +53,10 @@ export default function Introduction() {
 }
 
 const useHeaderStyles = makeStyles((theme) => ({
+  bar:{
+    backgroundColor: theme.palette.background.paper
+  },
   root: {
-    marginBottom: theme.spacing(2),
     [theme.breakpoints.down('sm')]: {
       flexDirection: 'column',
     },
@@ -73,11 +75,12 @@ const useHeaderStyles = makeStyles((theme) => ({
     flexGrow: 2,
   },
   title: {
+    textTransform: 'uppercase',
     [theme.breakpoints.down('xl')]: {
-      ...theme.typography.h4,
+      ...theme.typography.h5,
     },
     [theme.breakpoints.up('xl')]: {
-      ...theme.typography.h4,
+      ...theme.typography.h5,
     },
   },
   subtitle: {
@@ -90,44 +93,51 @@ const useHeaderStyles = makeStyles((theme) => ({
 function IntroHeader() {
   const classes = useHeaderStyles();
   return (
-    <Grid
-      container
-      wrap='nowrap'
-      justifyContent='space-between'
-      item
-      className={classes.root}
-    >
-      <Grid md={12} lg={10} item className={classes.headerText}>
-        <Typography className={classes.title} color='primary'>
-          Monitoreo a la Respuesta y Flujos Migratorios Mixtos
-        </Typography>
-        <Typography className={classes.subtitle}>
-          Recolección de datos: 6 de marzo a 04 de abril – Necoclí, Panamá y
-          Costa Rica
-        </Typography>
-      </Grid>
-      <Grid
-        wrap='nowrap'
-        item
-        container
-        alignItems='center'
-        justifyContent='flex-end'
-        className={classes.logoContainer}
-      >
-        <Grid item>
-          <UnicefLogo className={classes.logo} />
+    <AppBar elevation={0} className={classes.bar}>
+      <Toolbar>
+        <Grid
+          container
+          wrap='nowrap'
+          justifyContent='space-between'
+          item
+          className={classes.root}
+        >
+          <Grid md={12} lg={8} item className={classes.headerText}>
+            <Typography className={classes.title} color='primary'>
+              Monitoreo a la Respuesta y Flujos Migratorios Mixtos
+            </Typography>
+            <Typography className={classes.subtitle}>
+              Recolección de datos: 6 de marzo a 04 de abril – Necoclí, Panamá y
+              Costa Rica
+            </Typography>
+          </Grid>
+          <Grid
+            wrap='nowrap'
+            lg={2}
+            item
+            container
+            alignItems='center'
+            justifyContent='flex-end'
+            className={classes.logoContainer}
+          >
+            <Grid item>
+              <UnicefLogo className={classes.logo} />
+            </Grid>
+            <Grid item>
+              <ImmapLogo className={classes.logo} />
+            </Grid>
+            <ExitButton />
+          </Grid>
         </Grid>
-        <Grid item>
-          <ImmapLogo className={classes.logo} />
-        </Grid>
-        <ExitButton />
-      </Grid>
-    </Grid>
+      </Toolbar>
+      <Divider orientation='horizontal' />
+    </AppBar>
   );
 }
 
 const useContentStyles = makeStyles((theme) => ({
   root: {
+    marginTop: theme.mixins.toolbar.minHeight,
     flexGrow: 1,
     [theme.breakpoints.down('md')]: {
       flexDirection: 'column',
