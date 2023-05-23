@@ -7,6 +7,7 @@ const slice = createSlice({
     bottomSheetOpen: false,
     showChartModal: false,
     modalUrl: '',
+    modalDataSource: ''
   },
   reducers: {
     setError: (state, action) => {
@@ -20,6 +21,9 @@ const slice = createSlice({
     },
     setModalUrl: (state, action) => {
       state.modalUrl = action.payload;
+    },
+    setModalDataSource: (state,action)=>{
+      state.modalDataSource = action.payload
     },
     removeModalUrl: (state) => {
       state.modalUrl = '';
@@ -43,6 +47,10 @@ export const setChartModal = (payload: boolean) => ({
 });
 export const setModalUrl = (payload: string) => ({
   type: 'app/setModalUrl',
+  payload,
+});
+export const setModalDataSource = (payload: string) => ({
+  type: 'app/setModalDataSource',
   payload,
 });
 export const removeModalUrl = () => ({
