@@ -18,7 +18,7 @@ export default function TreeMapChart({ data: _data }: any) {
         drillDownIcon: '',
         label: {
           show: true,
-          position: "insideTopLeft",
+          position: 'insideTopLeft',
           distance: 5,
           formatter: '{b} - {c}',
           fontFamily: 'Barlow',
@@ -52,5 +52,11 @@ export default function TreeMapChart({ data: _data }: any) {
     }),
     [series, theme],
   );
-  return <ReactEcharts option={option} opts={{renderer: 'svg'}} style={{height: 600}} />;
+  return (
+    <ReactEcharts
+      option={option}
+      opts={{ renderer: 'svg' }}
+      style={{ height: 600 }}
+    />
+  );
 }

@@ -104,7 +104,7 @@ export default function CustomWordCloud({
           });
 
           return {
-            type:'group',
+            type: 'group',
             width: '80%',
             height: '80%',
             children: [
@@ -119,9 +119,9 @@ export default function CustomWordCloud({
                   textVerticalAlign: 'middle',
                   fill: selectedWord === text ? '#253494' : getColor(size),
                 },
-              }
-            ]
-          } 
+              },
+            ],
+          };
         },
         data: data,
       },

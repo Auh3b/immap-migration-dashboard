@@ -28,10 +28,10 @@ const useStyles = makeStyles((theme) => ({
     position: 'relative',
     minWidth: theme.breakpoints.values.md,
     minHeight: theme.breakpoints.values.sm,
-    '& > div':{
+    '& > div': {
       width: '100%',
       height: '100%',
-    }
+    },
   },
   close: {
     borderRadius: '100%',

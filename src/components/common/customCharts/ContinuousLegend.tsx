@@ -1,5 +1,5 @@
-import { Grid, Typography, makeStyles } from "@material-ui/core";
-import { scaleSequential } from "d3";
+import { Grid, Typography, makeStyles } from '@material-ui/core';
+import { scaleSequential } from 'd3';
 
 const useRangeStyles = makeStyles((theme) => ({
   root: {
@@ -22,20 +22,20 @@ const useRangeStyles = makeStyles((theme) => ({
 
 export default function ContinuousLegend({
   colorScheme,
-}:{
-  colorScheme: [string, string] ;
+}: {
+  colorScheme: [string, string];
 }) {
   const [negative, neutral, positive] = [1, 2, 3].map((a, i) =>
-  //@ts-ignore
+    //@ts-ignore
     scaleSequential(colorScheme).domain([0, 2])(i),
   );
   const classes = useRangeStyles({ negative, neutral, positive });
   return (
-    <Grid container item  wrap="nowrap" className={classes.root}>
+    <Grid container item wrap='nowrap' className={classes.root}>
       <Grid
         item
         container
-        direction="column"
+        direction='column'
         justifyContent='space-between'
         alignItems='flex-start'
         className={classes.lines}
