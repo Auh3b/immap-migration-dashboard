@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {},
   content: {
-    padding: theme.spacing(2),
+    padding: theme.spacing(6),
   },
 }));
 
@@ -28,10 +28,16 @@ export default function MediaPosts({ isLoading }: { isLoading: Boolean }) {
     <Grid item className={classes.root}>
       <Paper className={classes.paper}>
         {isDataLoading && <TopLoading />}
-        <Grid container spacing={4} className={classes.content}>
+        <Grid
+          container
+          justifyContent='space-between'
+          className={classes.content}
+        >
           {isLoading && <ComponentFallback />}
           {data.length > 0 &&
-            data.map(({ name, url, source }) => <SocialPost source={source} key={name} url={url} />)}
+            data.map(({ name, url, source }) => (
+              <SocialPost source={source} key={name} url={url} />
+            ))}
         </Grid>
       </Paper>
     </Grid>
