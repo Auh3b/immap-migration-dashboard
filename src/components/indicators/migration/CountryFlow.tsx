@@ -196,7 +196,7 @@ export default function CountryFlow({ dataSource }: BasicWidgetType) {
   const { widget } = useWidgetEffect(
     <CustomSunburstWidget
       actions={[
-        <ExpandChartButton chartUrl='indicators/migration/CountryFlow' />,
+        <ExpandChartButton dataSource={dataSource} chartUrl='indicators/migration/CountryFlow' />,
       ]}
       dataSource={dataSource}
       {...props}
