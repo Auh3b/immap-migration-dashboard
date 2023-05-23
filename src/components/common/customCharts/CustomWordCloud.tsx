@@ -104,17 +104,24 @@ export default function CustomWordCloud({
           });
 
           return {
-            type: 'text',
-            x,
-            y,
-            style: {
-              text,
-              font,
-              textAlign: 'middle',
-              textVerticalAlign: 'middle',
-              fill: selectedWord === text ? '#253494' : getColor(size),
-            },
-          };
+            type:'group',
+            width: '80%',
+            height: '80%',
+            children: [
+              {
+                type: 'text',
+                x,
+                y,
+                style: {
+                  text,
+                  font,
+                  textAlign: 'middle',
+                  textVerticalAlign: 'middle',
+                  fill: selectedWord === text ? '#253494' : getColor(size),
+                },
+              }
+            ]
+          } 
         },
         data: data,
       },
