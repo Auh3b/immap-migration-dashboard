@@ -11,6 +11,7 @@ import { useDispatch } from 'react-redux';
 import executeMethod from 'components/indicators/media/hooks/executeMethod';
 import { METHOD_NAMES } from './mediaViews/utils/methodName';
 import { setIsMediaDataReady } from 'store/mediaSlice';
+import MediaPosts from './mediaViews/MediaPosts';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -67,6 +68,7 @@ export default function Media() {
       <MediaFilterToolbar />
       <MediaAggregateIndicators isLoading={isLoading} />
       <MediaIndicators isLoading={isLoading} />
+      <MediaPosts isLoading={isLoading} />
     </Grid>
   );
 }

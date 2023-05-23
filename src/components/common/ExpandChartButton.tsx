@@ -1,7 +1,7 @@
 import { IconButton, makeStyles } from '@material-ui/core';
 import ZoomOutMapIcon from '@material-ui/icons/ZoomOutMap';
 import { useDispatch, useSelector } from 'react-redux';
-import { setChartModal, setModalUrl } from 'store/appSlice';
+import { setChartModal, setModalDataSource, setModalUrl } from 'store/appSlice';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -9,11 +9,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ExpandChartButton({ chartUrl }: { chartUrl: string }) {
+export default function ExpandChartButton({ chartUrl, dataSource}: { chartUrl: string, dataSource: string }) {
   const dispatch = useDispatch();
   const handleExpandChart = () => {
     dispatch(setChartModal(true));
     dispatch(setModalUrl(chartUrl));
+    dispatch(setModalDataSource(dataSource))
   };
   const showChartModal =
     //@ts-ignore

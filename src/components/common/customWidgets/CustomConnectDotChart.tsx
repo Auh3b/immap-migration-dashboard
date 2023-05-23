@@ -66,7 +66,7 @@ export default function CustomConnectDotChart({ data: _data, groupName }: any) {
             fontSize: 14,
             fontFamily: 'Barlow',
           });
-          console.log({ dailyCapacity, yesterdayCount, difference });
+
           return {
             type: 'group',
             children: [

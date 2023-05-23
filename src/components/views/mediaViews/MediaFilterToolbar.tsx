@@ -232,7 +232,7 @@ const useMenuStyles = makeStyles((theme) => ({
   },
   menuItem: {
     '&:hover': {
-      backgroundColor: 'none',
+      backgroundColor: 'none !important',
     },
   },
   menuText: {
@@ -283,16 +283,24 @@ function FilterMenu({
           <MenuList>
             {Object.entries(filters).map(
               ([name, { owner, type, values, column, source }]: any) => (
-                <MenuItem key={name}>
-                  <Grid container alignItems='center'>
+                <MenuItem key={name} className={classes.menuItem}>
+                  <Grid
+                    container
+                    alignItems='center'
+                    justifyContent='space-between'
+                  >
                     <div className={classes.menuText}>
                       <Typography variant='overline'>
                         {name.replace('_', ' ')}
                       </Typography>
                       <Typography variant='overline'>
                         {type === _FilterTypes.BETWEEN
-                          ? values[0].join(' - ')
-                          : values.join(', ')}
+                          ? values[0]
+                              .map((d: any) => d.replaceAll('-', '/'))
+                              .join(' - ')
+                          : values
+                              .map((d: any) => d.replaceAll('-', '/'))
+                              .join(', ')}
                       </Typography>
                     </div>
                     <IconButton

@@ -2,18 +2,11 @@ import { useCallback, useMemo } from 'react';
 import ReactEcharts from './ReactEcharts';
 import cloud from 'd3-cloud';
 import { makeStyles, useTheme } from '@material-ui/core';
-import {
-  extent,
-  interpolateYlGnBu,
-  interpolateYlOrRd,
-  max,
-  median,
-  scaleSequential,
-} from 'd3';
+import { extent, median, scaleSequential } from 'd3';
 import { numberFormatter } from 'utils/formatter';
 import { useDispatch } from 'react-redux';
 import getSourceFilter from 'components/indicators/media/utils/getSourceFilter';
-import { addMediaFilter } from 'store/mediaSlice';
+import { addMediaFilter, removeMediaFilter } from 'store/mediaSlice';
 import { FilterTypes } from 'utils/filterFunctions';
 
 const width = 450;
@@ -111,17 +104,24 @@ export default function CustomWordCloud({
           });
 
           return {
-            type: 'text',
-            x,
-            y,
-            style: {
-              text,
-              font,
-              textAlign: 'middle',
-              textVerticalAlign: 'middle',
-              fill: selectedWord === text ? '#253494' : getColor(size),
-            },
-          };
+            type:'group',
+            width: '80%',
+            height: '80%',
+            children: [
+              {
+                type: 'text',
+                x,
+                y,
+                style: {
+                  text,
+                  font,
+                  textAlign: 'middle',
+                  textVerticalAlign: 'middle',
+                  fill: selectedWord === text ? '#253494' : getColor(size),
+                },
+              }
+            ]
+          } 
         },
         data: data,
       },
@@ -155,17 +155,27 @@ export default function CustomWordCloud({
   const onClick = useCallback(
     ({ value }: any) => {
       const [x, y, text, ...rest] = value;
-      dispatch(
-        addMediaFilter({
-          owner: id,
-          source: 'meltwater',
-          values: [text],
-          column: 'topPhrases',
-          type: FilterTypes.WORD_CLOUD_IN,
-        }),
-      );
+      if (selectedWord === text) {
+        dispatch(
+          removeMediaFilter({
+            owner: id,
+            source: 'meltwater',
+            column: 'topPhrases',
+          }),
+        );
+      } else {
+        dispatch(
+          addMediaFilter({
+            owner: id,
+            source: 'meltwater',
+            values: [text],
+            column: 'topPhrases',
+            type: FilterTypes.WORD_CLOUD_IN,
+          }),
+        );
+      }
     },
-    [data, dispatch],
+    [data, dispatch, selectedWord],
   );
 
   return (

@@ -14,7 +14,6 @@ interface AppStore extends Store {
 
 export const setCustomViewport: Reducer = (state, action) => {
   if (action.type === 'SET_CUSTOM_VIEWPORT') {
-    console.log(action.payload);
     state = {
       ...state,
       carto: {

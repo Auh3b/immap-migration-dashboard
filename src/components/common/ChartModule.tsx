@@ -26,8 +26,12 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(2),
     position: 'relative',
-    minWidth: '600px',
-    minHeight: '480px',
+    minWidth: theme.breakpoints.values.md,
+    minHeight: theme.breakpoints.values.sm,
+    '& > div':{
+      width: '100%',
+      height: '100%',
+    }
   },
   close: {
     borderRadius: '100%',
@@ -50,6 +54,8 @@ export default function ChartModal() {
   const showChartModal = useSelector((state) => state.app.showChartModal);
   //@ts-ignore
   const modalUrl = useSelector((state) => state.app.modalUrl);
+  //@ts-ignore
+  const modalDataSource = useSelector((state) => state.app.modalDataSource);
   const classes = useStyles({ show: showChartModal });
   const zoomLevel = useSelector(
     (state: RootState) => state.carto.viewState.zoom,
@@ -62,7 +68,7 @@ export default function ChartModal() {
   const loadChart = async () => {
     if (modalUrl) {
       const Chart = await importChart(modalUrl);
-      setChart(<Chart dataSource={mainSource.id} />);
+      setChart(<Chart dataSource={modalDataSource} />);
       dispatch(setViewState({ zoom: zoomLevel * randBtwn(0.99, 1.01) }));
     }
   };
