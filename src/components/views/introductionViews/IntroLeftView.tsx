@@ -31,8 +31,6 @@ export const useLeftStyles = makeStyles((theme) => ({
   },
   drawer: {
     width: drawerWidth,
-    // flexShrink: 0,
-    // whiteSpace: 'nowrap',
   },
   drawerOpen:{
     width: drawerWidth,

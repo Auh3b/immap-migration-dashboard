@@ -30,19 +30,7 @@ const getHierarchy: MethodFunc = (input, column, params) => {
 
     output = [...output, { name, value, children }];
   }
-  // const _output = _unpacked.map(([name, childrenMap]) => {
-  //   const children = Array.from(childrenMap).map(([child, chilren2]) => ({
-  //     name: child,
-  //     value: chilren2.length,
-  //   }));
-  //   return {
-  //     name,
-  //     value: children.length,
-  //     children,
-  //   };
-  // });
 
-  console.log(output);
   return output;
 };
 
