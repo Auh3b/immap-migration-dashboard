@@ -14,8 +14,8 @@ const column = 'org_pert2';
 const filterType = _FilterTypes.IN;
 const method = getHierarchy;
 const methodParams = {
-  levels: ['org_pert1','org_pert2']
-}
+  levels: ['org_pert1', 'org_pert2'],
+};
 
 const props = {
   id,
@@ -23,7 +23,7 @@ const props = {
   column,
   filterType,
   method,
-  methodParams
+  methodParams,
 };
 
 export default function ImplementorsPrincipalTree({

@@ -1,7 +1,7 @@
-import CustomWidgetWrapper from './CustomWidgetWrapper'
-import { defaultCustomWidgetProps } from './customWidgetsType'
-import useWidgetFetch from './hooks/useWidgetFetch'
-import TreeMapChart from '../customCharts/TreeMapChart'
+import CustomWidgetWrapper from './CustomWidgetWrapper';
+import { defaultCustomWidgetProps } from './customWidgetsType';
+import useWidgetFetch from './hooks/useWidgetFetch';
+import TreeMapChart from '../customCharts/TreeMapChart';
 
 export default function TreeMapWidget({
   id,
@@ -12,15 +12,15 @@ export default function TreeMapWidget({
   column,
   filterType,
 }: defaultCustomWidgetProps) {
-  const {data, isLoading} = useWidgetFetch({
+  const { data, isLoading } = useWidgetFetch({
     id,
     dataSource,
     method,
     methodParams,
-  })
+  });
   return (
     <CustomWidgetWrapper title={title} isLoading={isLoading}>
-      <TreeMapChart data={data}/>
+      <TreeMapChart data={data} />
     </CustomWidgetWrapper>
-  )
+  );
 }

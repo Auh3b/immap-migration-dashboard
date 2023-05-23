@@ -2,11 +2,7 @@ import { useCallback, useMemo } from 'react';
 import ReactEcharts from './ReactEcharts';
 import cloud from 'd3-cloud';
 import { makeStyles, useTheme } from '@material-ui/core';
-import {
-  extent,
-  median,
-  scaleSequential,
-} from 'd3';
+import { extent, median, scaleSequential } from 'd3';
 import { numberFormatter } from 'utils/formatter';
 import { useDispatch } from 'react-redux';
 import getSourceFilter from 'components/indicators/media/utils/getSourceFilter';
@@ -152,7 +148,7 @@ export default function CustomWordCloud({
   const onClick = useCallback(
     ({ value }: any) => {
       const [x, y, text, ...rest] = value;
-      if(selectedWord === text){
+      if (selectedWord === text) {
         dispatch(
           removeMediaFilter({
             owner: id,
@@ -160,7 +156,7 @@ export default function CustomWordCloud({
             column: 'topPhrases',
           }),
         );
-      }else{
+      } else {
         dispatch(
           addMediaFilter({
             owner: id,
@@ -170,7 +166,6 @@ export default function CustomWordCloud({
             type: FilterTypes.WORD_CLOUD_IN,
           }),
         );
-
       }
     },
     [data, dispatch, selectedWord],
