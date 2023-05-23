@@ -2,7 +2,15 @@ import IntroRightView from './introductionViews/IntroRightView';
 import IntroMiddleView from './introductionViews/IntroMiddleView';
 import IntroLeftView from './introductionViews/IntroLeftView';
 import { makeStyles } from '@material-ui/core/styles';
-import { AppBar, Button, Divider, Fab, Grid, Toolbar, Typography } from '@material-ui/core';
+import {
+  AppBar,
+  Button,
+  Divider,
+  Fab,
+  Grid,
+  Toolbar,
+  Typography,
+} from '@material-ui/core';
 import { ReactComponent as UnicefLogo } from 'assets/img/unicef.svg';
 import { ReactComponent as ImmapLogo } from 'assets/img/immapLogoAlt.svg';
 import { NavLink } from 'react-router-dom';
@@ -53,8 +61,8 @@ export default function Introduction() {
 }
 
 const useHeaderStyles = makeStyles((theme) => ({
-  bar:{
-    backgroundColor: theme.palette.background.paper
+  bar: {
+    backgroundColor: theme.palette.background.paper,
   },
   root: {
     [theme.breakpoints.down('sm')]: {
