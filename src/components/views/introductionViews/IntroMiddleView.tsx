@@ -21,7 +21,7 @@ export const useMiddleStyles = makeStyles((theme) => ({
   root: {
     paddingRight: theme.spacing(2),
     paddingLeft: theme.spacing(2),
-    maxHeight: '95vh',
+    maxHeight: '90vh',
     overflowY: 'auto',
     overflowX: 'hidden',
     flexGrow: 1,

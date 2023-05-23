@@ -1,4 +1,6 @@
 import {
+  Divider,
+  Drawer,
   Grid,
   IconButton,
   Tooltip,
@@ -7,10 +9,15 @@ import {
 } from '@material-ui/core';
 import { useState } from 'react';
 import { UNICEF_COLORS } from 'theme';
-import SubjectIcon from '@material-ui/icons/Subject';
+import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import { clsx } from 'clsx'
+
+const drawerWidth = 300
+
 export const useLeftStyles = makeStyles((theme) => ({
   root: {
-    flexBasis: ({ isOpen }: any) => (isOpen ? '25%' : '0%'),
+    width: '300px',
     paddingTop: theme.spacing(2),
     paddingRight: theme.spacing(2),
     BorderRight: `1px solid ${UNICEF_COLORS[0]}`,
@@ -22,18 +29,47 @@ export const useLeftStyles = makeStyles((theme) => ({
       justifyContent: 'flex-start',
     },
   },
+  drawer: {
+    width: drawerWidth,
+    // flexShrink: 0,
+    // whiteSpace: 'nowrap',
+  },
+  drawerOpen:{
+    width: drawerWidth,
+    transition: theme.transitions.create('width', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  },
+  drawerClose:{
+    width: theme.mixins.toolbar.minHeight,
+    transition: theme.transitions.create('width', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  },
+  drawerPadding: {
+    height: theme.spacing(2),
+  },
+  buttonContainer: {
+    borderRadius: '100%',
+    marginTop: theme.mixins.toolbar.minHeight,
+    borderBottom: '1px solid' + theme.palette.divider,
+    padding: theme.spacing(1),
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
   content: {
+    padding: theme.spacing(2),
+    width: ({ isOpen }: any) =>
+      isOpen ? '300px' : theme.mixins.toolbar.minHeight,
+    display: ({ isOpen }: any) => (isOpen ? 'flex' : 'none'),
     maxHeight: '85vh',
     overflowY: 'auto',
-    width: ({ isOpen }: any) => (isOpen ? '100%' : 0),
-    flexGrow: ({ isOpen }: any) => (isOpen ? 1 : 0),
-    transitionDuration: theme.transitions.duration.enteringScreen + 'ms',
-    '& > *': {
-      display: ({ isOpen }: any) => (isOpen ? 'block' : 'none'),
-    },
+    overflowX: 'hidden',
+    transition: 'width '+theme.transitions.duration.enteringScreen + 'ms' + ' ease-in-out'
   },
   toggleButton: {
-    borderRadius: '100%',
     padding: theme.spacing(0.5),
     boxShadow: theme.shadows[1],
     backgroundColor: ({ isOpen }: any) =>
@@ -81,16 +117,34 @@ export default function IntroLeftView() {
     setIsOpen((prev) => !prev);
   };
   return (
-    <Grid
-      wrap='nowrap'
-      container
-      justifyContent='space-between'
-      lg
-      md={12}
-      item
-      className={classes.root}
+    <Drawer
+      variant='permanent'
+      anchor='left'
+      className={clsx(classes.drawer, {
+          [classes.drawerOpen]: isOpen,
+          [classes.drawerClose]: !isOpen,
+        })}
+      classes={{
+          paper: clsx({
+            [classes.drawerOpen]: isOpen,
+          [classes.drawerClose]: !isOpen,
+          }),
+        }}
+      open={isOpen}
     >
-      <Grid item className={classes.content}>
+      <div className={classes.buttonContainer}>
+        <IconButton onClick={handleOpenToggle} style={{borderRadius: '100%'}}>
+          {isOpen && <ChevronLeftIcon />}
+          {!isOpen && <HelpOutlineIcon />}
+        </IconButton>
+      </div>
+      <Divider />
+      <Grid
+        container
+        direction='column'
+        wrap='nowrap'
+        className={classes.content}
+      >
         <Typography variant='subtitle1' className={classes.title}>
           Nota metodológica
           <Typography className={classes.subtitle}>A Aurora Chatbot</Typography>
@@ -139,16 +193,6 @@ export default function IntroLeftView() {
           Las cifras presentadas en los tableros son preliminares.
         </Typography>
       </Grid>
-      <Grid item>
-        <Tooltip title={'Methodology'}>
-          <IconButton
-            className={classes.toggleButton}
-            onClick={handleOpenToggle}
-          >
-            <SubjectIcon />
-          </IconButton>
-        </Tooltip>
-      </Grid>
-    </Grid>
+    </Drawer>
   );
 }
