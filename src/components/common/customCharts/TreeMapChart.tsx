@@ -1,9 +1,19 @@
-import { useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import ReactEcharts from './ReactEcharts';
 import { UNICEF_COLORS } from 'theme';
 import { useTheme } from '@material-ui/core';
+import { _FilterTypes } from '@carto/react-core';
+import { useDispatch } from 'react-redux';
+import { addFilter, removeFilter } from '@carto/react-redux';
 
-export default function TreeMapChart({ data: _data }: any) {
+export default function TreeMapChart({ data: _data, dataSource, id, filterType }:{
+  data:any[]
+  dataSource?: string
+  id?:string
+  filterType?: _FilterTypes,
+}) {
+  const [filteredColumns, setFilteredColumns] = useState([])
+  const dispatch = useDispatch()
   const theme = useTheme();
   const series = useMemo(() => {
     const data = [..._data];
@@ -52,8 +62,44 @@ export default function TreeMapChart({ data: _data }: any) {
     }),
     [series, theme],
   );
+  const onClick = useCallback((params)=>{
+    console.log(params)
+    if(params?.color){
+      const {data: {name, column}} = params
+      dispatch(addFilter({
+        id: dataSource,
+        owner: id,
+        type: filterType,
+        values: [name],
+        column,
+      }))
+      setFilteredColumns((prev) => {
+        if(!prev.includes(column)){
+          return [...prev, column]
+        }
+        return prev
+      })
+
+      return;
+    }
+
+
+    filteredColumns.forEach((column)=>{
+      dispatch(removeFilter({
+        owner: id,
+        id: dataSource,
+        column,
+      }))
+      setFilteredColumns((prev) => prev.filter((d)=>d !== column))
+    })
+  }, [series, filteredColumns])
+  const onEvents = {
+    click: onClick
+  }
+  // console.log(filteredColumns)
   return (
     <ReactEcharts
+      onEvents={onEvents}
       option={option}
       opts={{ renderer: 'svg' }}
       style={{ height: 600 }}
