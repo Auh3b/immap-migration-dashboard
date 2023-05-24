@@ -13,7 +13,11 @@ const useErrorStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ComponentError({ message = 'Something went wrong' }: { message?: string }) {
+export default function ComponentError({
+  message = 'Something went wrong',
+}: {
+  message?: string;
+}) {
   const classes = useErrorStyles();
   return (
     <Grid

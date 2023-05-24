@@ -59,28 +59,33 @@ const method: MethodFunc = (input, column, params) => {
       .split(',')
       .map((d: string) => +d);
 
-    for( let service of services) {
+    for (let service of services) {
       const serviceColumns = SERVICE_STAT_COLUMNS.get(service);
-      if(serviceColumns){
+      if (serviceColumns) {
         let newEntry: any[] = [
           SERVICES_KEY.get(service) ?? 'Otro',
           null,
           serviceEntry[otherColumns.region],
           serviceEntry[otherColumns.organisation],
           serviceEntry[otherColumns.persons],
-          `${serviceEntry[otherColumns.organisation]} - ${SERVICES_KEY.get(
-            service,
-          ) ?? 'Otro'}`,
+          `${serviceEntry[otherColumns.organisation]} - ${
+            SERVICES_KEY.get(service) ?? 'Otro'
+          }`,
           [serviceEntry[otherColumns.long], serviceEntry[otherColumns.lat]],
         ];
-        let columnValues: any [] = []
+        let columnValues: any[] = [];
         for (let i = 0; i < SERVICE_STAT_COLUMNS_NAME.length; i++) {
-          columnValues = [...columnValues, serviceEntry[serviceColumns[i]] || 0];
+          columnValues = [
+            ...columnValues,
+            serviceEntry[serviceColumns[i]] || 0,
+          ];
         }
-        const id = `${newEntry[3]}-${newEntry[0]}+${newEntry[2]} - ${newEntry.at(-1).join('-')}`
+        const id = `${newEntry[3]}-${newEntry[0]}+${newEntry[2]} - ${newEntry
+          .at(-1)
+          .join('-')}`;
         output = [...output, [...newEntry, ...columnValues, id]];
       }
-    };
+    }
   }
   return output;
 };

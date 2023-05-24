@@ -1,13 +1,11 @@
-import { Component } from 'react'
+import { Component } from 'react';
 
 export class IndicatorBoundary extends Component {
-  static propTypes = {}
+  static propTypes = {};
 
   render() {
-    return (
-      <div>IndicatorBoundary</div>
-    )
+    return <div>IndicatorBoundary</div>;
   }
 }
 
-export default IndicatorBoundary
+export default IndicatorBoundary;
