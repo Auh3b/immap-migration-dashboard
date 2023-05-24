@@ -12,6 +12,10 @@ export const SERVICES_KEY = new Map([
   [11, 'Apoyo a ayuda psicosocial'],
   [12, 'Transporte humanitario'],
   [13, 'Otro'],
+  [14, 'Servicios de protección'],
+  [15, 'Servicios de protección NNA'],
+  [16, 'Restablecimiento de contacto familiar'],
+  [17, 'Gestión de casos'],
 ]);
 
 export const SICK_CATEGORY_ABREVATIONS = new Map([
