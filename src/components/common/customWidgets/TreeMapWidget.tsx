@@ -21,7 +21,7 @@ export default function TreeMapWidget({
   });
   return (
     <CustomWidgetWrapper actions={actions} title={title} isLoading={isLoading}>
-      <TreeMapChart data={data} />
+      <TreeMapChart data={data} filterType={filterType} id={id} dataSource={dataSource}  />
     </CustomWidgetWrapper>
   );
 }
