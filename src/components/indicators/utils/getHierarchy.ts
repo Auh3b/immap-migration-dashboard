@@ -23,12 +23,12 @@ const getHierarchy: MethodFunc = (input, column, params) => {
     for (let [childName, childrenArray] of unpackedChilren) {
       children = [
         ...children,
-        { name: childName, value: childrenArray.length },
+        { name: childName, column: levels[1], value: childrenArray.length },
       ];
       value += childrenArray.length;
     }
 
-    output = [...output, { name, value, children }];
+    output = [...output, { name, column: levels[0], value, children }];
   }
 
   return output;
