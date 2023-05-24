@@ -5,6 +5,14 @@ import { useTheme } from '@material-ui/core';
 import { _FilterTypes } from '@carto/react-core';
 import { useDispatch } from 'react-redux';
 import { addFilter, removeFilter } from '@carto/react-redux';
+import { dequal } from 'dequal';
+
+interface Selected {
+  dataIndex: number;
+  name: string;
+  column: string;
+  value: number;
+}
 
 export default function TreeMapChart({
   data: _data,
@@ -18,6 +26,7 @@ export default function TreeMapChart({
   filterType?: _FilterTypes;
 }) {
   const [filteredColumns, setFilteredColumns] = useState([]);
+  const [selected, setSelected] = useState<null | Selected>(null);
   const dispatch = useDispatch();
   const theme = useTheme();
   const series = useMemo(() => {
@@ -69,11 +78,12 @@ export default function TreeMapChart({
   );
   const onClick = useCallback(
     (params) => {
-      console.log(params);
       if (params?.color) {
         const {
           data: { name, column },
+          treePathInfo,
         } = params;
+        const item = treePathInfo.at(-1);
         dispatch(
           addFilter({
             id: dataSource,
@@ -83,6 +93,14 @@ export default function TreeMapChart({
             column,
           }),
         );
+
+        setSelected((prev) => {
+          if (dequal(prev, { ...item, column })) {
+            return prev;
+          }
+          return { ...item, column };
+        });
+
         setFilteredColumns((prev) => {
           if (!prev.includes(column)) {
             return [...prev, column];
@@ -90,6 +108,42 @@ export default function TreeMapChart({
           return prev;
         });
 
+        return;
+      }
+
+      if (!selected) {
+        return;
+      }
+
+      const { treePathInfo } = params;
+      const item = treePathInfo.at(-1);
+      const { name, value, column, dataIndex } = selected;
+
+      if (dequal({ name, value, dataIndex }, item)) {
+        return;
+      }
+
+      if (item?.name) {
+        dispatch(
+          removeFilter({
+            owner: id,
+            id: dataSource,
+            column,
+          }),
+        );
+        setSelected((prev) => {
+          const newSelected = treePathInfo[treePathInfo.length - 1];
+          const remainColumns = filteredColumns.filter((d) => d !== column);
+          const currentColumn = remainColumns[remainColumns.length - 1];
+          if (!newSelected.name) {
+            return null;
+          }
+          if (!currentColumn) {
+            return null;
+          }
+          return { ...newSelected, column: currentColumn };
+        });
+        setFilteredColumns((prev) => prev.filter((d) => d !== column));
         return;
       }
 
@@ -103,18 +157,18 @@ export default function TreeMapChart({
         );
         setFilteredColumns((prev) => prev.filter((d) => d !== column));
       });
+      setSelected(null);
     },
-    [series, filteredColumns],
+    [series, filteredColumns, selected],
   );
   const onEvents = {
     click: onClick,
   };
-  // console.log(filteredColumns)
   return (
     <ReactEcharts
       onEvents={onEvents}
       option={option}
-      opts={{ renderer: 'svg' }}
+      opts={{ renderer: 'canvas' }}
       style={{ height: 600 }}
     />
   );
