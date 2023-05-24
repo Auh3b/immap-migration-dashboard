@@ -63,6 +63,7 @@ export default function Introduction() {
 const useHeaderStyles = makeStyles((theme) => ({
   bar: {
     backgroundColor: theme.palette.background.paper,
+    zIndex: theme.zIndex.drawer + 1,
   },
   root: {
     [theme.breakpoints.down('sm')]: {

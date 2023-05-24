@@ -33,8 +33,8 @@ const otherColumns = {
   region: 'lugar_enc',
   organisation: 'org_pert',
   persons: 'nna_atend',
-  lat: 'lat',
-  long: 'long',
+  lat: 'latitude',
+  long: 'longitude',
 };
 
 const SERVICE_STAT_COLUMNS_NAME = [
@@ -59,26 +59,27 @@ const method: MethodFunc = (input, column, params) => {
       .split(',')
       .map((d: string) => +d);
 
-    services.forEach((service) => {
+    for( let service of services) {
       const serviceColumns = SERVICE_STAT_COLUMNS.get(service);
-      let newEntry: any = [
-        SERVICES_KEY.get(service),
-        '',
-        serviceEntry[otherColumns.region],
-        serviceEntry[otherColumns.organisation],
-        serviceEntry[otherColumns.persons],
-        `${serviceEntry[otherColumns.organisation]} - ${SERVICES_KEY.get(
-          service,
-        )}`,
-        [serviceEntry[otherColumns.long], serviceEntry[otherColumns.lat]],
-      ];
-      for (let i = 0; i < SERVICE_STAT_COLUMNS_NAME.length; i++) {
-        newEntry = [...newEntry, serviceEntry[serviceColumns[i]] || 0];
+      if(serviceColumns){
+        let newEntry: any = [
+          SERVICES_KEY.get(service) ?? 'Otro',
+          '',
+          serviceEntry[otherColumns.region],
+          serviceEntry[otherColumns.organisation],
+          serviceEntry[otherColumns.persons],
+          `${serviceEntry[otherColumns.organisation]} - ${SERVICES_KEY.get(
+            service,
+          ) ?? 'Otro'}`,
+          [serviceEntry[otherColumns.long], serviceEntry[otherColumns.lat]],
+        ];
+        for (let i = 0; i < SERVICE_STAT_COLUMNS_NAME.length; i++) {
+          newEntry = [...newEntry, serviceEntry[serviceColumns[i]] || 0];
+        }
+        output = [...output, newEntry];
       }
-      output = [...output, newEntry];
-    });
+    };
   }
-
   return output;
 };
 
@@ -123,6 +124,7 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
   });
 
   const data = useMemo(() => {
+    // throw new Error('something')
     const filteredData = filterValues(_data, filters);
     return filteredData;
   }, [_data, filters]);

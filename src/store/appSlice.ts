@@ -7,7 +7,7 @@ const slice = createSlice({
     bottomSheetOpen: false,
     showChartModal: false,
     modalUrl: '',
-    modalDataSource: ''
+    modalDataSource: '',
   },
   reducers: {
     setError: (state, action) => {
@@ -22,8 +22,8 @@ const slice = createSlice({
     setModalUrl: (state, action) => {
       state.modalUrl = action.payload;
     },
-    setModalDataSource: (state,action)=>{
-      state.modalDataSource = action.payload
+    setModalDataSource: (state, action) => {
+      state.modalDataSource = action.payload;
     },
     removeModalUrl: (state) => {
       state.modalUrl = '';

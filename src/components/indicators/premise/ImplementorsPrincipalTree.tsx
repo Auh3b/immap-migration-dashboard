@@ -31,12 +31,15 @@ export default function ImplementorsPrincipalTree({
   dataSource,
 }: BasicWidgetType) {
   const { widget } = useWidgetEffect(
-    <TreeMapWidget 
+    <TreeMapWidget
       actions={[
-        <ExpandChartButton dataSource={dataSource} chartUrl='indicators/premise/ImplementorsPrincipalTree' />,
-      ]} 
-      dataSource={dataSource} 
-      {...props} 
+        <ExpandChartButton
+          dataSource={dataSource}
+          chartUrl='indicators/premise/ImplementorsPrincipalTree'
+        />,
+      ]}
+      dataSource={dataSource}
+      {...props}
     />,
     [dataSource],
   );

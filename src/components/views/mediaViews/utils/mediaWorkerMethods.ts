@@ -1,4 +1,4 @@
-import { ascending, descending, flatRollup, maxIndex, minIndex, sum } from 'd3';
+import { ascending, descending, flatRollup, maxIndex, sum } from 'd3';
 import { MEDIA_SOURCES, Input, Params, POST_URL_MAP } from './mediaUtils';
 import groupByValue from 'utils/groupByValue';
 import { Filters, filterValues } from 'utils/filterFunctions';
@@ -10,9 +10,10 @@ export function setMediaData({ data }: Params) {
   return true;
 }
 
-export function getMediaData(params: Params) {
+export function getMediaData({ filters }: Params) {
   if (mediaData) {
-    return mediaData;
+    const data = applyFiltersToData(mediaData, filters);
+    return data;
   }
   return null;
 }
@@ -253,7 +254,6 @@ export function getTopPosts({ filters }: Params) {
     const data = applyFiltersToData(mediaData, filters);
 
     const { sources: _sources } = data;
-    let _data2: any[] = [];
 
     const groupsArray = _sources
       .map(({ topPosts, source }) => ({ source, topPosts }))

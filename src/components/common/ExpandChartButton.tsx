@@ -9,12 +9,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ExpandChartButton({ chartUrl, dataSource}: { chartUrl: string, dataSource: string }) {
+export default function ExpandChartButton({
+  chartUrl,
+  dataSource,
+}: {
+  chartUrl: string;
+  dataSource: string;
+}) {
   const dispatch = useDispatch();
   const handleExpandChart = () => {
     dispatch(setChartModal(true));
     dispatch(setModalUrl(chartUrl));
-    dispatch(setModalDataSource(dataSource))
+    dispatch(setModalDataSource(dataSource));
   };
   const showChartModal =
     //@ts-ignore

@@ -12,7 +12,6 @@ import {
 import MainView from './main/MainView';
 import PremiseLeftView from './premiseViews/PremiseLeftView';
 import PremiseRightView from './premiseViews/PremiseRightView';
-import PremiseMiddleView from './premiseViews/PremiseMiddleView';
 
 export default function PremiseService() {
   const dispatch = useDispatch();
@@ -60,14 +59,6 @@ export default function PremiseService() {
           ),
           expandable: false,
         },
-        // middle: {
-        //   element: (
-        //     <PremiseMiddleView
-        //       dataSources={{ premiseSource: premiseSource.id }}
-        //     />
-        //   ),
-        //   expandable: true,
-        // },
       }}
     </MainView>
   );
