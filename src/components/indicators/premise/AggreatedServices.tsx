@@ -62,9 +62,9 @@ const method: MethodFunc = (input, column, params) => {
     for( let service of services) {
       const serviceColumns = SERVICE_STAT_COLUMNS.get(service);
       if(serviceColumns){
-        let newEntry: any = [
+        let newEntry: any[] = [
           SERVICES_KEY.get(service) ?? 'Otro',
-          '',
+          null,
           serviceEntry[otherColumns.region],
           serviceEntry[otherColumns.organisation],
           serviceEntry[otherColumns.persons],
@@ -73,10 +73,12 @@ const method: MethodFunc = (input, column, params) => {
           ) ?? 'Otro'}`,
           [serviceEntry[otherColumns.long], serviceEntry[otherColumns.lat]],
         ];
+        let columnValues: any [] = []
         for (let i = 0; i < SERVICE_STAT_COLUMNS_NAME.length; i++) {
-          newEntry = [...newEntry, serviceEntry[serviceColumns[i]] || 0];
+          columnValues = [...columnValues, serviceEntry[serviceColumns[i]] || 0];
         }
-        output = [...output, newEntry];
+        const id = `${newEntry[3]}-${newEntry[0]}+${newEntry[2]} - ${newEntry.at(-1).join('-')}`
+        output = [...output, [...newEntry, ...columnValues, id]];
       }
     };
   }
