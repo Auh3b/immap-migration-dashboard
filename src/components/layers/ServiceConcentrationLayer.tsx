@@ -71,7 +71,7 @@ export default function ServiceConcentrationLayer() {
       id: SERVICE_CONCENTRATION_LAYER_ID,
       data: fetchData(),
       opacity: 0.8,
-      getPosition: (d: any) => [d.long, d.lat],
+      getPosition: (d: any) => [d.longitude, d.latitude],
       getWeight: (d: any) => d.porc_sobre,
       intensity: 1,
       visible: serviceConcentrationLayer.visible,
