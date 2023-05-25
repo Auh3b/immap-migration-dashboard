@@ -1,6 +1,5 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import ReactEcharts from './ReactEcharts';
-import { UNICEF_COLORS } from 'theme';
 import { useTheme } from '@material-ui/core';
 import { _FilterTypes } from '@carto/react-core';
 import { useDispatch } from 'react-redux';
@@ -29,6 +28,26 @@ export default function TreeMapChart({
   const [selected, setSelected] = useState<null | Selected>(null);
   const dispatch = useDispatch();
   const theme = useTheme();
+
+  useEffect(()=>{
+    if(filteredColumns.length){
+      filteredColumns.forEach((column) => {
+          dispatch(
+            removeFilter({
+              owner: id,
+              id: dataSource,
+              column,
+            }),
+          );
+          setFilteredColumns((prev) => prev.filter((d) => d !== column));
+        });
+    }
+    if(selected){
+      setSelected(null);
+    }
+  },[_data])
+
+
   const series = useMemo(() => {
     const data = [..._data];
     return [
