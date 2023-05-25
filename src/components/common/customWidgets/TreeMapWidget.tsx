@@ -16,12 +16,18 @@ export default function TreeMapWidget({
   const { data, isLoading } = useWidgetFetch({
     id,
     dataSource,
+    column,
     method,
     methodParams,
   });
   return (
     <CustomWidgetWrapper actions={actions} title={title} isLoading={isLoading}>
-      <TreeMapChart data={data} />
+      <TreeMapChart
+        data={data}
+        filterType={filterType}
+        id={id}
+        dataSource={dataSource}
+      />
     </CustomWidgetWrapper>
   );
 }

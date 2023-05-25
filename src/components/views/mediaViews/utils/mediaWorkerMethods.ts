@@ -2,6 +2,7 @@ import { ascending, descending, flatRollup, maxIndex, sum } from 'd3';
 import { MEDIA_SOURCES, Input, Params, POST_URL_MAP } from './mediaUtils';
 import groupByValue from 'utils/groupByValue';
 import { Filters, filterValues } from 'utils/filterFunctions';
+import crypto from 'crypto';
 
 let mediaData: Partial<Input>;
 
@@ -256,7 +257,7 @@ export function getTopPosts({ filters }: Params) {
     const { sources: _sources } = data;
 
     const groupsArray = _sources
-      .map(({ topPosts, source }) => ({ source, topPosts }))
+      .map(({ topPosts, date, source }) => ({ source,date, topPosts }))
       .filter(({ topPosts }) => topPosts.length !== 0);
     const sources = Array.from(
       new Set(groupsArray.map(({ source }) => source)),
@@ -268,16 +269,17 @@ export function getTopPosts({ filters }: Params) {
       const listBySource = groupsArray.filter(
         ({ source: parent }) => parent === source,
       );
-      let _output: any = [];
-      for (let { source, topPosts } of listBySource) {
+      let _output: any[] = [];
+      for (let { source, date, topPosts } of listBySource) {
         for (let [name, value] of topPosts) {
           const url = POST_URL_MAP.get(source)(name);
-          _output = [..._output, { source, name, value, url }];
+          const id = crypto.randomBytes(20).toString('hex')
+          _output = [..._output, { id, source, name, date, value, url }];
         }
       }
       //@ts-ignore
       const targetIndex = maxIndex(_output, (d) => d.value);
-      output = [...output, { ..._output[targetIndex] }];
+      output = [...output, ..._output.sort((a,b)=> descending(a.value, b.value)).slice(0, 10)];
     }
 
     return output;

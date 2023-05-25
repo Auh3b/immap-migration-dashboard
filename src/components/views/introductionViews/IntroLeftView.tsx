@@ -11,9 +11,9 @@ import { useState } from 'react';
 import { UNICEF_COLORS } from 'theme';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import { clsx } from 'clsx'
+import { clsx } from 'clsx';
 
-const drawerWidth = 300
+const drawerWidth = 300;
 
 export const useLeftStyles = makeStyles((theme) => ({
   root: {
@@ -32,14 +32,14 @@ export const useLeftStyles = makeStyles((theme) => ({
   drawer: {
     width: drawerWidth,
   },
-  drawerOpen:{
+  drawerOpen: {
     width: drawerWidth,
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
   },
-  drawerClose:{
+  drawerClose: {
     width: theme.mixins.toolbar.minHeight,
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
@@ -65,7 +65,11 @@ export const useLeftStyles = makeStyles((theme) => ({
     maxHeight: '85vh',
     overflowY: 'auto',
     overflowX: 'hidden',
-    transition: 'width '+theme.transitions.duration.enteringScreen + 'ms' + ' ease-in-out'
+    transition:
+      'width ' +
+      theme.transitions.duration.enteringScreen +
+      'ms' +
+      ' ease-in-out',
   },
   toggleButton: {
     padding: theme.spacing(0.5),
@@ -119,19 +123,19 @@ export default function IntroLeftView() {
       variant='permanent'
       anchor='left'
       className={clsx(classes.drawer, {
+        [classes.drawerOpen]: isOpen,
+        [classes.drawerClose]: !isOpen,
+      })}
+      classes={{
+        paper: clsx({
           [classes.drawerOpen]: isOpen,
           [classes.drawerClose]: !isOpen,
-        })}
-      classes={{
-          paper: clsx({
-            [classes.drawerOpen]: isOpen,
-          [classes.drawerClose]: !isOpen,
-          }),
-        }}
+        }),
+      }}
       open={isOpen}
     >
       <div className={classes.buttonContainer}>
-        <IconButton onClick={handleOpenToggle} style={{borderRadius: '100%'}}>
+        <IconButton onClick={handleOpenToggle} style={{ borderRadius: '100%' }}>
           {isOpen && <ChevronLeftIcon />}
           {!isOpen && <HelpOutlineIcon />}
         </IconButton>

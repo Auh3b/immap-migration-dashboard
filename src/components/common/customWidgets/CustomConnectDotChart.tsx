@@ -18,6 +18,7 @@ const DATA_DIMENSIONS = [
   'geom',
   'Capacidad diaria',
   'Personas atendidas ayer',
+  'id',
 ];
 
 function getDifference(primary: number = 0, secondary: number = 0) {
@@ -49,12 +50,14 @@ export default function CustomConnectDotChart({ data: _data, groupName }: any) {
       {
         type: 'custom',
         renderItem: (params: any, api: any) => {
-          const categoryIndex = api.value(5);
+          const categoryIndex = api.value(9);
           const dailyCapacity = api.value(7);
           const yesterdayCount = api.value(8);
           const p1 = api.coord([dailyCapacity, categoryIndex]);
           const p2 = api.coord([yesterdayCount, categoryIndex]);
           const points = [p1, p2].sort((a, b) => ascending(a[0], b[0]));
+          const [x1, y1] = p1;
+          const [x2, y2] = p2;
           const [x, y] = points.at(-1);
           const difference = getDifference(dailyCapacity, yesterdayCount);
           const stroke = getDifferenceColor(difference);
@@ -66,36 +69,41 @@ export default function CustomConnectDotChart({ data: _data, groupName }: any) {
             fontSize: 14,
             fontFamily: 'Barlow',
           });
-
-          return {
-            type: 'group',
-            children: [
-              {
-                type: 'polyline',
-                shape: {
-                  points,
+          if (params?.dataIndex !== params?.dataInsideLength) {
+            return {
+              type: 'group',
+              children: [
+                {
+                  type: 'line',
+                  shape: {
+                    x1,
+                    y1,
+                    x2,
+                    y2,
+                  },
+                  style: lineStyle,
                 },
-                style: lineStyle,
-              },
-              {
-                type: 'text',
-                x: x + x * 0.025,
-                y: y,
-                style: {
-                  text: format('.0%')(difference),
-                  textVerticalAlign: 'middle',
-                  font,
+                {
+                  type: 'text',
+                  x: x + x * 0.025,
+                  y: y,
+                  style: {
+                    text: format('.0%')(difference),
+                    textVerticalAlign: 'middle',
+                    font,
+                  },
                 },
-              },
-            ],
-          };
+              ],
+            };
+          }
         },
       },
       {
         type: 'scatter',
         encode: {
-          y: DATA_DIMENSIONS[5],
-          x: DATA_DIMENSIONS[8],
+          y: 9,
+          x: 8,
+          itemName: DATA_DIMENSIONS[5],
         },
         itemStyle: {
           color: STAT_CATEGORY_COLORS.get(DATA_DIMENSIONS[8]),
@@ -104,8 +112,9 @@ export default function CustomConnectDotChart({ data: _data, groupName }: any) {
       {
         type: 'scatter',
         encode: {
-          y: DATA_DIMENSIONS[5],
-          x: DATA_DIMENSIONS[7],
+          y: 9,
+          x: 7,
+          itemName: DATA_DIMENSIONS[5],
         },
         itemStyle: {
           color: STAT_CATEGORY_COLORS.get(DATA_DIMENSIONS[7]),
@@ -137,6 +146,9 @@ export default function CustomConnectDotChart({ data: _data, groupName }: any) {
         },
         boundaryGap: true,
         axisLabel: {
+          formatter(value: string) {
+            return value.split('+')[0];
+          },
           hideOverlap: true,
           width: 200,
           overflow: 'break',
@@ -162,6 +174,7 @@ export default function CustomConnectDotChart({ data: _data, groupName }: any) {
       },
       series,
       tooltip: {
+        trigger: 'axis',
         show: true,
         padding: [theme.spacing(0.5), theme.spacing(1)],
         borderWidth: 0,
@@ -173,36 +186,38 @@ export default function CustomConnectDotChart({ data: _data, groupName }: any) {
         },
         //@ts-ignore
         backgroundColor: theme.palette.other.tooltip,
-        //@ts-ignore
-        formatter({ data, encode }) {
-          const { x: dimensionIndex } = encode;
-          return `<span 
-            style='min-width: 35px;  display: flex; flex-direction: column;'
-            >
-            <span 
-              style='display: flex; justify-content: space-between; gap: 10px; align-items: center;'
-              >
-              <span>Servicio</span>
-              <span>${data[0]}</span>
-            </span>
-            <span 
-              style='display: flex; justify-content: space-between; gap: 10px; align-items: center;'
-              >
-              <span>Organización</span>
-              <span>${data[3]}</span>
-            </span>
-            <span 
-              style='display: flex; justify-content: space-between; gap: 10px; align-items: center;'
-              >
-              <span>Personas</span>
-              <span>${data[dimensionIndex]}</span>
-            </span>
-          </span>`;
+        // @ts-ignore
+        formatter(params) {
+          // console.log(params)
+          // const { x: dimensionIndex } = encode;
+          // return `<span
+          //   style='min-width: 35px;  display: flex; flex-direction: column;'
+          //   >
+          //   <span
+          //     style='display: flex; justify-content: space-between; gap: 10px; align-items: center;'
+          //     >
+          //     <span>Servicio</span>
+          //     <span>${data[0]}</span>
+          //   </span>
+          //   <span
+          //     style='display: flex; justify-content: space-between; gap: 10px; align-items: center;'
+          //     >
+          //     <span>Organización</span>
+          //     <span>${data[3]}</span>
+          //   </span>
+          //   <span
+          //     style='display: flex; justify-content: space-between; gap: 10px; align-items: center;'
+          //     >
+          //     <span>Personas</span>
+          //     <span>${data[dimensionIndex]}</span>
+          //   </span>
+          // </span>`;
         },
       },
     }),
     [series],
   );
+
   return (
     <>
       <ReactEchart

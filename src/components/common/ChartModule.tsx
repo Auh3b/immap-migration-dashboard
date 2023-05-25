@@ -4,11 +4,10 @@ import { ReactNode, Suspense, lazy, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeModalUrl, setChartModal } from 'store/appSlice';
 import ComponentFallback from './ComponentFallback';
-import mainSource from 'data/sources/mainSource';
-import ChartLoadFail from './ChartLoadFail';
 import { RootState } from 'store/store';
 import { setViewState } from '@carto/react-redux';
 import randBtwn from 'utils/randBtwn';
+import ComponentError from './ComponentError';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 
 //@ts-ignore
 const importChart = (url: string) =>
-  lazy(() => import(`components/${url}`).catch(() => <ChartLoadFail />));
+  lazy(() => import(`components/${url}`).catch(() => <ComponentError />));
 
 export default function ChartModal() {
   const [chart, setChart] = useState<ReactNode>(null);

@@ -19,14 +19,13 @@ import { _FilterTypes } from '@carto/react-core';
 import CustomConnectDotChart from 'components/common/customWidgets/CustomConnectDotChart';
 import { useDispatch, useSelector } from 'react-redux';
 import { addFilter, removeFilter } from '@carto/react-redux';
-import { featureCollection, point } from '@turf/helpers';
-import { bbox } from '@turf/turf';
-//@ts-ignore
-import { WebMercatorViewport } from '@deck.gl/core';
+import {  point } from '@turf/helpers';
 import { initialState } from 'store/initialStateSlice';
 import { RootState } from 'store/store';
-import handleMapTransitions from './hooks/handleMapTransitions';
+import handleMapTransitions from './utils/handleMapTransitions';
 import AggreatedServicesLegend from './utils/AggreatedServicesLegend';
+import getViewport from './utils/getViewport';
+import getFeatureCollection from './utils/getFeatureCollection';
 
 const otherColumns = {
   country: 'ubicacion_',
@@ -59,26 +58,33 @@ const method: MethodFunc = (input, column, params) => {
       .split(',')
       .map((d: string) => +d);
 
-    for( let service of services) {
+    for (let service of services) {
       const serviceColumns = SERVICE_STAT_COLUMNS.get(service);
-      if(serviceColumns){
-        let newEntry: any = [
+      if (serviceColumns) {
+        let newEntry: any[] = [
           SERVICES_KEY.get(service) ?? 'Otro',
-          '',
+          null,
           serviceEntry[otherColumns.region],
           serviceEntry[otherColumns.organisation],
           serviceEntry[otherColumns.persons],
-          `${serviceEntry[otherColumns.organisation]} - ${SERVICES_KEY.get(
-            service,
-          ) ?? 'Otro'}`,
+          `${serviceEntry[otherColumns.organisation]} - ${
+            SERVICES_KEY.get(service) ?? 'Otro'
+          }`,
           [serviceEntry[otherColumns.long], serviceEntry[otherColumns.lat]],
         ];
+        let columnValues: any[] = [];
         for (let i = 0; i < SERVICE_STAT_COLUMNS_NAME.length; i++) {
-          newEntry = [...newEntry, serviceEntry[serviceColumns[i]] || 0];
+          columnValues = [
+            ...columnValues,
+            serviceEntry[serviceColumns[i]] || 0,
+          ];
         }
-        output = [...output, newEntry];
+        const id = `${newEntry[3]}-${newEntry[0]}+${newEntry[2]} - ${newEntry
+          .at(-1)
+          .join('-')}`;
+        output = [...output, [...newEntry, ...columnValues, id]];
       }
-    };
+    }
   }
   return output;
 };
@@ -97,6 +103,16 @@ const useStyles = makeStyles((theme) => ({
   error: {
     marginTop: theme.spacing(8),
     padding: theme.spacing(2),
+  },
+  clearButton:{
+    position: 'fixed',
+    opacity: 0.5,
+    bottom: theme.spacing(2),
+    right: theme.spacing(2),
+    zIndex: theme.zIndex.drawer + 1,
+    '&:hover':{
+      opacity: 1,
+    }
   },
 }));
 
@@ -178,23 +194,14 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
       if (currentSelection) {
         const { data, width, height } = callbackProps;
         const padding = 100;
-        const geojson = featureCollection(
-          data
-            .filter((d: any) => d[column] === currentSelection)
-            .map((d: any) => point(d[6])),
-        );
-        const [minLong, minLat, maxLong, maxLat] = bbox(geojson);
-        const boundbox = [
-          [minLong, minLat],
-          [maxLong, maxLat],
-        ];
-        //@ts-ignore
-        const { latitude, longitude, zoom } =
-          new WebMercatorViewport().fitBounds(boundbox, {
-            width,
-            height,
-            padding,
-          });
+        const geojson = getFeatureCollection({
+          input: data,
+          coordinateLocation: (value)=> point(value[6]),
+          filterFunction: (d)=> d[column] === currentSelection
+        });
+        
+        const { latitude, longitude, zoom } = getViewport({geojson, padding, width, height})
+
         handleMapTransitions({
           start: 1000,
           end: 1500,
@@ -251,6 +258,7 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
               callbackProps={{ data, width, height }}
             />
             <ClearFiltersButton
+              className={classes.clearButton}
               disabled={Object.keys(filters).length === 0}
               clearCallback={() => setFilters({})}
             />
