@@ -29,24 +29,23 @@ export default function TreeMapChart({
   const dispatch = useDispatch();
   const theme = useTheme();
 
-  useEffect(()=>{
-    if(filteredColumns.length){
+  useEffect(() => {
+    if (filteredColumns.length) {
       filteredColumns.forEach((column) => {
-          dispatch(
-            removeFilter({
-              owner: id,
-              id: dataSource,
-              column,
-            }),
-          );
-          setFilteredColumns((prev) => prev.filter((d) => d !== column));
-        });
+        dispatch(
+          removeFilter({
+            owner: id,
+            id: dataSource,
+            column,
+          }),
+        );
+        setFilteredColumns((prev) => prev.filter((d) => d !== column));
+      });
     }
-    if(selected){
+    if (selected) {
       setSelected(null);
     }
-  },[_data])
-
+  }, [_data]);
 
   const series = useMemo(() => {
     const data = [..._data];

@@ -257,7 +257,7 @@ export function getTopPosts({ filters }: Params) {
     const { sources: _sources } = data;
 
     const groupsArray = _sources
-      .map(({ topPosts, date, source }) => ({ source,date, topPosts }))
+      .map(({ topPosts, date, source }) => ({ source, date, topPosts }))
       .filter(({ topPosts }) => topPosts.length !== 0);
     const sources = Array.from(
       new Set(groupsArray.map(({ source }) => source)),
@@ -273,13 +273,16 @@ export function getTopPosts({ filters }: Params) {
       for (let { source, date, topPosts } of listBySource) {
         for (let [name, value] of topPosts) {
           const url = POST_URL_MAP.get(source)(name);
-          const id = crypto.randomBytes(20).toString('hex')
+          const id = crypto.randomBytes(20).toString('hex');
           _output = [..._output, { id, source, name, date, value, url }];
         }
       }
       //@ts-ignore
       const targetIndex = maxIndex(_output, (d) => d.value);
-      output = [...output, ..._output.sort((a,b)=> descending(a.value, b.value)).slice(0, 10)];
+      output = [
+        ...output,
+        ..._output.sort((a, b) => descending(a.value, b.value)).slice(0, 10),
+      ];
     }
 
     return output;
