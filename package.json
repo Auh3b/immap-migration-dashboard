@@ -32,6 +32,7 @@
     "@material-ui/lab": "4.0.0-alpha.60",
     "@material-ui/pickers": "^3.3.10",
     "@mui/icons-material": "^5.11.9",
+    "@mui/x-data-grid": "4.0.0",
     "@nebula.gl/edit-modes": "^1.0.2-alpha.0",
     "@nebula.gl/layers": "^1.0.2-alpha.0",
     "@reduxjs/toolkit": "^1.6.1",
