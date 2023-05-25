@@ -1,0 +1,15 @@
+export const METHOD_NAMES = {
+  AGGREGATE_COLUMNS: 'aggregate_columns',
+  CONCATENATED_VALUES: 'aggregate_columns',
+  GET_HIERARCHY: 'aggregate_columns',
+  GROUP_CATEGORIES: 'aggregate_columns',
+  GROUPED_COLUMNS: 'aggregate_columns',
+  HISTOGRAM_VALUES: 'aggregate_columns',
+  SINGLE_STACK_BAR_VALUES: 'aggregate_columns',
+  STACK_CATEGORY_TOTALS: 'aggregate_columns',
+  STACKED_BAR_CATEGORIES: 'aggregate_columns',
+  STACKED_GROUP_CATEGORIES: 'aggregate_columns',
+  STACKED_GROUP_CATEGORIES_ALT: 'aggregate_columns',
+  STACKED_GROUP_CATEGORIES_ALT_2: 'aggregate_columns',
+  TIMELINE_VALUES: 'aggregate_columns',
+};

@@ -1,7 +1,8 @@
 // @ts-ignore
 import { MAP_TYPES } from '@deck.gl/carto';
+import { SOURCE_NAMES } from './sourceTypes';
 
-const SERVICE_POINTS_SOURCE_ID = 'servicePointsSource';
+const SERVICE_POINTS_SOURCE_ID = SOURCE_NAMES.SERVICE_POINTS_SOURCE;
 
 const source = {
   id: SERVICE_POINTS_SOURCE_ID,

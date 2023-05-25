@@ -1,7 +1,8 @@
 // @ts-ignore
 import { MAP_TYPES } from '@deck.gl/carto';
+import { SOURCE_NAMES } from './sourceTypes';
 
-const HOTSPOT_SOURCE_ID = 'hotspotSource';
+const HOTSPOT_SOURCE_ID = SOURCE_NAMES.MAIN_SOURCE;
 
 const source = {
   id: HOTSPOT_SOURCE_ID,
