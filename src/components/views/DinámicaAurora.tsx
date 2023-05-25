@@ -25,16 +25,6 @@ export default function DinámicaAurora() {
   };
 
   useEffect(() => {
-    dispatch(
-      setViewState({
-        width: 1700,
-        height: 890,
-        latitude: 22.294007742085636,
-        longitude: -89.47128457821132,
-        zoom: 4,
-      }),
-    );
-
     dispatch(addSource(mainSource));
     dispatch(addSource(timelineSource));
 
@@ -56,7 +46,6 @@ export default function DinámicaAurora() {
       dispatch(removeLayer(HOTSPOTS_LAYER_ID));
       dispatch(removeSource(timelineSource.id));
       dispatch(removeSource(mainSource.id));
-      dispatch(setViewState(initialState.viewState));
     };
   }, [dispatch]);
 

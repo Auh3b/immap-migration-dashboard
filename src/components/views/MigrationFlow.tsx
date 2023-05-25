@@ -19,15 +19,6 @@ import { setPageInfo } from 'store/mapSlice';
 export default function MigrationFlow() {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(
-      setViewState({
-        width: 1400,
-        height: 890,
-        latitude: -0.7592270882110561,
-        longitude: -61.55388709207003,
-        zoom: 2.1807410178760893,
-      }),
-    );
     dispatch(addSource(mainSource));
 
     dispatch(
@@ -49,7 +40,6 @@ export default function MigrationFlow() {
       dispatch(removeLayer(MIGRATION_FLOW_LAYER_ID));
       dispatch(removeLayer(HOTSPOTS_LAYER_ID));
       dispatch(removeSource(mainSource.id));
-      dispatch(setViewState(initialState.viewState));
       dispatch(setPageInfo({}));
     };
   }, [dispatch]);

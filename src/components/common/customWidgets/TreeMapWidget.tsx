@@ -16,10 +16,10 @@ export default function TreeMapWidget({
   const { data, isLoading } = useWidgetFetch({
     id,
     dataSource,
+    column,
     method,
     methodParams,
   });
-  console.log(data)
   return (
     <CustomWidgetWrapper actions={actions} title={title} isLoading={isLoading}>
       <TreeMapChart
