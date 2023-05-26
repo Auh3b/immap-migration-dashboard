@@ -1,10 +1,10 @@
 import { _FilterTypes } from '@carto/react-core';
 import { Grid } from '@material-ui/core';
 import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType';
-import CustomCategoryWidget from 'components/common/customWidgets/CustomCategoryWidget';
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
 import groupCategories from '../utils/groupCategories';
 import useWidgetEffect from '../utils/useWidgetEffect';
+import CustomPieWidget from 'components/common/customWidgets/CustomPieWidget';
 
 const NOTE = 'Nombre de la organización a la que pertenece el encuestado';
 const id = 'organisationsSurveyed';
@@ -26,7 +26,7 @@ export default function OrgSurveyed({
   operation,
 }: BasicWidgetType) {
   const { widget } = useWidgetEffect(
-    <CustomCategoryWidget dataSource={dataSource} {...props} />,
+    <CustomPieWidget dataSource={dataSource} {...props} />,
     [dataSource],
   );
   return (
