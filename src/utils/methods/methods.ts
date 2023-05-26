@@ -1,4 +1,6 @@
 export const METHOD_NAMES = {
+  SET_DATA: 'set_data',
+  GET_DATA: 'get_data',
   AGGREGATE_COLUMNS: 'aggregate_columns',
   CONCATENATED_VALUES: 'aggregate_columns',
   GET_HIERARCHY: 'aggregate_columns',
