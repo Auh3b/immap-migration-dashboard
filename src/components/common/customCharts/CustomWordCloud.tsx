@@ -30,12 +30,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CustomWordCloud({
-  data: _data,
+  data: _data = [],
   filters,
+  column,
+  onWordSelectChange,
   id,
 }: {
   data: { name: string; value: number }[];
   filters?: any;
+  column?:string
+  onWordSelectChange?: (values:any, args:any)=>void
   id?: string;
 }) {
   const dispatch = useDispatch();
@@ -152,29 +156,32 @@ export default function CustomWordCloud({
     [series],
   );
 
-  const onClick = useCallback(
-    ({ value }: any) => {
-      const [x, y, text, ...rest] = value;
-      if (selectedWord === text) {
-        dispatch(
-          removeMediaFilter({
-            owner: id,
-            source: 'meltwater',
-            column: 'topPhrases',
-          }),
-        );
-      } else {
-        dispatch(
-          addMediaFilter({
-            owner: id,
-            source: 'meltwater',
-            values: [text],
-            column: 'topPhrases',
-            type: FilterTypes.WORD_CLOUD_IN,
-          }),
-        );
-      }
-    },
+  const onClick = useCallback((values)=>{
+    console.log(values, selectedWord)
+    return onWordSelectChange(values, selectedWord)
+  },
+    // ({ value }: any) => {
+    //   const [x, y, text, ...rest] = value;
+    //   if (selectedWord === text) {
+    //     dispatch(
+    //       removeMediaFilter({
+    //         owner: id,
+    //         source: 'meltwater',
+    //         column: 'topPhrases',
+    //       }),
+    //     );
+    //   } else {
+    //     dispatch(
+    //       addMediaFilter({
+    //         owner: id,
+    //         source: 'meltwater',
+    //         values: [text],
+    //         column: 'topPhrases',
+    //         type: FilterTypes.WORD_CLOUD_IN,
+    //       }),
+    //     );
+    //   }
+    // },
     [data, dispatch, selectedWord],
   );
 
