@@ -39,7 +39,6 @@ export default function MediaTable({
     }
     return [];
   }, [data]);
-  console.log(rows);
 
   return (
     <Grid item xs={12} lg={4} className={classes.root}>
