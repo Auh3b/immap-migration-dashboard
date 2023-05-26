@@ -1,5 +1,5 @@
 import { wrap } from 'comlink';
-import { Params } from 'components/views/mediaViews/utils/mediaUtils';
+import { MediaParams } from 'components/views/mediaViews/utils/mediaUtils';
 
 const MediaWorker = new Worker(
   'components/views/mediaViews/utils/mediaWorker',
@@ -12,7 +12,7 @@ const MediaWorker = new Worker(
 //@ts-ignore
 const { runTransform } = wrap(MediaWorker);
 
-async function executeMethod(methodName: string, params: Partial<Params>) {
+async function executeMethod(methodName: string, params: Partial<MediaParams>) {
   const { result } = await runTransform(methodName, params);
   return result;
 }

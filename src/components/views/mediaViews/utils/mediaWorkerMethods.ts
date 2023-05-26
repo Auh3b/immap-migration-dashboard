@@ -1,17 +1,17 @@
 import { ascending, descending, flatRollup, maxIndex, sum } from 'd3';
-import { MEDIA_SOURCES, Input, Params, POST_URL_MAP } from './mediaUtils';
+import { MEDIA_SOURCES, Input, MediaParams, POST_URL_MAP } from './mediaUtils';
 import groupByValue from 'utils/groupByValue';
 import { Filters, filterValues } from 'utils/filterFunctions';
 import crypto from 'crypto';
 
 let mediaData: Partial<Input>;
 
-export function setMediaData({ data }: Params) {
+export function setMediaData({ data }: MediaParams) {
   mediaData = data;
   return true;
 }
 
-export function getMediaData({ filters }: Params) {
+export function getMediaData({ filters }: MediaParams) {
   if (mediaData) {
     const data = applyFiltersToData(mediaData, filters);
     return data;
@@ -31,7 +31,7 @@ function applyFiltersToData(
   return { ...data, sources: filteredData };
 }
 
-export function getMediaAggregateIndicators({ filters }: Params) {
+export function getMediaAggregateIndicators({ filters }: MediaParams) {
   if (mediaData) {
     const data = applyFiltersToData(mediaData, filters);
     let output: any[] = [];
@@ -62,7 +62,7 @@ export function getMediaAggregateIndicators({ filters }: Params) {
   return null;
 }
 
-export function getMediaOrigins({ filters }: Params) {
+export function getMediaOrigins({ filters }: MediaParams) {
   if (mediaData) {
     const data = applyFiltersToData(mediaData, filters);
     const { sources: _sources } = data;
@@ -87,7 +87,7 @@ export function getMediaOrigins({ filters }: Params) {
   return null;
 }
 
-export function getSentimentPercentages({ filters }: Params) {
+export function getSentimentPercentages({ filters }: MediaParams) {
   if (mediaData) {
     const data = applyFiltersToData(mediaData, filters);
     const { sources: _sources, summary } = data;
@@ -141,7 +141,7 @@ export function getSentimentPercentages({ filters }: Params) {
   return null;
 }
 
-export function getSentimentHistory({ filters }: Params) {
+export function getSentimentHistory({ filters }: MediaParams) {
   if (mediaData) {
     const data = applyFiltersToData(mediaData, filters);
     const { sources: _sources } = data;
@@ -185,7 +185,7 @@ export function getSentimentHistory({ filters }: Params) {
   return null;
 }
 
-export function getHistoricalEngagementBySource({ filters }: Params) {
+export function getHistoricalEngagementBySource({ filters }: MediaParams) {
   if (mediaData) {
     const data = applyFiltersToData(mediaData, filters);
     const { sources: _sources } = data;
@@ -220,7 +220,7 @@ export function getHistoricalEngagementBySource({ filters }: Params) {
   return null;
 }
 
-export function getTopPhrases({ filters }: Params) {
+export function getTopPhrases({ filters }: MediaParams) {
   if (mediaData) {
     const data = applyFiltersToData(mediaData, filters);
 
@@ -250,7 +250,7 @@ export function getTopPhrases({ filters }: Params) {
   return null;
 }
 
-export function getTopPosts({ filters }: Params) {
+export function getTopPosts({ filters }: MediaParams) {
   if (mediaData) {
     const data = applyFiltersToData(mediaData, filters);
 
