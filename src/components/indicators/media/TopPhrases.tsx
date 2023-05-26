@@ -16,20 +16,20 @@ const useStyles = makeStyles((theme) => ({
     position: 'relative',
   },
 }));
-const dataSource = 'meltwater'
-const column = 'topPhrases'
+const dataSource = 'meltwater';
+const column = 'topPhrases';
 
 export default function TopPhrases() {
   const { data, isLoading } = useMediaData({
     id,
     methodName: METHOD_NAMES.MEDIA_TOP_PHRASES,
   });
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   //@ts-ignore
   const filters = useSelector((state) => state.media.filters?.meltwater) || {};
   const classes = useStyles();
   const onWordSelectChange = useCallback(
-        ({ value }: any, selectedWord: string) => {
+    ({ value }: any, selectedWord: string) => {
       const [x, y, text, ...rest] = value;
       if (selectedWord === text) {
         dispatch(
@@ -50,12 +50,18 @@ export default function TopPhrases() {
           }),
         );
       }
-    },[dispatch, data]
-  )
+    },
+    [dispatch, data],
+  );
   return (
     <Grid xs={12} lg={4} item className={classes.root}>
       <TitleWrapper title='Palabras asociadas' isLoading={isLoading}>
-        <CustomWordCloud onWordSelectChange={onWordSelectChange} data={data} filters={filters} id={id} />
+        <CustomWordCloud
+          onWordSelectChange={onWordSelectChange}
+          data={data}
+          filters={filters}
+          id={id}
+        />
         <ContinuousLegend colorScheme={['#fd8d3c', '#800026']} />
       </TitleWrapper>
     </Grid>

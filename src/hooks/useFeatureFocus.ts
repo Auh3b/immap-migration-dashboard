@@ -18,17 +18,17 @@ export default function useFeatureFocus() {
   const _sources = useSelector(
     (state: RootState) => Object.entries(state.carto.dataSources) || [],
   );
-  
+
   const { width, height } = useSelector(
     (state: RootState) => state.carto.viewState,
   );
-  
-  const coordinatesColumns = useMemo(()=>{
-    if(_sources.length){
-      return _sources.map(([name, value])=> SOURCE_COORD_MAP.get(name)|| [])
+
+  const coordinatesColumns = useMemo(() => {
+    if (_sources.length) {
+      return _sources.map(([name, value]) => SOURCE_COORD_MAP.get(name) || []);
     }
-    return []
-  }, [_sources])
+    return [];
+  }, [_sources]);
 
   useCustomCompareEffectAlt(
     () => {
@@ -50,20 +50,22 @@ export default function useFeatureFocus() {
         );
         Promise.all(sourcesPromises)
           .then((_data) => {
-            if(_data.length){
-              let _geojson: any[] = []
-              for(let i=0; i < _data.length; i++){
-                const [longitude, latitude] = coordinatesColumns[i]
-                const currentSet = _data[i].map((d:any)=> point([d[longitude], d[latitude]]))
-                _geojson =[..._geojson, ...currentSet] 
+            if (_data.length) {
+              let _geojson: any[] = [];
+              for (let i = 0; i < _data.length; i++) {
+                const [longitude, latitude] = coordinatesColumns[i];
+                const currentSet = _data[i].map((d: any) =>
+                  point([d[longitude], d[latitude]]),
+                );
+                _geojson = [..._geojson, ...currentSet];
               }
-              const geojson = featureCollection(_geojson)
+              const geojson = featureCollection(_geojson);
               const { latitude, longitude, zoom } = getViewport({
                 geojson,
                 padding: 100,
                 width,
                 height,
-              }); 
+              });
               handleMapTransitions({
                 start: 500,
                 end: 1000,
@@ -73,14 +75,14 @@ export default function useFeatureFocus() {
                   zoom,
                 },
                 dispatch,
-              })
+              });
               setData([longitude, latitude, zoom].join('-'));
             }
           })
           .catch((error) => console.log(error));
       }
     },
-    [dispatch, coordinatesColumns,_sources, width, height],
+    [dispatch, coordinatesColumns, _sources, width, height],
     dequal,
   );
   console.log(data);

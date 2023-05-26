@@ -48,15 +48,15 @@ const useStyles = makeStyles((theme) => ({
     right: theme.spacing(2),
     bottom: theme.spacing(2),
     opacity: 0.25,
-    '&:hover':{
-      opacity: 0.75
-    }
-  }
+    '&:hover': {
+      opacity: 0.75,
+    },
+  },
 }));
 
 export default function Introduction() {
   const classes = useStyles();
-  const {hasFilters, clearAllIntroFilters} = useClearIntroFilters()
+  const { hasFilters, clearAllIntroFilters } = useClearIntroFilters();
   return (
     <Grid
       container
@@ -66,7 +66,11 @@ export default function Introduction() {
     >
       <IntroHeader />
       <IntroContent />
-      <ClearFiltersButton disabled={!hasFilters} clearCallback={clearAllIntroFilters} className={classes.clearButton} />
+      <ClearFiltersButton
+        disabled={!hasFilters}
+        clearCallback={clearAllIntroFilters}
+        className={classes.clearButton}
+      />
     </Grid>
   );
 }

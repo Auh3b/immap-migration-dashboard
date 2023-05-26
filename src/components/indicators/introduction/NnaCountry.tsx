@@ -11,8 +11,8 @@ import { _FilterTypes } from '@carto/react-core';
 const title = 'Identificación NNA solos';
 const column = 'm07__en_q';
 const subtitle = '';
-const dataSource = 'auroraData'
-const id = 'id'
+const dataSource = 'auroraData';
+const id = 'id';
 
 export default function NnaCountry({
   data: _data = [],
@@ -21,7 +21,7 @@ export default function NnaCountry({
   data: any[];
   isLoading: Boolean;
 }) {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const data = useMemo(() => {
     if (_data) {
       const category = groupCategories(_data, column);
@@ -29,12 +29,12 @@ export default function NnaCountry({
       return category;
     }
   }, [_data]);
-//@ts-ignore
-  const filters = useSelector(state => state.intro.filters[dataSource]) || {}
+  //@ts-ignore
+  const filters = useSelector((state) => state.intro.filters[dataSource]) || {};
 
   const onWordSelectChange = useCallback(
     ({ value }: any, selectedWord) => {
-      console.log(selectedWord)
+      console.log(selectedWord);
       const [x, y, text, ...rest] = value;
       if (selectedWord === text) {
         dispatch(
@@ -55,14 +55,24 @@ export default function NnaCountry({
           }),
         );
       }
-    }
-    ,[data, dispatch, filters]
-  )
+    },
+    [data, dispatch, filters],
+  );
 
   return (
-    <TitleWrapper title={title} subtitle={subtitle} isLoading={isLoading} filterable>
+    <TitleWrapper
+      title={title}
+      subtitle={subtitle}
+      isLoading={isLoading}
+      filterable
+    >
       <Grid item>
-        <CustomWordCloud data={data} id={id} filters={filters} onWordSelectChange={onWordSelectChange}/>
+        <CustomWordCloud
+          data={data}
+          id={id}
+          filters={filters}
+          onWordSelectChange={onWordSelectChange}
+        />
       </Grid>
     </TitleWrapper>
   );

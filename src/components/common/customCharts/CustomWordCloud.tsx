@@ -34,7 +34,7 @@ export default function CustomWordCloud({
 }: {
   data: { name: string; value: number }[];
   filters?: any;
-  onWordSelectChange?: (values:any, args:any)=>void
+  onWordSelectChange?: (values: any, args: any) => void;
   id?: string;
 }) {
   const classes = useStyles({ height });
@@ -150,10 +150,11 @@ export default function CustomWordCloud({
     [series],
   );
 
-  const onClick = useCallback((values)=>{
-    console.log(values, selectedWord)
-    return onWordSelectChange(values, selectedWord)
-  },
+  const onClick = useCallback(
+    (values) => {
+      console.log(values, selectedWord);
+      return onWordSelectChange(values, selectedWord);
+    },
     [data, selectedWord],
   );
 
