@@ -24,11 +24,11 @@ const id = 'media_posts';
 
 export default function MediaPosts({ isLoading }: { isLoading: Boolean }) {
   const classes = useStyles();
-  const { data:_data, isLoading: isDataLoading } = useMediaData({
+  const { data: _data, isLoading: isDataLoading } = useMediaData({
     id,
     methodName: METHOD_NAMES.MEDIA_TOP_POSTS,
   });
-   const columnConfig = [
+  const columnConfig = [
     {
       field: 'id',
       hide: true,
@@ -50,7 +50,7 @@ export default function MediaPosts({ isLoading }: { isLoading: Boolean }) {
       field: 'value',
       headerName: 'Views',
       type: 'number',
-      valueFormatter: (params:any) => numberFormatter(params.value),
+      valueFormatter: (params: any) => numberFormatter(params.value),
       sort: true,
       width: 120,
     },
@@ -64,16 +64,16 @@ export default function MediaPosts({ isLoading }: { isLoading: Boolean }) {
       field: 'url',
       hide: true,
     },
-  ]
-  const sources = useMemo(()=>{
-    if(_data.length){
-      const _sources = Array.from(new Set(_data.map(({source}:any)=>source)))
-      return [..._sources]
+  ];
+  const sources = useMemo(() => {
+    if (_data.length) {
+      const _sources = Array.from(
+        new Set(_data.map(({ source }: any) => source)),
+      );
+      return [..._sources];
     }
-    return []
-  },[_data])
-
- 
+    return [];
+  }, [_data]);
 
   return (
     <Grid item className={classes.root}>
@@ -86,7 +86,15 @@ export default function MediaPosts({ isLoading }: { isLoading: Boolean }) {
           alignItems='flex-start'
         >
           {isLoading && <ComponentFallback />}
-          {sources.length && sources.map((source)=> <MediaTable key={source} data={_data} source={source} columnConfig={columnConfig}/> )}
+          {sources.length &&
+            sources.map((source) => (
+              <MediaTable
+                key={source}
+                data={_data}
+                source={source}
+                columnConfig={columnConfig}
+              />
+            ))}
           {/* {data.length > 0 &&
             data.map(({ name, url, source }) => (
               <SocialPost source={source} key={name} url={url} />

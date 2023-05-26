@@ -4,10 +4,7 @@ import cloud from 'd3-cloud';
 import { makeStyles, useTheme } from '@material-ui/core';
 import { extent, median, scaleSequential } from 'd3';
 import { numberFormatter } from 'utils/formatter';
-import { useDispatch } from 'react-redux';
 import getSourceFilter from 'components/indicators/media/utils/getSourceFilter';
-import { addMediaFilter, removeMediaFilter } from 'store/mediaSlice';
-import { FilterTypes } from 'utils/filterFunctions';
 
 const width = 450;
 const height = 400;
@@ -30,15 +27,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function CustomWordCloud({
-  data: _data,
+  data: _data = [],
   filters,
+  onWordSelectChange,
   id,
 }: {
   data: { name: string; value: number }[];
   filters?: any;
+  onWordSelectChange?: (values: any, args: any) => void;
   id?: string;
 }) {
-  const dispatch = useDispatch();
   const classes = useStyles({ height });
   const theme = useTheme();
   const [selectedWord = ''] = getSourceFilter(id, filters);
@@ -153,29 +151,11 @@ export default function CustomWordCloud({
   );
 
   const onClick = useCallback(
-    ({ value }: any) => {
-      const [x, y, text, ...rest] = value;
-      if (selectedWord === text) {
-        dispatch(
-          removeMediaFilter({
-            owner: id,
-            source: 'meltwater',
-            column: 'topPhrases',
-          }),
-        );
-      } else {
-        dispatch(
-          addMediaFilter({
-            owner: id,
-            source: 'meltwater',
-            values: [text],
-            column: 'topPhrases',
-            type: FilterTypes.WORD_CLOUD_IN,
-          }),
-        );
-      }
+    (values) => {
+      console.log(values, selectedWord);
+      return onWordSelectChange(values, selectedWord);
     },
-    [data, dispatch, selectedWord],
+    [data, selectedWord],
   );
 
   return (

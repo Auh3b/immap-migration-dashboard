@@ -1,7 +1,8 @@
 // @ts-ignore
 import { MAP_TYPES } from '@deck.gl/carto';
+import { SOURCE_NAMES } from './sourceTypes';
 
-const TIMELINE_SOURCE_ID = 'timelineSource';
+const TIMELINE_SOURCE_ID = SOURCE_NAMES.TIMELINE_SOURCE;
 
 const source = {
   id: TIMELINE_SOURCE_ID,

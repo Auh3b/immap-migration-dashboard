@@ -20,6 +20,7 @@ import useIntroData, {
   useClearIntroFilters,
 } from 'components/indicators/introduction/hooks/useIntroData';
 import ClearAllIcon from '@material-ui/icons/ClearAll';
+import ClearFiltersButton from 'components/common/ClearFiltersButton';
 
 const useStyles = makeStyles((theme) => ({
   introduction: {
@@ -42,10 +43,20 @@ const useStyles = makeStyles((theme) => ({
       paddingBottom: theme.spacing(2),
     },
   },
+  clearButton: {
+    position: 'fixed',
+    right: theme.spacing(2),
+    bottom: theme.spacing(2),
+    opacity: 0.25,
+    '&:hover': {
+      opacity: 0.75,
+    },
+  },
 }));
 
 export default function Introduction() {
   const classes = useStyles();
+  const { hasFilters, clearAllIntroFilters } = useClearIntroFilters();
   return (
     <Grid
       container
@@ -55,7 +66,11 @@ export default function Introduction() {
     >
       <IntroHeader />
       <IntroContent />
-      <ClearFiltersButton />
+      <ClearFiltersButton
+        disabled={!hasFilters}
+        clearCallback={clearAllIntroFilters}
+        className={classes.clearButton}
+      />
     </Grid>
   );
 }
@@ -210,48 +225,5 @@ function ExitButton() {
         Dashboard
       </Button>
     </Grid>
-  );
-}
-
-const useClearStyles = makeStyles((theme) => ({
-  root: {
-    position: 'fixed',
-    left: theme.spacing(4),
-    bottom: theme.spacing(8),
-    backgroundColor: theme.palette.error.main,
-    color: theme.palette.background.paper,
-    [theme.breakpoints.down('md')]: {
-      left: theme.spacing(2),
-      bottom: theme.spacing(2),
-    },
-  },
-  text: {
-    marginRight: theme.spacing(2),
-  },
-}));
-
-function ClearFiltersButton() {
-  const classes = useClearStyles();
-  const { hasFilters, clearAllIntroFilters } = useClearIntroFilters();
-  return (
-    <>
-      {hasFilters && (
-        <Fab
-          onClick={clearAllIntroFilters}
-          size='large'
-          variant='extended'
-          className={classes.root}
-        >
-          <Typography
-            color='inherit'
-            variant='overline'
-            className={classes.text}
-          >
-            Clear All
-          </Typography>
-          <ClearAllIcon />
-        </Fab>
-      )}
-    </>
   );
 }

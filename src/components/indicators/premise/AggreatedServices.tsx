@@ -19,7 +19,7 @@ import { _FilterTypes } from '@carto/react-core';
 import CustomConnectDotChart from 'components/common/customWidgets/CustomConnectDotChart';
 import { useDispatch, useSelector } from 'react-redux';
 import { addFilter, removeFilter } from '@carto/react-redux';
-import {  point } from '@turf/helpers';
+import { point } from '@turf/helpers';
 import { initialState } from 'store/initialStateSlice';
 import { RootState } from 'store/store';
 import handleMapTransitions from './utils/handleMapTransitions';
@@ -104,15 +104,15 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(8),
     padding: theme.spacing(2),
   },
-  clearButton:{
+  clearButton: {
     position: 'fixed',
     opacity: 0.5,
     bottom: theme.spacing(2),
     right: theme.spacing(2),
     zIndex: theme.zIndex.drawer + 1,
-    '&:hover':{
+    '&:hover': {
       opacity: 1,
-    }
+    },
   },
 }));
 
@@ -196,11 +196,16 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
         const padding = 100;
         const geojson = getFeatureCollection({
           input: data,
-          coordinateLocation: (value)=> point(value[6]),
-          filterFunction: (d)=> d[column] === currentSelection
+          coordinateLocation: (value) => point(value[6]),
+          filterFunction: (d) => d[column] === currentSelection,
         });
-        
-        const { latitude, longitude, zoom } = getViewport({geojson, padding, width, height})
+
+        const { latitude, longitude, zoom } = getViewport({
+          geojson,
+          padding,
+          width,
+          height,
+        });
 
         handleMapTransitions({
           start: 1000,
@@ -214,18 +219,19 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
         });
         return;
       }
-
-      const { latitude, longitude, zoom } = initialState.viewState;
-      handleMapTransitions({
-        start: 500,
-        end: 1000,
-        params: {
-          latitude,
-          longitude,
-          zoom,
-        },
-        dispatch,
-      });
+      if (currentSelection === 0) {
+        const { latitude, longitude, zoom } = initialState.viewState;
+        handleMapTransitions({
+          start: 500,
+          end: 1000,
+          params: {
+            latitude,
+            longitude,
+            zoom,
+          },
+          dispatch,
+        });
+      }
     },
     [dispatch],
   );
@@ -323,7 +329,7 @@ function Selector({
       return filter.values[0];
     }
 
-    return 0;
+    return '';
   }, [filters]);
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {

@@ -12,7 +12,6 @@ import {
   removeSource,
 } from '@carto/react-redux';
 import { useDispatch } from 'react-redux';
-import { HOTSPOTS_LAYER_ID } from 'components/layers/HotspotsLayer';
 import { AGGREGATE_SERVICES_CHILDREN_LAYER_ID } from 'components/layers/AggregateServicesChildrenLayer';
 
 const ServiceLeftView = lazy(() => import('./serviceViews/ServiceLeftView'));

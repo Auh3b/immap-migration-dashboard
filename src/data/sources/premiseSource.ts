@@ -1,7 +1,8 @@
 // @ts-ignore
 import { MAP_TYPES } from '@deck.gl/carto';
+import { SOURCE_NAMES } from './sourceTypes';
 
-const PREMISE_SOURCE_ID = 'premiseSource';
+const PREMISE_SOURCE_ID = SOURCE_NAMES.PREMISE_SOURCE;
 
 const source = {
   id: PREMISE_SOURCE_ID,

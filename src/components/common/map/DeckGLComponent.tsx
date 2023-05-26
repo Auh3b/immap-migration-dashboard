@@ -13,6 +13,7 @@ import { FlyToInterpolator } from '@deck.gl/core';
 import maplibregl from '!maplibre-gl';
 // @ts-ignore
 import maplibreglWorker from 'maplibre-gl/dist/maplibre-gl-csp-worker';
+import useFeatureFocus from 'hooks/useFeatureFocus';
 // @ts-ignore
 maplibregl.workerClass = maplibreglWorker;
 
@@ -35,7 +36,7 @@ export default function DeckGLComponent({ layers }: { layers: any[] }) {
     handleTooltip,
     handleViewStateChange,
   } = useMapHooks();
-
+  // useFeatureFocus();
   return (
     // @ts-ignore
     <DeckGL

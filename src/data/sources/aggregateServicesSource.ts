@@ -1,7 +1,8 @@
 // @ts-ignore
 import { MAP_TYPES } from '@deck.gl/carto';
+import { SOURCE_NAMES } from './sourceTypes';
 
-const AGGREGATE_SERVICES_SOURCE_ID = 'aggregateServicesSource';
+const AGGREGATE_SERVICES_SOURCE_ID = SOURCE_NAMES.AGG_SERVICE_SOURCE;
 
 const source = {
   id: AGGREGATE_SERVICES_SOURCE_ID,
