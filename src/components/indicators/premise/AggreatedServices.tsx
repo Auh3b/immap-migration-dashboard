@@ -191,7 +191,7 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
 
   const handleLocationChange = useCallback(
     ({ id, column, currentSelection, callbackProps }) => {
-      if (currentSelection) {
+      if (currentSelection && currentSelection !== 'all') {
         const { data, width, height } = callbackProps;
         const padding = 100;
         const geojson = getFeatureCollection({
@@ -219,7 +219,8 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
         });
         return;
       }
-      if (currentSelection === 0) {
+
+      if (currentSelection === 'all') {
         const { latitude, longitude, zoom } = initialState.viewState;
         handleMapTransitions({
           start: 500,
@@ -266,7 +267,20 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
             <ClearFiltersButton
               className={classes.clearButton}
               disabled={Object.keys(filters).length === 0}
-              clearCallback={() => setFilters({})}
+              clearCallback={() => {
+                setFilters({})
+                const { latitude, longitude, zoom } = initialState.viewState;
+                handleMapTransitions({
+                  start: 500,
+                  end: 1000,
+                  params: {
+                    latitude,
+                    longitude,
+                    zoom,
+                  },
+                  dispatch,
+                });
+              }}
             />
           </Grid>
           <AggreatedServicesLegend />
@@ -359,7 +373,7 @@ function Selector({
           <Typography variant='overline'>Seleccionar {name}</Typography>
         </InputLabel>
         <Select value={currentSelection} onChange={handleChange}>
-          <MenuItem value={0}>
+          <MenuItem value={'all'}>
             <Typography variant='overline'>All</Typography>
           </MenuItem>
           {data &&
