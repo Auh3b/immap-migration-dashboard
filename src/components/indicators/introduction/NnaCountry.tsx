@@ -60,10 +60,9 @@ export default function NnaCountry({
   )
 
   return (
-    <TitleWrapper title={title} subtitle={subtitle} isLoading={isLoading}>
+    <TitleWrapper title={title} subtitle={subtitle} isLoading={isLoading} filterable>
       <Grid item>
         <CustomWordCloud data={data} id={id} filters={filters} onWordSelectChange={onWordSelectChange}/>
-        {/* <IntroWordCloud data={data} /> */}
       </Grid>
     </TitleWrapper>
   );
