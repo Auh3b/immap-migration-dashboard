@@ -1,10 +1,15 @@
 import { Grid, Typography, makeStyles } from '@material-ui/core';
-import { interpolateRdYlBu, scaleSequential } from 'd3';
+import { UNICEF_COLORS } from 'theme';
 
 const STAT_CATEGORY_COLORS = new Map([
-  ['Capacidad diaria', '#f03b20'],
-  ['Personas atendidas ayer', '#feb24c'],
+  ['Capacidad diaria', '#D053AC'],
+  ['Personas atendidas ayer', '#53D092'],
 ]);
+
+const CAPACITY_COLORS = new Map([
+  ['Capacidad excedente',UNICEF_COLORS[0]],
+  ['Déficit de Capacidad',UNICEF_COLORS[5]]
+])
 
 const useLegendStyle = makeStyles((theme) => ({
   root: {
@@ -22,10 +27,18 @@ const useLegendStyle = makeStyles((theme) => ({
 }));
 
 export default function AggreatedServicesLegend() {
-  const classes = useLegendStyle();
-  const legend = Array.from(STAT_CATEGORY_COLORS);
   return (
-    <Grid container item wrap='nowrap' spacing={2}>
+    <Grid container item wrap='nowrap'>
+      <Legend colors={STAT_CATEGORY_COLORS} />
+      <Legend colors={CAPACITY_COLORS} />
+    </Grid>
+  );
+}
+
+function Legend({colors}:any) {
+  const classes = useLegendStyle();
+  const legend = Array.from(colors)
+  return (
       <Grid item xs={6} direction='column' container className={classes.root}>
         {legend.map(([title, color]) => (
           <Grid
@@ -43,45 +56,5 @@ export default function AggreatedServicesLegend() {
           </Grid>
         ))}
       </Grid>
-      <Grid item xs={6} container alignItems='center'>
-        <RangeDifferenceScale />
-      </Grid>
-    </Grid>
-  );
-}
-
-const useRangeStyles = makeStyles((theme) => ({
-  root: {},
-  bar: {
-    backgroundImage: ({ positive, neutral, negative }: any) =>
-      `linear-gradient(to right, ${negative}, ${neutral}, ${positive})`,
-    height: '20px',
-    width: '100%',
-  },
-  lines: {
-    '& span': {},
-  },
-}));
-
-function RangeDifferenceScale() {
-  const [negative, neutral, positive] = [1, 2, 3].map((a, i) =>
-    scaleSequential(interpolateRdYlBu).domain([0, 2])(i),
-  );
-  const classes = useRangeStyles({ negative, neutral, positive });
-  return (
-    <Grid container item direction='column' className={classes.root}>
-      <Grid item className={classes.bar}></Grid>
-      <Grid
-        item
-        container
-        justifyContent='space-between'
-        alignItems='flex-start'
-        className={classes.lines}
-      >
-        <Typography variant='overline'>Bajo</Typography>
-        <Typography variant='overline'></Typography>
-        <Typography variant='overline'>Alto</Typography>
-      </Grid>
-    </Grid>
   );
 }
