@@ -20,7 +20,7 @@ export default function groupCategories(
   });
   if (groups) {
     //@ts-ignore
-    return groups.sort((a, b) => descending(a.name, b.name));
+    return groups.sort((a, b) => descending(a.value, b.value));
   }
 
   return [];

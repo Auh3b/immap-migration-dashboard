@@ -44,4 +44,7 @@ export const SERVICE_STAT_COLUMNS = new Map([
   [11, ['serv_psico', 'serv_psi_1']],
   [12, ['serv_trans', 'serv_tra_1']],
   [13, ['serv_tra_2', 'atend_serv']],
+  [14, ['serv_tra_2', 'atend_serv']],
+  [15, ['serv_tra_2', 'atend_serv']],
+  [17, ['serv_tra_2', 'atend_serv']],
 ]);

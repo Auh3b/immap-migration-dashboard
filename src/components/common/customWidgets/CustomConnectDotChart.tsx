@@ -2,10 +2,11 @@ import { useTheme } from '@material-ui/core';
 import { ascending, format, interpolateRdYlBu, scaleSequential } from 'd3';
 import { useMemo } from 'react';
 import ReactEchart from 'components/common/customCharts/ReactEcharts';
+import { UNICEF_COLORS } from 'theme';
 
 const STAT_CATEGORY_COLORS = new Map([
-  ['Capacidad diaria', '#f03b20'],
-  ['Personas atendidas ayer', '#feb24c'],
+  ['Capacidad diaria', '#D053AC'],
+  ['Personas atendidas ayer', '#53D092'],
 ]);
 
 const DATA_DIMENSIONS = [
@@ -22,19 +23,12 @@ const DATA_DIMENSIONS = [
 ];
 
 function getDifference(primary: number = 0, secondary: number = 0) {
-  const diff = primary / secondary;
-  if (primary >= secondary) {
-    return diff;
-  }
-
-  const adjustedDiff = 1 - diff;
-  return adjustedDiff * -1;
+  return primary - secondary
 }
 
 function getDifferenceColor(value: number) {
-  const scale = scaleSequential(interpolateRdYlBu).domain([-1, 1]);
-  const color = scale(value);
-  return color;
+  
+  return  value > 0 ? UNICEF_COLORS[0] : UNICEF_COLORS[5];
 }
 
 export default function CustomConnectDotChart({ data: _data, groupName }: any) {
@@ -47,6 +41,30 @@ export default function CustomConnectDotChart({ data: _data, groupName }: any) {
 
   const series = useMemo(() => {
     return [
+      {
+        type: 'scatter',
+        symbolSize: 15,
+        encode: {
+          y: 9,
+          x: 8,
+          itemName: DATA_DIMENSIONS[5],
+        },
+        itemStyle: {
+          color: STAT_CATEGORY_COLORS.get(DATA_DIMENSIONS[8]),
+        },
+      },
+      {
+        type: 'scatter',
+        symbolSize: 15,
+        encode: {
+          y: 9,
+          x: 7,
+          itemName: DATA_DIMENSIONS[5],
+        },
+        itemStyle: {
+          color: STAT_CATEGORY_COLORS.get(DATA_DIMENSIONS[7]),
+        },
+      },
       {
         type: 'custom',
         renderItem: (params: any, api: any) => {
@@ -65,10 +83,10 @@ export default function CustomConnectDotChart({ data: _data, groupName }: any) {
             stroke,
             lineWidth: 10,
           });
-          const font = api.font({
-            fontSize: 14,
-            fontFamily: 'Barlow',
-          });
+          // const font = api.font({
+          //   fontSize: 14,
+          //   fontFamily: 'Barlow',
+          // });
           if (params?.dataIndex !== params?.dataInsideLength) {
             return {
               type: 'group',
@@ -83,41 +101,19 @@ export default function CustomConnectDotChart({ data: _data, groupName }: any) {
                   },
                   style: lineStyle,
                 },
-                {
-                  type: 'text',
-                  x: x + x * 0.025,
-                  y: y,
-                  style: {
-                    text: format('.0%')(difference),
-                    textVerticalAlign: 'middle',
-                    font,
-                  },
-                },
+                // {
+                //   type: 'text',
+                //   x: x + x * 0.025,
+                //   y: y,
+                //   style: {
+                //     text: format('.0%')(difference),
+                //     textVerticalAlign: 'middle',
+                //     font,
+                //   },
+                // },
               ],
             };
           }
-        },
-      },
-      {
-        type: 'scatter',
-        encode: {
-          y: 9,
-          x: 8,
-          itemName: DATA_DIMENSIONS[5],
-        },
-        itemStyle: {
-          color: STAT_CATEGORY_COLORS.get(DATA_DIMENSIONS[8]),
-        },
-      },
-      {
-        type: 'scatter',
-        encode: {
-          y: 9,
-          x: 7,
-          itemName: DATA_DIMENSIONS[5],
-        },
-        itemStyle: {
-          color: STAT_CATEGORY_COLORS.get(DATA_DIMENSIONS[7]),
         },
       },
     ];
@@ -125,6 +121,7 @@ export default function CustomConnectDotChart({ data: _data, groupName }: any) {
 
   const option = useMemo(
     () => ({
+      legend: {},
       title: {
         show: true,
         text: groupName,
@@ -188,30 +185,29 @@ export default function CustomConnectDotChart({ data: _data, groupName }: any) {
         backgroundColor: theme.palette.other.tooltip,
         // @ts-ignore
         formatter(params) {
-          // console.log(params)
-          // const { x: dimensionIndex } = encode;
-          // return `<span
-          //   style='min-width: 35px;  display: flex; flex-direction: column;'
-          //   >
-          //   <span
-          //     style='display: flex; justify-content: space-between; gap: 10px; align-items: center;'
-          //     >
-          //     <span>Servicio</span>
-          //     <span>${data[0]}</span>
-          //   </span>
-          //   <span
-          //     style='display: flex; justify-content: space-between; gap: 10px; align-items: center;'
-          //     >
-          //     <span>Organización</span>
-          //     <span>${data[3]}</span>
-          //   </span>
-          //   <span
-          //     style='display: flex; justify-content: space-between; gap: 10px; align-items: center;'
-          //     >
-          //     <span>Personas</span>
-          //     <span>${data[dimensionIndex]}</span>
-          //   </span>
-          // </span>`;
+          const {data: [service, nothing, location, org,personas,orgServ, geom, capacity, yesterdayCount, id]} = params[0]
+          const {color: color1} = params[0]
+          const {color: color2} = params[1]
+          return `<span
+            style='min-width: 35px; display: flex; flex-direction: column; gap: 4px;'
+            >
+            <span style='display: flex; flex-direction: column;'>
+              <span>Organización</span>
+              <span>${org}</span>
+            </span>
+            <span style='display: flex; flex-direction: column;'>
+              <span>Servicio</span>
+              <span>${service}</span>
+            </span>
+            <span style='display: flex; align-items: center; justify-content: space-between;'>
+              <span style='width: 10px; height: 10px; border-radius: 100%; background-color: ${color1};'></span>
+              <span>${capacity}</span>
+            </span>
+            <span style='display: flex; align-items: center; justify-content: space-between;'>
+              <span style='width: 10px; height: 10px; border-radius: 100%; background-color: ${color2};'></span>
+              <span>${yesterdayCount}</span>
+            </span>
+          </span>`;
         },
       },
     }),

@@ -6,6 +6,7 @@ import WidgetNote from 'components/common/customWidgets/WidgetNote';
 import concatenatedValues from '../utils/concatenatedValues';
 import useWidgetEffect from '../utils/useWidgetEffect';
 import { SERVICES_KEY } from './utils/services';
+import CustomPieWidget from 'components/common/customWidgets/CustomPieWidget';
 
 const NOTE =
   'El punto de servicio / ayuda humanitaria cuenta con estos servicios para las personas migrantes';
@@ -27,7 +28,7 @@ const props = {
 
 export default function ServicesProvided({ dataSource }: BasicWidgetType) {
   const { widget } = useWidgetEffect(
-    <CustomCategoryWidget {...props} dataSource={dataSource} />,
+    <CustomPieWidget {...props} dataSource={dataSource} />,
     [dataSource],
   );
   return (
