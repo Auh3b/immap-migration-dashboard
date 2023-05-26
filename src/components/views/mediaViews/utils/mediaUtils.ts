@@ -83,7 +83,7 @@ export interface Input {
   sources: Sources;
 }
 
-export interface Params {
+export interface MediaParams {
   data?: Partial<Input>;
   filters?: Filters;
 }
