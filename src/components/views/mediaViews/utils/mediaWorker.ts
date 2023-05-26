@@ -11,7 +11,7 @@ import {
   getTopPosts,
   setMediaData,
 } from './mediaWorkerMethods';
-import { Params } from 'react-router-dom';
+import { MediaParams } from './mediaUtils';
 
 const methodMap = new Map<string, Function>([
   [METHOD_NAMES.SET_MEDIA_DATA, setMediaData],
@@ -25,7 +25,7 @@ const methodMap = new Map<string, Function>([
   [METHOD_NAMES.MEDIA_TOP_POSTS, getTopPosts],
 ]);
 
-function runTransform(methodName: string, params: Partial<Params>) {
+function runTransform(methodName: string, params: Partial<MediaParams>) {
   try {
     let result: any = null;
     let method = methodMap.get(methodName);
