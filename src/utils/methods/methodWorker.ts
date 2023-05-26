@@ -30,14 +30,14 @@ const methodMap = new Map<string, Function>([
   [METHOD_NAMES.TIMELINE_VALUES, timelineValues],
 ]);
 
-function executeMethod({ methodName, params }: any) {
+function executeMethod({ input, methodName, params }: any) {
   try {
     let result: any[] = [];
     let method = methodMap.get(methodName);
     if (!method) {
       throw new Error(`Invalid web worker name: ${methodName}`);
     }
-    result = method(params);
+    result = method(input, params);
     return { result: result === undefined ? true : result };
   } catch (error) {
     console.log(error);
