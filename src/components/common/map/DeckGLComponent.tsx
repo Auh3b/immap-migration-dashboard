@@ -36,7 +36,7 @@ export default function DeckGLComponent({ layers }: { layers: any[] }) {
     handleTooltip,
     handleViewStateChange,
   } = useMapHooks();
-  useFeatureFocus();
+  // useFeatureFocus();
   return (
     // @ts-ignore
     <DeckGL
