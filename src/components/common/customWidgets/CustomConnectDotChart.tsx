@@ -1,8 +1,9 @@
 import { useTheme } from '@material-ui/core';
-import { ascending, format, interpolateRdYlBu, scaleSequential } from 'd3';
+import { ascending } from 'd3';
 import { useMemo } from 'react';
 import ReactEchart from 'components/common/customCharts/ReactEcharts';
 import { UNICEF_COLORS } from 'theme';
+import { SERVICES_KEY } from 'components/indicators/premise/utils/services';
 
 const STAT_CATEGORY_COLORS = new Map([
   ['Capacidad diaria', '#D053AC'],
@@ -198,7 +199,7 @@ export default function CustomConnectDotChart({ data: _data, groupName }: any) {
             </span>
             <span style='display: flex; flex-direction: column;'>
               <span>Servicio:</span>
-              <span>${service}</span>
+              <span>${SERVICES_KEY.get(service)}</span>
             </span>
             <span style='display: flex; align-items: center; justify-content: space-between; gap: 8px;'>
             <span style='display: flex; align-items: center; justify-content: space-between; gap: 8px;'>

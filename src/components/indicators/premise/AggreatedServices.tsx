@@ -46,7 +46,7 @@ const column: string = 'serv_tipo1';
 const columnAlt: string = 'serv_tipo';
 
 const COLUNM_MAP = new Map([
-  [0, columnAlt],
+  [0, column],
   [3, Object.values(otherColumns)[1]],
 ]);
 
@@ -63,7 +63,7 @@ const method: MethodFunc = (input, column, params) => {
       const serviceColumns = SERVICE_STAT_COLUMNS.get(service);
       if (serviceColumns) {
         let newEntry: any[] = [
-          SERVICES_KEY.get(service) ?? 'Otro',
+          service ?? 'Otro',
           null,
           serviceEntry[otherColumns.region],
           serviceEntry[otherColumns.organisation],
@@ -80,13 +80,14 @@ const method: MethodFunc = (input, column, params) => {
             serviceEntry[serviceColumns[i]] || 0,
           ];
         }
-        const id = `${newEntry[3]}-${newEntry[0]}+${newEntry[2]} - ${newEntry
+        const id = `${newEntry[3]}-${ SERVICES_KEY.get(newEntry[0]) ?? 'Otro'}+${newEntry[2]} - ${newEntry
           .at(-1)
           .join('-')}`;
         output = [...output, [...newEntry, ...columnValues, id]];
       }
     }
   }
+  console.log(output)
   return output;
 };
 
@@ -126,7 +127,7 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
   const { width, height } = useSelector(
     (state: RootState) => state.carto.viewState,
   );
-  const serviceSelection = Array.from(SERVICES_KEY.values());
+  const serviceSelection = Array.from(SERVICES_KEY.keys());
   const classes = useStyles();
   const { data: _data, isLoading } = useWidgetFetch({
     id,
@@ -137,10 +138,11 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
   });
 
   const data = useMemo(() => {
-    // throw new Error('something')
     const filteredData = filterValues(_data, filters);
     return filteredData;
   }, [_data, filters]);
+
+  console.log(data)
 
   const locationSelection = useMemo(() => {
     if (_data.length === 0) {
@@ -246,6 +248,7 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
               column={0}
               data={serviceSelection}
               filters={filters}
+              labelFormatter={(value)=> SERVICES_KEY.get(value)}
               addFilter={setFilters}
               callback={handleServiceChange}
               callbackProps={{ owner: id }}
@@ -311,6 +314,7 @@ function Selector({
   id,
   column,
   name,
+  labelFormatter,
   type = _FilterTypes.IN,
   data,
   filters,
@@ -325,6 +329,7 @@ function Selector({
   data: any[];
   filters: Record<string, filterItem>;
   addFilter: any;
+  labelFormatter?: (value: any)=> unknown
   callback?: Function;
   callbackProps?: Record<string, unknown>;
 }) {
@@ -372,7 +377,7 @@ function Selector({
           {data &&
             data.map((d: string, index: number) => (
               <MenuItem value={d} key={index}>
-                <Typography variant='overline'>{d}</Typography>
+                <Typography variant='overline'>{labelFormatter ? labelFormatter(d) : d}</Typography>
               </MenuItem>
             ))}
         </Select>
