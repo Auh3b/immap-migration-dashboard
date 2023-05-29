@@ -82,10 +82,6 @@ export default function CustomConnectDotChart({ data: _data, groupName }: any) {
             stroke,
             lineWidth: 10,
           });
-          // const font = api.font({
-          //   fontSize: 14,
-          //   fontFamily: 'Barlow',
-          // });
           if (params?.dataIndex !== params?.dataInsideLength) {
             return {
               type: 'group',
@@ -100,16 +96,6 @@ export default function CustomConnectDotChart({ data: _data, groupName }: any) {
                   },
                   style: lineStyle,
                 },
-                // {
-                //   type: 'text',
-                //   x: x + x * 0.025,
-                //   y: y,
-                //   style: {
-                //     text: format('.0%')(difference),
-                //     textVerticalAlign: 'middle',
-                //     font,
-                //   },
-                // },
               ],
             };
           }
@@ -126,7 +112,7 @@ export default function CustomConnectDotChart({ data: _data, groupName }: any) {
         text: groupName,
       },
       grid: {
-        left: '0%',
+        left: '5%',
         right: '10%',
         bottom: '3%',
         containLabel: true,
@@ -149,6 +135,9 @@ export default function CustomConnectDotChart({ data: _data, groupName }: any) {
           width: 200,
           overflow: 'break',
         },
+        axisTick:{
+          alignWithLabel: true,
+        }
       },
       xAxis: {
         type: 'value',
@@ -201,22 +190,28 @@ export default function CustomConnectDotChart({ data: _data, groupName }: any) {
           const { color: color1 } = params[0];
           const { color: color2 } = params[1];
           return `<span
-            style='min-width: 35px; display: flex; flex-direction: column; gap: 4px;'
+            style='min-width: 35px; display: flex; flex-direction: column; gap: 8px;'
             >
             <span style='display: flex; flex-direction: column;'>
-              <span>Organización</span>
+              <span>Organización:</span>
               <span>${org}</span>
             </span>
             <span style='display: flex; flex-direction: column;'>
-              <span>Servicio</span>
+              <span>Servicio:</span>
               <span>${service}</span>
             </span>
-            <span style='display: flex; align-items: center; justify-content: space-between;'>
+            <span style='display: flex; align-items: center; justify-content: space-between; gap: 8px;'>
+            <span style='display: flex; align-items: center; justify-content: space-between; gap: 8px;'>
               <span style='width: 10px; height: 10px; border-radius: 100%; background-color: ${color1};'></span>
+                <span>Capacidad diaria</span>
+              </span>
               <span>${capacity}</span>
             </span>
-            <span style='display: flex; align-items: center; justify-content: space-between;'>
-              <span style='width: 10px; height: 10px; border-radius: 100%; background-color: ${color2};'></span>
+            <span style='display: flex; align-items: center; justify-content: space-between; gap: 8px;'>
+              <span style='display: flex; align-items: center; justify-content: space-between; gap: 8px;'>
+                <span style='width: 10px; height: 10px; border-radius: 100%; background-color: ${color2};'></span>
+                <span >Personas atendidas ayer</span>
+              </span>
               <span>${yesterdayCount}</span>
             </span>
           </span>`;
