@@ -37,6 +37,7 @@ function concatenatedValues(data: any[], column: string): any[] {
     keysColumn: column,
     operation: AggregationTypes.COUNT,
   });
+  //@ts-ignore
   return groupData.sort((a,b)=>descending(a.value, b.value));
 }
 
