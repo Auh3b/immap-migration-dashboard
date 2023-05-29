@@ -2,6 +2,11 @@ import deepmerge from 'deepmerge';
 import { createTheme, Theme } from '@material-ui/core';
 import { cartoThemeOptions } from '@carto/react-ui';
 import { Palette, PaletteColor } from '@material-ui/core/styles/createPalette';
+import { amber, blue, blueGrey, green, grey, indigo, orange, purple, red, teal } from '@material-ui/core/colors';
+import { yellow } from '@material-ui/core/colors';
+import { deepOrange } from '@material-ui/core/colors';
+import { deepPurple } from '@material-ui/core/colors';
+import randomiseArray from 'utils/randomiseArray';
 
 export interface CustomTheme extends Theme {
   palette: CustomPalette;
@@ -10,6 +15,32 @@ export interface CustomTheme extends Theme {
 interface CustomPalette extends Palette {
   appBar: PaletteColor;
 }
+
+export const EXTENDED_PALETTE: string[] = [
+  red[400],
+  red[600],
+  blue[400],
+  blue[600],
+  deepPurple[400],
+  deepPurple[600],
+  deepOrange[400],
+  deepOrange[600],
+  yellow[400],
+  yellow[600],
+  teal[400],
+  teal[600],
+  blueGrey[400],
+  blueGrey[600],
+  amber[400],
+  amber[600],
+  indigo[400],
+  indigo[600],
+  grey[400],
+  grey[600],
+]
+
+export const EXTENDED_PALETTE_RAND = randomiseArray(EXTENDED_PALETTE)
+
 
 export const UNICEF_COLORS: string[] = [
   '#1CABE2',
