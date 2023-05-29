@@ -1,4 +1,5 @@
 import { AggregationTypes, groupValuesByColumn } from '@carto/react-core';
+import { descending } from 'd3';
 
 interface getCategoriesProps {
   data: any[];
@@ -36,7 +37,7 @@ function concatenatedValues(data: any[], column: string): any[] {
     keysColumn: column,
     operation: AggregationTypes.COUNT,
   });
-  return groupData;
+  return groupData.sort((a,b)=>descending(a.value, b.value));
 }
 
 export default concatenatedValues;
