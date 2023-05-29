@@ -29,30 +29,30 @@ const methodMap = new Map<string, Function>([
   [METHOD_NAMES.STACKED_GROUP_CATEGORIES_ALT_2, stackedGroupCategoriesAlt2],
 ]);
 
-let currentData: Record<string, any[]>
+let currentData: Record<string, any[]>;
 
 function executeMethod({ methodName, params }: any) {
   try {
     let result: any[] = [];
     let method = methodMap.get(methodName);
-    
+
     if (!method) {
       throw new Error(`Invalid web worker name: ${methodName}`);
     }
-    
-    if(methodName === METHOD_NAMES.SET_DATA  ){
-      result = method({params})
-      return { result: result === undefined ? true : result }; 
-    }
-    
-    const input = getData({params})
 
-    if(input.length){
-      result = method({input, params});
+    if (methodName === METHOD_NAMES.SET_DATA) {
+      result = method({ params });
       return { result: result === undefined ? true : result };
     }
 
-    return {result: false}
+    const input = getData({ params });
+
+    if (input.length) {
+      result = method({ input, params });
+      return { result: result === undefined ? true : result };
+    }
+
+    return { result: false };
   } catch (error) {
     console.log(error);
     return { error: String(error) };
@@ -61,21 +61,20 @@ function executeMethod({ methodName, params }: any) {
 
 expose({ executeMethod });
 
-
-function setData({params}: any){
-  if(params?.data){
-    currentData = params?.data
-    return true
+function setData({ params }: any) {
+  if (params?.data) {
+    currentData = params?.data;
+    return true;
   }
-  return false
+  return false;
 }
 
-function getData({params}: any){
-  if(!currentData){
-    return []
+function getData({ params }: any) {
+  if (!currentData) {
+    return [];
   }
-  if(params?.dataSource){
-    return []
+  if (params?.dataSource) {
+    return [];
   }
-  return  currentData[params?.dataSource] || []
+  return currentData[params?.dataSource] || [];
 }
