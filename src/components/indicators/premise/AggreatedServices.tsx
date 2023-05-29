@@ -1,3 +1,4 @@
+import NoWidgetData from './../../common/customWidgets/NoWidgetData';
 import ClearFiltersButton from 'components/common/ClearFiltersButton';
 import {
   FormControl,
@@ -99,10 +100,6 @@ const useStyles = makeStyles((theme) => ({
   },
   selectors: {
     position: 'relative',
-  },
-  error: {
-    marginTop: theme.spacing(8),
-    padding: theme.spacing(2),
   },
   clearButton: {
     position: 'fixed',
@@ -268,7 +265,7 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
               className={classes.clearButton}
               disabled={Object.keys(filters).length === 0}
               clearCallback={() => {
-                setFilters({})
+                setFilters({});
                 const { latitude, longitude, zoom } = initialState.viewState;
                 handleMapTransitions({
                   start: 500,
@@ -284,7 +281,7 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
             />
           </Grid>
           <AggreatedServicesLegend />
-          {data.length > 0 && !isLoading && regions ? (
+          {data.length && !isLoading && regions ? (
             regions.map((groupName) => {
               return (
                 <CustomConnectDotChart
@@ -295,11 +292,7 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
               );
             })
           ) : (
-            <Grid item className={classes.error}>
-              <Typography>
-                No hay datos disponibles con los filtros seleccionados
-              </Typography>
-            </Grid>
+            <NoWidgetData />
           )}
         </Grid>
       </Grid>

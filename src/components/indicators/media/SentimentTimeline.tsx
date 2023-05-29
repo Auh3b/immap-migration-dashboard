@@ -4,6 +4,7 @@ import ReactEcharts from 'components/common/customCharts/ReactEcharts';
 import { METHOD_NAMES } from 'components/views/mediaViews/utils/methodName';
 import { useMemo } from 'react';
 import useMediaData from './hooks/useMediaData';
+import NoWidgetData from 'components/common/customWidgets/NoWidgetData';
 
 const id = 'sentimentTimeline';
 
@@ -75,6 +76,7 @@ export default function SentimentTimeline() {
         isLoading={isLoading}
       >
         <ReactEcharts option={option} style={{ height: 400 }} />
+        {(!data.length && !isLoading) && <NoWidgetData />}
       </TitleWrapper>
     </Grid>
   );

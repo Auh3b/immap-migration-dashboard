@@ -5,6 +5,7 @@ import { MEDIA_SOURCES_NAMES } from 'components/views/mediaViews/utils/mediaUtil
 import { METHOD_NAMES } from 'components/views/mediaViews/utils/methodName';
 import { useMemo } from 'react';
 import useMediaData from './hooks/useMediaData';
+import NoWidgetData from 'components/common/customWidgets/NoWidgetData';
 
 const id = 'sentimentPercentages';
 
@@ -44,6 +45,9 @@ export default function SentimentPresentages() {
         formatter(value: string) {
           return MEDIA_SOURCES_NAMES.get(value) ?? 'Otro';
         },
+      },
+      axisTick: {
+        show: false,
       },
     }),
     [series],
@@ -114,6 +118,7 @@ export default function SentimentPresentages() {
       >
         <ReactEcharts option={option} style={{ height: 400 }} />
       </TitleWrapper>
+      {(!data.length && !isLoading) && <NoWidgetData />}
     </Grid>
   );
 }

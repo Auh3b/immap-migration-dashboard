@@ -67,6 +67,9 @@ export default function CustomColumnChart({
             return value;
           },
         },
+        axisTick: {
+          show: false,
+        },
       },
       series,
     }),
