@@ -43,7 +43,6 @@ const SERVICE_STAT_COLUMNS_NAME = [
 ];
 
 const column: string = 'serv_tipo1';
-const columnAlt: string = 'serv_tipo';
 
 const COLUNM_MAP = new Map([
   [0, column],
@@ -80,14 +79,14 @@ const method: MethodFunc = (input, column, params) => {
             serviceEntry[serviceColumns[i]] || 0,
           ];
         }
-        const id = `${newEntry[3]}-${ SERVICES_KEY.get(newEntry[0]) ?? 'Otro'}+${newEntry[2]} - ${newEntry
-          .at(-1)
-          .join('-')}`;
+        const id = `${newEntry[3]}-${SERVICES_KEY.get(newEntry[0]) ?? 'Otro'}+${
+          newEntry[2]
+        } - ${newEntry.at(-1).join('-')}`;
         output = [...output, [...newEntry, ...columnValues, id]];
       }
     }
   }
-  console.log(output)
+  console.log(output);
   return output;
 };
 
@@ -123,7 +122,9 @@ const methodParams = {
 
 export default function AggreatedServices({ dataSource }: BasicWidgetType) {
   const dispatch = useDispatch();
-  const [filters, setFilters] = useState<Record<string, filterItem>>({});
+  const [filters, setFilters] = useState<Record<string, filterItem> | null>(
+    null,
+  );
   const { width, height } = useSelector(
     (state: RootState) => state.carto.viewState,
   );
@@ -138,24 +139,9 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
   });
 
   const data = useMemo(() => {
-    const filteredData = filterValues(_data, filters);
+    const filteredData = filterValues(_data, filters ?? {});
     return filteredData;
   }, [_data, filters]);
-
-  console.log(data)
-
-  const locationSelection = useMemo(() => {
-    if (_data.length === 0) {
-      return [];
-    }
-    return Array.from(
-      new Set(
-        _data.map((d) => {
-          return d[2];
-        }),
-      ),
-    );
-  }, [_data]);
 
   const regions = useMemo(
     () => data && Array.from(new Set(data.map((d: any) => d[2]))),
@@ -163,7 +149,7 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
   );
 
   const handleServiceChange = useCallback(
-    ({ id, column, currentSelection, callbackProps }) => {
+    ({ column, currentSelection, callbackProps }) => {
       const { owner } = callbackProps;
       if (currentSelection) {
         dispatch(
@@ -175,7 +161,9 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
             owner,
           }),
         );
-      } else {
+      }
+
+      if (currentSelection === 'all') {
         dispatch(
           removeFilter({
             id: dataSource,
@@ -189,7 +177,7 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
   );
 
   const handleLocationChange = useCallback(
-    ({ id, column, currentSelection, callbackProps }) => {
+    ({ column, currentSelection, callbackProps }) => {
       if (currentSelection && currentSelection !== 'all') {
         const { data, width, height } = callbackProps;
         const padding = 100;
@@ -219,7 +207,7 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
         return;
       }
 
-      if (currentSelection === 'all') {
+      if (filters && currentSelection === 'all') {
         const { latitude, longitude, zoom } = initialState.viewState;
         handleMapTransitions({
           start: 500,
@@ -233,7 +221,7 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
         });
       }
     },
-    [dispatch],
+    [dispatch, filters],
   );
 
   return (
@@ -248,7 +236,7 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
               column={0}
               data={serviceSelection}
               filters={filters}
-              labelFormatter={(value)=> SERVICES_KEY.get(value)}
+              labelFormatter={(value) => SERVICES_KEY.get(value)}
               addFilter={setFilters}
               callback={handleServiceChange}
               callbackProps={{ owner: id }}
@@ -258,7 +246,7 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
               id='locationSelector'
               name='ubicación'
               column={2}
-              data={locationSelection}
+              data={regions}
               filters={filters}
               addFilter={setFilters}
               callback={handleLocationChange}
@@ -266,7 +254,7 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
             />
             <ClearFiltersButton
               className={classes.clearButton}
-              disabled={Object.keys(filters).length === 0}
+              disabled={filters ? !Object.keys(filters).length : true}
               clearCallback={() => {
                 setFilters({});
                 const { latitude, longitude, zoom } = initialState.viewState;
@@ -329,32 +317,46 @@ function Selector({
   data: any[];
   filters: Record<string, filterItem>;
   addFilter: any;
-  labelFormatter?: (value: any)=> unknown
+  labelFormatter?: (value: any) => unknown;
   callback?: Function;
   callbackProps?: Record<string, unknown>;
 }) {
   const classes = useSelectSyles();
 
   const currentSelection = useMemo(() => {
+    if (!filters) {
+      return 'all';
+    }
+
     const filter = filters[id];
     if (filter) {
       return filter.values[0];
     }
 
-    return '';
+    return 'all';
   }, [filters]);
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     const value = event.target.value as string;
 
     addFilter((prev: any) => {
-      if (value) {
+      if (prev) {
+        if (!value) {
+          return { ...prev };
+        }
+        if (value === 'all') {
+          delete prev[id];
+          return { ...prev };
+        }
+        if (value) {
+          const newFilter: any = { id, values: [value], type, column };
+          prev[id] = newFilter;
+          return { ...prev };
+        }
+      } else {
         const newFilter: any = { id, values: [value], type, column };
-        prev[id] = newFilter;
-        return { ...prev };
+        return Object.fromEntries([[id, newFilter]]);
       }
-      delete prev[id];
-      return { ...prev };
     });
   };
 
@@ -377,7 +379,9 @@ function Selector({
           {data &&
             data.map((d: string, index: number) => (
               <MenuItem value={d} key={index}>
-                <Typography variant='overline'>{labelFormatter ? labelFormatter(d) : d}</Typography>
+                <Typography variant='overline'>
+                  {labelFormatter ? labelFormatter(d) : d}
+                </Typography>
               </MenuItem>
             ))}
         </Select>

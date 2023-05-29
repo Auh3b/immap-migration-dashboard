@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { defaultCustomWidgetProps } from './customWidgetsType';
 import useWidgetFilterValues from './hooks/useWidgetFilterValues';
 import { Link, makeStyles } from '@material-ui/core';
+import { EXTENDED_PALETTE_RAND, UNICEF_COLORS } from 'theme';
 
 const CustomWidgetWrapper = lazy(
   () => import('components/common/customWidgets/CustomWidgetWrapper'),
@@ -96,6 +97,7 @@ export default function CustomPieWidget({
         )}
         {data && (
           <PieWidgetUI
+            colors={EXTENDED_PALETTE_RAND}
             onSelectedCategoriesChange={handleSelectedCategoriesChange}
             selectedCategories={selectedCategories}
             labels={labels}

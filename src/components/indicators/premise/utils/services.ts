@@ -14,7 +14,6 @@
 // Restablecimiento de contacto familiar 	16
 // Gestión de casos 	17
 
-
 export const SERVICES_KEY = new Map([
   [1, 'Asesoría legal'],
   [2, 'Alimentación y nutrición'],
@@ -26,6 +25,7 @@ export const SERVICES_KEY = new Map([
   [9, 'Alojamiento temporal'],
   [10, 'Información sobre la ruta'],
   [11, 'Apoyo o ayuda psicosocial'],
+  [12, 'Transporte humanitario'],
   [13, 'Otro'],
   [14, 'Servicios de protección'],
   [15, 'Servicios de protección NNA'],
