@@ -64,7 +64,7 @@ export default function TopPhrases() {
           id={id}
         />
         <ContinuousLegend colorScheme={['#fd8d3c', '#800026']} />
-        {(!data.length && !isLoading) && <NoWidgetData />}
+        {!data.length && !isLoading && <NoWidgetData />}
       </TitleWrapper>
     </Grid>
   );

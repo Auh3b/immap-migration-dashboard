@@ -21,7 +21,7 @@ export default function MediaOrigin() {
           data={data}
           labelFormater={(name: string) => regionName.of(name.toUpperCase())}
         />
-        {(!data.length && !isLoading) && <NoWidgetData />}
+        {!data.length && !isLoading && <NoWidgetData />}
       </TitleWrapper>
     </Grid>
   );

@@ -76,7 +76,7 @@ export default function SentimentTimeline() {
         isLoading={isLoading}
       >
         <ReactEcharts option={option} style={{ height: 400 }} />
-        {(!data.length && !isLoading) && <NoWidgetData />}
+        {!data.length && !isLoading && <NoWidgetData />}
       </TitleWrapper>
     </Grid>
   );
