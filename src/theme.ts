@@ -2,7 +2,18 @@ import deepmerge from 'deepmerge';
 import { createTheme, Theme } from '@material-ui/core';
 import { cartoThemeOptions } from '@carto/react-ui';
 import { Palette, PaletteColor } from '@material-ui/core/styles/createPalette';
-import { amber, blue, blueGrey, green, grey, indigo, orange, purple, red, teal } from '@material-ui/core/colors';
+import {
+  amber,
+  blue,
+  blueGrey,
+  green,
+  grey,
+  indigo,
+  orange,
+  purple,
+  red,
+  teal,
+} from '@material-ui/core/colors';
 import { yellow } from '@material-ui/core/colors';
 import { deepOrange } from '@material-ui/core/colors';
 import { deepPurple } from '@material-ui/core/colors';
@@ -37,10 +48,9 @@ export const EXTENDED_PALETTE: string[] = [
   indigo[600],
   grey[400],
   grey[600],
-]
+];
 
-export const EXTENDED_PALETTE_RAND = randomiseArray(EXTENDED_PALETTE)
-
+export const EXTENDED_PALETTE_RAND = randomiseArray(EXTENDED_PALETTE);
 
 export const UNICEF_COLORS: string[] = [
   '#1CABE2',

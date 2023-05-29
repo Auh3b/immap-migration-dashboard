@@ -79,14 +79,14 @@ const method: MethodFunc = (input, column, params) => {
             serviceEntry[serviceColumns[i]] || 0,
           ];
         }
-        const id = `${newEntry[3]}-${ SERVICES_KEY.get(newEntry[0]) ?? 'Otro'}+${newEntry[2]} - ${newEntry
-          .at(-1)
-          .join('-')}`;
+        const id = `${newEntry[3]}-${SERVICES_KEY.get(newEntry[0]) ?? 'Otro'}+${
+          newEntry[2]
+        } - ${newEntry.at(-1).join('-')}`;
         output = [...output, [...newEntry, ...columnValues, id]];
       }
     }
   }
-  console.log(output)
+  console.log(output);
   return output;
 };
 
@@ -122,7 +122,9 @@ const methodParams = {
 
 export default function AggreatedServices({ dataSource }: BasicWidgetType) {
   const dispatch = useDispatch();
-  const [filters, setFilters] = useState<Record<string, filterItem>| null>(null);
+  const [filters, setFilters] = useState<Record<string, filterItem> | null>(
+    null,
+  );
   const { width, height } = useSelector(
     (state: RootState) => state.carto.viewState,
   );
@@ -161,7 +163,7 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
         );
       }
 
-      if ( currentSelection === 'all') {
+      if (currentSelection === 'all') {
         dispatch(
           removeFilter({
             id: dataSource,
@@ -234,7 +236,7 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
               column={0}
               data={serviceSelection}
               filters={filters}
-              labelFormatter={(value)=> SERVICES_KEY.get(value)}
+              labelFormatter={(value) => SERVICES_KEY.get(value)}
               addFilter={setFilters}
               callback={handleServiceChange}
               callbackProps={{ owner: id }}
@@ -315,15 +317,15 @@ function Selector({
   data: any[];
   filters: Record<string, filterItem>;
   addFilter: any;
-  labelFormatter?: (value: any)=> unknown
+  labelFormatter?: (value: any) => unknown;
   callback?: Function;
   callbackProps?: Record<string, unknown>;
 }) {
   const classes = useSelectSyles();
 
   const currentSelection = useMemo(() => {
-    if(!filters){
-      return 'all'
+    if (!filters) {
+      return 'all';
     }
 
     const filter = filters[id];
@@ -331,19 +333,18 @@ function Selector({
       return filter.values[0];
     }
 
-    return 'all'
-
+    return 'all';
   }, [filters]);
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     const value = event.target.value as string;
 
     addFilter((prev: any) => {
-      if(prev){
-        if(!value){
-          return {...prev}
+      if (prev) {
+        if (!value) {
+          return { ...prev };
         }
-        if(value === 'all'){
+        if (value === 'all') {
           delete prev[id];
           return { ...prev };
         }
@@ -352,9 +353,9 @@ function Selector({
           prev[id] = newFilter;
           return { ...prev };
         }
-      }else{
+      } else {
         const newFilter: any = { id, values: [value], type, column };
-        return  Object.fromEntries([[id, newFilter]])
+        return Object.fromEntries([[id, newFilter]]);
       }
     });
   };
@@ -378,7 +379,9 @@ function Selector({
           {data &&
             data.map((d: string, index: number) => (
               <MenuItem value={d} key={index}>
-                <Typography variant='overline'>{labelFormatter ? labelFormatter(d) : d}</Typography>
+                <Typography variant='overline'>
+                  {labelFormatter ? labelFormatter(d) : d}
+                </Typography>
               </MenuItem>
             ))}
         </Select>

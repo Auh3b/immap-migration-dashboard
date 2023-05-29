@@ -13,7 +13,7 @@ export default function IntroPieChart({
   data: { name: string; value: number }[];
   filterable?: Boolean;
   styles?: CSSProperties;
-  labelFormatter?: (value:any) => unknown
+  labelFormatter?: (value: any) => unknown;
   renderer?: 'svg' | 'canvas';
   selectedCategories?: string[];
   onSelectedCategoriesChange?: Function;
@@ -69,9 +69,12 @@ export default function IntroPieChart({
         labelLine: {
           show: false,
         },
-        data: data.map((d)=>{
-          const clonedData = {...d, name: labelFormatter ?  labelFormatter(+d.name) : d.name }
-          return clonedData 
+        data: data.map((d) => {
+          const clonedData = {
+            ...d,
+            name: labelFormatter ? labelFormatter(+d.name) : d.name,
+          };
+          return clonedData;
         }),
       },
     ],
@@ -95,14 +98,17 @@ export default function IntroPieChart({
         backgroundColor: theme.palette.other.tooltip,
       },
       legend: {
-        type: "scroll",
-        width: "90%",
-        bottom: "3%",
-        left: "4%",
-        icon: "circle",
-        pageIcons:{
-          horizontal: ['M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z','M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z']
-        }
+        type: 'scroll',
+        width: '90%',
+        bottom: '3%',
+        left: '4%',
+        icon: 'circle',
+        pageIcons: {
+          horizontal: [
+            'M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l192 192c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L77.3 256 246.6 86.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-192 192z',
+            'M310.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L242.7 256 73.4 86.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l192 192z',
+          ],
+        },
       },
       series: seriesOptions,
     }),

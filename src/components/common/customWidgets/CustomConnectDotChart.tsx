@@ -136,9 +136,9 @@ export default function CustomConnectDotChart({ data: _data, groupName }: any) {
           width: 200,
           overflow: 'break',
         },
-        axisTick:{
+        axisTick: {
           alignWithLabel: true,
-        }
+        },
       },
       xAxis: {
         type: 'value',

@@ -1,8 +1,4 @@
-import {
-  Grid,
-  Paper,
-  makeStyles,
-} from '@material-ui/core';
+import { Grid, Paper, makeStyles } from '@material-ui/core';
 import useMediaData from 'components/indicators/media/hooks/useMediaData';
 import { METHOD_NAMES } from './utils/methodName';
 import TopLoading from 'components/common/TopLoading';

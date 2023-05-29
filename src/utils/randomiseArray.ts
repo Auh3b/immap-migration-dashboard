@@ -1,9 +1,10 @@
 export default function randomiseArray(array: any[]) {
-  var copy = [], n = array.length, i;
+  var copy = [],
+    n = array.length,
+    i;
 
   // While there remain elements to shuffle…
   while (n) {
-
     // Pick a remaining element…
     i = Math.floor(Math.random() * array.length);
 
