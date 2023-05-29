@@ -3,6 +3,7 @@ import TitleWrapper from 'components/common/TitleWrapper';
 import CustomGriddedLineChart from 'components/common/customCharts/CustomGriddedLineChart';
 import { METHOD_NAMES } from 'components/views/mediaViews/utils/methodName';
 import useMediaData from './hooks/useMediaData';
+import NoWidgetData from 'components/common/customWidgets/NoWidgetData';
 
 const id = 'mediaEngagement';
 
@@ -16,6 +17,7 @@ export default function MediaEngagement() {
     <Grid item xs={12}>
       <TitleWrapper title='Serie de compromiso histórico' isLoading={isLoading}>
         <CustomGriddedLineChart data={data} />
+        {(!data.length && !isLoading) && <NoWidgetData />}
       </TitleWrapper>
     </Grid>
   );

@@ -8,6 +8,7 @@ import ContinuousLegend from 'components/common/customCharts/ContinuousLegend';
 import { useCallback } from 'react';
 import { addMediaFilter, removeMediaFilter } from 'store/mediaSlice';
 import { FilterTypes } from 'utils/filterFunctions';
+import NoWidgetData from 'components/common/customWidgets/NoWidgetData';
 
 const id = 'top_phrases';
 
@@ -63,6 +64,7 @@ export default function TopPhrases() {
           id={id}
         />
         <ContinuousLegend colorScheme={['#fd8d3c', '#800026']} />
+        {(!data.length && !isLoading) && <NoWidgetData />}
       </TitleWrapper>
     </Grid>
   );
