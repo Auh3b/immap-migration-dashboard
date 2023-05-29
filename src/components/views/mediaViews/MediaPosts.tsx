@@ -61,7 +61,7 @@ export default function MediaPosts({ isLoading }: { isLoading: Boolean }) {
     },
     {
       field: 'url',
-      headerName: 'URL/ID',
+      headerName: 'Preview/Link',
       sort: true,
       width: 120,
     },
