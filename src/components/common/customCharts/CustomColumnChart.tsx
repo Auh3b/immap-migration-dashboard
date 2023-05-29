@@ -3,6 +3,7 @@ import ReactEcharts from './ReactEcharts';
 import { format } from 'd3';
 import { useTheme } from '@material-ui/core';
 import { numberFormatter } from 'utils/formatter';
+import { UNICEF_COLORS } from 'theme';
 
 export default function CustomColumnChart({
   data,
@@ -23,6 +24,7 @@ export default function CustomColumnChart({
   );
   const option = useMemo(
     () => ({
+      color: UNICEF_COLORS,
       tooltip: {
         padding: [theme.spacing(0.5), theme.spacing(1)],
         borderWidth: 0,
