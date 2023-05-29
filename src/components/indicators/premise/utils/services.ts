@@ -26,6 +26,7 @@ export const SERVICES_KEY = new Map([
   [9, 'Alojamiento temporal'],
   [10, 'Información sobre la ruta'],
   [11, 'Apoyo o ayuda psicosocial'],
+  [12, 'Transporte humanitario'],
   [13, 'Otro'],
   [14, 'Servicios de protección'],
   [15, 'Servicios de protección NNA'],
