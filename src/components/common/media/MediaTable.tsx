@@ -19,6 +19,7 @@ import {
 import LinkIcon from '@material-ui/icons/Link';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import SocialPost from './SocialPost';
+import { format } from 'd3';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -70,7 +71,7 @@ export default function MediaTable({
                 </TableRow>
               </TableHead>
               <TableBody className={classes.tableBody}>
-                {rows.map(({ id, date, source, value, url }, i) => (
+                {rows.map(({ id, date, source, value, url }) => (
                   <TableRow key={id}>
                     <TableCell className={classes.tableCell}>
                       <Typography noWrap>{date}</Typography>
@@ -79,7 +80,7 @@ export default function MediaTable({
                       <Typography noWrap>{source}</Typography>
                     </TableCell>
                     <TableCell className={classes.tableCell}>
-                      <Typography noWrap>{value}</Typography>
+                      <Typography noWrap>{format('.2s')(value)}</Typography>
                     </TableCell>
                     <TableCell className={classes.tableCell}>
                       <ViewActionButtons url={url} source={source} />
