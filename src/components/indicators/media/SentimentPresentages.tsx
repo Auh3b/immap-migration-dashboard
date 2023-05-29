@@ -118,7 +118,7 @@ export default function SentimentPresentages() {
       >
         <ReactEcharts option={option} style={{ height: 400 }} />
       </TitleWrapper>
-      {(!data.length && !isLoading) && <NoWidgetData />}
+      {!data.length && !isLoading && <NoWidgetData />}
     </Grid>
   );
 }

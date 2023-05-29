@@ -1,11 +1,13 @@
-import { Grid, Typography, makeStyles } from '@material-ui/core';
+import { Grid, makeStyles } from '@material-ui/core';
 import { MEDIA_SOURCES } from 'components/views/mediaViews/utils/mediaUtils';
 import YoutubePost from './YoutubePost';
 import TwitterPost from './TwitterPost';
 import TiktokPost from './TiktokPost';
 
 const usePostStyles = makeStyles((theme) => ({
-  root: {},
+  root: {
+    zIndex: theme.zIndex.appBar + 1,
+  },
   title: {
     marginBottom: theme.spacing(2),
     ...theme.typography.subtitle1,
@@ -38,9 +40,9 @@ export default function SocialPost({
 
   return (
     <Grid item className={classes.root}>
-      <Typography variant='subtitle1' className={classes.title}>
+      {/* <Typography variant='subtitle1' className={classes.title}>
         {'TOP ' + source.toUpperCase() + ' POST'}
-      </Typography>
+      </Typography> */}
       {setPost(source, url)}
     </Grid>
   );
