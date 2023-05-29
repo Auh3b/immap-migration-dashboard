@@ -23,12 +23,11 @@ const DATA_DIMENSIONS = [
 ];
 
 function getDifference(primary: number = 0, secondary: number = 0) {
-  return primary - secondary
+  return primary - secondary;
 }
 
 function getDifferenceColor(value: number) {
-  
-  return  value > 0 ? UNICEF_COLORS[0] : UNICEF_COLORS[5];
+  return value > 0 ? UNICEF_COLORS[0] : UNICEF_COLORS[5];
 }
 
 export default function CustomConnectDotChart({ data: _data, groupName }: any) {
@@ -185,9 +184,22 @@ export default function CustomConnectDotChart({ data: _data, groupName }: any) {
         backgroundColor: theme.palette.other.tooltip,
         // @ts-ignore
         formatter(params) {
-          const {data: [service, nothing, location, org,personas,orgServ, geom, capacity, yesterdayCount, id]} = params[0]
-          const {color: color1} = params[0]
-          const {color: color2} = params[1]
+          const {
+            data: [
+              service,
+              nothing,
+              location,
+              org,
+              personas,
+              orgServ,
+              geom,
+              capacity,
+              yesterdayCount,
+              id,
+            ],
+          } = params[0];
+          const { color: color1 } = params[0];
+          const { color: color2 } = params[1];
           return `<span
             style='min-width: 35px; display: flex; flex-direction: column; gap: 4px;'
             >
