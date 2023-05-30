@@ -23,6 +23,9 @@ const props = {
   method,
   filterType,
   labels,
+  filterParams:{
+    useRegExp: true
+  }
 };
 
 export default function ServicesProvided({ dataSource }: BasicWidgetType) {

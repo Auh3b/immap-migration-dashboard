@@ -1,31 +1,18 @@
-import { addFilter, clearFilters, removeFilter } from '@carto/react-redux';
+import { addFilter, removeFilter } from '@carto/react-redux';
 import { PieWidgetUI } from '@carto/react-ui';
 import useWidgetFetch from './hooks/useWidgetFetch';
 import { lazy, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { defaultCustomWidgetProps } from './customWidgetsType';
 import useWidgetFilterValues from './hooks/useWidgetFilterValues';
-import { Link, makeStyles } from '@material-ui/core';
-import { EXTENDED_PALETTE_RAND, UNICEF_COLORS } from 'theme';
+import { EXTENDED_PALETTE_RAND } from 'theme';
+import { _FilterTypes } from '@carto/react-core';
 
 const CustomWidgetWrapper = lazy(
   () => import('components/common/customWidgets/CustomWidgetWrapper'),
 );
 
 const EMPTY_ARRAY: [] = [];
-
-const useStyles = makeStyles(() => ({
-  main: {
-    position: 'relative',
-  },
-  clearBtn: {
-    position: 'absolute',
-    cursor: 'pointer',
-    top: 0,
-    right: 0,
-    zIndex: 100,
-  },
-}));
 
 export default function CustomPieWidget({
   id,
@@ -34,9 +21,9 @@ export default function CustomPieWidget({
   dataSource,
   column,
   filterType,
+  filterParams = {},
   labels = {},
 }: defaultCustomWidgetProps) {
-  const classes = useStyles();
   const dispatch = useDispatch();
   const selectedCategories =
     useWidgetFilterValues({
@@ -49,12 +36,16 @@ export default function CustomPieWidget({
   const handleSelectedCategoriesChange = useCallback(
     (categories) => {
       if (categories && categories.length) {
+        const withRegExp = filterType === _FilterTypes.STRING_SEARCH  ? categories.map((d:any) => `^(.*,|)${d}(,.*|)$`) : categories
         dispatch(
           addFilter({
             id: dataSource,
             column,
             type: filterType,
-            values: categories,
+            values: withRegExp,
+            params:{
+              ...filterParams
+            },
             owner: id,
           }),
         );
@@ -71,12 +62,7 @@ export default function CustomPieWidget({
     [column, dataSource, filterType, id, dispatch],
   );
 
-  const handleClearClick = (e: any) => {
-    e.preventDefault();
-    dispatch(clearFilters(dataSource));
-  };
-
-  const { data, isLoading, error } = useWidgetFetch({
+  const { data = [], isLoading, error } = useWidgetFetch({
     id,
     dataSource,
     method,
@@ -85,26 +71,13 @@ export default function CustomPieWidget({
 
   return (
     <CustomWidgetWrapper title={title} isLoading={isLoading} onError={error}>
-      <div className={classes.main}>
-        {selectedCategories && selectedCategories.length > 0 && (
-          <Link
-            className={classes.clearBtn}
-            href='#'
-            onClick={handleClearClick}
-          >
-            Clear
-          </Link>
-        )}
-        {data && (
-          <PieWidgetUI
-            colors={EXTENDED_PALETTE_RAND}
-            onSelectedCategoriesChange={handleSelectedCategoriesChange}
-            selectedCategories={selectedCategories}
-            labels={labels}
-            data={data}
-          />
-        )}
-      </div>
+      <PieWidgetUI
+        colors={EXTENDED_PALETTE_RAND}
+        onSelectedCategoriesChange={handleSelectedCategoriesChange}
+        selectedCategories={selectedCategories}
+        labels={labels}
+        data={data}
+      />
     </CustomWidgetWrapper>
   );
 }

@@ -14,20 +14,12 @@ const column = 'm30__cua';
 const filterType = _FilterTypes.CLOSED_OPEN;
 const method = histogramValues;
 
-// const xAxisFormatter = (value: number) => {
-//   if (value % 1 === 0 || value === 0) {
-//     return value;
-//   }
-//   return '';
-// };
-
 const props = {
   id,
   title,
   column,
   filterType,
   method,
-  // xAxisFormatter,
 };
 
 export default function TransitStopLength({ dataSource }: BasicWidgetType) {

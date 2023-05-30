@@ -25,6 +25,12 @@ export default function useWidgetFilterValues({
     if (!filter || filter.owner !== id) {
       return null;
     }
-    return filter.values;
+    return filter.values.map((d:string) =>  {
+      if(type === _FilterTypes.STRING_SEARCH ){
+        const value = d.split(')')[1].split('(')[0]
+        return value
+      }
+      return d
+    });
   }, [filters, column, type, id, groupId]);
 }
