@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { defaultCustomWidgetProps } from './customWidgetsType';
 import useWidgetFilterValues from './hooks/useWidgetFilterValues';
 import CustomWidgetWrapper from './CustomWidgetWrapper';
+import { _FilterTypes } from '@carto/react-core';
 
 const EMPTY_ARRAY: [] = [];
 
@@ -16,6 +17,7 @@ export default function CustomCategoryWidget({
   dataSource,
   column,
   filterType,
+  filterParams = {},
   labels = {},
   order = 'ranking',
 }: defaultCustomWidgetProps) {
@@ -31,12 +33,16 @@ export default function CustomCategoryWidget({
   const handleSelectedCategoriesChange = useCallback(
     (categories) => {
       if (categories && categories.length) {
+        const withRegExp = filterType === _FilterTypes.STRING_SEARCH  ? categories.map((d:any) => `^(.*,|)${d}(,.*|)$`) : categories
         dispatch(
           addFilter({
             id: dataSource,
             column,
             type: filterType,
-            values: categories,
+            values: withRegExp,
+            params: {
+              ...filterParams
+            },
             owner: id,
           }),
         );
