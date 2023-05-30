@@ -127,7 +127,6 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
   const { width, height } = useSelector(
     (state: RootState) => state.carto.viewState,
   );
-  const serviceSelection = Array.from(SERVICES_KEY.keys());
   const classes = useStyles();
   const { data: _data, isLoading } = useWidgetFetch({
     id,
@@ -144,6 +143,10 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
 
   const regions = useMemo(
     () => data && Array.from(new Set(data.map((d: any) => d[2]))),
+    [data],
+  );
+  const serviceSelection = useMemo(
+    () => data && Array.from(new Set(data.map((d: any) => d[0]))),
     [data],
   );
 
