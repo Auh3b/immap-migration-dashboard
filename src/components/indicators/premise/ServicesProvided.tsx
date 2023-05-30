@@ -9,7 +9,7 @@ import CustomPieWidget from 'components/common/customWidgets/CustomPieWidget';
 
 const NOTE =
   'El punto de servicio / ayuda humanitaria cuenta con estos servicios para las personas migrantes';
-const id = 'servicesProvided';
+const id = 'aggregatedService';
 const title = 'Tipos de servicios prestados en el punto';
 const column = 'serv_tipo1';
 const filterType = _FilterTypes.STRING_SEARCH;
@@ -21,6 +21,7 @@ const props = {
   title,
   column,
   method,
+  filterable: false,
   filterType,
   labels,
   filterParams:{

@@ -9,6 +9,7 @@ export interface defaultCustomWidgetProps {
   dataSource?: string;
   column: string;
   filterType: _FilterTypes;
+  filterable?:Boolean;
   filterParams?: Record<string, unknown>;
   method?: MethodFunc;
   methodParams?: Record<string, unknown>;

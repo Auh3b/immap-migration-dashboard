@@ -20,6 +20,8 @@ export default function CustomPieWidget({
   method,
   dataSource,
   column,
+  filterable = true,
+  methodParams,
   filterType,
   filterParams = {},
   labels = {},
@@ -66,13 +68,17 @@ export default function CustomPieWidget({
     id,
     dataSource,
     method,
+    methodParams,
     column,
   });
+
+  console.log(id, data)
 
   return (
     <CustomWidgetWrapper title={title} isLoading={isLoading} onError={error}>
       <PieWidgetUI
         colors={EXTENDED_PALETTE_RAND}
+        filterable={filterable}
         onSelectedCategoriesChange={handleSelectedCategoriesChange}
         selectedCategories={selectedCategories}
         labels={labels}

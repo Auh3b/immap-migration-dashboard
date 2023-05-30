@@ -16,7 +16,7 @@ const source = 'premiseData';
 const id = 'sickPremise';
 
 export default function IntroSickPremise({
-  data: _data,
+  data: _data=[],
   isLoading,
 }: {
   data: any[];
@@ -32,9 +32,8 @@ export default function IntroSickPremise({
     if (_data) {
       //@ts-ignore
       output = [
-        ...concatenatedValues(_data, column).sort((a, b) =>
-          descending(a.value, b.value),
-        ),
+        //@ts-ignore
+        ...concatenatedValues(_data, column),
       ];
 
       if (selectedCategories.length > 0) {
@@ -56,6 +55,8 @@ export default function IntroSickPremise({
     owner: id,
     type: _FilterTypes.STRING_SEARCH,
   });
+
+  console.log(data)
 
   return (
     <TitleWrapper
