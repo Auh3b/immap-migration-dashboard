@@ -30,7 +30,7 @@ const concatenatedValues:MethodFunc = (input, column, params) => {
   
   let splitValue:string = ','
   if(params){
-    splitValue = params?.splitValue
+    splitValue = params?.splitValue ? params?.splitValue : splitValue
   }
   //@ts-ignore
   const values = input.map((f) => f[column]).filter((i) => i !== 'null');
