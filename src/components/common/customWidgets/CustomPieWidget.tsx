@@ -72,8 +72,6 @@ export default function CustomPieWidget({
     column,
   });
 
-  console.log(id, data)
-
   return (
     <CustomWidgetWrapper title={title} isLoading={isLoading} onError={error}>
       <PieWidgetUI
