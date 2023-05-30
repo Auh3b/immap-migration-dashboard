@@ -86,7 +86,6 @@ const method: MethodFunc = (input, column, params) => {
       }
     }
   }
-  console.log(output);
   return output;
 };
 
@@ -157,7 +156,10 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
             id: dataSource,
             column: COLUNM_MAP.get(column),
             type: _FilterTypes.STRING_SEARCH,
-            values: [currentSelection],
+            params:{
+              useRegExp: true,
+            },
+            values: ['^(.*,|)'+currentSelection+'(,.*|)$'],
             owner,
           }),
         );

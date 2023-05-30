@@ -1,19 +1,3 @@
-// Asesoría legal	1
-// Alimentación y nutrición	2
-// Salud, primeros auxilios o atención médica	3
-// Agua potable	4
-// Saneamiento	5
-// Higiene	6
-// Educación	8
-// Alojamiento temporal	9
-// Información sobre la ruta	10
-// Apoyo o ayuda psicosocial	11
-// Otro	13
-// Servicios de protección 	14
-// Servicios de protección NNA	15
-// Restablecimiento de contacto familiar 	16
-// Gestión de casos 	17
-
 export const SERVICES_KEY = new Map([
   [1, 'Asesoría legal'],
   [2, 'Alimentación y nutrición'],
