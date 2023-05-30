@@ -1,5 +1,6 @@
 import { AggregationTypes, groupValuesByColumn } from '@carto/react-core';
 import { descending } from 'd3';
+import MethodFunc from './methodType';
 
 interface getCategoriesProps {
   data: any[];
@@ -22,11 +23,19 @@ function getCategories({
   });
 }
 
-function concatenatedValues(data: any[], column: string): any[] {
+const concatenatedValues:MethodFunc = (input, column, params) => {
+  if(!input.length){
+    return []
+  }
+  
+  let splitValue:string = ','
+  if(params){
+    splitValue = params?.splitValue
+  }
   //@ts-ignore
-  const values = data.map((f) => f[column]).filter((i) => i !== 'null');
-  const valueString: string = values.join(',');
-  const valuesArray: any[] = valueString.split(',').map((i) => i.trim());
+  const values = input.map((f) => f[column]).filter((i) => i !== 'null');
+  const valueString: string = values.join(splitValue);
+  const valuesArray: any[] = valueString.split(splitValue).map((i) => i.trim());
   const pivotedData = valuesArray
     .filter((i: string) => i.length > 0)
     .map((i: any) => Object.fromEntries(new Map([[column, i]])));

@@ -20,6 +20,7 @@ export default function CustomPieWidget({
   method,
   dataSource,
   column,
+  methodParams,
   filterType,
   filterParams = {},
   labels = {},
@@ -66,6 +67,7 @@ export default function CustomPieWidget({
     id,
     dataSource,
     method,
+    methodParams,
     column,
   });
 
