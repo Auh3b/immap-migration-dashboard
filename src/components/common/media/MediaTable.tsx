@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function MediaTable({
-  data,
+  data = [],
   columnConfig,
   source,
 }: {

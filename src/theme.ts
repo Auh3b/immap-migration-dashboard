@@ -9,7 +9,6 @@ import {
   brown,
   cyan,
   green,
-  grey,
   indigo,
   lightBlue,
   lightGreen,
@@ -51,7 +50,6 @@ export const EXTENDED_PALETTE: string[] = [
   orange[400],
   deepOrange[400],
   brown[400],
-  grey[400],
   blueGrey[400],
   red[800],
   pink[800],
@@ -70,7 +68,6 @@ export const EXTENDED_PALETTE: string[] = [
   orange[800],
   deepOrange[800],
   brown[800],
-  grey[800],
   blueGrey[800],
 ];
 
