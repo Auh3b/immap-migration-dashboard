@@ -38,17 +38,18 @@ const methodMap = new Map<string, Function>([
   [EXTERNAL_METHOD_NAMES.GET_SERVICE_AVAILABILITY, getServiceAvailability],
   [EXTERNAL_METHOD_NAMES.GET_AVERAGE_ELAPSED_DAYS, getAverageElapsedDays],
   [EXTERNAL_METHOD_NAMES.GET_AVG_DAYS_BY_COUNTRY, getAvgDaysByCountry],
+  [EXTERNAL_METHOD_NAMES.GET_SUNBURST_HIERARCHY, getSunburstHierarchy],
   [EXTERNAL_METHOD_NAMES.TIMELINE_VALUES_ALT, timelineValueAlt],
 ]);
 
-function executeMethod({ input, methodName, params }: any) {
+function executeMethod({ input, methodName, column, params }: any) {
   try {
     let result: any[] = [];
     let method = methodMap.get(methodName);
     if (!method) {
       throw new Error(`Invalid web worker name: ${methodName}`);
     }
-    result = method(input, params);
+    result = method(input, column, params);
     return { result: result === undefined ? true : result };
   } catch (error) {
     console.log(error);

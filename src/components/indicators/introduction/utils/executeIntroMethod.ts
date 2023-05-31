@@ -10,23 +10,23 @@ import stackedBarCategories from 'components/indicators/utils/stackedBarCategori
 import stackedGroupCategories from 'components/indicators/utils/stackedGroupCategories';
 import stackedGroupCategoriesAlt from 'components/indicators/utils/stackedGroupCategoryAlt';
 import stackedGroupCategoriesAlt2 from 'components/indicators/utils/stackedGroupCategoriesAlt2';
-import { METHOD_NAMES } from 'utils/methods/methods';
+import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
 import { expose } from 'comlink';
 
 const methodMap = new Map<string, Function>([
-  [METHOD_NAMES.SET_DATA, setData],
-  [METHOD_NAMES.AGGREGATE_COLUMNS, aggregateColumns],
-  [METHOD_NAMES.CONCATENATED_VALUES, concatenatedValues],
-  [METHOD_NAMES.GET_HIERARCHY, getHierarchy],
-  [METHOD_NAMES.GROUPED_COLUMNS, groupedColumns],
-  [METHOD_NAMES.GROUP_CATEGORIES, groupCategories],
-  [METHOD_NAMES.HISTOGRAM_VALUES, histogramValues],
-  [METHOD_NAMES.SINGLE_STACK_BAR_VALUES, singleStackBarValues],
-  [METHOD_NAMES.STACK_CATEGORY_TOTALS, stackCategoryTotals],
-  [METHOD_NAMES.STACKED_BAR_CATEGORIES, stackedBarCategories],
-  [METHOD_NAMES.STACKED_GROUP_CATEGORIES, stackedGroupCategories],
-  [METHOD_NAMES.STACKED_GROUP_CATEGORIES_ALT, stackedGroupCategoriesAlt],
-  [METHOD_NAMES.STACKED_GROUP_CATEGORIES_ALT_2, stackedGroupCategoriesAlt2],
+  [EXTERNAL_METHOD_NAMES.SET_DATA, setData],
+  [EXTERNAL_METHOD_NAMES.AGGREGATE_COLUMNS, aggregateColumns],
+  [EXTERNAL_METHOD_NAMES.CONCATENATED_VALUES, concatenatedValues],
+  [EXTERNAL_METHOD_NAMES.GET_HIERARCHY, getHierarchy],
+  [EXTERNAL_METHOD_NAMES.GROUPED_COLUMNS, groupedColumns],
+  [EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES, groupCategories],
+  [EXTERNAL_METHOD_NAMES.HISTOGRAM_VALUES, histogramValues],
+  [EXTERNAL_METHOD_NAMES.SINGLE_STACK_BAR_VALUES, singleStackBarValues],
+  [EXTERNAL_METHOD_NAMES.STACK_CATEGORY_TOTALS, stackCategoryTotals],
+  [EXTERNAL_METHOD_NAMES.STACKED_BAR_CATEGORIES, stackedBarCategories],
+  [EXTERNAL_METHOD_NAMES.STACKED_GROUP_CATEGORIES, stackedGroupCategories],
+  [EXTERNAL_METHOD_NAMES.STACKED_GROUP_CATEGORIES_ALT, stackedGroupCategoriesAlt],
+  [EXTERNAL_METHOD_NAMES.STACKED_GROUP_CATEGORIES_ALT_2, stackedGroupCategoriesAlt2],
 ]);
 
 let currentData: Record<string, any[]>;
@@ -40,7 +40,7 @@ function executeMethod({ methodName, params }: any) {
       throw new Error(`Invalid web worker name: ${methodName}`);
     }
 
-    if (methodName === METHOD_NAMES.SET_DATA) {
+    if (methodName === EXTERNAL_METHOD_NAMES.SET_DATA) {
       result = method({ params });
       return { result: result === undefined ? true : result };
     }
