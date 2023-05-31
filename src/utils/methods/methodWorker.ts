@@ -14,6 +14,11 @@ import stackedGroupCategoriesAlt from 'components/indicators/utils/stackedGroupC
 import stackedGroupCategoriesAlt2 from 'components/indicators/utils/stackedGroupCategoriesAlt2';
 import timelineValues from 'components/indicators/utils/timelineValues';
 import getConnectDotServices from 'components/indicators/utils/getConnectDotServices';
+import getServiceAvailability from 'components/indicators/utils/getServiceAvailability';
+import getSunburstHierarchy from 'components/indicators/utils/getSunburstHierarchy';
+import getAverageElapsedDays from 'components/indicators/utils/getAverageElapsedDays';
+import getAvgDaysByCountry from 'components/indicators/utils/getAvgDaysByCountry';
+import timelineValueAlt from 'components/indicators/utils/timelineValueAlt';
 
 const methodMap = new Map<string, Function>([
   [EXTERNAL_METHOD_NAMES.AGGREGATE_COLUMNS, aggregateColumns],
@@ -30,6 +35,10 @@ const methodMap = new Map<string, Function>([
   [EXTERNAL_METHOD_NAMES.STACKED_GROUP_CATEGORIES_ALT_2, stackedGroupCategoriesAlt2],
   [EXTERNAL_METHOD_NAMES.TIMELINE_VALUES, timelineValues],
   [EXTERNAL_METHOD_NAMES.GET_CONNECTED_DOT_SERVICES, getConnectDotServices],
+  [EXTERNAL_METHOD_NAMES.GET_SERVICE_AVAILABILITY, getServiceAvailability],
+  [EXTERNAL_METHOD_NAMES.GET_AVERAGE_ELAPSED_DAYS, getAverageElapsedDays],
+  [EXTERNAL_METHOD_NAMES.GET_AVG_DAYS_BY_COUNTRY, getAvgDaysByCountry],
+  [EXTERNAL_METHOD_NAMES.TIMELINE_VALUES_ALT, timelineValueAlt],
 ]);
 
 function executeMethod({ input, methodName, params }: any) {

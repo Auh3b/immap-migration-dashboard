@@ -6,13 +6,14 @@ import WidgetNote from 'components/common/customWidgets/WidgetNote';
 import useWidgetEffect from '../utils/useWidgetEffect';
 import { aidTypes } from './utils/serviceIndicatorTypes';
 import groupCategories from '../utils/groupCategories';
+import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
 
 const NOTE = 'Ayudas humanitarias recibidas según zona de tránsito';
 const id = 'serviceTypeAdult';
 const title = 'Ayudas humanitarias';
 const column = 'm12';
 const filterType = _FilterTypes.IN;
-const method = groupCategories;
+const methodName = EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES;
 const labels = Object.fromEntries(aidTypes);
 
 const props = {
@@ -20,7 +21,7 @@ const props = {
   title,
   column,
   filterType,
-  method,
+  methodName,
   labels,
 };
 

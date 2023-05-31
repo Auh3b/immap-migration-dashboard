@@ -3,30 +3,9 @@ import { Grid } from '@material-ui/core';
 import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType';
 import CustomTimelineWidget from 'components/common/customWidgets/CustomTimelineWidget';
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
-import MethodFunc from '../utils/methodType';
 import useWidgetEffect from '../utils/useWidgetEffect';
 import { iconGroupsConfig } from 'components/layers/utils/surveyIconGroup';
-
-const timelineValueAlt: MethodFunc = (input, column, params) => {
-  const { iconGroupsConfig } = params;
-
-  let output: Record<string, any>[] = [];
-
-  for (let { name, color } of iconGroupsConfig) {
-    const value = input.filter(
-      ({ name: featureName }) => featureName === name,
-    ).length;
-    const outputItem = {
-      id: name,
-      name,
-      value,
-      color: `rgb(${color.join(',')})`,
-    };
-    output = [...output, outputItem];
-  }
-
-  return output;
-};
+import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
 
 const NOTE =
   'Localización de personas migrantes conectadas a Aurora en los distintos monitoreos';
@@ -34,7 +13,7 @@ const id = 'mobileSurveyResponseTimeline';
 const title = 'Personas migrantes conectadas a Aurora';
 const column = 'timeunix';
 const filterType = _FilterTypes.IN;
-const method = timelineValueAlt;
+const methodName = EXTERNAL_METHOD_NAMES.TIMELINE_VALUES_ALT;
 const methodParams = {
   iconGroupsConfig,
 };
@@ -44,13 +23,12 @@ const props = {
   title,
   column,
   filterType,
-  method,
+  methodName,
   methodParams,
 };
 
 export default function MobileSurveyTimeline({
   dataSource,
-  operation,
 }: BasicWidgetType) {
   const { widget } = useWidgetEffect(
     <CustomTimelineWidget dataSource={dataSource} {...props} />,
