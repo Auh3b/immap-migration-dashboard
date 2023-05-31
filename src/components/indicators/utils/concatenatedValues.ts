@@ -1,27 +1,6 @@
-import { AggregationTypes, groupValuesByColumn } from '@carto/react-core';
 import { descending } from 'd3';
 import MethodFunc from './methodType';
-
-interface getCategoriesProps {
-  data: any[];
-  valuesColumns?: string[];
-  keysColumn?: string;
-  operation?: AggregationTypes;
-}
-
-function getCategories({
-  data,
-  valuesColumns,
-  keysColumn,
-  operation,
-}: getCategoriesProps) {
-  return groupValuesByColumn({
-    data,
-    valuesColumns,
-    keysColumn,
-    operation,
-  });
-}
+import groupByValue, { GroupByTypes } from 'utils/groupByValue';
 
 const concatenatedValues:MethodFunc = (input, column, params) => {
   if(!input.length){
@@ -40,11 +19,11 @@ const concatenatedValues:MethodFunc = (input, column, params) => {
     .filter((i: string) => i.length > 0)
     .map((i: any) => Object.fromEntries(new Map([[column, i]])));
 
-  const groupData = getCategories({
-    data: pivotedData,
-    valuesColumns: [column],
-    keysColumn: column,
-    operation: AggregationTypes.COUNT,
+  const groupData = groupByValue({
+    input: pivotedData,
+    valueColumn: column,
+    keyColumn: column,
+    type: GroupByTypes.COUNT
   });
   //@ts-ignore
   return groupData.sort((a, b) => descending(a.value, b.value));

@@ -44,7 +44,7 @@ export default function CustomSunburstWidget({
   title,
   dataSource,
   column,
-  method,
+  methodName,
   methodParams,
   actions,
 }: defaultCustomWidgetProps) {
@@ -53,7 +53,7 @@ export default function CustomSunburstWidget({
   const [isOpen, setIsOpen] = useState(false);
   const { data, isLoading } = useWidgetFetch({
     id,
-    method,
+    methodName,
     column,
     dataSource,
     methodParams,

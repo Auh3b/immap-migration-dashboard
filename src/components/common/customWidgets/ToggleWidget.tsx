@@ -27,7 +27,7 @@ const useStyles: any = makeStyles(() => ({
 export default function ToggleWidget({
   id,
   title,
-  method,
+  methodName,
   dataSource,
   column,
   filterType,
@@ -38,7 +38,7 @@ export default function ToggleWidget({
   const { data, isLoading } = useWidgetFetch({
     id,
     dataSource,
-    method,
+    methodName,
     column,
   });
   return (

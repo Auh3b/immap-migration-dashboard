@@ -17,7 +17,7 @@ const EMPTY_ARRAY: [] = [];
 export default function CustomHistogramWidget({
   id,
   title,
-  method,
+  methodName,
   dataSource,
   column,
   bins = 3,
@@ -30,7 +30,7 @@ export default function CustomHistogramWidget({
   const { data: _data, isLoading } = useWidgetFetch({
     id,
     dataSource,
-    method,
+    methodName,
     column,
   });
 

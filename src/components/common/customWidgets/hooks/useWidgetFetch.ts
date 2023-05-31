@@ -27,7 +27,7 @@ export interface useWidgetFetchProps {
 
 export default function useWidgetFetch({
   id,
-  method = (input, column) => input,
+  methodName,
   column,
   dataSource,
   methodParams = {},
@@ -63,6 +63,7 @@ export default function useWidgetFetch({
           sourceId: source.id,
           params,
           methodName,
+          column,
           methodParams,
           global,
         })

@@ -1,8 +1,4 @@
-import {
-  AggregationTypes,
-  GroupByFeature,
-  groupValuesByColumn,
-} from '@carto/react-core';
+import groupByValue, { GroupByTypes } from 'utils/groupByValue';
 import { defaultFilterFunction } from './miscelleniousFunctions';
 import { descending } from 'd3';
 
@@ -10,13 +6,13 @@ export default function groupCategories(
   input: any[],
   column: string,
   params?: Record<string, any>,
-): GroupByFeature | [] {
-  const groups = groupValuesByColumn({
+){
+  const groups = groupByValue({
     //@ts-ignore
     data: defaultFilterFunction(input, column, params),
     keysColumn: column,
-    valuesColumns: [column],
-    operation: AggregationTypes.COUNT,
+    valuesColumns: column,
+    type: GroupByTypes.COUNT
   });
   if (groups) {
     //@ts-ignore

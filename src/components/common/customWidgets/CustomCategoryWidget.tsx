@@ -13,7 +13,7 @@ const EMPTY_ARRAY: [] = [];
 export default function CustomCategoryWidget({
   id,
   title,
-  method,
+  methodName,
   dataSource,
   column,
   filterType,
@@ -62,7 +62,7 @@ export default function CustomCategoryWidget({
   const { data, isLoading, error } = useWidgetFetch({
     id,
     dataSource,
-    method,
+    methodName,
     column,
   });
 

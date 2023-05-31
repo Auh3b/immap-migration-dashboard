@@ -2,7 +2,6 @@ import { _FilterTypes } from '@carto/react-core';
 import { Grid } from '@material-ui/core';
 import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType';
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
-import concatenatedValues from '../utils/concatenatedValues';
 import useWidgetEffect from '../utils/useWidgetEffect';
 import { SERVICES_KEY } from './utils/services';
 import CustomPieWidget from 'components/common/customWidgets/CustomPieWidget';

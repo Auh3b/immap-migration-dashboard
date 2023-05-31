@@ -16,7 +16,6 @@ import { SERVICES_KEY } from './utils/services';
 import CustomWidgetWrapper from 'components/common/customWidgets/CustomWidgetWrapper';
 import { filterItem, filterValues } from 'utils/filterFunctions';
 import { _FilterTypes } from '@carto/react-core';
-import CustomConnectDotChart from 'components/common/customWidgets/CustomConnectDotChart';
 import { useDispatch, useSelector } from 'react-redux';
 import { addFilter, removeFilter } from '@carto/react-redux';
 import { point } from '@turf/helpers';
@@ -27,6 +26,8 @@ import AggreatedServicesLegend from './utils/AggreatedServicesLegend';
 import getViewport from './utils/getViewport';
 import getFeatureCollection from './utils/getFeatureCollection';
 import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
+import CustomConnectDotChart from 'components/common/customCharts/CustomConnectDotChart';
+import { SERVICE_STAT_COLUMNS } from './utils/services';
 
 const otherColumns = {
   country: 'ubicacion_',
@@ -77,6 +78,9 @@ const title =
 const methodName = EXTERNAL_METHOD_NAMES.GET_CONNECTED_DOT_SERVICES
 const methodParams = {
   otherColumns,
+  serviceStatColumns:  Object.fromEntries(SERVICE_STAT_COLUMNS), 
+  servicesKey: Object.fromEntries(SERVICES_KEY), 
+  serviceStatColumnLength: SERVICE_STAT_COLUMNS_NAME.length 
 };
 
 export default function AggreatedServices({ dataSource }: BasicWidgetType) {

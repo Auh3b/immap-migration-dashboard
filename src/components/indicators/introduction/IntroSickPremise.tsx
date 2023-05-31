@@ -55,9 +55,7 @@ export default function IntroSickPremise({
     owner: id,
     type: _FilterTypes.STRING_SEARCH,
   });
-
-  console.log(data)
-
+  
   return (
     <TitleWrapper
       title={title}

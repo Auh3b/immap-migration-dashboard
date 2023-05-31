@@ -21,6 +21,7 @@ export default async function executeExternalMethod({
   column,
   params,
 }: ExecuteExternalMethod) {
-  const { result } = await executeMethod({ data, column, methodName, params });
+
+  const { result } = await executeMethod({ input: data, column, methodName, params });
   return result;
 }

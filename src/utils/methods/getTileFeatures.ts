@@ -7,6 +7,7 @@ interface getTileFeaturesProps {
   sourceId: string;
   params: getTileFeaturesPropsParams;
   global?: Boolean;
+  column?: string;
   methodName?:string;
   methodParams?:Record<string, any>
 }
@@ -23,10 +24,11 @@ export default async function getTileFeatures({
   sourceId,
   params,
   global,
+  column,
   methodName,
   methodParams,
 }: getTileFeaturesProps) {
   const { data: _rawData } = await executeTask(sourceId, Methods.FEATURES_RAW, params);
-  const  data = await executeExternalMethod({data: _rawData, methodName, params: methodParams})
+  const  data = await executeExternalMethod({data: _rawData, column, methodName, params: methodParams})
   return data;
 }
