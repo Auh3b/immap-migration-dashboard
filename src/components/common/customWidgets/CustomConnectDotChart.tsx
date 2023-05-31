@@ -203,14 +203,14 @@ export default function CustomConnectDotChart({ data: _data, groupName }: any) {
             </span>
             <span style='display: flex; align-items: center; justify-content: space-between; gap: 8px;'>
             <span style='display: flex; align-items: center; justify-content: space-between; gap: 8px;'>
-              <span style='width: 10px; height: 10px; border-radius: 100%; background-color: ${color1};'></span>
+              <span style='width: 10px; height: 10px; border-radius: 100%; background-color: ${color2};'></span>
                 <span>Capacidad diaria</span>
               </span>
               <span>${capacity}</span>
             </span>
             <span style='display: flex; align-items: center; justify-content: space-between; gap: 8px;'>
               <span style='display: flex; align-items: center; justify-content: space-between; gap: 8px;'>
-                <span style='width: 10px; height: 10px; border-radius: 100%; background-color: ${color2};'></span>
+                <span style='width: 10px; height: 10px; border-radius: 100%; background-color: ${color1};'></span>
                 <span >Personas atendidas ayer</span>
               </span>
               <span>${yesterdayCount}</span>
