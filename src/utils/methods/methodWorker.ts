@@ -11,7 +11,7 @@ import groupCategories from 'components/indicators/utils/groupCategories';
 // import stackedBarCategories from 'components/indicators/utils/stackedBarCategories';
 // import stackedGroupCategories from 'components/indicators/utils/stackedGroupCategories';
 // import stackedGroupCategoriesAlt from 'components/indicators/utils/stackedGroupCategoryAlt';
-// import stackedGroupCategoriesAlt2 from 'components/indicators/utils/stackedGroupCategoriesAlt2';
+import stackedGroupCategoriesAlt2 from 'components/indicators/utils/stackedGroupCategoriesAlt2';
 // import timelineValues from 'components/indicators/utils/timelineValues';
 import getConnectDotServices from 'components/indicators/utils/getConnectDotServices';
 // import getServiceAvailability from 'components/indicators/utils/getServiceAvailability';
@@ -32,7 +32,7 @@ const methodMap = new Map<string, Function>([
   // [EXTERNAL_METHOD_NAMES.STACKED_BAR_CATEGORIES, stackedBarCategories],
   // [EXTERNAL_METHOD_NAMES.STACKED_GROUP_CATEGORIES, stackedGroupCategories],
   // [EXTERNAL_METHOD_NAMES.STACKED_GROUP_CATEGORIES_ALT, stackedGroupCategoriesAlt],
-  // [EXTERNAL_METHOD_NAMES.STACKED_GROUP_CATEGORIES_ALT_2, stackedGroupCategoriesAlt2],
+  [EXTERNAL_METHOD_NAMES.STACKED_GROUP_CATEGORIES_ALT_2, stackedGroupCategoriesAlt2],
   // [EXTERNAL_METHOD_NAMES.TIMELINE_VALUES, timelineValues],
   [EXTERNAL_METHOD_NAMES.GET_CONNECTED_DOT_SERVICES, getConnectDotServices],
   // [EXTERNAL_METHOD_NAMES.GET_SERVICE_AVAILABILITY, getServiceAvailability],
@@ -42,9 +42,12 @@ const methodMap = new Map<string, Function>([
   // [EXTERNAL_METHOD_NAMES.TIMELINE_VALUES_ALT, timelineValueAlt],
 ]);
 
-function executeMethod({ input, methodName, column, params }: any) {
-  console.log(input, methodName, column, params)
+function executeMethod({ input, methodName, column, params }: any):any {
   try {
+    if(!methodName){
+     throw new Error(`no web worker name`);
+    }
+    
     let result: any[] = [];
     let method = methodMap.get(methodName);
     if (!method) {

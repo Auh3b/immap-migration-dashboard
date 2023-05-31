@@ -7,17 +7,22 @@ export default function groupCategories(
   column: string,
   params?: Record<string, any>,
 ){
+  if(!input.length){
+    return [];
+  }
+
   const groups = groupByValue({
-    //@ts-ignore
-    data: defaultFilterFunction(input, column, params),
-    keysColumn: column,
-    valuesColumns: column,
+    input: defaultFilterFunction(input, column, params),
+    keyColumn: column,
+    valueColumn: column,
     type: GroupByTypes.COUNT
   });
+  
+  console.log(groups)
+  
   if (groups) {
     //@ts-ignore
     return groups.sort((a, b) => descending(a.value, b.value));
   }
 
-  return [];
 }

@@ -30,7 +30,7 @@ function groupByValue({
 }) {
   const outputMap = rollup(
     input,
-    (v) => v.length,
+    (v) => GROUP_FUNCTION.get(type)(v, valueColumn),
     (d) => d[keyColumn],
   );
   const output = Array.from(outputMap).map(([name, value]) => ({

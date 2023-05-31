@@ -2,7 +2,7 @@ import { descending } from 'd3';
 import MethodFunc from './methodType';
 import groupByValue, { GroupByTypes } from 'utils/groupByValue';
 
-const concatenatedValues:MethodFunc = (input, column, params) => {
+const concatenatedValues:MethodFunc<any[]> = (input, column, params) => {
   if(!input.length){
     return []
   }

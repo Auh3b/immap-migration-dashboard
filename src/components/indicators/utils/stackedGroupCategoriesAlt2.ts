@@ -1,7 +1,7 @@
 import MethodFunc from './methodType';
 import stackCategoryTotals from './stackCategoryTotals';
 
-const stackedGroupCategoriesAlt2: MethodFunc = (
+const stackedGroupCategoriesAlt2: MethodFunc<any[]> = (
   input: any[],
   column: string,
   methodParams?: Record<string, unknown>,
