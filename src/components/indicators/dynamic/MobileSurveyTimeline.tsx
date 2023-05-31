@@ -4,7 +4,6 @@ import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType
 import CustomTimelineWidget from 'components/common/customWidgets/CustomTimelineWidget';
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
 import useWidgetEffect from '../utils/useWidgetEffect';
-import { iconGroupsConfig } from 'components/layers/utils/surveyIconGroup';
 import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
 
 const NOTE =
@@ -14,9 +13,6 @@ const title = 'Personas migrantes conectadas a Aurora';
 const column = 'timeunix';
 const filterType = _FilterTypes.IN;
 const methodName = EXTERNAL_METHOD_NAMES.TIMELINE_VALUES_ALT;
-const methodParams = {
-  iconGroupsConfig,
-};
 
 const props = {
   id,
@@ -24,7 +20,6 @@ const props = {
   column,
   filterType,
   methodName,
-  methodParams,
 };
 
 export default function MobileSurveyTimeline({

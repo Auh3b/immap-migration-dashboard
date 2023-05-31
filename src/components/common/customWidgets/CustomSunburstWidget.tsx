@@ -51,7 +51,7 @@ export default function CustomSunburstWidget({
   const classes = useStyle();
   const theme = useTheme();
   const [isOpen, setIsOpen] = useState(false);
-  const { data, isLoading } = useWidgetFetch({
+  const { data: [data, legend], isLoading } = useWidgetFetch({
     id,
     methodName,
     column,
@@ -72,7 +72,7 @@ export default function CustomSunburstWidget({
       series: {
         type: 'sunburst',
         //@ts-ignore
-        data: data.data,
+        data: data,
         radius: [20, '90%'],
         toolTip: {
           show: true,
@@ -167,9 +167,9 @@ export default function CustomSunburstWidget({
       actions={[...actions]}
     >
       {data && <ReactEchart style={{ height: 600 }} option={option} />}
-      {data.legend && (
+      {legend && (
         <Grid container className={classes.legendContainer}>
-          {data.legend.map(({ name, color }, index) => (
+          {legend.map(({ name, color }, index) => (
             <Grid
               container
               wrap='nowrap'

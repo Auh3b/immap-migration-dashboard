@@ -13,7 +13,7 @@ const id = 'Country Flow';
 const title = 'Migración de flujo de país';
 const column = 'e08_pais_';
 const filterType = _FilterTypes.IN;
-const method = EXTERNAL_METHOD_NAMES.GET_SUNBURST_HIERARCHY;
+const methodName = EXTERNAL_METHOD_NAMES.GET_SUNBURST_HIERARCHY;
 const methodParams = {
   lv2: 'e12_pais_',
   lv3: 'e10_pais_',
@@ -25,7 +25,7 @@ const props = {
   title,
   column,
   filterType,
-  method,
+  methodName,
   methodParams,
 };
 

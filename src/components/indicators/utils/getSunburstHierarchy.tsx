@@ -7,7 +7,7 @@ import {
   sum
 } from 'd3';
 import groupCategories from './groupCategories';
-import { UNICEF_COLORS } from 'theme';
+// import { UNICEF_COLORS } from 'theme';
 
 export const COLOR_SCALE_TYPE = {
   SEQUENTIAL: 'sequential',
@@ -26,7 +26,7 @@ function getFilteredInput(input: any[], column: string, value: string): any[] {
   return filterUnwantedValues(input, column).filter((d) => d[column] === value);
 }
 function getOrdinalColorScale(domain: string[]) {
-  return scaleOrdinal().domain(domain).range(UNICEF_COLORS);
+  return scaleOrdinal().domain(domain).range();
 }
 function getSequantialColorScale(range: [number, number]) {
   const scale = scaleSequential(interpolateSinebow).domain(range);
@@ -147,10 +147,7 @@ function getSunburstHierarchy(input: any[], column: string, params?: Record<any,
     }
   });
 
-  return {
-    data: nest,
-    legend,
-  };
+  return [nest, legend]
 }
 
 export default getSunburstHierarchy

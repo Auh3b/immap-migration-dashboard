@@ -1,9 +1,9 @@
+import { iconGroupsConfig } from 'components/layers/utils/surveyIconGroup';
 import MethodFunc from './methodType';
 
-const timelineValueAlt: MethodFunc = (input, column, params) => {
-  const { iconGroupsConfig } = params;
+const timelineValueAlt: MethodFunc<any[]> = (input, column, params) => {
 
-  let output: Record<string, any>[] = [];
+  let output: any[] = [];
 
   for (let { name, color } of iconGroupsConfig) {
     const value = input.filter(
@@ -17,6 +17,8 @@ const timelineValueAlt: MethodFunc = (input, column, params) => {
     };
     output = [...output, outputItem];
   }
+
+  console.log(output)
 
   return output;
 };

@@ -1,13 +1,13 @@
+import groupByValue, { GroupByTypes } from 'utils/groupByValue';
 import MethodFunc from './methodType';
-import { AggregationTypes, groupValuesByColumn } from '@carto/react-core';
 
-const getAvgDaysByCountry: MethodFunc = (input, column, params) => {
+const getAvgDaysByCountry: MethodFunc<{name: string, value: number}[]> = (input, column, params) => {
   const { valueColumn } = params;
-  const output = groupValuesByColumn({
-    data: input,
-    keysColumn: column,
-    valuesColumns: [valueColumn],
-    operation: AggregationTypes.AVG,
+  const output = groupByValue({
+    input,
+    keyColumn: column,
+    valueColumn: valueColumn,
+    type: GroupByTypes.AVG,
   });
 
   return output;

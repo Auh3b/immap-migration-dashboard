@@ -1,9 +1,8 @@
 import MethodFunc from './methodType';
-import aggregateColumns from './AggregateColumns';
-import { AggregationTypes } from '@carto/react-core';
+import { mean } from 'd3';
 
-const getAverageElapsedDays: MethodFunc = (input, column) => {
-  const averageDays = aggregateColumns(input, [column], AggregationTypes.AVG);
+const getAverageElapsedDays: MethodFunc<number> = (input, column) => {
+  const averageDays = mean(input, d => d[column])
   return averageDays;
 };
 

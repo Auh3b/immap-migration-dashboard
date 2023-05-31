@@ -18,8 +18,6 @@ export default function groupCategories(
     type: GroupByTypes.COUNT
   });
   
-  console.log(groups)
-  
   if (groups) {
     //@ts-ignore
     return groups.sort((a, b) => descending(a.value, b.value));

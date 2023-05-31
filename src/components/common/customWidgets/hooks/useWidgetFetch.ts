@@ -2,12 +2,10 @@
 import { selectAreFeaturesReadyForSource } from '@carto/react-redux';
 import { useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
-import getTileFeatures from 'utils/methods/getTileFeatures';
 import useCustomCompareEffect from '../../../../hooks/useCustomCompareEffect';
 import { dequal } from 'dequal';
 import useWidgetSource from './useWidgetSource';
-import MethodFunc from 'components/indicators/utils/methodType';
-import { defaultFilterFunction } from 'components/indicators/utils/miscelleniousFunctions';
+import getProcessedData from 'utils/getProcessedData';
 
 export interface useWidgetFetchProps {
   id: string;
@@ -59,7 +57,7 @@ export default function useWidgetFetch({
     () => {
       setIsLoading(true);
       if (source && isSourceReady) {
-        getTileFeatures({
+        getProcessedData({
           sourceId: source.id,
           params,
           methodName,
@@ -68,7 +66,7 @@ export default function useWidgetFetch({
           global,
         })
           .then((data) => {
-            if(data.length){
+            if(data){
               setData(data)
             }
           })
