@@ -6,6 +6,7 @@ import concatenatedValues from '../utils/concatenatedValues';
 import useWidgetEffect from '../utils/useWidgetEffect';
 import { SERVICES_KEY } from './utils/services';
 import CustomPieWidget from 'components/common/customWidgets/CustomPieWidget';
+import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
 
 const NOTE =
   'El punto de servicio / ayuda humanitaria cuenta con estos servicios para las personas migrantes';
@@ -13,14 +14,14 @@ const id = 'serviceProvided';
 const title = 'Tipos de servicios prestados en el punto';
 const column = 'serv_tipo1';
 const filterType = _FilterTypes.STRING_SEARCH;
-const method = concatenatedValues;
+const methodName = EXTERNAL_METHOD_NAMES.CONCATENATED_VALUES;
 const labels = Object.fromEntries(SERVICES_KEY);
 
 const props = {
   id,
   title,
   column,
-  method,
+  methodName,
   filterable: false,
   filterType,
   labels,

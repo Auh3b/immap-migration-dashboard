@@ -6,6 +6,7 @@ import { defaultCustomWidgetProps } from 'components/common/customWidgets/custom
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
 import groupedColumns from '../utils/groupedColumns';
 import useWidgetEffect from '../utils/useWidgetEffect';
+import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
 
 const title =
   'Atención a niños, niñas y adolescentes no acompañados y separados';
@@ -14,7 +15,7 @@ const NOTE =
 const id = 'childrenTravelPartyComposition';
 const column = 'serv_dif_n';
 const filterType = _FilterTypes.IN;
-const method = groupedColumns;
+const methodName = EXTERNAL_METHOD_NAMES.GROUPED_COLUMNS;
 const methodParams = {
   columns: ['cuan_nna_n', 'cuan_nna_s'],
   legend: ['Acompañados NNA', 'Separados NNA'],
@@ -26,7 +27,7 @@ const props: defaultCustomWidgetProps = {
   column,
   id,
   filterType,
-  method,
+  methodName,
   methodParams,
   stacked: true,
 };

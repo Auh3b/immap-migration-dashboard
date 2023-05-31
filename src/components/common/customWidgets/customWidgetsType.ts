@@ -11,7 +11,7 @@ export interface defaultCustomWidgetProps {
   filterType: _FilterTypes;
   filterable?:Boolean;
   filterParams?: Record<string, unknown>;
-  method?: MethodFunc;
+  methodName?: string;
   methodParams?: Record<string, unknown>;
   labels?: any;
   colorMap?: any;

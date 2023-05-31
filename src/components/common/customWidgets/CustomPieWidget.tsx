@@ -17,7 +17,7 @@ const EMPTY_ARRAY: [] = [];
 export default function CustomPieWidget({
   id,
   title,
-  method,
+  methodName,
   dataSource,
   column,
   filterable = true,
@@ -67,7 +67,7 @@ export default function CustomPieWidget({
   const { data = [], isLoading, error } = useWidgetFetch({
     id,
     dataSource,
-    method,
+    methodName,
     methodParams,
     column,
   });

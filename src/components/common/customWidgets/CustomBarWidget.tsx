@@ -14,7 +14,7 @@ const EMPTY_ARRAY: [] = [];
 export default function CustomBarWidget({
   id,
   title,
-  method,
+  methodName,
   methodParams,
   dataSource,
   column,
@@ -31,7 +31,7 @@ export default function CustomBarWidget({
   } = useWidgetFetch({
     id,
     dataSource,
-    method,
+    methodName,
     column,
     methodParams,
   });

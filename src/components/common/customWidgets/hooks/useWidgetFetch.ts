@@ -13,8 +13,8 @@ export interface useWidgetFetchProps {
   id: string;
   dataSource: any;
   column?: string;
-  method?: MethodFunc | null;
-  methodParams?: {};
+  methodName?: string;
+  methodParams?: Record<string, any>;
   global?: Boolean;
 }
 
@@ -62,19 +62,13 @@ export default function useWidgetFetch({
         getTileFeatures({
           sourceId: source.id,
           params,
+          methodName,
+          methodParams,
           global,
         })
           .then((data) => {
-            if (data && data.length > 0) {
-              setData(
-                method(
-                  [...defaultFilterFunction(data, column)],
-                  column,
-                  methodParams,
-                ),
-              );
-            } else {
-              setData([]);
+            if(data.length){
+              setData(data)
             }
           })
           .catch((error) => {

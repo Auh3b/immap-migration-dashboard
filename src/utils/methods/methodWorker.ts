@@ -1,5 +1,5 @@
 import { expose } from 'comlink';
-import { METHOD_NAMES } from './methods';
+import { EXTERNAL_METHOD_NAMES } from './methods';
 import aggregateColumns from 'components/indicators/utils/AggregateColumns';
 import concatenatedValues from 'components/indicators/utils/concatenatedValues';
 import getHierarchy from 'components/indicators/utils/getHierarchy';
@@ -13,21 +13,23 @@ import stackedGroupCategories from 'components/indicators/utils/stackedGroupCate
 import stackedGroupCategoriesAlt from 'components/indicators/utils/stackedGroupCategoryAlt';
 import stackedGroupCategoriesAlt2 from 'components/indicators/utils/stackedGroupCategoriesAlt2';
 import timelineValues from 'components/indicators/utils/timelineValues';
+import getConnectDotServices from 'components/indicators/utils/getConnectDotServices';
 
 const methodMap = new Map<string, Function>([
-  [METHOD_NAMES.AGGREGATE_COLUMNS, aggregateColumns],
-  [METHOD_NAMES.CONCATENATED_VALUES, concatenatedValues],
-  [METHOD_NAMES.GET_HIERARCHY, getHierarchy],
-  [METHOD_NAMES.GROUPED_COLUMNS, groupedColumns],
-  [METHOD_NAMES.GROUP_CATEGORIES, groupCategories],
-  [METHOD_NAMES.HISTOGRAM_VALUES, histogramValues],
-  [METHOD_NAMES.SINGLE_STACK_BAR_VALUES, singleStackBarValues],
-  [METHOD_NAMES.STACK_CATEGORY_TOTALS, stackCategoryTotals],
-  [METHOD_NAMES.STACKED_BAR_CATEGORIES, stackedBarCategories],
-  [METHOD_NAMES.STACKED_GROUP_CATEGORIES, stackedGroupCategories],
-  [METHOD_NAMES.STACKED_GROUP_CATEGORIES_ALT, stackedGroupCategoriesAlt],
-  [METHOD_NAMES.STACKED_GROUP_CATEGORIES_ALT_2, stackedGroupCategoriesAlt2],
-  [METHOD_NAMES.TIMELINE_VALUES, timelineValues],
+  [EXTERNAL_METHOD_NAMES.AGGREGATE_COLUMNS, aggregateColumns],
+  [EXTERNAL_METHOD_NAMES.CONCATENATED_VALUES, concatenatedValues],
+  [EXTERNAL_METHOD_NAMES.GET_HIERARCHY, getHierarchy],
+  [EXTERNAL_METHOD_NAMES.GROUPED_COLUMNS, groupedColumns],
+  [EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES, groupCategories],
+  [EXTERNAL_METHOD_NAMES.HISTOGRAM_VALUES, histogramValues],
+  [EXTERNAL_METHOD_NAMES.SINGLE_STACK_BAR_VALUES, singleStackBarValues],
+  [EXTERNAL_METHOD_NAMES.STACK_CATEGORY_TOTALS, stackCategoryTotals],
+  [EXTERNAL_METHOD_NAMES.STACKED_BAR_CATEGORIES, stackedBarCategories],
+  [EXTERNAL_METHOD_NAMES.STACKED_GROUP_CATEGORIES, stackedGroupCategories],
+  [EXTERNAL_METHOD_NAMES.STACKED_GROUP_CATEGORIES_ALT, stackedGroupCategoriesAlt],
+  [EXTERNAL_METHOD_NAMES.STACKED_GROUP_CATEGORIES_ALT_2, stackedGroupCategoriesAlt2],
+  [EXTERNAL_METHOD_NAMES.TIMELINE_VALUES, timelineValues],
+  [EXTERNAL_METHOD_NAMES.GET_CONNECTED_DOT_SERVICES, getConnectDotServices],
 ]);
 
 function executeMethod({ input, methodName, params }: any) {
