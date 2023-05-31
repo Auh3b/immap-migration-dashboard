@@ -24,9 +24,9 @@ const props = {
   filterable: false,
   filterType,
   labels,
-  filterParams:{
-    useRegExp: true
-  }
+  filterParams: {
+    useRegExp: true,
+  },
 };
 
 export default function ServicesProvided({ dataSource }: BasicWidgetType) {

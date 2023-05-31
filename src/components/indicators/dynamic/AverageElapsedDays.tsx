@@ -13,7 +13,7 @@ const id = 'averageElapsed';
 const column = 'dias';
 const NOTE =
   'Tiempo estimado (días) que ha transcurrido entre el enganche y el último push';
-const methodName = EXTERNAL_METHOD_NAMES.GET_AVERAGE_ELAPSED_DAYS
+const methodName = EXTERNAL_METHOD_NAMES.GET_AVERAGE_ELAPSED_DAYS;
 
 export default function AverageElapsedDays({ dataSource }: BasicWidgetType) {
   const { data: _data, isLoading } = useWidgetFetch({

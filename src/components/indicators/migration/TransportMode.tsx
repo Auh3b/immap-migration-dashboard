@@ -31,9 +31,9 @@ const props = {
   methodName,
   filterType,
   labels,
-  filterParams:{
-    useRegExp: true
-  }
+  filterParams: {
+    useRegExp: true,
+  },
 };
 
 export default function TransportMode({ dataSource }: BasicWidgetType) {

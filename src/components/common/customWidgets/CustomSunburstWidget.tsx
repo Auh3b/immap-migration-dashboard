@@ -51,7 +51,10 @@ export default function CustomSunburstWidget({
   const classes = useStyle();
   const theme = useTheme();
   const [isOpen, setIsOpen] = useState(false);
-  const { data: [data, legend], isLoading } = useWidgetFetch({
+  const {
+    data: [data, legend],
+    isLoading,
+  } = useWidgetFetch({
     id,
     methodName,
     column,

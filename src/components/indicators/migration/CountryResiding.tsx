@@ -22,9 +22,7 @@ const props = {
   methodName,
 };
 
-export default function CountryResiding({
-  dataSource,
-}: BasicWidgetType) {
+export default function CountryResiding({ dataSource }: BasicWidgetType) {
   const { widget } = useWidgetEffect(
     <CustomCategoryWidget dataSource={dataSource} {...props} />,
     [dataSource],

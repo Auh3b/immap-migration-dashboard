@@ -6,8 +6,8 @@ export default function groupCategories(
   input: any[],
   column: string,
   params?: Record<string, any>,
-){
-  if(!input.length){
+) {
+  if (!input.length) {
     return [];
   }
 
@@ -15,12 +15,11 @@ export default function groupCategories(
     input: defaultFilterFunction(input, column, params),
     keyColumn: column,
     valueColumn: column,
-    type: GroupByTypes.COUNT
+    type: GroupByTypes.COUNT,
   });
-  
+
   if (groups) {
     //@ts-ignore
     return groups.sort((a, b) => descending(a.value, b.value));
   }
-
 }

@@ -3,16 +3,14 @@ import WidgetNote from 'components/common/customWidgets/WidgetNote';
 import { Grid } from '@material-ui/core';
 import CustomColumnBarWidget from 'components/common/customWidgets/CustomColumnBarWidget';
 import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType';
-import {
-  _FilterTypes,
-} from '@carto/react-core';
+import { _FilterTypes } from '@carto/react-core';
 import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
 
 const title = 'Aggregate Service Performance';
 const id = 'aggregateServices';
 const column = 'm12';
 const filterType = _FilterTypes.IN;
-const methodName = EXTERNAL_METHOD_NAMES.GET_SERVICE_AVAILABILITY
+const methodName = EXTERNAL_METHOD_NAMES.GET_SERVICE_AVAILABILITY;
 const methodParams = {
   columns: ['m14', 'm15', 'm16'],
 };

@@ -16,7 +16,10 @@ export default function MediaEngagement() {
   return (
     <Grid item xs={12}>
       <TitleWrapper title='Serie de compromiso histórico' isLoading={isLoading}>
-        <CustomGriddedLineChart data={data} style={{height: data.length ? 600 : 0}} />
+        <CustomGriddedLineChart
+          data={data}
+          style={{ height: data.length ? 600 : 0 }}
+        />
         {!data.length && !isLoading && <NoWidgetData />}
       </TitleWrapper>
     </Grid>

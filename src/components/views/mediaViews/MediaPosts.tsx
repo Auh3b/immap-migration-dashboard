@@ -87,7 +87,7 @@ export default function MediaPosts({ isLoading }: { isLoading: Boolean }) {
           alignItems='flex-start'
         >
           {isLoading && <ComponentFallback />}
-          {(sources.length && !isDataLoading) ?
+          {sources.length && !isDataLoading ? (
             sources.map((source) => (
               <MediaTable
                 key={source}
@@ -95,10 +95,10 @@ export default function MediaPosts({ isLoading }: { isLoading: Boolean }) {
                 source={source}
                 columnConfig={columnConfig}
               />
-            )) : 
-            
+            ))
+          ) : (
             <NoWidgetData />
-            }
+          )}
         </Grid>
       </Paper>
     </Grid>

@@ -66,8 +66,8 @@ export default function useWidgetFetch({
           global,
         })
           .then((data) => {
-            if(data){
-              setData(data)
+            if (data) {
+              setData(data);
             }
           })
           .catch((error) => {

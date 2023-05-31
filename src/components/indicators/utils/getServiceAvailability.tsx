@@ -7,11 +7,11 @@ const getServiceAvailability: MethodFunc = (input, column, params) => {
 
   const services = new Map(
     Array.from(
-      new Set(input.map((d) => d[column] + '_' + d[column + '_1']))
+      new Set(input.map((d) => d[column] + '_' + d[column + '_1'])),
     ).map((d) => {
       const [key, name] = d.split('_');
       return [+key, name];
-    })
+    }),
   );
 
   for (let valueColumn of valueColumns) {
@@ -25,7 +25,7 @@ const getServiceAvailability: MethodFunc = (input, column, params) => {
     for (let [key, service] of Array.from(services)) {
       const serviceValue = aggregatedValueByColumn.filter(
         //@ts-ignore
-        ({ name }) => name === key
+        ({ name }) => name === key,
       )[0];
       //@ts-ignore
       serviceValue[valueColumn] = serviceValue.value ?? 0;
@@ -59,4 +59,4 @@ const getServiceAvailability: MethodFunc = (input, column, params) => {
   return output;
 };
 
-export default getServiceAvailability
+export default getServiceAvailability;

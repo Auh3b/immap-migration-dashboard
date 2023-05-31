@@ -29,7 +29,7 @@ const stackedBarCategories: MethodFunc = (input, column, params) => {
         _group_column_values.map(({ value }) => value),
       ];
     }
-  
+
     valueUnique = Array.from(new Set(valueUnique));
     const output = [
       {
@@ -41,7 +41,7 @@ const stackedBarCategories: MethodFunc = (input, column, params) => {
     ];
     return output;
   } catch (error) {
-    return []
+    return [];
   }
 };
 

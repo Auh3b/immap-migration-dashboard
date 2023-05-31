@@ -19,5 +19,5 @@ export const EXTERNAL_METHOD_NAMES = {
   GET_SUNBURST_HIERARCHY: 'get_sunburst_hierarchy',
   GET_AVERAGE_ELAPSED_DAYS: 'get_average_elapsed_days',
   GET_AVG_DAYS_BY_COUNTRY: 'get_avg_days_by_country',
-  TIMELINE_VALUES_ALT: 'timeline_values_alt'
+  TIMELINE_VALUES_ALT: 'timeline_values_alt',
 };

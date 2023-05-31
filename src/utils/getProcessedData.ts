@@ -8,8 +8,8 @@ interface getProcessedDataProps {
   params: getProcessedDataPropsParams;
   global?: Boolean;
   column?: string;
-  methodName?:string;
-  methodParams?:Record<string, any>
+  methodName?: string;
+  methodParams?: Record<string, any>;
 }
 
 interface getProcessedDataPropsParams {
@@ -28,7 +28,16 @@ export default async function getProcessedData({
   methodName,
   methodParams,
 }: getProcessedDataProps) {
-  const { data: _rawData } = await executeTask(sourceId, Methods.FEATURES_RAW, params);
-  const  data = await executeExternalMethod({data: _rawData, column, methodName, params: methodParams})
+  const { data: _rawData } = await executeTask(
+    sourceId,
+    Methods.FEATURES_RAW,
+    params,
+  );
+  const data = await executeExternalMethod({
+    data: _rawData,
+    column,
+    methodName,
+    params: methodParams,
+  });
   return data;
 }

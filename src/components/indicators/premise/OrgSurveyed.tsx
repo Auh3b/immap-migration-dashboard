@@ -21,9 +21,7 @@ const props = {
   methodName,
 };
 
-export default function OrgSurveyed({
-  dataSource,
-}: BasicWidgetType) {
+export default function OrgSurveyed({ dataSource }: BasicWidgetType) {
   const { widget } = useWidgetEffect(
     <CustomPieWidget dataSource={dataSource} {...props} />,
     [dataSource],

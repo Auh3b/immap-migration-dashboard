@@ -16,7 +16,7 @@ const groupedColumns: MethodFunc = (input, column, params) => {
       }).map((d) => d.value);
       value = [...value, ...target_value];
     }
-  
+
     const output: any = [
       {
         value,
@@ -27,7 +27,7 @@ const groupedColumns: MethodFunc = (input, column, params) => {
     ];
     return output;
   } catch (error) {
-    return []
+    return [];
   }
 };
 

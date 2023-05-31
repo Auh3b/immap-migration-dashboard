@@ -75,12 +75,12 @@ const useStyles = makeStyles((theme) => ({
 const id = 'aggregatedService';
 const title =
   'Capacidad de atención y operación del punto de servicio o ayuda humanitaria';
-const methodName = EXTERNAL_METHOD_NAMES.GET_CONNECTED_DOT_SERVICES
+const methodName = EXTERNAL_METHOD_NAMES.GET_CONNECTED_DOT_SERVICES;
 const methodParams = {
   otherColumns,
-  serviceStatColumns:  Object.fromEntries(SERVICE_STAT_COLUMNS), 
-  servicesKey: Object.fromEntries(SERVICES_KEY), 
-  serviceStatColumnLength: SERVICE_STAT_COLUMNS_NAME.length 
+  serviceStatColumns: Object.fromEntries(SERVICE_STAT_COLUMNS),
+  servicesKey: Object.fromEntries(SERVICES_KEY),
+  serviceStatColumnLength: SERVICE_STAT_COLUMNS_NAME.length,
 };
 
 export default function AggreatedServices({ dataSource }: BasicWidgetType) {
@@ -123,10 +123,10 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
             id: dataSource,
             column: COLUNM_MAP.get(column),
             type: _FilterTypes.STRING_SEARCH,
-            params:{
+            params: {
               useRegExp: true,
             },
-            values: ['^(.*,|)'+currentSelection+'(,.*|)$'],
+            values: ['^(.*,|)' + currentSelection + '(,.*|)$'],
             owner,
           }),
         );

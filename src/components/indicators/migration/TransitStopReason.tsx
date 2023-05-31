@@ -32,8 +32,8 @@ const props = {
   column,
   methodName,
   filterType,
-  filterParams:{
-    useRegExp: true
+  filterParams: {
+    useRegExp: true,
   },
   labels,
 };

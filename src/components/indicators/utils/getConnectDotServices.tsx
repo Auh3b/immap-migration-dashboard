@@ -2,7 +2,12 @@ import MethodFunc from './methodType';
 
 const getConnectDotServices: MethodFunc = (input, column, params) => {
   let output: any[] = [];
-  const { otherColumns, serviceStatColumns, servicesKey, serviceStatColumnLength } = params;
+  const {
+    otherColumns,
+    serviceStatColumns,
+    servicesKey,
+    serviceStatColumnLength,
+  } = params;
 
   for (let serviceEntry of input) {
     const services: number[] = serviceEntry[column]
@@ -18,7 +23,9 @@ const getConnectDotServices: MethodFunc = (input, column, params) => {
           serviceEntry[otherColumns.region],
           serviceEntry[otherColumns.organisation],
           serviceEntry[otherColumns.persons],
-          `${serviceEntry[otherColumns.organisation]} - ${servicesKey[service] ?? 'Otro'}`,
+          `${serviceEntry[otherColumns.organisation]} - ${
+            servicesKey[service] ?? 'Otro'
+          }`,
           [serviceEntry[otherColumns.long], serviceEntry[otherColumns.lat]],
         ];
         let columnValues: any[] = [];
@@ -28,7 +35,9 @@ const getConnectDotServices: MethodFunc = (input, column, params) => {
             serviceEntry[serviceColumns[i]] || 0,
           ];
         }
-        const id = `${newEntry[3]}-${servicesKey[newEntry[0]] ?? 'Otro'}+${newEntry[2]} - ${newEntry.at(-1).join('-')}`;
+        const id = `${newEntry[3]}-${servicesKey[newEntry[0]] ?? 'Otro'}+${
+          newEntry[2]
+        } - ${newEntry.at(-1).join('-')}`;
         output = [...output, [...newEntry, ...columnValues, id]];
       }
     }
@@ -36,4 +45,4 @@ const getConnectDotServices: MethodFunc = (input, column, params) => {
   return output;
 };
 
-export default getConnectDotServices
+export default getConnectDotServices;

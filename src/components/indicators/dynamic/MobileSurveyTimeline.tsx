@@ -22,9 +22,7 @@ const props = {
   methodName,
 };
 
-export default function MobileSurveyTimeline({
-  dataSource,
-}: BasicWidgetType) {
+export default function MobileSurveyTimeline({ dataSource }: BasicWidgetType) {
   const { widget } = useWidgetEffect(
     <CustomTimelineWidget dataSource={dataSource} {...props} />,
     [dataSource],

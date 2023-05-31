@@ -25,8 +25,14 @@ const methodMap = new Map<string, Function>([
   [EXTERNAL_METHOD_NAMES.STACK_CATEGORY_TOTALS, stackCategoryTotals],
   [EXTERNAL_METHOD_NAMES.STACKED_BAR_CATEGORIES, stackedBarCategories],
   [EXTERNAL_METHOD_NAMES.STACKED_GROUP_CATEGORIES, stackedGroupCategories],
-  [EXTERNAL_METHOD_NAMES.STACKED_GROUP_CATEGORIES_ALT, stackedGroupCategoriesAlt],
-  [EXTERNAL_METHOD_NAMES.STACKED_GROUP_CATEGORIES_ALT_2, stackedGroupCategoriesAlt2],
+  [
+    EXTERNAL_METHOD_NAMES.STACKED_GROUP_CATEGORIES_ALT,
+    stackedGroupCategoriesAlt,
+  ],
+  [
+    EXTERNAL_METHOD_NAMES.STACKED_GROUP_CATEGORIES_ALT_2,
+    stackedGroupCategoriesAlt2,
+  ],
 ]);
 
 let currentData: Record<string, any[]>;

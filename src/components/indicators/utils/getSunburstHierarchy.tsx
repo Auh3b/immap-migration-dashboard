@@ -4,7 +4,7 @@ import {
   interpolateSinebow,
   scaleOrdinal,
   scaleSequential,
-  sum
+  sum,
 } from 'd3';
 import groupCategories from './groupCategories';
 // import { UNICEF_COLORS } from 'theme';
@@ -49,7 +49,7 @@ function getUniqueValue(input: any[], columns: string[]) {
 function getColorMap(
   values: string[],
   colorScale: Function,
-  colorScaleType: string
+  colorScaleType: string,
 ) {
   const valueColor = new Map();
   const { ORDINAL, SEQUENTIAL } = COLOR_SCALE_TYPE;
@@ -58,7 +58,7 @@ function getColorMap(
       for (let value of values) {
         valueColor.set(
           value,
-          color(colorScale(value)).copy({ opacity: 0.1 }).formatHex()
+          color(colorScale(value)).copy({ opacity: 0.1 }).formatHex(),
         );
       }
       break;
@@ -67,7 +67,7 @@ function getColorMap(
       for (let i = 0; i < values.length; i++) {
         valueColor.set(
           values[i],
-          color(colorScale(i)).copy({ opacity: 0.1 }).formatHex()
+          color(colorScale(i)).copy({ opacity: 0.1 }).formatHex(),
         );
       }
       break;
@@ -80,12 +80,16 @@ function getColors(input: any[], columns: string[], colorScaleType: string) {
   const colorScale = getColorScale.get(colorScaleType)(
     colorScaleType === COLOR_SCALE_TYPE.SEQUENTIAL
       ? [0, uniqueValues.length]
-      : uniqueValues
+      : uniqueValues,
   );
   const colorMap = getColorMap(uniqueValues, colorScale, colorScaleType);
   return colorMap;
 }
-function getSunburstHierarchy(input: any[], column: string, params?: Record<any, any>) {
+function getSunburstHierarchy(
+  input: any[],
+  column: string,
+  params?: Record<any, any>,
+) {
   const { lv2, lv3, colorScaleType } = params;
   //@ts-ignore
   const levels = [column, lv2, lv3];
@@ -147,7 +151,7 @@ function getSunburstHierarchy(input: any[], column: string, params?: Record<any,
     }
   });
 
-  return [nest, legend]
+  return [nest, legend];
 }
 
-export default getSunburstHierarchy
+export default getSunburstHierarchy;

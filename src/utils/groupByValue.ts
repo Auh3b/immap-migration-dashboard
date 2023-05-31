@@ -1,21 +1,32 @@
 import { max, mean, min, rollup, sum } from 'd3';
 
-export enum GroupByTypes{
+export enum GroupByTypes {
   SUM = 'sum',
   AVG = 'avg',
   MAX = 'max',
   MIN = 'min',
-  COUNT = 'count'
+  COUNT = 'count',
 }
 
 const GROUP_FUNCTION = new Map<string, Function>([
-  [GroupByTypes.SUM, (data:any[], column:string) => sum(data, d=> d[column])],
-  [GroupByTypes.AVG,  (data:any[], column:string) => mean(data, d=> d[column])],
-  [GroupByTypes.COUNT,  (data:any[], column:string) => data.length],
-  [GroupByTypes.MAX,  (data:any[], column:string) => max(data, d=> d[column])],
-  [GroupByTypes.MIN,  (data:any[], column:string) => min(data, d=> d[column])],
-])
-
+  [
+    GroupByTypes.SUM,
+    (data: any[], column: string) => sum(data, (d) => d[column]),
+  ],
+  [
+    GroupByTypes.AVG,
+    (data: any[], column: string) => mean(data, (d) => d[column]),
+  ],
+  [GroupByTypes.COUNT, (data: any[], column: string) => data.length],
+  [
+    GroupByTypes.MAX,
+    (data: any[], column: string) => max(data, (d) => d[column]),
+  ],
+  [
+    GroupByTypes.MIN,
+    (data: any[], column: string) => min(data, (d) => d[column]),
+  ],
+]);
 
 function groupByValue({
   input,
@@ -26,7 +37,7 @@ function groupByValue({
   input: any[];
   keyColumn: string;
   valueColumn: string;
-  type?: GroupByTypes
+  type?: GroupByTypes;
 }) {
   const outputMap = rollup(
     input,
