@@ -8,6 +8,7 @@ import { defaultCustomWidgetProps } from './customWidgetsType';
 import useWidgetFetch from './hooks/useWidgetFetch';
 import useWidgetFilterValues from './hooks/useWidgetFilterValues';
 import CustomWidgetWrapper from './CustomWidgetWrapper';
+import CustomBarWidgetUI from '../customCharts/CustomBarWidgetUI';
 
 const EMPTY_ARRAY: [] = [];
 
@@ -99,7 +100,8 @@ export default function CustomBarWidget({
     <CustomWidgetWrapper title={title} isLoading={isLoading} onError={error}>
       <WidgetWithAlert dataSource={dataSource}>
         {(!!sortedData || !isLoading) && (
-          <BarWidgetUI
+          <CustomBarWidgetUI
+            height={400}
             selectedBars={selectedBars}
             onSelectedBarsChange={handleSelectedBarsChange}
             labels={labels}
