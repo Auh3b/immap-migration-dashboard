@@ -1,6 +1,6 @@
 import { ascending, descending, flatRollup, maxIndex, sum } from 'd3';
 import { MEDIA_SOURCES, Input, MediaParams, POST_URL_MAP } from './mediaUtils';
-import groupByValue from 'utils/groupByValue';
+import groupByValue, { GroupByTypes } from 'utils/groupByValue';
 import { Filters, filterValues } from 'utils/filterFunctions';
 import crypto from 'crypto';
 
@@ -78,6 +78,7 @@ export function getMediaOrigins({ filters }: MediaParams) {
       input: _data2,
       valueColumn: 'value',
       keyColumn: 'name',
+      type: GroupByTypes.SUM,
     })
       .sort((a, b) => descending(a.value, b.value))
       .slice(0, 10);
@@ -108,6 +109,7 @@ export function getSentimentPercentages({ filters }: MediaParams) {
         input: groupSentiment,
         valueColumn: 'value',
         keyColumn: 'name',
+        type: GroupByTypes.SUM,
       });
 
       const sentimanetTotal = sum(sourceSentimentGroup, ({ value }) => value);
@@ -161,6 +163,7 @@ export function getSentimentHistory({ filters }: MediaParams) {
         input: groupSentiment,
         valueColumn: 'value',
         keyColumn: 'name',
+        type: GroupByTypes.SUM,
       });
 
       const {
@@ -240,6 +243,7 @@ export function getTopPhrases({ filters }: MediaParams) {
       input: _data2,
       valueColumn: 'value',
       keyColumn: 'name',
+      type: GroupByTypes.SUM,
     })
       .sort((a, b) => descending(a.value, b.value))
       .slice(0, 20);
