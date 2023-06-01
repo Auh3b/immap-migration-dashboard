@@ -2,19 +2,17 @@
 import { selectAreFeaturesReadyForSource } from '@carto/react-redux';
 import { useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
-import getTileFeatures from 'utils/methods/getTileFeatures';
 import useCustomCompareEffect from '../../../../hooks/useCustomCompareEffect';
 import { dequal } from 'dequal';
 import useWidgetSource from './useWidgetSource';
-import MethodFunc from 'components/indicators/utils/methodType';
-import { defaultFilterFunction } from 'components/indicators/utils/miscelleniousFunctions';
+import getProcessedData from 'utils/getProcessedData';
 
 export interface useWidgetFetchProps {
   id: string;
   dataSource: any;
   column?: string;
-  method?: MethodFunc | null;
-  methodParams?: {};
+  methodName?: string;
+  methodParams?: Record<string, any>;
   global?: Boolean;
 }
 
@@ -27,7 +25,7 @@ export interface useWidgetFetchProps {
 
 export default function useWidgetFetch({
   id,
-  method = (input, column) => input,
+  methodName,
   column,
   dataSource,
   methodParams = {},
@@ -59,22 +57,17 @@ export default function useWidgetFetch({
     () => {
       setIsLoading(true);
       if (source && isSourceReady) {
-        getTileFeatures({
+        getProcessedData({
           sourceId: source.id,
           params,
+          methodName,
+          column,
+          methodParams,
           global,
         })
           .then((data) => {
-            if (data && data.length > 0) {
-              setData(
-                method(
-                  [...defaultFilterFunction(data, column)],
-                  column,
-                  methodParams,
-                ),
-              );
-            } else {
-              setData([]);
+            if (data) {
+              setData(data);
             }
           })
           .catch((error) => {

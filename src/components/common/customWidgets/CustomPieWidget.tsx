@@ -17,7 +17,7 @@ const EMPTY_ARRAY: [] = [];
 export default function CustomPieWidget({
   id,
   title,
-  method,
+  methodName,
   dataSource,
   column,
   filterable = true,
@@ -38,15 +38,18 @@ export default function CustomPieWidget({
   const handleSelectedCategoriesChange = useCallback(
     (categories) => {
       if (categories && categories.length) {
-        const withRegExp = filterType === _FilterTypes.STRING_SEARCH  ? categories.map((d:any) => `^(.*,|)${d}(,.*|)$`) : categories
+        const withRegExp =
+          filterType === _FilterTypes.STRING_SEARCH
+            ? categories.map((d: any) => `^(.*,|)${d}(,.*|)$`)
+            : categories;
         dispatch(
           addFilter({
             id: dataSource,
             column,
             type: filterType,
             values: withRegExp,
-            params:{
-              ...filterParams
+            params: {
+              ...filterParams,
             },
             owner: id,
           }),
@@ -64,10 +67,14 @@ export default function CustomPieWidget({
     [column, dataSource, filterType, id, dispatch],
   );
 
-  const { data = [], isLoading, error } = useWidgetFetch({
+  const {
+    data = [],
+    isLoading,
+    error,
+  } = useWidgetFetch({
     id,
     dataSource,
-    method,
+    methodName,
     methodParams,
     column,
   });

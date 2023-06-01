@@ -6,7 +6,7 @@ import TreeMapChart from '../customCharts/TreeMapChart';
 export default function TreeMapWidget({
   id,
   title,
-  method,
+  methodName,
   methodParams,
   dataSource,
   actions,
@@ -17,7 +17,7 @@ export default function TreeMapWidget({
     id,
     dataSource,
     column,
-    method,
+    methodName,
     methodParams,
   });
   return (

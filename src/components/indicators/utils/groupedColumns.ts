@@ -2,7 +2,7 @@ import { groupValuesByColumn } from '@carto/react-core';
 import MethodFunc from './methodType';
 import { UNICEF_COLORS } from 'theme';
 
-const groupedColumns: MethodFunc = (input, column, params) => {
+const groupedColumns: MethodFunc<any[]> = (input, column, params) => {
   try {
     const { columns, aggregateType, legend } = params;
     let value: any[] = [];
@@ -16,7 +16,7 @@ const groupedColumns: MethodFunc = (input, column, params) => {
       }).map((d) => d.value);
       value = [...value, ...target_value];
     }
-  
+
     const output: any = [
       {
         value,
@@ -27,7 +27,7 @@ const groupedColumns: MethodFunc = (input, column, params) => {
     ];
     return output;
   } catch (error) {
-    return []
+    return [];
   }
 };
 

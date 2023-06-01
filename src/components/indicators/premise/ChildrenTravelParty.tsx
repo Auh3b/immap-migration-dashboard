@@ -6,6 +6,7 @@ import { defaultCustomWidgetProps } from 'components/common/customWidgets/custom
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
 import stackedBarCategories from '../utils/stackedBarCategories';
 import useWidgetEffect from '../utils/useWidgetEffect';
+import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
 
 const title = 'NNA no acompañados y separados';
 const NOTE =
@@ -13,7 +14,7 @@ const NOTE =
 const id = 'childrenTravelParty';
 const column = 'serv_dif_n';
 const filterType = _FilterTypes.IN;
-const method = stackedBarCategories;
+const methodName = EXTERNAL_METHOD_NAMES.STACKED_BAR_CATEGORIES;
 const methodParams = {
   columns: ['nna_no_aco', 'nna_separ_'],
   legend: ['No acompañados', 'Separados'],
@@ -24,7 +25,7 @@ const props: defaultCustomWidgetProps = {
   column,
   id,
   filterType,
-  method,
+  methodName,
   methodParams,
   stacked: false,
 };

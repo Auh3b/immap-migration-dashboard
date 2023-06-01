@@ -16,7 +16,7 @@ const source = 'premiseData';
 const id = 'sickPremise';
 
 export default function IntroSickPremise({
-  data: _data=[],
+  data: _data = [],
   isLoading,
 }: {
   data: any[];
@@ -55,8 +55,6 @@ export default function IntroSickPremise({
     owner: id,
     type: _FilterTypes.STRING_SEARCH,
   });
-
-  console.log(data)
 
   return (
     <TitleWrapper

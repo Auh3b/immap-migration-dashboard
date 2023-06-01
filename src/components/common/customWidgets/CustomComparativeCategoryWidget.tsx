@@ -12,7 +12,7 @@ const CustomWidgetWrapper = lazy(
 export default function CustomComparativeCategoryWidget({
   id,
   title,
-  method,
+  methodName,
   methodParams,
   column,
   colorMap,
@@ -24,7 +24,7 @@ export default function CustomComparativeCategoryWidget({
   const [colors, setColors] = useState<null | string[]>(null);
   const { data: _data, isLoading } = useWidgetFetch({
     id,
-    method,
+    methodName,
     column,
     dataSource,
     methodParams,

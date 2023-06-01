@@ -30,7 +30,7 @@ const STEP_SIZE_RANGE_MAPPING = {
 export default function CustomTimeSeriesWidget({
   id,
   title,
-  method,
+  methodName,
   dataSource,
   column,
   chartType = TIME_SERIES_CHART_TYPES.LINE,
@@ -61,7 +61,7 @@ defaultCustomWidgetProps) {
     id,
     dataSource,
     column,
-    method,
+    methodName,
     methodParams,
   });
 

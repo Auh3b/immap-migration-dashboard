@@ -2,7 +2,7 @@ import { AggregationTypes, aggregationFunctions } from '@carto/react-core';
 import MethodFunc from 'components/indicators/utils/methodType';
 import { UNICEF_COLORS } from 'theme';
 
-const singleStackBarValues: MethodFunc = (input, column, params) => {
+const singleStackBarValues: MethodFunc<any[]> = (input, column, params) => {
   const { columns, legend, aggregationType = AggregationTypes.SUM } = params;
   let name = [legend];
   let value: [number][] = [];

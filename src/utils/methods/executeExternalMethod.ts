@@ -3,7 +3,8 @@ import { wrap } from 'comlink';
 interface ExecuteExternalMethod {
   data: any[];
   methodName: string;
-  params: Record<string, any>;
+  column: string;
+  params?: Record<string, any>;
 }
 
 const MethodWorker = new Worker('utils/methods/methodWorker', {
@@ -17,8 +18,14 @@ const { executeMethod } = wrap(MethodWorker);
 export default async function executeExternalMethod({
   data,
   methodName,
+  column,
   params,
 }: ExecuteExternalMethod) {
-  const { result } = await executeMethod({ data, methodName, params });
+  const { result } = await executeMethod({
+    input: data,
+    column,
+    methodName,
+    params,
+  });
   return result;
 }
