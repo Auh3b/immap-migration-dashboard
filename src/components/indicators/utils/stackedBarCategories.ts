@@ -3,7 +3,7 @@ import MethodFunc from 'components/indicators/utils/methodType';
 import { ascending } from 'd3';
 import { UNICEF_COLORS } from 'theme';
 
-const stackedBarCategories: MethodFunc = (input, column, params) => {
+const stackedBarCategories: MethodFunc<any[]> = (input, column, params) => {
   try {
     const { columns, legend } = params;
     let valueGroup: any = [];
@@ -29,7 +29,7 @@ const stackedBarCategories: MethodFunc = (input, column, params) => {
         _group_column_values.map(({ value }) => value),
       ];
     }
-  
+
     valueUnique = Array.from(new Set(valueUnique));
     const output = [
       {
@@ -41,7 +41,7 @@ const stackedBarCategories: MethodFunc = (input, column, params) => {
     ];
     return output;
   } catch (error) {
-    return []
+    return [];
   }
 };
 

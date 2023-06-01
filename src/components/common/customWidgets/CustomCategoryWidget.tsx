@@ -13,7 +13,7 @@ const EMPTY_ARRAY: [] = [];
 export default function CustomCategoryWidget({
   id,
   title,
-  method,
+  methodName,
   dataSource,
   column,
   filterType,
@@ -33,7 +33,10 @@ export default function CustomCategoryWidget({
   const handleSelectedCategoriesChange = useCallback(
     (categories) => {
       if (categories && categories.length) {
-        const withRegExp = filterType === _FilterTypes.STRING_SEARCH  ? categories.map((d:any) => `^(.*,|)${d}(,.*|)$`) : categories
+        const withRegExp =
+          filterType === _FilterTypes.STRING_SEARCH
+            ? categories.map((d: any) => `^(.*,|)${d}(,.*|)$`)
+            : categories;
         dispatch(
           addFilter({
             id: dataSource,
@@ -41,7 +44,7 @@ export default function CustomCategoryWidget({
             type: filterType,
             values: withRegExp,
             params: {
-              ...filterParams
+              ...filterParams,
             },
             owner: id,
           }),
@@ -62,7 +65,7 @@ export default function CustomCategoryWidget({
   const { data, isLoading, error } = useWidgetFetch({
     id,
     dataSource,
-    method,
+    methodName,
     column,
   });
 

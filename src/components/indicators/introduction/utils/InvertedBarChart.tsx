@@ -48,10 +48,10 @@ export default function InvertedBarChart({
   const option = useMemo(
     () => ({
       grid: {
-        top: '0%',
+        top: '3%',
         left: '5%',
-        right: '0%',
-        bottom: '0%',
+        right: '5%%',
+        bottom: '3%',
         containLabel: true,
       },
       xAxis: {

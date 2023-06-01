@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
 export default function CustomStackedBarWidget({
   id,
   title,
-  method,
+  methodName,
   dataSource,
   column,
   methodParams,
@@ -41,7 +41,7 @@ export default function CustomStackedBarWidget({
   } = useWidgetFetch({
     id,
     dataSource,
-    method,
+    methodName,
     column,
     methodParams,
   });

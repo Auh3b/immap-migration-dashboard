@@ -17,13 +17,13 @@ export default function CustomTimelineWidget({
   id,
   title,
   dataSource,
-  method,
+  methodName,
   column,
   methodParams,
 }: defaultCustomWidgetProps) {
   const { data, isLoading } = useWidgetFetch({
     id,
-    method,
+    methodName,
     column,
     dataSource,
     methodParams,

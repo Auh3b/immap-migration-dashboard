@@ -1,36 +1,15 @@
-import { AggregationTypes, groupValuesByColumn } from '@carto/react-core';
 import { descending } from 'd3';
 import MethodFunc from './methodType';
+import groupByValue, { GroupByTypes } from 'utils/groupByValue';
 
-interface getCategoriesProps {
-  data: any[];
-  valuesColumns?: string[];
-  keysColumn?: string;
-  operation?: AggregationTypes;
-}
-
-function getCategories({
-  data,
-  valuesColumns,
-  keysColumn,
-  operation,
-}: getCategoriesProps) {
-  return groupValuesByColumn({
-    data,
-    valuesColumns,
-    keysColumn,
-    operation,
-  });
-}
-
-const concatenatedValues:MethodFunc = (input, column, params) => {
-  if(!input.length){
-    return []
+const concatenatedValues: MethodFunc<any[]> = (input, column, params) => {
+  if (!input.length) {
+    return [];
   }
-  
-  let splitValue:string = ','
-  if(params){
-    splitValue = params?.splitValue ? params?.splitValue : splitValue
+
+  let splitValue: string = ',';
+  if (params) {
+    splitValue = params?.splitValue ? params?.splitValue : splitValue;
   }
   //@ts-ignore
   const values = input.map((f) => f[column]).filter((i) => i !== 'null');
@@ -40,14 +19,14 @@ const concatenatedValues:MethodFunc = (input, column, params) => {
     .filter((i: string) => i.length > 0)
     .map((i: any) => Object.fromEntries(new Map([[column, i]])));
 
-  const groupData = getCategories({
-    data: pivotedData,
-    valuesColumns: [column],
-    keysColumn: column,
-    operation: AggregationTypes.COUNT,
+  const groupData = groupByValue({
+    input: pivotedData,
+    valueColumn: column,
+    keyColumn: column,
+    type: GroupByTypes.COUNT,
   });
   //@ts-ignore
   return groupData.sort((a, b) => descending(a.value, b.value));
-}
+};
 
 export default concatenatedValues;

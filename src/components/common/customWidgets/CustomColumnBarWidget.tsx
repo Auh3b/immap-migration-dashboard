@@ -10,7 +10,7 @@ export default function CustomColumnBarWidget({
   title,
   id,
   dataSource,
-  method,
+  methodName,
   methodParams,
   column,
   extraProps,
@@ -19,7 +19,7 @@ export default function CustomColumnBarWidget({
   const { data: _data, isLoading } = useWidgetFetch({
     id,
     dataSource,
-    method,
+    methodName,
     column,
     methodParams,
     global,

@@ -5,6 +5,7 @@ import CustomCategoryWidget from 'components/common/customWidgets/CustomCategory
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
 import concatenatedValues from '../utils/concatenatedValues';
 import useWidgetEffect from '../utils/useWidgetEffect';
+import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
 
 const CATEGORY_ABREVATIONS = new Map([
   [1, 'Apoyo Psicosocial'],
@@ -22,17 +23,17 @@ const id = 'childrenDifferentiatedServices';
 const title = 'Cuales servicios diferenciados';
 const column = 'cual_ser_1';
 const filterType = _FilterTypes.STRING_SEARCH;
-const method = concatenatedValues;
+const methodName = EXTERNAL_METHOD_NAMES.CONCATENATED_VALUES;
 const labels = Object.fromEntries(CATEGORY_ABREVATIONS);
 
 const props = {
   id,
   title,
   column,
-  method,
+  methodName,
   filterType,
-  filterParams:{
-    useRegExp: true
+  filterParams: {
+    useRegExp: true,
   },
   labels,
 };

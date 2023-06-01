@@ -11,6 +11,7 @@ import {
 import CustomColumnBarWidget from 'components/common/customWidgets/CustomColumnBarWidget';
 import stackedGroupCategoriesAlt from '../utils/stackedGroupCategoryAlt';
 import stackedGroupCategoriesAlt2 from '../utils/stackedGroupCategoriesAlt2';
+import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
 
 const NOTE = 'Nivel de satisfacción del servicio prestado al migrante';
 const id = 'serviceQualityAdult';
@@ -18,7 +19,7 @@ const title = 'Calidad del servicio';
 const column = 'm12';
 const valueColumn = 'm15';
 const filterType = _FilterTypes.IN;
-const method = stackedGroupCategoriesAlt2;
+const methodName = EXTERNAL_METHOD_NAMES.STACKED_GROUP_CATEGORIES_ALT_2;
 const methodParams = {
   aidTypes,
   labels,
@@ -37,7 +38,7 @@ const props = {
   title,
   column,
   filterType,
-  method,
+  methodName,
   labels,
   methodParams,
   extraProps,

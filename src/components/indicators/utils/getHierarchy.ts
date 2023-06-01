@@ -1,7 +1,7 @@
 import { group } from 'd3';
 import MethodFunc from './methodType';
 
-const getHierarchy: MethodFunc = (input, column, params) => {
+const getHierarchy: MethodFunc<any[]> = (input, column, params) => {
   const { levels } = params;
   const _reducedData = input.map((d) =>
     Object.fromEntries([

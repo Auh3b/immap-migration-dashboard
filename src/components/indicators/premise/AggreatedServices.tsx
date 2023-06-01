@@ -12,12 +12,10 @@ import {
 import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType';
 import useWidgetFetch from 'components/common/customWidgets/hooks/useWidgetFetch';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import MethodFunc from '../utils/methodType';
-import { SERVICES_KEY, SERVICE_STAT_COLUMNS } from './utils/services';
+import { SERVICES_KEY } from './utils/services';
 import CustomWidgetWrapper from 'components/common/customWidgets/CustomWidgetWrapper';
 import { filterItem, filterValues } from 'utils/filterFunctions';
 import { _FilterTypes } from '@carto/react-core';
-import CustomConnectDotChart from 'components/common/customWidgets/CustomConnectDotChart';
 import { useDispatch, useSelector } from 'react-redux';
 import { addFilter, removeFilter } from '@carto/react-redux';
 import { point } from '@turf/helpers';
@@ -27,6 +25,9 @@ import handleMapTransitions from './utils/handleMapTransitions';
 import AggreatedServicesLegend from './utils/AggreatedServicesLegend';
 import getViewport from './utils/getViewport';
 import getFeatureCollection from './utils/getFeatureCollection';
+import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
+import CustomConnectDotChart from 'components/common/customCharts/CustomConnectDotChart';
+import { SERVICE_STAT_COLUMNS } from './utils/services';
 
 const otherColumns = {
   country: 'ubicacion_',
@@ -37,7 +38,7 @@ const otherColumns = {
   long: 'longitude',
 };
 
-const SERVICE_STAT_COLUMNS_NAME = [
+export const SERVICE_STAT_COLUMNS_NAME = [
   'Capacidad diaria',
   'Personas atendidas ayer',
 ];
@@ -49,49 +50,8 @@ const COLUNM_MAP = new Map([
   [3, Object.values(otherColumns)[1]],
 ]);
 
-const method: MethodFunc = (input, column, params) => {
-  let output: any[] = [];
-  const { otherColumns } = params;
-
-  for (let serviceEntry of input) {
-    const services: number[] = serviceEntry[column]
-      .split(',')
-      .map((d: string) => +d);
-
-    for (let service of services) {
-      const serviceColumns = SERVICE_STAT_COLUMNS.get(service);
-      if (serviceColumns) {
-        let newEntry: any[] = [
-          service ?? 'Otro',
-          null,
-          serviceEntry[otherColumns.region],
-          serviceEntry[otherColumns.organisation],
-          serviceEntry[otherColumns.persons],
-          `${serviceEntry[otherColumns.organisation]} - ${
-            SERVICES_KEY.get(service) ?? 'Otro'
-          }`,
-          [serviceEntry[otherColumns.long], serviceEntry[otherColumns.lat]],
-        ];
-        let columnValues: any[] = [];
-        for (let i = 0; i < SERVICE_STAT_COLUMNS_NAME.length; i++) {
-          columnValues = [
-            ...columnValues,
-            serviceEntry[serviceColumns[i]] || 0,
-          ];
-        }
-        const id = `${newEntry[3]}-${SERVICES_KEY.get(newEntry[0]) ?? 'Otro'}+${
-          newEntry[2]
-        } - ${newEntry.at(-1).join('-')}`;
-        output = [...output, [...newEntry, ...columnValues, id]];
-      }
-    }
-  }
-  return output;
-};
-
 const useStyles = makeStyles((theme) => ({
   main: {},
-
   menuItem: {},
   content: {
     marginTop: theme.spacing(2),
@@ -115,8 +75,12 @@ const useStyles = makeStyles((theme) => ({
 const id = 'aggregatedService';
 const title =
   'Capacidad de atención y operación del punto de servicio o ayuda humanitaria';
+const methodName = EXTERNAL_METHOD_NAMES.GET_CONNECTED_DOT_SERVICES;
 const methodParams = {
   otherColumns,
+  serviceStatColumns: Object.fromEntries(SERVICE_STAT_COLUMNS),
+  servicesKey: Object.fromEntries(SERVICES_KEY),
+  serviceStatColumnLength: SERVICE_STAT_COLUMNS_NAME.length,
 };
 
 export default function AggreatedServices({ dataSource }: BasicWidgetType) {
@@ -131,7 +95,7 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
   const { data: _data, isLoading } = useWidgetFetch({
     id,
     dataSource,
-    method,
+    methodName,
     column,
     methodParams,
   });
@@ -159,10 +123,10 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
             id: dataSource,
             column: COLUNM_MAP.get(column),
             type: _FilterTypes.STRING_SEARCH,
-            params:{
+            params: {
               useRegExp: true,
             },
-            values: ['^(.*,|)'+currentSelection+'(,.*|)$'],
+            values: ['^(.*,|)' + currentSelection + '(,.*|)$'],
             owner,
           }),
         );
