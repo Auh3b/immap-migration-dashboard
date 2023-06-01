@@ -18,7 +18,7 @@ const labels = Object.fromEntries([
   [1,'1 a 3 días' ],
   [2,'4 a 8 días' ],
   [3,'1 y 2 semanas' ],
-  [4,'1 y 2 semanas' ],
+  [4,'+2 semanas' ],
 ])
 
 const props = {
