@@ -10,10 +10,8 @@ export default function aggregateColumns(
   const aggFn = aggregationFunctions[aggregateType];
   columns.forEach((column) => {
     const filteredData = defaultFilterFunction(input, column);
-    //@ts-expect-error
     const columnTotal = aggFn(filteredData, [column]);
-    //@ts-expect-error
-    totalValue += columnTotal;
+    totalValue += columnTotal as number;
   });
 
   return totalValue;

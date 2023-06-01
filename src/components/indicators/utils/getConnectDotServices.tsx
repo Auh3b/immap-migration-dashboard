@@ -1,6 +1,6 @@
 import MethodFunc from './methodType';
 
-const getConnectDotServices: MethodFunc = (input, column, params) => {
+const getConnectDotServices: MethodFunc<any[]> = (input, column, params) => {
   let output: any[] = [];
   const {
     otherColumns,
