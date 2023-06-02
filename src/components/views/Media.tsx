@@ -1,17 +1,21 @@
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
-import MediaAggregateIndicators from './mediaViews/MediaAggregateIndicators';
 import MediaFilterToolbar from './mediaViews/MediaFilterToolbar';
-import { useEffect, useState } from 'react';
+import { Suspense, lazy, useEffect, useState } from 'react';
 import { setError } from 'store/appSlice';
 import { getDownloadURL, ref } from 'firebase/storage';
 import { fireStorage } from 'firedb';
-import MediaIndicators from './mediaViews/MediaIndicators';
 import { useDispatch } from 'react-redux';
 import executeMethod from 'components/indicators/media/hooks/executeMethod';
 import { METHOD_NAMES } from './mediaViews/utils/methodName';
 import { setIsMediaDataReady } from 'store/mediaSlice';
-import MediaPosts from './mediaViews/MediaPosts';
+import ComponentFallback from 'components/common/ComponentFallback';
+
+const MediaIndicators = lazy(() => import('./mediaViews/MediaIndicators'));
+const MediaAggregateIndicators = lazy(
+  () => import('./mediaViews/MediaAggregateIndicators'),
+);
+const MediaPosts = lazy(() => import('./mediaViews/MediaPosts'));
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -66,9 +70,15 @@ export default function Media() {
       className={classes.root}
     >
       <MediaFilterToolbar />
-      <MediaAggregateIndicators isLoading={isLoading} />
-      <MediaIndicators isLoading={isLoading} />
-      <MediaPosts isLoading={isLoading} />
+      <Suspense fallback={<ComponentFallback />}>
+        <MediaAggregateIndicators isLoading={isLoading} />
+      </Suspense>
+      <Suspense fallback={<ComponentFallback />}>
+        <MediaIndicators isLoading={isLoading} />
+      </Suspense>
+      <Suspense fallback={<ComponentFallback />}>
+        <MediaPosts isLoading={isLoading} />
+      </Suspense>
     </Grid>
   );
 }

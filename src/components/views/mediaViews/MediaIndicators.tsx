@@ -1,10 +1,20 @@
 import { Grid, Paper, makeStyles } from '@material-ui/core';
 import ComponentFallback from 'components/common/ComponentFallback';
-import MediaOrigin from 'components/indicators/media/MediaOrigin';
-import TopPhrases from 'components/indicators/media/TopPhrases';
-import SentimentPresentages from 'components/indicators/media/SentimentPresentages';
-import SentimentTimeline from 'components/indicators/media/SentimentTimeline';
-import MediaEngagement from 'components/indicators/media/MediaEngagement';
+import { Suspense, lazy } from 'react';
+
+const MediaOrigin = lazy(
+  () => import('components/indicators/media/MediaOrigin'),
+);
+const TopPhrases = lazy(() => import('components/indicators/media/TopPhrases'));
+const SentimentPresentages = lazy(
+  () => import('components/indicators/media/SentimentPresentages'),
+);
+const SentimentTimeline = lazy(
+  () => import('components/indicators/media/SentimentTimeline'),
+);
+const MediaEngagement = lazy(
+  () => import('components/indicators/media/MediaEngagement'),
+);
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -19,16 +29,21 @@ export default function MediaIndicators({ isLoading }: any) {
     <Grid item className={classes.root}>
       <Paper className={classes.paper}>
         <Grid container className={classes.content}>
-          {isLoading && <ComponentFallback />}
-          {!isLoading && (
-            <>
-              <MediaOrigin />
-              <SentimentPresentages />
-              <TopPhrases />
-              <SentimentTimeline />
-              <MediaEngagement />
-            </>
-          )}
+          <Suspense fallback={<ComponentFallback />}>
+            <MediaOrigin />
+          </Suspense>
+          <Suspense fallback={<ComponentFallback />}>
+            <SentimentPresentages />
+          </Suspense>
+          <Suspense fallback={<ComponentFallback />}>
+            <TopPhrases />
+          </Suspense>
+          <Suspense fallback={<ComponentFallback />}>
+            <SentimentTimeline />
+          </Suspense>
+          <Suspense fallback={<ComponentFallback />}>
+            <MediaEngagement />
+          </Suspense>
         </Grid>
       </Paper>
     </Grid>
