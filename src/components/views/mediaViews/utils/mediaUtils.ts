@@ -12,6 +12,8 @@ import {
   faYoutube,
 } from '@fortawesome/free-brands-svg-icons';
 import { Filters } from 'utils/filterFunctions';
+import { UNICEF_COLORS } from 'theme';
+import { grey, orange } from '@material-ui/core/colors';
 
 export const MEDIA_SOURCES = {
   MENCIONES_TOTALES: 'menciones_totales',
@@ -46,6 +48,18 @@ export const FA_MAP = new Map([
   [MEDIA_SOURCES.FORUMS, faUser],
   [MEDIA_SOURCES.MENCIONES_TOTALES, faHashtag],
   [MEDIA_SOURCES.SOCIAL_BLOGS, faSquareRss],
+]);
+
+export const SOURCE_COLOR = Object.fromEntries([
+  [MEDIA_SOURCES.ALL, '#333'],
+  [MEDIA_SOURCES.FACEBOOK, '#1877f2'],
+  [MEDIA_SOURCES.TWITTER, '#1da1f2'],
+  [MEDIA_SOURCES.TIKTOK, '#010101'],
+  [MEDIA_SOURCES.REDDIT, '#ff4500'],
+  [MEDIA_SOURCES.YOUTUBE, '#ff0000'],
+  [MEDIA_SOURCES.FORUMS, grey[500]],
+  [MEDIA_SOURCES.MENCIONES_TOTALES, '#1CABE2'],
+  [MEDIA_SOURCES.SOCIAL_BLOGS, orange[500]],
 ]);
 
 export const POST_URL_MAP = new Map([

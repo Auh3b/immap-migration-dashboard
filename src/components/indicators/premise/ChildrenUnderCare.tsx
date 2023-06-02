@@ -3,7 +3,6 @@ import { Grid } from '@material-ui/core';
 import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType';
 import CustomHistogramWidget from 'components/common/customWidgets/CustomHistogramWidget';
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
-import histogramValues from '../utils/histogramValues';
 import useWidgetEffect from '../utils/useWidgetEffect';
 import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
 

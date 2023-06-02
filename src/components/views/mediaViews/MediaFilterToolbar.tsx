@@ -27,6 +27,7 @@ import { UNICEF_COLORS } from 'theme';
 import { Filters } from 'utils/filterFunctions';
 import CloseIcon from '@material-ui/icons/Close';
 import FilterListIcon from '@material-ui/icons/FilterList';
+import regionName from 'components/indicators/media/utils/getCountryByRegion';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -296,10 +297,14 @@ function FilterMenu({
                       <Typography variant='overline'>
                         {type === _FilterTypes.BETWEEN
                           ? values[0]
-                              .map((d: any) => d.replaceAll('-', '/'))
+                              .map((d: string) => d.replaceAll('-', '/'))
                               .join(' - ')
                           : values
-                              .map((d: any) => d.replaceAll('-', '/'))
+                              .map((d: string) =>
+                                owner === 'país'
+                                  ? regionName.of(d.toUpperCase())
+                                  : d,
+                              )
                               .join(', ')}
                       </Typography>
                     </div>
