@@ -5,10 +5,11 @@ import { METHOD_NAMES } from 'components/views/mediaViews/utils/methodName';
 import useMediaData from './hooks/useMediaData';
 import { useDispatch, useSelector } from 'react-redux';
 import ContinuousLegend from 'components/common/customCharts/ContinuousLegend';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { addMediaFilter, removeMediaFilter } from 'store/mediaSlice';
 import { FilterTypes } from 'utils/filterFunctions';
 import NoWidgetData from 'components/common/customWidgets/NoWidgetData';
+import getSourceFilter from './utils/getSourceFilter';
 
 const id = 'top_phrases';
 
@@ -54,14 +55,18 @@ export default function TopPhrases() {
     },
     [dispatch, data],
   );
+
+  const selectedWord = useMemo(
+    () => getSourceFilter(id, filters)[0] || '',
+    [filters, id],
+  );
   return (
     <Grid xs={12} lg={4} item className={classes.root}>
-      <TitleWrapper title='Palabras asociadas' isLoading={isLoading}>
+      <TitleWrapper title='Palabras asociadas' isLoading={isLoading} filterable>
         <CustomWordCloud
           onWordSelectChange={onWordSelectChange}
           data={data}
-          filters={filters}
-          id={id}
+          selectedWord={selectedWord}
         />
         <ContinuousLegend colorScheme={['#fd8d3c', '#800026']} />
         {!data.length && !isLoading && <NoWidgetData />}
