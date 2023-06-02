@@ -3,7 +3,7 @@ import TitleWrapper from 'components/common/TitleWrapper';
 import ReactEcharts from 'components/common/customCharts/ReactEcharts';
 import { MEDIA_SOURCES_NAMES } from 'components/views/mediaViews/utils/mediaUtils';
 import { METHOD_NAMES } from 'components/views/mediaViews/utils/methodName';
-import { useMemo } from 'react';
+import { CSSProperties, useMemo } from 'react';
 import useMediaData from './hooks/useMediaData';
 import NoWidgetData from 'components/common/customWidgets/NoWidgetData';
 
@@ -16,6 +16,13 @@ export default function SentimentPresentages() {
     id,
     methodName: METHOD_NAMES.MEDIA_SENTIMENT_PERCENTAGES,
   });
+
+  const chartStyle: Partial<CSSProperties> = useMemo(
+    () => ({
+      height: 400, //data.length ? data.length * theme.spacing(11) : theme.spacing(2)
+    }),
+    [data, theme],
+  );
 
   const groupKey = ['name', 'Negative', 'Neutral', 'Positive', 'Not Rated'];
   const colorKey = ['#333333', '#f03b20', '#feb24c', '#ffeda0', '#999999'];
@@ -62,7 +69,9 @@ export default function SentimentPresentages() {
         bottom: '5%',
         containLabel: true,
       },
-      legend: {},
+      legend: {
+        left: 0,
+      },
       tooltip: {
         trigger: 'axis',
         padding: [theme.spacing(0.5), theme.spacing(1)],
@@ -116,7 +125,7 @@ export default function SentimentPresentages() {
         title='Sentimiento por tipo de red social'
         isLoading={isLoading}
       >
-        <ReactEcharts option={option} style={{ height: 400 }} />
+        <ReactEcharts option={option} style={chartStyle} />
       </TitleWrapper>
       {!data.length && !isLoading && <NoWidgetData />}
     </Grid>
