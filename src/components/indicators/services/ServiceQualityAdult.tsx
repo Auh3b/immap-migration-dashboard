@@ -9,8 +9,6 @@ import {
   serviceLabels2 as labels,
 } from './utils/serviceIndicatorTypes';
 import CustomColumnBarWidget from 'components/common/customWidgets/CustomColumnBarWidget';
-import stackedGroupCategoriesAlt from '../utils/stackedGroupCategoryAlt';
-import stackedGroupCategoriesAlt2 from '../utils/stackedGroupCategoriesAlt2';
 import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
 
 const NOTE = 'Nivel de satisfacción del servicio prestado al migrante';

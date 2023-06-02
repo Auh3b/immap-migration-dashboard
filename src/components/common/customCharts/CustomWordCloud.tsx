@@ -4,7 +4,6 @@ import cloud from 'd3-cloud';
 import { makeStyles, useTheme } from '@material-ui/core';
 import { extent, median, scaleSequential } from 'd3';
 import { numberFormatter } from 'utils/formatter';
-import getSourceFilter from 'components/indicators/media/utils/getSourceFilter';
 
 const width = 450;
 const height = 400;
@@ -28,18 +27,15 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CustomWordCloud({
   data: _data = [],
-  filters,
   onWordSelectChange,
-  id,
+  selectedWord,
 }: {
   data: { name: string; value: number }[];
-  filters?: any;
   onWordSelectChange?: (values: any, args: any) => void;
-  id?: string;
+  selectedWord?: string;
 }) {
   const classes = useStyles({ height });
   const theme = useTheme();
-  const [selectedWord = ''] = getSourceFilter(id, filters);
 
   const data = useMemo(() => {
     if (_data.length === 0) {
@@ -152,7 +148,6 @@ export default function CustomWordCloud({
 
   const onClick = useCallback(
     (values) => {
-      console.log(values, selectedWord);
       return onWordSelectChange(values, selectedWord);
     },
     [data, selectedWord],
@@ -161,7 +156,6 @@ export default function CustomWordCloud({
   return (
     <ReactEcharts
       onEvents={{ click: onClick }}
-      opts={{ renderer: 'svg' }}
       option={option}
       className={classes.root}
       style={{ width, height }}
