@@ -4,9 +4,13 @@ import { createSlice } from '@reduxjs/toolkit';
 const slice = createSlice({
   name: 'intro',
   initialState: {
+    isIntroDataReady: false,
     filters: {},
   },
   reducers: {
+    setIsIntroDataReady:(state, action)=>{
+      state.isIntroDataReady = action.payload
+    },
     addIntroFilter: (state, action) => {
       const { owner, source } = action.payload;
       const dataSource = state.filters[source];
@@ -35,6 +39,10 @@ const slice = createSlice({
 
 export default slice.reducer;
 
+export const setIsIntroDataReady = (payload: Boolean) => ({
+  type: 'intro/setIsIntroDataReady',
+  payload,
+});
 export const addIntroFilter = (payload: any) => ({
   type: 'intro/addIntroFilter',
   payload,

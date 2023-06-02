@@ -6,7 +6,6 @@ import {
   AppBar,
   Button,
   Divider,
-  Fab,
   Grid,
   Toolbar,
   Typography,
@@ -19,7 +18,6 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import useIntroData, {
   useClearIntroFilters,
 } from 'components/indicators/introduction/hooks/useIntroData';
-import ClearAllIcon from '@material-ui/icons/ClearAll';
 import ClearFiltersButton from 'components/common/ClearFiltersButton';
 
 const useStyles = makeStyles((theme) => ({
@@ -85,7 +83,6 @@ const useHeaderStyles = makeStyles((theme) => ({
       flexDirection: 'column',
     },
   },
-  logoContainer: {},
   logo: {
     [theme.breakpoints.down('md')]: {
       height: theme.spacing(2),
@@ -142,7 +139,6 @@ function IntroHeader() {
             container
             alignItems='center'
             justifyContent='flex-end'
-            className={classes.logoContainer}
           >
             <Grid item>
               <UnicefLogo className={classes.logo} />
