@@ -7,6 +7,7 @@ import CustomWordCloud from 'components/common/customCharts/CustomWordCloud';
 import { useDispatch, useSelector } from 'react-redux';
 import { addIntroFilter, removeIntroFilter } from 'store/introSlice';
 import { _FilterTypes } from '@carto/react-core';
+import getSourceFilter from '../media/utils/getSourceFilter';
 
 const title = 'Identificación NNA solos';
 const column = 'm07__en_q';
@@ -58,7 +59,10 @@ export default function NnaCountry({
     },
     [data, dispatch, filters],
   );
-
+  const selectedWord = useMemo(
+    () => getSourceFilter(id, filters) || '',
+    [filters, id],
+  );
   return (
     <TitleWrapper
       title={title}
@@ -69,8 +73,7 @@ export default function NnaCountry({
       <Grid item>
         <CustomWordCloud
           data={data}
-          id={id}
-          filters={filters}
+          selectedWord={selectedWord}
           onWordSelectChange={onWordSelectChange}
         />
       </Grid>
