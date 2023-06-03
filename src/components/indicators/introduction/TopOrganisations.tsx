@@ -14,17 +14,17 @@ const subtitle =
   'Top 5 de organizaciones implementadoras de servicios, (Para ver todas las organizaciones, diríjase a la pestaña de servicios)';
 const source = 'premise';
 const id = 'topOrganisations';
-const methodName = EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES
-export default function TopOrganisations() {  
-    const { data, isLoading} = useIntroData({
+const methodName = EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES;
+export default function TopOrganisations() {
+  const { data, isLoading } = useIntroData({
     id,
     column,
     source,
     methodName,
-  })
- //@ts-ignore
-  const _filters = useSelector((state)=> state.intro.filters) || {}
-  const selectedCategories = getSourceFilter(id,_filters,source);
+  });
+  //@ts-ignore
+  const _filters = useSelector((state) => state.intro.filters) || {};
+  const selectedCategories = getSourceFilter(id, _filters, source);
 
   const handleSelectedCategoriesChange = useIntroCategoryChange({
     source,

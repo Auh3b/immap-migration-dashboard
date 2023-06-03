@@ -8,8 +8,8 @@ const slice = createSlice({
     filters: {},
   },
   reducers: {
-    setIsIntroDataReady:(state, action)=>{
-      state.isIntroDataReady = action.payload
+    setIsIntroDataReady: (state, action) => {
+      state.isIntroDataReady = action.payload;
     },
     addIntroFilter: (state, action) => {
       const { owner, source } = action.payload;

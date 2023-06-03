@@ -1,10 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
-import {
-  AppBar, Divider,
-  Grid,
-  Toolbar,
-  Typography
-} from '@material-ui/core';
+import { AppBar, Divider, Grid, Toolbar, Typography } from '@material-ui/core';
 import { ReactComponent as UnicefLogo } from 'assets/img/unicef.svg';
 import { ReactComponent as ImmapLogo } from 'assets/img/immapLogoAlt.svg';
 import { ExitButton } from '../Introduction';

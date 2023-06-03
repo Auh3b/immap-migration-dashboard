@@ -4,26 +4,34 @@ import iconStyles from './utils/iconStyles';
 import { Grid } from '@material-ui/core';
 import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
 import useIntroData from './hooks/useIntroData';
+import { SummarisationTypes } from '../utils/AggregateColumns';
+import { useMemo } from 'react';
 
-const id = 'totalAurora'
-const source = 'aurora'
-const column = ''
+const id = 'totalAurora';
+const source = 'aurora';
+const column = '';
 const title = 'Personas conectadas';
 const subtitle = 'En Aurora Chatbot';
-const methodName  = EXTERNAL_METHOD_NAMES.AGGREGATE_COLUMNS
+const methodName = EXTERNAL_METHOD_NAMES.AGGREGATE_COLUMNS;
 const methodParams = {
-  columns: ['objectid']
-}
+  columns: [
+    {
+      name: 'objectid',
+      type: SummarisationTypes.COUNT,
+    },
+  ],
+};
 
 export default function TotalAurora() {
-
-  const { data, isLoading} = useIntroData({
+  const { data: _data, isLoading } = useIntroData({
     id,
     column,
     source,
     methodName,
-    methodParams
-  })
+    methodParams,
+  });
+
+  const data = useMemo(() => (_data.length ? _data[0]?.value : 0), [_data]);
 
   return (
     <Grid lg={3} item wrap='nowrap' container>

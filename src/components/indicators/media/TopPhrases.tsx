@@ -18,17 +18,18 @@ const useStyles = makeStyles((theme) => ({
     position: 'relative',
   },
 }));
-const dataSource = 'meltwater';
+const source = 'meltwater';
 const column = 'topPhrases';
 
 export default function TopPhrases() {
   const { data, isLoading } = useMediaData({
     id,
     methodName: METHOD_NAMES.MEDIA_TOP_PHRASES,
+    source,
   });
   const dispatch = useDispatch();
   //@ts-ignore
-  const filters = useSelector((state) => state.media.filters?.meltwater) || {};
+  const filters = useSelector((state) => state.media.filters) || {};
   const classes = useStyles();
   const onWordSelectChange = useCallback(
     ({ value }: any, selectedWord: string) => {
@@ -37,7 +38,7 @@ export default function TopPhrases() {
         dispatch(
           removeMediaFilter({
             owner: id,
-            source: dataSource,
+            source,
             column,
           }),
         );
@@ -45,7 +46,7 @@ export default function TopPhrases() {
         dispatch(
           addMediaFilter({
             owner: id,
-            source: dataSource,
+            source,
             values: [text],
             column,
             type: FilterTypes.WORD_CLOUD_IN,
@@ -57,7 +58,7 @@ export default function TopPhrases() {
   );
 
   const selectedWord = useMemo(
-    () => getSourceFilter(id, filters)[0] || '',
+    () => getSourceFilter(id, filters, source)[0] || '',
     [filters, id],
   );
   return (

@@ -14,7 +14,7 @@ const NOTE =
 const id = 'childrenTravelParty';
 const column = 'serv_dif_n';
 const methodName = EXTERNAL_METHOD_NAMES.STACKED_BAR_CATEGORIES;
-const source = 'aurora'
+const source = 'premise';
 const methodParams = {
   columns: ['nna_no_aco', 'nna_separ_'],
   legend: ['No acompañados', 'Separados'],
@@ -23,31 +23,36 @@ const methodParams = {
 export default function IntroChildTravelParty() {
   const theme = useTheme();
 
-  const { data, isLoading} = useIntroData({
+  const { data: _data, isLoading } = useIntroData({
     id,
     column,
     source,
     methodName,
-    methodParams
-  })
+    methodParams,
+  });
 
-  const series = useMemo(
-    () => [
-      {
-        name: data?.legend[0],
-        type: 'bar',
-        data: data?.value[0],
-        itemStyle: {},
-      },
-      {
-        name: data?.legend[1],
-        type: 'bar',
-        data: data?.value[1],
-        itemStyle: {},
-      },
-    ],
-    [data],
-  );
+  const data:any = useMemo(()=> _data.length ? _data[0] : {}, [_data])
+
+  const series = useMemo(() => {
+    if (Object.keys(data).length) {
+      return [
+        {
+          name: data?.legend[0],
+          type: 'bar',
+          data: data?.value[0],
+          itemStyle: {},
+        },
+        {
+          name: data?.legend[1],
+          type: 'bar',
+          data: data?.value[1],
+          itemStyle: {},
+        },
+      ];
+    }
+
+    return [];
+  }, [data]);
 
   const option = useMemo(
     () => ({
@@ -79,7 +84,7 @@ export default function IntroChildTravelParty() {
       },
       xAxis: {
         type: 'category',
-        data: data?.name,
+        data: data?.name || [],
         axisTick: {
           show: false,
         },

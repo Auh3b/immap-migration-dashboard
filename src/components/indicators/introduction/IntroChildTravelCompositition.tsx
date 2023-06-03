@@ -8,6 +8,7 @@ import { UNICEF_COLORS } from 'theme';
 import { useTheme } from '@material-ui/core';
 import useIntroData from './hooks/useIntroData';
 import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
+import { SummarisationTypes } from '../utils/AggregateColumns';
 
 const title =
   'Atención a niños, niñas y adolescentes no acompañados y separados';
@@ -15,24 +16,24 @@ const NOTE =
   'Cuántos niños, niñas y adolescentes no acompañados y separados atendieron durante la semana inmediatamente anterior';
 const id = 'childrenTravelPartyComposition';
 const column = 'serv_dif_n';
-const filterType = _FilterTypes.IN;
 const methodName = EXTERNAL_METHOD_NAMES.GROUPED_COLUMNS;
-const source = 'aurora'
+const source = 'premise';
 const methodParams = {
-  columns: ['cuan_nna_n', 'cuan_nna_s'],
+  columns: [{name: 'cuan_nna_n', type: SummarisationTypes.SUM}, {name:'cuan_nna_s', type:SummarisationTypes.SUM}],
   legend: ['Acompañados NNA', 'Separados NNA'],
-  aggregateType: AggregationTypes.SUM,
 };
 
 export default function IntroChildTravelCompositition() {
   const theme = useTheme();
-  const { data, isLoading} = useIntroData({
+  const { data: _data, isLoading } = useIntroData({
     id,
     column,
     source,
     methodName,
-    methodParams
-  })
+    methodParams,
+  });
+
+  const data = useMemo(()=> _data.length ? _data[0] : {}, [_data])
 
   const series = useMemo(
     () => [

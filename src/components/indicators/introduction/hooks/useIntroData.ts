@@ -1,4 +1,3 @@
-
 import { useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setError } from 'store/appSlice';
@@ -12,7 +11,7 @@ export default function useIntroData({
   column,
   methodName,
   methodParams,
-  source
+  source,
 }: {
   id: string;
   methodName: string;
@@ -24,7 +23,7 @@ export default function useIntroData({
   const [data, setData] = useState<any>([]);
   const [isLoading, setIsLoading] = useState(false);
   //@ts-ignore
-  const filters = useSelector((state) => state.intro.filters) || {}
+  const filters = useSelector((state) => state.intro.filters) || {};
   const sourceFilters = useIndicatorFilters({ id, source, filters });
   //@ts-ignore
   const isMediaDataReady = useSelector((state) => state.intro.isIntroDataReady);
@@ -48,7 +47,9 @@ export default function useIntroData({
           methodName,
         })
           .then((data) => {
-            setData(data);
+            if (data.length) {
+              setData(data);
+            }
           })
           .catch((error) => {
             dispatch(setError(error.message));

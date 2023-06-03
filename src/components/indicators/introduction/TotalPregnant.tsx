@@ -8,18 +8,28 @@ import useIntroData from './hooks/useIntroData';
 const title = 'Mujeres gestantes en los grupos';
 const subtitle = 'Reportadas en Aurora Chatbot';
 const column = 'm01__en_t';
-const id = 'totalPregnant'
-const methodName = EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES
-const source = 'aurora'
+const id = 'totalPregnant';
+const methodName = EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES;
+const source = 'aurora';
 
 export default function TotalPregnant() {
-  
-  const { data, isLoading} = useIntroData({
+  const { data: _data, isLoading } = useIntroData({
     id,
     column,
     source,
     methodName,
-  })
+  });
+  const data = useMemo(() => {
+    if (_data.length) {
+      const yesValues =
+        _data[
+          //@ts-ignore
+          _data.findIndex((d) => d?.name.toLocaleLowerCase() === 'si')
+        ];
+      return yesValues.value;
+    }
+    return 0;
+  }, [_data]);
   // const data = useMemo(() => {
   //   if (_data) {
   //     try {

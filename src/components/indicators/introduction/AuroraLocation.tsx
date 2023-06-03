@@ -15,21 +15,24 @@ const subtitle = '';
 const id = 'auroraLocations';
 const source = 'aurora';
 const filterable = true;
-const methodName =  EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES
+const methodName = EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES;
 
 export default function AuroraLocation() {
-  
   const { data, isLoading } = useIntroData({
     id,
     column,
     source,
     methodName,
-  })
+  });
 
   //@ts-ignore
-  const _filters = useSelector((state)=> state.intro.filters) || {}
-  const selectedCategories = getSourceFilter( source,id,_filters);
-  const handleSelectedCategoriesChange = useIntroCategoryChange({source,column,owner: id,});
+  const _filters = useSelector((state) => state.intro.filters) || {};
+  const selectedCategories = getSourceFilter(source, id, _filters);
+  const handleSelectedCategoriesChange = useIntroCategoryChange({
+    source,
+    column,
+    owner: id,
+  });
 
   return (
     <TitleWrapper

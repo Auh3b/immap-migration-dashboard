@@ -4,11 +4,27 @@ import { useMemo } from 'react';
 import aggregateColumns from '../utils/AggregateColumns';
 import { AggregationTypes } from '@carto/react-core';
 import TitleWrapper from '../../common/TitleWrapper';
+import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
+import useIntroData from './hooks/useIntroData';
 
 const title = 'Socios implementadores/Principales';
 const columns = [['org_pert1'], ['org_pert2']];
 const subtitle = '';
+const id = 'principalsImplementor';
+const column = '';
+const source = 'premise';
+const methodName = EXTERNAL_METHOD_NAMES.AGGREGATE_COLUMNS;
+const methodParams = {
+  columns,
+};
 export default function PrincipalsImplementor() {
+  const { data, isLoading } = useIntroData({
+    id,
+    column,
+    source,
+    methodName,
+    methodParams,
+  });
   // const data = useMemo(() => {
   //   if (_data) {
   //     const principles = aggregateColumns(
@@ -34,7 +50,7 @@ export default function PrincipalsImplementor() {
   //   }
   // }, [_data]);
   return (
-    <TitleWrapper title={title} subtitle={subtitle}>
+    <TitleWrapper title={title} subtitle={subtitle} isLoading={isLoading}>
       <Grid item>
         <CategoryWidgetUI data={data} />
       </Grid>

@@ -1,5 +1,5 @@
 import { Grid } from '@material-ui/core';
-import groupCategories from '../utils/groupCategories';
+import groupCategories, { Sort_Type } from '../utils/groupCategories';
 import TitleWrapper from '../../common/TitleWrapper';
 import InvertedBarChart from './utils/InvertedBarChart';
 import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
@@ -11,21 +11,24 @@ const title = 'Presencia de NNA solos';
 const column = 'm06_durant';
 const subtitle = '';
 const id = 'nnaSolo';
-const source = 'aurora'
-const methodName = EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES
+const source = 'aurora';
+const methodName = EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES;
+const methodParams = {
+  sortType: Sort_Type.ASC,
+};
 
 export default function NnaSolo() {
-  
-  const { data, isLoading} = useIntroData({
+  const { data, isLoading } = useIntroData({
     id,
     column,
     source,
     methodName,
-  })
+    methodParams,
+  });
 
- //@ts-ignore
-  const _filters = useSelector((state)=> state.intro.filters) || {}
-  const selectedCategories = getSourceFilter(id,_filters,source);
+  //@ts-ignore
+  const _filters = useSelector((state) => state.intro.filters) || {};
+  const selectedCategories = getSourceFilter(id, _filters, source);
 
   return (
     <Grid item lg={3}>

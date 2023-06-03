@@ -6,6 +6,7 @@ import IntroPieChart from './utils/IntroPieChart';
 import getSourceFilter from '../media/utils/getSourceFilter';
 import useIntroData from './hooks/useIntroData';
 import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
+import { useSelector } from 'react-redux';
 
 const title = 'Nacionalidad de la persona conectada';
 const column = 'e08_pais_';
@@ -13,18 +14,18 @@ const subtitle = '';
 const source = 'aurora';
 const id = 'topOrganisations';
 const filterable = true;
-const methodName = EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES
+const methodName = EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES;
 
 export default function MigrantNationalities() {
-  const { data, isLoading} = useIntroData({
+  const { data, isLoading } = useIntroData({
     id,
     column,
     source,
     methodName,
-  })
- //@ts-ignore
-  const _filters = useSelector((state)=> state.intro.filters) || {}
-  const selectedCategories = getSourceFilter(id,_filters,source);
+  });
+  //@ts-ignore
+  const _filters = useSelector((state) => state.intro.filters) || {};
+  const selectedCategories = getSourceFilter(id, _filters, source);
 
   const handleSelectedCategoriesChange = useIntroCategoryChange({
     source,

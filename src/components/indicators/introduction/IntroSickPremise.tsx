@@ -13,21 +13,20 @@ const title = 'Retos del punto de servicio';
 const column = 'princ_re_1';
 const subtitle = '';
 const filterable = true;
-const source = 'premiseData';
+const source = 'premise';
 const id = 'sickPremise';
-const methodName = EXTERNAL_METHOD_NAMES.CONCATENATED_VALUES
+const methodName = EXTERNAL_METHOD_NAMES.CONCATENATED_VALUES;
 
 export default function IntroSickPremise() {
-  
-  const { data, isLoading} = useIntroData({
+  const { data, isLoading } = useIntroData({
     id,
     column,
     source,
     methodName,
-  })
- //@ts-ignore
-  const _filters = useSelector((state)=> state.intro.filters) || {}
-  const selectedCategories = getSourceFilter(id,_filters,source);
+  });
+  //@ts-ignore
+  const _filters = useSelector((state) => state.intro.filters) || {};
+  const selectedCategories = getSourceFilter(id, _filters, source);
 
   const handleSelectedCategoriesChange = useIntroCategoryChange({
     source,

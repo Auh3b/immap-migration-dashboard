@@ -15,20 +15,20 @@ const column = 'm07__en_q';
 const subtitle = '';
 const source = 'aurora';
 const id = 'id';
-const methodName = EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES
+const methodName = EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES;
 
 export default function NnaCountry() {
   const dispatch = useDispatch();
 
-    const { data, isLoading} = useIntroData({
+  const { data, isLoading } = useIntroData({
     id,
     column,
     source,
     methodName,
-  })
+  });
 
   //@ts-ignore
-  const filters = useSelector((state) => state.intro.filters[dataSource]) || {};
+  const filters = useSelector((state) => state.intro.filters) || {};
 
   const onWordSelectChange = useCallback(
     ({ value }: any, selectedWord) => {

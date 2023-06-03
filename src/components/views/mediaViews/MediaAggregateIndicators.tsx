@@ -22,6 +22,7 @@ import getSourceFilter from 'components/indicators/media/utils/getSourceFilter';
 import { UNICEF_COLORS } from 'theme';
 
 const id = 'menciones_sociales';
+const source = 'meltwater';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -76,14 +77,17 @@ export default function MediaAggregateIndicators({ isLoading }: any) {
     (state) => state.media.filters,
   );
 
-  const source = useMemo(
-    () => getSourceFilter(id, filters)[0] ?? MEDIA_SOURCES.MENCIONES_TOTALES,
+  const mediaSource = useMemo(
+    () =>
+      getSourceFilter(id, filters, source)[0] ??
+      MEDIA_SOURCES.MENCIONES_TOTALES,
     [filters],
   );
 
   const { data, isLoading: isLoadingWidget } = useMediaData({
     id,
     methodName: METHOD_NAMES.MEDIA_AGGREGATES,
+    source,
   });
 
   const handleSourceChange = (
@@ -135,7 +139,7 @@ export default function MediaAggregateIndicators({ isLoading }: any) {
         <StyleToggleButtonGroup
           exclusive
           onChange={handleSourceChange}
-          value={source}
+          value={mediaSource}
           className={classes.indicatorContainer}
         >
           {data.length > 0 &&

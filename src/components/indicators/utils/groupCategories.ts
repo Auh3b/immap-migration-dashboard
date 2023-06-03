@@ -1,6 +1,16 @@
 import groupByValue, { GroupByTypes } from 'utils/groupByValue';
 import { defaultFilterFunction } from './miscelleniousFunctions';
-import { descending } from 'd3';
+import { ascending, descending } from 'd3';
+
+export enum Sort_Type {
+  ASC = 'asc',
+  DESC = 'desc',
+}
+
+const SORT_FUNCTION = Object.fromEntries([
+  [Sort_Type.ASC, ascending],
+  [Sort_Type.DESC, descending],
+]);
 
 export default function groupCategories(
   input: any[],
@@ -11,6 +21,8 @@ export default function groupCategories(
     return [];
   }
 
+  const sort = SORT_FUNCTION[params?.sortType] || SORT_FUNCTION[Sort_Type.DESC];
+
   const groups = groupByValue({
     input: defaultFilterFunction(input, column, params),
     keyColumn: column,
@@ -20,6 +32,6 @@ export default function groupCategories(
 
   if (groups) {
     //@ts-ignore
-    return groups.sort((a, b) => descending(a.value, b.value));
+    return groups.sort((a, b) => sort(a.value, b.value));
   }
 }

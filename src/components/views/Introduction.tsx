@@ -2,16 +2,13 @@ import IntroRightView from './introductionViews/IntroRightView';
 import IntroMiddleView from './introductionViews/IntroMiddleView';
 import IntroLeftView from './introductionViews/IntroLeftView';
 import { makeStyles } from '@material-ui/core/styles';
-import {
-  Button,
-  Grid,
-} from '@material-ui/core';
+import { Button, Grid } from '@material-ui/core';
 import { NavLink } from 'react-router-dom';
 import { ROUTE_PATHS } from 'routes';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import ClearFiltersButton from 'components/common/ClearFiltersButton';
-import IntroHeader  from './introductionViews/IntroHeader';
-import { useEffect, useMemo, useState } from 'react';
+import IntroHeader from './introductionViews/IntroHeader';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 //@ts-ignore
 import { fetchLayerData, FORMATS } from '@deck.gl/carto';
 import premiseSource from 'data/sources/premiseSource';
@@ -74,37 +71,45 @@ const fetchAurora = async () => {
   });
   return result;
 };
+
 export default function Introduction() {
   const classes = useStyles();
-  const dispatch = useDispatch()
-  const [isLoading, setIsLoading] = useState(false)
+  const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
+  const fetchData = async () => {
     setIsLoading(true);
     Promise.all([fetchAurora(), fetchPremise()])
       .then(([aurora, premise]) => {
         return executeIntroMethod({
           methodName: EXTERNAL_METHOD_NAMES.SET_DATA,
-          params:{
+          params: {
             data: {
               aurora,
-              premise
-            }
-          }
-        })
-      }).then((result) => dispatch(setIsIntroDataReady(result)))
+              premise,
+            },
+          },
+        });
+      })
+      .then((result) => dispatch(setIsIntroDataReady(result)))
       .catch((e) => dispatch(setError(e.message)))
       .finally(() => setIsLoading(false));
+  };
 
+  useEffect(() => {
+    fetchData();
     return () => {
       setIsLoading(false);
     };
   }, []);
 
   //@ts-ignore
-  const filters = useSelector((state)=> state.intro.filters) || {}
+  const filters = useSelector((state) => state.intro.filters) || {};
 
-  const hasFilters = useMemo(()=> Object.keys(filters).length, [filters])
+  const hasFilters = useMemo(() => Object.keys(filters).length || 0, [filters]);
+  const clearCallback = useCallback(() => {
+    dispatch(clearIntroFilters());
+  }, [hasFilters]);
 
   return (
     <Grid
@@ -117,7 +122,7 @@ export default function Introduction() {
       <IntroContent isLoading={isLoading} />
       <ClearFiltersButton
         disabled={!hasFilters}
-        clearCallback={dispatch(clearIntroFilters())}
+        clearCallback={clearCallback}
         className={classes.clearButton}
       />
     </Grid>
@@ -136,18 +141,18 @@ const useContentStyles = makeStyles((theme) => ({
   },
 }));
 
-function IntroContent({isLoading}:{isLoading: Boolean}) {
+function IntroContent({ isLoading }: { isLoading: Boolean }) {
   const classes = useContentStyles();
   return (
     <Grid container wrap='nowrap' item className={classes.root}>
       {isLoading && <ComponentFallback />}
-      {!isLoading && 
+      {!isLoading && (
         <>
           <IntroLeftView />
           <IntroMiddleView />
           <IntroRightView />
         </>
-      }
+      )}
     </Grid>
   );
 }

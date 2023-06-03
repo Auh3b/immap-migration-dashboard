@@ -1,20 +1,20 @@
-import { AggregationTypes, groupValuesByColumn } from '@carto/react-core';
 import MethodFunc from 'components/indicators/utils/methodType';
 import { ascending } from 'd3';
-import { UNICEF_COLORS } from 'theme';
+import groupByValue, { GroupByTypes } from 'utils/groupByValue';
+import { defaultFilterFunction } from './miscelleniousFunctions';
 
 const stackedBarCategories: MethodFunc<any[]> = (input, column, params) => {
   try {
-    const { columns, legend } = params;
+    const { columns, legend, aggType } = params;
     let valueGroup: any = [];
     let valueUnique: string[] = [];
     for (let i = 0; i < columns.length; i++) {
       const target_column = columns[i];
-      const group_column_values = groupValuesByColumn({
-        data: input.filter((d) => +d[target_column] !== 999999),
-        valuesColumns: [target_column],
-        keysColumn: target_column,
-        operation: AggregationTypes.COUNT,
+      const group_column_values = groupByValue({
+        input: defaultFilterFunction(input, target_column),
+        valueColumn: target_column,
+        keyColumn: target_column,
+        type: aggType || GroupByTypes.COUNT,
       });
       const _group_column_values = group_column_values.sort((a, b) =>
         //@ts-ignore
@@ -36,7 +36,7 @@ const stackedBarCategories: MethodFunc<any[]> = (input, column, params) => {
         name: valueUnique,
         value: valueGroup,
         legend,
-        color: [UNICEF_COLORS[0], UNICEF_COLORS[4], UNICEF_COLORS[3]],
+        color: ['#1CABE2',  '#F26A21','#FFC20E'],
       },
     ];
     return output;

@@ -7,12 +7,14 @@ import useMediaData from './hooks/useMediaData';
 import NoWidgetData from 'components/common/customWidgets/NoWidgetData';
 
 const id = 'sentimentTimeline';
+const source = 'meltwater';
 
 export default function SentimentTimeline() {
   const theme = useTheme();
   const { data, isLoading } = useMediaData({
     id,
     methodName: METHOD_NAMES.MEDIA_SENTIMENT_HISTORY,
+    source,
   });
 
   const groupKey = ['name', 'Negative', 'Neutral', 'Positive', 'Not Rated'];

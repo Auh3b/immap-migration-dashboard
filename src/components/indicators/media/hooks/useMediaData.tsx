@@ -9,17 +9,17 @@ import useIndicatorFilters from './useIndicatorFilters';
 export default function useMediaData({
   id,
   methodName,
-  source
+  source,
 }: {
   id: string;
   methodName: string;
-  source: string
+  source: string;
 }) {
   const dispatch = useDispatch();
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   //@ts-ignore
-  const filters = useSelector((state) => state.media.filters) || {}
+  const filters = useSelector((state) => state.media.filters) || {};
   const sourceFilters = useIndicatorFilters({ id, source, filters });
   //@ts-ignore
   const isMediaDataReady = useSelector((state) => state.media.isMediaDataReady);

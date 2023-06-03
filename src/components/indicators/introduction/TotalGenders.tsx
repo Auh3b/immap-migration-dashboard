@@ -1,4 +1,4 @@
-import groupCategories from '../utils/groupCategories';
+import groupCategories, { Sort_Type } from '../utils/groupCategories';
 import TitleWrapper from '../../common/TitleWrapper';
 import useIntroCategoryChange from './hooks/useCategoryChange';
 import { Grid } from '@material-ui/core';
@@ -12,20 +12,23 @@ const title = 'Géneros';
 const subtitle = '';
 const column = 'e07_gener';
 const id = 'totalGenders';
-const source = 'auroraData';
-const methodName = EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES
+const source = 'aurora';
+const methodName = EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES;
+const methodParams = {
+  sortType: Sort_Type.ASC,
+};
 
 export default function TotalGenders() {
-
-    const { data, isLoading} = useIntroData({
+  const { data, isLoading } = useIntroData({
     id,
     column,
     source,
     methodName,
-  })
- //@ts-ignore
-  const _filters = useSelector((state)=> state.intro.filters) || {}
-  const selectedCategories = getSourceFilter(id,_filters,source);
+    methodParams,
+  });
+  //@ts-ignore
+  const _filters = useSelector((state) => state.intro.filters) || {};
+  const selectedCategories = getSourceFilter(id, _filters, source);
 
   const handleSelectedCategoriesChange = useIntroCategoryChange({
     source,

@@ -6,42 +6,32 @@ import iconStyles from './utils/iconStyles';
 import useIntroData from './hooks/useIntroData';
 import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
 
-const id = 'totalChronicPatients'
-const column = 'm02__en_t'
-const source = 'aurora'
+const id = 'totalChronicPatients';
+const column = 'm02__en_t';
+const source = 'aurora';
 const title = 'Personas con enfermedades crónicas';
 const subtitle = 'Reportadas en Chatbot';
-const methodName = EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES
+const methodName = EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES;
 
 export default function TotalChronicPatients() {
-  
-  const { data, isLoading} = useIntroData({
+  const { data: _data, isLoading } = useIntroData({
     id,
     column,
     source,
     methodName,
-  })
-  // const data = useMemo(() => {
-  //   if (_data) {
-  //     try {
-  //       const groupValue = groupValuesByColumn({
-  //         data: _data,
-  //         keysColumn: columns[0],
-  //         operation: AggregationTypes.COUNT,
-  //         valuesColumns: columns,
-  //       });
-  //       const yesValues =
-  //         groupValue[
-  //           //@ts-ignore
-  //           groupValue.findIndex((d) => d?.name.toLocaleLowerCase() === 'si')
-  //         ];
-  //       return yesValues.value;
-  //     } catch (error) {
-  //       return 0;
-  //     }
-  //   }
-  //   return 0;
-  // }, [_data]);
+  });
+  const data = useMemo(() => {
+    if (_data.length) {
+      const yesValues =
+        _data[
+          //@ts-ignore
+          _data.findIndex((d) => d?.name.toLocaleLowerCase() === 'si')
+        ];
+      return yesValues.value;
+    }
+    return 0;
+  }, [_data]);
+
   return (
     <AggregateIndicatorWidget
       title={title}
