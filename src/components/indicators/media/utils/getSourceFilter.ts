@@ -6,8 +6,10 @@ export default function getSourceFilter(
   const filterBySource = _filters[source] || {};
   const filters = { ...filterBySource };
   if (!filters[id]) {
-    return [null];
+    return [];
   }
+
+  console.log(filterBySource)
 
   const { values } = filters[id];
   return values;

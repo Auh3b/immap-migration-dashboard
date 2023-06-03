@@ -5,10 +5,9 @@ import aggregateColumns from './AggregateColumns';
 
 const groupedColumns: MethodFunc<any[]> = (input, column, params) => {
   try {
-    const { columns, aggregateType, legend } = params;
+    const { legend } = params;
     let name: any[] = legend;
     let value = aggregateColumns(input, column, params).map(({value})=>value)
-    console.log(value)
 
     const output: any = [
       {

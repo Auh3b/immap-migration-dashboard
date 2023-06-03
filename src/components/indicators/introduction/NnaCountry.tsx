@@ -57,10 +57,7 @@ export default function NnaCountry() {
     [data, dispatch, filters],
   );
 
-  const selectedWord = useMemo(
-    () => getSourceFilter(id, filters, source)[0] || '',
-    [filters, id],
-  );
+  const selectedWord = getSourceFilter(id, filters, source) || [] 
 
   return (
     <TitleWrapper
@@ -72,7 +69,7 @@ export default function NnaCountry() {
       <Grid item>
         <CustomWordCloud
           data={data}
-          selectedWord={selectedWord}
+          selectedWord={selectedWord[0]|| ''}
           onWordSelectChange={onWordSelectChange}
         />
       </Grid>

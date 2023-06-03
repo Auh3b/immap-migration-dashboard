@@ -27,7 +27,7 @@ export default function TotalChronicPatients() {
           //@ts-ignore
           _data.findIndex((d) => d?.name.toLocaleLowerCase() === 'si')
         ];
-      return yesValues.value;
+      return yesValues ?  yesValues.value : 0;
     }
     return 0;
   }, [_data]);

@@ -27,12 +27,14 @@ export default function AuroraLocation() {
 
   //@ts-ignore
   const _filters = useSelector((state) => state.intro.filters) || {};
-  const selectedCategories = getSourceFilter(source, id, _filters);
+  const selectedCategories = getSourceFilter(id,_filters, source);
   const handleSelectedCategoriesChange = useIntroCategoryChange({
     source,
     column,
     owner: id,
   });
+
+  console.log(_filters, selectedCategories)
 
   return (
     <TitleWrapper
