@@ -6,6 +6,8 @@ import ReactEcharts from 'components/common/customCharts/ReactEcharts';
 import { useMemo } from 'react';
 import { UNICEF_COLORS } from 'theme';
 import { useTheme } from '@material-ui/core';
+import useIntroData from './hooks/useIntroData';
+import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
 
 const title =
   'Atención a niños, niñas y adolescentes no acompañados y separados';
@@ -14,22 +16,23 @@ const NOTE =
 const id = 'childrenTravelPartyComposition';
 const column = 'serv_dif_n';
 const filterType = _FilterTypes.IN;
-const method = groupedColumns;
+const methodName = EXTERNAL_METHOD_NAMES.GROUPED_COLUMNS;
+const source = 'aurora'
 const methodParams = {
   columns: ['cuan_nna_n', 'cuan_nna_s'],
   legend: ['Acompañados NNA', 'Separados NNA'],
   aggregateType: AggregationTypes.SUM,
 };
 
-export default function IntroChildTravelCompositition({ data: _data }: any) {
+export default function IntroChildTravelCompositition() {
   const theme = useTheme();
-
-  const data = useMemo(() => {
-    if (_data) {
-      //@ts-ignore
-      return method(_data, column, methodParams)[0];
-    }
-  }, [_data]);
+  const { data, isLoading} = useIntroData({
+    id,
+    column,
+    source,
+    methodName,
+    methodParams
+  })
 
   const series = useMemo(
     () => [
@@ -81,7 +84,7 @@ export default function IntroChildTravelCompositition({ data: _data }: any) {
   );
 
   return (
-    <TitleWrapper title={title}>
+    <TitleWrapper title={title} isLoading={isLoading}>
       <ReactEcharts option={option} opts={{ renderer: 'svg' }} />
       <WidgetNote note={NOTE} />
     </TitleWrapper>

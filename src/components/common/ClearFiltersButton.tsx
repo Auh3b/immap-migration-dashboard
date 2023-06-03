@@ -24,7 +24,7 @@ export default function ClearFiltersButton({
 }: {
   className?: string;
   disabled: Boolean;
-  clearCallback: Function;
+  clearCallback: any;
 }) {
   const classes = useClearStyles();
 

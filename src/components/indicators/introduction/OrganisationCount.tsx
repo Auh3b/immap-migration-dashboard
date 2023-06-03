@@ -1,25 +1,31 @@
 import AggregateIndicatorWidget from 'components/common/customWidgets/AggregateIndicatorWidget';
 import { ReactComponent as Organisation } from 'assets/img/first-aid.svg';
-import { useMemo } from 'react';
 import aggregateColumns from '../utils/AggregateColumns';
 import iconStyles from './utils/iconStyles';
 import { AggregationTypes } from '@carto/react-core';
-const title = 'PUNTOS DE SERVICIOS CARACTERIZADOS';
-const columns = ['org_pert'];
+import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
+import useIntroData from './hooks/useIntroData';
 
-export default function OrganisationCount({
-  data: _data,
-  isLoading,
-}: {
-  data: any[];
-  isLoading: Boolean;
-}) {
-  const data = useMemo(() => {
-    if (_data) {
-      return aggregateColumns(_data, columns, AggregationTypes.COUNT);
-    }
-    return 0;
-  }, [_data]);
+const id = 'organisationCount'
+const title = 'PUNTOS DE SERVICIOS CARACTERIZADOS';
+const column = ''
+const columns = ['org_pert'];
+const source = 'premise'
+const methodName = EXTERNAL_METHOD_NAMES.AGGREGATE_COLUMNS
+const methodParams = {
+  columns
+}
+
+export default function OrganisationCount() {
+  
+  const { data, isLoading} = useIntroData({
+    id,
+    column,
+    source,
+    methodName,
+    methodParams
+  })
+
   return (
     <AggregateIndicatorWidget
       title={title}

@@ -14,8 +14,8 @@ export default async function executeIntroMethod({
   column,
   params
 }:{
-  source: string;
-  column:string;
+  source?: string;
+  column?:string;
   methodName: string;
   params?: any;
 }){

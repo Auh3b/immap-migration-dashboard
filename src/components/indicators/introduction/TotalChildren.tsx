@@ -3,23 +3,30 @@ import { ReactComponent as Children } from 'assets/img/children.svg';
 import { useMemo } from 'react';
 import aggregateColumns from '../utils/AggregateColumns';
 import iconStyles from './utils/iconStyles';
-const title = 'NNA reportados en los grupos de viaje';
+import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
+import useIntroData from './hooks/useIntroData';
+
+const id = 'totalChildren'
+const column = ''
+const source = 'aurora'
+const title = 'NNA reportados en los grupos de viaje'; 
 const subtitle = 'Validadas';
 const columns = ['e19_1__cu'];
+const methodName = EXTERNAL_METHOD_NAMES.AGGREGATE_COLUMNS
+const methodParams = {
+  columns
+}
 
-export default function TotalChildren({
-  data: _data,
-  isLoading,
-}: {
-  data: any[];
-  isLoading: Boolean;
-}) {
-  const data = useMemo(() => {
-    if (_data) {
-      return aggregateColumns(_data, columns) || 0;
-    }
-    return 0;
-  }, [_data]);
+export default function TotalChildren() {
+
+  const { data, isLoading} = useIntroData({
+    id,
+    column,
+    source,
+    methodName,
+    methodParams
+  })
+
   return (
     <AggregateIndicatorWidget
       title={title}

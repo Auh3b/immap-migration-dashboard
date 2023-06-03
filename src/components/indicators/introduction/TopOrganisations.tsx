@@ -1,38 +1,30 @@
 import { CategoryWidgetUI } from '@carto/react-ui';
 import { Grid } from '@material-ui/core';
-import { useMemo } from 'react';
 import groupCategories from '../utils/groupCategories';
-import { descending } from 'd3';
 import TitleWrapper from '../../common/TitleWrapper';
 import useIntroCategoryChange from './hooks/useCategoryChange';
-import useIntroWidgetFilter from './hooks/useIntroWidgetFilter';
+import useIntroData from './hooks/useIntroData';
+import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
+import getSourceFilter from '../media/utils/getSourceFilter';
+import { useSelector } from 'react-redux';
 
 const title = 'Top de 5 organizaciones';
 const column = 'org_pert';
 const subtitle =
   'Top 5 de organizaciones implementadoras de servicios, (Para ver todas las organizaciones, diríjase a la pestaña de servicios)';
-const source = 'premiseData';
+const source = 'premise';
 const id = 'topOrganisations';
-export default function TopOrganisations({
-  data: _data,
-  isLoading,
-}: {
-  data: any[];
-  isLoading: Boolean;
-}) {
-  const data = useMemo(() => {
-    if (_data) {
-      const category = groupCategories(_data, column);
-      //@ts-ignore
-      const top5 = category.sort((a, b) => descending(a.value, b.value));
-      return top5.slice(0, 5);
-    }
-  }, [_data]);
-
-  const selectedCategories = useIntroWidgetFilter({
+const methodName = EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES
+export default function TopOrganisations() {  
+    const { data, isLoading} = useIntroData({
+    id,
+    column,
     source,
-    owner: id,
-  });
+    methodName,
+  })
+ //@ts-ignore
+  const _filters = useSelector((state)=> state.intro.filters) || {}
+  const selectedCategories = getSourceFilter(id,_filters,source);
 
   const handleSelectedCategoriesChange = useIntroCategoryChange({
     source,
@@ -41,7 +33,7 @@ export default function TopOrganisations({
   });
 
   return (
-    <TitleWrapper title={title} subtitle={subtitle}>
+    <TitleWrapper title={title} subtitle={subtitle} isLoading={isLoading}>
       <Grid item>
         <CategoryWidgetUI
           onSelectedCategoriesChange={handleSelectedCategoriesChange}

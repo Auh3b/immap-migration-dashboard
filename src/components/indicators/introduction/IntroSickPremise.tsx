@@ -1,12 +1,13 @@
-import { useMemo } from 'react';
 import { Grid } from '@material-ui/core';
 import TitleWrapper from '../../common/TitleWrapper';
-import { descending } from 'd3';
 import concatenatedValues from '../utils/concatenatedValues';
 import IntroHalfPieChart from './utils/IntroHalfPieChart';
-import useIntroWidgetFilter from './hooks/useIntroWidgetFilter';
 import useIntroCategoryChange from './hooks/useCategoryChange';
 import { _FilterTypes } from '@carto/react-core';
+import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
+import useIntroData from './hooks/useIntroData';
+import getSourceFilter from '../media/utils/getSourceFilter';
+import { useSelector } from 'react-redux';
 
 const title = 'Retos del punto de servicio';
 const column = 'princ_re_1';
@@ -14,40 +15,19 @@ const subtitle = '';
 const filterable = true;
 const source = 'premiseData';
 const id = 'sickPremise';
+const methodName = EXTERNAL_METHOD_NAMES.CONCATENATED_VALUES
 
-export default function IntroSickPremise({
-  data: _data = [],
-  isLoading,
-}: {
-  data: any[];
-  isLoading: Boolean;
-}) {
-  const selectedCategories = useIntroWidgetFilter({
+export default function IntroSickPremise() {
+  
+  const { data, isLoading} = useIntroData({
+    id,
+    column,
     source,
-    owner: id,
-  });
-
-  const data = useMemo(() => {
-    let output: any[] = [];
-    if (_data) {
-      //@ts-ignore
-      output = [
-        //@ts-ignore
-        ...concatenatedValues(_data, column),
-      ];
-
-      if (selectedCategories.length > 0) {
-        output = [
-          ...output.filter(
-            ({ name, value }) => +name === +selectedCategories[0],
-          ),
-        ];
-      }
-
-      return output;
-    }
-    return [];
-  }, [_data]);
+    methodName,
+  })
+ //@ts-ignore
+  const _filters = useSelector((state)=> state.intro.filters) || {}
+  const selectedCategories = getSourceFilter(id,_filters,source);
 
   const handleSelectedCategoriesChange = useIntroCategoryChange({
     source,

@@ -1,32 +1,32 @@
 import AggregateIndicatorWidget from 'components/common/customWidgets/AggregateIndicatorWidget';
 import { ReactComponent as People } from 'assets/img/Group.svg';
-import { useMemo } from 'react';
 import iconStyles from './utils/iconStyles';
-import { Grid, makeStyles } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
+import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
+import useIntroData from './hooks/useIntroData';
 
+const id = 'totalAurora'
+const source = 'aurora'
+const column = ''
 const title = 'Personas conectadas';
 const subtitle = 'En Aurora Chatbot';
-const useStyles = makeStyles((theme) => ({
-  root: {},
-}));
+const methodName  = EXTERNAL_METHOD_NAMES.AGGREGATE_COLUMNS
+const methodParams = {
+  columns: ['objectid']
+}
 
-export default function TotalAurora({
-  data: _data,
-  isLoading,
-}: {
-  data: any[];
-  isLoading: Boolean;
-}) {
-  const classes = useStyles();
-  const data = useMemo(() => {
-    if (_data) {
-      return _data.length;
-    }
-    return 0;
-  }, [_data]);
+export default function TotalAurora() {
+
+  const { data, isLoading} = useIntroData({
+    id,
+    column,
+    source,
+    methodName,
+    methodParams
+  })
 
   return (
-    <Grid lg={3} item wrap='nowrap' container className={classes.root}>
+    <Grid lg={3} item wrap='nowrap' container>
       <AggregateIndicatorWidget
         title={title}
         isLoading={isLoading}

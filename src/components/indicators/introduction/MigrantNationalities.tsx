@@ -1,35 +1,31 @@
-import { useMemo } from 'react';
 import groupCategories from '../utils/groupCategories';
 import { Grid } from '@material-ui/core';
 import TitleWrapper from '../../common/TitleWrapper';
 import useIntroCategoryChange from './hooks/useCategoryChange';
-import useIntroWidgetFilter from './hooks/useIntroWidgetFilter';
 import IntroPieChart from './utils/IntroPieChart';
+import getSourceFilter from '../media/utils/getSourceFilter';
+import useIntroData from './hooks/useIntroData';
+import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
 
 const title = 'Nacionalidad de la persona conectada';
 const column = 'e08_pais_';
 const subtitle = '';
-const source = 'auroraData';
+const source = 'aurora';
 const id = 'topOrganisations';
 const filterable = true;
+const methodName = EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES
 
-export default function MigrantNationalities({
-  data: _data,
-  isLoading,
-}: {
-  data: any[];
-  isLoading: Boolean;
-}) {
-  const data = useMemo(() => {
-    if (_data) {
-      return groupCategories(_data, column);
-    }
-    return [];
-  }, [_data]);
-  const selectedCategories = useIntroWidgetFilter({
+export default function MigrantNationalities() {
+  const { data, isLoading} = useIntroData({
+    id,
+    column,
     source,
-    owner: id,
-  });
+    methodName,
+  })
+ //@ts-ignore
+  const _filters = useSelector((state)=> state.intro.filters) || {}
+  const selectedCategories = getSourceFilter(id,_filters,source);
+
   const handleSelectedCategoriesChange = useIntroCategoryChange({
     source,
     column,

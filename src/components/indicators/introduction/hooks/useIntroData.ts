@@ -1,3 +1,4 @@
+
 import { useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setError } from 'store/appSlice';
@@ -20,7 +21,7 @@ export default function useIntroData({
   methodParams?: any;
 }) {
   const dispatch = useDispatch();
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<any>([]);
   const [isLoading, setIsLoading] = useState(false);
   //@ts-ignore
   const filters = useSelector((state) => state.intro.filters) || {}
