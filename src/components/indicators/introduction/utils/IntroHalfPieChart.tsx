@@ -131,7 +131,7 @@ export default function IntroHalfPieChart({
         }),
       },
     ],
-    [showLabel, labelOptions, dataWithColor],
+    [showLabel, labelOptions, selectedCategories, dataWithColor],
   );
 
   const option = useMemo(
