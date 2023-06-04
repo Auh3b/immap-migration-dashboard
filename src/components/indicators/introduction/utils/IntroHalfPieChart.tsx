@@ -111,7 +111,7 @@ export default function IntroHalfPieChart({
             selectedCategories.length &&
             !selectedCategories.includes(clonedData.name as any);
 
-          const isLast = i === dataWithColor.length -1
+          const isLast = i === dataWithColor.length - 1;
 
           if (labelFormatter) {
             clonedData.name = labelFormatter(+clonedData.name) as string;

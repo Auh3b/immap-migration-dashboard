@@ -28,8 +28,8 @@ function filterIn(column: string | number, value: number | string) {
 function filterSearch(column: string | number, value: string) {
   return (d: any) => {
     const dataValue = d[column] as string;
-    const regExp = new RegExp(`^(.*,|)${value}(,.*|)$`)
-    const isTrue = regExp.test(dataValue)
+    const regExp = new RegExp(`^(.*,|)${value}(,.*|)$`);
+    const isTrue = regExp.test(dataValue);
 
     if (isTrue) {
       return true;
@@ -77,11 +77,11 @@ export function filterValues(data: any[], _filters: Filters) {
   let output: any[] = data;
   for (let { values, column, type } of filters) {
     switch (type) {
-      case FilterTypes.BETWEEN:{
+      case FilterTypes.BETWEEN: {
         output = output.filter(filterFunction(type)(column, values[0]));
         break;
       }
-      case FilterTypes.STRING_SEARCH:{
+      case FilterTypes.STRING_SEARCH: {
         let _output: any[] = [];
         for (let value of values) {
           _output = [
@@ -90,12 +90,12 @@ export function filterValues(data: any[], _filters: Filters) {
           ];
         }
 
-        _output = Array.from(new Set(_output.map(d => d[column])))
-        
-        output = [...output.filter(d => _output.includes(d[column]))];
+        _output = Array.from(new Set(_output.map((d) => d[column])));
+
+        output = [...output.filter((d) => _output.includes(d[column]))];
         break;
       }
-      default:{
+      default: {
         let _output: any[] = [];
         for (let value of values) {
           _output = [
