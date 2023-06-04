@@ -5,9 +5,6 @@ import { makeStyles, useTheme } from '@material-ui/core';
 import { extent, median, scaleSequential } from 'd3';
 import { numberFormatter } from 'utils/formatter';
 
-const width = 450;
-const height = 400;
-
 const margin = {
   top: 0,
   left: 0,
@@ -29,10 +26,14 @@ export default function CustomWordCloud({
   data: _data = [],
   onWordSelectChange,
   selectedWord,
+  height = 400,
+  width = 400,
 }: {
   data: { name: string; value: number }[];
   onWordSelectChange?: (values: any, args: any) => void;
   selectedWord?: string;
+  width?: number;
+  height?: number;
 }) {
   const classes = useStyles({ height });
   const theme = useTheme();
@@ -109,8 +110,8 @@ export default function CustomWordCloud({
                 style: {
                   text,
                   font,
-                  textAlign: 'middle',
-                  textVerticalAlign: 'middle',
+                  textAlign: 'center',
+                  textVerticalAlign: 'bottom',
                   fill: selectedWord === text ? '#253494' : getColor(size),
                 },
               },
