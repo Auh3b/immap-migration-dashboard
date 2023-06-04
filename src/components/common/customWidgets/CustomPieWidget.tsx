@@ -1,12 +1,11 @@
 import { addFilter, removeFilter } from '@carto/react-redux';
-import { PieWidgetUI } from '@carto/react-ui';
 import useWidgetFetch from './hooks/useWidgetFetch';
 import { lazy, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { defaultCustomWidgetProps } from './customWidgetsType';
 import useWidgetFilterValues from './hooks/useWidgetFilterValues';
-import { EXTENDED_PALETTE_RAND } from 'theme';
 import { _FilterTypes } from '@carto/react-core';
+import CustomPieWidgetUI from '../customCharts/CustomPieWidgetUI';
 
 const CustomWidgetWrapper = lazy(
   () => import('components/common/customWidgets/CustomWidgetWrapper'),
@@ -81,8 +80,7 @@ export default function CustomPieWidget({
 
   return (
     <CustomWidgetWrapper title={title} isLoading={isLoading} onError={error}>
-      <PieWidgetUI
-        colors={EXTENDED_PALETTE_RAND}
+      <CustomPieWidgetUI
         filterable={filterable}
         onSelectedCategoriesChange={handleSelectedCategoriesChange}
         selectedCategories={selectedCategories}

@@ -2,7 +2,7 @@ import groupCategories from '../utils/groupCategories';
 import { Grid } from '@material-ui/core';
 import TitleWrapper from '../../common/TitleWrapper';
 import useIntroCategoryChange from './hooks/useCategoryChange';
-import IntroPieChart from './utils/IntroPieChart';
+import IntroPieChart from '../../common/customCharts/CustomPieWidgetUI';
 import getSourceFilter from '../media/utils/getSourceFilter';
 import useIntroData from './hooks/useIntroData';
 import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';

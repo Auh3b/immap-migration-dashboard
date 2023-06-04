@@ -4,7 +4,7 @@ import { useTheme } from '@material-ui/core';
 import { grey } from '@material-ui/core/colors';
 import { EXTENDED_PALETTE_RAND } from 'theme';
 
-export default function IntroPieChart({
+export default function CustomPieWidgetUI({
   data: _data,
   styles,
   filterable,

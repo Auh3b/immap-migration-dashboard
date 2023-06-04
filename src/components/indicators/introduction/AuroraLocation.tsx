@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import groupCategories from '../utils/groupCategories';
 import { Grid } from '@material-ui/core';
 import TitleWrapper from '../../common/TitleWrapper';
-import IntroPieChart from './utils/IntroPieChart';
+import IntroPieChart from '../../common/customCharts/CustomPieWidgetUI';
 import useIntroCategoryChange from './hooks/useCategoryChange';
 import getSourceFilter from '../media/utils/getSourceFilter';
 import { useSelector } from 'react-redux';
