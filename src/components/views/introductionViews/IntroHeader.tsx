@@ -28,16 +28,20 @@ const useHeaderStyles = makeStyles((theme) => ({
   },
   title: {
     textTransform: 'uppercase',
-    [theme.breakpoints.down('xl')]: {
-      ...theme.typography.h5,
+    [theme.breakpoints.down('sm')]: {
+      ...theme.typography.h6,
     },
-    [theme.breakpoints.up('xl')]: {
+    [theme.breakpoints.up('sm')]: {
       ...theme.typography.h5,
     },
   },
   subtitle: {
     [theme.breakpoints.up('md')]: {
       fontSize: '1em',
+    },
+    [theme.breakpoints.down('md')]: {
+      ...theme.typography.subtitle2,
+      fontWeight: 'normal',
     },
   },
 }));

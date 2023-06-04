@@ -2,7 +2,7 @@ import IntroRightView from './introductionViews/IntroRightView';
 import IntroMiddleView from './introductionViews/IntroMiddleView';
 import IntroLeftView from './introductionViews/IntroLeftView';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button, Grid } from '@material-ui/core';
+import { Button, Grid, useMediaQuery } from '@material-ui/core';
 import { NavLink } from 'react-router-dom';
 import { ROUTE_PATHS } from 'routes';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
@@ -20,6 +20,7 @@ import { setError } from 'store/appSlice';
 import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
 import ComponentFallback from 'components/common/ComponentFallback';
 import { clearIntroFilters } from 'store/introSlice';
+import { CustomTheme } from 'theme';
 
 const useStyles = makeStyles((theme) => ({
   introduction: {
@@ -131,7 +132,7 @@ export default function Introduction() {
 
 const useContentStyles = makeStyles((theme) => ({
   root: {
-    marginTop: theme.mixins.toolbar.minHeight,
+    marginTop: ({isMobile}:any)=> isMobile ? theme.mixins.toolbar.minHeight as number *2 :  theme.mixins.toolbar.minHeight,
     flexGrow: 1,
     [theme.breakpoints.down('md')]: {
       flexDirection: 'column',
@@ -142,7 +143,8 @@ const useContentStyles = makeStyles((theme) => ({
 }));
 
 function IntroContent({ isLoading }: { isLoading: Boolean }) {
-  const classes = useContentStyles();
+  const isMobile = useMediaQuery((theme: CustomTheme) => theme.breakpoints.down('sm'))
+  const classes = useContentStyles({isMobile});
   return (
     <Grid container wrap='nowrap' item className={classes.root}>
       {isLoading && <ComponentFallback />}
