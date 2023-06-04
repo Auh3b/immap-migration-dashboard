@@ -1,9 +1,11 @@
 import { CSSProperties, useCallback, useMemo, useState } from 'react';
 import ReactEchart from 'components/common/customCharts/ReactEcharts';
 import { useTheme } from '@material-ui/core';
+import { grey } from '@material-ui/core/colors';
+import { EXTENDED_PALETTE_RAND } from 'theme';
 
 export default function IntroPieChart({
-  data,
+  data: _data,
   styles,
   filterable,
   labelFormatter,
@@ -21,6 +23,12 @@ export default function IntroPieChart({
   const [showLabel, setShowLabel] = useState(true);
   const [showTooltip, setShowTooltip] = useState(true);
   const theme = useTheme();
+  const dataWithColor = useMemo(()=>{
+    if(_data.length){
+      return _data.map((d, i) => ({...d, itemStyle: {color: EXTENDED_PALETTE_RAND[i]}}))
+    }
+    return []
+  }, [_data])
   // Series
   const labelOptions = useMemo(
     () => ({
@@ -69,20 +77,28 @@ export default function IntroPieChart({
         labelLine: {
           show: false,
         },
-        data: data.map((d) => {
-          const clonedData = {
-            ...d,
-            name: labelFormatter ? labelFormatter(+d.name) : d.name,
-          };
-          return clonedData;
+        data: dataWithColor.map((d) => {
+          const clonedData = {...d};
+
+          const disabled = selectedCategories.length && !selectedCategories.includes(clonedData.name as any)
+
+          if(disabled){
+            const disabledItem = {...clonedData, itemStyle:{color: grey[400]}}
+            return disabledItem
+          }
+
+          const enabledItem = {...clonedData}
+
+          return enabledItem;
         }),
       },
     ],
-    [showLabel, labelOptions, data],
+    [showLabel, labelOptions, labelFormatter, dataWithColor, selectedCategories],
   );
 
   const option = useMemo(
     () => ({
+      color: EXTENDED_PALETTE_RAND,
       tooltip: {
         show: showTooltip,
         trigger: 'item',
@@ -112,14 +128,14 @@ export default function IntroPieChart({
       },
       series: seriesOptions,
     }),
-    [seriesOptions, labelOptions, showTooltip],
+    [seriesOptions, showTooltip, theme],
   );
 
   const clickEvent = useCallback(
     (params) => {
       if (onSelectedCategoriesChange) {
         const newSelectedCategories = [...selectedCategories];
-        const { name } = data[params.dataIndex];
+        const { name } = _data[params.dataIndex];
 
         const selectedCategoryIdx = newSelectedCategories.indexOf(name);
         if (selectedCategoryIdx === -1) {
@@ -131,7 +147,7 @@ export default function IntroPieChart({
         onSelectedCategoriesChange(newSelectedCategories);
       }
     },
-    [data, onSelectedCategoriesChange, selectedCategories],
+    [_data, onSelectedCategoriesChange, selectedCategories],
   );
 
   const onEvents = {

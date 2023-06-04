@@ -7,6 +7,7 @@ import getSourceFilter from '../media/utils/getSourceFilter';
 import useIntroData from './hooks/useIntroData';
 import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
 import { useSelector } from 'react-redux';
+import { useMemo } from 'react';
 
 const title = 'Nacionalidad de la persona conectada';
 const column = 'e08_pais_';
@@ -25,7 +26,7 @@ export default function MigrantNationalities() {
   });
   //@ts-ignore
   const _filters = useSelector((state) => state.intro.filters) || {};
-  const selectedCategories = getSourceFilter(id, _filters, source);
+  const selectedCategories = useMemo(()=> getSourceFilter(id,_filters, source), [_filters]) 
 
   const handleSelectedCategoriesChange = useIntroCategoryChange({
     source,
