@@ -109,9 +109,10 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
     () => data && Array.from(new Set(data.map((d: any) => d[2]))),
     [data],
   );
+
   const serviceSelection = useMemo(
-    () => data && Array.from(new Set(data.map((d: any) => d[0]))),
-    [data],
+    () => _data && Array.from(new Set(_data.map((d: any) => d[0]))),
+    [_data],
   );
 
   const handleServiceChange = useCallback(
