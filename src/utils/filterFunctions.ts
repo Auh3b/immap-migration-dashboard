@@ -73,9 +73,22 @@ export function filterValues(data: any[], _filters: Filters) {
     return data;
   }
 
+  console.log(filters);
+
   let output: any[] = data;
   for (let { values, column, type } of filters) {
-    output = output.filter(filterFunctions(type)(column, values[0]));
+    if (type === FilterTypes.BETWEEN) {
+      output = output.filter(filterFunctions(type)(column, values[0]));
+    } else {
+      let _output: any[] = [];
+      for (let value of values) {
+        _output = [
+          ..._output,
+          ...output.filter(filterFunctions(type)(column, value)),
+        ];
+      }
+      output = [..._output];
+    }
   }
 
   return output;

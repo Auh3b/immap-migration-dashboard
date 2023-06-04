@@ -31,7 +31,7 @@ export default function IntroChildTravelParty() {
     methodParams,
   });
 
-  const data:any = useMemo(()=> _data.length ? _data[0] : {}, [_data])
+  const data: any = useMemo(() => (_data.length ? _data[0] : {}), [_data]);
 
   const series = useMemo(() => {
     if (Object.keys(data).length) {

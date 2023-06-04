@@ -19,7 +19,10 @@ const column = 'serv_dif_n';
 const methodName = EXTERNAL_METHOD_NAMES.GROUPED_COLUMNS;
 const source = 'premise';
 const methodParams = {
-  columns: [{name: 'cuan_nna_n', type: SummarisationTypes.SUM}, {name:'cuan_nna_s', type:SummarisationTypes.SUM}],
+  columns: [
+    { name: 'cuan_nna_n', type: SummarisationTypes.SUM },
+    { name: 'cuan_nna_s', type: SummarisationTypes.SUM },
+  ],
   legend: ['Acompañados NNA', 'Separados NNA'],
 };
 
@@ -33,13 +36,14 @@ export default function IntroChildTravelCompositition() {
     methodParams,
   });
 
-  const data = useMemo(()=> _data.length ? _data[0] : {}, [_data])
+  const data = useMemo(() => (_data.length ? _data[0] : {}), [_data]);
 
   const series = useMemo(
     () => [
       {
         type: 'bar',
         data: data?.value,
+        barWidth: 60,
         itemStyle: {},
       },
     ],

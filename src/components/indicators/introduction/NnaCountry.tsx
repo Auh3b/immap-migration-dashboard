@@ -57,7 +57,7 @@ export default function NnaCountry() {
     [data, dispatch, filters],
   );
 
-  const selectedWord = getSourceFilter(id, filters, source) || [] 
+  const selectedWord = getSourceFilter(id, filters, source) || [];
 
   return (
     <TitleWrapper
@@ -69,7 +69,7 @@ export default function NnaCountry() {
       <Grid item>
         <CustomWordCloud
           data={data}
-          selectedWord={selectedWord[0]|| ''}
+          selectedWord={selectedWord[0] || ''}
           onWordSelectChange={onWordSelectChange}
         />
       </Grid>
