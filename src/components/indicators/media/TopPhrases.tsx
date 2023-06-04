@@ -42,8 +42,8 @@ export default function TopPhrases() {
             column,
             type: FilterTypes.WORD_CLOUD_IN,
           }),
-          );
-        } else {
+        );
+      } else {
         dispatch(
           removeMediaFilter({
             owner: id,

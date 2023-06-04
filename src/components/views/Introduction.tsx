@@ -132,7 +132,10 @@ export default function Introduction() {
 
 const useContentStyles = makeStyles((theme) => ({
   root: {
-    marginTop: ({isMobile}:any)=> isMobile ? theme.mixins.toolbar.minHeight as number *2 :  theme.mixins.toolbar.minHeight,
+    marginTop: ({ isMobile }: any) =>
+      isMobile
+        ? (theme.mixins.toolbar.minHeight as number) * 2
+        : theme.mixins.toolbar.minHeight,
     flexGrow: 1,
     [theme.breakpoints.down('md')]: {
       flexDirection: 'column',
@@ -143,8 +146,10 @@ const useContentStyles = makeStyles((theme) => ({
 }));
 
 function IntroContent({ isLoading }: { isLoading: Boolean }) {
-  const isMobile = useMediaQuery((theme: CustomTheme) => theme.breakpoints.down('sm'))
-  const classes = useContentStyles({isMobile});
+  const isMobile = useMediaQuery((theme: CustomTheme) =>
+    theme.breakpoints.down('sm'),
+  );
+  const classes = useContentStyles({ isMobile });
   return (
     <Grid container wrap='nowrap' item className={classes.root}>
       {isLoading && <ComponentFallback />}

@@ -41,8 +41,8 @@ export default function NnaCountry() {
             column,
             type: _FilterTypes.IN,
           }),
-          );
-        } else {
+        );
+      } else {
         dispatch(
           removeIntroFilter({
             owner: id,

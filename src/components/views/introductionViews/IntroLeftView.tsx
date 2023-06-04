@@ -69,11 +69,12 @@ export const useLeftStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     width: ({ isOpen, isMobile }: any) =>
       isOpen ? '300px' : isMobile ? '90%' : theme.mixins.toolbar.minHeight,
-    display: ({ isOpen, isMobile }: any) => (isOpen ? 'flex' : isMobile ? 'block' : 'none'),
+    display: ({ isOpen, isMobile }: any) =>
+      isOpen ? 'flex' : isMobile ? 'block' : 'none',
     maxHeight: '85vh',
     overflowY: 'auto',
     overflowX: 'hidden',
-  
+
     transition:
       'width ' +
       theme.transitions.duration.enteringScreen +
@@ -126,9 +127,9 @@ export const useLeftStyles = makeStyles((theme) => ({
       fontSize: '0.75rem',
     },
   },
-  popper:{
-    zIndex: ({isMobile}:any) => isMobile ? theme.zIndex.modal + 1 : 0,
-  }
+  popper: {
+    zIndex: ({ isMobile }: any) => (isMobile ? theme.zIndex.modal + 1 : 0),
+  },
 }));
 export default function IntroLeftView() {
   const [isOpen, setIsOpen] = useState(false);
@@ -136,7 +137,7 @@ export default function IntroLeftView() {
     setIsOpen((prev) => !prev);
   };
   const isMobile = useMediaQuery((theme: CustomTheme) =>
-  theme.breakpoints.down('xs'),
+    theme.breakpoints.down('xs'),
   );
   const classes = useLeftStyles({ isOpen, isMobile });
   return (
@@ -207,12 +208,13 @@ function IntroMobile({ classes, children }: any) {
           <HelpOutlineIcon />
         </Fab>
       </ClickAwayListener>
-      <Popper anchorEl={anchorEl} open={open} placement='top-end' className={classes.popper}>
-        {({ TransitionProps }) => (
-          <Fade {...TransitionProps}>
-              {children}
-          </Fade>
-        )}
+      <Popper
+        anchorEl={anchorEl}
+        open={open}
+        placement='top-end'
+        className={classes.popper}
+      >
+        {({ TransitionProps }) => <Fade {...TransitionProps}>{children}</Fade>}
       </Popper>
     </>
   );

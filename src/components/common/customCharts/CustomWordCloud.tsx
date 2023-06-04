@@ -112,7 +112,9 @@ export default function CustomWordCloud({
                   font,
                   textAlign: 'center',
                   textVerticalAlign: 'bottom',
-                  fill: selectedWords.includes(text)  ? '#253494' : getColor(size),
+                  fill: selectedWords.includes(text)
+                    ? '#253494'
+                    : getColor(size),
                 },
               },
             ],
@@ -148,16 +150,16 @@ export default function CustomWordCloud({
   );
 
   const onClick = useCallback(
-    ({value: [x, y, text, ...rest]}) => {
-      let newWords = [...selectedWords]
+    ({ value: [x, y, text, ...rest] }) => {
+      let newWords = [...selectedWords];
 
-        const selectedCategoryIdx = newWords.indexOf(text);
-        if (selectedCategoryIdx === -1) {
-          newWords.push(text);
-        } else {
-          newWords.splice(selectedCategoryIdx, 1);
-        }
-        onWordSelectChange(newWords)
+      const selectedCategoryIdx = newWords.indexOf(text);
+      if (selectedCategoryIdx === -1) {
+        newWords.push(text);
+      } else {
+        newWords.splice(selectedCategoryIdx, 1);
+      }
+      onWordSelectChange(newWords);
     },
     [data, selectedWords, onWordSelectChange],
   );
