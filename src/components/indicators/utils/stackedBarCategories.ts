@@ -36,7 +36,7 @@ const stackedBarCategories: MethodFunc<any[]> = (input, column, params) => {
         name: valueUnique,
         value: valueGroup,
         legend,
-        color: ['#1CABE2',  '#F26A21','#FFC20E'],
+        color: ['#1CABE2', '#F26A21', '#FFC20E'],
       },
     ];
     return output;

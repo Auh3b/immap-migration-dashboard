@@ -19,7 +19,7 @@ export default function TotalPregnant() {
     source,
     methodName,
   });
-  
+
   const data = useMemo(() => {
     if (_data.length) {
       const yesValues =
@@ -27,7 +27,7 @@ export default function TotalPregnant() {
           //@ts-ignore
           _data.findIndex((d) => d?.name.toLocaleLowerCase() === 'si')
         ];
-      return yesValues ? yesValues.value :  0;
+      return yesValues ? yesValues.value : 0;
     }
     return 0;
   }, [_data]);

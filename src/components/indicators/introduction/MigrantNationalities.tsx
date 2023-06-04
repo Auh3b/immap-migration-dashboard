@@ -26,7 +26,10 @@ export default function MigrantNationalities() {
   });
   //@ts-ignore
   const _filters = useSelector((state) => state.intro.filters) || {};
-  const selectedCategories = useMemo(()=> getSourceFilter(id,_filters, source), [_filters]) 
+  const selectedCategories = useMemo(
+    () => getSourceFilter(id, _filters, source),
+    [_filters],
+  );
 
   const handleSelectedCategoriesChange = useIntroCategoryChange({
     source,

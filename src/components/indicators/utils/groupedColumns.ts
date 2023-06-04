@@ -7,14 +7,16 @@ const groupedColumns: MethodFunc<any[]> = (input, column, params) => {
   try {
     const { legend } = params;
     let name: any[] = legend;
-    let value = aggregateColumns(input, column, params).map(({value})=>value)
+    let value = aggregateColumns(input, column, params).map(
+      ({ value }) => value,
+    );
 
     const output: any = [
       {
         value,
         name,
         legend,
-        color: ['#1CABE2',  '#F26A21','#FFC20E'],
+        color: ['#1CABE2', '#F26A21', '#FFC20E'],
       },
     ];
     return output;
