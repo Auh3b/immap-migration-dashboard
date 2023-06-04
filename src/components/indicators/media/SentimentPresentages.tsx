@@ -40,6 +40,7 @@ export default function SentimentPresentages() {
         itemStyle: {
           color: colorKey[i],
         },
+        barMaxWidth: 40,
       };
       groups = [...groups, seriesOption];
     }

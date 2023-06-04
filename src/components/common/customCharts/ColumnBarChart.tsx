@@ -17,6 +17,7 @@ export default function ColumnBarChart({ data, labels, colors, height }: any) {
         itemStyle: {
           color: colors.get(key),
         },
+        barMaxWidth: 40,
       };
       seriesGroups = [...seriesGroups, seriesGroup];
     }
