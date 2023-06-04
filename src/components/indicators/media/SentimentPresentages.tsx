@@ -8,6 +8,7 @@ import useMediaData from './hooks/useMediaData';
 import NoWidgetData from 'components/common/customWidgets/NoWidgetData';
 
 const id = 'sentimentPercentages';
+const source = 'meltwater';
 
 export default function SentimentPresentages() {
   const theme = useTheme();
@@ -15,6 +16,7 @@ export default function SentimentPresentages() {
   const { data, isLoading } = useMediaData({
     id,
     methodName: METHOD_NAMES.MEDIA_SENTIMENT_PERCENTAGES,
+    source,
   });
 
   const chartStyle: Partial<CSSProperties> = useMemo(
@@ -38,6 +40,7 @@ export default function SentimentPresentages() {
         itemStyle: {
           color: colorKey[i],
         },
+        barMaxWidth: 40,
       };
       groups = [...groups, seriesOption];
     }

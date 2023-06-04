@@ -6,11 +6,13 @@ import useMediaData from './hooks/useMediaData';
 import NoWidgetData from 'components/common/customWidgets/NoWidgetData';
 
 const id = 'mediaEngagement';
+const source = 'meltwater';
 
 export default function MediaEngagement() {
   const { data, isLoading } = useMediaData({
     id,
     methodName: METHOD_NAMES.MEDIA_ENGAGEMENT_HISTORY,
+    source,
   });
 
   return (

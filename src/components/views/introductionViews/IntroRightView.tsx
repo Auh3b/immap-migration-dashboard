@@ -1,8 +1,6 @@
 import OrganisationCount from 'components/indicators/introduction/OrganisationCount';
-import TopOrganisations from 'components/indicators/introduction/TopOrganisations';
 import TopSurveyLocation from 'components/indicators/introduction/TopSurveyLocation';
 import { Grid, makeStyles } from '@material-ui/core';
-import { IndicatorProps } from 'components/indicators/introduction/utils/introductionTypes';
 import { UNICEF_COLORS } from 'theme';
 import TopServices from 'components/indicators/introduction/TopServices';
 
@@ -19,7 +17,7 @@ export const useRightStyles = makeStyles((theme) => ({
     },
   },
 }));
-export default function IntroRightView({ data, isLoading }: IndicatorProps) {
+export default function IntroRightView() {
   const classes = useRightStyles();
   return (
     <Grid
@@ -31,10 +29,9 @@ export default function IntroRightView({ data, isLoading }: IndicatorProps) {
       lg={3}
       className={classes.root}
     >
-      <OrganisationCount data={data} isLoading={isLoading} />
-      <TopServices data={data} isLoading={isLoading} />
-      <TopSurveyLocation data={data} isLoading={isLoading} />
-      {/* <TopOrganisations data={data} isLoading={isLoading} /> */}
+      <OrganisationCount />
+      <TopServices />
+      <TopSurveyLocation />
     </Grid>
   );
 }

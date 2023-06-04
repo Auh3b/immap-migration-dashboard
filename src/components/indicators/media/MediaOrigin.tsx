@@ -20,10 +20,11 @@ export default function MediaOrigin() {
   const { data = [], isLoading } = useMediaData({
     id,
     methodName: METHOD_NAMES.MEDIA_ORIGINS,
+    source,
   });
 
   //@ts-ignore
-  const filters = useSelector((state) => state.media.filters?.meltwater) || {};
+  const filters = useSelector((state) => state.media.filters) || {};
 
   const onSelectedCategory = useCallback(
     (category) => {
@@ -51,7 +52,7 @@ export default function MediaOrigin() {
   );
 
   const selectedCategory = useMemo(
-    () => getSourceFilter(id, filters)[0] || '',
+    () => getSourceFilter(id, filters, source)[0] || '',
     [filters, id],
   );
 

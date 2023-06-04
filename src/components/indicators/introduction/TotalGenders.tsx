@@ -1,38 +1,34 @@
-import { useMemo } from 'react';
-import groupCategories from '../utils/groupCategories';
+import groupCategories, { Sort_Type } from '../utils/groupCategories';
 import TitleWrapper from '../../common/TitleWrapper';
-import useIntroWidgetFilter from './hooks/useIntroWidgetFilter';
 import useIntroCategoryChange from './hooks/useCategoryChange';
 import { Grid } from '@material-ui/core';
 import InvertedBarChart from './utils/InvertedBarChart';
-import { ascending } from 'd3';
+import getSourceFilter from '../media/utils/getSourceFilter';
+import { useSelector } from 'react-redux';
+import useIntroData from './hooks/useIntroData';
+import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
 
 const title = 'Géneros';
 const subtitle = '';
 const column = 'e07_gener';
 const id = 'totalGenders';
-const source = 'auroraData';
+const source = 'aurora';
+const methodName = EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES;
+const methodParams = {
+  sortType: Sort_Type.ASC,
+};
 
-export default function TotalGenders({
-  data: _data,
-  isLoading,
-}: {
-  data: any[];
-  isLoading: Boolean;
-}) {
-  const data = useMemo(() => {
-    if (_data) {
-      const dataset = groupCategories(_data, column);
-      //@ts-ignore
-      return dataset.sort((a, b) => ascending(a.value, b.value));
-    }
-    return [];
-  }, [_data]);
-
-  const selectedCategories = useIntroWidgetFilter({
+export default function TotalGenders() {
+  const { data, isLoading } = useIntroData({
+    id,
+    column,
     source,
-    owner: id,
+    methodName,
+    methodParams,
   });
+  //@ts-ignore
+  const _filters = useSelector((state) => state.intro.filters) || {};
+  const selectedCategories = getSourceFilter(id, _filters, source);
 
   const handleSelectedCategoriesChange = useIntroCategoryChange({
     source,

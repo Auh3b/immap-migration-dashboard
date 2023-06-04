@@ -22,12 +22,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const id = 'media_posts';
+const source = 'meltwater';
 
 export default function MediaPosts({ isLoading }: { isLoading: Boolean }) {
   const classes = useStyles();
   const { data: _data, isLoading: isDataLoading } = useMediaData({
     id,
     methodName: METHOD_NAMES.MEDIA_TOP_POSTS,
+    source,
   });
   const columnConfig = [
     {

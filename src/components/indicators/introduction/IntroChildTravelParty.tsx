@@ -5,45 +5,54 @@ import { useMemo } from 'react';
 import { UNICEF_COLORS } from 'theme';
 import { useTheme } from '@material-ui/core';
 import ReactEcharts from 'components/common/customCharts/ReactEcharts';
+import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
+import useIntroData from './hooks/useIntroData';
 
 const title = 'NNA no acompañados y separados';
 const NOTE =
   'Presencia de niños, niñas y adolescentes no acompañados y separados';
 const id = 'childrenTravelParty';
 const column = 'serv_dif_n';
-const method = stackedBarCategories;
+const methodName = EXTERNAL_METHOD_NAMES.STACKED_BAR_CATEGORIES;
+const source = 'premise';
 const methodParams = {
   columns: ['nna_no_aco', 'nna_separ_'],
   legend: ['No acompañados', 'Separados'],
 };
 
-export default function IntroChildTravelParty({ data: _data }: any) {
+export default function IntroChildTravelParty() {
   const theme = useTheme();
 
-  const data = useMemo(() => {
-    if (_data) {
-      //@ts-ignore
-      return method(_data, column, methodParams)[0];
-    }
-  }, [_data]);
+  const { data: _data, isLoading } = useIntroData({
+    id,
+    column,
+    source,
+    methodName,
+    methodParams,
+  });
 
-  const series = useMemo(
-    () => [
-      {
-        name: data?.legend[0],
-        type: 'bar',
-        data: data?.value[0],
-        itemStyle: {},
-      },
-      {
-        name: data?.legend[1],
-        type: 'bar',
-        data: data?.value[1],
-        itemStyle: {},
-      },
-    ],
-    [data],
-  );
+  const data: any = useMemo(() => (_data.length ? _data[0] : {}), [_data]);
+
+  const series = useMemo(() => {
+    if (Object.keys(data).length) {
+      return [
+        {
+          name: data?.legend[0],
+          type: 'bar',
+          data: data?.value[0],
+          itemStyle: {},
+        },
+        {
+          name: data?.legend[1],
+          type: 'bar',
+          data: data?.value[1],
+          itemStyle: {},
+        },
+      ];
+    }
+
+    return [];
+  }, [data]);
 
   const option = useMemo(
     () => ({
@@ -75,7 +84,7 @@ export default function IntroChildTravelParty({ data: _data }: any) {
       },
       xAxis: {
         type: 'category',
-        data: data?.name,
+        data: data?.name || [],
         axisTick: {
           show: false,
         },
@@ -89,7 +98,7 @@ export default function IntroChildTravelParty({ data: _data }: any) {
   );
 
   return (
-    <TitleWrapper title={title}>
+    <TitleWrapper title={title} isLoading={isLoading}>
       <ReactEcharts option={option} opts={{ renderer: 'svg' }} />
       <WidgetNote note={NOTE} />
     </TitleWrapper>

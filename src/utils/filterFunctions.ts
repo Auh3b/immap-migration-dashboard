@@ -28,13 +28,14 @@ function filterIn(column: string | number, value: number | string) {
 function filterSearch(column: string | number, value: string) {
   return (d: any) => {
     const dataValue = d[column] as string;
-    const startIndex = dataValue.search(value);
+    const regExp = new RegExp(`^(.*,|)${value}(,.*|)$`);
+    const isTrue = regExp.test(dataValue);
 
-    if (startIndex === -1) {
-      return false;
+    if (isTrue) {
+      return true;
     }
 
-    return true;
+    return false;
   };
 }
 
@@ -52,7 +53,7 @@ function filterWordCloud(column: string, value: string) {
   };
 }
 
-export function filterFunctions(type: filterType) {
+function filterFunction(type: filterType) {
   const filterMap = new Map<string, Function>([
     [FilterTypes.IN, filterIn],
     [FilterTypes.STRING_SEARCH, filterSearch],
@@ -75,7 +76,37 @@ export function filterValues(data: any[], _filters: Filters) {
 
   let output: any[] = data;
   for (let { values, column, type } of filters) {
-    output = output.filter(filterFunctions(type)(column, values[0]));
+    switch (type) {
+      case FilterTypes.BETWEEN: {
+        output = output.filter(filterFunction(type)(column, values[0]));
+        break;
+      }
+      case FilterTypes.STRING_SEARCH: {
+        let _output: any[] = [];
+        for (let value of values) {
+          _output = [
+            ..._output,
+            ...output.filter(filterFunction(type)(column, value)),
+          ];
+        }
+
+        _output = Array.from(new Set(_output.map((d) => d[column])));
+
+        output = [...output.filter((d) => _output.includes(d[column]))];
+        break;
+      }
+      default: {
+        let _output: any[] = [];
+        for (let value of values) {
+          _output = [
+            ..._output,
+            ...output.filter(filterFunction(type)(column, value)),
+          ];
+        }
+        output = [..._output];
+        break;
+      }
+    }
   }
 
   return output;

@@ -1,120 +1,68 @@
-import { executeSQL } from '@carto/react-api';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { clearIntroFilters } from 'store/introSlice';
-import { RootState } from 'store/store';
-import { filterValues } from 'utils/filterFunctions';
+import { setError } from 'store/appSlice';
+import { dequal } from 'dequal';
+import useIndicatorFilters from 'components/indicators/media/hooks/useIndicatorFilters';
+import useCustomCompareEffectAlt from 'components/indicators/media/hooks/useCustomCompareEffectAlt';
+import executeIntroMethod from '../utils/executeIntroMethod';
 
-function useFetchData() {
-  const [premiseData, setPremiseData] = useState(null);
-  const [auroraData, setAuroraData] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const credentials = useSelector(
-    (state: RootState) => state.carto.credentials,
-  );
-  const fetchPremise = async () => {
-    const result = await executeSQL({
-      credentials,
-      connection: 'carto_dw',
-      query: 'SELECT * FROM shared.Premise_22032023',
-      opts: {
-        format: 'json',
-      },
-    });
-    return result;
-  };
-  const fetchAurora = async () => {
-    const result = await executeSQL({
-      credentials,
-      connection: 'carto_dw',
-      query: 'SELECT * FROM shared.LACRO_Marzo_2023',
-      opts: {
-        format: 'json',
-      },
-    });
-    return result;
-  };
-  useEffect(() => {
-    setIsLoading(true);
-    Promise.all([fetchAurora(), fetchPremise()])
-      .then(([aurora, premise]) => {
-        setAuroraData(aurora);
-        setPremiseData(premise);
-      })
-      .catch((e) => setError(e.message))
-      .finally(() => setIsLoading(false));
-
-    return () => {
-      setAuroraData(null);
-      setPremiseData(null);
-      setError(null);
-      setIsLoading(false);
-    };
-  }, []);
-  return {
-    auroraData,
-    premiseData,
-    isLoading,
-    error,
-  };
-}
-
-export function useIntroFilters() {
-  //@ts-ignore
-  const introFilters = useSelector((state) => state.intro.filters);
-  return introFilters;
-}
-
-export function useClearIntroFilters() {
+export default function useIntroData({
+  id,
+  column,
+  methodName,
+  methodParams,
+  source,
+}: {
+  id: string;
+  methodName: string;
+  column: string;
+  source: string;
+  methodParams?: any;
+}) {
   const dispatch = useDispatch();
+  const [data, setData] = useState<any>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  //@ts-ignore
+  const filters = useSelector((state) => state.intro.filters) || {};
+  const sourceFilters = useIndicatorFilters({ id, source, filters });
+  //@ts-ignore
+  const isMediaDataReady = useSelector((state) => state.intro.isIntroDataReady);
 
-  const filters = useIntroFilters();
+  const params = useMemo(
+    () => ({
+      filters: sourceFilters,
+      ...methodParams,
+    }),
+    [filters, sourceFilters],
+  );
 
-  const hasFilters = useMemo(() => {
-    return Object.keys(filters).length > 0;
-  }, [dispatch, filters]);
-
-  const clearAllIntroFilters = () => {
-    dispatch(clearIntroFilters());
-  };
+  useCustomCompareEffectAlt(
+    () => {
+      setIsLoading(true);
+      if (isMediaDataReady) {
+        executeIntroMethod({
+          source,
+          column,
+          params,
+          methodName,
+        })
+          .then((data) => {
+            if (data.length) {
+              setData(data);
+            }
+          })
+          .catch((error) => {
+            dispatch(setError(error.message));
+          })
+          .finally(() => setIsLoading(false));
+      }
+    },
+    [params, isMediaDataReady, dispatch],
+    dequal,
+  );
 
   return {
-    hasFilters,
-    clearAllIntroFilters,
-  };
-}
-
-function useFilteredData(input: any[], filters: any) {
-  const filteredData = useMemo(() => {
-    let data: any[] = input;
-
-    if (data && filters) {
-      data = [...filterValues(input, filters)];
-      return data;
-    }
-    return data;
-  }, [input, filters]);
-
-  return filteredData;
-}
-
-export default function useIntroData() {
-  const { auroraData: auroraFilters, premiseData: premiseFilters } =
-    useIntroFilters();
-  const {
-    auroraData: _auroraData,
-    premiseData: _premiseData,
+    data,
     isLoading,
-    error,
-  } = useFetchData();
-  const auroraData = useFilteredData(_auroraData, auroraFilters);
-  const premiseData = useFilteredData(_premiseData, premiseFilters);
-  return {
-    auroraFilters,
-    auroraData,
-    premiseData,
-    isLoading,
-    error,
   };
 }

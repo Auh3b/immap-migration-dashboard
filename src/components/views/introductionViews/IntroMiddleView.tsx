@@ -9,7 +9,6 @@ import TotalPregnant from 'components/indicators/introduction/TotalPregnant';
 import TotalChildren from 'components/indicators/introduction/TotalChildren';
 import AuroraLocation from 'components/indicators/introduction/AuroraLocation';
 import MigrantNationalities from 'components/indicators/introduction/MigrantNationalities';
-import { IndicatorProps } from 'components/indicators/introduction/utils/introductionTypes';
 import TotalGenders from 'components/indicators/introduction/TotalGenders';
 import NnaSolo from 'components/indicators/introduction/NnaSolo';
 import NnaCountry from 'components/indicators/introduction/NnaCountry';
@@ -57,7 +56,7 @@ export const useMiddleStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function IntroMiddleView({ data, isLoading }: IndicatorProps) {
+export default function IntroMiddleView() {
   const classes = useMiddleStyles();
   return (
     <Grid
@@ -68,34 +67,34 @@ export default function IntroMiddleView({ data, isLoading }: IndicatorProps) {
       className={classes.root}
     >
       <Grid item container className={classes.indicatorsGroup}>
-        <TotalAurora data={data[0]} isLoading={isLoading} />
-        <TotalMigrants data={data[0]} isLoading={isLoading} />
-        <AverageGroupSize data={data[0]} isLoading={isLoading} />
-        <ChildrenPercentage data={data[0]} isLoading={isLoading} />
-        <TotalGenders data={data[0]} isLoading={isLoading} />
-        <NnaSolo data={data[0]} isLoading={isLoading} />
+        <TotalAurora />
+        <TotalMigrants />
+        <AverageGroupSize />
+        <ChildrenPercentage />
+        <TotalGenders />
+        <NnaSolo />
       </Grid>
       <Grid wrap='nowrap' item container className={classes.indicatorsGroup}>
-        <AuroraLocation data={data[0]} isLoading={isLoading} />
-        <MigrantNationalities data={data[0]} isLoading={isLoading} />
-        <IntroSickPremise data={data[1]} isLoading={isLoading} />
+        <AuroraLocation />
+        <MigrantNationalities />
+        <IntroSickPremise />
       </Grid>
       <Grid item wrap='nowrap' container className={classes.indicatorsGroup}>
         <Grid wrap='nowrap' lg={4} item container direction='column'>
-          <TotalChildren data={data[0]} isLoading={isLoading} />
-          <TotalDisabled data={data[0]} isLoading={isLoading} />
+          <TotalChildren />
+          <TotalDisabled />
         </Grid>
         <Grid wrap='nowrap' lg={4} direction='column' item container>
-          <TotalPregnant data={data[0]} isLoading={isLoading} />
-          <TotalChronicPatients data={data[0]} isLoading={isLoading} />
+          <TotalPregnant />
+          <TotalChronicPatients />
         </Grid>
         <Grid item lg={4}>
-          <NnaCountry data={data[0]} isLoading={isLoading} />
+          <NnaCountry />
         </Grid>
       </Grid>
       <Grid item wrap='nowrap' container className={classes.indicatorsGroup}>
-        <IntroChildTravelParty data={data[1]} />
-        <IntroChildTravelCompositition data={data[1]} />
+        <IntroChildTravelParty />
+        <IntroChildTravelCompositition />
       </Grid>
     </Grid>
   );
