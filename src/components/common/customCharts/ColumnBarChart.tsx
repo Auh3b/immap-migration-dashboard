@@ -46,6 +46,9 @@ export default function ColumnBarChart({ data, labels, colors, height }: any) {
           width: 100,
           overflow: 'break',
         },
+        axisTick: {
+          alignWithLabel: true
+        } 
       },
       xAxis: {
         type: 'value',
