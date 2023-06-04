@@ -1,39 +1,37 @@
-import { useMemo } from 'react';
 import TitleWrapper from '../../common/TitleWrapper';
-import { IndicatorProps } from './utils/introductionTypes';
 import { CategoryWidgetUI } from '@carto/react-ui';
 import { Grid } from '@material-ui/core';
 import useIntroCategoryChange from './hooks/useCategoryChange';
-import useIntroWidgetFilter from './hooks/useIntroWidgetFilter';
 import groupCategories from '../utils/groupCategories';
+import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
+import useIntroData from './hooks/useIntroData';
+import { useSelector } from 'react-redux';
+import getSourceFilter from '../media/utils/getSourceFilter';
 
 const title = 'PUNTOS DE SERVICIOS SOBREPASADOS EN SU CAPACIDAD';
 const subtitle = '';
 const column = 'sobrepasa_';
 const id = 'topServices';
-const source = 'premiseData';
+const source = 'premise';
+const methodName = EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES;
 
-export default function TopServices({
-  data: _data,
-  isLoading,
-}: IndicatorProps) {
-  const data = useMemo(() => {
-    if (_data) {
-      const category = groupCategories(_data, column, { filter: false });
-      return category;
-    }
-  }, [_data]);
-
-  const selectedCategories = useIntroWidgetFilter({
+export default function TopServices() {
+  const { data, isLoading } = useIntroData({
+    id,
+    column,
     source,
-    owner: id,
+    methodName,
   });
+  //@ts-ignore
+  const _filters = useSelector((state) => state.intro.filters) || {};
+  const selectedCategories = getSourceFilter(id, _filters, source);
 
   const handleSelectedCategoriesChange = useIntroCategoryChange({
     source,
     column,
     owner: id,
   });
+
   return (
     <TitleWrapper
       title={title}

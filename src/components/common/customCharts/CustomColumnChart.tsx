@@ -64,6 +64,7 @@ export default function CustomColumnChart({
         type: 'bar',
         data,
         label,
+        barMaxWidth: (chartStyle.height as number) * 0.1,
         ...selectionOptions,
       },
     ],

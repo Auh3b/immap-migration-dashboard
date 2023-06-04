@@ -1,4 +1,5 @@
 import {
+  Button,
   ClickAwayListener,
   Fab,
   Grid,
@@ -168,8 +169,8 @@ const useFilterStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(2),
   },
   button: {
-    padding: theme.spacing(2),
-    borderRadius: '100%',
+    padding: theme.spacing(1.5),
+    borderRadius: '30px',
     border: ({ hasFilters }: any) =>
       hasFilters && `solid 1px ${theme.palette.grey[100]}`,
     color: ({ isOpen }: any) =>
@@ -207,17 +208,17 @@ function ActiveFilters({
 
   return (
     <div className={classes.root}>
-      <Tooltip title='Filtros'>
-        <span>
-          <IconButton
-            className={classes.button}
-            disabled={disabled}
-            onClick={handleClick}
-          >
-            <FilterListIcon />
-          </IconButton>
-        </span>
-      </Tooltip>
+      <span>
+        <Button
+          startIcon={<FilterListIcon />}
+          className={classes.button}
+          disabled={disabled}
+          onClick={handleClick}
+          color={Boolean(anchorEl) ? 'secondary' : 'inherit'}
+        >
+          Filtros
+        </Button>
+      </span>
       <FilterMenu
         filters={filters}
         anchorEl={anchorEl}

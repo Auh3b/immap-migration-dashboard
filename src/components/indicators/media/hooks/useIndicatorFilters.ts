@@ -1,16 +1,19 @@
 import { useSelector } from 'react-redux';
 
-export default function useIndicatorFilters({ id }: { id: string }) {
-  const { meltwater: _filters } = useSelector(
-    //@ts-ignore
-    (state) => state.media.filters,
-  );
+export default function useIndicatorFilters({
+  id,
+  filters: _filters,
+  source,
+}: {
+  id: string;
+  filters: any;
+  source: string;
+}) {
+  if (!_filters[source]) return {};
 
-  const filters = { ..._filters };
+  const filtersBySource = _filters[source];
 
-  if (!filters) {
-    return {};
-  }
+  const filters = { ...filtersBySource };
 
   if (!filters[id]) {
     return filters;

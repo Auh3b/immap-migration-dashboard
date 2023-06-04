@@ -18,37 +18,37 @@ const useStyles = makeStyles((theme) => ({
     position: 'relative',
   },
 }));
-const dataSource = 'meltwater';
+const source = 'meltwater';
 const column = 'topPhrases';
 
 export default function TopPhrases() {
   const { data, isLoading } = useMediaData({
     id,
     methodName: METHOD_NAMES.MEDIA_TOP_PHRASES,
+    source,
   });
   const dispatch = useDispatch();
   //@ts-ignore
-  const filters = useSelector((state) => state.media.filters?.meltwater) || {};
+  const filters = useSelector((state) => state.media.filters) || {};
   const classes = useStyles();
   const onWordSelectChange = useCallback(
-    ({ value }: any, selectedWord: string) => {
-      const [x, y, text, ...rest] = value;
-      if (selectedWord === text) {
+    (words) => {
+      if (words.length) {
         dispatch(
-          removeMediaFilter({
+          addMediaFilter({
             owner: id,
-            source: dataSource,
+            source,
+            values: words,
             column,
+            type: FilterTypes.WORD_CLOUD_IN,
           }),
         );
       } else {
         dispatch(
-          addMediaFilter({
+          removeMediaFilter({
             owner: id,
-            source: dataSource,
-            values: [text],
+            source,
             column,
-            type: FilterTypes.WORD_CLOUD_IN,
           }),
         );
       }
@@ -56,8 +56,8 @@ export default function TopPhrases() {
     [dispatch, data],
   );
 
-  const selectedWord = useMemo(
-    () => getSourceFilter(id, filters)[0] || '',
+  const selectedWords = useMemo(
+    () => getSourceFilter(id, filters, source) || [],
     [filters, id],
   );
   return (
@@ -66,7 +66,7 @@ export default function TopPhrases() {
         <CustomWordCloud
           onWordSelectChange={onWordSelectChange}
           data={data}
-          selectedWord={selectedWord}
+          selectedWords={selectedWords}
         />
         <ContinuousLegend colorScheme={['#fd8d3c', '#800026']} />
         {!data.length && !isLoading && <NoWidgetData />}
