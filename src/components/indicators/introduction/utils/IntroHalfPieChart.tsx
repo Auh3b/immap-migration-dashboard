@@ -20,7 +20,7 @@ export default function IntroHalfPieChart({
   renderer?: 'svg' | 'canvas';
   filterable?: Boolean;
   selectedCategories?: string[];
-  labelFormatter: (value: any) => string;
+  labelFormatter?: (value: any) => string;
   onSelectedCategoriesChange?: Function;
 }) {
   const [showLabel, setShowLabel] = useState(true);

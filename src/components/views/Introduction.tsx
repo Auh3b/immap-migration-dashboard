@@ -146,9 +146,9 @@ function IntroContent({ isLoading }: { isLoading: Boolean }) {
   return (
     <Grid container wrap='nowrap' item className={classes.root}>
       {isLoading && <ComponentFallback />}
+      <IntroLeftView />
       {!isLoading && (
         <>
-          <IntroLeftView />
           <IntroMiddleView />
           <IntroRightView />
         </>
