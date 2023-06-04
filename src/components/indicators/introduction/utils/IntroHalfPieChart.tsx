@@ -3,6 +3,8 @@ import ReactEchart from 'components/common/customCharts/ReactEcharts';
 import { useTheme } from '@material-ui/core';
 import { sum } from 'd3';
 import { SICK_CATEGORY_ABREVATIONS } from 'components/indicators/premise/utils/services';
+import { EXTENDED_PALETTE_RAND } from 'theme';
+import { grey } from '@material-ui/core/colors';
 
 export default function IntroHalfPieChart({
   data: _data,
@@ -11,12 +13,14 @@ export default function IntroHalfPieChart({
   filterable,
   selectedCategories,
   onSelectedCategoriesChange,
+  labelFormatter,
 }: {
   data: any[];
   styles?: CSSProperties;
   renderer?: 'svg' | 'canvas';
   filterable?: Boolean;
   selectedCategories?: string[];
+  labelFormatter: (value: any) => string;
   onSelectedCategoriesChange?: Function;
 }) {
   const [showLabel, setShowLabel] = useState(true);
@@ -24,8 +28,12 @@ export default function IntroHalfPieChart({
 
   const theme = useTheme();
 
-  const data = useMemo(() => {
-    if (_data.length > 0) {
+  const dataWithColor = useMemo(() => {
+    if (_data.length) {
+      const active = _data.map((d, i) => ({
+        ...d,
+        itemStyle: { color: EXTENDED_PALETTE_RAND[i] },
+      }));
       const lastItem = {
         value: sum(_data, (d) => d.value),
         itemStyle: {
@@ -39,7 +47,7 @@ export default function IntroHalfPieChart({
         },
       };
 
-      return [..._data, lastItem];
+      return [...active, lastItem];
     }
     return [];
   }, [_data]);
@@ -96,10 +104,34 @@ export default function IntroHalfPieChart({
         labelLine: {
           show: false,
         },
-        data,
+        data: dataWithColor.map((d, i) => {
+          const clonedData = { ...d };
+
+          const disabled =
+            selectedCategories.length &&
+            !selectedCategories.includes(clonedData.name as any);
+
+          const isLast = i === dataWithColor.length -1
+
+          if (labelFormatter) {
+            clonedData.name = labelFormatter(+clonedData.name) as string;
+          }
+
+          if (disabled && !isLast) {
+            const disabledItem = {
+              ...clonedData,
+              itemStyle: { color: grey[400] },
+            };
+            return disabledItem;
+          }
+
+          const enabledItem = { ...clonedData };
+
+          return enabledItem;
+        }),
       },
     ],
-    [showLabel, labelOptions, data],
+    [showLabel, labelOptions, dataWithColor],
   );
 
   const option = useMemo(
@@ -142,7 +174,7 @@ export default function IntroHalfPieChart({
     (params) => {
       if (onSelectedCategoriesChange) {
         const newSelectedCategories = [...selectedCategories];
-        const { name } = data[params.dataIndex];
+        const { name } = _data[params.dataIndex];
 
         const selectedCategoryIdx = newSelectedCategories.indexOf(name);
         if (selectedCategoryIdx === -1) {
@@ -154,7 +186,7 @@ export default function IntroHalfPieChart({
         onSelectedCategoriesChange(newSelectedCategories);
       }
     },
-    [data, onSelectedCategoriesChange, selectedCategories],
+    [_data, onSelectedCategoriesChange, selectedCategories],
   );
 
   const onEvents = {
@@ -170,15 +202,11 @@ export default function IntroHalfPieChart({
   };
 
   return (
-    <>
-      {data && (
-        <ReactEchart
-          onEvents={onEvents}
-          option={option}
-          opts={{ renderer }}
-          style={styles}
-        />
-      )}
-    </>
+    <ReactEchart
+      onEvents={onEvents}
+      option={option}
+      opts={{ renderer }}
+      style={styles}
+    />
   );
 }

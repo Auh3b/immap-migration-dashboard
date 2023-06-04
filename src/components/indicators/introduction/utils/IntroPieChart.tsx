@@ -23,12 +23,15 @@ export default function IntroPieChart({
   const [showLabel, setShowLabel] = useState(true);
   const [showTooltip, setShowTooltip] = useState(true);
   const theme = useTheme();
-  const dataWithColor = useMemo(()=>{
-    if(_data.length){
-      return _data.map((d, i) => ({...d, itemStyle: {color: EXTENDED_PALETTE_RAND[i]}}))
+  const dataWithColor = useMemo(() => {
+    if (_data.length) {
+      return _data.map((d, i) => ({
+        ...d,
+        itemStyle: { color: EXTENDED_PALETTE_RAND[i] },
+      }));
     }
-    return []
-  }, [_data])
+    return [];
+  }, [_data]);
   // Series
   const labelOptions = useMemo(
     () => ({
@@ -78,22 +81,37 @@ export default function IntroPieChart({
           show: false,
         },
         data: dataWithColor.map((d) => {
-          const clonedData = {...d};
+          const clonedData = { ...d };
 
-          const disabled = selectedCategories.length && !selectedCategories.includes(clonedData.name as any)
+          const disabled =
+            selectedCategories.length &&
+            !selectedCategories.includes(clonedData.name as any);
 
-          if(disabled){
-            const disabledItem = {...clonedData, itemStyle:{color: grey[400]}}
-            return disabledItem
+          if (labelFormatter) {
+            clonedData.name = labelFormatter(+clonedData.name) as string;
           }
 
-          const enabledItem = {...clonedData}
+          if (disabled) {
+            const disabledItem = {
+              ...clonedData,
+              itemStyle: { color: grey[400] },
+            };
+            return disabledItem;
+          }
+
+          const enabledItem = { ...clonedData };
 
           return enabledItem;
         }),
       },
     ],
-    [showLabel, labelOptions, labelFormatter, dataWithColor, selectedCategories],
+    [
+      showLabel,
+      labelOptions,
+      labelFormatter,
+      dataWithColor,
+      selectedCategories,
+    ],
   );
 
   const option = useMemo(
