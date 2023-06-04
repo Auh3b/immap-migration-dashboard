@@ -15,7 +15,7 @@ export default function CustomPieWidgetUI({
   data: { name: string; value: number }[];
   filterable?: Boolean;
   styles?: CSSProperties;
-  labels?: Record<string|number, string>;
+  labels?: Record<string | number, string>;
   renderer?: 'svg' | 'canvas';
   selectedCategories?: string[];
   onSelectedCategoriesChange?: Function;
@@ -105,13 +105,7 @@ export default function CustomPieWidgetUI({
         }),
       },
     ],
-    [
-      showLabel,
-      labelOptions,
-      labels,
-      dataWithColor,
-      selectedCategories,
-    ],
+    [showLabel, labelOptions, labels, dataWithColor, selectedCategories],
   );
 
   const option = useMemo(

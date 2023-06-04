@@ -31,10 +31,18 @@ export default function NnaCountry() {
   const filters = useSelector((state) => state.intro.filters) || {};
 
   const onWordSelectChange = useCallback(
-    ({ value }: any, selectedWord) => {
-      console.log(selectedWord);
-      const [x, y, text, ...rest] = value;
-      if (selectedWord === text) {
+    (words) => {
+      if (words.length) {
+        dispatch(
+          addIntroFilter({
+            owner: id,
+            source,
+            values: words,
+            column,
+            type: _FilterTypes.IN,
+          }),
+          );
+        } else {
         dispatch(
           removeIntroFilter({
             owner: id,
@@ -42,22 +50,12 @@ export default function NnaCountry() {
             column,
           }),
         );
-      } else {
-        dispatch(
-          addIntroFilter({
-            owner: id,
-            source,
-            values: [text],
-            column,
-            type: _FilterTypes.IN,
-          }),
-        );
       }
     },
     [data, dispatch, filters],
   );
 
-  const selectedWord = getSourceFilter(id, filters, source) || [];
+  const selectedWords = getSourceFilter(id, filters, source) || [];
 
   return (
     <TitleWrapper
@@ -69,7 +67,7 @@ export default function NnaCountry() {
       <Grid item>
         <CustomWordCloud
           data={data}
-          selectedWord={selectedWord[0] || ''}
+          selectedWords={selectedWords}
           onWordSelectChange={onWordSelectChange}
         />
       </Grid>

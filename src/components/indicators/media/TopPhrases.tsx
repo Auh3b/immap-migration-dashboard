@@ -32,9 +32,18 @@ export default function TopPhrases() {
   const filters = useSelector((state) => state.media.filters) || {};
   const classes = useStyles();
   const onWordSelectChange = useCallback(
-    ({ value }: any, selectedWord: string) => {
-      const [x, y, text, ...rest] = value;
-      if (selectedWord === text) {
+    (words) => {
+      if (words.length) {
+        dispatch(
+          addMediaFilter({
+            owner: id,
+            source,
+            values: words,
+            column,
+            type: FilterTypes.WORD_CLOUD_IN,
+          }),
+          );
+        } else {
         dispatch(
           removeMediaFilter({
             owner: id,
@@ -42,23 +51,13 @@ export default function TopPhrases() {
             column,
           }),
         );
-      } else {
-        dispatch(
-          addMediaFilter({
-            owner: id,
-            source,
-            values: [text],
-            column,
-            type: FilterTypes.WORD_CLOUD_IN,
-          }),
-        );
       }
     },
     [dispatch, data],
   );
 
-  const selectedWord = useMemo(
-    () => getSourceFilter(id, filters, source)[0] || '',
+  const selectedWords = useMemo(
+    () => getSourceFilter(id, filters, source) || [],
     [filters, id],
   );
   return (
@@ -67,7 +66,7 @@ export default function TopPhrases() {
         <CustomWordCloud
           onWordSelectChange={onWordSelectChange}
           data={data}
-          selectedWord={selectedWord}
+          selectedWords={selectedWords}
         />
         <ContinuousLegend colorScheme={['#fd8d3c', '#800026']} />
         {!data.length && !isLoading && <NoWidgetData />}

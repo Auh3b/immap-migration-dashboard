@@ -25,13 +25,13 @@ const useStyles = makeStyles((theme) => ({
 export default function CustomWordCloud({
   data: _data = [],
   onWordSelectChange,
-  selectedWord,
+  selectedWords,
   height = 400,
   width = 400,
 }: {
   data: { name: string; value: number }[];
-  onWordSelectChange?: (values: any, args: any) => void;
-  selectedWord?: string;
+  onWordSelectChange?: (values: any) => void;
+  selectedWords?: string[];
   width?: number;
   height?: number;
 }) {
@@ -112,7 +112,7 @@ export default function CustomWordCloud({
                   font,
                   textAlign: 'center',
                   textVerticalAlign: 'bottom',
-                  fill: selectedWord === text ? '#253494' : getColor(size),
+                  fill: selectedWords.includes(text)  ? '#253494' : getColor(size),
                 },
               },
             ],
@@ -121,7 +121,7 @@ export default function CustomWordCloud({
         data: data,
       },
     ],
-    [data, selectedWord],
+    [data, selectedWords],
   );
   const option = useMemo(
     () => ({
@@ -148,10 +148,18 @@ export default function CustomWordCloud({
   );
 
   const onClick = useCallback(
-    (values) => {
-      return onWordSelectChange(values, selectedWord);
+    ({value: [x, y, text, ...rest]}) => {
+      let newWords = [...selectedWords]
+
+        const selectedCategoryIdx = newWords.indexOf(text);
+        if (selectedCategoryIdx === -1) {
+          newWords.push(text);
+        } else {
+          newWords.splice(selectedCategoryIdx, 1);
+        }
+        onWordSelectChange(newWords)
     },
-    [data, selectedWord],
+    [data, selectedWords, onWordSelectChange],
   );
 
   return (
