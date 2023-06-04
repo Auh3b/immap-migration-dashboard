@@ -8,14 +8,14 @@ export default function IntroPieChart({
   data: _data,
   styles,
   filterable,
-  labelFormatter,
+  labels,
   selectedCategories,
   onSelectedCategoriesChange,
 }: {
   data: { name: string; value: number }[];
   filterable?: Boolean;
   styles?: CSSProperties;
-  labelFormatter?: (value: any) => unknown;
+  labels?: Record<string|number, string>;
   renderer?: 'svg' | 'canvas';
   selectedCategories?: string[];
   onSelectedCategoriesChange?: Function;
@@ -62,7 +62,7 @@ export default function IntroPieChart({
     () => [
       {
         type: 'pie',
-        radius: ['55%', '90%'],
+        radius: ['65%', '90%'],
         bottom: '10%',
         avoidLabelOverlap: false,
         label: {
@@ -87,8 +87,8 @@ export default function IntroPieChart({
             selectedCategories.length &&
             !selectedCategories.includes(clonedData.name as any);
 
-          if (labelFormatter) {
-            clonedData.name = labelFormatter(+clonedData.name) as string;
+          if (labels) {
+            clonedData.name = labels[+clonedData.name] || clonedData.name;
           }
 
           if (disabled) {
@@ -108,7 +108,7 @@ export default function IntroPieChart({
     [
       showLabel,
       labelOptions,
-      labelFormatter,
+      labels,
       dataWithColor,
       selectedCategories,
     ],
