@@ -72,14 +72,12 @@ export default function MediaAggregateIndicators({ isLoading }: any) {
   const theme = useTheme();
   const classes = useStyles();
 
-  const { meltwater: filters = {} } = useSelector(
-    //@ts-ignore
-    (state) => state.media.filters,
-  );
+  //@ts-ignore
+  const filters = useSelector((state) => state.media.filters) || {};
 
   const mediaSource = useMemo(
     () =>
-      getSourceFilter(id, filters, source)[0] ??
+      getSourceFilter(id, filters, source)[0] ||
       MEDIA_SOURCES.MENCIONES_TOTALES,
     [filters],
   );
@@ -156,7 +154,7 @@ export default function MediaAggregateIndicators({ isLoading }: any) {
                       icon={FA_MAP.get(name)}
                       style={{
                         color:
-                          source === name
+                          mediaSource === name
                             ? SOURCE_COLOR[name]
                             : theme.palette.grey[100],
                       }}
