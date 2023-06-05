@@ -47,8 +47,8 @@ export default function ColumnBarChart({ data, labels, colors, height }: any) {
           overflow: 'break',
         },
         axisTick: {
-          alignWithLabel: true
-        } 
+          alignWithLabel: true,
+        },
       },
       xAxis: {
         type: 'value',
@@ -77,15 +77,15 @@ export default function ColumnBarChart({ data, labels, colors, height }: any) {
           return `<span 
             style='min-width: 35px; display: flex; flex-direction: column;'
             >
-             <span>${name}</span>
-             <span 
+            <span>${name}</span>
+            <span 
               style='display: flex; justify-content: space-between; align-items: center;'
               >
-               <span 
+              <span 
                 style='background-color: ${color}; width: 10px; height: 10px; border-radius: 100%;'
                 ></span>
                 <span>${format('.0%')(value)}</span>
-             </span>
+            </span>
           </span>`;
         },
       },

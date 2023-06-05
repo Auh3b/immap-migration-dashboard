@@ -1,5 +1,5 @@
-import { CSSProperties, useCallback, useMemo, useState } from 'react';
-import ReactEchart from 'echarts-for-react';
+import ReactEcharts from 'components/common/customCharts/ReactEcharts';
+import { CSSProperties, useCallback, useMemo } from 'react';
 
 export default function InvertedBarChart({
   data,
@@ -16,33 +16,41 @@ export default function InvertedBarChart({
   selectedCategories?: string[];
   onSelectedCategoriesChange?: Function;
 }) {
-  const [showLabel, setShowLabel] = useState(true);
-  const [showTooltip, setShowTooltip] = useState(true);
-
   const labelOptions = useMemo(
     () => ({
+      show: true,
       color: 'white',
       position: 'outside',
       fontFamily: 'Barlow',
     }),
-    [data, showLabel],
+    [data],
   );
 
   const seriesOptions = useMemo(
     () => [
       {
         type: 'bar',
-        data: data.map(({ value }) => value),
+        data: data.map((d) => {
+          const clonedData = { ...d };
+          const disabled =
+            selectedCategories.length &&
+            !selectedCategories.includes(clonedData.name);
+          if (disabled) {
+            const disabledItem = { ...clonedData, itemStyle: { opacity: 0.5 } };
+            return disabledItem;
+          }
+
+          return { ...clonedData, itemStyle: { opacity: 1 } };
+        }),
         itemStyle: {
           color: 'white',
         },
         label: {
-          show: showLabel,
           ...labelOptions,
         },
       },
     ],
-    [data],
+    [data, selectedCategories],
   );
 
   const option = useMemo(
@@ -79,7 +87,7 @@ export default function InvertedBarChart({
       },
       series: seriesOptions,
     }),
-    [data],
+    [data, seriesOptions],
   );
 
   const clickEvent = useCallback(
@@ -103,14 +111,13 @@ export default function InvertedBarChart({
 
   const onEvents = {
     ...(filterable && { click: clickEvent }),
-    // mouseover: () => {
-    //   setShowLabel(false);
-    //   setShowTooltip(true);
-    // },
-    // mouseout: () => {
-    //   setShowLabel(true);
-    //   setShowTooltip(false);
-    // },
   };
-  return <ReactEchart option={option} opts={{ renderer }} style={styles} />;
+  return (
+    <ReactEcharts
+      onEvents={onEvents}
+      option={option}
+      opts={{ renderer }}
+      style={styles}
+    />
+  );
 }
