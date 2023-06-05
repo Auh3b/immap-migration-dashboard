@@ -26,15 +26,15 @@ export default function MediaOrigin() {
   //@ts-ignore
   const filters = useSelector((state) => state.media.filters) || {};
 
-  const onSelectedCategory = useCallback(
-    (category) => {
-      if (category) {
+  const onSelectedCategoriesChange = useCallback(
+    (categories) => {
+      if (categories.length) {
         dispatch(
           addMediaFilter({
             source,
             column,
             owner: id,
-            values: [category],
+            values: categories,
             type: FilterTypes.WORD_CLOUD_IN,
           }),
         );
@@ -51,19 +51,19 @@ export default function MediaOrigin() {
     [data],
   );
 
-  const selectedCategory = useMemo(
-    () => getSourceFilter(id, filters, source)[0] || '',
+  const selectedCategories = useMemo(
+    () => getSourceFilter(id, filters, source) || [],
     [filters, id],
   );
 
   return (
     <Grid item xs={12} lg={4}>
-      <TitleWrapper title='¿De dónde escribe?' isLoading={isLoading} filterable>
+      <TitleWrapper title='¿De dónde escribe?' isLoading={isLoading}>
         <CustomColumnChart
-          selectedCategory={selectedCategory}
-          onSelectedCategory={onSelectedCategory}
+          selectedCategories={selectedCategories}
+          onSelectedCategoriesChange={onSelectedCategoriesChange}
           data={data}
-          labelFormater={(name: string) => regionName.of(name.toUpperCase())}
+          labelFormater={(name: string) => name === 'zz' ? 'Otros países' : regionName.of(name.toUpperCase())}
         />
         {!data.length && !isLoading && <NoWidgetData />}
       </TitleWrapper>

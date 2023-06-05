@@ -95,6 +95,20 @@ export function filterValues(data: any[], _filters: Filters) {
         output = [...output.filter((d) => _output.includes(d[column]))];
         break;
       }
+      case FilterTypes.WORD_CLOUD_IN: {
+        let _output: any[] = [];
+        for (let value of values) {
+          _output = [
+            ..._output,
+            ...output.filter(filterFunction(type)(column, value)),
+          ];
+        }
+
+        _output = Array.from(new Set(_output.map((d) => d[column][0])));
+
+        output = [...output.filter((d) => _output.includes(d[column][0]))];
+        break;
+      }
       default: {
         let _output: any[] = [];
         for (let value of values) {
@@ -108,6 +122,8 @@ export function filterValues(data: any[], _filters: Filters) {
       }
     }
   }
+
+  console.log(filters, output)
 
   return output;
 }
