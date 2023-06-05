@@ -1,4 +1,4 @@
-import groupCategories, { Sort_Type } from '../utils/groupCategories';
+import { Sort_Type } from '../utils/groupCategories';
 import TitleWrapper from '../../common/TitleWrapper';
 import useIntroCategoryChange from './hooks/useCategoryChange';
 import { Grid } from '@material-ui/core';

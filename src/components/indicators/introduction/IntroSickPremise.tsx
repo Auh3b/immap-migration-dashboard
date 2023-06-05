@@ -1,6 +1,5 @@
 import { Grid } from '@material-ui/core';
 import TitleWrapper from '../../common/TitleWrapper';
-import concatenatedValues from '../utils/concatenatedValues';
 import IntroHalfPieChart from './utils/IntroHalfPieChart';
 import useIntroCategoryChange from './hooks/useCategoryChange';
 import { _FilterTypes } from '@carto/react-core';

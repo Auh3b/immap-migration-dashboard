@@ -1,7 +1,6 @@
 //@ts-ignore
 import { TILE_FORMATS } from '@deck.gl/carto';
 import { executeTask, Methods } from '@carto/react-workers';
-import executeExternalMethod from './executeExternalMethod';
 
 interface getTileFeaturesProps {
   sourceId: string;

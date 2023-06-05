@@ -6,7 +6,6 @@ import {
   Fade,
   Grid,
   IconButton,
-  Paper,
   Popper,
   Typography,
   makeStyles,

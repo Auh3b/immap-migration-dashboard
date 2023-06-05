@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import groupCategories from '../utils/groupCategories';
 import { Grid } from '@material-ui/core';
 import TitleWrapper from '../../common/TitleWrapper';
 import IntroPieChart from '../../common/customCharts/CustomPieWidgetUI';

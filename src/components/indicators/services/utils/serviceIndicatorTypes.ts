@@ -1,5 +1,3 @@
-import { UNICEF_COLORS } from 'theme';
-
 export const aidTypes = new Map([
   [1, 'Alimentación o kit de alimentación '],
   [2, 'Alojamiento temporal'],

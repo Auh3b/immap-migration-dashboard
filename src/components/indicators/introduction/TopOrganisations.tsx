@@ -1,6 +1,5 @@
 import { CategoryWidgetUI } from '@carto/react-ui';
 import { Grid } from '@material-ui/core';
-import groupCategories from '../utils/groupCategories';
 import TitleWrapper from '../../common/TitleWrapper';
 import useIntroCategoryChange from './hooks/useCategoryChange';
 import useIntroData from './hooks/useIntroData';

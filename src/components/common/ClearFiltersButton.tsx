@@ -1,5 +1,4 @@
 import { Fab, Typography, makeStyles } from '@material-ui/core';
-import { useMemo } from 'react';
 import ClearAllIcon from '@material-ui/icons/ClearAll';
 
 const useClearStyles = makeStyles((theme) => ({

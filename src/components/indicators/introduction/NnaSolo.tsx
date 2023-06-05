@@ -1,5 +1,5 @@
 import { Grid } from '@material-ui/core';
-import groupCategories, { Sort_Type } from '../utils/groupCategories';
+import { Sort_Type } from '../utils/groupCategories';
 import TitleWrapper from '../../common/TitleWrapper';
 import InvertedBarChart from './utils/InvertedBarChart';
 import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';

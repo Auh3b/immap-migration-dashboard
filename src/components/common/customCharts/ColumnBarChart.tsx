@@ -91,7 +91,7 @@ export default function ColumnBarChart({ data, labels, colors, height }: any) {
       },
       series,
     }),
-    [series],
+    [series, data, theme],
   );
   return (
     <ReactEchart

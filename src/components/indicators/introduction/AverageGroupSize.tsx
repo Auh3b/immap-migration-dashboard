@@ -1,7 +1,7 @@
 import AggregateIndicatorWidget from 'components/common/customWidgets/AggregateIndicatorWidget';
 import { ReactComponent as People } from 'assets/img/Group.svg';
 import { useMemo } from 'react';
-import aggregateColumns, {
+import {
   SummarisationTypes,
 } from '../utils/AggregateColumns';
 import iconStyles from './utils/iconStyles';

@@ -1,5 +1,5 @@
 //@ts-nocheck
-import React, { useCallback, useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import {
   Grid,
@@ -105,15 +105,10 @@ function CustomBarWidgetUI(props: any) {
       },
       axisLabel: {
         show: true,
-        // ...theme.typography.charts,
-        // padding: [theme.spacing(0.5), 0, 0, 0],
-        // width: 20,
-        // height: 20,
-        // overflow: 'break'
       },
       data: xAxisDataWithLabels,
     }),
-    [theme, xAxisDataWithLabels],
+    [theme, theme, xAxisDataWithLabels],
   );
 
   // yAxis
@@ -402,7 +397,6 @@ function calculateMargin(label = '', amountCategories = 0) {
   // For less than 8 characters and less than 15 categories, the margin isn't necessary
   if (amountCategories <= 15 && label.length <= 8) return 0;
   // Calculated manually. For each 6 characters, the margin should be 8.5px
-  console.log((label.length * 8.5) / 6);
   return (label.length * 8.5) / 6;
 }
 

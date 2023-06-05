@@ -1,4 +1,4 @@
-import { ascending, descending, flatRollup, maxIndex, sum } from 'd3';
+import { ascending, descending, flatRollup, sum } from 'd3';
 import { MEDIA_SOURCES, Input, MediaParams, POST_URL_MAP } from './mediaUtils';
 import groupByValue, { GroupByTypes } from 'utils/groupByValue';
 import { Filters, filterValues } from 'utils/filterFunctions';
@@ -274,8 +274,7 @@ export function getTopPosts({ filters }: MediaParams) {
           _output = [..._output, { id, source, name, date, value, url }];
         }
       }
-      //@ts-ignore
-      const targetIndex = maxIndex(_output, (d) => d.value);
+
       output = [
         ...output,
         ..._output.sort((a, b) => descending(a.value, b.value)).slice(0, 10),

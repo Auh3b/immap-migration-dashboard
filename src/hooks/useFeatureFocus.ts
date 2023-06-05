@@ -1,8 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
-import useCustomCompareEffect from './useCustomCompareEffect';
 import { dequal } from 'dequal';
 import { RootState } from 'store/store';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import getTileFeatures from 'utils/methods/getTileFeatures';
 //@ts-ignore
 import { TILE_FORMATS } from '@deck.gl/carto';
@@ -33,7 +32,6 @@ export default function useFeatureFocus() {
   useCustomCompareEffectAlt(
     () => {
       //@ts-ignore
-      console.log(_sources);
       if (_sources.length) {
         const sourcesPromises = _sources.map(
           async ([source, { filters, filtersLogicalOperator }]: any) => {
@@ -85,5 +83,4 @@ export default function useFeatureFocus() {
     [dispatch, coordinatesColumns, _sources, width, height],
     dequal,
   );
-  console.log(data);
 }

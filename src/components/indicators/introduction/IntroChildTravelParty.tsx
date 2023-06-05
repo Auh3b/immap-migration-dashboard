@@ -1,5 +1,4 @@
 import TitleWrapper from 'components/common/TitleWrapper';
-import stackedBarCategories from '../utils/stackedBarCategories';
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
 import { useMemo } from 'react';
 import { UNICEF_COLORS } from 'theme';

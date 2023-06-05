@@ -1,8 +1,5 @@
 import { CategoryWidgetUI } from '@carto/react-ui';
 import { Grid } from '@material-ui/core';
-import { useMemo } from 'react';
-import aggregateColumns from '../utils/AggregateColumns';
-import { AggregationTypes } from '@carto/react-core';
 import TitleWrapper from '../../common/TitleWrapper';
 import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
 import useIntroData from './hooks/useIntroData';

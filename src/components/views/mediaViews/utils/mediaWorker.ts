@@ -35,7 +35,6 @@ function runTransform(methodName: string, params: Partial<MediaParams>) {
     result = method(params);
     return { result: result === undefined ? true : result };
   } catch (error) {
-    console.log(error);
     return { error: String(error) };
   }
 }

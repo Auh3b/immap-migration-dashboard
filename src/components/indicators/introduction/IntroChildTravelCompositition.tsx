@@ -1,5 +1,4 @@
-import { AggregationTypes, _FilterTypes } from '@carto/react-core';
-import groupedColumns from '../utils/groupedColumns';
+import { _FilterTypes } from '@carto/react-core';
 import TitleWrapper from 'components/common/TitleWrapper';
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
 import ReactEcharts from 'components/common/customCharts/ReactEcharts';
