@@ -12,7 +12,7 @@ import regionName from './utils/getCountryByRegion';
 import getSourceFilter from './utils/getSourceFilter';
 
 const id = 'país';
-const column = 'countries';
+const column = 'country';
 const source = 'meltwater';
 
 export default function MediaOrigin() {
@@ -35,7 +35,7 @@ export default function MediaOrigin() {
             column,
             owner: id,
             values: categories,
-            type: FilterTypes.WORD_CLOUD_IN,
+            type: FilterTypes.IN,
           }),
         );
       } else {
@@ -58,12 +58,15 @@ export default function MediaOrigin() {
 
   return (
     <Grid item xs={12} lg={4}>
-      <TitleWrapper title='¿De dónde escribe?' isLoading={isLoading}>
+      <TitleWrapper title='¿De dónde escribe?' isLoading={isLoading} filterable>
         <CustomColumnChart
+          filterable
           selectedCategories={selectedCategories}
           onSelectedCategoriesChange={onSelectedCategoriesChange}
           data={data}
-          labelFormater={(name: string) => name === 'zz' ? 'Otros países' : regionName.of(name.toUpperCase())}
+          labelFormater={(name: string) =>
+            name === 'zz' ? 'Otros países' : regionName.of(name.toUpperCase())
+          }
         />
         {!data.length && !isLoading && <NoWidgetData />}
       </TitleWrapper>
