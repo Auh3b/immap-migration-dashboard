@@ -5,6 +5,7 @@ import TopLoading from './TopLoading';
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    height: '100%',
     position: 'relative',
     padding: theme.spacing(4),
     gap: theme.spacing(1),
