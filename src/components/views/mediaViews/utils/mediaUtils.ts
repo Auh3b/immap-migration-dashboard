@@ -84,7 +84,7 @@ interface SourceField {
   volume: number;
   topPhrases: FieldValues[];
   sentiment: FieldValues[];
-  country: FieldValues[];
+  countries: FieldValues[];
   languages: FieldValues[];
   topPosts: FieldValues[];
   views: number;

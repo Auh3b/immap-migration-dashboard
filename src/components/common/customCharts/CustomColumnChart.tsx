@@ -9,19 +9,21 @@ import { grey } from '@material-ui/core/colors';
 export default function CustomColumnChart({
   data,
   labelFormater,
-  onSelectedCategory,
-  selectedCategory,
+  onSelectedCategoriesChange,
+  selectedCategories,
+  filterable,
 }: {
-  data: Record<string, string | number>[];
-  onSelectedCategory?: (args: any) => void;
-  selectedCategory?: string;
+  data: { name: string; value: number }[];
+  onSelectedCategoriesChange?: (args: any) => void;
+  selectedCategories?: string[];
   labelFormater: Function;
+  filterable?: Boolean;
 }) {
   const theme = useTheme();
 
   const chartStyle: Partial<CSSProperties> = useMemo(
     () => ({
-      height: 400, //data.length ? data.length * theme.spacing(5) : theme.spacing(2)
+      height: 400,
     }),
     [data, theme],
   );
@@ -39,36 +41,30 @@ export default function CustomColumnChart({
     [data],
   );
 
-  const selectionOptions = useMemo(
-    () => ({
-      itemStyle: {
-        color: selectedCategory ? grey[400] : UNICEF_COLORS[0],
-      },
-      selectedMode: 'single',
-      select: {
-        label: {
-          fontWeight: 'bold',
-        },
-        itemStyle: {
-          color: UNICEF_COLORS[5],
-          borderWidth: 0,
-        },
-      },
-    }),
-    [selectedCategory],
-  );
-
   const series = useMemo(
     () => [
       {
         type: 'bar',
-        data,
+        data: data.map((d) => {
+          const clonedData = { ...d };
+          const disabled =
+            selectedCategories.length &&
+            !selectedCategories.includes(clonedData.name);
+          if (disabled) {
+            const disabledItem = {
+              ...clonedData,
+              itemStyle: { color: grey[400] },
+            };
+            return disabledItem;
+          }
+
+          return { ...clonedData, itemStyle: { color: UNICEF_COLORS[0] } };
+        }),
         label,
         barMaxWidth: (chartStyle.height as number) * 0.1,
-        ...selectionOptions,
       },
     ],
-    [data, selectionOptions, label],
+    [data, selectedCategories, label],
   );
 
   const option = useMemo(
@@ -130,21 +126,21 @@ export default function CustomColumnChart({
 
   const click = useCallback(
     (params) => {
-      const {
-        data: { name },
-      } = params;
-      if (!onSelectedCategory) return;
+      if (onSelectedCategoriesChange && filterable) {
+        const newSelectedCategories = [...selectedCategories];
+        const { name } = data[params.dataIndex];
 
-      let selected: string = selectedCategory;
+        const selectedCategoryIdx = newSelectedCategories.indexOf(name);
+        if (selectedCategoryIdx === -1) {
+          newSelectedCategories.push(name);
+        } else {
+          newSelectedCategories.splice(selectedCategoryIdx, 1);
+        }
 
-      if (selected === name) {
-        onSelectedCategory('');
-        return;
+        onSelectedCategoriesChange(newSelectedCategories);
       }
-
-      onSelectedCategory(name);
     },
-    [data, onSelectedCategory, selectedCategory],
+    [data, onSelectedCategoriesChange, selectedCategories],
   );
 
   const onEvents = {

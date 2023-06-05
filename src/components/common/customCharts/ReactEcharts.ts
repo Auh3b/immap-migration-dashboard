@@ -1,5 +1,4 @@
 //@ts-nocheck
-import 'echarts-wordcloud';
 import _ReactEcharts from 'echarts-for-react';
 import isEqual from 'fast-deep-equal';
 

@@ -38,8 +38,19 @@ export default function TotalGenders() {
 
   return (
     <Grid item lg={3}>
-      <TitleWrapper title={title} subtitle={subtitle} isLoading={isLoading}>
-        <InvertedBarChart data={data} styles={{ height: '100px' }} />
+      <TitleWrapper
+        title={title}
+        subtitle={subtitle}
+        isLoading={isLoading}
+        filterable
+      >
+        <InvertedBarChart
+          filterable
+          data={data}
+          styles={{ height: '100px' }}
+          selectedCategories={selectedCategories}
+          onSelectedCategoriesChange={handleSelectedCategoriesChange}
+        />
       </TitleWrapper>
     </Grid>
   );

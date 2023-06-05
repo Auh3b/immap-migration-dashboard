@@ -12,7 +12,7 @@ import regionName from './utils/getCountryByRegion';
 import getSourceFilter from './utils/getSourceFilter';
 
 const id = 'país';
-const column = 'countries';
+const column = 'country';
 const source = 'meltwater';
 
 export default function MediaOrigin() {
@@ -26,16 +26,16 @@ export default function MediaOrigin() {
   //@ts-ignore
   const filters = useSelector((state) => state.media.filters) || {};
 
-  const onSelectedCategory = useCallback(
-    (category) => {
-      if (category) {
+  const onSelectedCategoriesChange = useCallback(
+    (categories) => {
+      if (categories.length) {
         dispatch(
           addMediaFilter({
             source,
             column,
             owner: id,
-            values: [category],
-            type: FilterTypes.WORD_CLOUD_IN,
+            values: categories,
+            type: FilterTypes.IN,
           }),
         );
       } else {
@@ -51,8 +51,8 @@ export default function MediaOrigin() {
     [data],
   );
 
-  const selectedCategory = useMemo(
-    () => getSourceFilter(id, filters, source)[0] || '',
+  const selectedCategories = useMemo(
+    () => getSourceFilter(id, filters, source) || [],
     [filters, id],
   );
 
@@ -60,10 +60,13 @@ export default function MediaOrigin() {
     <Grid item xs={12} lg={4}>
       <TitleWrapper title='¿De dónde escribe?' isLoading={isLoading} filterable>
         <CustomColumnChart
-          selectedCategory={selectedCategory}
-          onSelectedCategory={onSelectedCategory}
+          filterable
+          selectedCategories={selectedCategories}
+          onSelectedCategoriesChange={onSelectedCategoriesChange}
           data={data}
-          labelFormater={(name: string) => regionName.of(name.toUpperCase())}
+          labelFormater={(name: string) =>
+            name === 'zz' ? 'Otros países' : regionName.of(name.toUpperCase())
+          }
         />
         {!data.length && !isLoading && <NoWidgetData />}
       </TitleWrapper>
