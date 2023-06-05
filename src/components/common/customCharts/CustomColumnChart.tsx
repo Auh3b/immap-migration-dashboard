@@ -11,7 +11,7 @@ export default function CustomColumnChart({
   labelFormater,
   onSelectedCategoriesChange,
   selectedCategories,
-  filterable
+  filterable,
 }: {
   data: { name: string; value: number }[];
   onSelectedCategoriesChange?: (args: any) => void;
@@ -41,7 +41,6 @@ export default function CustomColumnChart({
     [data],
   );
 
-
   const series = useMemo(
     () => [
       {
@@ -52,7 +51,10 @@ export default function CustomColumnChart({
             selectedCategories.length &&
             !selectedCategories.includes(clonedData.name);
           if (disabled) {
-            const disabledItem = { ...clonedData, itemStyle: { color: grey[400]} };
+            const disabledItem = {
+              ...clonedData,
+              itemStyle: { color: grey[400] },
+            };
             return disabledItem;
           }
 

@@ -231,8 +231,8 @@ function NavigationMenu({ column = false }: { column?: boolean }) {
       >
         {/* [hygen] Import links */}
         <Tab
-          label='Intro'
-          value='intro'
+          label='Inicio'
+          value='inicio'
           component={NavLink}
           to={ROUTE_PATHS.INTRODUCTION}
         />

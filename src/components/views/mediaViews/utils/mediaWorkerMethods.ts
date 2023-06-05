@@ -65,19 +65,12 @@ export function getMediaAggregateIndicators({ filters }: MediaParams) {
 export function getMediaOrigins({ filters }: MediaParams) {
   if (mediaData) {
     const data = applyFiltersToData(mediaData, filters);
-    const { sources: _sources } = data;
-    let _data2: any[] = [];
-    const groupsArray = _sources.map(({ countries }: any) => countries);
-    for (let group of groupsArray) {
-      for (let [name, value] of group) {
-        _data2 = [..._data2, { name, value }];
-      }
-    }
+    const { sources } = data;
 
     const output = groupByValue({
-      input: _data2,
-      valueColumn: 'value',
-      keyColumn: 'name',
+      input: sources,
+      valueColumn: 'volume',
+      keyColumn: 'country',
       type: GroupByTypes.SUM,
     })
       .sort((a, b) => descending(a.value, b.value))

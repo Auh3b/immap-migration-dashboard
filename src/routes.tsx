@@ -30,7 +30,7 @@ export const ROUTE_PATHS = {
   LOGIN: '/login',
   DEFAULT: '/',
   NOT_FOUND: '/404',
-  INTRODUCTION: '/intro',
+  INTRODUCTION: '/inicio',
   ...BOARD_ROUTES,
   // [hygen] Add path routes
 };

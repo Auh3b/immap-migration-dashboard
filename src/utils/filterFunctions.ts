@@ -123,7 +123,7 @@ export function filterValues(data: any[], _filters: Filters) {
     }
   }
 
-  console.log(filters, output)
+  console.log(filters, output);
 
   return output;
 }
