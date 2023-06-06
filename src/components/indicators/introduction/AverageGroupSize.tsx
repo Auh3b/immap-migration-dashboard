@@ -1,9 +1,7 @@
 import AggregateIndicatorWidget from 'components/common/customWidgets/AggregateIndicatorWidget';
 import { ReactComponent as People } from 'assets/img/Group.svg';
 import { useMemo } from 'react';
-import {
-  SummarisationTypes,
-} from '../utils/AggregateColumns';
+import { SummarisationTypes } from '../utils/AggregateColumns';
 import iconStyles from './utils/iconStyles';
 import { Grid } from '@material-ui/core';
 import { format } from 'd3';
