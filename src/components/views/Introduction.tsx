@@ -1,6 +1,6 @@
 import IntroRightView from './introductionViews/IntroRightView';
 import IntroMiddleView from './introductionViews/IntroMiddleView';
-import IntroLeftView from './introductionViews/IntroLeftView';
+import IntroLeftView from './introductionViews/introLeftView/Index';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, Grid, useMediaQuery } from '@material-ui/core';
 import { NavLink } from 'react-router-dom';

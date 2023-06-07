@@ -7,14 +7,12 @@ import {
   removeLayer,
   addSource,
   removeSource,
-  setViewState,
 } from '@carto/react-redux';
 import MainView from './main/MainView';
 import { useEffect } from 'react';
 import { SURVEY_TIMELINE_LAYER_ID } from 'components/layers/SurveyTimelineLayer';
 import DinamicaLeftView from './dinamicaViews/DinamicaLeftView';
 import { HOTSPOTS_LAYER_ID } from 'components/layers/HotspotsLayer';
-import { initialState } from 'store/initialStateSlice';
 
 export default function DinámicaAurora() {
   const dispatch = useDispatch();

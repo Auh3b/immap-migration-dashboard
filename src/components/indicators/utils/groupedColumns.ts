@@ -1,6 +1,4 @@
 import MethodFunc from './methodType';
-import groupByValue, { GroupByTypes } from 'utils/groupByValue';
-import { defaultFilterFunction } from './miscelleniousFunctions';
 import aggregateColumns from './AggregateColumns';
 
 const groupedColumns: MethodFunc<any[]> = (input, column, params) => {

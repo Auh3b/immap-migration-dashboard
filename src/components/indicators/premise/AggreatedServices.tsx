@@ -14,7 +14,7 @@ import useWidgetFetch from 'components/common/customWidgets/hooks/useWidgetFetch
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { SERVICES_KEY } from './utils/services';
 import CustomWidgetWrapper from 'components/common/customWidgets/CustomWidgetWrapper';
-import { filterItem, filterValues } from 'utils/filterFunctions';
+import { FilterItem, filterValues } from 'utils/filterFunctions';
 import { _FilterTypes } from '@carto/react-core';
 import { useDispatch, useSelector } from 'react-redux';
 import { addFilter, removeFilter } from '@carto/react-redux';
@@ -85,7 +85,7 @@ const methodParams = {
 
 export default function AggreatedServices({ dataSource }: BasicWidgetType) {
   const dispatch = useDispatch();
-  const [filters, setFilters] = useState<Record<string, filterItem> | null>(
+  const [filters, setFilters] = useState<Record<string, FilterItem> | null>(
     null,
   );
   const { width, height } = useSelector(
@@ -285,7 +285,7 @@ function Selector({
   column: string | number;
   type?: _FilterTypes;
   data: any[];
-  filters: Record<string, filterItem>;
+  filters: Record<string, FilterItem>;
   addFilter: any;
   labelFormatter?: (value: any) => unknown;
   callback?: Function;

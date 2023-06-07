@@ -1,5 +1,5 @@
 import { Grid } from '@material-ui/core';
-import groupCategories, { Sort_Type } from '../utils/groupCategories';
+import { Sort_Type } from '../utils/groupCategories';
 import TitleWrapper from '../../common/TitleWrapper';
 import InvertedBarChart from './utils/InvertedBarChart';
 import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
@@ -11,7 +11,7 @@ import useIntroCategoryChange from './hooks/useCategoryChange';
 const title = 'Presencia de NNA solos';
 const column = 'm06_durant';
 const subtitle = '';
-const id = 'nnaSolo';
+const id = 'nna_Solo';
 const source = 'aurora';
 const methodName = EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES;
 const methodParams = {

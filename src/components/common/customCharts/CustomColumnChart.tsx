@@ -1,4 +1,4 @@
-import { CSSProperties, useCallback, useMemo, useState } from 'react';
+import { CSSProperties, useCallback, useMemo } from 'react';
 import ReactEcharts from './ReactEcharts';
 import { format } from 'd3';
 import { useTheme } from '@material-ui/core';
@@ -25,7 +25,7 @@ export default function CustomColumnChart({
     () => ({
       height: 400,
     }),
-    [data, theme],
+    [],
   );
 
   const label = useMemo(
@@ -38,7 +38,7 @@ export default function CustomColumnChart({
         return format('.2s')(value);
       },
     }),
-    [data],
+    [],
   );
 
   const series = useMemo(
@@ -61,7 +61,7 @@ export default function CustomColumnChart({
           return { ...clonedData, itemStyle: { color: UNICEF_COLORS[0] } };
         }),
         label,
-        barMaxWidth: (chartStyle.height as number) * 0.1,
+        barMaxWidth: 40,
       },
     ],
     [data, selectedCategories, label],
@@ -121,7 +121,7 @@ export default function CustomColumnChart({
       },
       series,
     }),
-    [series],
+    [series, data, labelFormater, theme],
   );
 
   const click = useCallback(
@@ -140,7 +140,7 @@ export default function CustomColumnChart({
         onSelectedCategoriesChange(newSelectedCategories);
       }
     },
-    [data, onSelectedCategoriesChange, selectedCategories],
+    [data, onSelectedCategoriesChange, selectedCategories, filterable],
   );
 
   const onEvents = {

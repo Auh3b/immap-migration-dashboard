@@ -1,9 +1,7 @@
 import AggregateIndicatorWidget from 'components/common/customWidgets/AggregateIndicatorWidget';
 import { ReactComponent as People } from 'assets/img/Group.svg';
 import { useMemo } from 'react';
-import aggregateColumns, {
-  SummarisationTypes,
-} from '../utils/AggregateColumns';
+import { SummarisationTypes } from '../utils/AggregateColumns';
 import iconStyles from './utils/iconStyles';
 import { Grid } from '@material-ui/core';
 import { format } from 'd3';
@@ -11,7 +9,7 @@ import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
 import useIntroData from './hooks/useIntroData';
 
 const title = 'Tamaño promedio de los grupos de viaje';
-const id = 'avgGroupSize';
+const id = 'tamaño_de_grupo_promedio';
 const column = '';
 const source = 'aurora';
 const methodName = EXTERNAL_METHOD_NAMES.AGGREGATE_COLUMNS;

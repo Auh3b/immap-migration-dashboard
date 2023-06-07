@@ -12,7 +12,6 @@ import {
   faYoutube,
 } from '@fortawesome/free-brands-svg-icons';
 import { Filters } from 'utils/filterFunctions';
-import { UNICEF_COLORS } from 'theme';
 import { grey, orange } from '@material-ui/core/colors';
 
 export const MEDIA_SOURCES = {

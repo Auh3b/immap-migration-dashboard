@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import MainColumnTitle, { MainColumnTitleProps } from './MainColumnTitle';
+import MainColumnTitle from './MainColumnTitle';
 
 export interface MainColumnViewProps {
   children?: ReactNode;

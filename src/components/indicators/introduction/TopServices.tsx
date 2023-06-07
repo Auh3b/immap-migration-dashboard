@@ -2,7 +2,6 @@ import TitleWrapper from '../../common/TitleWrapper';
 import { CategoryWidgetUI } from '@carto/react-ui';
 import { Grid } from '@material-ui/core';
 import useIntroCategoryChange from './hooks/useCategoryChange';
-import groupCategories from '../utils/groupCategories';
 import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
 import useIntroData from './hooks/useIntroData';
 import { useSelector } from 'react-redux';
@@ -11,7 +10,7 @@ import getSourceFilter from '../media/utils/getSourceFilter';
 const title = 'PUNTOS DE SERVICIOS SOBREPASADOS EN SU CAPACIDAD';
 const subtitle = '';
 const column = 'sobrepasa_';
-const id = 'topServices';
+const id = 'top_Servicios';
 const source = 'premise';
 const methodName = EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES;
 

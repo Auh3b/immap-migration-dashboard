@@ -1,6 +1,5 @@
 import { Grid } from '@material-ui/core';
 import TitleWrapper from '../../common/TitleWrapper';
-import concatenatedValues from '../utils/concatenatedValues';
 import IntroHalfPieChart from './utils/IntroHalfPieChart';
 import useIntroCategoryChange from './hooks/useCategoryChange';
 import { _FilterTypes } from '@carto/react-core';
@@ -14,7 +13,7 @@ const column = 'princ_re_1';
 const subtitle = '';
 const filterable = true;
 const source = 'premise';
-const id = 'sickPremise';
+const id = 'gente_enferma';
 const methodName = EXTERNAL_METHOD_NAMES.CONCATENATED_VALUES;
 
 export default function IntroSickPremise() {

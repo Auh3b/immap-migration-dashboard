@@ -9,11 +9,9 @@ import {
   addSource,
   removeLayer,
   removeSource,
-  setViewState,
 } from '@carto/react-redux';
 import { MIGRATION_FLOW_LAYER_ID } from 'components/layers/MigrationFlowLayer';
 import { HOTSPOTS_LAYER_ID } from 'components/layers/HotspotsLayer';
-import { initialState } from 'store/initialStateSlice';
 import { setPageInfo } from 'store/mapSlice';
 
 export default function MigrationFlow() {

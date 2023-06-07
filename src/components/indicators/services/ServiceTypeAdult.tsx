@@ -5,7 +5,6 @@ import CustomCategoryWidget from 'components/common/customWidgets/CustomCategory
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
 import useWidgetEffect from '../utils/useWidgetEffect';
 import { aidTypes } from './utils/serviceIndicatorTypes';
-import groupCategories from '../utils/groupCategories';
 import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
 
 const NOTE = 'Ayudas humanitarias recibidas según zona de tránsito';

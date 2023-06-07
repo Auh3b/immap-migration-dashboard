@@ -1,7 +1,6 @@
 import AggregateIndicatorWidget from 'components/common/customWidgets/AggregateIndicatorWidget';
 import { ReactComponent as SickPeople } from 'assets/img/fever.svg';
 import { useMemo } from 'react';
-import { AggregationTypes, groupValuesByColumn } from '@carto/react-core';
 import iconStyles from './utils/iconStyles';
 import useIntroData from './hooks/useIntroData';
 import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';

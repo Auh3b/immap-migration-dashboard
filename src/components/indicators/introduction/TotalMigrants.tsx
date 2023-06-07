@@ -4,7 +4,6 @@ import { useMemo } from 'react';
 import aggregateColumns, {
   SummarisationTypes,
 } from '../utils/AggregateColumns';
-import { AggregationTypes } from '@carto/react-core';
 import iconStyles from './utils/iconStyles';
 import { Grid } from '@material-ui/core';
 import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
