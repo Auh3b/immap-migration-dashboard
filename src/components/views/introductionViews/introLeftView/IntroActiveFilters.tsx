@@ -1,4 +1,4 @@
-import { Grid, Typography } from '@material-ui/core';
+import { Divider, Grid, Typography } from '@material-ui/core';
 import ActiveFilterItem, {
   ActiveFilterItemProps,
 } from 'components/common/ActiveFilterItem';
@@ -32,7 +32,7 @@ export default function IntroActiveFilters() {
     <Grid container direction='column'>
       {filters.length ? (
         filters.map(([name, _filters]) => (
-          <div key={name}>
+          <div key={name} style={{marginBottom: 16}}>
             <Typography
               variant='subtitle2'
               style={{ textTransform: 'uppercase' }}
@@ -47,6 +47,7 @@ export default function IntroActiveFilters() {
                 name={filterName}
               />
             ))}
+            <Divider />
           </div>
         ))) : 
         <Typography variant='caption'>

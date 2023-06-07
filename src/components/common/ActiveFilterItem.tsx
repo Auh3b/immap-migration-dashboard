@@ -48,7 +48,7 @@ export default function ActiveFilterItem(props: ActiveFilterItemProps) {
     );
   };
 
-  const name = _name.replace('_', ' ');
+  const name = _name.replaceAll('_', ' ');
   const value = getValueFormat(type, values)
   return (
     <Grid

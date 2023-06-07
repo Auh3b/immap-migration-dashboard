@@ -1,5 +1,5 @@
 import { _FilterTypes } from '@carto/react-core';
-import { Button, Fab, Grid, TextField, makeStyles } from '@material-ui/core';
+import { Button, Fab, Grid, TextField, Typography, makeStyles } from '@material-ui/core';
 import { deepOrange } from '@material-ui/core/colors';
 import { dequal } from 'dequal';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
@@ -20,6 +20,7 @@ export default function IntroExtraFilters() {
   const classes = useExtraStyles()
   return (
     <Grid container direction='column' className={classes.root}>
+      <Typography variant='subtitle2' style={{textTransform: 'uppercase', marginBottom: 6}}>{id.replaceAll('_', ' ')}</Typography>
       <TimeseriesFilter />
     </Grid>
   );
