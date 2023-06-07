@@ -12,14 +12,14 @@ export type filterValue = string | number;
 export type filterField = string | number;
 export type filterType = FilterTypes;
 
-export interface filterItem {
+export interface FilterItem {
   id: filterId;
   values: filterValue[];
   column: filterField;
   type: filterType;
 }
 
-export type Filters = Record<string, filterItem>;
+export type Filters = Record<string, FilterItem>;
 
 function filterIn(column: string | number, value: number | string) {
   return (d: any) => d[column] === value;
