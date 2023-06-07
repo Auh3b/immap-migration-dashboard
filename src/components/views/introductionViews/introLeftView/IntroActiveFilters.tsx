@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 
 type Filters = Record<string, Record<string, ActiveFilterItemProps>>;
 
-export default function IntroFilters() {
+export default function IntroActiveFilters() {
   // @ts-ignore
   const filters: Filters = useSelector((state) => state.intro.filters);
   return (
