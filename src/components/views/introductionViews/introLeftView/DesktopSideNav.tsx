@@ -84,6 +84,7 @@ export default function DesktopSideNav({ isOpen, handleOpenToggle }: any) {
         style={{ width: '100%', height: '100%', paddingTop: '56px' }}
       >
         <ContentPanel value={value} />
+        {isOpen && <Divider orientation='vertical' />}
         <SideMenu isOpen={isOpen} setValue={setValue} value={value} />
       </Grid>
     </Drawer>
@@ -136,7 +137,7 @@ function SideMenu({
         {/* @ts-expect-error */}
         <StyledTab
           value={0}
-          style={{ color: red['400'], display: 0 ? 'none' : 'block' }}
+          style={{ color: red['400'], display: Boolean(value) ? 'block' : 'none' }}
           icon={<ChevronLeftIcon />}
         />
       </StyledTabs>
