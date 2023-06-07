@@ -16,7 +16,8 @@ import { clsx } from 'clsx';
 import { ReactNode, useEffect, useMemo, useState } from 'react';
 import IntroContent from './IntroContent';
 import { grey, red } from '@material-ui/core/colors';
-import IntroFilters from './IntroFilters';
+import IntroActiveFilters from './IntroActiveFilters';
+import IntroExtraFilters from './IntroExtraFilters';
 
 const drawerWidth = 300;
 
@@ -131,9 +132,9 @@ function SideMenu({
         {/* @ts-expect-error */}
         <StyledTab value={1} icon={<HelpOutlineIcon />} />
         {/* @ts-expect-error */}
-        <StyledTab value={2} icon={<FilterListIcon />} />
+        <StyledTab value={2} icon={<TuneIcon />} />
         {/* @ts-expect-error */}
-        <StyledTab value={3} icon={<TuneIcon />} />
+        <StyledTab value={3} icon={<FilterListIcon />} />
         {/* @ts-expect-error */}
         <StyledTab
           value={0}
@@ -174,10 +175,10 @@ function ContentPanel({ value }: any) {
         <IntroContent isOpen={true} />
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <IntroFilters />
+        <IntroExtraFilters />
       </TabPanel>
       <TabPanel value={value} index={3}>
-        Tune
+        <IntroActiveFilters />
       </TabPanel>
     </Grid>
   );
