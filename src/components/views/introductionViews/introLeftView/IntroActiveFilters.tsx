@@ -13,7 +13,12 @@ export default function IntroActiveFilters() {
     <Grid container direction='column'>
       {Object.entries(filters).map(([name, _filters]) => (
         <div key={name}>
-          <Typography variant='subtitle2' style={{textTransform: 'uppercase'}}>{name+ ' data'}</Typography>
+          <Typography
+            variant='subtitle2'
+            style={{ textTransform: 'uppercase' }}
+          >
+            {name + ' data'}
+          </Typography>
           {Object.entries(_filters).map(([filterName, _filterItem]) => (
             <ActiveFilterItem
               key={filterName}

@@ -138,7 +138,10 @@ function SideMenu({
         {/* @ts-expect-error */}
         <StyledTab
           value={0}
-          style={{ color: red['400'], display: Boolean(value) ? 'block' : 'none' }}
+          style={{
+            color: red['400'],
+            display: Boolean(value) ? 'block' : 'none',
+          }}
           icon={<ChevronLeftIcon />}
         />
       </StyledTabs>

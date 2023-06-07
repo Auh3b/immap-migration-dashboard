@@ -38,9 +38,7 @@ export default function ChildrenPercentage() {
 
   const data = useMemo(() => {
     if (_data.length) {
-      return (
-        _data[0].value / _data[1].value
-      );
+      return _data[0].value / _data[1].value;
     }
     return 0;
   }, [_data]);
