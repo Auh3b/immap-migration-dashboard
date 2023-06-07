@@ -55,9 +55,9 @@ export const useLeftStyles = makeStyles((theme) => ({
   },
 }));
 export default function IntroLeftView() {
-  const [isOpen, setIsOpen] = useState(false);
-  const handleOpenToggle = () => {
-    setIsOpen((prev) => !prev);
+  const [isOpen, setIsOpen] = useState<Boolean>(false);
+  const handleOpenToggle = (value: Boolean) => {
+    setIsOpen(value);
   };
   const isMobile = useMediaQuery((theme: CustomTheme) =>
     theme.breakpoints.down('xs'),

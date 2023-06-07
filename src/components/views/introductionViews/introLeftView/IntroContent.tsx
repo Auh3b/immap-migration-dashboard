@@ -3,13 +3,13 @@ import { Grid, Typography, makeStyles } from '@material-ui/core';
 const useStyles = makeStyles((theme) => ({
   content: {
     background: theme.palette.background.paper,
-    border:({isMobile}:any) => isMobile ?  '1px solid' + theme.palette.grey[100]: 'unset',
+    border: ({ isMobile }: any) =>
+      isMobile ? '1px solid' + theme.palette.grey[100] : 'unset',
     borderRadius: theme.shape.borderRadius,
-    width: ({ isOpen, isMobile }: any) =>
-      isOpen ? '100%' : isMobile ? '90%' : theme.mixins.toolbar.minHeight,
+    width: ({ isOpen, isMobile }: any) => (isMobile ? '90%' : '219px'),
     display: ({ isOpen, isMobile }: any) =>
       isOpen ? 'flex' : isMobile ? 'block' : 'none',
-    maxHeight: '85vh',
+    maxHeight: ({ isMobile }: any) => (isMobile ? '85vh' : '90vh'),
     overflowY: 'auto',
     overflowX: 'hidden',
 

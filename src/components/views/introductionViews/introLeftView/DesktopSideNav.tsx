@@ -13,9 +13,10 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import TuneIcon from '@material-ui/icons/Tune';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { clsx } from 'clsx';
-import { useState } from 'react';
-import { TabContext, TabList, TabPanel } from '@material-ui/lab';
+import { ReactNode, useEffect, useMemo, useState } from 'react';
 import IntroContent from './IntroContent';
+import { grey, red } from '@material-ui/core/colors';
+import IntroFilters from './IntroFilters';
 
 const drawerWidth = 300;
 
@@ -50,14 +51,16 @@ export const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function DesktopSideNav({
-  // isOpen,
-  handleOpenToggle,
-  children,
-}: any) {
-  const [value, setValue] = useState('0');
-  const isOpen = true;
+export default function DesktopSideNav({ isOpen, handleOpenToggle }: any) {
+  const [value, setValue] = useState(0);
   const classes = useStyles({ isOpen });
+  useEffect(() => {
+    if (value) {
+      handleOpenToggle(true);
+    } else {
+      handleOpenToggle(false);
+    }
+  }, [value, setValue]);
   return (
     <Drawer
       variant='permanent'
@@ -74,20 +77,34 @@ export default function DesktopSideNav({
       }}
       open={isOpen}
     >
-      <TabContext value={value}>
-        <Grid
-          wrap='nowrap'
-          container
-          alignItems='stretch'
-          style={{ width: '100%', height: '100%', paddingTop: '56px' }}
-        >
-          <ContentPanel />
-          <SideMenu isOpen={isOpen} setValue={setValue} value={value} />
-        </Grid>
-      </TabContext>
+      <Grid
+        wrap='nowrap'
+        container
+        alignItems='stretch'
+        style={{ width: '100%', height: '100%', paddingTop: '56px' }}
+      >
+        <ContentPanel value={value} />
+        <SideMenu isOpen={isOpen} setValue={setValue} value={value} />
+      </Grid>
     </Drawer>
   );
 }
+
+const StyledTabs = withStyles((theme) => ({
+  indicator: {
+    backgroundColor: 'rgba(0, 0, 0, 0) !important',
+  },
+}))(Tabs);
+
+const StyledTab = withStyles((theme) => ({
+  root: {
+    marginRight: 0,
+  },
+  selected: {
+    color: theme.palette.secondary.main,
+    backgroundColor: '#f4f4f4',
+  },
+}))(Tab);
 
 function SideMenu({
   isOpen,
@@ -95,45 +112,72 @@ function SideMenu({
   setValue,
 }: {
   isOpen: Boolean;
-  value: string;
-  setValue: (value: string) => void;
+  value: number;
+  setValue: (value: number) => void;
 }) {
-  const handleChange = (event: React.ChangeEvent<{}>, newValue: string) => {
+  const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
   };
   return (
-    <Grid item xs>
-      <TabList orientation='vertical' value={value} onChange={handleChange}>
-        <Tab value={'0'} icon={<HelpOutlineIcon />} />
-        <Tab value={'1'} icon={<FilterListIcon />} />
-        <Tab value={'2'} icon={<TuneIcon />} />
-      </TabList>
-      {isOpen && (
-        <IconButton>
-          <ChevronLeftIcon />
-        </IconButton>
-      )}
+    <Grid item xs container style={{ color: grey['600'] }}>
+      {/* @ts-expect-error */}
+      <StyledTabs
+        orientation='vertical'
+        textColor='inherit'
+        value={value}
+        onChange={handleChange}
+      >
+        {/* @ts-expect-error */}
+        <StyledTab value={1} icon={<HelpOutlineIcon />} />
+        {/* @ts-expect-error */}
+        <StyledTab value={2} icon={<FilterListIcon />} />
+        {/* @ts-expect-error */}
+        <StyledTab value={3} icon={<TuneIcon />} />
+        {/* @ts-expect-error */}
+        <StyledTab
+          value={0}
+          style={{ color: red['400'], display: 0 ? 'none' : 'block' }}
+          icon={<ChevronLeftIcon />}
+        />
+      </StyledTabs>
     </Grid>
   );
 }
 
-const StyledTabPanel = withStyles((theme)=>({
-  root:{
-    padding: `${theme.spacing(1)}px ${theme.spacing(2)}px`
-  }
-}))(TabPanel)
-
-function ContentPanel() {
+function TabPanel({
+  value,
+  index,
+  children,
+}: {
+  value: any;
+  index: any;
+  children: ReactNode;
+}) {
   return (
-    <Grid item style={{ flexGrow: 1 }}>
-      {/* @ts-expect-error */}
-      <StyledTabPanel value={'0'}>
+    <div
+      role='tabpanel'
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      style={{ padding: '8px 0px 8px 24px' }}
+    >
+      {children}
+    </div>
+  );
+}
+
+function ContentPanel({ value }: any) {
+  return (
+    <Grid item style={{ flexGrow: 1, width: '100%' }}>
+      <TabPanel value={value} index={1}>
         <IntroContent isOpen={true} />
-      </StyledTabPanel>
-      {/* @ts-expect-error */}
-      <StyledTabPanel value={'1'}>Filter</StyledTabPanel>
-      {/* @ts-expect-error */}
-      <StyledTabPanel value={'2'}>Tune</StyledTabPanel>
+      </TabPanel>
+      <TabPanel value={value} index={2}>
+        <IntroFilters />
+      </TabPanel>
+      <TabPanel value={value} index={3}>
+        Tune
+      </TabPanel>
     </Grid>
   );
 }
