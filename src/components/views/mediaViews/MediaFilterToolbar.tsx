@@ -9,7 +9,6 @@ import {
   Paper,
   Popper,
   TextField,
-  Tooltip,
   Typography,
   makeStyles,
 } from '@material-ui/core';
@@ -102,7 +101,7 @@ function DateFilter({ filters }: any) {
     }
 
     return true;
-  }, [start, end, currentDateFilter.current]);
+  }, [start, end]);
 
   const handleApplyFilter = () => {
     dispatch(

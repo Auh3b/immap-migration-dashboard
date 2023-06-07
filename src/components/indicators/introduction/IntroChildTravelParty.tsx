@@ -1,5 +1,4 @@
 import TitleWrapper from 'components/common/TitleWrapper';
-import stackedBarCategories from '../utils/stackedBarCategories';
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
 import { useMemo } from 'react';
 import { UNICEF_COLORS } from 'theme';
@@ -11,7 +10,7 @@ import useIntroData from './hooks/useIntroData';
 const title = 'NNA no acompañados y separados';
 const NOTE =
   'Presencia de niños, niñas y adolescentes no acompañados y separados';
-const id = 'childrenTravelParty';
+const id = 'nna_viajes_fiesta';
 const column = 'serv_dif_n';
 const methodName = EXTERNAL_METHOD_NAMES.STACKED_BAR_CATEGORIES;
 const source = 'premise';

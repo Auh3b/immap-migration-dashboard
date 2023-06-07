@@ -1,7 +1,6 @@
 import AggregateIndicatorWidget from 'components/common/customWidgets/AggregateIndicatorWidget';
 import { ReactComponent as Pregnant } from 'assets/img/pregnant-1.svg';
 import { useMemo } from 'react';
-import { AggregationTypes, groupValuesByColumn } from '@carto/react-core';
 import iconStyles from './utils/iconStyles';
 import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
 import useIntroData from './hooks/useIntroData';

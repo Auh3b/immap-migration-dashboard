@@ -11,7 +11,7 @@ const title = 'Total de encuestas por área de recolección';
 const column = 'erm';
 const subtitle = '';
 const source = 'premise';
-const id = 'topSurveySites';
+const id = 'top_Survey_Sitios';
 const methodName = EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES;
 export default function TopSurveyLocation() {
   const { data, isLoading } = useIntroData({

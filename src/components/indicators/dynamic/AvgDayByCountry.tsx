@@ -1,5 +1,4 @@
 import { Grid } from '@material-ui/core';
-import React from 'react';
 import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType';
 import useWidgetEffect from '../utils/useWidgetEffect';
 import CustomBarWidget from 'components/common/customWidgets/CustomBarWidget';

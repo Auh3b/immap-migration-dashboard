@@ -3,7 +3,6 @@ import { Grid } from '@material-ui/core';
 import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType';
 import CustomCategoryWidget from 'components/common/customWidgets/CustomCategoryWidget';
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
-import concatenatedValues from '../utils/concatenatedValues';
 import useWidgetEffect from '../utils/useWidgetEffect';
 import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
 

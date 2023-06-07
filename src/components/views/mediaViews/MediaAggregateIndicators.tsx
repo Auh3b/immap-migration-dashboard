@@ -73,7 +73,7 @@ export default function MediaAggregateIndicators({ isLoading }: any) {
   const classes = useStyles();
 
   //@ts-ignore
-  const filters = useSelector((state) => state.media.filters) || {};
+  const filters = useSelector((state) => state.media.filters);
 
   const mediaSource = useMemo(
     () =>

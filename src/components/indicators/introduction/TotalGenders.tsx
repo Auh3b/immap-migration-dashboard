@@ -1,4 +1,4 @@
-import groupCategories, { Sort_Type } from '../utils/groupCategories';
+import { Sort_Type } from '../utils/groupCategories';
 import TitleWrapper from '../../common/TitleWrapper';
 import useIntroCategoryChange from './hooks/useCategoryChange';
 import { Grid } from '@material-ui/core';
@@ -11,7 +11,7 @@ import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
 const title = 'Géneros';
 const subtitle = '';
 const column = 'e07_gener';
-const id = 'totalGenders';
+const id = 'géneros';
 const source = 'aurora';
 const methodName = EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES;
 const methodParams = {

@@ -1,5 +1,4 @@
 import { useMemo } from 'react';
-import groupCategories from '../utils/groupCategories';
 import { Grid } from '@material-ui/core';
 import TitleWrapper from '../../common/TitleWrapper';
 import IntroPieChart from '../../common/customCharts/CustomPieWidgetUI';
@@ -12,7 +11,7 @@ import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
 const title = 'Distribución por zona geográfica donde la  persona conectó';
 const column = 'e004_regio';
 const subtitle = '';
-const id = 'auroraLocations';
+const id = 'aurora_ubicaciones';
 const source = 'aurora';
 const filterable = true;
 const methodName = EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES;

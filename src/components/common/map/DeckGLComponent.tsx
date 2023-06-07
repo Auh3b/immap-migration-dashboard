@@ -1,7 +1,7 @@
 // @ts-ignore
 import DeckGL from '@deck.gl/react';
 import { useSelector } from 'react-redux';
-import { useTheme, useMediaQuery } from '@material-ui/core';
+import { useTheme } from '@material-ui/core';
 import { BASEMAPS } from '@carto/react-basemaps';
 import { Map } from 'react-map-gl';
 import { RootState } from 'store/store';
@@ -13,7 +13,6 @@ import { FlyToInterpolator } from '@deck.gl/core';
 import maplibregl from '!maplibre-gl';
 // @ts-ignore
 import maplibreglWorker from 'maplibre-gl/dist/maplibre-gl-csp-worker';
-import useFeatureFocus from 'hooks/useFeatureFocus';
 // @ts-ignore
 maplibregl.workerClass = maplibreglWorker;
 
@@ -27,8 +26,6 @@ export default function DeckGLComponent({ layers }: { layers: any[] }) {
     // @ts-ignore
     (state: RootState) => BASEMAPS[state.carto.basemap],
   );
-  const theme = useTheme();
-  // const isMobile = useMediaQuery(theme.breakpoints.down('xs'));
   const {
     handleCursor,
     handleHover,
@@ -36,7 +33,6 @@ export default function DeckGLComponent({ layers }: { layers: any[] }) {
     handleTooltip,
     handleViewStateChange,
   } = useMapHooks();
-  // useFeatureFocus();
   return (
     // @ts-ignore
     <DeckGL
