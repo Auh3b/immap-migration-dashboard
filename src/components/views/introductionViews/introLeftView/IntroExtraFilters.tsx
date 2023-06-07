@@ -1,6 +1,7 @@
 import { _FilterTypes } from '@carto/react-core';
 import {
   Button,
+  Divider,
   Fab,
   Grid,
   TextField,
@@ -28,10 +29,15 @@ export default function IntroExtraFilters() {
   return (
     <Grid container direction='column' className={classes.root}>
       <Typography
-        variant='subtitle2'
-        style={{ textTransform: 'uppercase', marginBottom: 6 }}
+        variant='subtitle1'
+        style={{
+          textTransform: 'uppercase',
+          marginBottom: 6,
+          color: '#333333',
+          padding: '8px 0px',
+        }}
       >
-        {id.replaceAll('_', ' ')}
+        filtros adicionales
       </Typography>
       <TimeseriesFilter />
     </Grid>
@@ -40,7 +46,13 @@ export default function IntroExtraFilters() {
 
 function TimeseriesFilter() {
   return (
-    <Grid item container xs>
+    <Grid item container direction='column' xs>
+      <Typography
+        variant='subtitle2'
+        style={{ textTransform: 'capitalize', marginBottom: 6 }}
+      >
+        {id.replaceAll('_', ' ')}
+      </Typography>
       <DateFilter />
     </Grid>
   );

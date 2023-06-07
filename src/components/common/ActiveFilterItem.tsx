@@ -23,7 +23,7 @@ const useFilterStyles = makeStyles((theme) => ({
     display: 'flex',
     flexDirection: 'column',
     maxWidth: 150,
-    marginBottom: theme.spacing(1)
+    marginBottom: theme.spacing(1),
   },
   itemClose: {
     marginLeft: theme.spacing(2),
@@ -70,9 +70,11 @@ export default function ActiveFilterItem(props: ActiveFilterItemProps) {
       justifyContent='space-between'
     >
       <div className={classes.menuText}>
-        <Typography variant='overline' style={{fontWeight: 600}}>{name}</Typography>
+        <Typography variant='overline' style={{ fontWeight: 600 }}>
+          {name}
+        </Typography>
         <Tooltip title={value}>
-          <Typography variant='overline' noWrap={true} >
+          <Typography variant='overline' noWrap={true}>
             {value}
           </Typography>
         </Tooltip>
