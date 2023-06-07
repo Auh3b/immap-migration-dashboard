@@ -1,5 +1,12 @@
 import { _FilterTypes } from '@carto/react-core';
-import { Button, Fab, Grid, TextField, Typography, makeStyles } from '@material-ui/core';
+import {
+  Button,
+  Fab,
+  Grid,
+  TextField,
+  Typography,
+  makeStyles,
+} from '@material-ui/core';
 import { deepOrange } from '@material-ui/core/colors';
 import { dequal } from 'dequal';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
@@ -10,17 +17,22 @@ const source = 'aurora';
 const id = 'fecha_filtro';
 const column = 'timeunix';
 
-const useExtraStyles = makeStyles((theme)=>({
-  root:{
-    paddingRight: theme.spacing(1)
-  }
-}))
+const useExtraStyles = makeStyles((theme) => ({
+  root: {
+    paddingRight: theme.spacing(1),
+  },
+}));
 
 export default function IntroExtraFilters() {
-  const classes = useExtraStyles()
+  const classes = useExtraStyles();
   return (
     <Grid container direction='column' className={classes.root}>
-      <Typography variant='subtitle2' style={{textTransform: 'uppercase', marginBottom: 6}}>{id.replaceAll('_', ' ')}</Typography>
+      <Typography
+        variant='subtitle2'
+        style={{ textTransform: 'uppercase', marginBottom: 6 }}
+      >
+        {id.replaceAll('_', ' ')}
+      </Typography>
       <TimeseriesFilter />
     </Grid>
   );
@@ -72,8 +84,8 @@ function DateFilter() {
   }, [start, end]);
 
   const handleApplyFilter = useCallback(() => {
-    const startUnix = new Date(start).getTime()
-    const endUnix = new Date(end).getTime()
+    const startUnix = new Date(start).getTime();
+    const endUnix = new Date(end).getTime();
     dispatch(
       addIntroFilter({
         source,
@@ -84,7 +96,7 @@ function DateFilter() {
       }),
     );
     currentDateFilter.current = [start, end];
-  }, [start, end])
+  }, [start, end]);
 
   return (
     <Grid container alignItems='center' direction='column' item>
@@ -112,7 +124,7 @@ function DatePicker({ id, value, label, setValue }: DatePickerProps) {
   };
 
   return (
-    <Grid item style={{width: '100%', marginBottom: '8px'}}>
+    <Grid item style={{ width: '100%', marginBottom: '8px' }}>
       <TextField
         id={id}
         size='medium'

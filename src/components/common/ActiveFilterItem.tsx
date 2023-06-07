@@ -49,7 +49,7 @@ export default function ActiveFilterItem(props: ActiveFilterItemProps) {
   };
 
   const name = _name.replaceAll('_', ' ');
-  const value = getValueFormat(type, values)
+  const value = getValueFormat(type, values);
   return (
     <Grid
       container
@@ -76,11 +76,12 @@ function getValueFormat(type: string, values: any[]) {
   switch (type) {
     case FilterTypes.BETWEEN: {
       const value = values[0];
-      return value.map((d: string) => timeFormat('%d/%m/%Y')(new Date(d))).join(' - ');
+      return value
+        .map((d: string) => timeFormat('%d/%m/%Y')(new Date(d)))
+        .join(' - ');
     }
-    default:
-      {
-        return values.map((d: string) => d.replaceAll('-', '/')).join(' - ');
-      }
+    default: {
+      return values.map((d: string) => d.replaceAll('-', '/')).join(' - ');
+    }
   }
 }
