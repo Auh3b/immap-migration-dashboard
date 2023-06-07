@@ -1,13 +1,21 @@
-import { Grid, IconButton, Tooltip, Typography, makeStyles } from '@material-ui/core';
-import { FilterItem } from 'utils/filterFunctions';
+import {
+  Grid,
+  IconButton,
+  Tooltip,
+  Typography,
+  makeStyles,
+} from '@material-ui/core';
+import { FilterItem, FilterTypes } from 'utils/filterFunctions';
 import CloseIcon from '@material-ui/icons/Close';
 import { useDispatch } from 'react-redux';
 import { removeIntroFilter } from 'store/introSlice';
+import { timeFormat } from 'd3';
 
 export interface ActiveFilterItemProps extends FilterItem {
   name: string;
   source: string;
   owner: string;
+  valueFormatter?: (value: any) => any;
 }
 
 const useFilterStyles = makeStyles((theme) => ({
@@ -27,23 +35,28 @@ const useFilterStyles = makeStyles((theme) => ({
 }));
 
 export default function ActiveFilterItem(props: ActiveFilterItemProps) {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const classes = useFilterStyles();
-  const { owner, source, name: _name, values, column } = props;
-  const handleRemove = () =>{
+  const { owner, source, name: _name, values, type, column } = props;
+  const handleRemove = () => {
     dispatch(
       removeIntroFilter({
         owner,
         source,
-        column
-      })
-    )
-  }
+        column,
+      }),
+    );
+  };
 
-  const name = _name.replace('_', ' ')
-  const value = values.map((d: string) => d.replaceAll('-', '/')).join(' - ')
+  const name = _name.replace('_', ' ');
+  const value = getValueFormat(type, values)
   return (
-    <Grid container alignItems='center' wrap='nowrap' justifyContent='space-between'>
+    <Grid
+      container
+      alignItems='center'
+      wrap='nowrap'
+      justifyContent='space-between'
+    >
       <div className={classes.menuText}>
         <Typography variant='overline'>{name}</Typography>
         <Tooltip title={value}>
@@ -52,12 +65,22 @@ export default function ActiveFilterItem(props: ActiveFilterItemProps) {
           </Typography>
         </Tooltip>
       </div>
-      <IconButton
-        className={classes.itemClose}
-        onClick={handleRemove}
-      >
+      <IconButton className={classes.itemClose} onClick={handleRemove}>
         <CloseIcon />
       </IconButton>
     </Grid>
   );
+}
+
+function getValueFormat(type: string, values: any[]) {
+  switch (type) {
+    case FilterTypes.BETWEEN: {
+      const value = values[0];
+      return value.map((d: string) => timeFormat('%d/%m/%Y')(new Date(d))).join(' - ');
+    }
+    default:
+      {
+        return values.map((d: string) => d.replaceAll('-', '/')).join(' - ');
+      }
+  }
 }
