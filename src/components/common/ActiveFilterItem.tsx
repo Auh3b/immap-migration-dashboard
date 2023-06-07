@@ -1,19 +1,20 @@
-import { Grid, IconButton, Typography, makeStyles } from '@material-ui/core';
+import { Grid, IconButton, Tooltip, Typography, makeStyles } from '@material-ui/core';
 import { FilterItem } from 'utils/filterFunctions';
 import CloseIcon from '@material-ui/icons/Close';
+import { useDispatch } from 'react-redux';
+import { removeIntroFilter } from 'store/introSlice';
 
 export interface ActiveFilterItemProps extends FilterItem {
   name: string;
   source: string;
-  removeItem: RemoveItem;
+  owner: string;
 }
-
-type RemoveItem = (filterItem: Partial<ActiveFilterItemProps>) => void;
 
 const useFilterStyles = makeStyles((theme) => ({
   menuText: {
     display: 'flex',
     flexDirection: 'column',
+    maxWidth: 150,
   },
   itemClose: {
     marginLeft: theme.spacing(2),
@@ -26,21 +27,34 @@ const useFilterStyles = makeStyles((theme) => ({
 }));
 
 export default function ActiveFilterItem(props: ActiveFilterItemProps) {
+  const dispatch = useDispatch()
   const classes = useFilterStyles();
-  const { id: owner, source, name, values, type, column, removeItem } = props;
+  const { owner, source, name: _name, values, column } = props;
+  const handleRemove = () =>{
+    dispatch(
+      removeIntroFilter({
+        owner,
+        source,
+        column
+      })
+    )
+  }
+
+  const name = _name.replace('_', ' ')
+  const value = values.map((d: string) => d.replaceAll('-', '/')).join(' - ')
   return (
-    <Grid container alignItems='center' justifyContent='space-between'>
+    <Grid container alignItems='center' wrap='nowrap' justifyContent='space-between'>
       <div className={classes.menuText}>
-        <Typography variant='overline'>{name.replace('_', ' ')}</Typography>
-        <Typography variant='overline'>
-          {values.map((d: string) => d.replaceAll('-', '/')).join(' - ')}
-        </Typography>
+        <Typography variant='overline'>{name}</Typography>
+        <Tooltip title={value}>
+          <Typography variant='overline' noWrap={true}>
+            {value}
+          </Typography>
+        </Tooltip>
       </div>
       <IconButton
         className={classes.itemClose}
-        onClick={() => {
-          removeItem({ id: owner, column, source });
-        }}
+        onClick={handleRemove}
       >
         <CloseIcon />
       </IconButton>
