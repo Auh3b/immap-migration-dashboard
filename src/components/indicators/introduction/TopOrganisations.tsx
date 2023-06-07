@@ -12,7 +12,7 @@ const column = 'org_pert';
 const subtitle =
   'Top 5 de organizaciones implementadoras de servicios, (Para ver todas las organizaciones, diríjase a la pestaña de servicios)';
 const source = 'premise';
-const id = 'topOrganisations';
+const id = 'top_Organizaciones';
 const methodName = EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES;
 export default function TopOrganisations() {
   const { data, isLoading } = useIntroData({
