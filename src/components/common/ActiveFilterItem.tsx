@@ -37,7 +37,15 @@ const useFilterStyles = makeStyles((theme) => ({
 export default function ActiveFilterItem(props: ActiveFilterItemProps) {
   const dispatch = useDispatch();
   const classes = useFilterStyles();
-  const { owner, source, name: _name, values, type, column } = props;
+  const {
+    owner,
+    source,
+    name: _name,
+    values,
+    type,
+    column,
+    valueFormatter,
+  } = props;
   const handleRemove = () => {
     dispatch(
       removeIntroFilter({
@@ -47,9 +55,12 @@ export default function ActiveFilterItem(props: ActiveFilterItemProps) {
       }),
     );
   };
-
+  console.log(valueFormatter);
   const name = _name.replaceAll('_', ' ');
-  const value = getValueFormat(type, values);
+  const value = getValueFormat(
+    type,
+    values.map((d) => (valueFormatter ? valueFormatter(d) : d)),
+  );
   return (
     <Grid
       container
@@ -81,7 +92,7 @@ function getValueFormat(type: string, values: any[]) {
         .join(' - ');
     }
     default: {
-      return values.map((d: string) => d.replaceAll('-', '/')).join(' - ');
+      return values.map((d: string) => d.replaceAll('-', '/')).join(', ');
     }
   }
 }

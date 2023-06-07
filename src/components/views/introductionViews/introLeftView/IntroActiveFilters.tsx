@@ -2,10 +2,18 @@ import { Divider, Grid, Typography } from '@material-ui/core';
 import ActiveFilterItem, {
   ActiveFilterItemProps,
 } from 'components/common/ActiveFilterItem';
+import { SICK_CATEGORY_ABREVATIONS } from 'components/indicators/premise/utils/services';
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
 type Filters = Record<string, Record<string, ActiveFilterItemProps>>;
+
+const valueFormatters: Record<string, Function> = {
+  gente_enferma: (value: any) => {
+    const newValue = Object.fromEntries(SICK_CATEGORY_ABREVATIONS)[+value];
+    return newValue;
+  },
+};
 
 export default function IntroActiveFilters() {
   // @ts-ignore
@@ -18,7 +26,16 @@ export default function IntroActiveFilters() {
       const sourceFilters = Object.entries(_appliedFilters);
       if (sourceFilters.length) {
         for (let [filterName, filterPros] of sourceFilters) {
-          _output = [..._output, [filterName, filterPros]];
+          _output = [
+            ..._output,
+            [
+              filterName,
+              {
+                ...filterPros,
+                valueFormatter: valueFormatters[filterName] || null,
+              },
+            ],
+          ];
         }
         output = [...output, [name, _output]];
       }
@@ -26,7 +43,7 @@ export default function IntroActiveFilters() {
 
     return output;
   }, [_filters]);
-
+  console.log(filters);
   return (
     <Grid container direction='column'>
       {filters.length ? (

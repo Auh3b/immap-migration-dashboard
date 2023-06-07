@@ -11,7 +11,7 @@ const column = '';
 const source = 'aurora';
 const title = 'NNA reportados en los grupos de viaje';
 const subtitle = 'Validadas';
-const columns = [{ name: 'e19_1__cu', type: SummarisationTypes.SUM }];
+const columns = [{ name: 'e19_cu', type: SummarisationTypes.SUM }];
 const methodName = EXTERNAL_METHOD_NAMES.AGGREGATE_COLUMNS;
 const methodParams = {
   columns,
