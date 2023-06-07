@@ -114,7 +114,7 @@ function DatePicker({ id, value, label, setValue }: DatePickerProps) {
     <Grid item style={{width: '100%', marginBottom: '8px'}}>
       <TextField
         id={id}
-        size='small'
+        size='medium'
         label={label}
         type='date'
         defaultValue={date.current}
