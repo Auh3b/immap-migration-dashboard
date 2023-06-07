@@ -13,7 +13,7 @@ const title = 'Identificación NNA solos';
 const column = 'm07__en_q';
 const subtitle = '';
 const source = 'aurora';
-const id = 'id';
+const id = 'nna_solo_países';
 const methodName = EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES;
 
 export default function NnaCountry() {
