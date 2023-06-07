@@ -12,7 +12,7 @@ const title = 'Nacionalidad de la persona conectada';
 const column = 'e08_pais_';
 const subtitle = '';
 const source = 'aurora';
-const id = 'topOrganisations';
+const id = 'nacionalidades_migrantes';
 const filterable = true;
 const methodName = EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES;
 

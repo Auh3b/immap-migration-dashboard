@@ -9,7 +9,7 @@ import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
 import useIntroData from './hooks/useIntroData';
 
 const title = 'Tamaño promedio de los grupos de viaje';
-const id = 'avgGroupSize';
+const id = 'tamaño_de_grupo_promedio';
 const column = '';
 const source = 'aurora';
 const methodName = EXTERNAL_METHOD_NAMES.AGGREGATE_COLUMNS;

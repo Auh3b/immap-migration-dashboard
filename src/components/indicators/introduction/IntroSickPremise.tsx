@@ -13,7 +13,7 @@ const column = 'princ_re_1';
 const subtitle = '';
 const filterable = true;
 const source = 'premise';
-const id = 'sickPremise';
+const id = 'gente_enferma';
 const methodName = EXTERNAL_METHOD_NAMES.CONCATENATED_VALUES;
 
 export default function IntroSickPremise() {

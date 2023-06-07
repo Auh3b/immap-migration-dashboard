@@ -11,7 +11,7 @@ import useIntroCategoryChange from './hooks/useCategoryChange';
 const title = 'Presencia de NNA solos';
 const column = 'm06_durant';
 const subtitle = '';
-const id = 'nnaSolo';
+const id = 'nna_Solo';
 const source = 'aurora';
 const methodName = EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES;
 const methodParams = {

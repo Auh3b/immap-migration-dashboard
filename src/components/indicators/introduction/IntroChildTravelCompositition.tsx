@@ -13,7 +13,7 @@ const title =
   'Atención a niños, niñas y adolescentes no acompañados y separados';
 const NOTE =
   'Cuántos niños, niñas y adolescentes no acompañados y separados atendieron durante la semana inmediatamente anterior';
-const id = 'childrenTravelPartyComposition';
+const id = 'nna_viajes_fiesta_composición';
 const column = 'serv_dif_n';
 const methodName = EXTERNAL_METHOD_NAMES.GROUPED_COLUMNS;
 const source = 'premise';

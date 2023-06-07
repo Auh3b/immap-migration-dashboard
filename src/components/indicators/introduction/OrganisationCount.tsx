@@ -6,7 +6,7 @@ import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
 import useIntroData from './hooks/useIntroData';
 import { useMemo } from 'react';
 
-const id = 'organisationCount';
+const id = 'organización_count';
 const title = 'PUNTOS DE SERVICIOS CARACTERIZADOS';
 const column = '';
 const columns = [{ name: 'org_pert', type: SummarisationTypes.COUNT }];

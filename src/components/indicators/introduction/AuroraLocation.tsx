@@ -11,7 +11,7 @@ import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
 const title = 'Distribución por zona geográfica donde la  persona conectó';
 const column = 'e004_regio';
 const subtitle = '';
-const id = 'auroraLocations';
+const id = 'aurora_ubicaciones';
 const source = 'aurora';
 const filterable = true;
 const methodName = EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES;

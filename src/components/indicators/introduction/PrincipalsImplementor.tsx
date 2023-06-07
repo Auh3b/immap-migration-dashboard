@@ -7,7 +7,7 @@ import useIntroData from './hooks/useIntroData';
 const title = 'Socios implementadores/Principales';
 const columns = [['org_pert1'], ['org_pert2']];
 const subtitle = '';
-const id = 'principalsImplementor';
+const id = 'Principales_Implementador';
 const column = '';
 const source = 'premise';
 const methodName = EXTERNAL_METHOD_NAMES.AGGREGATE_COLUMNS;
@@ -22,30 +22,6 @@ export default function PrincipalsImplementor() {
     methodName,
     methodParams,
   });
-  // const data = useMemo(() => {
-  //   if (_data) {
-  //     const principles = aggregateColumns(
-  //       _data,
-  //       columns[0],
-  //       AggregationTypes.COUNT,
-  //     );
-  //     const implementors = aggregateColumns(
-  //       _data,
-  //       columns[1],
-  //       AggregationTypes.COUNT,
-  //     );
-  //     return [
-  //       {
-  //         name: 'Principales',
-  //         value: principles,
-  //       },
-  //       {
-  //         name: 'Implementadores',
-  //         value: implementors,
-  //       },
-  //     ];
-  //   }
-  // }, [_data]);
   return (
     <TitleWrapper title={title} subtitle={subtitle} isLoading={isLoading}>
       <Grid item>
