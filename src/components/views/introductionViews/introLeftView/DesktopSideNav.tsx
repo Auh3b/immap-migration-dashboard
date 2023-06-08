@@ -1,10 +1,11 @@
-import {
+              import {
   Divider,
   Drawer,
   Grid,
   IconButton,
   Tab,
   Tabs,
+  Tooltip,
   makeStyles,
   withStyles,
 } from '@material-ui/core';
@@ -94,7 +95,8 @@ export default function DesktopSideNav({ isOpen, handleOpenToggle }: any) {
 
 const StyledTabs = withStyles((theme) => ({
   indicator: {
-    backgroundColor: 'rgba(0, 0, 0, 0) !important',
+    width: '100%',
+    backgroundColor: 'rgba(0, 0, 0, 0.25) !important',
   },
 }))(Tabs);
 
@@ -120,31 +122,36 @@ function SideMenu({
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
   };
+
+  const values: Record<number, string> = {
+    0: 'Cerrar',
+    1: 'Metodología',
+    2: 'Filtros Adicionales',
+    3: 'Filtros Activos',
+  }
+  
   return (
-    <Grid item xs container style={{ color: grey['600'] }}>
-      {/* @ts-expect-error */}
-      <StyledTabs
-        orientation='vertical'
-        textColor='inherit'
-        value={value}
-        onChange={handleChange}
-      >
-        {/* @ts-expect-error */}
-        <StyledTab value={1} icon={<HelpOutlineIcon />} />
-        {/* @ts-expect-error */}
-        <StyledTab value={2} icon={<TuneIcon />} />
-        {/* @ts-expect-error */}
-        <StyledTab value={3} icon={<FilterListIcon />} />
-        {/* @ts-expect-error */}
-        <StyledTab
-          value={0}
-          style={{
-            color: red['400'],
-            display: Boolean(value) ? 'block' : 'none',
-          }}
-          icon={<ChevronLeftIcon />}
-        />
-      </StyledTabs>
+    <Grid direction='column' alignItems='flex-start' item xs container style={{ color: grey['600'] }}>
+      <Tooltip title={values[1]} placement='right'>
+        <IconButton onClick={(e)=> handleChange(e, 1)}>
+          <HelpOutlineIcon />
+        </IconButton>
+      </Tooltip>
+      <Tooltip title={values[2]} placement='right'>
+        <IconButton onClick={(e)=> handleChange(e, 2)}>
+          <FilterListIcon />
+        </IconButton>
+      </Tooltip>
+      <Tooltip title={values[3]} placement='right'>
+        <IconButton onClick={(e)=> handleChange(e, 3)}>
+          <TuneIcon />
+        </IconButton>
+      </Tooltip>
+      <Tooltip title={values[0]} placement='right'>
+        <IconButton onClick={(e)=> handleChange(e, 0)}>
+          <ChevronLeftIcon />
+        </IconButton>
+      </Tooltip>
     </Grid>
   );
 }
