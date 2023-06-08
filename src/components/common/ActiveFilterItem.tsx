@@ -56,7 +56,7 @@ export default function ActiveFilterItem(props: ActiveFilterItemProps) {
       }),
     );
   };
-  console.log(valueFormatter);
+
   const name = _name.replaceAll('_', ' ');
   const value = getValueFormat(
     type,
