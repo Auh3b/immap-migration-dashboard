@@ -1,24 +1,23 @@
-              import {
+import {
   Divider,
   Drawer,
   Grid,
   IconButton,
-  Tab,
-  Tabs,
   Tooltip,
-  makeStyles,
-  withStyles,
+  makeStyles
 } from '@material-ui/core';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import TuneIcon from '@material-ui/icons/Tune';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { clsx } from 'clsx';
-import { ReactNode, useEffect, useMemo, useState } from 'react';
+import { MouseEvent, ReactNode, useEffect, useState } from 'react';
 import IntroContent from './IntroContent';
 import { grey, red } from '@material-ui/core/colors';
 import IntroActiveFilters from './IntroActiveFilters';
 import IntroExtraFilters from './IntroExtraFilters';
+import { UNICEF_COLORS } from 'theme';
+import { dequal } from 'dequal';
 
 const drawerWidth = 300;
 
@@ -93,22 +92,40 @@ export default function DesktopSideNav({ isOpen, handleOpenToggle }: any) {
   );
 }
 
-const StyledTabs = withStyles((theme) => ({
-  indicator: {
-    width: '100%',
-    backgroundColor: 'rgba(0, 0, 0, 0.25) !important',
-  },
-}))(Tabs);
-
-const StyledTab = withStyles((theme) => ({
+const useNavStyle = makeStyles((theme) => ({
   root: {
-    marginRight: 0,
+    width: theme.mixins.toolbar.minHeight,
+    color: ({ value, isCurrent }: any) =>
+      isCurrent ? UNICEF_COLORS[0] : value ? grey[400] : red[400],
   },
-  selected: {
-    color: theme.palette.secondary.main,
-    backgroundColor: '#f4f4f4',
-  },
-}))(Tab);
+}));
+
+function NavButton({
+  value,
+  selectedValue,
+  title,
+  onValueChange,
+  icon,
+}: {
+  value: number;
+  selectedValue: number;
+  title: string;
+  onValueChange: (e: MouseEvent, value: number) => void;
+  icon: ReactNode;
+}) {
+  const isCurrent = dequal(value, selectedValue);
+  const classes = useNavStyle({ value, isCurrent });
+  return (
+    <Tooltip title={title} placement='right'>
+      <IconButton
+        onClick={(e) => onValueChange(e, value)}
+        className={classes.root}
+      >
+        {icon}
+      </IconButton>
+    </Tooltip>
+  );
+}
 
 function SideMenu({
   isOpen,
@@ -128,30 +145,48 @@ function SideMenu({
     1: 'Metodología',
     2: 'Filtros Adicionales',
     3: 'Filtros Activos',
-  }
-  
+  };
+
   return (
-    <Grid direction='column' alignItems='flex-start' item xs container style={{ color: grey['600'] }}>
-      <Tooltip title={values[1]} placement='right'>
-        <IconButton onClick={(e)=> handleChange(e, 1)}>
-          <HelpOutlineIcon />
-        </IconButton>
-      </Tooltip>
-      <Tooltip title={values[2]} placement='right'>
-        <IconButton onClick={(e)=> handleChange(e, 2)}>
-          <FilterListIcon />
-        </IconButton>
-      </Tooltip>
-      <Tooltip title={values[3]} placement='right'>
-        <IconButton onClick={(e)=> handleChange(e, 3)}>
-          <TuneIcon />
-        </IconButton>
-      </Tooltip>
-      <Tooltip title={values[0]} placement='right'>
-        <IconButton onClick={(e)=> handleChange(e, 0)}>
-          <ChevronLeftIcon />
-        </IconButton>
-      </Tooltip>
+    <Grid
+      direction='column'
+      alignItems='flex-start'
+      item
+      xs
+      container
+      style={{ color: grey['600'] }}
+    >
+      <NavButton
+        value={1}
+        selectedValue={value}
+        title={values[1]}
+        onValueChange={handleChange}
+        icon={<HelpOutlineIcon />}
+      />
+      <NavButton
+        value={2}
+        selectedValue={value}
+        title={values[2]}
+        onValueChange={handleChange}
+        icon={<FilterListIcon />}
+      />
+      <NavButton
+        value={3}
+        selectedValue={value}
+        title={values[3]}
+        onValueChange={handleChange}
+        icon={<TuneIcon />}
+      />
+      {value ? 
+        <NavButton
+          value={0}
+          selectedValue={value}
+          title={values[0]}
+          onValueChange={handleChange}
+          icon={<ChevronLeftIcon />}
+        />
+        : <></>
+      }
     </Grid>
   );
 }
@@ -178,9 +213,17 @@ function TabPanel({
   );
 }
 
+const usePanelStyles = makeStyles((theme) => ({
+  root: {
+    width: ({ value }: any) => (value ? '100%' : '0%'),
+    flexGrow: ({ value }: any) => (value ? 1 : 0),
+  },
+}));
+
 function ContentPanel({ value }: any) {
+  const classes = usePanelStyles({ value });
   return (
-    <Grid item style={{ flexGrow: 1, width: '100%' }}>
+    <Grid item className={classes.root}>
       <TabPanel value={value} index={1}>
         <IntroContent isOpen={true} />
       </TabPanel>
