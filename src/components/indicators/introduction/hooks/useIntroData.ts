@@ -56,6 +56,10 @@ export default function useIntroData({
           })
           .finally(() => setIsLoading(false));
       }
+      return () => {
+        setData([])
+        setIsLoading(false)
+      }
     },
     [params, isMediaDataReady, dispatch],
     dequal,
