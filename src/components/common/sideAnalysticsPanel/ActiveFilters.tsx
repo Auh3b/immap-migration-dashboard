@@ -47,7 +47,7 @@ export function ActiveFilters({ filterSources }: ActiveFiltersProps) {
     }
 
     return output;
-  }, [state]);
+  }, [state, filterSources]);
   return (
     <Grid container direction='column'>
       {!filterGroups.length ? null : filterGroups.map(({ name, filters, removeFunction }) => (
