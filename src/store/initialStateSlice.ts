@@ -9,7 +9,7 @@ export const initialState: InitialCarto3State = {
     longitude: -81.39079408436801,
     zoom: 6,
     //@ts-ignore
-    // minZoom: 5,
+    maxZoom: 14,
     pitch: 0,
     bearing: 0,
     dragRotate: false,
