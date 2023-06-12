@@ -1,7 +1,7 @@
 import IntroRightView from './introductionViews/IntroRightView';
 import IntroMiddleView from './introductionViews/IntroMiddleView';
 import IntroLeftView from './introductionViews/introLeftView/Index';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { Button, Grid, useMediaQuery } from '@material-ui/core';
 import { NavLink } from 'react-router-dom';
 import { ROUTE_PATHS } from 'routes';
@@ -21,6 +21,7 @@ import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
 import ComponentFallback from 'components/common/ComponentFallback';
 import { clearIntroFilters } from 'store/introSlice';
 import { CustomTheme } from 'theme';
+import clsx from 'clsx';
 
 const useStyles = makeStyles((theme) => ({
   introduction: {
@@ -173,7 +174,7 @@ const useButtonStyles = makeStyles((theme) => ({
       zIndex: 1,
     },
   },
-  button: {
+  mobile: {
     padding: theme.spacing(1),
     borderRadius: theme.spacing(4),
     color: theme.palette.primary.main,
@@ -188,21 +189,34 @@ const useButtonStyles = makeStyles((theme) => ({
       boxShadow: theme.shadows[5],
     },
   },
+  desktop:{
+    padding: '0px 16px',
+    color: theme.palette.primary.main,
+    '&:hover': {
+      backgroundColor: theme.palette.background.paper,
+      color: theme.palette.secondary.dark,
+    },
+  }
 }));
 
 export function ExitButton() {
   const classes = useButtonStyles();
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
   return (
     <Grid item className={classes.root}>
       <Button
         component={NavLink}
         to={ROUTE_PATHS.PREMISE_SERVICE}
-        variant='outlined'
+        variant={isMobile ? 'outlined' : 'text'}
         size='large'
-        className={classes.button}
+        className={clsx({
+          [classes.mobile]: isMobile,
+          [classes.desktop]: !isMobile
+        })}
         endIcon={<ArrowForwardIcon />}
       >
-        Dashboard
+        Board
       </Button>
     </Grid>
   );
