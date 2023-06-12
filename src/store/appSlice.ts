@@ -8,6 +8,8 @@ const slice = createSlice({
     showChartModal: false,
     modalUrl: '',
     modalDataSource: '',
+    isSidePanelOpen: false,
+    sidePanelWidth: 300,
   },
   reducers: {
     setError: (state, action) => {
@@ -27,6 +29,11 @@ const slice = createSlice({
     },
     removeModalUrl: (state) => {
       state.modalUrl = '';
+    },
+    setIsSidePanelOpen: (state, action) => {
+      state.isSidePanelOpen = action?.payload
+        ? action.payload
+        : !state.isSidePanelOpen;
     },
   },
 });
@@ -55,4 +62,8 @@ export const setModalDataSource = (payload: string) => ({
 });
 export const removeModalUrl = () => ({
   type: 'app/removeModalUrl',
+});
+export const setIsSidePanelOpen = (payload?: boolean) => ({
+  type: 'app/setIsSidePanelOpen',
+  payload,
 });
