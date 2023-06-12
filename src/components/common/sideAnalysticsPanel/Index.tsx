@@ -4,7 +4,7 @@ import {
   Grid,
   IconButton,
   Tooltip,
-  makeStyles
+  makeStyles,
 } from '@material-ui/core';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
@@ -51,11 +51,11 @@ export const useStyles = makeStyles((theme) => ({
 
 export default function SideAnalyticsPanel() {
   const [value, setValue] = useState(0);
-  const [isOpen, setIsOpen] = useState<boolean>(false)
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const classes = useStyles({ isOpen });
-  const handleOpenToggle = (value: boolean) =>{
-    setIsOpen(value)
-  }
+  const handleOpenToggle = (value: boolean) => {
+    setIsOpen(value);
+  };
   useEffect(() => {
     if (value) {
       handleOpenToggle(true);
@@ -178,7 +178,7 @@ function SideMenu({
         onValueChange={handleChange}
         icon={<TuneIcon />}
       />
-      {value ? 
+      {value ? (
         <NavButton
           value={0}
           selectedValue={value}
@@ -186,8 +186,9 @@ function SideMenu({
           onValueChange={handleChange}
           icon={<ChevronLeftIcon />}
         />
-        : <></>
-      }
+      ) : (
+        <></>
+      )}
     </Grid>
   );
 }
@@ -225,15 +226,9 @@ function ContentPanel({ value }: any) {
   const classes = usePanelStyles({ value });
   return (
     <Grid item className={classes.root}>
-      <TabPanel value={value} index={1}>
-        
-      </TabPanel>
-      <TabPanel value={value} index={2}>
-        
-      </TabPanel>
-      <TabPanel value={value} index={3}>
-        
-      </TabPanel>
+      <TabPanel value={value} index={1}></TabPanel>
+      <TabPanel value={value} index={2}></TabPanel>
+      <TabPanel value={value} index={3}></TabPanel>
     </Grid>
   );
 }

@@ -1,4 +1,4 @@
-import { MouseEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   AppBar,
   Drawer,
@@ -11,20 +11,16 @@ import {
   Link,
   makeStyles,
   Typography,
-  Avatar,
-  Menu,
-  MenuItem,
   useMediaQuery,
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import CloseIcon from '@material-ui/icons/Close';
 import { NavLink, useLocation } from 'react-router-dom';
-import { ReactComponent as UnicefLogo } from 'assets/img/unice-logo-1-sp.svg';
-import { ReactComponent as ImmapLogo } from 'assets/img/immapLogoAlt.svg';
 import { ROUTE_PATHS } from 'routes';
-import { useAuth0 } from '@auth0/auth0-react';
 import { CustomTheme } from 'theme';
 import useGetPathname from 'hooks/useGetPathname';
+import UserMenu from './UserMenu';
+import AppLogos from './AppLogos';
 
 const useStylesCommon = makeStyles((theme) => ({
   title: {
@@ -99,7 +95,7 @@ function Desktop() {
         className={classes.title}
       >
         <Typography component='h1' variant='subtitle1' noWrap>
-          <AppName />
+          <AppLogos />
         </Typography>
       </Link>
       <Divider orientation='vertical' className={classes.divider}></Divider>
@@ -166,7 +162,7 @@ function Mobile() {
       >
         <Typography component='h1' variant='subtitle1' noWrap>
           <Divider orientation='vertical' light />
-          <AppName />
+          <AppLogos />
         </Typography>
       </Link>
       <Drawer
@@ -192,15 +188,6 @@ function Mobile() {
           <NavigationMenu column={true} />
         </Grid>
       </Drawer>
-    </>
-  );
-}
-
-function AppName() {
-  return (
-    <>
-      <UnicefLogo />
-      <ImmapLogo />
     </>
   );
 }
@@ -268,100 +255,5 @@ function NavigationMenu({ column = false }: { column?: boolean }) {
         />
       </Tabs>
     </Grid>
-  );
-}
-
-const useStylesUserMenu = makeStyles((theme) => ({
-  avatar: {
-    cursor: 'pointer',
-    width: theme.spacing(4.5),
-    height: theme.spacing(4.5),
-    marginLeft: theme.spacing(1),
-  },
-  menu: {
-    zIndex: theme.zIndex.modal + 10,
-  },
-}));
-
-function UserMenu() {
-  const { logout, user } = useAuth0();
-  const [anchorEl, setAnchorEl] = useState<
-    (EventTarget & (HTMLAnchorElement | HTMLSpanElement)) | null
-  >(null);
-  const classes = useStylesUserMenu();
-
-  const smDownHidden = useMediaQuery((theme: CustomTheme) =>
-    theme.breakpoints.down('sm'),
-  );
-
-  // User is NOT logged in, so display nothing
-  if (!user) {
-    return null;
-  }
-
-  // At this point, there is an oauthApp and the user has logged in (forceOAuthLogin mode).
-  const open = Boolean(anchorEl);
-
-  const handleMenu = (
-    event: MouseEvent<HTMLAnchorElement | HTMLSpanElement>,
-  ) => {
-    if (!anchorEl) {
-      setAnchorEl(event.currentTarget);
-    } else {
-      setAnchorEl(null);
-    }
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  const handleLogout = () => {
-    logout({ returnTo: window.location.origin });
-    handleClose();
-  };
-
-  // Display User menu, with name, avatar + an attached menu for user-related options
-  return (
-    <>
-      <Link
-        aria-label='account of current user'
-        aria-controls='menu-login'
-        aria-haspopup='true'
-        color='inherit'
-        onClick={handleMenu}
-      >
-        <Grid container alignItems='center' item wrap='nowrap'>
-          {smDownHidden ? null : (
-            <Typography variant='caption' color='primary' noWrap>
-              {user.email}
-            </Typography>
-          )}
-          <Avatar className={classes.avatar} src={user.picture} />
-        </Grid>
-      </Link>
-      <Menu
-        id='menu-login'
-        anchorEl={anchorEl}
-        getContentAnchorEl={null}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'right',
-        }}
-        keepMounted
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
-        open={open}
-        onClose={handleClose}
-        className={classes.menu}
-      >
-        <MenuItem onClick={handleLogout}>Logout</MenuItem>
-        {/* <MenuItem>
-          <Link href='https://app.carto.com'>Go to CARTO</Link>
-        </MenuItem> */}
-      </Menu>
-    </>
   );
 }
