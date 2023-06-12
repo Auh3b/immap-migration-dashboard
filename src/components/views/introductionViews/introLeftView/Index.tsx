@@ -49,6 +49,7 @@ export const useLeftStyles = makeStyles((theme) => ({
   collapse: {
     maxHeight: '70vh',
     overflowY: 'auto',
+    overFlowX: 'hidden',
   },
   popper: {
     zIndex: ({ isMobile }: any) => (isMobile ? theme.zIndex.modal + 1 : 0),
