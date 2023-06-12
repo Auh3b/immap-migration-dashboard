@@ -39,7 +39,6 @@ export function ActiveFilters({ filterSources }: ActiveFiltersProps) {
         return;
       } else {
         const dataSources: [string, SourceProps][] = Object.entries(state[stateSlice]?.filters);
-        console.log(dataSources);
         for (let [source, filters] of dataSources) {
 
           output = [...output, { name: source, filters: [...Object.entries(filters)], removeFunction: removeFunction[stateSlice] }];
