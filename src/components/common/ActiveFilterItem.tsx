@@ -8,8 +8,8 @@ import {
 import { FilterItem, FilterTypes } from 'utils/filterFunctions';
 import CloseIcon from '@material-ui/icons/Close';
 import { useDispatch } from 'react-redux';
-import { removeIntroFilter } from 'store/introSlice';
 import { timeFormat } from 'd3';
+import { useCallback } from 'react';
 
 export interface ActiveFilterItemProps extends FilterItem {
   name: string;
@@ -55,7 +55,7 @@ export default function ActiveFilterItem(props: Partial<ActiveFilterItemProps>) 
     valueFormatter,
     removeFilter
   } = props;
-  const handleRemove = () => {
+  const handleRemove = useCallback(() =>{
     dispatch(
       removeFilter({
         owner,
@@ -63,9 +63,7 @@ export default function ActiveFilterItem(props: Partial<ActiveFilterItemProps>) 
         column,
       }),
     );
-  };
-
-  console.log(props)
+  }, [owner, source, column, removeFilter]);
 
   const name = _name.replaceAll('_', ' ');
   const value = getValueFormat(
