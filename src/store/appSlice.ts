@@ -9,7 +9,7 @@ const slice = createSlice({
     modalUrl: '',
     modalDataSource: '',
     isSidePanelOpen: false,
-    sidePanelWidth: 300,
+    sidePanelWidth: 348,
   },
   reducers: {
     setError: (state, action) => {
