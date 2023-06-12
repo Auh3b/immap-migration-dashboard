@@ -200,7 +200,7 @@ function TabPanel({
 }: {
   value: any;
   index: any;
-  children: ReactNode;
+  children?: ReactNode;
 }) {
   return (
     <div
