@@ -52,16 +52,16 @@ export const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export interface FilterSource{
+export interface FilterSource {
   stateSlice: string;
 }
 
-interface SideAnalyticsPanelProps{
-  filterSources: FilterSource[]
+interface SideAnalyticsPanelProps {
+  filterSources: FilterSource[];
 }
 
 export default function SideAnalyticsPanel({
-  filterSources
+  filterSources,
 }: SideAnalyticsPanelProps) {
   const [value, setValue] = useState(0);
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -98,7 +98,7 @@ export default function SideAnalyticsPanel({
         alignItems='stretch'
         style={{ width: '100%', height: '100%', paddingTop: '48px' }}
       >
-        <ContentPanel value={value} filterSources={filterSources}/>
+        <ContentPanel value={value} filterSources={filterSources} />
         {isOpen && <Divider orientation='vertical' />}
         <SideMenu isOpen={isOpen} setValue={setValue} value={value} />
       </Grid>
@@ -235,18 +235,18 @@ const usePanelStyles = makeStyles((theme) => ({
   },
 }));
 
-interface ContentPanelProps{
-  value: number
-  filterSources: FilterSource[]
+interface ContentPanelProps {
+  value: number;
+  filterSources: FilterSource[];
 }
 
-function ContentPanel({ value, filterSources }: ContentPanelProps ) {
+function ContentPanel({ value, filterSources }: ContentPanelProps) {
   const classes = usePanelStyles({ value });
   return (
     <Grid item className={classes.root}>
       <TabPanel value={value} index={1}></TabPanel>
       <TabPanel value={value} index={2}>
-        <ActiveFilters filterSources={filterSources}/>
+        <ActiveFilters filterSources={filterSources} />
       </TabPanel>
       <TabPanel value={value} index={3}></TabPanel>
     </Grid>

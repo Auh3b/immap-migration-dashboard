@@ -17,7 +17,7 @@ const useHeaderStyles = makeStyles((theme) => ({
   bar: {
     backgroundColor: theme.palette.background.paper,
     zIndex: theme.zIndex.drawer + 1,
-    borderBottom: '1px solid rgba(44, 48, 50, 0.12)'
+    borderBottom: '1px solid rgba(44, 48, 50, 0.12)',
   },
   root: {
     [theme.breakpoints.down('sm')]: {
@@ -33,7 +33,7 @@ const useHeaderStyles = makeStyles((theme) => ({
       height: theme.spacing(4),
     },
   },
-  headerText: { 
+  headerText: {
     marginLeft: theme.spacing(3),
     paddingLeft: theme.spacing(3),
     borderLeft: '1px solid rgba(44, 48, 50, 0.12)',

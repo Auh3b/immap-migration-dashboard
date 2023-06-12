@@ -63,7 +63,7 @@ export default function Media() {
 
   return (
     <>
-      <SideAnalyticsPanel filterSources={[{stateSlice: 'media'}]} />
+      <SideAnalyticsPanel filterSources={[{ stateSlice: 'media' }]} />
       <Grid
         container
         direction='column'

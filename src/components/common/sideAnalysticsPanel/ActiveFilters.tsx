@@ -23,25 +23,37 @@ const removeFunction = Object.fromEntries([
   ['carto', removeFilter],
   ['media', removeMediaFilter],
   ['intro', removeIntroFilter],
-])
+]);
 
 export function ActiveFilters({ filterSources }: ActiveFiltersProps) {
   const state = useSelector((state: RootState) => state);
   const filterGroups = useMemo(() => {
-    if (!filterSources.length) { return []; }
+    if (!filterSources.length) {
+      return [];
+    }
 
     let output: FilterGroupProps[] = [];
 
     for (let i = 0; i < filterSources.length; i++) {
       const { stateSlice } = filterSources[i];
-      if (!state[stateSlice]) { return; }
+      if (!state[stateSlice]) {
+        return;
+      }
       if (stateSlice === 'carto') {
         return;
       } else {
-        const dataSources: [string, SourceProps][] = Object.entries(state[stateSlice]?.filters);
+        const dataSources: [string, SourceProps][] = Object.entries(
+          state[stateSlice]?.filters,
+        );
         for (let [source, filters] of dataSources) {
-
-          output = [...output, { name: source, filters: [...Object.entries(filters)], removeFunction: removeFunction[stateSlice] }];
+          output = [
+            ...output,
+            {
+              name: source,
+              filters: [...Object.entries(filters)],
+              removeFunction: removeFunction[stateSlice],
+            },
+          ];
         }
       }
     }
@@ -50,9 +62,16 @@ export function ActiveFilters({ filterSources }: ActiveFiltersProps) {
   }, [state, filterSources]);
   return (
     <Grid container direction='column'>
-      {!filterGroups.length ? null : filterGroups.map(({ name, filters, removeFunction }) => (
-        <FilterGroup key={name} name={name} filters={filters} removeFunction={removeFunction} />
-      ))}
+      {!filterGroups.length
+        ? null
+        : filterGroups.map(({ name, filters, removeFunction }) => (
+            <FilterGroup
+              key={name}
+              name={name}
+              filters={filters}
+              removeFunction={removeFunction}
+            />
+          ))}
     </Grid>
   );
 }
@@ -64,7 +83,13 @@ function FilterGroup(props: FilterGroupProps) {
         {name}
       </Typography>
       {filters.map(([filterName, filterProps]) => (
-        <ActiveFilterItem key={filterName} name={filterName} id={filterName} {...filterProps} removeFilter={removeFunction} />
+        <ActiveFilterItem
+          key={filterName}
+          name={filterName}
+          id={filterName}
+          {...filterProps}
+          removeFilter={removeFunction}
+        />
       ))}
     </Grid>
   );

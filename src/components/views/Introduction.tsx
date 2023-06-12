@@ -189,20 +189,20 @@ const useButtonStyles = makeStyles((theme) => ({
       boxShadow: theme.shadows[5],
     },
   },
-  desktop:{
+  desktop: {
     padding: '0px 16px',
     color: theme.palette.primary.main,
     '&:hover': {
       backgroundColor: theme.palette.background.paper,
       color: theme.palette.secondary.dark,
     },
-  }
+  },
 }));
 
 export function ExitButton() {
   const classes = useButtonStyles();
-  const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   return (
     <Grid item className={classes.root}>
       <Button
@@ -212,7 +212,7 @@ export function ExitButton() {
         size='large'
         className={clsx({
           [classes.mobile]: isMobile,
-          [classes.desktop]: !isMobile
+          [classes.desktop]: !isMobile,
         })}
         endIcon={<ArrowForwardIcon />}
       >

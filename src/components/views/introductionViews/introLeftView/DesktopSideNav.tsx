@@ -21,11 +21,8 @@ import { dequal } from 'dequal';
 import SideAnalyticsPanel from 'components/common/sideAnalysticsPanel/Index';
 
 export default function DesktopSideNav() {
-  return (
-  <SideAnalyticsPanel filterSources={[{stateSlice: 'intro'}]}/>
-  )
+  return <SideAnalyticsPanel filterSources={[{ stateSlice: 'intro' }]} />;
 }
-
 
 // const drawerWidth = 300;
 

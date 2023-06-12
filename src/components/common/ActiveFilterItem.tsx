@@ -16,7 +16,7 @@ export interface ActiveFilterItemProps extends FilterItem {
   source: string;
   owner: string;
   valueFormatter?: (value: any) => any;
-  removeFilter?: Function
+  removeFilter?: Function;
 }
 
 const useFilterStyles = makeStyles((theme) => ({
@@ -36,13 +36,11 @@ const useFilterStyles = makeStyles((theme) => ({
   },
 }));
 
-const removeFilterFunction = Object.fromEntries([
-  ['']
-])
+const removeFilterFunction = Object.fromEntries([['']]);
 
-
-
-export default function ActiveFilterItem(props: Partial<ActiveFilterItemProps>) {
+export default function ActiveFilterItem(
+  props: Partial<ActiveFilterItemProps>,
+) {
   const dispatch = useDispatch();
   const classes = useFilterStyles();
   const {
@@ -53,9 +51,9 @@ export default function ActiveFilterItem(props: Partial<ActiveFilterItemProps>) 
     type,
     column,
     valueFormatter,
-    removeFilter
+    removeFilter,
   } = props;
-  const handleRemove = useCallback(() =>{
+  const handleRemove = useCallback(() => {
     dispatch(
       removeFilter({
         owner,
