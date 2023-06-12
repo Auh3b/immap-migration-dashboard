@@ -34,19 +34,24 @@ export default function useMediaData({
   useCustomCompareEffectAlt(
     () => {
       setIsLoading(true);
+      let isCancelled = false;
       if (isMediaDataReady) {
         executeMethod(methodName, params)
           .then((data) => {
-            setData(data);
+            if (!isCancelled) {
+              console.log(isCancelled);
+              setData(data);
+            }
           })
           .catch((error) => {
             dispatch(setError(error.message));
           })
           .finally(() => setIsLoading(false));
-      }
-      return () =>{
-        setData([])
-        setIsLoading(false)
+        return () => {
+          isCancelled = true;
+          // setIsLoading can clause Memory leak issues/errors
+          setIsLoading(false)
+        };
       }
     },
     [params, isMediaDataReady, dispatch],

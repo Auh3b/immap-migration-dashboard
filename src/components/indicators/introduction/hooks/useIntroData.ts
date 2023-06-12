@@ -39,6 +39,7 @@ export default function useIntroData({
   useCustomCompareEffectAlt(
     () => {
       setIsLoading(true);
+      let isCancelled = false;
       if (isMediaDataReady) {
         executeIntroMethod({
           source,
@@ -47,7 +48,7 @@ export default function useIntroData({
           methodName,
         })
           .then((data) => {
-            if (data.length) {
+            if (data.length && !isCancelled) {
               setData(data);
             }
           })
@@ -55,10 +56,12 @@ export default function useIntroData({
             dispatch(setError(error.message));
           })
           .finally(() => setIsLoading(false));
-      }
-      return () => {
-        setData([])
-        setIsLoading(false)
+
+        return () => {
+          isCancelled = true;
+          // setIsLoading can clause Memory leak issues/errors
+          setIsLoading(false)
+        };
       }
     },
     [params, isMediaDataReady, dispatch],
