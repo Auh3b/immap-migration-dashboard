@@ -10,6 +10,7 @@ import executeMethod from 'components/indicators/media/hooks/executeMethod';
 import { METHOD_NAMES } from './mediaViews/utils/methodName';
 import { setIsMediaDataReady } from 'store/mediaSlice';
 import ComponentFallback from 'components/common/ComponentFallback';
+import SideAnalyticsPanel from 'components/common/sideAnalysticsPanel/Index';
 
 const MediaIndicators = lazy(() => import('./mediaViews/MediaIndicators'));
 const MediaAggregateIndicators = lazy(
@@ -62,6 +63,8 @@ export default function Media() {
   }, []);
 
   return (
+    <Grid container>
+      <SideAnalyticsPanel />
     <Grid
       container
       direction='column'
@@ -79,6 +82,7 @@ export default function Media() {
       <Suspense fallback={<ComponentFallback />}>
         <MediaPosts isLoading={isLoading} />
       </Suspense>
+    </Grid>
     </Grid>
   );
 }
