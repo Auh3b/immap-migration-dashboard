@@ -15,14 +15,16 @@ import { MouseEvent, ReactNode, useEffect, useState } from 'react';
 import { grey, red } from '@material-ui/core/colors';
 import { UNICEF_COLORS } from 'theme';
 import { dequal } from 'dequal';
+import { ActiveFilters } from './ActiveFilters';
 
-const drawerWidth = 300;
+const drawerWidth = 348;
 
 export const useStyles = makeStyles((theme) => ({
   drawer: {
     width: drawerWidth,
   },
   drawerOpen: {
+    overflowX: 'hidden',
     width: drawerWidth,
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
@@ -30,6 +32,7 @@ export const useStyles = makeStyles((theme) => ({
     }),
   },
   drawerClose: {
+    overflowX: 'hidden',
     width: theme.mixins.toolbar.minHeight,
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
@@ -49,7 +52,17 @@ export const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SideAnalyticsPanel() {
+export interface FilterSource{
+  stateSlice: string;
+}
+
+interface SideAnalyticsPanelProps{
+  filterSources: FilterSource[]
+}
+
+export default function SideAnalyticsPanel({
+  filterSources
+}: SideAnalyticsPanelProps) {
   const [value, setValue] = useState(0);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const classes = useStyles({ isOpen });
@@ -83,9 +96,9 @@ export default function SideAnalyticsPanel() {
         wrap='nowrap'
         container
         alignItems='stretch'
-        style={{ width: '100%', height: '100%', paddingTop: '56px' }}
+        style={{ width: '100%', height: '100%', paddingTop: '48px' }}
       >
-        <ContentPanel value={value} />
+        <ContentPanel value={value} filterSources={filterSources}/>
         {isOpen && <Divider orientation='vertical' />}
         <SideMenu isOpen={isOpen} setValue={setValue} value={value} />
       </Grid>
@@ -144,8 +157,8 @@ function SideMenu({
   const values: Record<number, string> = {
     0: 'Cerrar',
     1: 'Metodología',
-    2: 'Filtros Adicionales',
-    3: 'Filtros Activos',
+    2: 'Filtros Activos',
+    3: 'Filtros Adicionales',
   };
 
   return (
@@ -222,12 +235,19 @@ const usePanelStyles = makeStyles((theme) => ({
   },
 }));
 
-function ContentPanel({ value }: any) {
+interface ContentPanelProps{
+  value: number
+  filterSources: FilterSource[]
+}
+
+function ContentPanel({ value, filterSources }: ContentPanelProps ) {
   const classes = usePanelStyles({ value });
   return (
     <Grid item className={classes.root}>
       <TabPanel value={value} index={1}></TabPanel>
-      <TabPanel value={value} index={2}></TabPanel>
+      <TabPanel value={value} index={2}>
+        <ActiveFilters filterSources={filterSources}/>
+      </TabPanel>
       <TabPanel value={value} index={3}></TabPanel>
     </Grid>
   );

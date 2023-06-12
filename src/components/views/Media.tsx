@@ -21,7 +21,6 @@ const MediaPosts = lazy(() => import('./mediaViews/MediaPosts'));
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: theme.spacing(2),
-    width: '100%',
     height: '100%',
     maxHeight: `calc(100vh - ${theme.mixins.toolbar.minHeight}px)`,
     overflowY: 'auto',
@@ -63,8 +62,8 @@ export default function Media() {
   }, []);
 
   return (
-    <Grid container>
-      <SideAnalyticsPanel />
+    <>
+      <SideAnalyticsPanel filterSources={[{stateSlice: 'media'}]} />
       <Grid
         container
         direction='column'
@@ -83,6 +82,6 @@ export default function Media() {
           <MediaPosts isLoading={isLoading} />
         </Suspense>
       </Grid>
-    </Grid>
+    </>
   );
 }
