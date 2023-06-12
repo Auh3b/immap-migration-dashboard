@@ -65,24 +65,24 @@ export default function Media() {
   return (
     <Grid container>
       <SideAnalyticsPanel />
-    <Grid
-      container
-      direction='column'
-      item
-      wrap='nowrap'
-      className={classes.root}
-    >
-      <MediaFilterToolbar />
-      <Suspense fallback={<ComponentFallback />}>
-        <MediaAggregateIndicators isLoading={isLoading} />
-      </Suspense>
-      <Suspense fallback={<ComponentFallback />}>
-        <MediaIndicators isLoading={isLoading} />
-      </Suspense>
-      <Suspense fallback={<ComponentFallback />}>
-        <MediaPosts isLoading={isLoading} />
-      </Suspense>
-    </Grid>
+      <Grid
+        container
+        direction='column'
+        item
+        wrap='nowrap'
+        className={classes.root}
+      >
+        <MediaFilterToolbar />
+        <Suspense fallback={<ComponentFallback />}>
+          <MediaAggregateIndicators isLoading={isLoading} />
+        </Suspense>
+        <Suspense fallback={<ComponentFallback />}>
+          <MediaIndicators isLoading={isLoading} />
+        </Suspense>
+        <Suspense fallback={<ComponentFallback />}>
+          <MediaPosts isLoading={isLoading} />
+        </Suspense>
+      </Grid>
     </Grid>
   );
 }

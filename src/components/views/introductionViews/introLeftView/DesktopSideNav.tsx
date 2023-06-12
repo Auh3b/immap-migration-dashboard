@@ -4,7 +4,7 @@ import {
   Grid,
   IconButton,
   Tooltip,
-  makeStyles
+  makeStyles,
 } from '@material-ui/core';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
@@ -177,7 +177,7 @@ function SideMenu({
         onValueChange={handleChange}
         icon={<TuneIcon />}
       />
-      {value ? 
+      {value ? (
         <NavButton
           value={0}
           selectedValue={value}
@@ -185,8 +185,9 @@ function SideMenu({
           onValueChange={handleChange}
           icon={<ChevronLeftIcon />}
         />
-        : <></>
-      }
+      ) : (
+        <></>
+      )}
     </Grid>
   );
 }
