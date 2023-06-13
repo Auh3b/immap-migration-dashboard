@@ -6,16 +6,12 @@ import {
   Tooltip,
   makeStyles,
 } from '@material-ui/core';
-import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import TuneIcon from '@material-ui/icons/Tune';
-import FilterListIcon from '@material-ui/icons/FilterList';
 import { clsx } from 'clsx';
 import { MouseEvent, ReactNode, useEffect, useState } from 'react';
 import { grey, red } from '@material-ui/core/colors';
 import { UNICEF_COLORS } from 'theme';
 import { dequal } from 'dequal';
-import { ActiveFilters } from './ActiveFilters';
 
 const drawerWidth = 348;
 
@@ -56,12 +52,19 @@ export interface FilterSource {
   stateSlice: string;
 }
 
+interface PanelContent {
+  value: number;
+  title: string;
+  content: ReactNode;
+  icon?: ReactNode;
+}
+
 interface SideAnalyticsPanelProps {
-  filterSources: FilterSource[];
+  children?: PanelContent[];
 }
 
 export default function SideAnalyticsPanel({
-  filterSources,
+  children,
 }: SideAnalyticsPanelProps) {
   const [value, setValue] = useState(0);
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -98,9 +101,17 @@ export default function SideAnalyticsPanel({
         alignItems='stretch'
         style={{ width: '100%', height: '100%', paddingTop: '48px' }}
       >
-        <ContentPanel value={value} filterSources={filterSources} />
+        <ContentPanel children={children} value={value} />
         {isOpen && <Divider orientation='vertical' />}
-        <SideMenu isOpen={isOpen} setValue={setValue} value={value} />
+        <SideMenu
+          menuItems={children.map(({ icon, title, value }) => ({
+            icon,
+            title,
+            value,
+          }))}
+          setValue={setValue}
+          value={value}
+        />
       </Grid>
     </Drawer>
   );
@@ -109,6 +120,7 @@ export default function SideAnalyticsPanel({
 const useNavStyle = makeStyles((theme) => ({
   root: {
     width: theme.mixins.toolbar.minHeight,
+    borderRadius: 0,
     color: ({ value, isCurrent }: any) =>
       isCurrent ? UNICEF_COLORS[0] : value ? grey[400] : red[400],
   },
@@ -130,7 +142,7 @@ function NavButton({
   const isCurrent = dequal(value, selectedValue);
   const classes = useNavStyle({ value, isCurrent });
   return (
-    <Tooltip title={title} placement='right'>
+    <Tooltip id={`${title}-tooltip`} title={title} placement='right' arrow>
       <IconButton
         onClick={(e) => onValueChange(e, value)}
         className={classes.root}
@@ -142,23 +154,16 @@ function NavButton({
 }
 
 function SideMenu({
-  isOpen,
   value,
   setValue,
+  menuItems,
 }: {
-  isOpen: boolean;
   value: number;
   setValue: (value: number) => void;
+  menuItems: Partial<PanelContent>[];
 }) {
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
-  };
-
-  const values: Record<number, string> = {
-    0: 'Cerrar',
-    1: 'Metodología',
-    2: 'Filtros Activos',
-    3: 'Filtros Adicionales',
   };
 
   return (
@@ -170,32 +175,22 @@ function SideMenu({
       container
       style={{ color: grey['600'] }}
     >
-      <NavButton
-        value={1}
-        selectedValue={value}
-        title={values[1]}
-        onValueChange={handleChange}
-        icon={<HelpOutlineIcon />}
-      />
-      <NavButton
-        value={2}
-        selectedValue={value}
-        title={values[2]}
-        onValueChange={handleChange}
-        icon={<FilterListIcon />}
-      />
-      <NavButton
-        value={3}
-        selectedValue={value}
-        title={values[3]}
-        onValueChange={handleChange}
-        icon={<TuneIcon />}
-      />
+      {menuItems.length &&
+        menuItems.map(({ icon, title, value: itemValue }) => (
+          <NavButton
+            key={title}
+            value={itemValue}
+            title={title}
+            selectedValue={value}
+            onValueChange={handleChange}
+            icon={icon}
+          />
+        ))}
       {value ? (
         <NavButton
           value={0}
           selectedValue={value}
-          title={values[0]}
+          title={'Cerrar'}
           onValueChange={handleChange}
           icon={<ChevronLeftIcon />}
         />
@@ -236,19 +231,20 @@ const usePanelStyles = makeStyles((theme) => ({
 }));
 
 interface ContentPanelProps {
+  children?: Partial<PanelContent>[];
   value: number;
-  filterSources: FilterSource[];
 }
 
-function ContentPanel({ value, filterSources }: ContentPanelProps) {
+function ContentPanel({ children, value }: ContentPanelProps) {
   const classes = usePanelStyles({ value });
   return (
     <Grid item className={classes.root}>
-      <TabPanel value={value} index={1}></TabPanel>
-      <TabPanel value={value} index={2}>
-        <ActiveFilters filterSources={filterSources} />
-      </TabPanel>
-      <TabPanel value={value} index={3}></TabPanel>
+      {children.length &&
+        children.map(({ content, value: itemValue, title }) => (
+          <TabPanel key={title} value={value} index={itemValue}>
+            {content}
+          </TabPanel>
+        ))}
     </Grid>
   );
 }
