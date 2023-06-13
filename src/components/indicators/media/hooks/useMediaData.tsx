@@ -50,7 +50,7 @@ export default function useMediaData({
         return () => {
           isCancelled = true;
           // setIsLoading can clause Memory leak issues/errors
-          setIsLoading(false)
+          setIsLoading(false);
         };
       }
     },

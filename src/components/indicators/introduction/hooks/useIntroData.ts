@@ -60,7 +60,7 @@ export default function useIntroData({
         return () => {
           isCancelled = true;
           // setIsLoading can clause Memory leak issues/errors
-          setIsLoading(false)
+          setIsLoading(false);
         };
       }
     },
