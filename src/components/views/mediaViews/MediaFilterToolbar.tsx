@@ -1,18 +1,19 @@
 import {
-  Button,
-  ClickAwayListener,
+  Checkbox,
+  Chip,
   Fab,
+  FormControl,
   Grid,
-  IconButton,
+  Input,
+  InputLabel,
+  ListItemText,
   MenuItem,
-  MenuList,
   Paper,
-  Popper,
+  Select,
   TextField,
-  Typography,
   makeStyles,
 } from '@material-ui/core';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   addMediaFilter,
@@ -23,11 +24,60 @@ import { _FilterTypes } from '@carto/react-core';
 import { dequal } from 'dequal';
 import { deepOrange } from '@material-ui/core/colors';
 import ClearFiltersButton from 'components/common/ClearFiltersButton';
-import { UNICEF_COLORS } from 'theme';
-import { Filters } from 'utils/filterFunctions';
-import CloseIcon from '@material-ui/icons/Close';
-import FilterListIcon from '@material-ui/icons/FilterList';
-import regionName from 'components/indicators/media/utils/getCountryByRegion';
+import { FilterTypes } from 'utils/filterFunctions';
+
+const termsCriteriaOption = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+const termsCriteriaLabels = {
+  0: 'Otro',
+  1: 'Migrante',
+  2: 'Migrante irregulare',
+  3: 'Refugiado',
+  4: 'Migración',
+  5: 'Migración forzada',
+  6: 'Personas desplazada',
+  7: 'Ruta Migratoria',
+  8: 'Flujo Migratorio',
+};
+const placeCriteriaOption = [0, 1, 2, 3, 4, 5, 6, 7];
+const placeCriteriaLabels = {
+  0: 'Otro',
+  1: 'Selva del darién',
+  2: 'Darién',
+  3: 'Frontera Colombia Panamá',
+  4: 'Panamá',
+  5: 'Necoclí',
+  6: 'Tapón',
+  7: 'Cruce del darién',
+};
+const subgroupCriteriaOption = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+const subgroupCriteriaLabels = {
+  0: 'Otro',
+  1: 'Niña',
+  2: 'Niño',
+  3: 'Adolescente',
+  4: 'Mujeres Embarazada',
+  5: 'Mujere Embarazada',
+  6: 'Venezolano',
+  7: 'Haitiano',
+  8: 'Ecuatariano',
+  9: 'Chino',
+  10: 'Colombiano',
+  11: 'Peruano',
+  12: 'Cubano',
+};
+const contextCriteriaOption = [0, 1, 2, 3];
+const contextCriteriaLabels = {
+  0: 'Otro',
+  1: 'Tráfico',
+  2: 'Abuso',
+  3: 'Sexual',
+};
+const temporalityCriteriaOption = [0, 1, 2];
+const temporalityCriteriaLabels = {
+  0: 'Otro',
+  1: '2023',
+  2: 'Marzo',
+};
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -71,14 +121,55 @@ export default function MediaFilterToolbar() {
         justifyContent='space-between'
       >
         <DateFilter />
+        <CriteriaSelector
+          id='terms'
+          title='Tema'
+          source='meltwater'
+          column='terms'
+          filterType={FilterTypes.STRING_SEARCH}
+          criteriaOption={termsCriteriaOption}
+          labels={termsCriteriaLabels}
+        />
+        <CriteriaSelector
+          id='places'
+          title='Lugar'
+          source='meltwater'
+          column='places'
+          filterType={FilterTypes.STRING_SEARCH}
+          criteriaOption={placeCriteriaOption}
+          labels={placeCriteriaLabels}
+        />
+        <CriteriaSelector
+          id='subgroups'
+          title='Sub-grupo'
+          source='meltwater'
+          column='subgroups'
+          filterType={FilterTypes.STRING_SEARCH}
+          criteriaOption={subgroupCriteriaOption}
+          labels={subgroupCriteriaLabels}
+        />
+        <CriteriaSelector
+          id='context'
+          title='Contexto'
+          source='meltwater'
+          column='context'
+          filterType={FilterTypes.STRING_SEARCH}
+          criteriaOption={contextCriteriaOption}
+          labels={contextCriteriaLabels}
+        />
+        <CriteriaSelector
+          id='temporality'
+          title='Temporabalidad'
+          source='meltwater'
+          column='temporality'
+          filterType={FilterTypes.STRING_SEARCH}
+          criteriaOption={temporalityCriteriaOption}
+          labels={temporalityCriteriaLabels}
+        />
         <div className={classes.filters}>
           <ClearFiltersButton
             clearCallback={() => dispatch(clearMediaFilters())}
             disabled={disabled}
-          />
-          <ActiveFilters
-            disabled={disabled}
-            filters={filters?.meltwater ?? {}}
           />
         </div>
       </Grid>
@@ -163,166 +254,122 @@ function ApplyDateFilter({ onClick }: any) {
   );
 }
 
-const useFilterStyles = makeStyles((theme) => ({
-  root: {
-    marginLeft: theme.spacing(2),
+const useSelectorStyles = makeStyles((theme) => ({
+  formControl: {
+    margin: theme.spacing(1),
+    // minWidth: 120,
+    // maxWidth: 300,
   },
-  button: {
-    padding: theme.spacing(1.5),
-    borderRadius: '30px',
-    border: ({ hasFilters }: any) =>
-      hasFilters && `solid 1px ${theme.palette.grey[100]}`,
-    color: ({ isOpen }: any) =>
-      isOpen ? UNICEF_COLORS[0] : theme.palette.grey[100],
+  chips: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  chip: {
+    margin: 2,
+  },
+  noLabel: {
+    marginTop: theme.spacing(3),
   },
 }));
 
-function ActiveFilters({
-  filters,
-  disabled,
-}: {
-  disabled: any;
-  filters: Filters;
-}) {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  useEffect(() => {
-    if (disabled) {
-      setAnchorEl(null);
-    }
-  }, [disabled]);
-
-  const classes = useFilterStyles({
-    isOpen: Boolean(anchorEl),
-    hasFilters: !disabled,
-  });
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-
-  return (
-    <div className={classes.root}>
-      <span>
-        <Button
-          startIcon={<FilterListIcon />}
-          className={classes.button}
-          disabled={disabled}
-          onClick={handleClick}
-          color={Boolean(anchorEl) ? 'secondary' : 'inherit'}
-        >
-          Filtros
-        </Button>
-      </span>
-      <FilterMenu
-        filters={filters}
-        anchorEl={anchorEl}
-        handleClose={handleClose}
-      />
-    </div>
-  );
+interface CriteriaSelectorProps {
+  id: string;
+  title: string;
+  column: string;
+  source: string;
+  filterType: FilterTypes;
+  criteriaOption: number[];
+  labels?: Record<number, string>;
 }
 
-const useMenuStyles = makeStyles((theme) => ({
-  paper: {
-    padding: theme.spacing(1),
-  },
-  menuItem: {
-    '&:hover': {
-      backgroundColor: 'none !important',
-    },
-  },
-  menuText: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  itemClose: {
-    marginLeft: theme.spacing(2),
-    borderRadius: '100%',
-    '&:hover': {
-      backgroundColor: theme.palette.error.main,
-      color: theme.palette.common.white,
-    },
-  },
-}));
-
-function FilterMenu({
-  filters,
-  anchorEl,
-  handleClose,
-}: {
-  filters: Record<string, unknown>;
-  anchorEl: null | HTMLElement;
-  handleClose: any;
-}) {
-  const classes = useMenuStyles();
+function CriteriaSelector(props: CriteriaSelectorProps) {
+  const {
+    id,
+    title,
+    column,
+    source,
+    filterType: type,
+    criteriaOption,
+    labels,
+  } = props;
+  const classes = useSelectorStyles();
+  const [criteria, setCriteria] = useState<number[]>([]);
   const dispatch = useDispatch();
 
-  const handleRemove = ({ owner, column, source }: any) => {
-    dispatch(
-      removeMediaFilter({
-        owner,
-        column,
-        source,
-      }),
-    );
-  };
+  const onCategoriesChange = useCallback(
+    (categories) => {
+      if (categories.length) {
+        const withRegExp =
+          type === _FilterTypes.STRING_SEARCH
+            ? categories.map((d: any) => `^(.*,|)${d}(,.*|)$`)
+            : categories;
+        dispatch(
+          addMediaFilter({
+            source,
+            column,
+            type,
+            values: withRegExp,
+            owner: id,
+          }),
+        );
+      } else {
+        dispatch(
+          removeMediaFilter({
+            source,
+            column,
+            owner: id,
+          }),
+        );
+      }
+    },
+    [criteria, dispatch, source, id, column],
+  );
 
+  const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setCriteria(event.target.value as number[]);
+    onCategoriesChange(event.target.value);
+  };
+  console.log(id, criteriaOption);
   return (
-    <Popper
-      id='mediaFilterMenu'
-      open={Boolean(anchorEl)}
-      anchorEl={anchorEl}
-      placement='bottom'
-    >
-      <Paper className={classes.paper}>
-        <ClickAwayListener onClickAway={handleClose}>
-          <MenuList>
-            {Object.entries(filters).map(
-              ([name, { owner, type, values, column, source }]: any) => (
-                <MenuItem key={name} className={classes.menuItem}>
-                  <Grid
-                    container
-                    alignItems='center'
-                    justifyContent='space-between'
-                  >
-                    <div className={classes.menuText}>
-                      <Typography variant='overline'>
-                        {name.replace('_', ' ')}
-                      </Typography>
-                      <Typography variant='overline'>
-                        {type === _FilterTypes.BETWEEN
-                          ? values[0]
-                              .map((d: string) => d.replaceAll('-', '/'))
-                              .join(' - ')
-                          : values
-                              .map((d: string) =>
-                                owner === 'país'
-                                  ? regionName.of(d.toUpperCase())
-                                  : d,
-                              )
-                              .join(', ')}
-                      </Typography>
-                    </div>
-                    <IconButton
-                      className={classes.itemClose}
-                      onClick={() => {
-                        handleRemove({ owner, column, source });
-                      }}
-                    >
-                      <CloseIcon />
-                    </IconButton>
-                  </Grid>
-                </MenuItem>
-              ),
-            )}
-          </MenuList>
-        </ClickAwayListener>
-      </Paper>
-    </Popper>
+    <FormControl>
+      <InputLabel id={`${title}-criteria`}>{title}</InputLabel>
+      <Select
+        id={`${title}-criteria-select`}
+        multiple
+        value={criteria}
+        onChange={handleChange}
+        input={<Input />}
+        MenuProps={MenuProps}
+        renderValue={(selected: any[]) => (
+          <div className={classes.chips}>
+            {selected.map((value) => (
+              <Chip
+                key={value}
+                label={labels ? labels[value] : value}
+                className={classes.chip}
+              />
+            ))}
+          </div>
+        )}
+      >
+        {criteriaOption.map((criterion: number) => (
+          <MenuItem key={criterion} value={criterion}>
+            <Checkbox checked={criteria.indexOf(criterion) > -1} />
+            <ListItemText primary={labels ? labels[criterion] : criterion} />
+          </MenuItem>
+        ))}
+      </Select>
+    </FormControl>
   );
 }
