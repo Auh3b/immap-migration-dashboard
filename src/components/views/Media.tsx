@@ -11,6 +11,10 @@ import { METHOD_NAMES } from './mediaViews/utils/methodName';
 import { setIsMediaDataReady } from 'store/mediaSlice';
 import ComponentFallback from 'components/common/ComponentFallback';
 import SideAnalyticsPanel from 'components/common/sideAnalysticsPanel/Index';
+import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
+import TuneIcon from '@material-ui/icons/Tune';
+import FilterListIcon from '@material-ui/icons/FilterList';
+import { ActiveFilters } from 'components/common/sideAnalysticsPanel/ActiveFilters';
 
 const MediaIndicators = lazy(() => import('./mediaViews/MediaIndicators'));
 const MediaAggregateIndicators = lazy(
@@ -40,7 +44,7 @@ export default function Media() {
     try {
       const dataRef = ref(
         fireStorage,
-        'data/summarised_meltwater_data_v5.json',
+        'data/summarised_meltwater_data_v6.json',
       );
       const dataUrl = await getDownloadURL(dataRef);
       const dataReq = await fetch(dataUrl);
@@ -63,7 +67,30 @@ export default function Media() {
 
   return (
     <>
-      <SideAnalyticsPanel filterSources={[{ stateSlice: 'media' }]} />
+      <SideAnalyticsPanel>
+        {[
+          {
+            content: <span>Methodology</span>,
+            value: 1,
+            title: 'Metodología',
+            icon: <HelpOutlineIcon />,
+          },
+          {
+            content: (
+              <ActiveFilters filterSources={[{ stateSlice: 'media' }]} />
+            ),
+            value: 2,
+            title: 'Filtros Activos',
+            icon: <FilterListIcon />,
+          },
+          {
+            content: <span>No addition filtros</span>,
+            value: 3,
+            title: 'Filtros Adicionales',
+            icon: <TuneIcon />,
+          },
+        ]}
+      </SideAnalyticsPanel>
       <Grid
         container
         direction='column'
