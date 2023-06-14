@@ -8,7 +8,7 @@ import {
 } from '@material-ui/core';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { clsx } from 'clsx';
-import { MouseEvent, ReactNode, useEffect, useState } from 'react';
+import { CSSProperties, MouseEvent, ReactNode, useEffect, useState } from 'react';
 import { grey, red } from '@material-ui/core/colors';
 import { UNICEF_COLORS } from 'theme';
 import { dequal } from 'dequal';
@@ -201,6 +201,13 @@ function SideMenu({
   );
 }
 
+const TabPanelStyles:CSSProperties ={
+  padding: '8px 8px 8px 24px',
+  width: 290,
+  maxHeight: `calc(100vh - 48px)`,
+  overflowY: 'scroll',
+}
+
 function TabPanel({
   value,
   index,
@@ -216,7 +223,7 @@ function TabPanel({
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
-      style={{ padding: '8px 8px 8px 24px' }}
+      style={TabPanelStyles}
     >
       {children}
     </div>
