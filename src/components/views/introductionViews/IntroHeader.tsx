@@ -1,17 +1,20 @@
 import { makeStyles } from '@material-ui/core/styles';
 import {
   AppBar,
+  Button,
+  Collapse,
   Divider,
   Grid,
   Link,
   Toolbar,
   Typography,
 } from '@material-ui/core';
-import { ExitButton } from '../Introduction';
 import AppLogos from 'components/common/header/AppLogos';
 import { NavLink } from 'react-router-dom';
 import { ROUTE_PATHS } from 'routes';
 import UserMenu from 'components/common/header/UserMenu';
+import { useState } from 'react';
+import NavigationMenu from 'components/common/header/NavigationMenu';
 
 const useHeaderStyles = makeStyles((theme) => ({
   bar: {
@@ -85,6 +88,10 @@ const useHeaderStyles = makeStyles((theme) => ({
 
 export default function IntroHeader() {
   const classes = useHeaderStyles();
+  const [isNavOpen, setIsNavOpen] = useState<boolean>(false);
+  const handleOpen = () => {
+    setIsNavOpen((prev) => !prev);
+  };
   return (
     <AppBar elevation={0} className={classes.bar}>
       <Toolbar variant='dense'>
@@ -106,9 +113,17 @@ export default function IntroHeader() {
             Costa Rica
           </Typography>
         </Grid>
-        <ExitButton />
+        <Button color='primary' onClick={handleOpen}>
+          Explore More
+        </Button>
         <UserMenu />
       </Toolbar>
+      <Collapse in={isNavOpen}>
+        <Divider orientation='horizontal' />
+        <Toolbar variant='dense'>
+          <NavigationMenu />
+        </Toolbar>
+      </Collapse>
     </AppBar>
   );
 }
