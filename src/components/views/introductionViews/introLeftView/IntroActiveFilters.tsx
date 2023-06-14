@@ -43,7 +43,7 @@ export default function IntroActiveFilters() {
 
     return output;
   }, [_filters]);
-  console.log(filters);
+
   return (
     <Grid container direction='column'>
       {filters.length ? (

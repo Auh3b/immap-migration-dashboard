@@ -20,7 +20,9 @@ export const useMiddleStyles = makeStyles((theme) => ({
   root: {
     paddingRight: theme.spacing(2),
     paddingLeft: theme.spacing(2),
-    maxHeight: '90vh',
+    maxHeight: `calc(100vh - ${
+      (theme.mixins.toolbar.minHeight as number) + theme.spacing(2)
+    }px)`,
     overflowY: 'auto',
     overflowX: 'hidden',
     flexGrow: 1,

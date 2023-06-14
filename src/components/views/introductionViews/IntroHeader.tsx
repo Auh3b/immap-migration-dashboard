@@ -1,13 +1,26 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { AppBar, Divider, Grid, Toolbar, Typography } from '@material-ui/core';
-import { ReactComponent as UnicefLogo } from 'assets/img/unicef.svg';
-import { ReactComponent as ImmapLogo } from 'assets/img/immapLogoAlt.svg';
-import { ExitButton } from '../Introduction';
+import {
+  AppBar,
+  Button,
+  Collapse,
+  Divider,
+  Grid,
+  Link,
+  Toolbar,
+  Typography,
+} from '@material-ui/core';
+import AppLogos from 'components/common/header/AppLogos';
+import { NavLink } from 'react-router-dom';
+import { ROUTE_PATHS } from 'routes';
+import UserMenu from 'components/common/header/UserMenu';
+import { useState } from 'react';
+import NavigationMenu from 'components/common/header/NavigationMenu';
 
 const useHeaderStyles = makeStyles((theme) => ({
   bar: {
     backgroundColor: theme.palette.background.paper,
     zIndex: theme.zIndex.drawer + 1,
+    borderBottom: '1px solid rgba(44, 48, 50, 0.12)',
   },
   root: {
     [theme.breakpoints.down('sm')]: {
@@ -24,7 +37,29 @@ const useHeaderStyles = makeStyles((theme) => ({
     },
   },
   headerText: {
+    marginLeft: theme.spacing(3),
+    paddingLeft: theme.spacing(3),
+    borderLeft: '1px solid rgba(44, 48, 50, 0.12)',
     flexGrow: 2,
+  },
+  titleLogo: {
+    '& h1': {
+      display: 'flex',
+      fontWeight: theme.typography.fontWeightRegular,
+      color: theme.palette.primary,
+
+      '& strong': {
+        marginRight: theme.spacing(0.5),
+      },
+
+      '& svg': {
+        height: `${theme.typography.subtitle1.lineHeight}em`,
+        marginRight: theme.spacing(1.5),
+        width: 'auto',
+        verticalAlign: 'bottom',
+        color: 'black',
+      },
+    },
   },
   title: {
     textTransform: 'uppercase',
@@ -33,9 +68,11 @@ const useHeaderStyles = makeStyles((theme) => ({
     },
     [theme.breakpoints.up('sm')]: {
       ...theme.typography.h5,
+      fontSize: '1.5em',
     },
   },
   subtitle: {
+    lineHeight: 'unset',
     [theme.breakpoints.up('md')]: {
       fontSize: '1em',
     },
@@ -44,47 +81,49 @@ const useHeaderStyles = makeStyles((theme) => ({
       fontWeight: 'normal',
     },
   },
+  divider: {
+    margin: theme.spacing(0, 3),
+  },
 }));
+
 export default function IntroHeader() {
   const classes = useHeaderStyles();
+  const [isNavOpen, setIsNavOpen] = useState<boolean>(false);
+  const handleOpen = () => {
+    setIsNavOpen((prev) => !prev);
+  };
   return (
     <AppBar elevation={0} className={classes.bar}>
-      <Toolbar>
-        <Grid
-          container
-          wrap='nowrap'
-          justifyContent='space-between'
-          item
-          className={classes.root}
+      <Toolbar variant='dense'>
+        <Link
+          component={NavLink}
+          to={ROUTE_PATHS.DEFAULT}
+          className={classes.titleLogo}
         >
-          <Grid md={12} lg={8} item className={classes.headerText}>
-            <Typography className={classes.title} color='primary'>
-              Monitoreo a la Respuesta y Flujos Migratorios Mixtos
-            </Typography>
-            <Typography className={classes.subtitle}>
-              Recolección de datos: 6 de marzo a 04 de abril – Necoclí, Panamá y
-              Costa Rica
-            </Typography>
-          </Grid>
-          <Grid
-            wrap='nowrap'
-            lg={2}
-            item
-            container
-            alignItems='center'
-            justifyContent='flex-end'
-          >
-            <Grid item>
-              <UnicefLogo className={classes.logo} />
-            </Grid>
-            <Grid item>
-              <ImmapLogo className={classes.logo} />
-            </Grid>
-            <ExitButton />
-          </Grid>
+          <Typography component='h1' variant='subtitle1' noWrap>
+            <AppLogos />
+          </Typography>
+        </Link>
+        <Grid item className={classes.headerText}>
+          <Typography className={classes.title} color='primary'>
+            Monitoreo a la Respuesta y Flujos Migratorios Mixtos
+          </Typography>
+          <Typography className={classes.subtitle}>
+            Recolección de datos: 6 de marzo a 04 de abril – Necoclí, Panamá y
+            Costa Rica
+          </Typography>
         </Grid>
+        <Button color='primary' onClick={handleOpen}>
+          Explore More
+        </Button>
+        <UserMenu />
       </Toolbar>
-      <Divider orientation='horizontal' />
+      <Collapse in={isNavOpen}>
+        <Divider orientation='horizontal' />
+        <Toolbar variant='dense'>
+          <NavigationMenu />
+        </Toolbar>
+      </Collapse>
     </AppBar>
   );
 }

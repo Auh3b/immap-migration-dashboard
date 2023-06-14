@@ -10,7 +10,7 @@ import {
 } from '@material-ui/core';
 import { deepOrange } from '@material-ui/core/colors';
 import { dequal } from 'dequal';
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addIntroFilter } from 'store/introSlice';
 

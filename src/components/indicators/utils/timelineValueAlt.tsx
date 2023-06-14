@@ -17,8 +17,6 @@ const timelineValueAlt: MethodFunc<any[]> = (input, column, params) => {
     output = [...output, outputItem];
   }
 
-  console.log(output);
-
   return output;
 };
 

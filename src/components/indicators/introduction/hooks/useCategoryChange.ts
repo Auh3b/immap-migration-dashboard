@@ -8,11 +8,13 @@ export default function useIntroCategoryChange({
   column,
   owner,
   type = _FilterTypes.IN,
+  valueFormatter,
 }: {
   source: string;
   column: string;
   owner: string;
   type?: _FilterTypes;
+  valueFormatter?: Record<any, string>;
 }) {
   const dispatch = useDispatch();
   const handleSelectedCategoriesChange = useCallback(
@@ -25,6 +27,7 @@ export default function useIntroCategoryChange({
             values: categories,
             owner,
             type,
+            valueFormatter,
           }),
         );
       } else {

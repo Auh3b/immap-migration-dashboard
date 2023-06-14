@@ -49,6 +49,7 @@ export const useLeftStyles = makeStyles((theme) => ({
   collapse: {
     maxHeight: '70vh',
     overflowY: 'auto',
+    overFlowX: 'hidden',
   },
   popper: {
     zIndex: ({ isMobile }: any) => (isMobile ? theme.zIndex.modal + 1 : 0),
@@ -65,22 +66,14 @@ export default function IntroLeftView() {
   const classes = useLeftStyles({ isOpen, isMobile });
   return (
     <>
-      {!isMobile && (
-        <DesktopSideNav
-          classes={classes}
-          isOpen={isOpen}
-          handleOpenToggle={handleOpenToggle}
-        >
-          <IntroContent classes={classes} />
-        </DesktopSideNav>
-      )}
+      {!isMobile && <DesktopSideNav />}
       {isMobile && (
         <MobileSideNav
           classes={classes}
           isOpen={isOpen}
           handleOpenToggle={handleOpenToggle}
         >
-          <IntroContent classes={classes} />
+          <IntroContent />
         </MobileSideNav>
       )}
     </>
