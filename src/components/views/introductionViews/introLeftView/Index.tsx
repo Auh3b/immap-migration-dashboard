@@ -67,13 +67,7 @@ export default function IntroLeftView() {
   return (
     <>
       {!isMobile && (
-        <DesktopSideNav
-          classes={classes}
-          isOpen={isOpen}
-          handleOpenToggle={handleOpenToggle}
-        >
-          <IntroContent classes={classes} />
-        </DesktopSideNav>
+        <DesktopSideNav/>
       )}
       {isMobile && (
         <MobileSideNav
@@ -81,7 +75,7 @@ export default function IntroLeftView() {
           isOpen={isOpen}
           handleOpenToggle={handleOpenToggle}
         >
-          <IntroContent classes={classes} />
+          <IntroContent />
         </MobileSideNav>
       )}
     </>
