@@ -73,11 +73,11 @@ export default function UserMenu() {
         onClick={handleMenu}
       >
         <Grid container alignItems='center' item wrap='nowrap'>
-          {smDownHidden ? null : (
+          {/* {smDownHidden ? null : (
             <Typography variant='caption' color='primary' noWrap>
               {user.email}
             </Typography>
-          )}
+          )} */}
           <Avatar className={classes.avatar} src={user.picture} />
         </Grid>
       </Link>
