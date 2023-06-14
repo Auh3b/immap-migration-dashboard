@@ -84,7 +84,7 @@ export default function Media() {
             icon: <FilterListIcon />,
           },
           {
-            content: <span>No addition filtros</span>,
+            content: <MediaFilterToolbar />,
             value: 3,
             title: 'Filtros Adicionales',
             icon: <TuneIcon />,
@@ -98,7 +98,6 @@ export default function Media() {
         wrap='nowrap'
         className={classes.root}
       >
-        <MediaFilterToolbar />
         <Suspense fallback={<ComponentFallback />}>
           <MediaAggregateIndicators isLoading={isLoading} />
         </Suspense>
