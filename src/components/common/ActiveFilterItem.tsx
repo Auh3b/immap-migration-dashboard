@@ -1,25 +1,35 @@
 import {
+  Chip,
+  Divider,
   Grid,
   IconButton,
   Tooltip,
   Typography,
   makeStyles,
+  withStyles,
 } from '@material-ui/core';
 import { FilterItem, FilterTypes } from 'utils/filterFunctions';
 import CloseIcon from '@material-ui/icons/Close';
 import { useDispatch } from 'react-redux';
 import { timeFormat } from 'd3';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
+import { grey } from '@material-ui/core/colors';
 
 export interface ActiveFilterItemProps extends FilterItem {
   name: string;
   source: string;
   owner: string;
-  valueFormatter?: (value: any) => any;
+  valueFormatter?: Record<string | number, string>;
   removeFilter?: Function;
 }
 
 const useFilterStyles = makeStyles((theme) => ({
+  root: {
+    padding: theme.spacing(1),
+    marginBottom: theme.spacing(1),
+    border: '0.5px solid #F3F3F3',
+    borderRadius: theme.shape.borderRadius,
+  },
   menuText: {
     display: 'flex',
     flexDirection: 'column',
@@ -30,13 +40,11 @@ const useFilterStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(2),
     borderRadius: '100%',
     '&:hover': {
-      backgroundColor: theme.palette.error.main,
-      color: theme.palette.common.white,
+      backgroundColor: 'rgba(0,0,0,0)',
+      color: theme.palette.error.main,
     },
   },
 }));
-
-const removeFilterFunction = Object.fromEntries([['']]);
 
 export default function ActiveFilterItem(
   props: Partial<ActiveFilterItemProps>,
@@ -64,35 +72,57 @@ export default function ActiveFilterItem(
   }, [owner, source, column, removeFilter]);
 
   const name = _name.replaceAll('_', ' ');
-  const value = getValueFormat(
+  const filterValues = getValueFormat(
     type,
-    values.map((d) => (valueFormatter ? valueFormatter(d) : d)),
+    values.map((d) => (valueFormatter ? valueFormatter[d] : d)),
   );
   return (
-    <Grid
-      container
-      alignItems='center'
-      wrap='nowrap'
-      justifyContent='space-between'
-    >
-      <div className={classes.menuText}>
+    <Grid container wrap='nowrap' direction='column' className={classes.root}>
+      <Grid item container justifyContent='space-between' alignItems='center'>
         <Typography variant='overline' style={{ fontWeight: 600 }}>
           {name}
         </Typography>
-        <Tooltip title={value}>
-          <Typography variant='overline' noWrap={true}>
-            {value}
-          </Typography>
-        </Tooltip>
-      </div>
-      <IconButton className={classes.itemClose} onClick={handleRemove}>
-        <CloseIcon />
-      </IconButton>
+        <IconButton className={classes.itemClose} onClick={handleRemove}>
+          <CloseIcon />
+        </IconButton>
+      </Grid>
+      <Divider orientation='horizontal' />
+      <FilterValues values={filterValues} />
     </Grid>
   );
 }
 
-function getValueFormat(type: string, values: any[]) {
+function FilterValues({ values }: { values: string | string[] }) {
+  return (
+    <Grid item wrap='wrap' container style={{ marginTop: 6 }}>
+      {typeof values === 'string' ? (
+        <FilterValue value={values} />
+      ) : (
+        values.map((value) => <FilterValue key={value} value={value} />)
+      )}
+    </Grid>
+  );
+}
+
+const StyledChip = withStyles((theme) => ({
+  label: {
+    maxWidth: '150px',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+  },
+}))(Chip);
+
+function FilterValue({ value }: { value: string }) {
+  return (
+    <Tooltip title={value}>
+      {/* @ts-ignore */}
+      <StyledChip label={value} style={{ margin: 4 }} />
+    </Tooltip>
+  );
+}
+
+function getValueFormat(type: string, values: any[]): string | string[] {
   switch (type) {
     case FilterTypes.BETWEEN: {
       const value = values[0];
@@ -101,7 +131,7 @@ function getValueFormat(type: string, values: any[]) {
         .join(' - ');
     }
     default: {
-      return values.map((d: string) => d.replaceAll('-', '/')).join(', ');
+      return values.map((d: string) => d.replaceAll('-', '/'));
     }
   }
 }
