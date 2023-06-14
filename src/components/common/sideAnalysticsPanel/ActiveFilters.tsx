@@ -16,6 +16,7 @@ type SourceProps = Record<string, Partial<ActiveFilterItemProps>>;
 interface FilterGroupProps {
   name: string;
   filters: [string, Partial<ActiveFilterItemProps>][];
+  valueFormatter?: Function;
   removeFunction: Function;
 }
 
