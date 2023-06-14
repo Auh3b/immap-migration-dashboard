@@ -9,28 +9,26 @@ import { ActiveFilters } from 'components/common/sideAnalysticsPanel/ActiveFilte
 export default function DesktopSideNav() {
   return (
     <SideAnalyticsPanel>
-    {[
-      {
-        content: <IntroContent />,
-        value: 1,
-        title: 'Metodología',
-        icon: <HelpOutlineIcon />,
-      },
-      {
-        content: (
-          <ActiveFilters filterSources={[{ stateSlice: 'intro' }]} />
-          ),
+      {[
+        {
+          content: <IntroContent />,
+          value: 1,
+          title: 'Metodología',
+          icon: <HelpOutlineIcon />,
+        },
+        {
+          content: <ActiveFilters filterSources={[{ stateSlice: 'intro' }]} />,
           value: 2,
           title: 'Filtros Activos',
           icon: <FilterListIcon />,
-      },
-      {
-        content:<IntroExtraFilters />,
-        value: 3,
-        title: 'Filtros Adicionales',
-        icon: <TuneIcon />,
-      },
-    ]}
+        },
+        {
+          content: <IntroExtraFilters />,
+          value: 3,
+          title: 'Filtros Adicionales',
+          icon: <TuneIcon />,
+        },
+      ]}
     </SideAnalyticsPanel>
   );
 }
