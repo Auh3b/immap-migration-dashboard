@@ -1,4 +1,5 @@
 import {
+  Button,
   Checkbox,
   Chip,
   Fab,
@@ -25,6 +26,7 @@ import { dequal } from 'dequal';
 import { deepOrange } from '@material-ui/core/colors';
 import ClearFiltersButton from 'components/common/ClearFiltersButton';
 import { FilterTypes } from 'utils/filterFunctions';
+import getStringSearchValue from 'utils/getStringSearchValue';
 
 const termsCriteriaOption = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 const termsCriteriaLabels = {
@@ -112,68 +114,67 @@ export default function MediaFilterToolbar() {
   );
 
   return (
-    <Paper variant='outlined' className={classes.root}>
-      <Grid
-        container
-        item
-        wrap='nowrap'
-        alignItems='center'
-        justifyContent='space-between'
-      >
-        <DateFilter />
-        <CriteriaSelector
-          id='terms'
-          title='Tema'
-          source='meltwater'
-          column='terms'
-          filterType={FilterTypes.STRING_SEARCH}
-          criteriaOption={termsCriteriaOption}
-          labels={termsCriteriaLabels}
+    <Grid
+      container
+      item
+      direction='column'
+      wrap='nowrap'
+      alignItems='center'
+      justifyContent='space-between'
+    >
+      <DateFilter />
+      <CriteriaSelector
+        id='terms'
+        title='Tema'
+        source='meltwater'
+        column='terms'
+        filterType={FilterTypes.STRING_SEARCH}
+        criteriaOption={termsCriteriaOption}
+        labels={termsCriteriaLabels}
+      />
+      <CriteriaSelector
+        id='places'
+        title='Lugar'
+        source='meltwater'
+        column='places'
+        filterType={FilterTypes.STRING_SEARCH}
+        criteriaOption={placeCriteriaOption}
+        labels={placeCriteriaLabels}
+      />
+      <CriteriaSelector
+        id='subgroups'
+        title='Sub-grupo'
+        source='meltwater'
+        column='subgroups'
+        filterType={FilterTypes.STRING_SEARCH}
+        criteriaOption={subgroupCriteriaOption}
+        labels={subgroupCriteriaLabels}
+      />
+      <CriteriaSelector
+        id='context'
+        title='Contexto'
+        source='meltwater'
+        column='context'
+        filterType={FilterTypes.STRING_SEARCH}
+        criteriaOption={contextCriteriaOption}
+        labels={contextCriteriaLabels}
+      />
+      <CriteriaSelector
+        id='temporality'
+        title='Temporabalidad'
+        source='meltwater'
+        column='temporality'
+        filterType={FilterTypes.STRING_SEARCH}
+        criteriaOption={temporalityCriteriaOption}
+        labels={temporalityCriteriaLabels}
+      />
+      <div className={classes.filters}>
+        <ClearFiltersButton
+          clearCallback={() => dispatch(clearMediaFilters())}
+          disabled={disabled}
         />
-        <CriteriaSelector
-          id='places'
-          title='Lugar'
-          source='meltwater'
-          column='places'
-          filterType={FilterTypes.STRING_SEARCH}
-          criteriaOption={placeCriteriaOption}
-          labels={placeCriteriaLabels}
-        />
-        <CriteriaSelector
-          id='subgroups'
-          title='Sub-grupo'
-          source='meltwater'
-          column='subgroups'
-          filterType={FilterTypes.STRING_SEARCH}
-          criteriaOption={subgroupCriteriaOption}
-          labels={subgroupCriteriaLabels}
-        />
-        <CriteriaSelector
-          id='context'
-          title='Contexto'
-          source='meltwater'
-          column='context'
-          filterType={FilterTypes.STRING_SEARCH}
-          criteriaOption={contextCriteriaOption}
-          labels={contextCriteriaLabels}
-        />
-        <CriteriaSelector
-          id='temporality'
-          title='Temporabalidad'
-          source='meltwater'
-          column='temporality'
-          filterType={FilterTypes.STRING_SEARCH}
-          criteriaOption={temporalityCriteriaOption}
-          labels={temporalityCriteriaLabels}
-        />
-        <div className={classes.filters}>
-          <ClearFiltersButton
-            clearCallback={() => dispatch(clearMediaFilters())}
-            disabled={disabled}
-          />
-        </div>
-      </Grid>
-    </Paper>
+      </div>
+    </Grid>
   );
 }
 
@@ -208,7 +209,7 @@ function DateFilter({ filters }: any) {
   };
 
   return (
-    <Grid container alignItems='center' item spacing={4}>
+    <Grid container direction='column' alignItems='stretch' item>
       <DatePicker id='start' label='start' value={start} setValue={setStart} />
       <DatePicker id='end' label='end' value={end} setValue={setEnd} />
       {showToggle && <ApplyDateFilter onClick={handleApplyFilter} />}
@@ -233,7 +234,7 @@ function DatePicker({ id, value, label, setValue }: DatePickerProps) {
   };
 
   return (
-    <Grid item>
+    <Grid item style={{marginBottom: 8}}>
       <TextField
         id={id}
         label={label}
@@ -248,17 +249,15 @@ function DatePicker({ id, value, label, setValue }: DatePickerProps) {
 function ApplyDateFilter({ onClick }: any) {
   const classes = useStyles();
   return (
-    <Fab className={classes.clear} onClick={onClick}>
+    <Button className={classes.clear} onClick={onClick}>
       Apply
-    </Fab>
+    </Button>
   );
 }
 
 const useSelectorStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
-    // minWidth: 120,
-    // maxWidth: 300,
   },
   chips: {
     display: 'flex',
@@ -314,6 +313,13 @@ function CriteriaSelector(props: CriteriaSelectorProps) {
           type === _FilterTypes.STRING_SEARCH
             ? categories.map((d: any) => `^(.*,|)${d}(,.*|)$`)
             : categories;
+        const valueFormatter = Object.fromEntries(
+          withRegExp.map((strExp: string) => [
+            strExp,
+            labels[Number(getStringSearchValue(strExp))],
+          ]),
+        );
+
         dispatch(
           addMediaFilter({
             source,
@@ -321,6 +327,7 @@ function CriteriaSelector(props: CriteriaSelectorProps) {
             type,
             values: withRegExp,
             owner: id,
+            valueFormatter,
           }),
         );
       } else {
@@ -333,16 +340,16 @@ function CriteriaSelector(props: CriteriaSelectorProps) {
         );
       }
     },
-    [criteria, dispatch, source, id, column],
+    [criteria, dispatch, source, id, column, labels],
   );
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setCriteria(event.target.value as number[]);
     onCategoriesChange(event.target.value);
   };
-  console.log(id, criteriaOption);
+
   return (
-    <FormControl>
+    <FormControl variant="outlined" className={classes.formControl}>
       <InputLabel id={`${title}-criteria`}>{title}</InputLabel>
       <Select
         id={`${title}-criteria-select`}
