@@ -66,9 +66,7 @@ export default function IntroLeftView() {
   const classes = useLeftStyles({ isOpen, isMobile });
   return (
     <>
-      {!isMobile && (
-        <DesktopSideNav/>
-      )}
+      {!isMobile && <DesktopSideNav />}
       {isMobile && (
         <MobileSideNav
           classes={classes}

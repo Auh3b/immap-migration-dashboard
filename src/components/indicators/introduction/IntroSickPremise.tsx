@@ -16,7 +16,7 @@ const filterable = true;
 const source = 'premise';
 const id = 'gente_enferma';
 const methodName = EXTERNAL_METHOD_NAMES.CONCATENATED_VALUES;
-const valueFormatter = Object.fromEntries(SICK_CATEGORY_ABREVATIONS)
+const valueFormatter = Object.fromEntries(SICK_CATEGORY_ABREVATIONS);
 
 export default function IntroSickPremise() {
   const { data, isLoading } = useIntroData({

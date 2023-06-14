@@ -37,6 +37,12 @@ const useStyles = makeStyles((theme) => ({
       maxHeight: '100vh',
       overflowY: 'scroll',
     },
+    [theme.breakpoints.up('lg')]: {
+      paddingTop: theme.spacing(2),
+      paddingLeft: theme.spacing(2),
+      paddingRight: theme.spacing(2),
+      paddingBottom: theme.spacing(2),
+    },
   },
   clearButton: {
     position: 'fixed',

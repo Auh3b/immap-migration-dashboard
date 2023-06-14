@@ -14,7 +14,7 @@ export default function useIntroCategoryChange({
   column: string;
   owner: string;
   type?: _FilterTypes;
-  valueFormatter?:Record<any, string>
+  valueFormatter?: Record<any, string>;
 }) {
   const dispatch = useDispatch();
   const handleSelectedCategoriesChange = useCallback(
