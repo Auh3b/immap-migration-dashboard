@@ -1,15 +1,11 @@
 import {
   Button,
   Checkbox,
-  Chip,
-  Fab,
   FormControl,
+  FormLabel,
   Grid,
-  Input,
-  InputLabel,
   ListItemText,
   MenuItem,
-  Paper,
   Select,
   TextField,
   makeStyles,
@@ -234,7 +230,7 @@ function DatePicker({ id, value, label, setValue }: DatePickerProps) {
   };
 
   return (
-    <Grid item style={{marginBottom: 8}}>
+    <Grid item style={{ marginBottom: 8 }}>
       <TextField
         id={id}
         label={label}
@@ -349,26 +345,17 @@ function CriteriaSelector(props: CriteriaSelectorProps) {
   };
 
   return (
-    <FormControl variant="outlined" className={classes.formControl}>
-      <InputLabel id={`${title}-criteria`}>{title}</InputLabel>
+    <FormControl variant='outlined' className={classes.formControl}>
+      <FormLabel component='legend'>{title}</FormLabel>
       <Select
         id={`${title}-criteria-select`}
         multiple
         value={criteria}
         onChange={handleChange}
-        input={<Input />}
         MenuProps={MenuProps}
-        renderValue={(selected: any[]) => (
-          <div className={classes.chips}>
-            {selected.map((value) => (
-              <Chip
-                key={value}
-                label={labels ? labels[value] : value}
-                className={classes.chip}
-              />
-            ))}
-          </div>
-        )}
+        renderValue={(selected: any[]) =>
+          selected.map((d) => (labels ? labels[d] : d)).join(', ')
+        }
       >
         {criteriaOption.map((criterion: number) => (
           <MenuItem key={criterion} value={criterion}>
