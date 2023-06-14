@@ -2,17 +2,7 @@ import { Grid, Typography, makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   content: {
-    background: theme.palette.background.paper,
-    border: ({ isMobile }: any) =>
-      isMobile ? '1px solid' + theme.palette.grey[100] : 'unset',
     borderRadius: theme.shape.borderRadius,
-    width: ({ isOpen, isMobile }: any) => (isMobile ? '90%' : '219px'),
-    display: ({ isOpen, isMobile }: any) =>
-      isOpen ? 'flex' : isMobile ? 'block' : 'none',
-    maxHeight: ({ isMobile }: any) => (isMobile ? '85vh' : '90vh'),
-    overflowY: 'auto',
-    overflowX: 'hidden',
-
     transition:
       'width ' +
       theme.transitions.duration.enteringScreen +
@@ -42,8 +32,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function IntroContent({ isOpen }: any) {
-  const classes = useStyles({ isOpen });
+export default function IntroContent() {
+  const classes = useStyles();
   return (
     <Grid
       container
