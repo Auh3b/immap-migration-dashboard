@@ -216,7 +216,7 @@ function TabPanel({
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
-      style={{ padding: '8px 0px 8px 24px' }}
+      style={{ padding: '8px 8px 8px 24px' }}
     >
       {children}
     </div>
