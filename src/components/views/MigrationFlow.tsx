@@ -37,8 +37,6 @@ export default function MigrationFlow() {
       }),
     );
 
-    // dispatch(setPageInfo({ location: 'migrationFlow' }));
-
     return () => {
       dispatch(removeLayer(MIGRATION_FLOW_LAYER_ID));
       dispatch(removeLayer(HOTSPOTS_LAYER_ID));
