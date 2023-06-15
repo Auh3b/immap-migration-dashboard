@@ -1,7 +1,5 @@
 import {
-  FilterSource,
   PanelContent,
-  SidePanelChildrenProps,
   SideAnalyticsPanelProps,
 } from './sideAnalyticsPanelTypes';
 import {
