@@ -5,8 +5,6 @@ import { CustomTheme, UNICEF_COLORS } from 'theme';
 import IntroContent from './IntroContent';
 import MobileSideNav from './MobileSideNav';
 
-const drawerWidth = 300;
-
 export const useLeftStyles = makeStyles((theme) => ({
   root: {
     width: '300px',
