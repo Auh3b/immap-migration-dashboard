@@ -3,7 +3,7 @@ import { ascending } from 'd3';
 import { useMemo } from 'react';
 import ReactEchart from 'components/common/customCharts/ReactEcharts';
 import { UNICEF_COLORS } from 'theme';
-import { SERVICES_KEY } from 'components/indicators/premise/utils/services';
+import { SERVICES_KEY } from 'components/indicators/premise/utils/premiseServiceDefinitions';
 
 const STAT_CATEGORY_COLORS = new Map([
   ['Capacidad diaria', '#D053AC'],

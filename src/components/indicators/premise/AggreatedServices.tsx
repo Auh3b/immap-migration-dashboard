@@ -12,7 +12,7 @@ import {
 import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType';
 import useWidgetFetch from 'components/common/customWidgets/hooks/useWidgetFetch';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { SERVICES_KEY } from './utils/services';
+import { SERVICES_KEY } from './utils/premiseServiceDefinitions';
 import CustomWidgetWrapper from 'components/common/customWidgets/CustomWidgetWrapper';
 import { FilterItem, filterValues } from 'utils/filterFunctions';
 import { _FilterTypes } from '@carto/react-core';
@@ -27,7 +27,7 @@ import getViewport from './utils/getViewport';
 import getFeatureCollection from './utils/getFeatureCollection';
 import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
 import CustomConnectDotChart from 'components/common/customCharts/CustomConnectDotChart';
-import { SERVICE_STAT_COLUMNS } from './utils/services';
+import { SERVICE_STAT_COLUMNS } from './utils/premiseServiceDefinitions';
 
 const otherColumns = {
   country: 'ubicacion_',

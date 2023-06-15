@@ -3,7 +3,7 @@ import { Grid } from '@material-ui/core';
 import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType';
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
 import useWidgetEffect from '../utils/useWidgetEffect';
-import { SERVICES_KEY } from './utils/services';
+import { SERVICES_KEY } from './utils/premiseServiceDefinitions';
 import CustomPieWidget from 'components/common/customWidgets/CustomPieWidget';
 import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
 

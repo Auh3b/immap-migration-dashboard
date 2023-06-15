@@ -2,7 +2,7 @@ import { Grid, Typography } from '@material-ui/core';
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store/store';
-import ActiveFilterItem, { ActiveFilterItemProps } from '../ActiveFilterItem';
+import ActiveFilterItem, { ActiveFilterItemProps } from './ActiveFilterItem';
 import { FilterSource } from './Index';
 import { removeFilter } from '@carto/react-redux';
 import { removeMediaFilter } from 'store/mediaSlice';
@@ -28,6 +28,7 @@ const removeFunction = Object.fromEntries([
 
 export function ActiveFilters({ filterSources }: ActiveFiltersProps) {
   const state = useSelector((state: RootState) => state);
+  
   const filterGroups = useMemo(() => {
     if (!filterSources.length) {
       return [];
@@ -38,19 +39,38 @@ export function ActiveFilters({ filterSources }: ActiveFiltersProps) {
     for (let i = 0; i < filterSources.length; i++) {
       const { stateSlice } = filterSources[i];
       if (!state[stateSlice]) {
-        return;
+        continue
       }
       if (stateSlice === 'carto') {
-        return;
+        const dataSources = Object.entries(state[stateSlice].dataSources)
+        //@ts-ignore
+        for(let [source, {filters}]of dataSources){
+          
+          const filteredColumns = filters ? Object.entries(filters) : []
+          
+          if(!filteredColumns.length){continue}
+          
+          let activeFilters: [string , Partial<ActiveFilterItemProps>][] = []
+          
+          for (let [column, typedValues] of filteredColumns){
+            const types = Object.entries(typedValues)
+            for ( let [type, { valueFormatter = {}, values, owner}] of types){
+              const newActiveFilter  = [column, {values, owner, type, source}]
+              //@ts-ignore
+              activeFilters = [...activeFilters, [...newActiveFilter]]
+            }
+          }
+          output = [...output, { name: source, filters: [...activeFilters],  removeFunction: removeFunction[stateSlice]}]
+        }
       } else {
         const dataSources: [string, SourceProps][] = Object.entries(
           state[stateSlice]?.filters,
-        );
-        for (let [source, filters] of dataSources) {
-          output = [
-            ...output,
-            {
-              name: source,
+          );
+          for (let [source, filters] of dataSources) {
+            output = [
+              ...output,
+              {
+                name: source,
               filters: [...Object.entries(filters)],
               removeFunction: removeFunction[stateSlice],
             },
@@ -58,9 +78,12 @@ export function ActiveFilters({ filterSources }: ActiveFiltersProps) {
         }
       }
     }
+    
+    console.log(output)
 
     return output;
   }, [state, filterSources]);
+
   return (
     <Grid container direction='column'>
       {!filterGroups.length

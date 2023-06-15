@@ -7,7 +7,7 @@ import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
 import useIntroData from './hooks/useIntroData';
 import getSourceFilter from '../media/utils/getSourceFilter';
 import { useSelector } from 'react-redux';
-import { SICK_CATEGORY_ABREVATIONS } from '../premise/utils/services';
+import { SICK_CATEGORY_ABREVATIONS } from '../premise/utils/premiseServiceDefinitions';
 
 const title = 'Retos del punto de servicio';
 const column = 'princ_re_1';
