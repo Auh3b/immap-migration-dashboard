@@ -60,7 +60,7 @@ export default function CustomWordCloud({
       ])
       .words(words)
       .rotate(0)
-      .padding(5)
+      .padding(8)
       .font('Barlow')
       .fontSize((d) => Math.sqrt(d.size / 10 ** exponent) * 15)
       .on('word', ({ x, y, text, size, font, value }: any) => {
