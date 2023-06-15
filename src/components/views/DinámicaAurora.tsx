@@ -54,7 +54,7 @@ export default function DinámicaAurora() {
   return (
     <MainView>
       {{
-        side:[
+        side: [
           {
             content: (
               <ActiveFilters filterSources={[{ stateSlice: 'carto' }]} />

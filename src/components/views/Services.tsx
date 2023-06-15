@@ -70,7 +70,7 @@ export default function Services() {
   return (
     <MainView>
       {{
-        side:[
+        side: [
           {
             content: (
               <ActiveFilters filterSources={[{ stateSlice: 'carto' }]} />

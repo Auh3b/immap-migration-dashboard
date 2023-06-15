@@ -49,7 +49,7 @@ export default function MigrationFlow() {
   return (
     <MainView>
       {{
-        side:[
+        side: [
           {
             content: (
               <ActiveFilters filterSources={[{ stateSlice: 'carto' }]} />

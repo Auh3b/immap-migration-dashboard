@@ -130,7 +130,7 @@ function getValueFormat(type: string, values: any[]): string | string[] {
         .join(' - ');
     }
     default: {
-      return values//.map((d: string) => d.replaceAll('-', '/'));
+      return values; //.map((d: string) => d.replaceAll('-', '/'));
     }
   }
 }
