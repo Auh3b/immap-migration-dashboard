@@ -5,6 +5,7 @@ import { lazy, useState } from 'react';
 import { MainViewChildren } from './utils/types';
 import { Grid, makeStyles, IconButton, Collapse } from '@material-ui/core';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+import SideAnalyticsPanel from 'components/common/sideAnalysticsPanel/Index';
 
 const MapContainer = lazy(() => import('./MapContainer'));
 
@@ -43,6 +44,7 @@ export default function Desktop({ children }: { children: MainViewChildren }) {
 
   return (
     <>
+      <SideAnalyticsPanel>{children?.side}</SideAnalyticsPanel>
       <SideView direction={'left'} expandable={children?.left?.expandable}>
         {children?.left?.element}
       </SideView>
