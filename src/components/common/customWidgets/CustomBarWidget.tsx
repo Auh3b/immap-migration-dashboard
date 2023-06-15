@@ -81,6 +81,9 @@ export default function CustomBarWidget({
             //@ts-ignore
             values: selectedBarsIdxs.map((idx) => sortedData[idx].name),
             owner: id,
+            params: {
+              valueFormatter: labels,
+            },
           }),
         );
       } else {

@@ -7,6 +7,7 @@ import { defaultCustomWidgetProps } from './customWidgetsType';
 import useWidgetFilterValues from './hooks/useWidgetFilterValues';
 import CustomWidgetWrapper from './CustomWidgetWrapper';
 import { _FilterTypes } from '@carto/react-core';
+import getStringSearchValue from 'utils/getStringSearchValue';
 
 const EMPTY_ARRAY: [] = [];
 
@@ -18,7 +19,7 @@ export default function CustomCategoryWidget({
   column,
   filterType,
   filterParams = {},
-  labels = {},
+  labels,
   order = 'ranking',
 }: defaultCustomWidgetProps) {
   const dispatch = useDispatch();
@@ -37,6 +38,19 @@ export default function CustomCategoryWidget({
           filterType === _FilterTypes.STRING_SEARCH
             ? categories.map((d: any) => `^(.*,|)${d}(,.*|)$`)
             : categories;
+
+        const valueFormatter =
+          filterType === _FilterTypes.STRING_SEARCH
+            ? Object.fromEntries(
+                withRegExp.map((strExp: string) => [
+                  strExp,
+                  labels[Number(getStringSearchValue(strExp))],
+                ]),
+              )
+            : labels
+            ? labels
+            : null;
+
         dispatch(
           addFilter({
             id: dataSource,
@@ -44,6 +58,7 @@ export default function CustomCategoryWidget({
             type: filterType,
             values: withRegExp,
             params: {
+              valueFormatter,
               ...filterParams,
             },
             owner: id,
@@ -59,7 +74,7 @@ export default function CustomCategoryWidget({
         );
       }
     },
-    [column, dataSource, filterType, id, dispatch],
+    [column, dataSource, filterType, labels, id, dispatch],
   );
 
   const { data, isLoading, error } = useWidgetFetch({
