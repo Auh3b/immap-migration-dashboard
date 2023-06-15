@@ -58,19 +58,21 @@ export interface FilterSource {
   stateSlice: string;
 }
 
-interface PanelContent {
+export interface PanelContent {
   value: number;
   title: string;
   content: ReactNode;
   icon?: ReactNode;
 }
 
-interface SideAnalyticsPanelProps {
-  children?: PanelContent[];
+export type SidePanelChildrenProps = PanelContent[];
+
+export interface SideAnalyticsPanelProps {
+  children?: SidePanelChildrenProps;
 }
 
 export default function SideAnalyticsPanel({
-  children,
+  children = [],
 }: SideAnalyticsPanelProps) {
   const [value, setValue] = useState(0);
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -85,7 +87,7 @@ export default function SideAnalyticsPanel({
       handleOpenToggle(false);
     }
   }, [value, setValue]);
-  return (
+  return !children.length ? null : (
     <Drawer
       variant='permanent'
       anchor='left'
