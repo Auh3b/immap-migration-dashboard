@@ -72,7 +72,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const id = 'aggregatedService';
+const id = 'Capacidad_de_atención_y_operación_del_punto_de_servicio_o_ayuda_humanitaria';
 const title =
   'Capacidad de atención y operación del punto de servicio o ayuda humanitaria';
 const methodName = EXTERNAL_METHOD_NAMES.GET_CONNECTED_DOT_SERVICES;
