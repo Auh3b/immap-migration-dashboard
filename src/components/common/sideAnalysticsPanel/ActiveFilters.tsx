@@ -12,11 +12,12 @@ import ActiveFilterItem from './ActiveFilterItem';
 import { removeFilter } from '@carto/react-redux';
 import { removeMediaFilter } from 'store/mediaSlice';
 import { removeIntroFilter } from 'store/introSlice';
+import { StateSlices } from 'utils/types';
 
-const removeFunction = Object.fromEntries([
-  ['carto', removeFilter],
-  ['media', removeMediaFilter],
-  ['intro', removeIntroFilter],
+const removeFunction: Record<StateSlices, Function> = Object.fromEntries([
+  [StateSlices.CARTO, removeFilter],
+  [StateSlices.MEDIA, removeMediaFilter],
+  [StateSlices.INTRO, removeIntroFilter],
 ]);
 
 export function ActiveFilters({ filterSources }: ActiveFiltersProps) {
@@ -48,8 +49,13 @@ export function ActiveFilters({ filterSources }: ActiveFiltersProps) {
 
           for (let [column, typedValues] of filteredColumns) {
             const types = Object.entries(typedValues);
-            for (let [type, { valueFormatter = {}, values, owner }] of types) {
-              const newActiveFilter = [column, { values, owner, type, source }];
+            for (let [type, filterValues] of types) {
+              const { params = {}, values, owner } = filterValues;
+              const { valueFormatter = null } = params;
+              const newActiveFilter = [
+                owner,
+                { values, owner, column, type, source, valueFormatter },
+              ];
               //@ts-ignore
               activeFilters = [...activeFilters, [...newActiveFilter]];
             }
@@ -102,9 +108,6 @@ function FilterGroup(props: FilterGroupProps) {
   const { name, filters, removeFunction } = props;
   return (
     <Grid item>
-      <Typography variant='subtitle1' style={{ textTransform: 'uppercase' }}>
-        {name}
-      </Typography>
       {filters.map(([filterName, filterProps]) => (
         <ActiveFilterItem
           key={filterName}
