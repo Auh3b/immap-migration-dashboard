@@ -1,9 +1,10 @@
 import {
   Divider,
-  Grid, Link,
+  Grid,
+  Link,
   makeStyles,
   Typography,
-  useMediaQuery
+  useMediaQuery,
 } from '@material-ui/core';
 import { NavLink } from 'react-router-dom';
 import { ROUTE_PATHS } from 'routes';
@@ -28,7 +29,8 @@ export default function Desktop() {
 
   const location = useGetPathname();
 
-  const hidden = useMediaQuery((theme: CustomTheme) => theme.breakpoints.down('xs')) ||
+  const hidden =
+    useMediaQuery((theme: CustomTheme) => theme.breakpoints.down('xs')) ||
     location === '';
 
   return hidden ? null : (

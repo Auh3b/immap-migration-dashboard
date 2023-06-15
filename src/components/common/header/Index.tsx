@@ -1,9 +1,4 @@
-import {
-  AppBar,
-  Divider,
-  Toolbar,
-  makeStyles,
-} from '@material-ui/core';
+import { AppBar, Divider, Toolbar, makeStyles } from '@material-ui/core';
 import Mobile from './Mobile';
 import Desktop from './Desktop';
 
@@ -52,5 +47,3 @@ export default function Header() {
     </AppBar>
   );
 }
-
-

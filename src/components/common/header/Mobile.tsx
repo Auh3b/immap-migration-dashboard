@@ -8,7 +8,7 @@ import {
   Link,
   makeStyles,
   Typography,
-  useMediaQuery
+  useMediaQuery,
 } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import CloseIcon from '@material-ui/icons/Close';
@@ -51,7 +51,8 @@ export default function Mobile() {
     setDrawerOpen(!drawerOpen);
   };
 
-  const hidden = useMediaQuery((theme: CustomTheme) => theme.breakpoints.up('sm')
+  const hidden = useMediaQuery((theme: CustomTheme) =>
+    theme.breakpoints.up('sm'),
   );
 
   return hidden ? null : (
