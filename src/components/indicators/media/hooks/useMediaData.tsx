@@ -39,7 +39,6 @@ export default function useMediaData({
         executeMethod(methodName, params)
           .then((data) => {
             if (!isCancelled) {
-              console.log(isCancelled);
               setData(data);
             }
           })
