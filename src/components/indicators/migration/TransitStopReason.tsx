@@ -19,7 +19,7 @@ const CATEGORY_ABREVATIONS = new Map([
 ]);
 
 const NOTE = 'Razón (es) para no continuar el viaje.';
-const id = 'transitStopReason';
+const id = 'Razón_no_continúa_viaje';
 const title = 'Razón no continúa viaje';
 const column = 'm29_por_qu';
 const filterType = _FilterTypes.STRING_SEARCH;

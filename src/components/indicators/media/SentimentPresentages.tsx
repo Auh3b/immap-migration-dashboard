@@ -7,7 +7,7 @@ import { CSSProperties, useMemo } from 'react';
 import useMediaData from './hooks/useMediaData';
 import NoWidgetData from 'components/common/customWidgets/NoWidgetData';
 
-const id = 'sentimentPercentages';
+const id = 'Sentimiento_por_tipo_de_red_social';
 const source = 'meltwater';
 
 export default function SentimentPresentages() {

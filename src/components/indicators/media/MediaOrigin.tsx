@@ -11,7 +11,7 @@ import { FilterTypes } from 'utils/filterFunctions';
 import regionName from './utils/getCountryByRegion';
 import getSourceFilter from './utils/getSourceFilter';
 
-const id = 'país';
+const id = '¿De_dónde_escribe?';
 const column = 'country';
 const source = 'meltwater';
 

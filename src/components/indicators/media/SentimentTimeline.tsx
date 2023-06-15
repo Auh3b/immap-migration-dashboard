@@ -6,7 +6,7 @@ import { useMemo } from 'react';
 import useMediaData from './hooks/useMediaData';
 import NoWidgetData from 'components/common/customWidgets/NoWidgetData';
 
-const id = 'sentimentTimeline';
+const id = 'Serie_histórica_de_sentimiento';
 const source = 'meltwater';
 
 export default function SentimentTimeline() {

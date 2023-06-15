@@ -8,7 +8,7 @@ import CustomBarWidget from 'components/common/customWidgets/CustomBarWidget';
 
 const NOTE =
   'Duración promedio de días de estadía de migrantes en zona de tránsito.';
-const id = 'daysInTransitStay';
+const id = 'Días_de_estadía';
 const title = 'Días de estadía';
 const column = 'm30__cua';
 const filterType = _FilterTypes.IN;
