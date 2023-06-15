@@ -1,4 +1,10 @@
 import {
+  FilterSource,
+  PanelContent,
+  SidePanelChildrenProps,
+  SideAnalyticsPanelProps,
+} from './sideAnalyticsPanelTypes';
+import {
   Divider,
   Drawer,
   Grid,
@@ -53,23 +59,6 @@ export const useStyles = makeStyles((theme) => ({
     justifyContent: 'flex-end',
   },
 }));
-
-export interface FilterSource {
-  stateSlice: string;
-}
-
-export interface PanelContent {
-  value: number;
-  title: string;
-  content: ReactNode;
-  icon?: ReactNode;
-}
-
-export type SidePanelChildrenProps = PanelContent[];
-
-export interface SideAnalyticsPanelProps {
-  children?: SidePanelChildrenProps;
-}
 
 export default function SideAnalyticsPanel({
   children = [],

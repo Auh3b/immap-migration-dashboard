@@ -15,6 +15,7 @@ import { useDispatch } from 'react-redux';
 import { AGGREGATE_SERVICES_CHILDREN_LAYER_ID } from 'components/layers/AggregateServicesChildrenLayer';
 import { ActiveFilters } from 'components/common/sideAnalysticsPanel/ActiveFilters';
 import FilterListIcon from '@material-ui/icons/FilterList';
+import { StateSlices } from 'utils/types';
 
 const ServiceLeftView = lazy(() => import('./serviceViews/ServiceLeftView'));
 const ServicesRightView = lazy(
@@ -73,7 +74,9 @@ export default function Services() {
         side: [
           {
             content: (
-              <ActiveFilters filterSources={[{ stateSlice: 'carto' }]} />
+              <ActiveFilters
+                filterSources={[{ stateSlice: StateSlices.CARTO }]}
+              />
             ),
             value: 2,
             title: 'Filtros Activos',

@@ -5,6 +5,7 @@ import IntroContent from './IntroContent';
 import IntroExtraFilters from './IntroExtraFilters';
 import SideAnalyticsPanel from 'components/common/sideAnalysticsPanel/Index';
 import { ActiveFilters } from 'components/common/sideAnalysticsPanel/ActiveFilters';
+import { StateSlices } from 'utils/types';
 
 export default function DesktopSideNav() {
   return (
@@ -17,7 +18,11 @@ export default function DesktopSideNav() {
           icon: <HelpOutlineIcon />,
         },
         {
-          content: <ActiveFilters filterSources={[{ stateSlice: 'intro' }]} />,
+          content: (
+            <ActiveFilters
+              filterSources={[{ stateSlice: StateSlices.INTRO }]}
+            />
+          ),
           value: 2,
           title: 'Filtros Activos',
           icon: <FilterListIcon />,

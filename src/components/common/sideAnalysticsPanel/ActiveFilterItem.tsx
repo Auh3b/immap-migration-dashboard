@@ -1,3 +1,4 @@
+import { ActiveFilterItemProps } from './sideAnalyticsPanelTypes';
 import {
   Chip,
   Divider,
@@ -13,14 +14,6 @@ import CloseIcon from '@material-ui/icons/Close';
 import { useDispatch } from 'react-redux';
 import { timeFormat } from 'd3';
 import { useCallback } from 'react';
-
-export interface ActiveFilterItemProps extends FilterItem {
-  name: string;
-  source: string;
-  owner: string;
-  valueFormatter?: Record<string | number, string>;
-  removeFilter?: Function;
-}
 
 const useFilterStyles = makeStyles((theme) => ({
   root: {

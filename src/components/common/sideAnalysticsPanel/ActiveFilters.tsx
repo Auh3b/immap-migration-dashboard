@@ -1,24 +1,17 @@
+import {
+  ActiveFiltersProps,
+  SourceProps,
+  FilterGroupProps,
+  ActiveFilterItemProps,
+} from './sideAnalyticsPanelTypes';
 import { Grid, Typography } from '@material-ui/core';
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store/store';
-import ActiveFilterItem, { ActiveFilterItemProps } from './ActiveFilterItem';
-import { FilterSource } from './Index';
+import ActiveFilterItem from './ActiveFilterItem';
 import { removeFilter } from '@carto/react-redux';
 import { removeMediaFilter } from 'store/mediaSlice';
 import { removeIntroFilter } from 'store/introSlice';
-
-interface ActiveFiltersProps {
-  filterSources: FilterSource[];
-}
-type SourceProps = Record<string, Partial<ActiveFilterItemProps>>;
-
-interface FilterGroupProps {
-  name: string;
-  filters: [string, Partial<ActiveFilterItemProps>][];
-  valueFormatter?: Function;
-  removeFunction: Function;
-}
 
 const removeFunction = Object.fromEntries([
   ['carto', removeFilter],
@@ -86,8 +79,6 @@ export function ActiveFilters({ filterSources }: ActiveFiltersProps) {
         }
       }
     }
-
-    console.log(output);
 
     return output;
   }, [state, filterSources]);

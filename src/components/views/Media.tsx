@@ -15,6 +15,7 @@ import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import TuneIcon from '@material-ui/icons/Tune';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { ActiveFilters } from 'components/common/sideAnalysticsPanel/ActiveFilters';
+import { StateSlices } from 'utils/types';
 
 const MediaIndicators = lazy(() => import('./mediaViews/MediaIndicators'));
 const MediaAggregateIndicators = lazy(
@@ -77,7 +78,9 @@ export default function Media() {
           },
           {
             content: (
-              <ActiveFilters filterSources={[{ stateSlice: 'media' }]} />
+              <ActiveFilters
+                filterSources={[{ stateSlice: StateSlices.MEDIA }]}
+              />
             ),
             value: 2,
             title: 'Filtros Activos',
