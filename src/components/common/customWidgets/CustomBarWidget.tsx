@@ -20,7 +20,7 @@ export default function CustomBarWidget({
   dataSource,
   column,
   filterType,
-  labels = {},
+  labels,
   order = [],
 }: defaultCustomWidgetProps) {
   const dispatch = useDispatch();
