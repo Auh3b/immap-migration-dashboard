@@ -12,8 +12,7 @@ import { FilterItem, FilterTypes } from 'utils/filterFunctions';
 import CloseIcon from '@material-ui/icons/Close';
 import { useDispatch } from 'react-redux';
 import { timeFormat } from 'd3';
-import { useCallback, useMemo } from 'react';
-import { grey } from '@material-ui/core/colors';
+import { useCallback } from 'react';
 
 export interface ActiveFilterItemProps extends FilterItem {
   name: string;
@@ -131,7 +130,7 @@ function getValueFormat(type: string, values: any[]): string | string[] {
         .join(' - ');
     }
     default: {
-      return values.map((d: string) => d.replaceAll('-', '/'));
+      return values//.map((d: string) => d.replaceAll('-', '/'));
     }
   }
 }
