@@ -136,8 +136,41 @@ function NavButton({
 }) {
   const isCurrent = dequal(value, selectedValue);
   const classes = useNavStyle({ value, isCurrent });
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const promptIcons = async () => {
+    handleOpen();
+    return new Promise((resolve) => {
+      return resolve(
+        setTimeout(() => {
+          handleClose();
+        }, 3000),
+      );
+    });
+  };
+
+  useEffect(() => {
+    promptIcons().then((close) => close);
+  }, []);
+
+  console.log(open);
   return (
-    <Tooltip id={`${title}-tooltip`} title={title} placement='right' arrow>
+    <Tooltip
+      open={open}
+      onOpen={handleOpen}
+      onClose={handleClose}
+      id={`${title}-tooltip`}
+      title={title}
+      placement='right'
+      arrow
+    >
       <IconButton
         onClick={(e) => onValueChange(e, value)}
         className={classes.root}
