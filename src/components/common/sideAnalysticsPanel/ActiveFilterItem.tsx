@@ -27,7 +27,7 @@ const useFilterStyles = makeStyles((theme) => ({
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-    fontWeight: 600
+    fontWeight: 600,
   },
   menuText: {
     display: 'flex',
@@ -79,7 +79,13 @@ export default function ActiveFilterItem(
   );
   return (
     <Grid container wrap='nowrap' direction='column' className={classes.root}>
-      <Grid item container wrap='nowrap' justifyContent='space-between' alignItems='center'>
+      <Grid
+        item
+        container
+        wrap='nowrap'
+        justifyContent='space-between'
+        alignItems='center'
+      >
         <Tooltip title={name} arrow>
           <Typography variant='overline' className={classes.title}>
             {name}

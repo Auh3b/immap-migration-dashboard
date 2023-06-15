@@ -46,10 +46,12 @@ export default function PremiseService() {
   return (
     <MainView>
       {{
-        side:[
+        side: [
           {
             content: (
-              <ActiveFilters filterSources={[{ stateSlice: StateSlices.CARTO }]} />
+              <ActiveFilters
+                filterSources={[{ stateSlice: StateSlices.CARTO }]}
+              />
             ),
             value: 2,
             title: 'Filtros Activos',
