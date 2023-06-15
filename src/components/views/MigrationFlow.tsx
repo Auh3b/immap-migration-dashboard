@@ -13,6 +13,8 @@ import {
 import { MIGRATION_FLOW_LAYER_ID } from 'components/layers/MigrationFlowLayer';
 import { HOTSPOTS_LAYER_ID } from 'components/layers/HotspotsLayer';
 import { setPageInfo } from 'store/mapSlice';
+import { ActiveFilters } from 'components/common/sideAnalysticsPanel/ActiveFilters';
+import FilterListIcon from '@material-ui/icons/FilterList';
 
 export default function MigrationFlow() {
   const dispatch = useDispatch();
@@ -47,6 +49,16 @@ export default function MigrationFlow() {
   return (
     <MainView>
       {{
+        side:[
+          {
+            content: (
+              <ActiveFilters filterSources={[{ stateSlice: 'carto' }]} />
+            ),
+            value: 2,
+            title: 'Filtros Activos',
+            icon: <FilterListIcon />,
+          },
+        ],
         left: {
           element: <MigrationLeftView dataSources={{ mainSource }} />,
           expandable: false,

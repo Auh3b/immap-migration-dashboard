@@ -13,6 +13,8 @@ import { useEffect } from 'react';
 import { SURVEY_TIMELINE_LAYER_ID } from 'components/layers/SurveyTimelineLayer';
 import DinamicaLeftView from './dinamicaViews/DinamicaLeftView';
 import { HOTSPOTS_LAYER_ID } from 'components/layers/HotspotsLayer';
+import { ActiveFilters } from 'components/common/sideAnalysticsPanel/ActiveFilters';
+import FilterListIcon from '@material-ui/icons/FilterList';
 
 export default function DinámicaAurora() {
   const dispatch = useDispatch();
@@ -52,6 +54,16 @@ export default function DinámicaAurora() {
   return (
     <MainView>
       {{
+        side:[
+          {
+            content: (
+              <ActiveFilters filterSources={[{ stateSlice: 'carto' }]} />
+            ),
+            value: 2,
+            title: 'Filtros Activos',
+            icon: <FilterListIcon />,
+          },
+        ],
         left: {
           element: <DinamicaLeftView dataSources={sources} />,
           expandable: false,
