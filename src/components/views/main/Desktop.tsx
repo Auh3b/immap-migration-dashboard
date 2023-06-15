@@ -1,11 +1,12 @@
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import { lazy, useState } from 'react';
+import { Suspense, lazy, useState } from 'react';
 import { MainViewChildren } from './utils/types';
 import { Grid, makeStyles, IconButton, Collapse } from '@material-ui/core';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import SideAnalyticsPanel from 'components/common/sideAnalysticsPanel/Index';
+import ComponentFallback from 'components/common/ComponentFallback';
 
 const MapContainer = lazy(() => import('./MapContainer'));
 
@@ -49,7 +50,9 @@ export default function Desktop({ children }: { children: MainViewChildren }) {
         {children?.left?.element}
       </SideView>
       <Grid xs container direction='column' item alignContent='stretch'>
-        <MapContainer />
+        <Suspense fallback={<ComponentFallback />}>
+          <MapContainer />
+        </Suspense>
         {children.middle && (
           <Grid className={classes.middleDrawer} item>
             <IconButton
