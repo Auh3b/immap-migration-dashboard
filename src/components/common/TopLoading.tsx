@@ -7,7 +7,7 @@ const useStyles = makeStyles((theme) => ({
     left: 0,
     width: '100%',
     height: theme.spacing(0.35),
-    zIndex: 9999,
+    zIndex: theme.zIndex.appBar,
   },
 }));
 
