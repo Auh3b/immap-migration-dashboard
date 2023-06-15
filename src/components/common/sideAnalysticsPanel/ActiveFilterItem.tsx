@@ -22,6 +22,13 @@ const useFilterStyles = makeStyles((theme) => ({
     border: '0.5px solid #F3F3F3',
     borderRadius: theme.shape.borderRadius,
   },
+  title: {
+    maxWidth: 175,
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    fontWeight: 600
+  },
   menuText: {
     display: 'flex',
     flexDirection: 'column',
@@ -53,9 +60,11 @@ export default function ActiveFilterItem(
     valueFormatter,
     removeFilter,
   } = props;
+
   const handleRemove = useCallback(() => {
     dispatch(
       removeFilter({
+        id: source,
         owner,
         source,
         column,
@@ -70,10 +79,12 @@ export default function ActiveFilterItem(
   );
   return (
     <Grid container wrap='nowrap' direction='column' className={classes.root}>
-      <Grid item container justifyContent='space-between' alignItems='center'>
-        <Typography variant='overline' style={{ fontWeight: 600 }}>
-          {name}
-        </Typography>
+      <Grid item container wrap='nowrap' justifyContent='space-between' alignItems='center'>
+        <Tooltip title={name} arrow>
+          <Typography variant='overline' className={classes.title}>
+            {name}
+          </Typography>
+        </Tooltip>
         <IconButton className={classes.itemClose} onClick={handleRemove}>
           <CloseIcon />
         </IconButton>
@@ -107,7 +118,7 @@ const StyledChip = withStyles((theme) => ({
 
 function FilterValue({ value }: { value: string }) {
   return (
-    <Tooltip title={value}>
+    <Tooltip title={value} arrow>
       {/* @ts-ignore */}
       <StyledChip label={value} style={{ margin: 4 }} />
     </Tooltip>
