@@ -14,7 +14,9 @@ const Media = lazy(() => import('components/views/Media'));
 const PremiseService = lazy(() => import('components/views/PremiseService'));
 const DinámicaAurora = lazy(() => import('components/views/DinámicaAurora'));
 const Introduction = lazy(() => import('components/views/Introduction'));
-const ServicioFeedback_2 = lazy(() => import('components/views/ServicioFeedback_2'));
+const ServicioFeedback_2 = lazy(
+  () => import('components/views/ServicioFeedback_2'),
+);
 // [hygen] Import views
 
 const DEFAULT_ROUTE = '/board';
@@ -54,7 +56,10 @@ const routes = [
       { path: ROUTE_PATHS.MEDIA, element: <Media /> },
       { path: ROUTE_PATHS.PREMISE_SERVICE, element: <PremiseService /> },
       { path: ROUTE_PATHS.DINÁMICA_AURORA, element: <DinámicaAurora /> },
-      { path: ROUTE_PATHS.SERVICIO_FEEDBACK_2, element: <ServicioFeedback_2 /> },
+      {
+        path: ROUTE_PATHS.SERVICIO_FEEDBACK_2,
+        element: <ServicioFeedback_2 />,
+      },
       // [hygen] Add routes
     ],
   },
