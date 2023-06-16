@@ -146,21 +146,27 @@ function NavButton({
   };
 
   const promptIcons = async () => {
-    handleOpen();
-    return new Promise((resolve) => {
-      return resolve(
-        setTimeout(() => {
-          handleClose();
-        }, 3000),
-      );
-    });
+    setTimeout(() => {
+      handleOpen();
+      return new Promise((resolve) => {
+        return resolve(
+          setTimeout(() => {
+            handleClose();
+          }, 3000),
+        );
+      });
+    }, 3000);
   };
 
   useEffect(() => {
-    promptIcons().then((close) => close);
+    if(value){
+      promptIcons()
+      return ()=>{
+        setOpen(false)
+      }
+    }
   }, []);
 
-  console.log(open);
   return (
     <Tooltip
       open={open}
