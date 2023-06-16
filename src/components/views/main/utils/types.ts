@@ -1,4 +1,4 @@
-import { SidePanelChildrenProps } from 'components/common/sideAnalysticsPanel/Index';
+import { SidePanelChildrenProps } from 'components/common/sideAnalysticsPanel/sideAnalyticsPanelTypes';
 import { ReactChild, ReactNode } from 'react';
 
 export interface MainViewChildren {
