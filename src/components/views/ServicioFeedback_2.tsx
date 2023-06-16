@@ -13,9 +13,10 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import MainView from './main/MainView';
 import { ActiveFilters } from 'components/common/sideAnalysticsPanel/ActiveFilters';
-import FilterListIcon from '@material-ui/icons/FilterList'
+import FilterListIcon from '@material-ui/icons/FilterList';
 import { StateSlices } from 'utils/types';
 import ServiceFeedbackLeftView from './serviceViews/ServiceFeedbackLeftView';
+import ServiceFeedbackRightView from './serviceViews/ServiceFeedbackRightView';
 
 const useStyles = makeStyles(() => ({
   servicioFeedback_2: {},
@@ -62,7 +63,7 @@ export default function ServicioFeedback_2() {
   return (
     <MainView>
       {{
-          side: [
+        side: [
           {
             content: (
               <ActiveFilters
@@ -79,6 +80,15 @@ export default function ServicioFeedback_2() {
             <ServiceFeedbackLeftView
               classes={classes}
               dataSources={{ serviceFeedbackV2Source }}
+            />
+          ),
+          expandable: false,
+        },
+        right: {
+          element: (
+            <ServiceFeedbackRightView
+              classes={classes}
+              dataSources={{ serviceFeedbackNnaV2Source }}
             />
           ),
           expandable: false,
