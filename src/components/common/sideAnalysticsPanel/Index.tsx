@@ -159,11 +159,11 @@ function NavButton({
   };
 
   useEffect(() => {
-    if(value){
-      promptIcons()
-      return ()=>{
-        setOpen(false)
-      }
+    if (value) {
+      promptIcons();
+      return () => {
+        setOpen(false);
+      };
     }
   }, []);
 
