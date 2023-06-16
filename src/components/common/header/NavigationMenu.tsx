@@ -50,6 +50,12 @@ export default function NavigationMenu({
           to={ROUTE_PATHS.SERVICES}
         />
         <Tab
+          label='Feedback Servicios 2'
+          value='servicio_feedback_2'
+          component={NavLink}
+          to={ROUTE_PATHS.SERVICIO_FEEDBACK_2}
+        />
+        <Tab
           label='Flujos Migratorios'
           value='flujos_migratorios'
           component={NavLink}
