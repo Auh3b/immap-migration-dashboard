@@ -1,6 +1,7 @@
 export const EXTERNAL_METHOD_NAMES = {
   SET_DATA: 'set_data',
   GET_DATA: 'get_data',
+  GET_RAW_DATA: 'get_raw_data',
   AGGREGATE_COLUMNS: 'aggregate_columns',
   CONCATENATED_VALUES: 'concatenated_values',
   GET_HIERARCHY: 'get_hierarchy',
@@ -20,4 +21,5 @@ export const EXTERNAL_METHOD_NAMES = {
   GET_AVERAGE_ELAPSED_DAYS: 'get_average_elapsed_days',
   GET_AVG_DAYS_BY_COUNTRY: 'get_avg_days_by_country',
   TIMELINE_VALUES_ALT: 'timeline_values_alt',
+  GET_TEMPORAL_FILTER_VALUES: 'getTemporalFilterValues',
 };

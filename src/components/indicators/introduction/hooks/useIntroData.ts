@@ -48,7 +48,8 @@ export default function useIntroData({
           methodName,
         })
           .then((data) => {
-            if (data.length && !isCancelled) {
+            if (isCancelled) return;
+            if (data) {
               setData(data);
             }
           })
