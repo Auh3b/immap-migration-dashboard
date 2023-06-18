@@ -9,6 +9,7 @@ import {
   makeStyles,
 } from '@material-ui/core';
 import { deepOrange } from '@material-ui/core/colors';
+import StrictDateFilter from 'components/common/dataFilters/strictDataFilter/Index';
 import { dequal } from 'dequal';
 import { useCallback, useMemo, useRef, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -40,6 +41,7 @@ export default function IntroExtraFilters() {
         filtros adicionales
       </Typography>
       <TimeseriesFilter />
+      <StrictDateFilter />
     </Grid>
   );
 }
