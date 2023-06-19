@@ -1,26 +1,39 @@
-import { MouseEvent, useCallback, useEffect, useState } from 'react';
+import { MouseEvent, useCallback, useState } from 'react';
 import CustomTab from './utils/CustomTab';
-import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
 import { FilterTypes } from 'utils/filterFunctions';
-import { useDispatch, useSelector } from 'react-redux';
-import executeIntroMethod from 'components/indicators/introduction/utils/executeIntroMethod';
+import { useDispatch } from 'react-redux';
 import { addIntroFilter } from 'store/introSlice';
 import { removeIntroFilter } from 'store/introSlice';
+import { Values } from './utils/strictDateFilterTypes';
+import { _FilterTypes } from '@carto/react-core';
+import { StateSlices } from 'utils/types';
+import { addFilterFunction, removeFilterFunction } from 'utils/stateFunction';
 
-const source = 'aurora';
-const id = 'fecha_filtro';
-const column = 'timeunix';
-const type = FilterTypes.BETWEEN;
-const methodName = EXTERNAL_METHOD_NAMES.GET_TEMPORAL_FILTER_VALUES;
+type DateFilter = Record<string, Values>;
 
-export default function StrictDateFilter() {
+interface StrictDataFilterProps {
+  id: string;
+  column: string;
+  data: DateFilter;
+  isLoading?: boolean;
+  source: string;
+  stateSlice: StateSlices;
+  type: _FilterTypes | FilterTypes;
+}
+
+export default function StrictDateFilter({
+  id,
+  column,
+  data,
+  isLoading,
+  source,
+  stateSlice,
+  type,
+}: StrictDataFilterProps) {
   const dispatch = useDispatch();
-  //@ts-ignore
-  const isIntroDataReady = useSelector((state) => state.intro.isIntroDataReady);
-  const [data, setData] = useState<{} | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [selected, setSelected] = useState<string | null>(null);
-
+  const addFilter = addFilterFunction[stateSlice];
+  const removeFilter = removeFilterFunction[stateSlice];
   const onSelectionChange = useCallback(
     (event: MouseEvent<HTMLElement>, newValue: string) => {
       if (newValue) {
@@ -29,7 +42,7 @@ export default function StrictDateFilter() {
         const selectedData = data[newValue];
         const values = [selectedData.start, selectedData.end];
         dispatch(
-          addIntroFilter({
+          addFilter({
             owner: id,
             column,
             source,
@@ -40,7 +53,7 @@ export default function StrictDateFilter() {
       } else {
         setSelected(null);
         dispatch(
-          removeIntroFilter({
+          removeFilter({
             owner: id,
             column,
             source,
@@ -48,24 +61,8 @@ export default function StrictDateFilter() {
         );
       }
     },
-    [data, isIntroDataReady, dispatch, selected],
+    [data, dispatch, addFilter, selected],
   );
-
-  useEffect(() => {
-    if (isIntroDataReady) {
-      executeIntroMethod({
-        source,
-        methodName,
-        column,
-      })
-        .then((data) => setData(data))
-        .finally(() => setIsLoading(false));
-    }
-    return () => {
-      setData(null);
-      setIsLoading(false);
-    };
-  }, [isIntroDataReady]);
 
   return (
     <>
@@ -75,6 +72,8 @@ export default function StrictDateFilter() {
           column={column}
           source={source}
           type={type}
+          addFilter={addFilter}
+          removeFilter={removeFilter}
           values={data}
           size={'medium'}
           exclusive
