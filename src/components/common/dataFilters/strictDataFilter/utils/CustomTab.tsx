@@ -4,8 +4,8 @@ import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
 import { ascending } from 'd3';
 import { MouseEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addIntroFilter } from 'store/introSlice';
 import { FilterTypes } from 'utils/filterFunctions';
+import { Values } from './strictDateFilterTypes';
 
 const StyledToggleButtonGroup = withStyles((theme) => ({
   root: {
@@ -13,7 +13,7 @@ const StyledToggleButtonGroup = withStyles((theme) => ({
     backgroundColor: grey[50],
   },
   grouped: {
-    margin: theme.spacing(1),
+    margin: theme.spacing(0.5),
     border: 'none',
     '&:not(:first-child)': {
       borderRadius: theme.shape.borderRadius,
@@ -27,7 +27,6 @@ const StyledToggleButtonGroup = withStyles((theme) => ({
 const StyledToggleButton = withStyles((theme) => ({
   root: {
     width: '100%',
-    flexWrap: 'wrap',
   },
   selected: {
     backgroundColor: theme.palette.background.paper + ' !important',
@@ -43,14 +42,6 @@ const StyledToggleButton = withStyles((theme) => ({
   },
 }))(ToggleButton);
 
-interface Values {
-  name: string;
-  start: number;
-  end: number;
-  intervalValue: number;
-  children?: Record<string, Values>;
-}
-
 type Size = 'small' | 'medium' | 'large';
 
 interface CustomTapProps {
@@ -63,6 +54,8 @@ interface CustomTapProps {
   onSelectionChange: (event: MouseEvent<HTMLElement>, newValue: any) => void;
   exclusive?: boolean;
   size?: Size;
+  addFilter: Function;
+  removeFilter: Function;
 }
 
 export default function CustomTab({
@@ -75,6 +68,8 @@ export default function CustomTab({
   size = 'medium',
   onSelectionChange,
   exclusive = true,
+  addFilter,
+  removeFilter
 }: CustomTapProps) {
   const dispatch = useDispatch();
   const [selectedChild, setSelectedChild] = useState(null);
@@ -95,7 +90,7 @@ export default function CustomTab({
           selectedChildren[newValue].end,
         ];
         dispatch(
-          addIntroFilter({
+          addFilter({
             owner: id,
             column,
             source,
@@ -106,7 +101,7 @@ export default function CustomTab({
       } else {
         const _values = [values[selected].start, values[selected].end];
         dispatch(
-          addIntroFilter({
+          addFilter({
             owner: id,
             column,
             source,
@@ -126,8 +121,6 @@ export default function CustomTab({
     setSelectedChild(newValue);
     handleSelectionChange(newValue);
   };
-
-  // console.log(values)
 
   return (
     <>
@@ -155,6 +148,8 @@ export default function CustomTab({
           column={column}
           source={source}
           type={type}
+          addFilter={addFilter}
+          removeFilter={removeFilter}
           size={Object.keys(selectedChildren).length > 5 ? 'small' : 'medium'}
           values={selectedChildren}
           selected={selectedChild}
