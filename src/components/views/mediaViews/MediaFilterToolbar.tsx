@@ -10,7 +10,13 @@ import {
   TextField,
   makeStyles,
 } from '@material-ui/core';
-import { useCallback, useMemo, useRef, useState } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   addMediaFilter,
@@ -23,6 +29,10 @@ import { deepOrange } from '@material-ui/core/colors';
 import ClearFiltersButton from 'components/common/ClearFiltersButton';
 import { FilterTypes } from 'utils/filterFunctions';
 import getStringSearchValue from 'utils/getStringSearchValue';
+import executeMethod from 'components/indicators/media/hooks/executeMethod';
+import { METHOD_NAMES } from './utils/methodName';
+import StrictDateFilter from 'components/common/dataFilters/strictDataFilter/Index';
+import { StateSlices } from 'utils/types';
 
 const termsCriteriaOption = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 const termsCriteriaLabels = {
@@ -118,6 +128,7 @@ export default function MediaFilterToolbar() {
       alignItems='center'
       justifyContent='space-between'
     >
+      <MediaStrictDataFilter />
       <DateFilter />
       <CriteriaSelector
         id='terms'
@@ -365,5 +376,44 @@ function CriteriaSelector(props: CriteriaSelectorProps) {
         ))}
       </Select>
     </FormControl>
+  );
+}
+
+function MediaStrictDataFilter() {
+  const source = 'meltwater';
+  const id = 'fecha_filtro';
+  const column = 'date';
+  const type = FilterTypes.BETWEEN;
+  const methodName = METHOD_NAMES.GET_TEMPORAL_FILTER_VALUES;
+  //@ts-ignore
+  const isMediaDataReady = useSelector((state) => state.media.isMediaDataReady);
+  const [data, setData] = useState<{} | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (isMediaDataReady) {
+      executeMethod(methodName, {})
+        .then((data) => setData(data))
+        .finally(() => setIsLoading(false));
+    }
+    return () => {
+      setData(null);
+      setIsLoading(false);
+    };
+  }, [isMediaDataReady]);
+
+  return (
+    <>
+      {data && !isLoading ? (
+        <StrictDateFilter
+          id={id}
+          column={column}
+          source={source}
+          type={type}
+          data={data}
+          stateSlice={StateSlices.MEDIA}
+        />
+      ) : null}
+    </>
   );
 }
