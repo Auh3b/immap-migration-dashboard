@@ -4,21 +4,12 @@ import {
   FilterGroupProps,
   ActiveFilterItemProps,
 } from './sideAnalyticsPanelTypes';
-import { Grid, Typography } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store/store';
 import ActiveFilterItem from './ActiveFilterItem';
-import { removeFilter } from '@carto/react-redux';
-import { removeMediaFilter } from 'store/mediaSlice';
-import { removeIntroFilter } from 'store/introSlice';
-import { StateSlices } from 'utils/types';
-
-const removeFunction: Record<StateSlices, Function> = Object.fromEntries([
-  [StateSlices.CARTO, removeFilter],
-  [StateSlices.MEDIA, removeMediaFilter],
-  [StateSlices.INTRO, removeIntroFilter],
-]);
+import { removeFilterFunction } from 'utils/stateFunction';
 
 export function ActiveFilters({ filterSources }: ActiveFiltersProps) {
   const state = useSelector((state: RootState) => state);
@@ -65,7 +56,7 @@ export function ActiveFilters({ filterSources }: ActiveFiltersProps) {
             {
               name: source,
               filters: [...activeFilters],
-              removeFunction: removeFunction[stateSlice],
+              removeFunction: removeFilterFunction[stateSlice],
             },
           ];
         }
@@ -79,7 +70,7 @@ export function ActiveFilters({ filterSources }: ActiveFiltersProps) {
             {
               name: source,
               filters: [...Object.entries(filters)],
-              removeFunction: removeFunction[stateSlice],
+              removeFunction: removeFilterFunction[stateSlice],
             },
           ];
         }
