@@ -1,6 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
-import MediaFilterToolbar from './mediaViews/MediaFilterToolbar';
 import { Suspense, lazy, useEffect, useState } from 'react';
 import { setError } from 'store/appSlice';
 import { getDownloadURL, ref } from 'firebase/storage';
@@ -16,6 +15,7 @@ import TuneIcon from '@material-ui/icons/Tune';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { ActiveFilters } from 'components/common/sideAnalysticsPanel/ActiveFilters';
 import { StateSlices } from 'utils/types';
+import MediaFilterToolbar from './mediaViews/mediaFilterToolbar/Index';
 
 const MediaIndicators = lazy(() => import('./mediaViews/MediaIndicators'));
 const MediaAggregateIndicators = lazy(

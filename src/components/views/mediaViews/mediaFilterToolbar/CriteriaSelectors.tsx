@@ -1,32 +1,18 @@
+import { _FilterTypes } from '@carto/react-core';
 import {
-  Button,
   Checkbox,
   FormControl,
   FormLabel,
-  Grid,
   ListItemText,
   MenuItem,
   Select,
-  TextField,
   makeStyles,
 } from '@material-ui/core';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  addMediaFilter,
-  clearMediaFilters,
-  removeMediaFilter,
-} from 'store/mediaSlice';
-import { _FilterTypes } from '@carto/react-core';
-import { dequal } from 'dequal';
-import { deepOrange } from '@material-ui/core/colors';
-import ClearFiltersButton from 'components/common/ClearFiltersButton';
+import React, { useCallback, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addMediaFilter, removeMediaFilter } from 'store/mediaSlice';
 import { FilterTypes } from 'utils/filterFunctions';
 import getStringSearchValue from 'utils/getStringSearchValue';
-import executeMethod from 'components/indicators/media/hooks/executeMethod';
-import { METHOD_NAMES } from './utils/methodName';
-import StrictDateFilter from 'components/common/dataFilters/strictDataFilter/Index';
-import { StateSlices } from 'utils/types';
 
 const termsCriteriaOption = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 const termsCriteriaLabels = {
@@ -81,49 +67,9 @@ const temporalityCriteriaLabels = {
   2: 'Marzo',
 };
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '100%',
-    padding: theme.spacing(2),
-  },
-  clear: {
-    backgroundColor: deepOrange[500],
-    color: 'white',
-    '&:hover': {
-      backgroundColor: deepOrange[800],
-      color: 'white',
-    },
-  },
-  filters: {
-    width: '25%',
-    display: 'flex',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    flexWrap: 'nowrap',
-  },
-}));
-
-export default function MediaFilterToolbar() {
-  const dispatch = useDispatch();
-  const classes = useStyles();
-  //@ts-ignore
-  const filters = useSelector((state) => state.media.filters);
-  const disabled = useMemo(
-    () => Object.keys(filters?.meltwater ?? {}).length === 0,
-    [filters],
-  );
-
+export function CriteriaSelectors() {
   return (
-    <Grid
-      container
-      item
-      direction='column'
-      wrap='nowrap'
-      alignItems='center'
-      justifyContent='space-between'
-    >
-      <MediaStrictDataFilter />
-      <DateFilter />
+    <>
       <CriteriaSelector
         id='terms'
         title='Tema'
@@ -169,90 +115,7 @@ export default function MediaFilterToolbar() {
         criteriaOption={temporalityCriteriaOption}
         labels={temporalityCriteriaLabels}
       />
-      <div className={classes.filters}>
-        <ClearFiltersButton
-          clearCallback={() => dispatch(clearMediaFilters())}
-          disabled={disabled}
-        />
-      </div>
-    </Grid>
-  );
-}
-
-function DateFilter({ filters }: any) {
-  const id = 'fecha_filtro';
-  const dispatch = useDispatch();
-  const [start, setStart] = useState('2022-05-12');
-  const [end, setEnd] = useState('2023-05-12');
-  const currentDateFilter = useRef([start, end]);
-
-  const showToggle = useMemo(() => {
-    const newDate = [start, end];
-    const oldDate = currentDateFilter.current;
-    if (dequal(newDate, oldDate)) {
-      return false;
-    }
-
-    return true;
-  }, [start, end]);
-
-  const handleApplyFilter = () => {
-    dispatch(
-      addMediaFilter({
-        source: 'meltwater',
-        column: 'date',
-        values: [[start, end]],
-        owner: id,
-        type: _FilterTypes.BETWEEN,
-      }),
-    );
-    currentDateFilter.current = [start, end];
-  };
-
-  return (
-    <Grid container direction='column' alignItems='stretch' item>
-      <DatePicker id='start' label='start' value={start} setValue={setStart} />
-      <DatePicker id='end' label='end' value={end} setValue={setEnd} />
-      {showToggle && <ApplyDateFilter onClick={handleApplyFilter} />}
-    </Grid>
-  );
-}
-
-interface DatePickerProps {
-  id?: string;
-  value?: string;
-  label?: string;
-  setValue?: Function;
-}
-
-function DatePicker({ id, value, label, setValue }: DatePickerProps) {
-  const date = useRef<string>(value);
-
-  const handleDateChange = (event: any) => {
-    const selectedValue = event.target.value;
-    date.current = selectedValue;
-    setValue(selectedValue);
-  };
-
-  return (
-    <Grid item style={{ marginBottom: 8 }}>
-      <TextField
-        id={id}
-        label={label}
-        type='date'
-        defaultValue={date.current}
-        onChange={handleDateChange}
-      />
-    </Grid>
-  );
-}
-
-function ApplyDateFilter({ onClick }: any) {
-  const classes = useStyles();
-  return (
-    <Button className={classes.clear} onClick={onClick}>
-      Apply
-    </Button>
+    </>
   );
 }
 
@@ -370,44 +233,5 @@ function CriteriaSelector(props: CriteriaSelectorProps) {
         ))}
       </Select>
     </FormControl>
-  );
-}
-
-function MediaStrictDataFilter() {
-  const source = 'meltwater';
-  const id = 'fecha_filtro';
-  const column = 'date';
-  const type = FilterTypes.BETWEEN;
-  const methodName = METHOD_NAMES.GET_TEMPORAL_FILTER_VALUES;
-  //@ts-ignore
-  const isMediaDataReady = useSelector((state) => state.media.isMediaDataReady);
-  const [data, setData] = useState<{} | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (isMediaDataReady) {
-      executeMethod(methodName, {})
-        .then((data) => setData(data))
-        .finally(() => setIsLoading(false));
-    }
-    return () => {
-      setData(null);
-      setIsLoading(false);
-    };
-  }, [isMediaDataReady]);
-
-  return (
-    <>
-      {data && !isLoading ? (
-        <StrictDateFilter
-          id={id}
-          column={column}
-          source={source}
-          type={type}
-          data={data}
-          stateSlice={StateSlices.MEDIA}
-        />
-      ) : null}
-    </>
   );
 }
