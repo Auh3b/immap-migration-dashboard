@@ -69,7 +69,7 @@ export default function CustomTab({
   onSelectionChange,
   exclusive = true,
   addFilter,
-  removeFilter
+  removeFilter,
 }: CustomTapProps) {
   const dispatch = useDispatch();
   const [selectedChild, setSelectedChild] = useState(null);

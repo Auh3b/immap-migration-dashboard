@@ -10,13 +10,7 @@ import {
   TextField,
   makeStyles,
 } from '@material-ui/core';
-import {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   addMediaFilter,
