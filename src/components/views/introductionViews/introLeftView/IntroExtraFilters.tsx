@@ -10,10 +10,14 @@ import {
 } from '@material-ui/core';
 import { deepOrange } from '@material-ui/core/colors';
 import StrictDateFilter from 'components/common/dataFilters/strictDataFilter/Index';
+import executeIntroMethod from 'components/indicators/introduction/utils/executeIntroMethod';
 import { dequal } from 'dequal';
-import { useCallback, useMemo, useRef, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { addIntroFilter } from 'store/introSlice';
+import { FilterTypes } from 'utils/filterFunctions';
+import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
+import { StateSlices } from 'utils/types';
 
 const source = 'aurora';
 const id = 'fecha_filtro';
@@ -41,7 +45,7 @@ export default function IntroExtraFilters() {
         filtros adicionales
       </Typography>
       <TimeseriesFilter />
-      <StrictDateFilter />
+      <IntroStrictDateFilter />
     </Grid>
   );
 }
@@ -148,5 +152,46 @@ function DatePicker({ id, value, label, setValue }: DatePickerProps) {
         onChange={handleDateChange}
       />
     </Grid>
+  );
+}
+
+function IntroStrictDateFilter() {
+  const source = 'aurora';
+  const id = 'fecha_filtro';
+  const column = 'timeunix';
+  const type = FilterTypes.BETWEEN;
+  const methodName = EXTERNAL_METHOD_NAMES.GET_TEMPORAL_FILTER_VALUES;
+
+  //@ts-ignore
+  const isIntroDataReady = useSelector((state) => state.intro.isIntroDataReady);
+  const [data, setData] = useState<{} | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (isIntroDataReady) {
+      executeIntroMethod({
+        source,
+        methodName,
+        column,
+      })
+        .then((data) => setData(data))
+        .finally(() => setIsLoading(false));
+    }
+    return () => {
+      setData(null);
+      setIsLoading(false);
+    };
+  }, [isIntroDataReady]);
+
+  return (
+    <StrictDateFilter
+      id={id}
+      source={source}
+      column={column}
+      type={type}
+      data={data}
+      stateSlice={StateSlices.INTRO}
+      isLoading={isLoading}
+    />
   );
 }
