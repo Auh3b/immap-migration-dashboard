@@ -1,15 +1,16 @@
-import { MouseEvent, useMemo, useState } from 'react';
+import { MouseEvent, useState } from 'react';
 import CustomTab from './utils/CustomTab';
 import useIntroData from 'components/indicators/introduction/hooks/useIntroData';
 import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
+import { FilterTypes } from 'utils/filterFunctions';
 
-const id = 'filtro fecha';
 const source = 'aurora';
+const id = 'fecha_filtro';
 const column = 'timeunix';
+const type = FilterTypes.BETWEEN;
 const methodName = EXTERNAL_METHOD_NAMES.GET_TEMPORAL_FILTER_VALUES;
 
 export default function StrictDateFilter() {
-  const values = ['APR', 'MAR'];
   const [selected, setSelected] = useState<string | null>(null);
   const onSelectionChange = (
     event: MouseEvent<HTMLElement>,
@@ -27,15 +28,19 @@ export default function StrictDateFilter() {
 
   return (
     <>
-      {data && (
+      {Object.keys(data).length && !isLoading ? (
         <CustomTab
-          values={Object.keys(data)}
+          id={id}
+          column={column}
+          source={source}
+          type={type}
+          values={data}
+          size={'medium'}
           exclusive
           selected={selected}
           onSelectionChange={onSelectionChange}
-          children={selected ? data[selected].children : null}
         />
-      )}
+      ) : null}
     </>
   );
 }
