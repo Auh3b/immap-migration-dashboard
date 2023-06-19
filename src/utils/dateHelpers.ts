@@ -159,10 +159,10 @@ export function getTemporalFilters(
           monthChildren = [
             ...monthChildren,
             [
-              `WK${i + 1}`,
+              `W${i + 1}`,
               {
                 ..._weekOutput,
-                name: `WK${i + 1}`,
+                name: `W${i + 1}`,
                 // children: Object.fromEntries(days),
               },
             ],
