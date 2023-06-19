@@ -14,56 +14,58 @@ const type = FilterTypes.BETWEEN;
 const methodName = EXTERNAL_METHOD_NAMES.GET_TEMPORAL_FILTER_VALUES;
 
 export default function StrictDateFilter() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   //@ts-ignore
-  const isIntroDataReady = useSelector((state) => state.intro.isIntroDataReady)
+  const isIntroDataReady = useSelector((state) => state.intro.isIntroDataReady);
   const [data, setData] = useState<{} | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [selected, setSelected] = useState<string | null>(null);
-  
-  const onSelectionChange = useCallback((
-    event: MouseEvent<HTMLElement>,
-    newValue: string,
-  ) => {
-    if(newValue){
-      setSelected(newValue);
-      //@ts-ignore
-      const selectedData = data[newValue]
-      const values = [selectedData.start, selectedData.end]
-      dispatch(
-        addIntroFilter({
+
+  const onSelectionChange = useCallback(
+    (event: MouseEvent<HTMLElement>, newValue: string) => {
+      if (newValue) {
+        setSelected(newValue);
+        //@ts-ignore
+        const selectedData = data[newValue];
+        const values = [selectedData.start, selectedData.end];
+        dispatch(
+          addIntroFilter({
             owner: id,
             column,
             source,
             type,
             values: [values],
-        })
-      )
-    }else{
-      setSelected(null)
-      dispatch(
-        removeIntroFilter({
+          }),
+        );
+      } else {
+        setSelected(null);
+        dispatch(
+          removeIntroFilter({
             owner: id,
             column,
             source,
-        })
-      )
-    }
-  }, [data, isIntroDataReady, dispatch,selected]);
+          }),
+        );
+      }
+    },
+    [data, isIntroDataReady, dispatch, selected],
+  );
 
-  useEffect(()=>{
-    if(isIntroDataReady){
+  useEffect(() => {
+    if (isIntroDataReady) {
       executeIntroMethod({
         source,
         methodName,
-        column
-      }).then((data) => setData(data)).finally(()=> setIsLoading(false))
+        column,
+      })
+        .then((data) => setData(data))
+        .finally(() => setIsLoading(false));
     }
-    return () =>{
-      setData(null)
-      setIsLoading(false)
-    }
-  }, [isIntroDataReady])
+    return () => {
+      setData(null);
+      setIsLoading(false);
+    };
+  }, [isIntroDataReady]);
 
   return (
     <>
