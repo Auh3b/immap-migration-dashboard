@@ -1,13 +1,7 @@
 import { _FilterTypes } from '@carto/react-core';
-import {
-  Checkbox,
-  FormControl,
-  FormLabel,
-  ListItemText,
-  MenuItem,
-  Select,
-  makeStyles,
-} from '@material-ui/core';
+import { makeStyles, withStyles } from '@material-ui/core';
+import { grey } from '@material-ui/core/colors';
+import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
 import React, { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addMediaFilter, removeMediaFilter } from 'store/mediaSlice';
@@ -119,6 +113,50 @@ export function CriteriaSelectors() {
   );
 }
 
+const StyledToggleButtonGroup = withStyles((theme) => ({
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    width: '100%',
+    border: '0.5px solid ' + grey[200],
+    backgroundColor: grey[50],
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+  },
+  grouped: {
+    margin: theme.spacing(0.5),
+    border: 'none',
+    '&:not(:first-child)': {
+      borderRadius: theme.shape.borderRadius,
+    },
+    '&:first-child': {
+      borderRadius: theme.shape.borderRadius,
+    },
+  },
+}))(ToggleButtonGroup);
+
+const StyledToggleButton = withStyles((theme) => ({
+  root: {
+    width: '32%',
+  },
+  selected: {
+    backgroundColor: theme.palette.background.paper + ' !important',
+    boxShadow: theme.shadows[3],
+    '& > span': {
+      color: theme.palette.primary.main + ' !important',
+      fontWeight: 'bold',
+    },
+  },
+  label: {
+    ...theme.typography.overline,
+    fontSize: theme.typography.pxToRem(theme.spacing(1.5)),
+    width: '75%',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+  },
+}))(ToggleButton);
+
 const useSelectorStyles = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
@@ -134,17 +172,6 @@ const useSelectorStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
   },
 }));
-
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
 
 interface CriteriaSelectorProps {
   id: string;
@@ -207,31 +234,30 @@ function CriteriaSelector(props: CriteriaSelectorProps) {
     [criteria, dispatch, source, id, column, labels],
   );
 
-  const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setCriteria(event.target.value as number[]);
-    onCategoriesChange(event.target.value);
+  const handleChange = (
+    event: React.ChangeEvent<{ value: unknown }>,
+    newValue: number[],
+  ) => {
+    setCriteria(newValue);
+    onCategoriesChange(newValue);
   };
 
   return (
-    <FormControl variant='outlined' className={classes.formControl}>
-      <FormLabel component='legend'>{title}</FormLabel>
-      <Select
-        id={`${title}-criteria-select`}
-        multiple
+    <>
+      {/* @ts-expect-error */}
+      <StyledToggleButtonGroup
         value={criteria}
+        //@ts-ignore
         onChange={handleChange}
-        MenuProps={MenuProps}
-        renderValue={(selected: any[]) =>
-          selected.map((d) => (labels ? labels[d] : d)).join(', ')
-        }
+        exclusive={false}
       >
         {criteriaOption.map((criterion: number) => (
-          <MenuItem key={criterion} value={criterion}>
-            <Checkbox checked={criteria.indexOf(criterion) > -1} />
-            <ListItemText primary={labels ? labels[criterion] : criterion} />
-          </MenuItem>
+          // @ts-ignore
+          <StyledToggleButton key={title + criterion} value={criterion}>
+            {labels ? labels[criterion] : criterion}
+          </StyledToggleButton>
         ))}
-      </Select>
-    </FormControl>
+      </StyledToggleButtonGroup>
+    </>
   );
 }
