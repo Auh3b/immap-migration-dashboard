@@ -17,9 +17,9 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1),
     borderRadius: theme.shape.borderRadius,
     backgroundColor: grey[50],
-    border: '1px solid '+ grey[200]
+    border: '1px solid ' + grey[200],
   },
-  title:{
+  title: {
     ...theme.typography.subtitle1,
     color: grey[600],
     width: 200,
@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
-  }
+  },
 }));
 
 type DateFilter = Record<string, Values>;
@@ -88,16 +88,14 @@ export default function StrictDateFilter({
     [data, dispatch, source, column, addFilter, selected],
   );
 
-  const title = id.replaceAll('_', ' ')
+  const title = id.replaceAll('_', ' ');
 
   return (
     <>
       {data && !isLoading ? (
         <Grid item className={classes.root}>
           <Tooltip title={title} arrow placement='bottom'>
-            <Typography className={classes.title}>
-              {title}
-            </Typography>
+            <Typography className={classes.title}>{title}</Typography>
           </Tooltip>
           <CustomTab
             id={id}

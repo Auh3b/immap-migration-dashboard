@@ -38,15 +38,16 @@ export default function ServiceStrictDateFilter() {
 
   useEffect(() => {
     Promise.all([fetchAdult(), fetchChild()])
-    .then(([_adultData, _childData])=>{
-      return Promise.all([
-        executeExternalMethod({data: _adultData, methodName, column}),
-        executeExternalMethod({data: _childData, methodName, column})
-      ]) 
-    }).then(([processedAdult, processedChild])=>{
-      console.log(processedAdult, processedChild)
-      setData([processedAdult, processedChild])
-    })
+      .then(([_adultData, _childData]) => {
+        return Promise.all([
+          executeExternalMethod({ data: _adultData, methodName, column }),
+          executeExternalMethod({ data: _childData, methodName, column }),
+        ]);
+      })
+      .then(([processedAdult, processedChild]) => {
+        console.log(processedAdult, processedChild);
+        setData([processedAdult, processedChild]);
+      });
     return () => {
       setData(null);
       setIsLoading(false);
@@ -61,8 +62,9 @@ export default function ServiceStrictDateFilter() {
 }
 
 function AdultStrictDateFilter({
-  data, isLoading
-}:{
+  data,
+  isLoading,
+}: {
   data: Record<string, any>;
   isLoading: boolean;
 }) {
@@ -87,8 +89,9 @@ function AdultStrictDateFilter({
 }
 
 function ChildStrictDateFilter({
-  data, isLoading
-}:{
+  data,
+  isLoading,
+}: {
   data: Record<string, any>;
   isLoading: boolean;
 }) {
