@@ -1,28 +1,33 @@
 import {
-  Divider,
   Grid,
   Typography,
   makeStyles,
   withStyles,
 } from '@material-ui/core';
-import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
-import { MouseEvent, useMemo, useState } from 'react';
+import { TimelineDot, ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
+import { MouseEvent, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { UNICEF_COLORS } from 'theme';
-import d3Hex2RGB from 'utils/d3Hex2RGB';
 import serviceFeedbackNnaV2Source from 'data/sources/serviceFeedbackNnaV2Source';
 import serviceFeedbackV2Source from 'data/sources/serviceFeedbackV2Source';
 import { _FilterTypes } from '@carto/react-core';
 import { RootState } from 'store/store';
 import { addFilter, removeFilter } from '@carto/react-redux';
+import useWidgetFetch from 'components/common/customWidgets/hooks/useWidgetFetch';
+import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
 
 const id = 'services_pushes';
 const pushs = [1, 2, 3, 4, 5];
 const column = 'push';
 const filterType = _FilterTypes.IN;
+const methodName = EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES
+const adultSource = serviceFeedbackV2Source.id
+const childSource = serviceFeedbackNnaV2Source.id
 
 const StyleToggleButtonGroup = withStyles((theme) => ({
-  root: {},
+  root: {
+    width: '100%'
+  },
   groupedHorizontal: {
     '&:not(:first-child)': {
       borderLeft: 'unset',
@@ -33,14 +38,13 @@ const StyleToggleButtonGroup = withStyles((theme) => ({
 
 const StyledToggleButton = withStyles((theme) => ({
   root: {
+    alignItems: 'center',
     padding: theme.spacing(0.5),
-    margin: theme.spacing(0.5),
     height: '100%',
     width: '100%',
   },
   selected: {
-    backgroundColor: 'rgba(0,0,0,0)',
-    border: '3px solid' + UNICEF_COLORS[0] + ' !important',
+    border: 'none',
   },
 }))(ToggleButton);
 
@@ -54,6 +58,34 @@ export default function ServicesByPush() {
       state.carto.dataSources[serviceFeedbackNnaV2Source.id],
   );
 
+  const { data: _adultData } = useWidgetFetch({
+    id,
+    methodName,
+    column,
+    dataSource: adultSource,
+  })
+
+  const adultData = useMemo(()=>{
+    if(_adultData.length){
+      return Object.fromEntries(_adultData.map(({name, value})=>[name, value]))
+    }
+    return {}
+  }, [_adultData])
+
+  const { data: _childData } = useWidgetFetch({
+    id,
+    methodName,
+    column,
+    dataSource: childSource,
+  })
+
+    const childData = useMemo(()=>{
+    if(_childData.length){
+      return Object.fromEntries(_childData.map(({name, value})=>[name, value]))
+    }
+    return {}
+  }, [_childData])
+
   const adultPush = useMemo(() => {
     if (!adultServices) return [];
     if (!adultServices.filters) return [];
@@ -61,7 +93,7 @@ export default function ServicesByPush() {
     if (!adultServices.filters[column][filterType]) return [];
     return adultServices.filters[column][filterType].values;
   }, [adultServices]);
-  console.log(adultServices, adultPush);
+
   const childPush = useMemo(() => {
     if (!childrenServices) return [];
     if (!childrenServices.filters) return [];
@@ -78,7 +110,6 @@ export default function ServicesByPush() {
   }, [adultPush, childPush]);
 
   const handlePush = (event: MouseEvent<HTMLElement>, newPushes: any[]) => {
-    console.log(newPushes);
     if (newPushes.length) {
       dispatch(
         addFilter({
@@ -117,36 +148,51 @@ export default function ServicesByPush() {
   };
 
   return (
-    //@ts-ignore
-    <StyleToggleButtonGroup
-      exclusive={false}
-      value={selectedPushes}
-      orientation='vertical'
-      onChange={handlePush}
-    >
-      {pushs.map((p) => (
-        // @ts-ignore
-        <StyledToggleButton key={p} value={p}>
-          <PushContent push={p} />
-        </StyledToggleButton>
-      ))}
-    </StyleToggleButtonGroup>
+    <Grid item>
+      <Grid item container>
+        <Grid item xs={4}>
+          <Typography>Push</Typography>
+        </Grid>
+        <Grid item xs={4}>
+          <Typography>Adulto</Typography>
+        </Grid>
+        <Grid item xs={4}>
+          <Typography>NNA</Typography>
+        </Grid>
+      </Grid>
+      {/* @ts-ignore */}
+      <StyleToggleButtonGroup
+        exclusive={false}
+        value={selectedPushes}
+        orientation='vertical'
+        onChange={handlePush}
+      >
+        {pushs.map((p) => (
+          // @ts-ignore
+          <StyledToggleButton key={p} value={p}>
+            <PushContent push={p} childData={childData} adultData={adultData} />
+          </StyledToggleButton>
+        ))}
+      </StyleToggleButtonGroup>
+    </Grid>
   );
 }
 
 const usePushStyles = makeStyles((theme) => ({
   root: {
-    marginBottom: theme.spacing(1.5),
+
   },
   title: {
-    ...theme.typography.subtitle1,
+    ...theme.typography.body1,
     marginBottom: theme.spacing(0.5),
+    textAlign: 'start',
+    color: 'inherit',
+  },
+  adultContainer:{
+
   },
   adultIcon: {
     marginRight: theme.spacing(1),
-    borderRadius: '100%',
-    width: 10,
-    height: 10,
     backgroundColor: ({ push }: any) =>
       push ? UNICEF_COLORS[push] : 'rgba(0,0,0,0)',
   },
@@ -160,38 +206,22 @@ const usePushStyles = makeStyles((theme) => ({
   },
 }));
 
-function PushContent({ push }: { push: number }) {
+function PushContent({ push, childData, adultData }: { push: number, childData: Record<number, number>, adultData: Record<number, number> }) {
   const classes = usePushStyles({ push });
   return (
-    <Grid container direction='column' className={classes.root}>
-      <Typography className={classes.title}>
-        {push ? 'Push ' + push : 'All'}
-      </Typography>
-      <Grid
-        item
-        container
-        wrap='nowrap'
-        alignItems='stretch'
-        style={{ width: '100%', height: '100%' }}
-      >
-        <Grid
-          container
-          wrap='nowrap'
-          alignItems='center'
-          item
-          style={{
-            borderRight: '0.5px solid #F0F0F0',
-            paddingRight: 16,
-            marginRight: 16,
-          }}
-        >
-          <div className={classes.adultIcon}></div>
-          <div>[number]</div>
-        </Grid>
-        <Grid container wrap='nowrap' alignItems='center' item>
-          <div className={classes.childIcon}></div>
-          <div>[number]</div>
-        </Grid>
+    <Grid container className={classes.root}>
+      <Grid item xs={4}>
+        <Typography className={classes.title}>
+          {push ? push : 'All'}
+        </Typography>
+      </Grid>
+      <Grid container wrap='nowrap' alignItems='center' item xs={4} className={classes.adultContainer}>
+        <TimelineDot className={classes.adultIcon}></TimelineDot>
+        <Typography className={classes.title}>{adultData[push] || 0}</Typography>
+      </Grid>
+      <Grid container wrap='nowrap' alignItems='center' item xs={4}>
+        <TimelineDot variant='outlined' className={classes.childIcon}></TimelineDot>
+        <Typography className={classes.title}>{childData[push] || 0}</Typography>
       </Grid>
     </Grid>
   );
