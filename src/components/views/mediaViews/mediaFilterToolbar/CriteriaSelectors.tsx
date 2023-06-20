@@ -1,5 +1,11 @@
 import { _FilterTypes } from '@carto/react-core';
-import { makeStyles, withStyles } from '@material-ui/core';
+import {
+  Grid,
+  Tooltip,
+  Typography,
+  makeStyles,
+  withStyles,
+} from '@material-ui/core';
 import { grey } from '@material-ui/core/colors';
 import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
 import React, { useCallback, useState } from 'react';
@@ -117,17 +123,13 @@ const StyledToggleButtonGroup = withStyles((theme) => ({
   root: {
     display: 'flex',
     flexWrap: 'wrap',
-    width: '100%',
-    border: '0.5px solid ' + grey[200],
-    backgroundColor: grey[50],
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2),
+    marginTop: theme.spacing(0.5),
   },
   grouped: {
     margin: theme.spacing(0.5),
-    border: 'none',
     '&:not(:first-child)': {
       borderRadius: theme.shape.borderRadius,
+      borderLeft: '0.5px solid ' + grey[200],
     },
     '&:first-child': {
       borderRadius: theme.shape.borderRadius,
@@ -137,7 +139,8 @@ const StyledToggleButtonGroup = withStyles((theme) => ({
 
 const StyledToggleButton = withStyles((theme) => ({
   root: {
-    width: '32%',
+    width: 'auto',
+    border: '0.5px solid ' + grey[200],
   },
   selected: {
     backgroundColor: theme.palette.background.paper + ' !important',
@@ -150,7 +153,8 @@ const StyledToggleButton = withStyles((theme) => ({
   label: {
     ...theme.typography.overline,
     fontSize: theme.typography.pxToRem(theme.spacing(1.5)),
-    width: '75%',
+    display: 'block',
+    textAlign: 'left',
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
@@ -158,18 +162,21 @@ const StyledToggleButton = withStyles((theme) => ({
 }))(ToggleButton);
 
 const useSelectorStyles = makeStyles((theme) => ({
-  formControl: {
-    margin: theme.spacing(1),
+  root: {
+    border: '0.5px solid ' + grey[200],
+    borderRadius: theme.shape.borderRadius,
+    padding: theme.spacing(1),
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
   },
-  chips: {
-    display: 'flex',
-    flexWrap: 'wrap',
-  },
-  chip: {
-    margin: 2,
-  },
-  noLabel: {
-    marginTop: theme.spacing(3),
+  title: {
+    ...theme.typography.subtitle1,
+    color: grey[600],
+    width: 200,
+    textTransform: 'uppercase',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
   },
 }));
 
@@ -243,7 +250,10 @@ function CriteriaSelector(props: CriteriaSelectorProps) {
   };
 
   return (
-    <>
+    <Grid item className={classes.root}>
+      <Tooltip title={title} arrow placement='bottom'>
+        <Typography className={classes.title}>{title}</Typography>
+      </Tooltip>
       {/* @ts-expect-error */}
       <StyledToggleButtonGroup
         value={criteria}
@@ -258,6 +268,6 @@ function CriteriaSelector(props: CriteriaSelectorProps) {
           </StyledToggleButton>
         ))}
       </StyledToggleButtonGroup>
-    </>
+    </Grid>
   );
 }

@@ -16,7 +16,6 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(2),
     padding: theme.spacing(1),
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: grey[50],
     border: '1px solid ' + grey[200],
   },
   title: {

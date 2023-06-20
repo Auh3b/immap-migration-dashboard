@@ -5,6 +5,7 @@ import { MouseEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { FilterTypes } from 'utils/filterFunctions';
 import { Values } from './strictDateFilterTypes';
+import { grey } from '@material-ui/core/colors';
 
 const StyledToggleButtonGroup = withStyles((theme) => ({
   root: {
@@ -12,9 +13,10 @@ const StyledToggleButtonGroup = withStyles((theme) => ({
   },
   grouped: {
     margin: theme.spacing(0.5),
-    border: 'none',
+    border: '0.5px solid ' + grey[200],
     '&:not(:first-child)': {
       borderRadius: theme.shape.borderRadius,
+      borderLeft: '0.5px solid ' + grey[200],
     },
     '&:first-child': {
       borderRadius: theme.shape.borderRadius,
