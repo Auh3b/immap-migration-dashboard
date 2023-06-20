@@ -1,5 +1,4 @@
 import { withStyles } from '@material-ui/core';
-import { grey } from '@material-ui/core/colors';
 import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
 import { ascending } from 'd3';
 import { MouseEvent, useCallback, useEffect, useMemo, useState } from 'react';
@@ -10,7 +9,6 @@ import { Values } from './strictDateFilterTypes';
 const StyledToggleButtonGroup = withStyles((theme) => ({
   root: {
     width: '100%',
-    backgroundColor: grey[50],
   },
   grouped: {
     margin: theme.spacing(0.5),
