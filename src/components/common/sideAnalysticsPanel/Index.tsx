@@ -23,7 +23,7 @@ import { grey, red } from '@material-ui/core/colors';
 import { UNICEF_COLORS } from 'theme';
 import { dequal } from 'dequal';
 
-const drawerWidth = 348;
+const drawerWidth = 355;
 
 export const useStyles = makeStyles((theme) => ({
   drawer: {
@@ -114,10 +114,14 @@ export default function SideAnalyticsPanel({
 
 const useNavStyle = makeStyles((theme) => ({
   root: {
+    margin: theme.spacing(0.5),
+    boxShadow:({ value, isCurrent }: any) =>
+      isCurrent ? theme.shadows[3] : theme.shadows[0],
     width: theme.mixins.toolbar.minHeight,
-    borderRadius: 0,
+    borderRadius: theme.shape.borderRadius,
     color: ({ value, isCurrent }: any) =>
       isCurrent ? UNICEF_COLORS[0] : value ? grey[400] : red[400],
+    
   },
 }));
 
