@@ -91,6 +91,7 @@ export default function CustomTab({
         ];
         dispatch(
           addFilter({
+            id: source,
             owner: id,
             column,
             source,
@@ -102,6 +103,7 @@ export default function CustomTab({
         const _values = [values[selected].start, values[selected].end];
         dispatch(
           addFilter({
+            id: source,
             owner: id,
             column,
             source,
@@ -111,7 +113,7 @@ export default function CustomTab({
         );
       }
     },
-    [selected, values, selectedChild, selectedChildren],
+    [selected, values,source, id, column, selectedChild, selectedChildren],
   );
 
   const handleChildSelection = (

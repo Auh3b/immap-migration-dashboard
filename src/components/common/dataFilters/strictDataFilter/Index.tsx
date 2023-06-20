@@ -51,6 +51,7 @@ export default function StrictDateFilter({
         const values = [selectedData.start, selectedData.end];
         dispatch(
           addFilter({
+            id: source,
             owner: id,
             column,
             source,
@@ -62,6 +63,7 @@ export default function StrictDateFilter({
         setSelected(null);
         dispatch(
           removeFilter({
+            id: source,
             owner: id,
             column,
             source,
@@ -69,7 +71,7 @@ export default function StrictDateFilter({
         );
       }
     },
-    [data, dispatch, addFilter, selected],
+    [data, dispatch, source, column, addFilter, selected],
   );
 
   return (
