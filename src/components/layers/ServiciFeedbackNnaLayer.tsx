@@ -3,31 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { CartoLayer } from '@deck.gl/carto';
 import { selectSourceById, updateLayer } from '@carto/react-redux';
 import { useCartoLayerProps } from '@carto/react-api';
-import htmlForFeature from 'utils/htmlForFeature';
 import { RootState } from 'store/store';
-import circleMarker from 'assets/img/circle_symbol.png';
 import d3Hex2RGB from 'utils/d3Hex2RGB';
 import { LEGEND_TYPES } from '@carto/react-ui';
 import { UNICEF_COLORS } from 'theme';
-
-const iconMapping = {
-  circleFull: {
-    x: 0,
-    y: 0,
-    width: 1180,
-    height: 1180,
-    mask: true,
-  },
-  circleShaded: {
-    x: 1180,
-    y: 0,
-    width: 1180,
-    height: 1180,
-    mask: true,
-  },
-};
-
-console.log(circleMarker);
 
 export const SERVICI_FEEDBACK_NNA_LAYER_ID = 'serviciFeedbackNnaLayer';
 
