@@ -113,7 +113,7 @@ export default function CustomTab({
         );
       }
     },
-    [selected, values,source, id, column, selectedChild, selectedChildren],
+    [selected, values, source, id, column, selectedChild, selectedChildren],
   );
 
   const handleChildSelection = (

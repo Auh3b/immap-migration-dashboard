@@ -115,13 +115,12 @@ export default function SideAnalyticsPanel({
 const useNavStyle = makeStyles((theme) => ({
   root: {
     margin: theme.spacing(0.5),
-    boxShadow:({ value, isCurrent }: any) =>
+    boxShadow: ({ isCurrent }: any) =>
       isCurrent ? theme.shadows[3] : theme.shadows[0],
     width: theme.mixins.toolbar.minHeight,
     borderRadius: theme.shape.borderRadius,
     color: ({ value, isCurrent }: any) =>
       isCurrent ? UNICEF_COLORS[0] : value ? grey[400] : red[400],
-    
   },
 }));
 

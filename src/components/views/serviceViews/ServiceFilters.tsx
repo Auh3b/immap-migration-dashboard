@@ -1,6 +1,6 @@
-import { Grid } from '@material-ui/core'
-import ServicesByPush from './ServicesByPush'
-import ServiceStrictDateFilter from './ServiceStrictDateFilter'
+import { Grid } from '@material-ui/core';
+import ServicesByPush from './ServicesByPush';
+import ServiceStrictDateFilter from './ServiceStrictDateFilter';
 
 export default function ServiceFilters() {
   return (
@@ -8,5 +8,5 @@ export default function ServiceFilters() {
       <ServiceStrictDateFilter />
       <ServicesByPush />
     </Grid>
-  )
+  );
 }

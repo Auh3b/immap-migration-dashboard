@@ -1,9 +1,4 @@
-import {
-  Grid,
-  Typography,
-  makeStyles,
-  withStyles,
-} from '@material-ui/core';
+import { Grid, Typography, makeStyles, withStyles } from '@material-ui/core';
 import { TimelineDot, ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
 import { MouseEvent, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -20,13 +15,13 @@ const id = 'services_pushes';
 const pushs = [1, 2, 3, 4, 5];
 const column = 'push';
 const filterType = _FilterTypes.IN;
-const methodName = EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES
-const adultSource = serviceFeedbackV2Source.id
-const childSource = serviceFeedbackNnaV2Source.id
+const methodName = EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES;
+const adultSource = serviceFeedbackV2Source.id;
+const childSource = serviceFeedbackNnaV2Source.id;
 
 const StyleToggleButtonGroup = withStyles((theme) => ({
   root: {
-    width: '100%'
+    width: '100%',
   },
   groupedHorizontal: {
     '&:not(:first-child)': {
@@ -63,28 +58,32 @@ export default function ServicesByPush() {
     methodName,
     column,
     dataSource: adultSource,
-  })
+  });
 
-  const adultData = useMemo(()=>{
-    if(_adultData.length){
-      return Object.fromEntries(_adultData.map(({name, value})=>[name, value]))
+  const adultData = useMemo(() => {
+    if (_adultData.length) {
+      return Object.fromEntries(
+        _adultData.map(({ name, value }) => [name, value]),
+      );
     }
-    return {}
-  }, [_adultData])
+    return {};
+  }, [_adultData]);
 
   const { data: _childData } = useWidgetFetch({
     id,
     methodName,
     column,
     dataSource: childSource,
-  })
+  });
 
-    const childData = useMemo(()=>{
-    if(_childData.length){
-      return Object.fromEntries(_childData.map(({name, value})=>[name, value]))
+  const childData = useMemo(() => {
+    if (_childData.length) {
+      return Object.fromEntries(
+        _childData.map(({ name, value }) => [name, value]),
+      );
     }
-    return {}
-  }, [_childData])
+    return {};
+  }, [_childData]);
 
   const adultPush = useMemo(() => {
     if (!adultServices) return [];
@@ -179,18 +178,14 @@ export default function ServicesByPush() {
 }
 
 const usePushStyles = makeStyles((theme) => ({
-  root: {
-
-  },
+  root: {},
   title: {
     ...theme.typography.body1,
     marginBottom: theme.spacing(0.5),
     textAlign: 'start',
     color: 'inherit',
   },
-  adultContainer:{
-
-  },
+  adultContainer: {},
   adultIcon: {
     marginRight: theme.spacing(1),
     backgroundColor: ({ push }: any) =>
@@ -206,22 +201,42 @@ const usePushStyles = makeStyles((theme) => ({
   },
 }));
 
-function PushContent({ push, childData, adultData }: { push: number, childData: Record<number, number>, adultData: Record<number, number> }) {
+function PushContent({
+  push,
+  childData,
+  adultData,
+}: {
+  push: number;
+  childData: Record<number, number>;
+  adultData: Record<number, number>;
+}) {
   const classes = usePushStyles({ push });
   return (
     <Grid container className={classes.root}>
       <Grid item xs={4}>
+        <Typography className={classes.title}>{push ? push : 'All'}</Typography>
+      </Grid>
+      <Grid
+        container
+        wrap='nowrap'
+        alignItems='center'
+        item
+        xs={4}
+        className={classes.adultContainer}
+      >
+        <TimelineDot className={classes.adultIcon}></TimelineDot>
         <Typography className={classes.title}>
-          {push ? push : 'All'}
+          {adultData[push] || 0}
         </Typography>
       </Grid>
-      <Grid container wrap='nowrap' alignItems='center' item xs={4} className={classes.adultContainer}>
-        <TimelineDot className={classes.adultIcon}></TimelineDot>
-        <Typography className={classes.title}>{adultData[push] || 0}</Typography>
-      </Grid>
       <Grid container wrap='nowrap' alignItems='center' item xs={4}>
-        <TimelineDot variant='outlined' className={classes.childIcon}></TimelineDot>
-        <Typography className={classes.title}>{childData[push] || 0}</Typography>
+        <TimelineDot
+          variant='outlined'
+          className={classes.childIcon}
+        ></TimelineDot>
+        <Typography className={classes.title}>
+          {childData[push] || 0}
+        </Typography>
       </Grid>
     </Grid>
   );
