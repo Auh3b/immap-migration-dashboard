@@ -10,6 +10,7 @@ import getAverageElapsedDays from 'components/indicators/utils/getAverageElapsed
 import getAvgDaysByCountry from 'components/indicators/utils/getAvgDaysByCountry';
 import timelineValueAlt from 'components/indicators/utils/timelineValueAlt';
 import { defaultFilterFunction } from 'components/indicators/utils/miscelleniousFunctions';
+import { getTemporalFilters } from 'utils/dateHelpers';
 
 const methodMap = new Map<string, Function>([
   [EXTERNAL_METHOD_NAMES.CONCATENATED_VALUES, concatenatedValues],
@@ -24,6 +25,7 @@ const methodMap = new Map<string, Function>([
   [EXTERNAL_METHOD_NAMES.GET_AVG_DAYS_BY_COUNTRY, getAvgDaysByCountry],
   [EXTERNAL_METHOD_NAMES.GET_SUNBURST_HIERARCHY, getSunburstHierarchy],
   [EXTERNAL_METHOD_NAMES.TIMELINE_VALUES_ALT, timelineValueAlt],
+  [EXTERNAL_METHOD_NAMES.GET_TEMPORAL_FILTER_VALUES, getTemporalFilters],
 ]);
 
 function executeMethod({ input, methodName, column, params }: any): any {
