@@ -17,8 +17,8 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 import { StateSlices } from 'utils/types';
 import ServiceFeedbackLeftView from './serviceViews/ServiceFeedbackLeftView';
 import ServiceFeedbackRightView from './serviceViews/ServiceFeedbackRightView';
-import ServicesByPush from './serviceViews/ServicesByPush';
 import TuneIcon from '@material-ui/icons/Tune';
+import ServiceFilters from './serviceViews/ServiceFilters';
 
 const useStyles = makeStyles(() => ({
   servicioFeedback_2: {},
@@ -77,7 +77,7 @@ export default function ServicioFeedback_2() {
             icon: <FilterListIcon />,
           },
           {
-            content: <ServicesByPush />,
+            content: <ServiceFilters />,
             value: 3,
             title: 'Filtros Adicionales',
             icon: <TuneIcon />,
