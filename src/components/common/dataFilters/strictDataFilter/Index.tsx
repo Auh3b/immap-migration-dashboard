@@ -6,14 +6,28 @@ import { Values } from './utils/strictDateFilterTypes';
 import { _FilterTypes } from '@carto/react-core';
 import { StateSlices } from 'utils/types';
 import { addFilterFunction, removeFilterFunction } from 'utils/stateFunction';
-import { Grid, makeStyles } from '@material-ui/core';
+import { Grid, Tooltip, Typography, makeStyles } from '@material-ui/core';
+import { grey } from '@material-ui/core/colors';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
+    padding: theme.spacing(1),
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: grey[50],
+    border: '1px solid '+ grey[200]
   },
+  title:{
+    ...theme.typography.subtitle1,
+    color: grey[600],
+    width: 200,
+    textTransform: 'uppercase',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+  }
 }));
 
 type DateFilter = Record<string, Values>;
@@ -74,10 +88,17 @@ export default function StrictDateFilter({
     [data, dispatch, source, column, addFilter, selected],
   );
 
+  const title = id.replaceAll('_', ' ')
+
   return (
     <>
       {data && !isLoading ? (
         <Grid item className={classes.root}>
+          <Tooltip title={title} arrow placement='bottom'>
+            <Typography className={classes.title}>
+              {title}
+            </Typography>
+          </Tooltip>
           <CustomTab
             id={id}
             column={column}
