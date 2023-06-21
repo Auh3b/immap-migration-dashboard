@@ -7,6 +7,7 @@ interface UseDateFilterValuesProps {
   state: Partial<RootState>;
   slice: StateSlices;
   source: string;
+  column?: string;
   id: string;
   type?: _FilterTypes | FilterTypes;
 }
@@ -21,13 +22,14 @@ export default function getDateFilterValues(
 }
 
 function handleCartoFilters(props: UseDateFilterValuesProps): any[] {
-  const { state, source, type, id } = props;
+  const { state, source, type, column } = props;
   if (!state.carto.dataSources) return [];
-  if (!state.carto.dataSources[id]) return [];
+  if (!state.carto.dataSources[source]) return [];
   if (!state.carto.dataSources[source].filters) return [];
-  if (!state.carto.dataSources[source].filters[id]) return [];
-  if (!state.carto.dataSources[source].filters[id][type]) return [];
-  return state.carto.dataSources[source].filters[id][type].values;
+  if (!state.carto.dataSources[source].filters[column]) return [];
+  if (!state.carto.dataSources[source].filters[column]) return [];
+  if (!state.carto.dataSources[source].filters[column][type]) return [];
+  return state.carto.dataSources[source].filters[column][type].values;
 }
 
 function handleOtherFilters(props: UseDateFilterValuesProps): any[] {
