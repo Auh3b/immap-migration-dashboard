@@ -203,10 +203,13 @@ function CriteriaSelector(props: CriteriaSelectorProps) {
   } = props;
   const dispatch = useDispatch();
   const classes = useSelectorStyles();
-    //@ts-ignore
+  //@ts-ignore
   const filters = useSelector((state) => state.media.filters) || {};
   const criteria = useMemo(
-    () => getSourceFilter(id, filters, source).map((d:string) => +getStringSearchValue(d)) || [],
+    () =>
+      getSourceFilter(id, filters, source).map(
+        (d: string) => +getStringSearchValue(d),
+      ) || [],
     [filters, id],
   );
 

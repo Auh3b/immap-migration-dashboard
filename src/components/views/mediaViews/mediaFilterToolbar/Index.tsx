@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     padding: theme.spacing(2),
   },
-  title:{
+  title: {
     ...theme.typography.subtitle1,
     width: '100%',
     textAlign: 'left',
@@ -54,9 +54,7 @@ export default function MediaFilterToolbar() {
       alignItems='center'
       justifyContent='space-between'
     >
-      <Typography className={classes.title}>
-        filtros adicionales
-      </Typography>
+      <Typography className={classes.title}>filtros adicionales</Typography>
       <MediaStrictDataFilter />
       {/* <DateFilter /> */}
       <CriteriaSelectors />

@@ -2,7 +2,7 @@ export default function getSourceFilter(
   id: string,
   _filters: any,
   source: string,
-):any[] {
+): any[] {
   const filterBySource = _filters[source] || [];
   const filters = { ...filterBySource };
   if (!filters[id]) {
