@@ -20,6 +20,7 @@ import LinkIcon from '@material-ui/icons/Link';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import SocialPost from './SocialPost';
 import { format } from 'd3';
+import { formatDate } from 'utils/dateHelpers';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -74,7 +75,7 @@ export default function MediaTable({
                 {rows.map(({ id, date, source, value, url }) => (
                   <TableRow key={id}>
                     <TableCell className={classes.tableCell}>
-                      <Typography noWrap>{date}</Typography>
+                      <Typography noWrap>{formatDate(+date)}</Typography>
                     </TableCell>
                     <TableCell className={classes.tableCell}>
                       <Typography noWrap>{source}</Typography>

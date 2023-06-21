@@ -4,6 +4,7 @@ import { EChartsReactProps } from 'echarts-for-react';
 import { format } from 'd3';
 import { useTheme } from '@material-ui/core';
 import { UNICEF_COLORS } from 'theme';
+import { formatDate } from 'utils/dateHelpers';
 
 interface CustomChartProps extends EChartsReactProps {
   data: [[string, string, number][], [string, string, number][]][];
@@ -90,7 +91,7 @@ export default function CustomGriddedLineChart({
       for (let j = 0; j < _data[i].length; j++) {
         const axisConfig = {
           type: 'category',
-          data: _data[i][j].map((d) => d[0]),
+          data: _data[i][j].map((d) => formatDate(+d[0])),
         };
         output = [...output, axisConfig];
       }
