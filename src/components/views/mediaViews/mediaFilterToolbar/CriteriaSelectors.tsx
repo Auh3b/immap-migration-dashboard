@@ -15,7 +15,7 @@ import { addMediaFilter, removeMediaFilter } from 'store/mediaSlice';
 import { FilterTypes } from 'utils/filterFunctions';
 import getStringSearchValue from 'utils/getStringSearchValue';
 
-const termsCriteriaOption = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+const termsCriteriaOption = [ 1, 2, 3, 4, 5, 6, 7, 8, 0];
 const termsCriteriaLabels = {
   0: 'Otro',
   1: 'Migrante',
@@ -27,7 +27,7 @@ const termsCriteriaLabels = {
   7: 'Ruta Migratoria',
   8: 'Flujo Migratorio',
 };
-const placeCriteriaOption = [0, 1, 2, 3, 4, 5, 6, 7];
+const placeCriteriaOption = [ 1, 2, 3, 4, 5, 6, 7, 0];
 const placeCriteriaLabels = {
   0: 'Otro',
   1: 'Selva del darién',
@@ -38,7 +38,7 @@ const placeCriteriaLabels = {
   6: 'Tapón',
   7: 'Cruce del darién',
 };
-const subgroupCriteriaOption = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
+const subgroupCriteriaOption = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0];
 const subgroupCriteriaLabels = {
   0: 'Otro',
   1: 'Niña',
@@ -53,14 +53,14 @@ const subgroupCriteriaLabels = {
   10: 'Peruano',
   11: 'Cubano',
 };
-const contextCriteriaOption = [0, 1, 2, 3];
+const contextCriteriaOption = [1, 2, 3, 0];
 const contextCriteriaLabels = {
   0: 'Otro',
   1: 'Tráfico',
   2: 'Abuso',
   3: 'Sexual',
 };
-const temporalityCriteriaOption = [0, 1, 2];
+const temporalityCriteriaOption = [1, 2, 0];
 const temporalityCriteriaLabels = {
   0: 'Otro',
   1: '2023',
