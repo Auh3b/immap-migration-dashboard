@@ -4,7 +4,7 @@ import {
   FilterGroupProps,
   ActiveFilterItemProps,
 } from './sideAnalyticsPanelTypes';
-import { Grid } from '@material-ui/core';
+import { Grid, Typography } from '@material-ui/core';
 import { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from 'store/store';
@@ -82,21 +82,23 @@ export function ActiveFilters({ filterSources }: ActiveFiltersProps) {
 
   return (
     <Grid container direction='column'>
-      {!filterGroups.length
-        ? null
-        : filterGroups.map(({ name, filters, removeFunction }) => (
-            <FilterGroup
-              key={name}
-              name={name}
-              filters={filters}
-              removeFunction={removeFunction}
-            />
-          ))}
+      {!filterGroups.length ? (
+        <NoActiveFilters />
+      ) : (
+        filterGroups.map(({ name, filters, removeFunction }) => (
+          <FilterGroup
+            key={name}
+            name={name}
+            filters={filters}
+            removeFunction={removeFunction}
+          />
+        ))
+      )}
     </Grid>
   );
 }
 function FilterGroup(props: FilterGroupProps) {
-  const { name, filters, removeFunction } = props;
+  const { filters, removeFunction } = props;
   return (
     <Grid item>
       {filters.map(([filterName, filterProps]) => (
@@ -110,4 +112,8 @@ function FilterGroup(props: FilterGroupProps) {
       ))}
     </Grid>
   );
+}
+
+function NoActiveFilters() {
+  return <Typography>No hay filtros activos.</Typography>;
 }
