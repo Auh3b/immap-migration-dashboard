@@ -9,11 +9,12 @@ import {
   makeStyles,
   withStyles,
 } from '@material-ui/core';
-import { FilterItem, FilterTypes } from 'utils/filterFunctions';
+import { FilterTypes } from 'utils/filterFunctions';
 import CloseIcon from '@material-ui/icons/Close';
 import { useDispatch } from 'react-redux';
 import { timeFormat } from 'd3';
 import { useCallback } from 'react';
+import getStringSearchValue from 'utils/getStringSearchValue';
 
 const useFilterStyles = makeStyles((theme) => ({
   root: {
@@ -73,10 +74,7 @@ export default function ActiveFilterItem(
   }, [owner, source, column, removeFilter]);
 
   const name = _name.replaceAll('_', ' ');
-  const filterValues = getValueFormat(
-    type,
-    values.map((d) => (valueFormatter ? valueFormatter[d] : d)),
-  );
+  const filterValues = getValueFormat(type, values, valueFormatter);
   return (
     <Grid container wrap='nowrap' direction='column' className={classes.root}>
       <Grid
@@ -131,16 +129,32 @@ function FilterValue({ value }: { value: string }) {
   );
 }
 
-function getValueFormat(type: string, values: any[]): string | string[] {
+function getValueFormat(
+  type: string,
+  values: any[],
+  valueFormatter?: Record<string | number, string>,
+): string | any[] {
+  let output: string | any[];
   switch (type) {
     case FilterTypes.BETWEEN: {
       const value = values[0];
-      return value
+      output = value
         .map((d: string) => timeFormat('%d/%m/%Y')(new Date(d)))
         .join(' - ');
+      break;
+    }
+    case FilterTypes.STRING_SEARCH: {
+      const extractValues = values.map((d) => +getStringSearchValue(d));
+      output = valueFormatter
+        ? extractValues.map((d) => valueFormatter[d])
+        : extractValues;
+      break;
     }
     default: {
-      return values; //.map((d: string) => d.replaceAll('-', '/'));
+      output = valueFormatter ? values.map((d) => valueFormatter[d]) : values;
+      break;
     }
   }
+
+  return output;
 }
