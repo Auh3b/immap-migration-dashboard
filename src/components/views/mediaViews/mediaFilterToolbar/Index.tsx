@@ -1,11 +1,7 @@
 import { CriteriaSelectors } from './CriteriaSelectors';
 import { Grid, Typography, makeStyles } from '@material-ui/core';
 import { deepOrange } from '@material-ui/core/colors';
-import { useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import MediaStrictDataFilter from './MediaStrictDataFilter';
-import { clearMediaFilters } from 'store/mediaSlice';
-import ClearFiltersButton from 'components/common/ClearFiltersButton';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,6 +13,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     textAlign: 'left',
     textTransform: 'uppercase',
+    marginBottom: theme.spacing(1),
   },
   clear: {
     backgroundColor: deepOrange[500],
@@ -36,14 +33,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function MediaFilterToolbar() {
-  const dispatch = useDispatch();
   const classes = useStyles();
-  //@ts-ignore
-  const filters = useSelector((state) => state.media.filters);
-  const disabled = useMemo(
-    () => Object.keys(filters?.meltwater ?? {}).length === 0,
-    [filters],
-  );
 
   return (
     <Grid
@@ -51,19 +41,13 @@ export default function MediaFilterToolbar() {
       item
       direction='column'
       wrap='nowrap'
-      alignItems='center'
+      alignItems='stretch'
       justifyContent='space-between'
     >
       <Typography className={classes.title}>filtros adicionales</Typography>
       <MediaStrictDataFilter />
       {/* <DateFilter /> */}
       <CriteriaSelectors />
-      <div className={classes.filters}>
-        <ClearFiltersButton
-          clearCallback={() => dispatch(clearMediaFilters())}
-          disabled={disabled}
-        />
-      </div>
     </Grid>
   );
 }
