@@ -83,6 +83,8 @@ const methodParams = {
   servicesKey: Object.fromEntries(SERVICES_KEY),
   serviceStatColumnLength: SERVICE_STAT_COLUMNS_NAME.length,
 };
+const valueFormatter = Object.fromEntries(SERVICES_KEY)
+console.log(valueFormatter)
 
 export default function AggreatedServices({ dataSource }: BasicWidgetType) {
   const dispatch = useDispatch();
@@ -127,6 +129,7 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
             type: _FilterTypes.STRING_SEARCH,
             params: {
               useRegExp: true,
+              valueFormatter
             },
             values: ['^(.*,|)' + currentSelection + '(,.*|)$'],
             owner,
@@ -222,24 +225,6 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
               addFilter={setFilters}
               callback={handleLocationChange}
               callbackProps={{ data, width, height }}
-            />
-            <ClearFiltersButton
-              className={classes.clearButton}
-              disabled={filters ? !Object.keys(filters).length : true}
-              clearCallback={() => {
-                setFilters({});
-                const { latitude, longitude, zoom } = initialState.viewState;
-                handleMapTransitions({
-                  start: 500,
-                  end: 1000,
-                  params: {
-                    latitude,
-                    longitude,
-                    zoom,
-                  },
-                  dispatch,
-                });
-              }}
             />
           </Grid>
           <AggreatedServicesLegend />
