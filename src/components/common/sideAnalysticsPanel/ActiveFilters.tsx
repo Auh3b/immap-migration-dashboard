@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from 'store/store';
 import ActiveFilterItem from './ActiveFilterItem';
 import { removeFilterFunction } from 'utils/stateFunction';
+import ClearFiltersButton from '../ClearFiltersButton';
 
 export function ActiveFilters({ filterSources }: ActiveFiltersProps) {
   const state = useSelector((state: RootState) => state);
@@ -82,6 +83,10 @@ export function ActiveFilters({ filterSources }: ActiveFiltersProps) {
 
   return (
     <Grid container direction='column'>
+      <ClearFiltersButton
+        filterSource={filterSources[0].stateSlice}
+        disabled={!filterGroups.length}
+      />
       {!filterGroups.length ? (
         <NoActiveFilters />
       ) : (
