@@ -1,5 +1,5 @@
 import { CriteriaSelectors } from './CriteriaSelectors';
-import { Grid, makeStyles } from '@material-ui/core';
+import { Grid, Typography, makeStyles } from '@material-ui/core';
 import { deepOrange } from '@material-ui/core/colors';
 import { useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,6 +11,12 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
     padding: theme.spacing(2),
+  },
+  title:{
+    ...theme.typography.subtitle1,
+    width: '100%',
+    textAlign: 'left',
+    textTransform: 'uppercase',
   },
   clear: {
     backgroundColor: deepOrange[500],
@@ -48,6 +54,9 @@ export default function MediaFilterToolbar() {
       alignItems='center'
       justifyContent='space-between'
     >
+      <Typography className={classes.title}>
+        filtros adicionales
+      </Typography>
       <MediaStrictDataFilter />
       {/* <DateFilter /> */}
       <CriteriaSelectors />
