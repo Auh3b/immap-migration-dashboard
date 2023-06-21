@@ -58,7 +58,7 @@ export default function StrictDateFilter({
   const addFilter = addFilterFunction[stateSlice];
   const removeFilter = removeFilterFunction[stateSlice];
   const isActive = useSelector((state) =>
-    getDateFilterValues({ state, slice: stateSlice, id, source, type }),
+    getDateFilterValues({ state, slice: stateSlice, id, source, type }).length,
   );
   const onSelectionChange = useCallback(
     (event: MouseEvent<HTMLElement>, newValue: string) => {
@@ -93,7 +93,7 @@ export default function StrictDateFilter({
   );
 
   useEffect(() => {
-    if (!isActive.length) {
+    if (!isActive) {
       setSelected(null);
     }
   }, [isActive]);
