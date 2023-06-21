@@ -1,13 +1,15 @@
-import { MouseEvent, useCallback, useState } from 'react';
+import { MouseEvent, useCallback, useEffect, useState } from 'react';
 import CustomTab from './utils/CustomTab';
 import { FilterTypes } from 'utils/filterFunctions';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Values } from './utils/strictDateFilterTypes';
 import { _FilterTypes } from '@carto/react-core';
 import { StateSlices } from 'utils/types';
 import { addFilterFunction, removeFilterFunction } from 'utils/stateFunction';
 import { Grid, Tooltip, Typography, makeStyles } from '@material-ui/core';
 import { grey } from '@material-ui/core/colors';
+import getDateFilterValues from './hooks/getDateFilterValues';
+import ComponentFallback from 'components/common/ComponentFallback';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -55,6 +57,7 @@ export default function StrictDateFilter({
   const [selected, setSelected] = useState<string | null>(null);
   const addFilter = addFilterFunction[stateSlice];
   const removeFilter = removeFilterFunction[stateSlice];
+  const isActive = useSelector(state => getDateFilterValues({state, slice: stateSlice, id, source, type}))
   const onSelectionChange = useCallback(
     (event: MouseEvent<HTMLElement>, newValue: string) => {
       if (newValue) {
@@ -87,30 +90,34 @@ export default function StrictDateFilter({
     [data, dispatch, source, column, addFilter, selected],
   );
 
+  useEffect(()=>{
+    if(!isActive.length){
+      setSelected(null)
+    }
+  },[isActive])
+
   const title = id.replaceAll('_', ' ');
 
   return (
-    <>
-      {data && !isLoading ? (
-        <Grid item className={classes.root}>
-          <Tooltip title={title} arrow placement='bottom'>
-            <Typography className={classes.title}>{title}</Typography>
-          </Tooltip>
-          <CustomTab
-            id={id}
-            column={column}
-            source={source}
-            type={type}
-            addFilter={addFilter}
-            removeFilter={removeFilter}
-            values={data}
-            size={'medium'}
-            exclusive
-            selected={selected}
-            onSelectionChange={onSelectionChange}
-          />
-        </Grid>
-      ) : null}
-    </>
+    <Grid item className={classes.root}>
+      <Tooltip title={title} arrow placement='bottom'>
+        <Typography className={classes.title}>{title}</Typography>
+      </Tooltip>
+    {data && !isLoading ? (
+      <CustomTab
+        id={id}
+        column={column}
+        source={source}
+        type={type}
+        addFilter={addFilter}
+        removeFilter={removeFilter}
+        values={data}
+        size={'medium'}
+        exclusive
+        selected={selected}
+        onSelectionChange={onSelectionChange}
+      />
+      ) : <ComponentFallback />}
+    </Grid>
   );
 }
