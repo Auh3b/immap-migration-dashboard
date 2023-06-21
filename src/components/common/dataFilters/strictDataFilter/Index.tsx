@@ -57,8 +57,10 @@ export default function StrictDateFilter({
   const [selected, setSelected] = useState<string | null>(null);
   const addFilter = addFilterFunction[stateSlice];
   const removeFilter = removeFilterFunction[stateSlice];
-  const isActive = useSelector((state) =>
-    getDateFilterValues({ state, slice: stateSlice, id, source, type }).length,
+  const isActive = useSelector(
+    (state) =>
+      getDateFilterValues({ state, slice: stateSlice, id, source, type })
+        .length,
   );
   const onSelectionChange = useCallback(
     (event: MouseEvent<HTMLElement>, newValue: string) => {
