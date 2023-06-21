@@ -1,5 +1,5 @@
-import { Divider, Fab, Grid, Typography, makeStyles } from '@material-ui/core';
-import { TimeseriesFilter } from 'components/common/dataFilters/TimeseriesFilter';
+import { Grid, Typography, makeStyles } from '@material-ui/core';
+// import { TimeseriesFilter } from 'components/common/dataFilters/TimeseriesFilter';
 import StrictDateFilter from 'components/common/dataFilters/strictDataFilter/Index';
 import executeIntroMethod from 'components/indicators/introduction/utils/executeIntroMethod';
 import { useEffect, useState } from 'react';
