@@ -57,7 +57,9 @@ export default function StrictDateFilter({
   const [selected, setSelected] = useState<string | null>(null);
   const addFilter = addFilterFunction[stateSlice];
   const removeFilter = removeFilterFunction[stateSlice];
-  const isActive = useSelector(state => getDateFilterValues({state, slice: stateSlice, id, source, type}))
+  const isActive = useSelector((state) =>
+    getDateFilterValues({ state, slice: stateSlice, id, source, type }),
+  );
   const onSelectionChange = useCallback(
     (event: MouseEvent<HTMLElement>, newValue: string) => {
       if (newValue) {
@@ -90,11 +92,11 @@ export default function StrictDateFilter({
     [data, dispatch, source, column, addFilter, selected],
   );
 
-  useEffect(()=>{
-    if(!isActive.length){
-      setSelected(null)
+  useEffect(() => {
+    if (!isActive.length) {
+      setSelected(null);
     }
-  },[isActive])
+  }, [isActive]);
 
   const title = id.replaceAll('_', ' ');
 
@@ -103,21 +105,23 @@ export default function StrictDateFilter({
       <Tooltip title={title} arrow placement='bottom'>
         <Typography className={classes.title}>{title}</Typography>
       </Tooltip>
-    {data && !isLoading ? (
-      <CustomTab
-        id={id}
-        column={column}
-        source={source}
-        type={type}
-        addFilter={addFilter}
-        removeFilter={removeFilter}
-        values={data}
-        size={'medium'}
-        exclusive
-        selected={selected}
-        onSelectionChange={onSelectionChange}
-      />
-      ) : <ComponentFallback />}
+      {data && !isLoading ? (
+        <CustomTab
+          id={id}
+          column={column}
+          source={source}
+          type={type}
+          addFilter={addFilter}
+          removeFilter={removeFilter}
+          values={data}
+          size={'medium'}
+          exclusive
+          selected={selected}
+          onSelectionChange={onSelectionChange}
+        />
+      ) : (
+        <ComponentFallback />
+      )}
     </Grid>
   );
 }

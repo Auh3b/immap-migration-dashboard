@@ -15,7 +15,7 @@ import { addMediaFilter, removeMediaFilter } from 'store/mediaSlice';
 import { FilterTypes } from 'utils/filterFunctions';
 import getStringSearchValue from 'utils/getStringSearchValue';
 
-const termsCriteriaOption = [ 1, 2, 3, 4, 5, 6, 7, 8, 0];
+const termsCriteriaOption = [1, 2, 3, 4, 5, 6, 7, 8, 0];
 const termsCriteriaLabels = {
   0: 'Otro',
   1: 'Migrante',
@@ -27,7 +27,7 @@ const termsCriteriaLabels = {
   7: 'Ruta Migratoria',
   8: 'Flujo Migratorio',
 };
-const placeCriteriaOption = [ 1, 2, 3, 4, 5, 6, 7, 0];
+const placeCriteriaOption = [1, 2, 3, 4, 5, 6, 7, 0];
 const placeCriteriaLabels = {
   0: 'Otro',
   1: 'Selva del darién',
