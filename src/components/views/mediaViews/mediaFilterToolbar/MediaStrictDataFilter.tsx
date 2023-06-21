@@ -30,17 +30,14 @@ export default function MediaStrictDataFilter() {
   }, [isMediaDataReady]);
 
   return (
-    <>
-      {data && !isLoading ? (
-        <StrictDateFilter
-          id={id}
-          column={column}
-          source={source}
-          type={type}
-          data={data}
-          stateSlice={StateSlices.MEDIA}
-        />
-      ) : null}
-    </>
+    <StrictDateFilter
+      id={id}
+      column={column}
+      source={source}
+      type={type}
+      data={data}
+      isLoading={isLoading}
+      stateSlice={StateSlices.MEDIA}
+    />
   );
 }
