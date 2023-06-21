@@ -83,8 +83,8 @@ const methodParams = {
   servicesKey: Object.fromEntries(SERVICES_KEY),
   serviceStatColumnLength: SERVICE_STAT_COLUMNS_NAME.length,
 };
-const valueFormatter = Object.fromEntries(SERVICES_KEY)
-console.log(valueFormatter)
+const valueFormatter = Object.fromEntries(SERVICES_KEY);
+console.log(valueFormatter);
 
 export default function AggreatedServices({ dataSource }: BasicWidgetType) {
   const dispatch = useDispatch();
@@ -129,7 +129,7 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
             type: _FilterTypes.STRING_SEARCH,
             params: {
               useRegExp: true,
-              valueFormatter
+              valueFormatter,
             },
             values: ['^(.*,|)' + currentSelection + '(,.*|)$'],
             owner,
