@@ -8,6 +8,7 @@ import useIntroData from './hooks/useIntroData';
 import getSourceFilter from '../media/utils/getSourceFilter';
 import { useSelector } from 'react-redux';
 import { SICK_CATEGORY_ABREVATIONS } from '../premise/utils/premiseServiceDefinitions';
+import getStringSearchValue from 'utils/getStringSearchValue';
 
 const title = 'Retos del punto de servicio';
 const column = 'princ_re_1';
@@ -27,7 +28,9 @@ export default function IntroSickPremise() {
   });
   //@ts-ignore
   const _filters = useSelector((state) => state.intro.filters) || {};
-  const selectedCategories = getSourceFilter(id, _filters, source);
+  const selectedCategories = getSourceFilter(id, _filters, source).map((d) =>
+    d ? getStringSearchValue(d) : d,
+  );
 
   const handleSelectedCategoriesChange = useIntroCategoryChange({
     source,

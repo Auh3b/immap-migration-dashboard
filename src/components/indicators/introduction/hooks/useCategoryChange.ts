@@ -20,11 +20,15 @@ export default function useIntroCategoryChange({
   const handleSelectedCategoriesChange = useCallback(
     (categories) => {
       if (categories && categories.length) {
+        const withRegExp =
+          type === _FilterTypes.STRING_SEARCH
+            ? categories.map((d: any) => `^(.*,|)${d}(,.*|)$`)
+            : categories;
         dispatch(
           addIntroFilter({
             source,
             column,
-            values: categories,
+            values: withRegExp,
             owner,
             type,
             valueFormatter,
@@ -40,7 +44,7 @@ export default function useIntroCategoryChange({
         );
       }
     },
-    [column, owner, dispatch],
+    [column, owner, valueFormatter, dispatch],
   );
   return handleSelectedCategoriesChange;
 }
