@@ -27,14 +27,6 @@ import {
   startOfYear,
 } from 'date-fns';
 
-export function getUnixTimestamp(date: Date) {
-  return getUnixTime(date) * 1000;
-}
-
-export function fromUnixTimestamp(value: number) {
-  return fromUnixTime(value / 1000);
-}
-
 enum intervalsPeriod {
   DAY = 'day',
   WEEK = 'week',
@@ -76,6 +68,27 @@ const intervalNameFunction: IntervalLookFunction = Object.fromEntries([
   [intervalsPeriod.QUARTER, (date: Date) => format(date, 'QQQ')],
   [intervalsPeriod.YEAR, (date: Date) => format(date, 'yyyy')],
 ]);
+
+export function formatDate(date: number | Date):string{
+  const stringFormat = 'yyyy-MM-dd'
+  let targetDate: Date
+  if(typeof(date)==='number'){
+    targetDate = fromUnixTimestamp(date)
+  }else{
+    targetDate = date
+  }
+
+  return format(targetDate, stringFormat)
+}
+
+export function getUnixTimestamp(date: Date) {
+  return getUnixTime(date) * 1000;
+}
+
+export function fromUnixTimestamp(value: number) {
+  return fromUnixTime(value / 1000);
+}
+
 
 export function getInterval(date: Date, interval: intervalsPeriod) {
   const _start = date;
