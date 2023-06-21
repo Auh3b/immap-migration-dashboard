@@ -1,5 +1,4 @@
 import NoWidgetData from './../../common/customWidgets/NoWidgetData';
-import ClearFiltersButton from 'components/common/ClearFiltersButton';
 import {
   FormControl,
   Grid,

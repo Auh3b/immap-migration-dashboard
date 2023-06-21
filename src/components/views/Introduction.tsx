@@ -122,11 +122,6 @@ export default function Introduction() {
     >
       <IntroHeader />
       <IntroContent isLoading={isLoading} />
-      <ClearFiltersButton
-        disabled={!hasFilters}
-        clearCallback={clearCallback}
-        className={classes.clearButton}
-      />
     </Grid>
   );
 }
