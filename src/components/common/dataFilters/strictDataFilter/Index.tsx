@@ -1,4 +1,4 @@
-import { MouseEvent, useCallback, useEffect, useState } from 'react';
+import { MouseEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import CustomTab from './utils/CustomTab';
 import { FilterTypes } from 'utils/filterFunctions';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,6 +10,7 @@ import { Grid, Tooltip, Typography, makeStyles } from '@material-ui/core';
 import { grey } from '@material-ui/core/colors';
 import getDateFilterValues from './hooks/getDateFilterValues';
 import ComponentFallback from 'components/common/ComponentFallback';
+import { RootState } from 'store/store';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -57,10 +58,18 @@ export default function StrictDateFilter({
   const [selected, setSelected] = useState<string | null>(null);
   const addFilter = addFilterFunction[stateSlice];
   const removeFilter = removeFilterFunction[stateSlice];
-  const isActive = useSelector(
-    (state) =>
-      getDateFilterValues({ state, slice: stateSlice, id, source, type })
-        .length,
+  const state = useSelector((state: RootState) => state);
+  const isActive = useMemo(
+    () =>
+      getDateFilterValues({
+        state,
+        slice: stateSlice,
+        column,
+        id,
+        source,
+        type,
+      }).length,
+    [state],
   );
   const onSelectionChange = useCallback(
     (event: MouseEvent<HTMLElement>, newValue: string) => {
