@@ -1,7 +1,5 @@
-import DinamicaStrictDateFilter from "./DinamicaStrictDateFilter";
+import DinamicaStrictDateFilter from './DinamicaStrictDateFilter';
 
 export default function DinamicaFilters() {
-  return (
-    <DinamicaStrictDateFilter />
-  )
+  return <DinamicaStrictDateFilter />;
 }
