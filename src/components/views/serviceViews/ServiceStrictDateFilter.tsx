@@ -45,7 +45,6 @@ export default function ServiceStrictDateFilter() {
         ]);
       })
       .then(([processedAdult, processedChild]) => {
-        console.log(processedAdult, processedChild);
         setData([processedAdult, processedChild]);
       });
     return () => {
