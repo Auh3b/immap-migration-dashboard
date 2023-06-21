@@ -8,8 +8,9 @@ import {
 } from '@material-ui/core';
 import { grey } from '@material-ui/core/colors';
 import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
-import React, { useCallback, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import getSourceFilter from 'components/indicators/media/utils/getSourceFilter';
+import React, { useCallback, useMemo, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { addMediaFilter, removeMediaFilter } from 'store/mediaSlice';
 import { FilterTypes } from 'utils/filterFunctions';
 import getStringSearchValue from 'utils/getStringSearchValue';
@@ -37,21 +38,20 @@ const placeCriteriaLabels = {
   6: 'Tapón',
   7: 'Cruce del darién',
 };
-const subgroupCriteriaOption = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+const subgroupCriteriaOption = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 const subgroupCriteriaLabels = {
   0: 'Otro',
   1: 'Niña',
   2: 'Niño',
   3: 'Adolescente',
   4: 'Mujeres Embarazada',
-  5: 'Mujere Embarazada',
-  6: 'Venezolano',
-  7: 'Haitiano',
-  8: 'Ecuatariano',
-  9: 'Chino',
-  10: 'Colombiano',
-  11: 'Peruano',
-  12: 'Cubano',
+  5: 'Venezolano',
+  6: 'Haitiano',
+  7: 'Ecuatariano',
+  8: 'Chino',
+  9: 'Colombiano',
+  10: 'Peruano',
+  11: 'Cubano',
 };
 const contextCriteriaOption = [0, 1, 2, 3];
 const contextCriteriaLabels = {
@@ -163,6 +163,7 @@ const StyledToggleButton = withStyles((theme) => ({
 
 const useSelectorStyles = makeStyles((theme) => ({
   root: {
+    width: '100%',
     border: '0.5px solid ' + grey[200],
     borderRadius: theme.shape.borderRadius,
     padding: theme.spacing(1),
@@ -200,9 +201,14 @@ function CriteriaSelector(props: CriteriaSelectorProps) {
     criteriaOption,
     labels,
   } = props;
-  const classes = useSelectorStyles();
-  const [criteria, setCriteria] = useState<number[]>([]);
   const dispatch = useDispatch();
+  const classes = useSelectorStyles();
+    //@ts-ignore
+  const filters = useSelector((state) => state.media.filters) || {};
+  const criteria = useMemo(
+    () => getSourceFilter(id, filters, source).map((d:string) => +getStringSearchValue(d)) || [],
+    [filters, id],
+  );
 
   const onCategoriesChange = useCallback(
     (categories) => {
@@ -238,14 +244,13 @@ function CriteriaSelector(props: CriteriaSelectorProps) {
         );
       }
     },
-    [criteria, dispatch, source, id, column, labels],
+    [dispatch, source, id, column, labels],
   );
 
   const handleChange = (
     event: React.ChangeEvent<{ value: unknown }>,
     newValue: number[],
   ) => {
-    setCriteria(newValue);
     onCategoriesChange(newValue);
   };
 
