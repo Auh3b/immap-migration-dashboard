@@ -11,7 +11,7 @@ import { FilterTypes } from 'utils/filterFunctions';
 import regionName from './utils/getCountryByRegion';
 import getSourceFilter from './utils/getSourceFilter';
 
-const id = 'país';
+const id = '¿De_dónde_escribe?';
 const column = 'country';
 const source = 'meltwater';
 
@@ -29,6 +29,13 @@ export default function MediaOrigin() {
   const onSelectedCategoriesChange = useCallback(
     (categories) => {
       if (categories.length) {
+        const valueFormatter = Object.fromEntries(
+          categories.map((name: string) =>
+            name === 'zz'
+              ? ['zz', 'Otros países']
+              : [name, regionName.of(name.toUpperCase())],
+          ),
+        );
         dispatch(
           addMediaFilter({
             source,
@@ -36,6 +43,7 @@ export default function MediaOrigin() {
             owner: id,
             values: categories,
             type: FilterTypes.IN,
+            valueFormatter,
           }),
         );
       } else {

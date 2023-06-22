@@ -31,7 +31,7 @@ export default function CustomTimelineWidget({
 
   return (
     <CustomWidgetWrapper title={title} isLoading={isLoading}>
-      {data.length > 0 && !isLoading && <CustomTimelineUI data={data} />}
+      {!data.length ? null : <CustomTimelineUI data={data} />}
     </CustomWidgetWrapper>
   );
 }

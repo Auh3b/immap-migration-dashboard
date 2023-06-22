@@ -20,6 +20,7 @@ import useMediaData from 'components/indicators/media/hooks/useMediaData';
 import TopLoading from 'components/common/TopLoading';
 import getSourceFilter from 'components/indicators/media/utils/getSourceFilter';
 import { UNICEF_COLORS } from 'theme';
+import { MEDIA_SOURCES_NAMES } from './utils/mediaUtils';
 
 const id = 'menciones_sociales';
 const source = 'meltwater';
@@ -66,6 +67,8 @@ const StyledToggleButton = withStyles((theme) => ({
     border: '3px solid' + UNICEF_COLORS[0] + ' !important',
   },
 }))(ToggleButton);
+
+const valueFormatter = Object.fromEntries(MEDIA_SOURCES_NAMES);
 
 export default function MediaAggregateIndicators({ isLoading }: any) {
   const dispatch = useDispatch();
@@ -121,6 +124,7 @@ export default function MediaAggregateIndicators({ isLoading }: any) {
         values: [newSource],
         owner: id,
         type: _FilterTypes.IN,
+        valueFormatter,
       }),
     );
   };

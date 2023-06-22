@@ -5,7 +5,7 @@ import executeExternalMethod from './methods/executeExternalMethod';
 
 interface getProcessedDataProps {
   sourceId: string;
-  params: getProcessedDataPropsParams;
+  params?: getProcessedDataPropsParams;
   global?: Boolean;
   column?: string;
   methodName?: string;

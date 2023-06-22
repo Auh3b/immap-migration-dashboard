@@ -7,7 +7,7 @@ import useWidgetEffect from '../utils/useWidgetEffect';
 import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
 
 const NOTE = 'País de nacimiento del migrante que responde.';
-const id = 'originCountry';
+const id = 'País_de_nacimiento';
 const title = 'País de nacimiento';
 const column = 'e08_pais_';
 const filterType = _FilterTypes.IN;

@@ -10,12 +10,6 @@ const DeckGLComponent = lazy(
       /* webpackChunkName: 'deck-gl' */ 'components/common/map/DeckGLComponent'
     ),
 );
-const GoogleMapsComponent = lazy(
-  () =>
-    import(
-      /* webpackChunkName: 'google-map' */ 'components/common/map/GoogleMapsComponent'
-    ),
-);
 
 const BASEMAP_TYPES = {
   mapbox: 'mapbox',
@@ -61,7 +55,6 @@ export default function Map({ layers }: { layers: any[] }) {
 
   const mapsAvailable = {
     [BASEMAP_TYPES.mapbox]: () => <DeckGLComponent layers={layers} />,
-    [BASEMAP_TYPES.gmaps]: () => <GoogleMapsComponent layers={layers} />,
   };
 
   let map = mapsAvailable[basemap.type] ? (

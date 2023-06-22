@@ -13,6 +13,13 @@ import {
 import { MIGRATION_FLOW_LAYER_ID } from 'components/layers/MigrationFlowLayer';
 import { HOTSPOTS_LAYER_ID } from 'components/layers/HotspotsLayer';
 import { setPageInfo } from 'store/mapSlice';
+import { ActiveFilters } from 'components/common/sideAnalysticsPanel/ActiveFilters';
+import FilterListIcon from '@material-ui/icons/FilterList';
+import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
+import MigrationPageInfo from './migrationViews/MigrationPageInfo';
+import { StateSlices } from 'utils/types';
+import MigrationFilters from './migrationViews/MigrationFilters';
+import TuneIcon from '@material-ui/icons/Tune';
 
 export default function MigrationFlow() {
   const dispatch = useDispatch();
@@ -32,8 +39,6 @@ export default function MigrationFlow() {
       }),
     );
 
-    dispatch(setPageInfo({ location: 'migrationFlow' }));
-
     return () => {
       dispatch(removeLayer(MIGRATION_FLOW_LAYER_ID));
       dispatch(removeLayer(HOTSPOTS_LAYER_ID));
@@ -47,6 +52,30 @@ export default function MigrationFlow() {
   return (
     <MainView>
       {{
+        side: [
+          {
+            content: <MigrationPageInfo />,
+            value: 1,
+            title: 'Metodología',
+            icon: <HelpOutlineIcon />,
+          },
+          {
+            content: (
+              <ActiveFilters
+                filterSources={[{ stateSlice: StateSlices.CARTO }]}
+              />
+            ),
+            value: 2,
+            title: 'Filtros Activos',
+            icon: <FilterListIcon />,
+          },
+          {
+            content: <MigrationFilters />,
+            value: 3,
+            title: 'Filtros Adicionales',
+            icon: <TuneIcon />,
+          },
+        ],
         left: {
           element: <MigrationLeftView dataSources={{ mainSource }} />,
           expandable: false,

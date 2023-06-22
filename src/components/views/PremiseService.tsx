@@ -12,6 +12,9 @@ import {
 import MainView from './main/MainView';
 import PremiseLeftView from './premiseViews/PremiseLeftView';
 import PremiseRightView from './premiseViews/PremiseRightView';
+import { ActiveFilters } from 'components/common/sideAnalysticsPanel/ActiveFilters';
+import { StateSlices } from 'utils/types';
+import FilterListIcon from '@material-ui/icons/FilterList';
 
 export default function PremiseService() {
   const dispatch = useDispatch();
@@ -43,6 +46,18 @@ export default function PremiseService() {
   return (
     <MainView>
       {{
+        side: [
+          {
+            content: (
+              <ActiveFilters
+                filterSources={[{ stateSlice: StateSlices.CARTO }]}
+              />
+            ),
+            value: 2,
+            title: 'Filtros Activos',
+            icon: <FilterListIcon />,
+          },
+        ],
         left: {
           element: (
             <PremiseLeftView

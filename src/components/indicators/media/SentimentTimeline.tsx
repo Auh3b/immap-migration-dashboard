@@ -5,8 +5,9 @@ import { METHOD_NAMES } from 'components/views/mediaViews/utils/methodName';
 import { useMemo } from 'react';
 import useMediaData from './hooks/useMediaData';
 import NoWidgetData from 'components/common/customWidgets/NoWidgetData';
+import { formatDate } from 'utils/dateHelpers';
 
-const id = 'sentimentTimeline';
+const id = 'Serie_histórica_de_sentimiento';
 const source = 'meltwater';
 
 export default function SentimentTimeline() {
@@ -64,7 +65,7 @@ export default function SentimentTimeline() {
       yAxis: {},
       xAxis: {
         type: 'category',
-        data: data.map((d) => d[0]),
+        data: data.map((d) => formatDate(+d[0])),
       },
       series,
     }),

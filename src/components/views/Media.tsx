@@ -1,6 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
-import MediaFilterToolbar from './mediaViews/MediaFilterToolbar';
 import { Suspense, lazy, useEffect, useState } from 'react';
 import { setError } from 'store/appSlice';
 import { getDownloadURL, ref } from 'firebase/storage';
@@ -10,6 +9,13 @@ import executeMethod from 'components/indicators/media/hooks/executeMethod';
 import { METHOD_NAMES } from './mediaViews/utils/methodName';
 import { setIsMediaDataReady } from 'store/mediaSlice';
 import ComponentFallback from 'components/common/ComponentFallback';
+import SideAnalyticsPanel from 'components/common/sideAnalysticsPanel/Index';
+import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
+import TuneIcon from '@material-ui/icons/Tune';
+import FilterListIcon from '@material-ui/icons/FilterList';
+import { ActiveFilters } from 'components/common/sideAnalysticsPanel/ActiveFilters';
+import { StateSlices } from 'utils/types';
+import MediaFilterToolbar from './mediaViews/mediaFilterToolbar/Index';
 
 const MediaIndicators = lazy(() => import('./mediaViews/MediaIndicators'));
 const MediaAggregateIndicators = lazy(
@@ -20,7 +26,6 @@ const MediaPosts = lazy(() => import('./mediaViews/MediaPosts'));
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: theme.spacing(2),
-    width: '100%',
     height: '100%',
     maxHeight: `calc(100vh - ${theme.mixins.toolbar.minHeight}px)`,
     overflowY: 'auto',
@@ -40,7 +45,7 @@ export default function Media() {
     try {
       const dataRef = ref(
         fireStorage,
-        'data/summarised_meltwater_data_v5.json',
+        'data/summarised_meltwater_data_v6.json',
       );
       const dataUrl = await getDownloadURL(dataRef);
       const dataReq = await fetch(dataUrl);
@@ -62,23 +67,50 @@ export default function Media() {
   }, []);
 
   return (
-    <Grid
-      container
-      direction='column'
-      item
-      wrap='nowrap'
-      className={classes.root}
-    >
-      <MediaFilterToolbar />
-      <Suspense fallback={<ComponentFallback />}>
-        <MediaAggregateIndicators isLoading={isLoading} />
-      </Suspense>
-      <Suspense fallback={<ComponentFallback />}>
-        <MediaIndicators isLoading={isLoading} />
-      </Suspense>
-      <Suspense fallback={<ComponentFallback />}>
-        <MediaPosts isLoading={isLoading} />
-      </Suspense>
-    </Grid>
+    <>
+      <SideAnalyticsPanel>
+        {[
+          {
+            content: <span>Methodology</span>,
+            value: 1,
+            title: 'Metodología',
+            icon: <HelpOutlineIcon />,
+          },
+          {
+            content: (
+              <ActiveFilters
+                filterSources={[{ stateSlice: StateSlices.MEDIA }]}
+              />
+            ),
+            value: 2,
+            title: 'Filtros Activos',
+            icon: <FilterListIcon />,
+          },
+          {
+            content: <MediaFilterToolbar />,
+            value: 3,
+            title: 'Filtros Adicionales',
+            icon: <TuneIcon />,
+          },
+        ]}
+      </SideAnalyticsPanel>
+      <Grid
+        container
+        direction='column'
+        item
+        wrap='nowrap'
+        className={classes.root}
+      >
+        <Suspense fallback={<ComponentFallback />}>
+          <MediaAggregateIndicators isLoading={isLoading} />
+        </Suspense>
+        <Suspense fallback={<ComponentFallback />}>
+          <MediaIndicators isLoading={isLoading} />
+        </Suspense>
+        <Suspense fallback={<ComponentFallback />}>
+          <MediaPosts isLoading={isLoading} />
+        </Suspense>
+      </Grid>
+    </>
   );
 }

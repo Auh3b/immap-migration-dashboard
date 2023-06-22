@@ -2,7 +2,7 @@ import { CSSProperties, useCallback, useMemo, useState } from 'react';
 import ReactEchart from 'components/common/customCharts/ReactEcharts';
 import { useTheme } from '@material-ui/core';
 import { sum } from 'd3';
-import { SICK_CATEGORY_ABREVATIONS } from 'components/indicators/premise/utils/services';
+import { SICK_CATEGORY_ABREVATIONS } from 'components/indicators/premise/utils/premiseServiceDefinitions';
 import { EXTENDED_PALETTE_RAND } from 'theme';
 import { grey } from '@material-ui/core/colors';
 

@@ -3,6 +3,8 @@ import { MEDIA_SOURCES, Input, MediaParams, POST_URL_MAP } from './mediaUtils';
 import groupByValue, { GroupByTypes } from 'utils/groupByValue';
 import { Filters, filterValues } from 'utils/filterFunctions';
 import crypto from 'crypto';
+import { getTemporalFilters } from 'utils/dateHelpers';
+import { getUnixTimestamp } from 'utils/dateHelpers';
 
 let mediaData: Partial<Input>;
 
@@ -239,7 +241,7 @@ export function getTopPhrases({ filters }: MediaParams) {
       type: GroupByTypes.SUM,
     })
       .sort((a, b) => descending(a.value, b.value))
-      .slice(0, 20);
+      .slice(0, 30);
 
     return output.sort((a, b) => ascending(a.value, b.value));
   }
@@ -284,5 +286,18 @@ export function getTopPosts({ filters }: MediaParams) {
     return output;
   }
 
+  return null;
+}
+
+export function getTemporalFilterValues({ filters }: MediaParams) {
+  if (mediaData) {
+    const { sources } = mediaData;
+    const sourceWithUnixTime = sources.map((d) => ({
+      ...d,
+      date: getUnixTimestamp(new Date(d.date)),
+    }));
+    const column = 'date';
+    return getTemporalFilters(sourceWithUnixTime, column);
+  }
   return null;
 }

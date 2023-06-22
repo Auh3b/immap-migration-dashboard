@@ -1,5 +1,3 @@
-import premiseSource from 'data/sources/premiseSource';
-import mainSource from 'data/sources/mainSource';
 import timelineSource from 'data/sources/timelineSource';
 import { useDispatch } from 'react-redux';
 import {
@@ -12,25 +10,19 @@ import MainView from './main/MainView';
 import { useEffect } from 'react';
 import { SURVEY_TIMELINE_LAYER_ID } from 'components/layers/SurveyTimelineLayer';
 import DinamicaLeftView from './dinamicaViews/DinamicaLeftView';
-import { HOTSPOTS_LAYER_ID } from 'components/layers/HotspotsLayer';
+import { ActiveFilters } from 'components/common/sideAnalysticsPanel/ActiveFilters';
+import FilterListIcon from '@material-ui/icons/FilterList';
+import { StateSlices } from 'utils/types';
+import TuneIcon from '@material-ui/icons/Tune';
+import DinamicaFilters from './dinamicaViews/DinamicaFilters';
 
 export default function DinámicaAurora() {
   const dispatch = useDispatch();
   const sources = {
-    premiseSource,
-    mainSource,
-    timelineSource,
+    timelineSource: timelineSource.id,
   };
 
   useEffect(() => {
-    dispatch(addSource(mainSource));
-    dispatch(
-      addLayer({
-        id: HOTSPOTS_LAYER_ID,
-        source: mainSource.id,
-      }),
-    );
-
     dispatch(addSource(timelineSource));
 
     dispatch(
@@ -42,9 +34,7 @@ export default function DinámicaAurora() {
 
     return () => {
       dispatch(removeLayer(SURVEY_TIMELINE_LAYER_ID));
-      dispatch(removeLayer(HOTSPOTS_LAYER_ID));
       dispatch(removeSource(timelineSource.id));
-      dispatch(removeSource(mainSource.id));
     };
   }, [dispatch]);
 
@@ -53,6 +43,24 @@ export default function DinámicaAurora() {
   return (
     <MainView>
       {{
+        side: [
+          {
+            content: (
+              <ActiveFilters
+                filterSources={[{ stateSlice: StateSlices.CARTO }]}
+              />
+            ),
+            value: 2,
+            title: 'Filtros Activos',
+            icon: <FilterListIcon />,
+          },
+          {
+            content: <DinamicaFilters />,
+            value: 3,
+            title: 'Filtros Adicionales',
+            icon: <TuneIcon />,
+          },
+        ],
         left: {
           element: <DinamicaLeftView dataSources={sources} />,
           expandable: false,

@@ -7,13 +7,13 @@ import { CompositeLayer } from 'deck.gl';
 import { RootState } from 'store/store';
 import { addLayer, removeLayer, selectSourceById } from '@carto/react-redux';
 import { useCartoLayerProps } from '@carto/react-api';
-import getTileFeatures from 'utils/methods/getTileFeatures';
-//@ts-ignore
-import { TILE_FORMATS } from '@deck.gl/carto';
 import { format, scaleLinear } from 'd3';
 import distance from '@turf/distance';
 import d3Hex2RGB from 'utils/d3Hex2RGB';
 import { LEGEND_TYPES } from '@carto/react-ui';
+import mainSource from 'data/sources/mainSource';
+// @ts-ignore
+import { fetchLayerData } from '@deck.gl/carto';
 
 const layerStyle = new Map([
   ['País de nacimiento', d3Hex2RGB(1)],
@@ -204,32 +204,25 @@ const getArcHeight = (d: any) => {
   };
 };
 
+async function fetchData() {
+  const { data } = await fetchLayerData({
+    ...mainSource,
+    source: mainSource.data,
+    format: 'json',
+  });
+  return data.filter(filterCoordinates);
+}
 export default function MigrationFlowLayer() {
-  const { viewport } = useSelector((state: RootState) => state.carto);
   const dispatch = useDispatch();
   const { layers: loadedLayers } = useSelector(
     (state: RootState) => state.carto,
   );
-  const { hotspotsLayer, migrationFlowLayer } = useSelector(
+  const { migrationFlowLayer } = useSelector(
     (state: RootState) => state.carto.layers,
   );
   const source = useSelector((state) =>
     selectSourceById(state, migrationFlowLayer?.source),
   );
-
-  async function fetchData() {
-    const data = await getTileFeatures({
-      sourceId: source.id,
-      params: {
-        viewport,
-        tileFormat: TILE_FORMATS.GEOJSON,
-        limit: null,
-        filters: source.filters,
-        filtersLogicalOperator: source.filtersLogicalOperator,
-      },
-    });
-    return data.filter(filterCoordinates).map(getArcHeight);
-  }
 
   const cartoLayerProps = useCartoLayerProps({
     source,
@@ -237,7 +230,7 @@ export default function MigrationFlowLayer() {
   });
   delete cartoLayerProps.onDataLoad;
 
-  if (hotspotsLayer && migrationFlowLayer && source) {
+  if (migrationFlowLayer && source) {
     return new TravelLayer({
       ...cartoLayerProps,
       data: fetchData(),

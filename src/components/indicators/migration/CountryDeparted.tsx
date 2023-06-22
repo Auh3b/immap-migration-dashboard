@@ -7,7 +7,7 @@ import useWidgetEffect from '../utils/useWidgetEffect';
 import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
 
 const NOTE = 'País desde donde inicia el flujo migratorio';
-const id = 'countryDeparted';
+const id = 'País_inicial_de_flujo_migratorio';
 const title = 'País inicial de flujo migratorio';
 const column = 'e10_pais_';
 const filterType = _FilterTypes.IN;

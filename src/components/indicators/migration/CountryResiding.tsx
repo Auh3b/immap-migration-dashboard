@@ -7,7 +7,7 @@ import useWidgetEffect from '../utils/useWidgetEffect';
 import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
 
 const NOTE = 'País donde vivía hace un año.';
-const id = 'countryResiding';
+const id = 'País_donde_vivía';
 const title = 'País donde vivía';
 const column = 'e12_pais_';
 const filterType = _FilterTypes.IN;

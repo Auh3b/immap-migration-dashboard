@@ -7,6 +7,7 @@ import {
   getMediaOrigins,
   getSentimentHistory,
   getSentimentPercentages,
+  getTemporalFilterValues,
   getTopPhrases,
   getTopPosts,
   setMediaData,
@@ -23,6 +24,7 @@ const methodMap = new Map<string, Function>([
   [METHOD_NAMES.MEDIA_TOP_PHRASES, getTopPhrases],
   [METHOD_NAMES.MEDIA_ENGAGEMENT_HISTORY, getHistoricalEngagementBySource],
   [METHOD_NAMES.MEDIA_TOP_POSTS, getTopPosts],
+  [METHOD_NAMES.GET_TEMPORAL_FILTER_VALUES, getTemporalFilterValues],
 ]);
 
 function runTransform(methodName: string, params: Partial<MediaParams>) {

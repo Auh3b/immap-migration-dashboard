@@ -8,7 +8,7 @@ import { serviceTypeChildren } from './utils/serviceIndicatorTypes';
 import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
 
 const NOTE = 'Ayudas humanitarias recibidas según zona de tránsito';
-const id = 'serviceTypeAdult';
+const id = 'Ayudas_humanitarias_NNA';
 const title = 'Ayudas humanitarias NNA';
 const column = 'm18_1';
 const filterType = _FilterTypes.IN;

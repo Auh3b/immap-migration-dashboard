@@ -11,7 +11,7 @@ import { FilterTypes } from 'utils/filterFunctions';
 import NoWidgetData from 'components/common/customWidgets/NoWidgetData';
 import getSourceFilter from './utils/getSourceFilter';
 
-const id = 'top_phrases';
+const id = 'Palabras_asociadas';
 
 const useStyles = makeStyles((theme) => ({
   root: {

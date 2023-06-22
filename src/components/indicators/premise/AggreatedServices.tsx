@@ -1,5 +1,4 @@
 import NoWidgetData from './../../common/customWidgets/NoWidgetData';
-import ClearFiltersButton from 'components/common/ClearFiltersButton';
 import {
   FormControl,
   Grid,
@@ -12,7 +11,7 @@ import {
 import { BasicWidgetType } from 'components/common/customWidgets/basicWidgetType';
 import useWidgetFetch from 'components/common/customWidgets/hooks/useWidgetFetch';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { SERVICES_KEY } from './utils/services';
+import { SERVICES_KEY } from './utils/premiseServiceDefinitions';
 import CustomWidgetWrapper from 'components/common/customWidgets/CustomWidgetWrapper';
 import { FilterItem, filterValues } from 'utils/filterFunctions';
 import { _FilterTypes } from '@carto/react-core';
@@ -27,7 +26,8 @@ import getViewport from './utils/getViewport';
 import getFeatureCollection from './utils/getFeatureCollection';
 import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
 import CustomConnectDotChart from 'components/common/customCharts/CustomConnectDotChart';
-import { SERVICE_STAT_COLUMNS } from './utils/services';
+import { SERVICE_STAT_COLUMNS } from './utils/premiseServiceDefinitions';
+import useWidgetFilterValues from 'components/common/customWidgets/hooks/useWidgetFilterValues';
 
 const otherColumns = {
   country: 'ubicacion_',
@@ -72,7 +72,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const id = 'aggregatedService';
+const id =
+  'Capacidad_de_atención_y_operación_del_punto_de_servicio_o_ayuda_humanitaria';
 const title =
   'Capacidad de atención y operación del punto de servicio o ayuda humanitaria';
 const methodName = EXTERNAL_METHOD_NAMES.GET_CONNECTED_DOT_SERVICES;
@@ -82,12 +83,21 @@ const methodParams = {
   servicesKey: Object.fromEntries(SERVICES_KEY),
   serviceStatColumnLength: SERVICE_STAT_COLUMNS_NAME.length,
 };
+const type = _FilterTypes.STRING_SEARCH;
+const valueFormatter = Object.fromEntries(SERVICES_KEY);
 
 export default function AggreatedServices({ dataSource }: BasicWidgetType) {
   const dispatch = useDispatch();
   const [filters, setFilters] = useState<Record<string, FilterItem> | null>(
     null,
   );
+  // const selectedValue = useWidgetFilterValues({
+  //   dataSource,
+  //   column,
+  //   id,
+  //   type
+  // }) || []
+
   const { width, height } = useSelector(
     (state: RootState) => state.carto.viewState,
   );
@@ -123,9 +133,10 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
           addFilter({
             id: dataSource,
             column: COLUNM_MAP.get(column),
-            type: _FilterTypes.STRING_SEARCH,
+            type,
             params: {
               useRegExp: true,
+              valueFormatter,
             },
             values: ['^(.*,|)' + currentSelection + '(,.*|)$'],
             owner,
@@ -221,24 +232,6 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
               addFilter={setFilters}
               callback={handleLocationChange}
               callbackProps={{ data, width, height }}
-            />
-            <ClearFiltersButton
-              className={classes.clearButton}
-              disabled={filters ? !Object.keys(filters).length : true}
-              clearCallback={() => {
-                setFilters({});
-                const { latitude, longitude, zoom } = initialState.viewState;
-                handleMapTransitions({
-                  start: 500,
-                  end: 1000,
-                  params: {
-                    latitude,
-                    longitude,
-                    zoom,
-                  },
-                  dispatch,
-                });
-              }}
             />
           </Grid>
           <AggreatedServicesLegend />

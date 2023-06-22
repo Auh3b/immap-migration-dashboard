@@ -16,7 +16,7 @@ const CATEGORY_ABREVATIONS = new Map([
 ]);
 
 const NOTE = 'Medios de transporte empleados durante la ruta';
-const id = 'transportMode';
+const id = 'Medios_de_transporte';
 const title = 'Medios de transporte';
 const column = 'e14_medios';
 const filterType = _FilterTypes.STRING_SEARCH;
@@ -32,6 +32,7 @@ const props = {
   labels,
   filterParams: {
     useRegExp: true,
+    valueFormatter: labels,
   },
 };
 
