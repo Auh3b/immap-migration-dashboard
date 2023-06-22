@@ -220,12 +220,7 @@ function CriteriaSelector(props: CriteriaSelectorProps) {
           type === _FilterTypes.STRING_SEARCH
             ? categories.map((d: any) => `^(.*,|)${d}(,.*|)$`)
             : categories;
-        const valueFormatter = Object.fromEntries(
-          withRegExp.map((strExp: string) => [
-            strExp,
-            labels[Number(getStringSearchValue(strExp))],
-          ]),
-        );
+        const valueFormatter = labels
 
         dispatch(
           addMediaFilter({
