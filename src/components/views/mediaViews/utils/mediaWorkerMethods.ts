@@ -241,7 +241,7 @@ export function getTopPhrases({ filters }: MediaParams) {
       type: GroupByTypes.SUM,
     })
       .sort((a, b) => descending(a.value, b.value))
-      .slice(0, 20);
+      .slice(0, 30);
 
     return output.sort((a, b) => ascending(a.value, b.value));
   }
