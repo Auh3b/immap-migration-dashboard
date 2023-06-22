@@ -32,6 +32,7 @@ const props = {
   labels,
   filterParams: {
     useRegExp: true,
+    valueFormatter: labels
   },
 };
 
