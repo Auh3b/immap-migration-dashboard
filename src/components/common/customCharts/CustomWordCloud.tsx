@@ -6,10 +6,10 @@ import { extent, median, scaleSequential } from 'd3';
 import { numberFormatter } from 'utils/formatter';
 
 const margin = {
-  top: 0,
-  left: 0,
-  right: 0,
-  bottom: 0,
+  top: 10,
+  left: 10,
+  right: 10,
+  bottom: 10,
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -62,7 +62,7 @@ export default function CustomWordCloud({
       .rotate(0)
       .padding(8)
       .font('Barlow')
-      .fontSize((d) => Math.sqrt(d.size / 10 ** exponent) * 15)
+      .fontSize((d) => Math.sqrt(d.size / 10 ** exponent) * 12)
       .on('word', ({ x, y, text, size, font, value }: any) => {
         output = [...output, [x, y, text, size, font, value]];
       });
@@ -168,6 +168,7 @@ export default function CustomWordCloud({
     <ReactEcharts
       onEvents={{ click: onClick }}
       option={option}
+      opts={{renderer:'svg'}}
       className={classes.root}
       style={{ width, height }}
     />
