@@ -168,7 +168,6 @@ export default function CustomWordCloud({
     <ReactEcharts
       onEvents={{ click: onClick }}
       option={option}
-      opts={{renderer:'svg'}}
       className={classes.root}
       style={{ width, height }}
     />
