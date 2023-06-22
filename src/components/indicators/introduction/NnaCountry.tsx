@@ -1,5 +1,5 @@
 import { Grid } from '@material-ui/core';
-import { useCallback, useMemo } from 'react';
+import { useCallback } from 'react';
 import TitleWrapper from '../../common/TitleWrapper';
 import CustomWordCloud from 'components/common/customCharts/CustomWordCloud';
 import { useDispatch, useSelector } from 'react-redux';
