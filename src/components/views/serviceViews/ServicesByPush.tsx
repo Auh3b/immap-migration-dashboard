@@ -10,8 +10,9 @@ import { RootState } from 'store/store';
 import { addFilter, removeFilter } from '@carto/react-redux';
 import useWidgetFetch from 'components/common/customWidgets/hooks/useWidgetFetch';
 import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
+import useWidgetFilterValues from 'components/common/customWidgets/hooks/useWidgetFilterValues';
 
-const id = 'services_pushes';
+const id = 'empujes_de_servicio';
 const pushs = [1, 2, 3, 4, 5];
 const column = 'push';
 const filterType = _FilterTypes.IN;
@@ -45,14 +46,7 @@ const StyledToggleButton = withStyles((theme) => ({
 
 export default function ServicesByPush() {
   const dispatch = useDispatch();
-  const adultServices = useSelector(
-    (state: RootState) => state.carto.dataSources[serviceFeedbackV2Source.id],
-  );
-  const childrenServices = useSelector(
-    (state: RootState) =>
-      state.carto.dataSources[serviceFeedbackNnaV2Source.id],
-  );
-
+  
   const { data: _adultData } = useWidgetFetch({
     id,
     methodName,
@@ -85,21 +79,19 @@ export default function ServicesByPush() {
     return {};
   }, [_childData]);
 
-  const adultPush = useMemo(() => {
-    if (!adultServices) return [];
-    if (!adultServices.filters) return [];
-    if (!adultServices.filters[column]) return [];
-    if (!adultServices.filters[column][filterType]) return [];
-    return adultServices.filters[column][filterType].values;
-  }, [adultServices]);
+  const adultPush = useWidgetFilterValues({
+    dataSource: adultSource,
+    id: id+'_-_adulto',
+    column,
+    type: filterType
+  }) || [];
 
-  const childPush = useMemo(() => {
-    if (!childrenServices) return [];
-    if (!childrenServices.filters) return [];
-    if (!childrenServices.filters[column]) return [];
-    if (!childrenServices.filters[column][filterType]) return [];
-    return childrenServices.filters[column][filterType].values;
-  }, [childrenServices]);
+  const childPush = useWidgetFilterValues({
+    dataSource: childSource,
+    id: id+'_-_nna',
+    column,
+    type: filterType
+  }) || [];
 
   const selectedPushes = useMemo(() => {
     if (adultPush.length || childPush.length) {
@@ -116,7 +108,7 @@ export default function ServicesByPush() {
           id: serviceFeedbackV2Source.id,
           type: filterType,
           values: newPushes,
-          owner: id,
+          owner: id+'_-_adulto',
         }),
       );
       dispatch(
@@ -125,7 +117,7 @@ export default function ServicesByPush() {
           id: serviceFeedbackNnaV2Source.id,
           type: filterType,
           values: newPushes,
-          owner: id,
+          owner: id+'_-_nna',
         }),
       );
     } else {
@@ -133,14 +125,14 @@ export default function ServicesByPush() {
         removeFilter({
           column,
           id: serviceFeedbackV2Source.id,
-          owner: id,
+          owner: id+'_-_adulto',
         }),
       );
       dispatch(
         removeFilter({
           column,
           id: serviceFeedbackNnaV2Source.id,
-          owner: id,
+          owner: id+'_-_nna',
         }),
       );
     }
