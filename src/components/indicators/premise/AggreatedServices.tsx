@@ -83,7 +83,7 @@ const methodParams = {
   servicesKey: Object.fromEntries(SERVICES_KEY),
   serviceStatColumnLength: SERVICE_STAT_COLUMNS_NAME.length,
 };
-const type = _FilterTypes.STRING_SEARCH
+const type = _FilterTypes.STRING_SEARCH;
 const valueFormatter = Object.fromEntries(SERVICES_KEY);
 
 export default function AggreatedServices({ dataSource }: BasicWidgetType) {

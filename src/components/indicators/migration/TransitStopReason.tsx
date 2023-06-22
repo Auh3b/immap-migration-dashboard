@@ -34,7 +34,7 @@ const props = {
   filterType,
   filterParams: {
     useRegExp: true,
-    valueFormatter: labels
+    valueFormatter: labels,
   },
   labels,
 };

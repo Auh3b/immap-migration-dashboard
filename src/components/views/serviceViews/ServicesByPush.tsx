@@ -46,7 +46,7 @@ const StyledToggleButton = withStyles((theme) => ({
 
 export default function ServicesByPush() {
   const dispatch = useDispatch();
-  
+
   const { data: _adultData } = useWidgetFetch({
     id,
     methodName,
@@ -79,19 +79,21 @@ export default function ServicesByPush() {
     return {};
   }, [_childData]);
 
-  const adultPush = useWidgetFilterValues({
-    dataSource: adultSource,
-    id: id+'_-_adulto',
-    column,
-    type: filterType
-  }) || [];
+  const adultPush =
+    useWidgetFilterValues({
+      dataSource: adultSource,
+      id: id + '_-_adulto',
+      column,
+      type: filterType,
+    }) || [];
 
-  const childPush = useWidgetFilterValues({
-    dataSource: childSource,
-    id: id+'_-_nna',
-    column,
-    type: filterType
-  }) || [];
+  const childPush =
+    useWidgetFilterValues({
+      dataSource: childSource,
+      id: id + '_-_nna',
+      column,
+      type: filterType,
+    }) || [];
 
   const selectedPushes = useMemo(() => {
     if (adultPush.length || childPush.length) {
@@ -108,7 +110,7 @@ export default function ServicesByPush() {
           id: serviceFeedbackV2Source.id,
           type: filterType,
           values: newPushes,
-          owner: id+'_-_adulto',
+          owner: id + '_-_adulto',
         }),
       );
       dispatch(
@@ -117,7 +119,7 @@ export default function ServicesByPush() {
           id: serviceFeedbackNnaV2Source.id,
           type: filterType,
           values: newPushes,
-          owner: id+'_-_nna',
+          owner: id + '_-_nna',
         }),
       );
     } else {
@@ -125,14 +127,14 @@ export default function ServicesByPush() {
         removeFilter({
           column,
           id: serviceFeedbackV2Source.id,
-          owner: id+'_-_adulto',
+          owner: id + '_-_adulto',
         }),
       );
       dispatch(
         removeFilter({
           column,
           id: serviceFeedbackNnaV2Source.id,
-          owner: id+'_-_nna',
+          owner: id + '_-_nna',
         }),
       );
     }
