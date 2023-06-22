@@ -27,6 +27,7 @@ import getFeatureCollection from './utils/getFeatureCollection';
 import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
 import CustomConnectDotChart from 'components/common/customCharts/CustomConnectDotChart';
 import { SERVICE_STAT_COLUMNS } from './utils/premiseServiceDefinitions';
+import useWidgetFilterValues from 'components/common/customWidgets/hooks/useWidgetFilterValues';
 
 const otherColumns = {
   country: 'ubicacion_',
@@ -82,14 +83,21 @@ const methodParams = {
   servicesKey: Object.fromEntries(SERVICES_KEY),
   serviceStatColumnLength: SERVICE_STAT_COLUMNS_NAME.length,
 };
+const type = _FilterTypes.STRING_SEARCH
 const valueFormatter = Object.fromEntries(SERVICES_KEY);
-console.log(valueFormatter);
 
 export default function AggreatedServices({ dataSource }: BasicWidgetType) {
   const dispatch = useDispatch();
   const [filters, setFilters] = useState<Record<string, FilterItem> | null>(
     null,
   );
+  // const selectedValue = useWidgetFilterValues({
+  //   dataSource,
+  //   column,
+  //   id,
+  //   type
+  // }) || []
+
   const { width, height } = useSelector(
     (state: RootState) => state.carto.viewState,
   );
@@ -125,7 +133,7 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
           addFilter({
             id: dataSource,
             column: COLUNM_MAP.get(column),
-            type: _FilterTypes.STRING_SEARCH,
+            type,
             params: {
               useRegExp: true,
               valueFormatter,
