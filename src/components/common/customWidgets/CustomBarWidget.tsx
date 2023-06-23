@@ -20,6 +20,7 @@ export default function CustomBarWidget({
   dataSource,
   column,
   filterType,
+  yAxisFormatter,
   labels,
   order = [],
 }: defaultCustomWidgetProps) {
@@ -106,6 +107,8 @@ export default function CustomBarWidget({
           <CustomBarWidgetUI
             height={400}
             selectedBars={selectedBars}
+            // @ts-ignore
+            yAxisFormatter={yAxisFormatter}
             onSelectedBarsChange={handleSelectedBarsChange}
             labels={labels}
             //@ts-ignore
