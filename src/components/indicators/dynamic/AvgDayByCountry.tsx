@@ -9,7 +9,7 @@ import { numberFormatter } from 'utils/formatter';
 
 const title =
   'Días promedio transcurridos entre Enganche y último monitoreo por país';
-const id = 'avgDaysByCountry';
+const id = 'Días_promedio_transcurridos_entre_Enganche_y_último_monitoreo_por_aís';
 const column = 'pais_fin';
 const NOTE =
   'Tiempo estimado (días) que ha transcurrido entre el enganche y el último país  de localización reportado';
