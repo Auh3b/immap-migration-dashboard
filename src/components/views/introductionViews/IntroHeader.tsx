@@ -114,7 +114,7 @@ export default function IntroHeader() {
           </Typography>
         </Grid>
         <Button color='primary' onClick={handleOpen}>
-          Explore More
+          Explora más
         </Button>
         <UserMenu />
       </Toolbar>
