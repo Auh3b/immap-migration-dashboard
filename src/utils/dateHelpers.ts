@@ -184,7 +184,13 @@ export function getTemporalFilters(
           ...quarterChildren,
           [
             _monthOutput.name,
-            { ..._monthOutput, children: Object.fromEntries(monthChildren) },
+
+            {
+              ..._monthOutput,
+              start: monthChildren[0][1].start,
+              end: monthChildren.at(-1)[1].end,
+              children: Object.fromEntries(monthChildren),
+            },
           ],
         ];
       }
@@ -192,13 +198,20 @@ export function getTemporalFilters(
         ...yearChildren,
         [
           _quarterOutput.name,
-          { ..._quarterOutput, children: Object.fromEntries(quarterChildren) },
+          {
+            ..._quarterOutput,
+            start: quarterChildren[0][1].start,
+            end: quarterChildren.at(-1)[1].end,
+            children: Object.fromEntries(quarterChildren),
+          },
         ],
       ];
     }
 
     output[_yearOutput.name] = {
       ..._yearOutput,
+      start: yearChildren[0][1].start,
+      end: yearChildren.at(-1)[1].end,
       children: Object.fromEntries(yearChildren),
     };
   }
