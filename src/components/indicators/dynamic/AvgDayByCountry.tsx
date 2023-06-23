@@ -5,6 +5,7 @@ import CustomBarWidget from 'components/common/customWidgets/CustomBarWidget';
 import { _FilterTypes } from '@carto/react-core';
 import WidgetNote from 'components/common/customWidgets/WidgetNote';
 import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
+import { numberFormatter } from 'utils/formatter';
 
 const title =
   'Días promedio transcurridos entre Enganche y último monitoreo por país';
@@ -24,6 +25,7 @@ const props = {
   filterType,
   methodName,
   methodParams,
+  yAxisFormatter: (value: number) => numberFormatter(value),
 };
 
 export default function AvgDayByCountry({ dataSource }: BasicWidgetType) {
