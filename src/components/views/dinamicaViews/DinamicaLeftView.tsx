@@ -7,9 +7,9 @@ export default function DinamicaLeftView({ dataSources }: any) {
   const { timelineSource } = dataSources;
   return (
     <Grid xs item>
-      <MobileSurveyTimeline dataSource={timelineSource.id} />
-      <AverageElapsedDays dataSource={timelineSource.id} />
-      <AvgDayByCountry dataSource={timelineSource.id} />
+      <MobileSurveyTimeline dataSource={timelineSource} />
+      <AverageElapsedDays dataSource={timelineSource} />
+      <AvgDayByCountry dataSource={timelineSource} />
     </Grid>
   );
 }
