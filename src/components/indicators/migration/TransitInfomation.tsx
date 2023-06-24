@@ -6,9 +6,9 @@ import WidgetNote from 'components/common/customWidgets/WidgetNote';
 import useWidgetEffect from '../utils/useWidgetEffect';
 import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
 
-const labels = {
-  1: 'Ubicaciones de la ayuda humanitaria',
-};
+// const labels = {
+//   1: 'Ubicaciones de la ayuda humanitaria',
+// };
 
 const NOTE =
   'Tipo de información requerida sobre la ayuda humanitaria en la ruta';

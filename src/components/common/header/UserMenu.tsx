@@ -2,7 +2,6 @@ import { MouseEvent, useState } from 'react';
 import {
   Grid,
   Link,
-  Typography,
   Avatar,
   Menu,
   MenuItem,

@@ -8,7 +8,8 @@ import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
 
 const NOTE =
   'Localización de personas migrantes conectadas a Aurora en los distintos monitoreos';
-const id = 'Localización_de_personas_migrantes_conectadas_a_Aurora_en_los_distintos_monitoreos';
+const id =
+  'Localización_de_personas_migrantes_conectadas_a_Aurora_en_los_distintos_monitoreos';
 const title = 'Personas migrantes conectadas a Aurora';
 const column = 'timeunix';
 const filterType = _FilterTypes.IN;

@@ -2,7 +2,7 @@ import { useEffect, ReactNode, useState } from 'react';
 
 export default function useWidgetEffect(
   widgetComponent: ReactNode,
-  deps: any[],
+  deps: any[] = [],
 ) {
   const [widget, setWidget] = useState<null | ReactNode>(null);
   useEffect(() => {
@@ -10,7 +10,7 @@ export default function useWidgetEffect(
     return () => {
       setWidget(null);
     };
-  }, deps);
+  }, [...deps]);
 
   return {
     widget,

@@ -27,7 +27,6 @@ import getFeatureCollection from './utils/getFeatureCollection';
 import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
 import CustomConnectDotChart from 'components/common/customCharts/CustomConnectDotChart';
 import { SERVICE_STAT_COLUMNS } from './utils/premiseServiceDefinitions';
-import useWidgetFilterValues from 'components/common/customWidgets/hooks/useWidgetFilterValues';
 
 const otherColumns = {
   country: 'ubicacion_',
@@ -154,7 +153,7 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
         );
       }
     },
-    [dispatch],
+    [dispatch, dataSource],
   );
 
   const handleLocationChange = useCallback(
@@ -297,7 +296,7 @@ function Selector({
     }
 
     return 'all';
-  }, [filters]);
+  }, [filters, id]);
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     const value = event.target.value as string;
@@ -327,7 +326,7 @@ function Selector({
     if (callback) {
       callback({ id, type, column, currentSelection, callbackProps });
     }
-  }, [currentSelection, callback]);
+  }, [currentSelection, callback, callbackProps, id, type, column]);
 
   return (
     <Grid item className={classes.root}>

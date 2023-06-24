@@ -1,7 +1,7 @@
 import { defaultFilterFunction } from 'components/indicators/utils/miscelleniousFunctions';
 import { extent } from 'd3';
 import {
-  eachDayOfInterval,
+  // eachDayOfInterval,
   eachMonthOfInterval,
   eachQuarterOfInterval,
   eachWeekOfInterval,

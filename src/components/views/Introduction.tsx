@@ -6,7 +6,6 @@ import { Button, Grid, useMediaQuery } from '@material-ui/core';
 import { NavLink } from 'react-router-dom';
 import { ROUTE_PATHS } from 'routes';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-import ClearFiltersButton from 'components/common/ClearFiltersButton';
 import IntroHeader from './introductionViews/IntroHeader';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 //@ts-ignore
@@ -104,14 +103,6 @@ export default function Introduction() {
       setIsLoading(false);
     };
   }, []);
-
-  //@ts-ignore
-  const filters = useSelector((state) => state.intro.filters) || {};
-
-  const hasFilters = useMemo(() => Object.keys(filters).length || 0, [filters]);
-  const clearCallback = useCallback(() => {
-    dispatch(clearIntroFilters());
-  }, [hasFilters]);
 
   return (
     <Grid
