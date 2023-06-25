@@ -71,7 +71,6 @@ export default function CustomSunburstWidget({
         bottom: '0%',
         containLabel: true,
       },
-      // animation: false,
       series: {
         type: 'sunburst',
         //@ts-ignore
@@ -81,7 +80,7 @@ export default function CustomSunburstWidget({
           show: true,
           trigger: 'item',
         },
-        labelLayout(params) {
+        labelLayout() {
           return {
             hideOverlap: true,
           };
@@ -140,16 +139,16 @@ export default function CustomSunburstWidget({
           return `<span 
             style='min-width: 35px; display: flex; flex-direction: column;'
             >
-             <span style='display: block; border-bottom: 1px solid white;'> ${level}</span>
-             <span>${name}</span>
-             <span 
+            <span style='display: block; border-bottom: 1px solid white;'> ${level}</span>
+            <span>${name}</span>
+            <span 
               style='display: flex; justify-content: space-between; align-items: center;'
               >
-               <span 
+              <span 
                 style='background-color: ${color}; width: 10px; height: 10px; border-radius: 100%;'
                 ></span>
                 <span>${value}</span>
-             </span>
+            </span>
           </span>`;
         },
       },
