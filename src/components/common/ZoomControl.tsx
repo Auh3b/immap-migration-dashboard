@@ -17,6 +17,16 @@ const useStyles = makeStyles((theme) => ({
   zoomControl: {
     backgroundColor: theme.palette.background.paper,
     width: 'auto',
+    boxShadow: theme.shadows[1],
+    borderRadius: theme.shape.borderRadius,
+  },
+  zoomLevel: {
+    ...theme.typography.overline,
+    display: 'block',
+    fontSize: theme.typography.pxToRem(theme.spacing(1.85)),
+    color: theme.palette.grey[600],
+    textAlign: 'center',
+    fontWeight: 500,
   },
 }));
 
@@ -64,14 +74,7 @@ export default function ZoomControl({
       {showCurrentZoom && (
         // @ts-ignore
         <Box px={1} minWidth={36}>
-          <Typography
-            display='block'
-            align='center'
-            color='textSecondary'
-            variant='overline'
-          >
-            {zoomLevel}
-          </Typography>
+          <Typography className={classes.zoomLevel}>{zoomLevel}</Typography>
         </Box>
       )}
       <Divider orientation='vertical' flexItem />
