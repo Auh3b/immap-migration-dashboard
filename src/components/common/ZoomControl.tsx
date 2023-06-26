@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const MINIMUN_ZOOM_LEVEL = 0;
-const MAXIMUM_ZOOM_LEVEL = 14;
+const MAXIMUM_ZOOM_LEVEL = 13;
 
 export default function ZoomControl({
   className,
