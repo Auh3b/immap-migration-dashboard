@@ -326,7 +326,8 @@ function Selector({
     if (callback) {
       callback({ id, type, column, currentSelection, callbackProps });
     }
-  }, [currentSelection, callback, callbackProps, id, type, column]);
+    // depends on current selection only
+  }, [currentSelection]);
 
   return (
     <Grid item className={classes.root}>
