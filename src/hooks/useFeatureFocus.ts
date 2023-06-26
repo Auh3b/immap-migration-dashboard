@@ -12,7 +12,7 @@ import getViewport from 'components/indicators/premise/utils/getViewport';
 import handleMapTransitions from 'components/indicators/premise/utils/handleMapTransitions';
 
 export default function useFeatureFocus() {
-  const [data, setData] = useState(',');
+  const [, setData] = useState(',');
   const dispatch = useDispatch();
   const _sources = useSelector(
     (state: RootState) => Object.entries(state.carto.dataSources) || [],
@@ -24,7 +24,7 @@ export default function useFeatureFocus() {
 
   const coordinatesColumns = useMemo(() => {
     if (_sources.length) {
-      return _sources.map(([name, value]) => SOURCE_COORD_MAP.get(name) || []);
+      return _sources.map(([name]) => SOURCE_COORD_MAP.get(name) || []);
     }
     return [];
   }, [_sources]);
@@ -77,7 +77,7 @@ export default function useFeatureFocus() {
               setData([longitude, latitude, zoom].join('-'));
             }
           })
-          .catch((error) => console.log(error));
+          .catch((error) => setData(null));
       }
     },
     [dispatch, coordinatesColumns, _sources, width, height],

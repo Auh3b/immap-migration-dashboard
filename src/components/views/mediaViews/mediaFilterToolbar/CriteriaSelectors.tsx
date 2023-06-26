@@ -9,7 +9,7 @@ import {
 import { grey } from '@material-ui/core/colors';
 import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
 import getSourceFilter from 'components/indicators/media/utils/getSourceFilter';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addMediaFilter, removeMediaFilter } from 'store/mediaSlice';
 import { FilterTypes } from 'utils/filterFunctions';
@@ -210,7 +210,7 @@ function CriteriaSelector(props: CriteriaSelectorProps) {
       getSourceFilter(id, filters, source).map(
         (d: string) => +getStringSearchValue(d),
       ) || [],
-    [filters, id],
+    [filters, source, id],
   );
 
   const onCategoriesChange = useCallback(
@@ -242,7 +242,7 @@ function CriteriaSelector(props: CriteriaSelectorProps) {
         );
       }
     },
-    [dispatch, source, id, column, labels],
+    [dispatch, source, id, type, column, labels],
   );
 
   const handleChange = (

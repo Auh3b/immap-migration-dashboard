@@ -8,9 +8,9 @@ import { FilterTypes } from 'utils/filterFunctions';
 import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
 import { StateSlices } from 'utils/types';
 
-const source = 'aurora';
-export const id = 'fecha_filtro';
-const column = 'timeunix';
+// const source = 'aurora';
+// const id = 'fecha_filtro';
+// const column = 'timeunix';
 
 const useExtraStyles = makeStyles((theme) => ({
   root: {

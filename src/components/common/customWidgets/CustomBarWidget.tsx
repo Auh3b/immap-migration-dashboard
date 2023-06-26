@@ -1,6 +1,5 @@
 import { FilterTypes } from '@carto/react-core/src/filters/FilterTypes';
 import { addFilter, removeFilter } from '@carto/react-redux';
-import { BarWidgetUI } from '@carto/react-ui';
 import { useCallback, useMemo } from 'react';
 import { useDispatch } from 'react-redux';
 import WidgetWithAlert from '../../indicators/WidgetWithAlert';
@@ -20,6 +19,7 @@ export default function CustomBarWidget({
   dataSource,
   column,
   filterType,
+  yAxisFormatter,
   labels,
   order = [],
 }: defaultCustomWidgetProps) {
@@ -106,6 +106,8 @@ export default function CustomBarWidget({
           <CustomBarWidgetUI
             height={400}
             selectedBars={selectedBars}
+            // @ts-ignore
+            yAxisFormatter={yAxisFormatter}
             onSelectedBarsChange={handleSelectedBarsChange}
             labels={labels}
             //@ts-ignore

@@ -1,7 +1,7 @@
 //@ts-nocheck
 import { useDispatch } from 'react-redux';
 import { setFeaturesReady } from '@carto/react-redux';
-import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
+import { useState, useRef, useCallback, useMemo } from 'react';
 
 export default function useFeaturesCommons({ source }) {
   const dispatch = useDispatch();

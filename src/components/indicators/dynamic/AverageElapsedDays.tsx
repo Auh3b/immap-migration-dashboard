@@ -9,7 +9,7 @@ import { format } from 'd3';
 import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
 
 const title = 'Días promedio transcuridos entre Enganche y último monitoreo';
-const id = 'averageElapsed';
+const id = 'Días_promedio_transcuridos_entre_Enganche_y_último_monitoreo';
 const column = 'dias';
 const NOTE =
   'Tiempo estimado (días) que ha transcurrido entre el enganche y el último push';

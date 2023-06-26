@@ -50,7 +50,7 @@ export default function ClearFiltersButton({
     } else {
       dispatch(clearFunction());
     }
-  }, [clearFunction, sources]);
+  }, [clearFunction, dispatch, sources]);
 
   return (
     <span className={className}>

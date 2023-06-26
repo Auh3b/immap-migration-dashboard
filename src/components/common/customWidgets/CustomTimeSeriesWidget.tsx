@@ -1,8 +1,4 @@
-import {
-  TimeSeriesWidgetUI,
-  TIME_SERIES_CHART_TYPES,
-  WrapperWidgetUI,
-} from '@carto/react-ui';
+import { TimeSeriesWidgetUI, TIME_SERIES_CHART_TYPES } from '@carto/react-ui';
 import { defaultCustomWidgetProps } from './customWidgetsType';
 import useWidgetFetch from './hooks/useWidgetFetch';
 import { useCallback, useEffect, useState } from 'react';

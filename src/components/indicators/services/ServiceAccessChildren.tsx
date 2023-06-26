@@ -9,7 +9,6 @@ import {
   serviceLabels1 as labels,
 } from './utils/serviceIndicatorTypes';
 import CustomColumnBarWidget from 'components/common/customWidgets/CustomColumnBarWidget';
-import stackedGroupCategoriesAlt2 from '../utils/stackedGroupCategoriesAlt2';
 import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
 
 const NOTE = 'Percepción de accesibilidad a servicios humanitarios';

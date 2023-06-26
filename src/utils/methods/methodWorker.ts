@@ -41,7 +41,6 @@ function executeMethod({ input, methodName, column, params }: any): any {
     result = method(defaultFilterFunction(input, column), column, params);
     return { result: result === undefined ? true : result };
   } catch (error) {
-    console.log(error);
     return { error: String(error) };
   }
 }

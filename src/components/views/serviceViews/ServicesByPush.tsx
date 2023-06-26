@@ -1,12 +1,11 @@
 import { Grid, Typography, makeStyles, withStyles } from '@material-ui/core';
 import { TimelineDot, ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
 import { MouseEvent, useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { UNICEF_COLORS } from 'theme';
 import serviceFeedbackNnaV2Source from 'data/sources/serviceFeedbackNnaV2Source';
 import serviceFeedbackV2Source from 'data/sources/serviceFeedbackV2Source';
 import { _FilterTypes } from '@carto/react-core';
-import { RootState } from 'store/store';
 import { addFilter, removeFilter } from '@carto/react-redux';
 import useWidgetFetch from 'components/common/customWidgets/hooks/useWidgetFetch';
 import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
