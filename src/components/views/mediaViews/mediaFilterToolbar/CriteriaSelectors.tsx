@@ -38,28 +38,28 @@ const placeCriteriaLabels = {
   6: 'Tapón',
   7: 'Cruce del darién',
 };
-const subgroupCriteriaOption = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0];
-const subgroupCriteriaLabels = {
-  0: 'Otro',
-  1: 'Niña',
-  2: 'Niño',
-  3: 'Adolescente',
-  4: 'Mujeres Embarazada',
-  5: 'Venezolano',
-  6: 'Haitiano',
-  7: 'Ecuatariano',
-  8: 'Chino',
-  9: 'Colombiano',
-  10: 'Peruano',
-  11: 'Cubano',
-};
-const contextCriteriaOption = [1, 2, 3, 0];
-const contextCriteriaLabels = {
-  0: 'Otro',
-  1: 'Tráfico',
-  2: 'Abuso',
-  3: 'Sexual',
-};
+// const subgroupCriteriaOption = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0];
+// const subgroupCriteriaLabels = {
+//   0: 'Otro',
+//   1: 'Niña',
+//   2: 'Niño',
+//   3: 'Adolescente',
+//   4: 'Mujeres Embarazada',
+//   5: 'Venezolano',
+//   6: 'Haitiano',
+//   7: 'Ecuatariano',
+//   8: 'Chino',
+//   9: 'Colombiano',
+//   10: 'Peruano',
+//   11: 'Cubano',
+// };
+// const contextCriteriaOption = [1, 2, 3, 0];
+// const contextCriteriaLabels = {
+//   0: 'Otro',
+//   1: 'Tráfico',
+//   2: 'Abuso',
+//   3: 'Sexual',
+// };
 const temporalityCriteriaOption = [1, 2, 0];
 const temporalityCriteriaLabels = {
   0: 'Otro',
@@ -88,7 +88,7 @@ export function CriteriaSelectors() {
         criteriaOption={placeCriteriaOption}
         labels={placeCriteriaLabels}
       />
-      <CriteriaSelector
+      {/* <CriteriaSelector
         id='subgroups'
         title='Sub-grupo'
         source='meltwater'
@@ -105,7 +105,7 @@ export function CriteriaSelectors() {
         filterType={FilterTypes.STRING_SEARCH}
         criteriaOption={contextCriteriaOption}
         labels={contextCriteriaLabels}
-      />
+      /> */}
       <CriteriaSelector
         id='temporality'
         title='Temporabalidad'
