@@ -270,8 +270,9 @@ export function getTopPosts({ filters }: MediaParams) {
       );
       let _output: any[] = [];
       for (let { source, date, topPosts } of listBySource) {
+        if (source === 'news') continue;
         for (let [name, value] of topPosts) {
-          const url = POST_URL_MAP.get(source)(name);
+          const url = POST_URL_MAP.get(source)(name) || name;
           const id = crypto.randomBytes(20).toString('hex');
           _output = [..._output, { id, source, name, date, value, url }];
         }
