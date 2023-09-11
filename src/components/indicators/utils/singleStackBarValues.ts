@@ -8,7 +8,6 @@ const singleStackBarValues: MethodFunc<any[]> = (input, column, params) => {
   let value: [number][] = [];
   for (let i = 0; i < columns.length; i++) {
     const target_column = columns[i];
-    //@ts-expect-error
     const column_value = aggregationFunctions[aggregationType](
       input.filter((d) => +d[target_column] !== 999999),
       target_column,
