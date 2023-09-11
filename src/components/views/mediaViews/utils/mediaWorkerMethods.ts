@@ -1,4 +1,4 @@
-import { ascending, descending, extent, flatRollup, sum } from 'd3';
+import { ascending, descending, flatRollup, max, min, sum } from 'd3';
 import { MEDIA_SOURCES, Input, MediaParams, POST_URL_MAP } from './mediaUtils';
 import groupByValue, { GroupByTypes } from 'utils/groupByValue';
 import { Filters, filterValues } from 'utils/filterFunctions';
@@ -306,6 +306,7 @@ export function getTemporalFilterValues({ filters }: MediaParams) {
 export function getDateRange(_e: MediaParams) {
   if (!mediaData) return null;
   const { sources } = mediaData;
-  const dateExtent = extent(sources, (d) => d.date);
-  return dateExtent;
+  const maxDate = max(sources, (d) => d.date);
+  const minDate = min(sources, (d) => d.date);
+  return [minDate, maxDate];
 }
