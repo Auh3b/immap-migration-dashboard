@@ -80,7 +80,7 @@ export default function MediaPosts({ isLoading }: { isLoading: Boolean }) {
 
   return (
     <Grid item className={classes.root}>
-      <Paper className={classes.paper}>
+      <Paper variant={'outlined'} className={classes.paper}>
         {isDataLoading && <TopLoading />}
         <Grid
           container

@@ -27,7 +27,7 @@ export default function MediaIndicators({ isLoading }: any) {
   const classes = useStyles();
   return (
     <Grid item className={classes.root}>
-      <Paper className={classes.paper}>
+      <Paper variant={'outlined'} className={classes.paper}>
         <Grid container className={classes.content}>
           <Suspense fallback={<ComponentFallback />}>
             <MediaOrigin />
