@@ -37,7 +37,7 @@ const getConnectDotServices: MethodFunc<any[]> = (input, column, params) => {
         }
         const id = `${newEntry[3]}-${servicesKey[newEntry[0]] ?? 'Otro'}+${
           newEntry[2]
-        } - ${newEntry.at(-1).join('-')}`;
+        } - ${newEntry[newEntry.length - 1].join('-')}`;
         output = [...output, [...newEntry, ...columnValues, id]];
       }
     }
