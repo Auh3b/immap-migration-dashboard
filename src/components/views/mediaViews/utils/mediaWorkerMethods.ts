@@ -1,4 +1,4 @@
-import { ascending, descending, flatRollup, sum } from 'd3';
+import { ascending, descending, extent, flatRollup, sum } from 'd3';
 import { MEDIA_SOURCES, Input, MediaParams, POST_URL_MAP } from './mediaUtils';
 import groupByValue, { GroupByTypes } from 'utils/groupByValue';
 import { Filters, filterValues } from 'utils/filterFunctions';
@@ -270,8 +270,9 @@ export function getTopPosts({ filters }: MediaParams) {
       );
       let _output: any[] = [];
       for (let { source, date, topPosts } of listBySource) {
+        if (source === 'news') continue;
         for (let [name, value] of topPosts) {
-          const url = POST_URL_MAP.get(source)(name);
+          const url = POST_URL_MAP.get(source)(name) || name;
           const id = crypto.randomBytes(20).toString('hex');
           _output = [..._output, { id, source, name, date, value, url }];
         }
@@ -300,4 +301,11 @@ export function getTemporalFilterValues({ filters }: MediaParams) {
     return getTemporalFilters(sourceWithUnixTime, column);
   }
   return null;
+}
+
+export function getDateRange(_e: MediaParams) {
+  if (!mediaData) return null;
+  const { sources } = mediaData;
+  const dateExtent = extent(sources, (d) => d.date);
+  return dateExtent;
 }

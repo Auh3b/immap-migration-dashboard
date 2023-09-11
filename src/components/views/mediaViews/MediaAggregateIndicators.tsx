@@ -132,7 +132,7 @@ export default function MediaAggregateIndicators({ isLoading }: any) {
   return (
     <Grid item className={classes.root}>
       {isLoadingWidget && <TopLoading />}
-      <Paper className={classes.paper}>
+      <Paper variant={'outlined'} className={classes.paper}>
         <Typography className={classes.title}>
           Número de menciones por red social relacionadas con migración en la
           región
