@@ -10,7 +10,7 @@ const MediaWorker = new Worker(
 );
 
 //@ts-ignore
-const { runTransform } = wrap(MediaWorker);
+const { runTransform } = wrap<(items: any) => Promise<Any>>(MediaWorker);
 
 async function executeMethod(methodName: string, params: Partial<MediaParams>) {
   const { result } = await runTransform(methodName, params);

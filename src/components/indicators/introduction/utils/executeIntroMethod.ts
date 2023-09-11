@@ -9,7 +9,7 @@ const IntroWorker = new Worker(
 );
 
 //@ts-ignore
-const { executeMethod } = wrap(IntroWorker);
+const { executeMethod } = wrap<(items: any) => Promise<Any>>(IntroWorker);
 
 export default async function executeIntroMethod({
   source,

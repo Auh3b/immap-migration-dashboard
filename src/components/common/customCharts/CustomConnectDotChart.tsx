@@ -73,10 +73,8 @@ export default function CustomConnectDotChart({ data: _data, groupName }: any) {
           const yesterdayCount = api.value(8);
           const p1 = api.coord([dailyCapacity, categoryIndex]);
           const p2 = api.coord([yesterdayCount, categoryIndex]);
-          const points = [p1, p2].sort((a, b) => ascending(a[0], b[0]));
           const [x1, y1] = p1;
           const [x2, y2] = p2;
-          const [x, y] = points.at(-1);
           const difference = getDifference(dailyCapacity, yesterdayCount);
           const stroke = getDifferenceColor(difference);
           const lineStyle = api.style({
