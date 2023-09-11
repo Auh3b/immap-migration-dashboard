@@ -18,6 +18,7 @@ const useStyles = makeStyles((theme) => ({
     paddingRight: theme.spacing(2),
     paddingTop: theme.spacing(2),
     paddingBottom: theme.spacing(2),
+    gap: theme.spacing(2),
   },
 }));
 
@@ -77,17 +78,13 @@ export default function MediaPosts({ isLoading }: { isLoading: Boolean }) {
     }
     return [];
   }, [_data]);
+  console.log(sources);
 
   return (
     <Grid item className={classes.root}>
-      <Paper className={classes.paper}>
+      <Paper variant={'outlined'} className={classes.paper}>
         {isDataLoading && <TopLoading />}
-        <Grid
-          container
-          justifyContent='space-between'
-          className={classes.content}
-          alignItems='flex-start'
-        >
+        <Grid container className={classes.content} alignItems='flex-start'>
           {isLoading && <ComponentFallback />}
           {sources.length && !isDataLoading ? (
             sources.map((source) => (

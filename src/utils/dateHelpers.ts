@@ -69,8 +69,8 @@ const intervalNameFunction: IntervalLookFunction = Object.fromEntries([
   [intervalsPeriod.YEAR, (date: Date) => format(date, 'yyyy')],
 ]);
 
-export function formatDate(date: number | Date): string {
-  const stringFormat = 'yyyy-MM-dd';
+export function formatDate(date: number | Date, formatting?: string): string {
+  const stringFormat = formatting || 'yyyy-MM-dd';
   let targetDate: Date;
   if (typeof date === 'number') {
     targetDate = fromUnixTimestamp(date);

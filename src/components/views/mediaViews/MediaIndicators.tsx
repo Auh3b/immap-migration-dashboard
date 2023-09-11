@@ -12,9 +12,9 @@ const SentimentPresentages = lazy(
 const SentimentTimeline = lazy(
   () => import('components/indicators/media/SentimentTimeline'),
 );
-const MediaEngagement = lazy(
-  () => import('components/indicators/media/MediaEngagement'),
-);
+// const MediaEngagement = lazy(
+//   () => import('components/indicators/media/MediaEngagement'),
+// );
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -27,7 +27,7 @@ export default function MediaIndicators({ isLoading }: any) {
   const classes = useStyles();
   return (
     <Grid item className={classes.root}>
-      <Paper className={classes.paper}>
+      <Paper variant={'outlined'} className={classes.paper}>
         <Grid container className={classes.content}>
           <Suspense fallback={<ComponentFallback />}>
             <MediaOrigin />
@@ -41,9 +41,9 @@ export default function MediaIndicators({ isLoading }: any) {
           <Suspense fallback={<ComponentFallback />}>
             <SentimentTimeline />
           </Suspense>
-          <Suspense fallback={<ComponentFallback />}>
+          {/* <Suspense fallback={<ComponentFallback />}>
             <MediaEngagement />
-          </Suspense>
+          </Suspense> */}
         </Grid>
       </Paper>
     </Grid>

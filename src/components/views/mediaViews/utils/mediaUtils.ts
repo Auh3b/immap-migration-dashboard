@@ -16,7 +16,7 @@ import { grey, orange } from '@material-ui/core/colors';
 
 export const MEDIA_SOURCES = {
   MENCIONES_TOTALES: 'menciones_totales',
-  ALL: 'all',
+  NEWS: 'news',
   FACEBOOK: 'facebook',
   TWITTER: 'twitter',
   TIKTOK: 'tiktok',
@@ -27,7 +27,7 @@ export const MEDIA_SOURCES = {
 };
 
 export const MEDIA_SOURCES_NAMES = new Map([
-  [MEDIA_SOURCES.ALL, 'News'],
+  [MEDIA_SOURCES.NEWS, 'News'],
   [MEDIA_SOURCES.FACEBOOK, 'Facebook'],
   [MEDIA_SOURCES.TWITTER, 'Twitter'],
   [MEDIA_SOURCES.TIKTOK, 'Tiktok'],
@@ -38,7 +38,7 @@ export const MEDIA_SOURCES_NAMES = new Map([
 ]);
 
 export const FA_MAP = new Map([
-  [MEDIA_SOURCES.ALL, faNewspaper],
+  [MEDIA_SOURCES.NEWS, faNewspaper],
   [MEDIA_SOURCES.FACEBOOK, faFacebook],
   [MEDIA_SOURCES.TWITTER, faTwitter],
   [MEDIA_SOURCES.TIKTOK, faTiktok],
@@ -50,7 +50,7 @@ export const FA_MAP = new Map([
 ]);
 
 export const SOURCE_COLOR = Object.fromEntries([
-  [MEDIA_SOURCES.ALL, '#333'],
+  [MEDIA_SOURCES.NEWS, '#333'],
   [MEDIA_SOURCES.FACEBOOK, '#1877f2'],
   [MEDIA_SOURCES.TWITTER, '#1da1f2'],
   [MEDIA_SOURCES.TIKTOK, '#010101'],

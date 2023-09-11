@@ -1,6 +1,7 @@
 import { expose } from 'comlink';
 import { METHOD_NAMES } from './methodName';
 import {
+  getDateRange,
   getHistoricalEngagementBySource,
   getMediaAggregateIndicators,
   getMediaData,
@@ -25,6 +26,7 @@ const methodMap = new Map<string, Function>([
   [METHOD_NAMES.MEDIA_ENGAGEMENT_HISTORY, getHistoricalEngagementBySource],
   [METHOD_NAMES.MEDIA_TOP_POSTS, getTopPosts],
   [METHOD_NAMES.GET_TEMPORAL_FILTER_VALUES, getTemporalFilterValues],
+  [METHOD_NAMES.GET_DATE_RANGE, getDateRange],
 ]);
 
 function runTransform(methodName: string, params: Partial<MediaParams>) {
