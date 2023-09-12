@@ -6,11 +6,24 @@ import {
   useTheme,
   withStyles,
 } from '@material-ui/core';
+import {
+  faHashtag,
+  faNewspaper,
+  faSquareRss,
+  faUser,
+} from '@fortawesome/free-solid-svg-icons';
+import {
+  faFacebook,
+  faReddit,
+  faTiktok,
+  faTwitter,
+  faYoutube,
+} from '@fortawesome/free-brands-svg-icons';
 import SourceIndictor from 'components/indicators/media/utils/SourceIndictor';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { MouseEvent, useMemo } from 'react';
 import ComponentFallback from 'components/common/ComponentFallback';
-import { FA_MAP, MEDIA_SOURCES, SOURCE_COLOR } from './utils/mediaUtils';
+import { MEDIA_SOURCES, SOURCE_COLOR } from './utils/mediaUtils';
 import { METHOD_NAMES } from './utils/methodName';
 import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
 import { addMediaFilter, removeMediaFilter } from 'store/mediaSlice';
@@ -174,3 +187,15 @@ export default function MediaAggregateIndicators({ isLoading }: any) {
     </Grid>
   );
 }
+
+export const FA_MAP = new Map([
+  [MEDIA_SOURCES.NEWS, faNewspaper],
+  [MEDIA_SOURCES.FACEBOOK, faFacebook],
+  [MEDIA_SOURCES.TWITTER, faTwitter],
+  [MEDIA_SOURCES.TIKTOK, faTiktok],
+  [MEDIA_SOURCES.REDDIT, faReddit],
+  [MEDIA_SOURCES.YOUTUBE, faYoutube],
+  [MEDIA_SOURCES.FORUMS, faUser],
+  [MEDIA_SOURCES.MENCIONES_TOTALES, faHashtag],
+  [MEDIA_SOURCES.SOCIAL_BLOGS, faSquareRss],
+]);
