@@ -1,10 +1,10 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid, Typography } from '@material-ui/core';
-import { Suspense, lazy, useEffect, useMemo, useState } from 'react';
+import { Grid } from '@material-ui/core';
+import { Suspense, lazy, useEffect, useState } from 'react';
 import { setError } from 'store/appSlice';
 import { getDownloadURL, ref } from 'firebase/storage';
 import { fireStorage } from 'firedb';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import executeMethod from 'components/indicators/media/hooks/executeMethod';
 import { METHOD_NAMES } from './mediaViews/utils/methodName';
 import { setIsMediaDataReady } from 'store/mediaSlice';
@@ -16,10 +16,7 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 import { ActiveFilters } from 'components/common/sideAnalysticsPanel/ActiveFilters';
 import { StateSlices } from 'utils/types';
 import MediaFilterToolbar from './mediaViews/mediaFilterToolbar/Index';
-import useMediaData from 'components/indicators/media/hooks/useMediaData';
-import { formatDate } from 'utils/dateHelpers';
-import ScheduleIcon from '@material-ui/icons/Schedule';
-import { Skeleton } from '@material-ui/lab';
+import MediaToolbar from './mediaViews/MediaToolbar';
 
 const MediaIndicators = lazy(() => import('./mediaViews/MediaIndicators'));
 const MediaAggregateIndicators = lazy(
@@ -105,7 +102,7 @@ export default function Media() {
         wrap='nowrap'
         className={classes.root}
       >
-        <TimeInfo />
+        <MediaToolbar />
         <Suspense fallback={<ComponentFallback />}>
           <MediaAggregateIndicators isLoading={isLoading} />
         </Suspense>
@@ -117,38 +114,5 @@ export default function Media() {
         </Suspense>
       </Grid>
     </>
-  );
-}
-
-function TimeInfo() {
-  const filteredTime = useSelector(
-    // @ts-expect-error
-    (state) => state?.media?.filters?.meltwater?.['fecha_filtro']?.values[0],
-  );
-
-  const { data: sourceTime, isLoading } = useMediaData({
-    id: 'timeInfo',
-    methodName: METHOD_NAMES.GET_DATE_RANGE,
-    source: 'date',
-  });
-
-  const time = useMemo(() => {
-    if (filteredTime) {
-      return (filteredTime as number[]).map((d) =>
-        formatDate(+d, 'do LLLL yyyy'),
-      );
-    }
-    return (sourceTime as number[]).map((d) => formatDate(+d, 'do LLLL yyyy'));
-  }, [sourceTime, filteredTime]);
-
-  return (
-    <Grid item container style={{ gap: '16px' }}>
-      <ScheduleIcon />
-      {isLoading ? (
-        <Skeleton style={{ width: 250 }} />
-      ) : (
-        <Typography>{time.join(' - ')}</Typography>
-      )}
-    </Grid>
   );
 }
