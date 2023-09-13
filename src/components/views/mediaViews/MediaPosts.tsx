@@ -3,14 +3,16 @@ import useMediaData from 'components/indicators/media/hooks/useMediaData';
 import { METHOD_NAMES } from './utils/methodName';
 import TopLoading from 'components/common/TopLoading';
 import ComponentFallback from 'components/common/ComponentFallback';
-import { useMemo } from 'react';
+import { useContext, useMemo } from 'react';
 import MediaTable from 'components/common/media/MediaTable';
 import { numberFormatter } from 'utils/formatter';
 import NoWidgetData from 'components/common/customWidgets/NoWidgetData';
+import { MediaCountryContext } from './utils';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     position: 'relative',
+    marginBottom: theme.spacing(2),
   },
   paper: {},
   content: {
@@ -22,15 +24,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const id = 'media_posts';
 const source = 'meltwater';
 
 export default function MediaPosts({ isLoading }: { isLoading: Boolean }) {
   const classes = useStyles();
+  const viewFilter = useContext(MediaCountryContext) || '';
+  const id =
+    'publicaciones_en_los_medios' + (viewFilter ? `_${viewFilter}` : '');
   const { data: _data, isLoading: isDataLoading } = useMediaData({
     id,
     methodName: METHOD_NAMES.MEDIA_TOP_POSTS,
     source,
+    viewFilter,
   });
   const columnConfig = [
     {
@@ -78,7 +83,6 @@ export default function MediaPosts({ isLoading }: { isLoading: Boolean }) {
     }
     return [];
   }, [_data]);
-  console.log(sources);
 
   return (
     <Grid item className={classes.root}>
@@ -93,6 +97,7 @@ export default function MediaPosts({ isLoading }: { isLoading: Boolean }) {
                 data={_data}
                 source={source}
                 columnConfig={columnConfig}
+                viewFilter={viewFilter}
               />
             ))
           ) : (

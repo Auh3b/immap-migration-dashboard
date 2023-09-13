@@ -10,17 +10,24 @@ export default function useMediaData({
   id,
   methodName,
   source,
+  viewFilter,
 }: {
   id: string;
   methodName: string;
   source: string;
+  viewFilter?: string;
 }) {
   const dispatch = useDispatch();
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   //@ts-ignore
   const filters = useSelector((state) => state.media.filters) || {};
-  const sourceFilters = useIndicatorFilters({ id, source, filters });
+  const sourceFilters = useIndicatorFilters({
+    id,
+    source,
+    filters,
+    viewFilter,
+  });
   //@ts-ignore
   const isMediaDataReady = useSelector((state) => state.media.isMediaDataReady);
 

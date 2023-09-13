@@ -5,13 +5,12 @@ import { METHOD_NAMES } from 'components/views/mediaViews/utils/methodName';
 import useMediaData from './hooks/useMediaData';
 import { useDispatch, useSelector } from 'react-redux';
 import ContinuousLegend from 'components/common/customCharts/ContinuousLegend';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useContext, useMemo } from 'react';
 import { addMediaFilter, removeMediaFilter } from 'store/mediaSlice';
 import { FilterTypes } from 'utils/filterFunctions';
 import NoWidgetData from 'components/common/customWidgets/NoWidgetData';
 import getSourceFilter from './utils/getSourceFilter';
-
-const id = 'Palabras_asociadas';
+import { MediaCountryContext } from 'components/views/mediaViews/utils';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,10 +21,13 @@ const source = 'meltwater';
 const column = 'topPhrases';
 
 export default function TopPhrases() {
+  const viewFilter = useContext(MediaCountryContext) || '';
+  const id = 'Palabras_asociadas' + (viewFilter ? `_${viewFilter}` : '');
   const { data, isLoading } = useMediaData({
     id,
     methodName: METHOD_NAMES.MEDIA_TOP_PHRASES,
     source,
+    viewFilter,
   });
   const dispatch = useDispatch();
   //@ts-ignore
@@ -61,7 +63,7 @@ export default function TopPhrases() {
     [filters, id],
   );
   return (
-    <Grid xs={12} lg={4} item className={classes.root}>
+    <Grid xs={12} lg={viewFilter ? 12 : 4} item className={classes.root}>
       <TitleWrapper title='Palabras asociadas' isLoading={isLoading} filterable>
         <CustomWordCloud
           onWordSelectChange={onWordSelectChange}

@@ -41,12 +41,14 @@ export default function MediaTable({
   data = [],
   columnConfig,
   source,
+  viewFilter,
 }: {
   data: any[];
   source: string;
   columnConfig: any[];
   sortBy?: string;
   sortDirection?: 'asc' | 'des';
+  viewFilter?: string;
 }) {
   const classes = useStyles();
   const rows = useMemo(() => {
@@ -57,7 +59,7 @@ export default function MediaTable({
   }, [data]);
 
   return (
-    <Grid item xs={12} lg={4} className={classes.root}>
+    <Grid item xs={12} lg={viewFilter ? 12 : 4} className={classes.root}>
       <TitleWrapper title={`Top ${source} Posts`}>
         <Paper variant='outlined' className={classes.paper}>
           <TableContainer className={classes.tableContainer}>

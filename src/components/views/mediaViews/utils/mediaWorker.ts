@@ -3,6 +3,7 @@ import { METHOD_NAMES } from './methodName';
 import {
   getDateRange,
   getHistoricalEngagementBySource,
+  getKeywords,
   getMediaAggregateIndicators,
   getMediaData,
   getMediaOrigins,
@@ -27,6 +28,7 @@ const methodMap = new Map<string, Function>([
   [METHOD_NAMES.MEDIA_TOP_POSTS, getTopPosts],
   [METHOD_NAMES.GET_TEMPORAL_FILTER_VALUES, getTemporalFilterValues],
   [METHOD_NAMES.GET_DATE_RANGE, getDateRange],
+  [METHOD_NAMES.GET_KEYWORDS, getKeywords],
 ]);
 
 function runTransform(methodName: string, params: Partial<MediaParams>) {

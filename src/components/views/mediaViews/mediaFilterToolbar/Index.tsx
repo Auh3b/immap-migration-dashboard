@@ -1,7 +1,7 @@
 import { CriteriaSelectors } from './CriteriaSelectors';
 import { Grid, Typography, makeStyles } from '@material-ui/core';
 import { deepOrange } from '@material-ui/core/colors';
-import MediaStrictDataFilter from './MediaStrictDataFilter';
+import MediaStrictDateFilter from './MediaStrictDateFilter';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -45,8 +45,7 @@ export default function MediaFilterToolbar() {
       justifyContent='space-between'
     >
       <Typography className={classes.title}>filtros adicionales</Typography>
-      <MediaStrictDataFilter />
-      {/* <DateFilter /> */}
+      <MediaStrictDateFilter />
       {/* <CriteriaSelectors /> */}
     </Grid>
   );

@@ -6,7 +6,7 @@ import { METHOD_NAMES } from '../utils/methodName';
 import StrictDateFilter from 'components/common/dataFilters/strictDataFilter/Index';
 import { StateSlices } from 'utils/types';
 
-export default function MediaStrictDataFilter() {
+export default function MediaStrictDateFilter() {
   const source = 'meltwater';
   const id = 'fecha_filtro';
   const column = 'date';

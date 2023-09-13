@@ -17,7 +17,9 @@ const SentimentTimeline = lazy(
 // );
 
 const useStyles = makeStyles((theme) => ({
-  root: {},
+  root: {
+    marginBottom: theme.spacing(2),
+  },
   paper: {},
   content: {
     padding: theme.spacing(2),

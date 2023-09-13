@@ -4,23 +4,26 @@ import TitleWrapper from 'components/common/TitleWrapper';
 import { METHOD_NAMES } from 'components/views/mediaViews/utils/methodName';
 import useMediaData from './hooks/useMediaData';
 import NoWidgetData from 'components/common/customWidgets/NoWidgetData';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useContext, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addMediaFilter, removeMediaFilter } from 'store/mediaSlice';
 import { FilterTypes } from 'utils/filterFunctions';
 import regionName from './utils/getCountryByRegion';
 import getSourceFilter from './utils/getSourceFilter';
+import { MediaCountryContext } from 'components/views/mediaViews/utils';
 
-const id = '¿De_dónde_escribe?';
 const column = 'country';
 const source = 'meltwater';
 
 export default function MediaOrigin() {
+  const viewFilter = useContext(MediaCountryContext) || '';
+  const id = 'orígenes_de_los_medios' + (viewFilter ? `_${viewFilter}` : '');
   const dispatch = useDispatch();
   const { data = [], isLoading } = useMediaData({
     id,
     methodName: METHOD_NAMES.MEDIA_ORIGINS,
     source,
+    viewFilter,
   });
 
   //@ts-ignore
@@ -65,7 +68,7 @@ export default function MediaOrigin() {
   );
 
   return (
-    <Grid item xs={12} lg={4}>
+    <Grid item xs={12} lg={viewFilter ? 12 : 4}>
       <TitleWrapper title='¿De dónde escribe?' isLoading={isLoading} filterable>
         <CustomColumnChart
           filterable
