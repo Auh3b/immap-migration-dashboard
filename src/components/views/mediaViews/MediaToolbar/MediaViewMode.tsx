@@ -2,6 +2,8 @@ import { Button, Grid, Menu, MenuItem } from '@material-ui/core';
 import { MouseEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearMediaFilters, getViewMode, setViewMode } from 'store/mediaSlice';
+import CompareIcon from '@material-ui/icons/Compare';
+import CropPortraitIcon from '@material-ui/icons/CropPortrait';
 
 export default function MediaViewMode() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -26,7 +28,10 @@ export default function MediaViewMode() {
   };
   return (
     <Grid item>
-      <Button onClick={handleOpen}>
+      <Button
+        onClick={handleOpen}
+        startIcon={mode ? <CompareIcon /> : <CropPortraitIcon />}
+      >
         {mode ? 'Vista comparativa' : 'Vista única'}
       </Button>
       <Menu

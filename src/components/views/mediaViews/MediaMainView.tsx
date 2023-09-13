@@ -142,7 +142,7 @@ function IndicatorWithCountrySelector(
   const dispatch = useDispatch();
   const filters = useSelector((state) =>
     // @ts-ignore
-    Object.keys(state.media.filters || {}),
+    Object.keys(state.media.filters.meltwater || {}),
   );
   const getOwner = (country: string) =>
     props.id ? `país_secundario_${country}` : `país_primario_${country}`;
@@ -152,11 +152,11 @@ function IndicatorWithCountrySelector(
 
   useCustomCompareEffectAlt(
     () => {
-      if (!filters.includes(currentCountry)) {
+      if (!selectedViews.some((d: string) => filters.includes(d))) {
         dispatch(clearViews());
       }
     },
-    [filters],
+    [filters, currentCountry],
     dequal,
   );
 
@@ -204,8 +204,6 @@ function IndicatorWithCountrySelector(
     },
     [getOwner, currentCountry],
   );
-
-  console.log(`view_${props.id}:`, currentCountry);
   return (
     <Fragment>
       <Grid
