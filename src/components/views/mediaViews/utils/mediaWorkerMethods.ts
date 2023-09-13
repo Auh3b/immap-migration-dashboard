@@ -310,3 +310,36 @@ export function getDateRange(_e: MediaParams) {
   const minDate = min(sources, (d) => d.date);
   return [minDate, maxDate];
 }
+
+export function getKeywords(_e: MediaParams) {
+  if (mediaData) {
+    const data = applyFiltersToData(mediaData, _e.filters);
+
+    const { sources: _sources } = data;
+
+    let _data2: any[] = [];
+
+    const groupsArray = _sources.map(({ keywords }) => keywords);
+
+    for (let group of groupsArray) {
+      _data2 = [
+        ..._data2,
+        ...group.map(([name, value]) => ({
+          name: name.toLocaleLowerCase(),
+          value,
+        })),
+      ];
+    }
+
+    const output = groupByValue({
+      input: _data2,
+      valueColumn: 'value',
+      keyColumn: 'name',
+      type: GroupByTypes.SUM,
+    }).sort((a, b) => descending(a.value, b.value));
+
+    return output.sort((a, b) => ascending(a.value, b.value));
+  }
+
+  return null;
+}

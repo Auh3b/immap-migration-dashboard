@@ -10,4 +10,5 @@ export const METHOD_NAMES = {
   MEDIA_ENGAGEMENT_HISTORY: 'media_engagement_history',
   GET_TEMPORAL_FILTER_VALUES: 'get_temporal_filter_values',
   GET_DATE_RANGE: 'get_date_range',
+  GET_KEYWORDS: 'get_keywords',
 };

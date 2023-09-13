@@ -61,6 +61,7 @@ interface SourceField {
   countries: FieldValues[];
   languages: FieldValues[];
   topPosts: FieldValues[];
+  keywords: FieldValues[];
   views: number;
 }
 
