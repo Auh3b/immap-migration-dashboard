@@ -1,35 +1,43 @@
-import { Grid, makeStyles } from '@material-ui/core';
-import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
-import { MouseEvent } from 'react';
+import { Button, Grid, Menu, MenuItem } from '@material-ui/core';
+import { MouseEvent, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getViewMode, setViewMode } from 'store/mediaSlice';
-
-const buttonStyles = makeStyles((theme) => ({
-  button: {
-    padding: theme.spacing(1),
-    marginLeft: theme.spacing(2),
-  },
-}));
+import { clearMediaFilters, getViewMode, setViewMode } from 'store/mediaSlice';
 
 export default function MediaViewMode() {
-  const classes = { ...buttonStyles() };
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const dispatch = useDispatch();
   // @ts-ignore
   const mode = useSelector((state) => getViewMode(state.media));
 
-  const handleModeChange = (_e: MouseEvent<HTMLElement>, newMode: number) => {
-    dispatch(setViewMode(newMode));
+  const handleModeChange = (newMode: number) => {
+    return () => {
+      dispatch(clearMediaFilters());
+      dispatch(setViewMode(newMode));
+      handleClose();
+    };
+  };
+
+  const handleOpen = (e: MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(e.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
   };
   return (
     <Grid item>
-      <ToggleButtonGroup value={mode} exclusive onChange={handleModeChange}>
-        <ToggleButton className={classes.button} value={0}>
-          Single
-        </ToggleButton>
-        <ToggleButton className={classes.button} value={1}>
-          Duel
-        </ToggleButton>
-      </ToggleButtonGroup>
+      <Button onClick={handleOpen}>
+        {mode ? 'Vista comparativa' : 'Vista única'}
+      </Button>
+      <Menu
+        id='view-mode-menu'
+        open={Boolean(anchorEl)}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+      >
+        <MenuItem onClick={handleModeChange(0)}>Vista única</MenuItem>
+        <MenuItem onClick={handleModeChange(1)}>Vista comparativa</MenuItem>
+      </Menu>
     </Grid>
   );
 }

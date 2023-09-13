@@ -12,6 +12,7 @@ import { MediaCountryContext } from './utils';
 const useStyles = makeStyles((theme) => ({
   root: {
     position: 'relative',
+    marginBottom: theme.spacing(2),
   },
   paper: {},
   content: {
@@ -82,7 +83,6 @@ export default function MediaPosts({ isLoading }: { isLoading: Boolean }) {
     }
     return [];
   }, [_data]);
-  console.log(sources);
 
   return (
     <Grid item className={classes.root}>

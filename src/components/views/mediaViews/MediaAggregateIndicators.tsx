@@ -41,7 +41,7 @@ const source = 'meltwater';
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
-    position: 'relative',
+    marginBottom: theme.spacing(2),
   },
   paper: {},
   title: {
@@ -59,7 +59,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const StyleToggleButtonGroup = withStyles((theme) => ({
-  root: {},
+  root: {
+    flexWrap: 'wrap',
+  },
   groupedHorizontal: {
     '&:not(:first-child)': {
       borderLeft: 'unset',
@@ -72,8 +74,8 @@ const StyledToggleButton = withStyles((theme) => ({
   root: {
     padding: theme.spacing(0.5),
     margin: theme.spacing(0.5),
+    width: 'auto',
     height: '100%',
-    width: '100%',
   },
   selected: {
     backgroundColor: 'rgba(0,0,0,0)',
@@ -161,7 +163,7 @@ export default function MediaAggregateIndicators({ isLoading }: any) {
           {data.length > 0 &&
             !isLoading &&
             data.map(({ name, value }, i) => (
-              //@ts-expect-error
+              // @ts-expect-error
               <StyledToggleButton key={name} value={name}>
                 <SourceIndictor
                   title={name}
