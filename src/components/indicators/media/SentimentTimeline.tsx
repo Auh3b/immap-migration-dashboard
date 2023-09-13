@@ -2,16 +2,19 @@ import { Grid, useTheme } from '@material-ui/core';
 import TitleWrapper from 'components/common/TitleWrapper';
 import ReactEcharts from 'components/common/customCharts/ReactEcharts';
 import { METHOD_NAMES } from 'components/views/mediaViews/utils/methodName';
-import { useMemo } from 'react';
+import { useContext, useMemo } from 'react';
 import useMediaData from './hooks/useMediaData';
 import NoWidgetData from 'components/common/customWidgets/NoWidgetData';
 import { formatDate } from 'utils/dateHelpers';
+import { MediaCountryContext } from 'components/views/mediaViews/utils';
 
-const id = 'Serie_histórica_de_sentimiento';
 const source = 'meltwater';
 
 export default function SentimentTimeline() {
   const theme = useTheme();
+  const viewFilter = useContext(MediaCountryContext) || '';
+  const id =
+    'Serie_histórica_de_sentimiento' + (viewFilter ? `_${viewFilter}` : '');
   const { data, isLoading } = useMediaData({
     id,
     methodName: METHOD_NAMES.MEDIA_SENTIMENT_HISTORY,

@@ -1,6 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { Grid } from '@material-ui/core';
-import { Suspense, lazy, useEffect, useState } from 'react';
+import { lazy, useEffect, useState } from 'react';
 import { setError } from 'store/appSlice';
 import { getDownloadURL, ref } from 'firebase/storage';
 import { fireStorage } from 'firedb';
@@ -8,7 +7,6 @@ import { useDispatch } from 'react-redux';
 import executeMethod from 'components/indicators/media/hooks/executeMethod';
 import { METHOD_NAMES } from './mediaViews/utils/methodName';
 import { setIsMediaDataReady } from 'store/mediaSlice';
-import ComponentFallback from 'components/common/ComponentFallback';
 import SideAnalyticsPanel from 'components/common/sideAnalysticsPanel/Index';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import TuneIcon from '@material-ui/icons/Tune';
@@ -16,29 +14,11 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 import { ActiveFilters } from 'components/common/sideAnalysticsPanel/ActiveFilters';
 import { StateSlices } from 'utils/types';
 import MediaFilterToolbar from './mediaViews/mediaFilterToolbar/Index';
-import MediaToolbar from './mediaViews/MediaToolbar';
 
-const MediaIndicators = lazy(() => import('./mediaViews/MediaIndicators'));
-const MediaAggregateIndicators = lazy(
-  () => import('./mediaViews/MediaAggregateIndicators'),
-);
-const MediaPosts = lazy(() => import('./mediaViews/MediaPosts'));
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    padding: theme.spacing(2),
-    height: '100%',
-    maxHeight: `calc(100vh - ${theme.mixins.toolbar.minHeight}px)`,
-    overflowY: 'auto',
-    '& > *': {
-      marginBottom: theme.spacing(2),
-    },
-  },
-}));
+export const MediaMainView = lazy(() => import('./mediaViews/MediaMainView'));
 
 export default function Media() {
   const dispatch = useDispatch();
-  const classes = useStyles();
   const [isLoading, setIsLoading] = useState(true);
 
   const fetchMediaData = async () => {
@@ -95,24 +75,7 @@ export default function Media() {
           },
         ]}
       </SideAnalyticsPanel>
-      <Grid
-        container
-        direction='column'
-        item
-        wrap='nowrap'
-        className={classes.root}
-      >
-        <MediaToolbar />
-        <Suspense fallback={<ComponentFallback />}>
-          <MediaAggregateIndicators isLoading={isLoading} />
-        </Suspense>
-        <Suspense fallback={<ComponentFallback />}>
-          <MediaIndicators isLoading={isLoading} />
-        </Suspense>
-        <Suspense fallback={<ComponentFallback />}>
-          <MediaPosts isLoading={isLoading} />
-        </Suspense>
-      </Grid>
+      <MediaMainView isLoading={isLoading} />
     </>
   );
 }

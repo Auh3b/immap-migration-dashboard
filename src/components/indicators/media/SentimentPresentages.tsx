@@ -3,20 +3,23 @@ import TitleWrapper from 'components/common/TitleWrapper';
 import ReactEcharts from 'components/common/customCharts/ReactEcharts';
 import { MEDIA_SOURCES_NAMES } from 'components/views/mediaViews/utils/mediaUtils';
 import { METHOD_NAMES } from 'components/views/mediaViews/utils/methodName';
-import { CSSProperties, useMemo } from 'react';
+import { CSSProperties, useContext, useMemo } from 'react';
 import useMediaData from './hooks/useMediaData';
 import NoWidgetData from 'components/common/customWidgets/NoWidgetData';
+import { MediaCountryContext } from 'components/views/mediaViews/utils';
 
-const id = 'Sentimiento_por_tipo_de_red_social';
 const source = 'meltwater';
 
 export default function SentimentPresentages() {
+  const viewFilter = useContext(MediaCountryContext) || '';
+  const id =
+    'Sentimiento_por_tipo_de_red_social' + (viewFilter ? `_${viewFilter}` : '');
   const theme = useTheme();
-
   const { data, isLoading } = useMediaData({
     id,
     methodName: METHOD_NAMES.MEDIA_SENTIMENT_PERCENTAGES,
     source,
+    viewFilter,
   });
 
   const chartStyle: Partial<CSSProperties> = useMemo(
@@ -123,7 +126,7 @@ export default function SentimentPresentages() {
   );
 
   return (
-    <Grid item xs={12} lg={4}>
+    <Grid item xs={12} lg={viewFilter ? 12 : 4}>
       <TitleWrapper
         title='Sentimiento por tipo de red social'
         isLoading={isLoading}

@@ -21,7 +21,7 @@ import {
 } from '@fortawesome/free-brands-svg-icons';
 import SourceIndictor from 'components/indicators/media/utils/SourceIndictor';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { MouseEvent, useMemo } from 'react';
+import { MouseEvent, useContext, useMemo } from 'react';
 import ComponentFallback from 'components/common/ComponentFallback';
 import { MEDIA_SOURCES, SOURCE_COLOR } from './utils/mediaUtils';
 import { METHOD_NAMES } from './utils/methodName';
@@ -34,8 +34,8 @@ import TopLoading from 'components/common/TopLoading';
 import getSourceFilter from 'components/indicators/media/utils/getSourceFilter';
 import { UNICEF_COLORS } from 'theme';
 import { MEDIA_SOURCES_NAMES } from './utils/mediaUtils';
+import { MediaCountryContext } from './utils';
 
-const id = 'menciones_sociales';
 const source = 'meltwater';
 
 const useStyles = makeStyles((theme) => ({
@@ -87,10 +87,10 @@ export default function MediaAggregateIndicators({ isLoading }: any) {
   const dispatch = useDispatch();
   const theme = useTheme();
   const classes = useStyles();
-
+  const viewFilter = useContext(MediaCountryContext) || '';
+  const id = 'menciones_sociales' + (viewFilter ? `_${viewFilter}` : '');
   //@ts-ignore
   const filters = useSelector((state) => state.media.filters);
-
   const mediaSource = useMemo(
     () =>
       getSourceFilter(id, filters, source)[0] ||
@@ -102,10 +102,11 @@ export default function MediaAggregateIndicators({ isLoading }: any) {
     id,
     methodName: METHOD_NAMES.MEDIA_AGGREGATES,
     source,
+    viewFilter,
   });
 
   const handleSourceChange = (
-    event: MouseEvent<HTMLElement>,
+    _event: MouseEvent<HTMLElement>,
     newSource: string,
   ) => {
     if (!newSource) {
