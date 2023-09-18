@@ -23,8 +23,11 @@ import SourceIndictor from 'components/indicators/media/utils/SourceIndictor';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { MouseEvent, useContext, useMemo } from 'react';
 import ComponentFallback from 'components/common/ComponentFallback';
-import { MEDIA_SOURCES, SOURCE_COLOR } from './utils/mediaUtils';
-import { METHOD_NAMES } from './utils/methodName';
+import {
+  MEDIA_SOURCES,
+  SOURCE_COLOR,
+} from '../../views/mediaViews/utils/mediaUtils';
+import { METHOD_NAMES } from '../../views/mediaViews/utils/methodName';
 import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
 import { addMediaFilter, removeMediaFilter } from 'store/mediaSlice';
 import { useDispatch, useSelector } from 'react-redux';
@@ -33,10 +36,9 @@ import useMediaData from 'components/indicators/media/hooks/useMediaData';
 import TopLoading from 'components/common/TopLoading';
 import getSourceFilter from 'components/indicators/media/utils/getSourceFilter';
 import { UNICEF_COLORS } from 'theme';
-import { MEDIA_SOURCES_NAMES } from './utils/mediaUtils';
-import { MediaCountryContext } from './utils';
-
-const source = 'meltwater';
+import { MEDIA_SOURCES_NAMES } from '../../views/mediaViews/utils/mediaUtils';
+import { MediaCountryContext } from '../../views/mediaViews/utils';
+import useViewFilter from './hooks/useViewFilter';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -84,6 +86,8 @@ const StyledToggleButton = withStyles((theme) => ({
 }))(ToggleButton);
 
 const valueFormatter = Object.fromEntries(MEDIA_SOURCES_NAMES);
+const source = 'meltwater';
+const column = 'source';
 
 export default function MediaAggregateIndicators({ isLoading }: any) {
   const dispatch = useDispatch();
@@ -100,6 +104,8 @@ export default function MediaAggregateIndicators({ isLoading }: any) {
     [filters],
   );
 
+  useViewFilter(id);
+
   const { data, isLoading: isLoadingWidget } = useMediaData({
     id,
     methodName: METHOD_NAMES.MEDIA_AGGREGATES,
@@ -114,8 +120,8 @@ export default function MediaAggregateIndicators({ isLoading }: any) {
     if (!newSource) {
       dispatch(
         removeMediaFilter({
-          source: 'meltwater',
-          column: 'source',
+          source,
+          column,
           owner: id,
         }),
       );
@@ -125,8 +131,8 @@ export default function MediaAggregateIndicators({ isLoading }: any) {
     if (newSource === MEDIA_SOURCES.MENCIONES_TOTALES) {
       dispatch(
         removeMediaFilter({
-          source: 'meltwater',
-          column: 'source',
+          source,
+          column,
           owner: id,
         }),
       );
@@ -135,8 +141,8 @@ export default function MediaAggregateIndicators({ isLoading }: any) {
 
     dispatch(
       addMediaFilter({
-        source: 'meltwater',
-        column: 'source',
+        source,
+        column,
         values: [newSource],
         owner: id,
         type: _FilterTypes.IN,
