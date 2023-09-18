@@ -1,4 +1,3 @@
-import { makeStyles } from '@material-ui/core/styles';
 import { lazy, useEffect, useState } from 'react';
 import { setError } from 'store/appSlice';
 import { getDownloadURL, ref } from 'firebase/storage';
@@ -26,7 +25,7 @@ export default function Media() {
     try {
       const dataRef = ref(
         fireStorage,
-        'data/summarised_meltwater_data_v8.json',
+        'data/summarised_meltwater_data_v9.json',
       );
       const dataUrl = await getDownloadURL(dataRef);
       const dataReq = await fetch(dataUrl);
