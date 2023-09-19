@@ -23,7 +23,7 @@ export default function useWidgetFilterValues({
   return useMemo(() => {
     const filter = filters?.[column]?.[type];
     if (!filter || filter.owner !== id) {
-      return null;
+      return [];
     }
     return filter.values.map((d: string) => {
       if (type === _FilterTypes.STRING_SEARCH) {

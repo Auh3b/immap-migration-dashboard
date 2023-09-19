@@ -11,8 +11,7 @@ import { MediaCountryContext } from 'components/views/mediaViews/utils';
 const source = 'meltwater';
 
 export default function SentimentPresentages() {
-  const { value: countryIndex, label: viewFilter } =
-    useContext(MediaCountryContext);
+  const { label: viewFilter } = useContext(MediaCountryContext);
   const id =
     'Sentimiento_por_tipo_de_red_social' + (viewFilter ? `_${viewFilter}` : '');
 

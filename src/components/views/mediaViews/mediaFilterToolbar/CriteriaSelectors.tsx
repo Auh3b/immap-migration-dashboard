@@ -76,7 +76,7 @@ export function CriteriaSelectors() {
       termsLabels.includes(name),
     );
   }, [data]);
-  console.log(data);
+
   return (
     <>
       <CriteriaSelector

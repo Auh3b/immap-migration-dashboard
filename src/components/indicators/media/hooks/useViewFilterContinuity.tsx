@@ -1,10 +1,6 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  addMediaFilter,
-  removeMediaFilter,
-  setViewFilter,
-} from 'store/mediaSlice';
+import { addMediaFilter, removeMediaFilter } from 'store/mediaSlice';
 import useCustomCompareEffectAlt from './useCustomCompareEffectAlt';
 import { dequal } from 'dequal';
 

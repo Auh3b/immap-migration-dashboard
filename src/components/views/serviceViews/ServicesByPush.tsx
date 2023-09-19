@@ -78,21 +78,19 @@ export default function ServicesByPush() {
     return {};
   }, [_childData]);
 
-  const adultPush =
-    useWidgetFilterValues({
-      dataSource: adultSource,
-      id: id + '_-_adulto',
-      column,
-      type: filterType,
-    }) || [];
+  const adultPush = useWidgetFilterValues({
+    dataSource: adultSource,
+    id: id + '_-_adulto',
+    column,
+    type: filterType,
+  });
 
-  const childPush =
-    useWidgetFilterValues({
-      dataSource: childSource,
-      id: id + '_-_nna',
-      column,
-      type: filterType,
-    }) || [];
+  const childPush = useWidgetFilterValues({
+    dataSource: childSource,
+    id: id + '_-_nna',
+    column,
+    type: filterType,
+  });
 
   const selectedPushes = useMemo(() => {
     if (adultPush.length || childPush.length) {
@@ -101,7 +99,7 @@ export default function ServicesByPush() {
     return [];
   }, [adultPush, childPush]);
 
-  const handlePush = (event: MouseEvent<HTMLElement>, newPushes: any[]) => {
+  const handlePush = (_e: MouseEvent<HTMLElement>, newPushes: any[]) => {
     if (newPushes.length) {
       dispatch(
         addFilter({
