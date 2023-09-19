@@ -1,5 +1,4 @@
 import { useTheme } from '@material-ui/core';
-import { ascending } from 'd3';
 import { useMemo } from 'react';
 import ReactEchart from 'components/common/customCharts/ReactEcharts';
 import { UNICEF_COLORS } from 'theme';
@@ -175,15 +174,15 @@ export default function CustomConnectDotChart({ data: _data, groupName }: any) {
           const {
             data: [
               service,
-              nothing,
-              location,
+              _nothing,
+              _location,
               org,
-              personas,
-              orgServ,
-              geom,
+              _personas,
+              _orgServ,
+              _geom,
               capacity,
               yesterdayCount,
-              id,
+              _id,
             ],
           } = params[0];
           const { color: color1 } = params[0];
