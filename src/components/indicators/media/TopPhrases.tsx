@@ -11,6 +11,7 @@ import { FilterTypes } from 'utils/filterFunctions';
 import NoWidgetData from 'components/common/customWidgets/NoWidgetData';
 import getSourceFilter from './utils/getSourceFilter';
 import { MediaCountryContext } from 'components/views/mediaViews/utils';
+import useViewFilterContinuity from './hooks/useViewFilterContinuity';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,8 +22,10 @@ const source = 'meltwater';
 const column = 'topPhrases';
 
 export default function TopPhrases() {
-  const viewFilter = useContext(MediaCountryContext) || '';
+  const { value: countryIndex, label: viewFilter } =
+    useContext(MediaCountryContext);
   const id = 'Palabras_asociadas' + (viewFilter ? `_${viewFilter}` : '');
+  useViewFilterContinuity(id, countryIndex);
   const { data, isLoading } = useMediaData({
     id,
     methodName: METHOD_NAMES.MEDIA_TOP_PHRASES,

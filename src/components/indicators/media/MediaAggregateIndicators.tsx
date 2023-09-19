@@ -21,7 +21,7 @@ import {
 } from '@fortawesome/free-brands-svg-icons';
 import SourceIndictor from 'components/indicators/media/utils/SourceIndictor';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { MouseEvent, useContext, useMemo } from 'react';
+import { MouseEvent, useContext, useEffect, useMemo } from 'react';
 import ComponentFallback from 'components/common/ComponentFallback';
 import {
   MEDIA_SOURCES,
@@ -38,7 +38,7 @@ import getSourceFilter from 'components/indicators/media/utils/getSourceFilter';
 import { UNICEF_COLORS } from 'theme';
 import { MEDIA_SOURCES_NAMES } from '../../views/mediaViews/utils/mediaUtils';
 import { MediaCountryContext } from '../../views/mediaViews/utils';
-import useViewFilter from './hooks/useViewFilter';
+import useViewFilterContinuity from './hooks/useViewFilterContinuity';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -93,7 +93,8 @@ export default function MediaAggregateIndicators({ isLoading }: any) {
   const dispatch = useDispatch();
   const theme = useTheme();
   const classes = useStyles();
-  const viewFilter = useContext(MediaCountryContext) || '';
+  const { value: countryIndex, label: viewFilter } =
+    useContext(MediaCountryContext);
   const id = 'menciones_sociales' + (viewFilter ? `_${viewFilter}` : '');
   //@ts-ignore
   const filters = useSelector((state) => state.media.filters);
@@ -104,7 +105,7 @@ export default function MediaAggregateIndicators({ isLoading }: any) {
     [filters],
   );
 
-  useViewFilter(id);
+  useViewFilterContinuity(id, countryIndex);
 
   const { data, isLoading: isLoadingWidget } = useMediaData({
     id,

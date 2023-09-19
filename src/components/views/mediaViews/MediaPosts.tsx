@@ -28,9 +28,11 @@ const source = 'meltwater';
 
 export default function MediaPosts({ isLoading }: { isLoading: Boolean }) {
   const classes = useStyles();
-  const viewFilter = useContext(MediaCountryContext) || '';
+  const { value: countryIndex, label: viewFilter } =
+    useContext(MediaCountryContext);
   const id =
     'publicaciones_en_los_medios' + (viewFilter ? `_${viewFilter}` : '');
+
   const { data: _data, isLoading: isDataLoading } = useMediaData({
     id,
     methodName: METHOD_NAMES.MEDIA_TOP_POSTS,

@@ -36,7 +36,7 @@ const column = 'keywords';
 
 const MediaIndicators = lazy(() => import('./MediaIndicators'));
 const MediaAggregateIndicators = lazy(
-  () => import('./MediaAggregateIndicators'),
+  () => import('../../indicators/media/MediaAggregateIndicators'),
 );
 const MediaPosts = lazy(() => import('./MediaPosts'));
 
@@ -214,7 +214,9 @@ function IndicatorWithCountrySelector(
           paddingRight: !props.id ? '24px' : 0,
         }}
       >
-        <MediaCountryContext.Provider value={currentCountryValue}>
+        <MediaCountryContext.Provider
+          value={{ value: props.id, label: currentCountryValue }}
+        >
           <Typography
             variant='subtitle1'
             style={{ textTransform: 'uppercase', marginBottom: '8px' }}

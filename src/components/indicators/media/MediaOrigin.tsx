@@ -4,20 +4,23 @@ import TitleWrapper from 'components/common/TitleWrapper';
 import { METHOD_NAMES } from 'components/views/mediaViews/utils/methodName';
 import useMediaData from './hooks/useMediaData';
 import NoWidgetData from 'components/common/customWidgets/NoWidgetData';
-import { useCallback, useContext, useMemo } from 'react';
+import { useCallback, useContext, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addMediaFilter, removeMediaFilter } from 'store/mediaSlice';
 import { FilterTypes } from 'utils/filterFunctions';
 import regionName from './utils/getCountryByRegion';
 import getSourceFilter from './utils/getSourceFilter';
 import { MediaCountryContext } from 'components/views/mediaViews/utils';
+import useViewFilterContinuity from './hooks/useViewFilterContinuity';
 
 const column = 'country';
 const source = 'meltwater';
 
 export default function MediaOrigin() {
-  const viewFilter = useContext(MediaCountryContext) || '';
+  const { value: countryIndex, label: viewFilter } =
+    useContext(MediaCountryContext);
   const id = 'orígenes_de_los_medios' + (viewFilter ? `_${viewFilter}` : '');
+  useViewFilterContinuity(id, countryIndex);
   const dispatch = useDispatch();
   const { data = [], isLoading } = useMediaData({
     id,

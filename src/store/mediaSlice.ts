@@ -6,6 +6,7 @@ interface MediaSlice {
   filters: Record<string, unknown>;
   viewMode: number;
   views: null | string[];
+  viewFilters: null | Record<string, unknown>[];
 }
 
 const slice = createSlice({
@@ -15,6 +16,7 @@ const slice = createSlice({
     filters: {},
     viewMode: 0,
     views: null,
+    viewFilters: null,
   },
   reducers: {
     setIsMediaDataReady: (state, action) => {
@@ -32,6 +34,15 @@ const slice = createSlice({
         state.views[index] = value;
       } else {
         state.views[index] = value;
+      }
+    },
+    setViewFilter: (state, action) => {
+      const { index, id, value } = action.payload;
+      if (!state.viewFilters) {
+        state.viewFilters = [];
+        state.viewFilters[index] = { [id]: value };
+      } else {
+        state.viewFilters[index] = { ...state.viewFilters[index], [id]: value };
       }
     },
     removeView: (state, action) => {
@@ -74,33 +85,53 @@ export const addMediaFilter = (payload: any) => ({
   type: 'media/addMediaFilter',
   payload,
 });
+
 export const setViewMode = (payload: number) => ({
   type: 'media/setViewMode',
   payload,
 });
+
 export const setView = (payload: { index: number; value: string }) => ({
   type: 'media/setView',
   payload,
 });
+
 export const removeView = (payload: number) => ({
   type: 'media/removeView',
   payload,
 });
+
 export const clearViews = () => ({
   type: 'media/clearViews',
 });
+
 export const removeMediaFilter = (payload: any) => ({
   type: 'media/removeMediaFilter',
   payload,
 });
+
 export const clearMediaFilters = () => ({
   type: 'media/clearMediaFilters',
 });
+
 export const setIsMediaDataReady = (payload: any) => ({
   type: 'media/setIsMediaDataReady',
   payload,
 });
 
+export const setViewFilter = (payload: {
+  index: number;
+  id: string;
+  value: any;
+}) => ({
+  type: 'media/setViewFilter',
+  payload,
+});
+
 export const getViewMode = (state: MediaSlice) => {
   return state.viewMode;
+};
+
+export const getViewFilter = (state: MediaSlice, index: number) => {
+  return state.viewFilters?.[index];
 };
