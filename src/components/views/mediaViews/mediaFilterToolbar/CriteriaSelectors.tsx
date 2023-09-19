@@ -8,96 +8,106 @@ import {
 } from '@material-ui/core';
 import { grey } from '@material-ui/core/colors';
 import { ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
+import useMediaData from 'components/indicators/media/hooks/useMediaData';
 import getSourceFilter from 'components/indicators/media/utils/getSourceFilter';
 import React, { useCallback, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addMediaFilter, removeMediaFilter } from 'store/mediaSlice';
 import { FilterTypes } from 'utils/filterFunctions';
-import getStringSearchValue from 'utils/getStringSearchValue';
+import { METHOD_NAMES } from '../utils/methodName';
+import TopLoading from 'components/common/TopLoading';
 
-const termsCriteriaOption = [1, 2, 3, 4, 5, 6, 7, 8, 0];
-const termsCriteriaLabels = {
-  0: 'Otro',
-  1: 'Migrante',
-  2: 'Migrante irregulare',
-  3: 'Refugiado',
-  4: 'Migración',
-  5: 'Migración forzada',
-  6: 'Personas desplazada',
-  7: 'Ruta Migratoria',
-  8: 'Flujo Migratorio',
-};
-const placeCriteriaOption = [1, 2, 3, 4, 5, 6, 7, 0];
-const placeCriteriaLabels = {
-  0: 'Otro',
-  1: 'Selva del darién',
-  2: 'Darién',
-  3: 'Frontera Colombia Panamá',
-  4: 'Panamá',
-  5: 'Necoclí',
-  6: 'Tapón',
-  7: 'Cruce del darién',
-};
-// const subgroupCriteriaOption = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 0];
-// const subgroupCriteriaLabels = {
-//   0: 'Otro',
-//   1: 'Niña',
-//   2: 'Niño',
-//   3: 'Adolescente',
-//   4: 'Mujeres Embarazada',
-//   5: 'Venezolano',
-//   6: 'Haitiano',
-//   7: 'Ecuatariano',
-//   8: 'Chino',
-//   9: 'Colombiano',
-//   10: 'Peruano',
-//   11: 'Cubano',
-// };
-// const contextCriteriaOption = [1, 2, 3, 0];
-// const contextCriteriaLabels = {
-//   0: 'Otro',
-//   1: 'Tráfico',
-//   2: 'Abuso',
-//   3: 'Sexual',
-// };
-const temporalityCriteriaOption = [1, 2, 0];
-const temporalityCriteriaLabels = {
-  0: 'Otro',
-  1: '2023',
-  2: 'Marzo',
-};
+const termsLabels = [
+  'irregulares',
+  'refugiados',
+  'forzada',
+  'personas desplazadas',
+  'ruta',
+  'flujo',
+];
 
+const placeLabels = [
+  'selva del darién',
+  'darién',
+  'colombia',
+  'frontera',
+  'panamá',
+  'necoclí',
+  'tapón',
+  'cruce del darién',
+];
+
+const demoLabels = ['niña', 'niño', 'adolescente', 'mujeres embarazada'];
+
+const contextLabels = ['tráfico', 'abuso', 'sexual'];
+
+const id = 'temas';
+const source = 'meltwater';
+const methodName = METHOD_NAMES.GET_KEYWORDS;
+interface CriteriaObject {
+  name: string;
+  value: number;
+}
 export function CriteriaSelectors() {
+  const { data, isLoading } = useMediaData({
+    id,
+    source,
+    methodName,
+  });
+  const demo = useMemo(() => {
+    if (!data.length) return [];
+    return data.filter(({ name }: CriteriaObject) => demoLabels.includes(name));
+  }, [data]);
+  const context = useMemo(() => {
+    if (!data.length) return [];
+    return data.filter(({ name }: CriteriaObject) =>
+      contextLabels.includes(name),
+    );
+  }, [data]);
+  const place = useMemo(() => {
+    if (!data.length) return [];
+    return data.filter(({ name }: CriteriaObject) =>
+      placeLabels.includes(name),
+    );
+  }, [data]);
+  const terms = useMemo(() => {
+    if (!data.length) return [];
+    return data.filter(({ name }: CriteriaObject) =>
+      termsLabels.includes(name),
+    );
+  }, [data]);
+  console.log(data);
   return (
     <>
       <CriteriaSelector
-        id='terms'
-        title='Tema'
+        id='demo_criteria'
+        title='Demográfica'
         source='meltwater'
-        column='terms'
-        filterType={FilterTypes.STRING_SEARCH}
-        criteriaOption={termsCriteriaOption}
-        labels={termsCriteriaLabels}
+        column='keywords'
+        filterType={FilterTypes.WORD_CLOUD_IN}
+        values={demo}
+        isLoading={isLoading}
       />
+
       <CriteriaSelector
         id='places'
         title='Lugar'
         source='meltwater'
-        column='places'
-        filterType={FilterTypes.STRING_SEARCH}
-        criteriaOption={placeCriteriaOption}
-        labels={placeCriteriaLabels}
-      />
-      {/* <CriteriaSelector
-        id='subgroups'
-        title='Sub-grupo'
-        source='meltwater'
-        column='subgroups'
-        filterType={FilterTypes.STRING_SEARCH}
-        criteriaOption={subgroupCriteriaOption}
-        labels={subgroupCriteriaLabels}
+        column='keywords'
+        filterType={FilterTypes.WORD_CLOUD_IN}
+        values={place}
+        isLoading={isLoading}
       />
       <CriteriaSelector
+        id='terms'
+        title='Terma'
+        source='meltwater'
+        column='keywords'
+        filterType={FilterTypes.WORD_CLOUD_IN}
+        values={terms}
+        isLoading={isLoading}
+      />
+      {/* <CriteriaSelector
         id='context'
         title='Contexto'
         source='meltwater'
@@ -107,13 +117,13 @@ export function CriteriaSelectors() {
         labels={contextCriteriaLabels}
       /> */}
       <CriteriaSelector
-        id='temporality'
-        title='Temporabalidad'
+        id='context'
+        title='Contexto'
         source='meltwater'
-        column='temporality'
-        filterType={FilterTypes.STRING_SEARCH}
-        criteriaOption={temporalityCriteriaOption}
-        labels={temporalityCriteriaLabels}
+        column='keywords'
+        filterType={FilterTypes.WORD_CLOUD_IN}
+        values={context}
+        isLoading={isLoading}
       />
     </>
   );
@@ -163,6 +173,7 @@ const StyledToggleButton = withStyles((theme) => ({
 
 const useSelectorStyles = makeStyles((theme) => ({
   root: {
+    position: 'relative',
     width: '100%',
     border: '0.5px solid ' + grey[200],
     borderRadius: theme.shape.borderRadius,
@@ -187,73 +198,56 @@ interface CriteriaSelectorProps {
   column: string;
   source: string;
   filterType: FilterTypes;
-  criteriaOption: number[];
-  labels?: Record<number, string>;
+  values: CriteriaObject[];
+  isLoading?: boolean;
 }
 
 function CriteriaSelector(props: CriteriaSelectorProps) {
-  const {
-    id,
-    title,
-    column,
-    source,
-    filterType: type,
-    criteriaOption,
-    labels,
-  } = props;
+  const { id, title, column, source, filterType: type, values } = props;
   const dispatch = useDispatch();
   const classes = useSelectorStyles();
   //@ts-ignore
   const filters = useSelector((state) => state.media.filters) || {};
   const criteria = useMemo(
-    () =>
-      getSourceFilter(id, filters, source).map(
-        (d: string) => +getStringSearchValue(d),
-      ) || [],
+    () => getSourceFilter(id, filters, source) || [],
     [filters, source, id],
   );
 
-  const onCategoriesChange = useCallback(
-    (categories) => {
-      if (categories.length) {
-        const withRegExp =
-          type === _FilterTypes.STRING_SEARCH
-            ? categories.map((d: any) => `^(.*,|)${d}(,.*|)$`)
-            : categories;
-        const valueFormatter = labels;
-
+  const onCriteriaChange = useCallback(
+    (options) => {
+      if (options.length) {
         dispatch(
           addMediaFilter({
+            owner: id,
             source,
+            values: options,
             column,
             type,
-            values: withRegExp,
-            owner: id,
-            valueFormatter,
           }),
         );
       } else {
         dispatch(
           removeMediaFilter({
+            owner: id,
             source,
             column,
-            owner: id,
           }),
         );
       }
     },
-    [dispatch, source, id, type, column, labels],
+    [values],
   );
 
   const handleChange = (
-    event: React.ChangeEvent<{ value: unknown }>,
-    newValue: number[],
+    _e: React.ChangeEvent<{ value: unknown }>,
+    newValue: string[],
   ) => {
-    onCategoriesChange(newValue);
+    onCriteriaChange(newValue);
   };
 
   return (
     <Grid item className={classes.root}>
+      {props.isLoading && <TopLoading />}
       <Tooltip title={title} arrow placement='bottom'>
         <Typography className={classes.title}>{title}</Typography>
       </Tooltip>
@@ -264,10 +258,10 @@ function CriteriaSelector(props: CriteriaSelectorProps) {
         onChange={handleChange}
         exclusive={false}
       >
-        {criteriaOption.map((criterion: number) => (
+        {values.map(({ name }) => (
           // @ts-ignore
-          <StyledToggleButton key={title + criterion} value={criterion}>
-            {labels ? labels[criterion] : criterion}
+          <StyledToggleButton key={name} value={name}>
+            {name}
           </StyledToggleButton>
         ))}
       </StyledToggleButtonGroup>
