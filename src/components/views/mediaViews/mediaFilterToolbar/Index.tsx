@@ -46,7 +46,7 @@ export default function MediaFilterToolbar() {
     >
       <Typography className={classes.title}>filtros adicionales</Typography>
       <MediaStrictDateFilter />
-      {/* <CriteriaSelectors /> */}
+      <CriteriaSelectors />
     </Grid>
   );
 }

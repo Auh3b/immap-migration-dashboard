@@ -7,18 +7,17 @@ import { NavLink } from 'react-router-dom';
 import { ROUTE_PATHS } from 'routes';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import IntroHeader from './introductionViews/IntroHeader';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 //@ts-ignore
 import { fetchLayerData, FORMATS } from '@deck.gl/carto';
 import premiseSource from 'data/sources/premiseSource';
 import mainSource from 'data/sources/mainSource';
 import executeIntroMethod from 'components/indicators/introduction/utils/executeIntroMethod';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setIsIntroDataReady } from 'store/introSlice';
 import { setError } from 'store/appSlice';
 import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
 import ComponentFallback from 'components/common/ComponentFallback';
-import { clearIntroFilters } from 'store/introSlice';
 import { CustomTheme } from 'theme';
 import clsx from 'clsx';
 

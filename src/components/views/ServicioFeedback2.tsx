@@ -24,7 +24,7 @@ const useStyles = makeStyles(() => ({
   servicioFeedback_2: {},
 }));
 
-export default function ServicioFeedback_2() {
+export default function ServicioFeedback2() {
   const dispatch = useDispatch();
   const classes = useStyles();
 

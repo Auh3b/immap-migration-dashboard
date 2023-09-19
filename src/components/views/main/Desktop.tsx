@@ -10,7 +10,7 @@ import ComponentFallback from 'components/common/ComponentFallback';
 
 const MapContainer = lazy(() => import('./MapContainer'));
 
-const DRAWER_WIDTH_CLOSED = 500;
+const DRAWER_WIDTH_CLOSED = 350;
 const DRAWER_WIDTH_OPEN = 600;
 
 const MIDDLE_HEIGHT = 50;

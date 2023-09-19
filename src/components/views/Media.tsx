@@ -1,4 +1,3 @@
-import { makeStyles } from '@material-ui/core/styles';
 import { lazy, useEffect, useState } from 'react';
 import { setError } from 'store/appSlice';
 import { getDownloadURL, ref } from 'firebase/storage';

@@ -12,7 +12,7 @@ const margin = {
   bottom: 10,
 };
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
     '& svg': {},
     '& text': {

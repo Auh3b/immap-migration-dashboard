@@ -14,6 +14,7 @@ import { RootState } from 'store/store';
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    position: 'relative',
     width: '100%',
     padding: theme.spacing(1),
     borderRadius: theme.shape.borderRadius,
@@ -114,7 +115,8 @@ export default function StrictDateFilter({
       <Tooltip title={title} arrow placement='bottom'>
         <Typography className={classes.title}>{title}</Typography>
       </Tooltip>
-      {data && !isLoading ? (
+      {isLoading && <ComponentFallback />}
+      {data && (
         <CustomTab
           id={id}
           column={column}
@@ -128,8 +130,6 @@ export default function StrictDateFilter({
           selected={selected}
           onSelectionChange={onSelectionChange}
         />
-      ) : (
-        <ComponentFallback />
       )}
     </Grid>
   );
