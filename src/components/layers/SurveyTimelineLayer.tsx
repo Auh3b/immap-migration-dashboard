@@ -199,7 +199,8 @@ export default function SurveyTimelineLayer() {
   useEffect(() => {
     (async function fetchData() {
       const { data } = await fetchLayerData({
-        ...timelineSource,
+        type: timelineSource.type,
+        connection: timelineSource.connection,
         source: timelineSource.data,
         format: 'geojson',
       });
