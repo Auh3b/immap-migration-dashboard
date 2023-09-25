@@ -25,7 +25,7 @@ export default function Media() {
     try {
       const dataRef = ref(
         fireStorage,
-        'data/summarised_meltwater_data_v9.json',
+        'data/summarised_meltwater_data_v10.json',
       );
       const dataUrl = await getDownloadURL(dataRef);
       const dataReq = await fetch(dataUrl);
