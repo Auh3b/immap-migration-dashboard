@@ -1,15 +1,32 @@
 import { ascending, descending, flatRollup, max, min, sum } from 'd3';
-import { MEDIA_SOURCES, Input, MediaParams, POST_URL_MAP } from './mediaUtils';
+import {
+  MEDIA_SOURCES,
+  Input,
+  MediaParams,
+  POST_URL_MAP,
+  SourceField,
+} from './mediaUtils';
 import groupByValue, { GroupByTypes } from 'utils/groupByValue';
 import { Filters, filterValues } from 'utils/filterFunctions';
 import crypto from 'crypto';
 import { getTemporalFilters } from 'utils/dateHelpers';
 import { getUnixTimestamp } from 'utils/dateHelpers';
 
-let mediaData: Partial<Input>;
+let mediaData: Input = [];
 
 export function setMediaData({ data }: MediaParams) {
-  mediaData = data;
+  for (let i = 0; i < data.length; i++) {
+    const { keywords, topphrases, topposts, sentiment, ...rest }: any = data[i];
+    const entry = {
+      ...rest,
+      keywords: JSON.parse(keywords),
+      topPosts: JSON.parse(topposts),
+      topPhrases: JSON.parse(topphrases),
+      sentiment: JSON.parse(sentiment),
+    };
+    mediaData = [...mediaData, entry];
+  }
+
   return true;
 }
 
@@ -21,34 +38,30 @@ export function getMediaData({ filters }: MediaParams) {
   return null;
 }
 
-function applyFiltersToData(
-  data: Partial<Input>,
-  filters: Filters,
-): Partial<Input> {
+function applyFiltersToData(data: Input, filters: Filters): Input {
   if (Object.keys(filters).length === 0) {
     return data;
   }
 
-  const filteredData = filterValues(data.sources, filters);
-  return { ...data, sources: filteredData };
+  const filteredData = filterValues<SourceField>(data, filters);
+  return filteredData;
 }
 
 export function getMediaAggregateIndicators({ filters }: MediaParams) {
   if (mediaData) {
     const data = applyFiltersToData(mediaData, filters);
     let output: any[] = [];
-    const { sources, summary } = data;
     output = [
       ...output,
       {
         name: MEDIA_SOURCES.MENCIONES_TOTALES,
 
-        value: sum(sources, (d) => d.volume),
+        value: sum(data, (d) => d.volume),
       },
     ];
-    const sourceList = summary.sources;
+    const sourceList = Object.values(MEDIA_SOURCES);
     for (let sourceName of sourceList) {
-      const currentSourceData = sources.filter(
+      const currentSourceData = data.filter(
         ({ source }) => source === sourceName,
       );
 
@@ -67,10 +80,9 @@ export function getMediaAggregateIndicators({ filters }: MediaParams) {
 export function getMediaOrigins({ filters }: MediaParams) {
   if (mediaData) {
     const data = applyFiltersToData(mediaData, filters);
-    const { sources } = data;
 
     const output = groupByValue({
-      input: sources,
+      input: data,
       valueColumn: 'volume',
       keyColumn: 'country',
       type: GroupByTypes.SUM,
@@ -86,11 +98,10 @@ export function getMediaOrigins({ filters }: MediaParams) {
 export function getSentimentPercentages({ filters }: MediaParams) {
   if (mediaData) {
     const data = applyFiltersToData(mediaData, filters);
-    const { sources: _sources, summary } = data;
     let _data2: any[] = [];
-    const sources = summary.sources;
+    const sources = Object.values(MEDIA_SOURCES);
     for (let sourceName of sources) {
-      const sentimentBySource = _sources
+      const sentimentBySource = data
         .filter(({ source }: any) => sourceName === source)
         .map(({ sentiment }: any) => sentiment);
       let groupSentiment: any[] = [];
@@ -141,11 +152,10 @@ export function getSentimentPercentages({ filters }: MediaParams) {
 export function getSentimentHistory({ filters }: MediaParams) {
   if (mediaData) {
     const data = applyFiltersToData(mediaData, filters);
-    const { sources: _sources } = data;
     let _data2: any[] = [];
-    let dates = Array.from(new Set(_sources.map(({ date }: any) => date)));
+    let dates = Array.from(new Set(data.map(({ date }: any) => date)));
     for (let dateValue of dates) {
-      const sentimentByDate = _sources
+      const sentimentByDate = data
         .filter(({ date }: any) => date === dateValue)
         .map(({ sentiment }: any) => sentiment);
       let groupSentiment: any[] = [];
@@ -186,16 +196,15 @@ export function getSentimentHistory({ filters }: MediaParams) {
 export function getHistoricalEngagementBySource({ filters }: MediaParams) {
   if (mediaData) {
     const data = applyFiltersToData(mediaData, filters);
-    const { sources: _sources } = data;
     let output: any[] = [];
     const sourcesWithViews = Array.from(
       new Set(
-        _sources.filter(({ views }) => views !== 0).map(({ source }) => source),
+        data.filter(({ views }) => views !== 0).map(({ source }) => source),
       ),
     );
 
     for (let source of sourcesWithViews) {
-      const dataBySource = _sources.filter(
+      const dataBySource = data.filter(
         ({ source: parentSource }) => parentSource === source,
       );
       const views = flatRollup(
@@ -222,11 +231,9 @@ export function getTopPhrases({ filters }: MediaParams) {
   if (mediaData) {
     const data = applyFiltersToData(mediaData, filters);
 
-    const { sources: _sources } = data;
-
     let _data2: any[] = [];
 
-    const groupsArray = _sources.map(({ topPhrases }: any) => topPhrases);
+    const groupsArray = data.map(({ topPhrases }: any) => topPhrases);
 
     for (let group of groupsArray) {
       for (let [name, value] of group) {
@@ -253,9 +260,7 @@ export function getTopPosts({ filters }: MediaParams) {
   if (mediaData) {
     const data = applyFiltersToData(mediaData, filters);
 
-    const { sources: _sources } = data;
-
-    const groupsArray = _sources
+    const groupsArray = data
       .map(({ topPosts, date, source }) => ({ source, date, topPosts }))
       .filter(({ topPosts }) => topPosts.length !== 0);
     const sources = Array.from(
@@ -292,8 +297,7 @@ export function getTopPosts({ filters }: MediaParams) {
 
 export function getTemporalFilterValues({ filters }: MediaParams) {
   if (mediaData) {
-    const { sources } = mediaData;
-    const sourceWithUnixTime = sources.map((d) => ({
+    const sourceWithUnixTime = mediaData.map((d) => ({
       ...d,
       date: getUnixTimestamp(new Date(d.date)),
     }));
@@ -305,9 +309,8 @@ export function getTemporalFilterValues({ filters }: MediaParams) {
 
 export function getDateRange(_e: MediaParams) {
   if (!mediaData) return null;
-  const { sources } = mediaData;
-  const maxDate = max(sources, (d) => d.date);
-  const minDate = min(sources, (d) => d.date);
+  const maxDate = max(mediaData, (d) => d.date);
+  const minDate = min(mediaData, (d) => d.date);
   return [minDate, maxDate];
 }
 
@@ -315,11 +318,9 @@ export function getKeywords(_e: MediaParams) {
   if (mediaData) {
     const data = applyFiltersToData(mediaData, _e.filters);
 
-    const { sources: _sources } = data;
-
     let _data2: any[] = [];
 
-    const groupsArray = _sources.map(({ keywords }) => keywords);
+    const groupsArray = data.map(({ keywords }) => keywords);
 
     for (let group of groupsArray) {
       _data2 = [

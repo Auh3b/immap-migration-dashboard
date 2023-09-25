@@ -13,8 +13,21 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 import { ActiveFilters } from 'components/common/sideAnalysticsPanel/ActiveFilters';
 import { StateSlices } from 'utils/types';
 import MediaFilterToolbar from './mediaViews/mediaFilterToolbar/Index';
+//@ts-ignore
+import { fetchLayerData, FORMATS } from '@deck.gl/carto';
+import mediaSource from 'data/sources/mediaSources';
 
 export const MediaMainView = lazy(() => import('./mediaViews/MediaMainView'));
+
+const fetchMedia = async () => {
+  const { data: result } = await fetchLayerData({
+    source: mediaSource.data,
+    type: mediaSource.type,
+    connection: mediaSource.connection,
+    format: FORMATS.JSON,
+  });
+  return result;
+};
 
 export default function Media() {
   const dispatch = useDispatch();
@@ -23,13 +36,7 @@ export default function Media() {
   const fetchMediaData = async () => {
     setIsLoading(true);
     try {
-      const dataRef = ref(
-        fireStorage,
-        'data/summarised_meltwater_data_v10.json',
-      );
-      const dataUrl = await getDownloadURL(dataRef);
-      const dataReq = await fetch(dataUrl);
-      const data = await dataReq.json();
+      const data = await fetchMedia();
       const result = await executeMethod(METHOD_NAMES.SET_MEDIA_DATA, { data });
       if (!result) {
         throw 'Something went wrong when loading data';

@@ -1,4 +1,3 @@
-import { index } from 'd3';
 import { createContext } from 'react';
 
 export const MediaCountryContext = createContext<{

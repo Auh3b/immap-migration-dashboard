@@ -63,7 +63,7 @@ function filterFunction(type: filterType) {
   return filterMap.get(type);
 }
 
-export function filterValues(data: any[], _filters: Filters) {
+export function filterValues<T = any>(data: T[], _filters: Filters): T[] {
   if (data.length === 0) {
     return data;
   }

@@ -52,7 +52,7 @@ interface Summary {
 
 type FieldValues = [string, number];
 
-interface SourceField {
+export interface SourceField {
   date: string;
   source: string;
   volume: number;
@@ -65,14 +65,11 @@ interface SourceField {
   views: number;
 }
 
-type Sources = Partial<SourceField[]>;
+type Sources = SourceField[];
 
-export interface Input {
-  summary: Partial<Summary>;
-  sources: Sources;
-}
+export type Input = Sources;
 
 export interface MediaParams {
-  data?: Partial<Input>;
+  data?: Input;
   filters?: Filters;
 }
