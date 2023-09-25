@@ -10,8 +10,8 @@ import IntroHeader from './introductionViews/IntroHeader';
 import { useEffect, useState } from 'react';
 //@ts-ignore
 import { fetchLayerData, FORMATS } from '@deck.gl/carto';
-import premiseSource from 'data/sources/premiseSource';
-import mainSource from 'data/sources/mainSource';
+import introPremiseSource from 'data/sources/introPremiseSource';
+import introAuroraSource from 'data/sources/introAuroraSource';
 import executeIntroMethod from 'components/indicators/introduction/utils/executeIntroMethod';
 import { useDispatch } from 'react-redux';
 import { setIsIntroDataReady } from 'store/introSlice';
@@ -55,18 +55,18 @@ const useStyles = makeStyles((theme) => ({
 
 const fetchPremise = async () => {
   const { data: result } = await fetchLayerData({
-    source: premiseSource.data,
-    type: premiseSource.type,
-    connection: premiseSource.connection,
+    source: introPremiseSource.data,
+    type: introPremiseSource.type,
+    connection: introPremiseSource.connection,
     format: FORMATS.JSON,
   });
   return result;
 };
 const fetchAurora = async () => {
   const { data: result } = await fetchLayerData({
-    source: mainSource.data,
-    type: mainSource.type,
-    connection: mainSource.connection,
+    source: introAuroraSource.data,
+    type: introAuroraSource.type,
+    connection: introAuroraSource.connection,
     format: FORMATS.JSON,
   });
   return result;
