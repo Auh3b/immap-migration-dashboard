@@ -11,7 +11,7 @@ const getConnectDotServices: MethodFunc<any[]> = (input, column, params) => {
 
   for (let serviceEntry of input) {
     const services: number[] = serviceEntry[column]
-      .split(',')
+      .split('|')
       .map((d: string) => +d);
 
     for (let service of services) {

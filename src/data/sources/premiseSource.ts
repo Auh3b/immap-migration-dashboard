@@ -54,7 +54,7 @@ const source = {
   connection: 'carto_dw',
   data: `SELECT ${COLUMNS.join(
     ',',
-  )} FROM \`carto-dw-ac-4v8fnfsh.shared.Premise_22032023\``,
+  )} FROM \`carto-dw-ac-4v8fnfsh.shared.premise_old_new\``,
 };
 //`SELECT * FROM shared.Premise_22032023`
 //carto-dw-ac-4v8fnfsh.shared.Premise_22032023
