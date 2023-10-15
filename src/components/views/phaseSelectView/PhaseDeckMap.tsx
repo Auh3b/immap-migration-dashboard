@@ -2,6 +2,7 @@ import {
   Dispatch,
   SetStateAction,
   createContext,
+  useCallback,
   useContext,
   useEffect,
   useState,
@@ -73,15 +74,58 @@ function DeckMapContainer() {
   );
 }
 
+const targetCountries = ['PAN', 'COL', 'CRI', 'CHL'];
+
 function CountriesLayer() {
+  // @ts-ignore
+  const phase = useSelector((state) => state.app.phase);
+  const setDetails = useContext(MapContext).setDetails;
+  useEffect(() => {
+    const data = {
+      ...americaFeatureCollection,
+      features: americaFeatureCollection.features.filter(
+        ({ properties: { ADM0_A3 } }) => targetCountries.includes(ADM0_A3),
+      ),
+    };
+    const { zoom, latitude, longitude } = getViewport({
+      // @ts-ignore
+      geojson: data,
+      padding: 50,
+      width: 300,
+      height: 500,
+    });
+
+    setDetails((prev) => ({
+      ...prev,
+      viewState: {
+        // @ts-ignore
+        ...prev.viewState,
+        zoom,
+        latitude,
+        longitude,
+      },
+    }));
+  }, []);
+  const getFillColor = useCallback(
+    (d) => {
+      if (phase) return [0, 0, 0, 0];
+      if (!targetCountries.includes(d.properties.ADM0_A3)) return [0, 0, 0, 0];
+      return [51, 218, 255, 200];
+    },
+    [phase],
+  );
   return new GeoJsonLayer({
     id: 'countries',
     data: americaFeatureCollection,
-    getFillColor: [0, 0, 0, 0],
+    // @ts-ignore
+    getFillColor,
     stroked: true,
     getLineColor: [0, 0, 0, 255],
     getLineWidth: 1,
     lineWidthMinPixels: 0.5,
+    updateTriggers: {
+      getFillColor: phase,
+    },
   });
 }
 
