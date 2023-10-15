@@ -1,8 +1,15 @@
 // @ts-ignore
 import { MAP_TYPES } from '@deck.gl/carto';
 import { SOURCE_NAMES } from './sourceTypes';
+import { useMemo } from 'react';
+import { useSelector } from 'react-redux';
 
 const PREMISE_SOURCE_ID = SOURCE_NAMES.PREMISE_SOURCE;
+
+const phases = {
+  1: '`carto-dw-ac-4v8fnfsh.shared.Premise_22032023`',
+  2: '`carto-dw-ac-4v8fnfsh.shared.premise_alt`',
+};
 
 const COLUMNS = [
   'id',
@@ -48,15 +55,21 @@ const COLUMNS = [
   'serv_tra_2',
 ];
 
-const source = {
-  id: PREMISE_SOURCE_ID,
-  type: MAP_TYPES.QUERY,
-  connection: 'carto_dw',
-  data: `SELECT ${COLUMNS.join(
-    ',',
-  )} FROM \`carto-dw-ac-4v8fnfsh.shared.premise_old_new\``,
+const usePremiseSource = () => {
+  // @ts-ignore
+  const phaseIndex = useSelector((state) => state.app.phase) || 1;
+  const premiseByPhase = useMemo(
+    () => ({
+      id: PREMISE_SOURCE_ID,
+      type: MAP_TYPES.QUERY,
+      connection: 'carto_dw',
+      data: `SELECT ${COLUMNS.join(',')} FROM ${phases[phaseIndex]}`,
+    }),
+    [phaseIndex],
+  );
+  return premiseByPhase;
 };
 //`SELECT * FROM shared.Premise_22032023`
 //carto-dw-ac-4v8fnfsh.shared.Premise_22032023
 
-export default source;
+export default usePremiseSource;

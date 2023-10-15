@@ -10,7 +10,7 @@ import { color } from 'd3';
 import CustomGeoJsonLayer from './CustomLayer/CustomGeoJsonLayer';
 import useCustomDataLoad from './hooks/useCustomDataLoad';
 import { useEffect, useState } from 'react';
-import premiseSource from 'data/sources/premiseSource';
+import usePremiseSource from 'data/sources/premiseSource';
 import premisePopup from './utils/premisePopup';
 
 export const PREMISE_SERVICES_LAYER_ID = 'premiseServicesLayer';
@@ -44,7 +44,7 @@ export default function PremiseServicesLayer() {
   const source = useSelector((state) =>
     selectSourceById(state, premiseServicesLayer?.source),
   );
-
+  const premiseSource = usePremiseSource();
   useEffect(() => {
     (async function fetchData() {
       const { data } = await fetchLayerData({

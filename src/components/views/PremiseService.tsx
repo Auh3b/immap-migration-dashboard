@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { SERVICE_CONCENTRATION_LAYER_ID } from 'components/layers/ServiceConcentrationLayer';
-import premiseSource from 'data/sources/premiseSource';
 import { PREMISE_SERVICES_LAYER_ID } from 'components/layers/PremiseServicesLayer';
 import { useDispatch } from 'react-redux';
 import {
@@ -15,10 +14,11 @@ import PremiseRightView from './premiseViews/PremiseRightView';
 import { ActiveFilters } from 'components/common/sideAnalysticsPanel/ActiveFilters';
 import { StateSlices } from 'utils/types';
 import FilterListIcon from '@material-ui/icons/FilterList';
+import usePremiseSource from 'data/sources/premiseSource';
 
 export default function PremiseService() {
   const dispatch = useDispatch();
-
+  const premiseSource = usePremiseSource();
   useEffect(() => {
     dispatch(addSource(premiseSource));
     dispatch(

@@ -10,6 +10,7 @@ const slice = createSlice({
     modalDataSource: '',
     isSidePanelOpen: false,
     sidePanelWidth: 348,
+    phase: null,
   },
   reducers: {
     setError: (state, action) => {
@@ -34,6 +35,9 @@ const slice = createSlice({
       state.isSidePanelOpen = action?.payload
         ? action.payload
         : !state.isSidePanelOpen;
+    },
+    setPhase: (state, action) => {
+      state.phase = action.payload;
     },
   },
 });
@@ -65,5 +69,9 @@ export const removeModalUrl = () => ({
 });
 export const setIsSidePanelOpen = (payload?: boolean) => ({
   type: 'app/setIsSidePanelOpen',
+  payload,
+});
+export const setPhase = (payload: number) => ({
+  type: 'app/setPhase',
   payload,
 });

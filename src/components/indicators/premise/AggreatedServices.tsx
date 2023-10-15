@@ -90,12 +90,6 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
   const [filters, setFilters] = useState<Record<string, FilterItem> | null>(
     null,
   );
-  // const selectedValue = useWidgetFilterValues({
-  //   dataSource,
-  //   column,
-  //   id,
-  //   type
-  // }) || []
 
   const { width, height } = useSelector(
     (state: RootState) => state.carto.viewState,
