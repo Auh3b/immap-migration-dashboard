@@ -22,6 +22,7 @@ import {
 import { grey, red } from '@material-ui/core/colors';
 import { UNICEF_COLORS } from 'theme';
 import { dequal } from 'dequal';
+import PhaseIndicator from './PhaseIndicator';
 
 const drawerWidth = 355;
 
@@ -104,6 +105,7 @@ export default function SideAnalyticsPanel({
             title,
             value,
           }))}
+          isOpen={isOpen}
           setValue={setValue}
           value={value}
         />
@@ -194,10 +196,12 @@ function SideMenu({
   value,
   setValue,
   menuItems,
+  isOpen
 }: {
   value: number;
   setValue: (value: number) => void;
   menuItems: Partial<PanelContent>[];
+  isOpen?: boolean
 }) {
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
@@ -212,6 +216,7 @@ function SideMenu({
       container
       style={{ color: grey['600'] }}
     >
+      <PhaseIndicator isPanelOpen={isOpen} />
       {menuItems.length &&
         menuItems.map(({ icon, title, value: itemValue }) => (
           <NavButton
