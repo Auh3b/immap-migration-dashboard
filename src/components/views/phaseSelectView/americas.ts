@@ -3614,4 +3614,4 @@ const americaFeatureCollection = {
   ],
 };
 
-export default americaFeatureCollection
+export default americaFeatureCollection;
