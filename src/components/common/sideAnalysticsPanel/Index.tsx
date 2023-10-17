@@ -196,12 +196,12 @@ function SideMenu({
   value,
   setValue,
   menuItems,
-  isOpen
+  isOpen,
 }: {
   value: number;
   setValue: (value: number) => void;
   menuItems: Partial<PanelContent>[];
-  isOpen?: boolean
+  isOpen?: boolean;
 }) {
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
@@ -288,6 +288,9 @@ function ContentPanel({ children, value }: ContentPanelProps) {
   const classes = usePanelStyles({ value });
   return (
     <Grid item className={classes.root}>
+      {Boolean(value) && 
+      <PhaseIndicator fullText />
+      }
       {children.length &&
         children.map(({ content, value: itemValue, title }) => (
           <TabPanel key={title} value={value} index={itemValue}>

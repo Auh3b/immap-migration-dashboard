@@ -1,10 +1,23 @@
-import { Button, Menu, MenuItem, MenuList, Popper } from '@material-ui/core';
-import { Dispatch, Fragment, MouseEvent, SetStateAction, useState } from 'react';
+import {
+  Button,
+  Grid,
+  Menu,
+  MenuItem,
+  MenuList,
+} from '@material-ui/core';
+import {
+  Dispatch,
+  Fragment,
+  MouseEvent,
+  SetStateAction,
+  useState,
+} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPhase } from 'store/appSlice';
 
-interface PhaseIndicatorProps{
-    isPanelOpen?: boolean
+interface PhaseIndicatorProps {
+  isPanelOpen?: boolean;
+  fullText?: boolean
 }
 
 export default function PhaseIndicator(props: PhaseIndicatorProps) {
@@ -12,13 +25,15 @@ export default function PhaseIndicator(props: PhaseIndicatorProps) {
   const phase = useSelector((state) => state.app.phase);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const handleClick = (event: MouseEvent<HTMLElement>) => {
-    setAnchorEl((prev)=> prev ? null : event.currentTarget)
-  }
+    setAnchorEl((prev) => (prev ? null : event.currentTarget));
+  };
   return (
-    <Fragment>
-      <Button onClick={handleClick} variant={'contained'}>{props.isPanelOpen ? 'Phase '+phase :phase}</Button>
+    <Grid style={{ padding: '8px', width: '100%'}}>
+      <Button color={'primary'} disabled={props.isPanelOpen} fullWidth style={{minWidth: 'unset'}} onClick={handleClick} variant={'contained'}>
+        {props.fullText ? 'Phase '+phase : phase}
+      </Button>
       <PhaseIndicatorSelector anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
-    </Fragment>
+    </Grid>
   );
 }
 
@@ -41,6 +56,7 @@ function PhaseIndicatorSelector(props: PhaseIndicatorSelectorProps) {
       open={Boolean(props.anchorEl)}
       anchorEl={props.anchorEl}
       onClose={onClose}
+      
     >
       <MenuList>
         {[1, 2].map((d) => (
