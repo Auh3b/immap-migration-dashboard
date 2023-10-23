@@ -17,17 +17,20 @@ const Introduction = lazy(() => import('components/views/Introduction'));
 const ServicioFeedback2 = lazy(
   () => import('components/views/ServicioFeedback2'),
 );
+const ProjectPhaseSelect = lazy(
+  () => import('components/views/ProjectPhaseSelect'),
+);
 // [hygen] Import views
 
-const DEFAULT_ROUTE = '/board';
+export const BOARD_ROUTE_DEFAULT = 'board';
 
-const BOARD_ROUTES = {
-  SERVICES: DEFAULT_ROUTE + '/feedback_servicios',
-  MIGRATION_FLOW: DEFAULT_ROUTE + '/flujos_migratorios',
-  MEDIA: DEFAULT_ROUTE + '/redes_sociales',
-  PREMISE_SERVICE: DEFAULT_ROUTE + '/servicios',
-  DINÁMICA_AURORA: DEFAULT_ROUTE + '/conexiones_en_la_ruta',
-  SERVICIO_FEEDBACK_2: DEFAULT_ROUTE + '/servicio_feedback_2',
+export const BOARD_ROUTES = {
+  SERVICES: 'feedback_servicios',
+  MIGRATION_FLOW: 'flujos_migratorios',
+  MEDIA: 'redes_sociales',
+  PREMISE_SERVICE: 'servicios',
+  DINÁMICA_AURORA: 'conexiones_en_la_ruta',
+  SERVICIO_FEEDBACK_2: 'servicio_feedback_2',
 };
 
 export const ROUTE_PATHS = {
@@ -36,6 +39,7 @@ export const ROUTE_PATHS = {
   NOT_FOUND: '/404',
   INTRODUCTION: '/inicio',
   ...BOARD_ROUTES,
+  PROJECT_PHASE_SELECT: '/phase_select',
   // [hygen] Add path routes
 };
 
@@ -50,18 +54,30 @@ const routes = [
       </ProtectedRoute>
     ),
     children: [
-      { path: '/', element: <Navigate to={ROUTE_PATHS.INTRODUCTION} /> },
-      { path: ROUTE_PATHS.SERVICES, element: <Services /> },
-      { path: ROUTE_PATHS.MIGRATION_FLOW, element: <MigrationFlow /> },
-      { path: ROUTE_PATHS.MEDIA, element: <Media /> },
-      { path: ROUTE_PATHS.PREMISE_SERVICE, element: <PremiseService /> },
-      { path: ROUTE_PATHS.DINÁMICA_AURORA, element: <DinámicaAurora /> },
       {
-        path: ROUTE_PATHS.SERVICIO_FEEDBACK_2,
-        element: <ServicioFeedback2 />,
+        path: '/',
+        element: <Navigate to={ROUTE_PATHS.PROJECT_PHASE_SELECT} />,
+      },
+      {
+        path: BOARD_ROUTE_DEFAULT,
+        children: [
+          { path: ROUTE_PATHS.SERVICES, element: <Services /> },
+          { path: ROUTE_PATHS.MIGRATION_FLOW, element: <MigrationFlow /> },
+          { path: ROUTE_PATHS.MEDIA, element: <Media /> },
+          { path: ROUTE_PATHS.PREMISE_SERVICE, element: <PremiseService /> },
+          { path: ROUTE_PATHS.DINÁMICA_AURORA, element: <DinámicaAurora /> },
+          {
+            path: ROUTE_PATHS.SERVICIO_FEEDBACK_2,
+            element: <ServicioFeedback2 />,
+          },
+        ],
       },
       // [hygen] Add routes
     ],
+  },
+  {
+    path: ROUTE_PATHS.PROJECT_PHASE_SELECT,
+    element: <ProjectPhaseSelect />,
   },
   { path: ROUTE_PATHS.INTRODUCTION, element: <Introduction /> },
   { path: ROUTE_PATHS.LOGIN, element: <Login /> },

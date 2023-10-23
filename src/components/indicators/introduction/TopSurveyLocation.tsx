@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 import getSourceFilter from '../media/utils/getSourceFilter';
 
 const title = 'Total de encuestas por área de recolección';
-const column = 'erm';
+const column = 'lugar_enc';
 const subtitle = '';
 const source = 'premise';
 const id = 'top_Survey_Sitios';

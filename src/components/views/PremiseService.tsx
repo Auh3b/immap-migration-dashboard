@@ -1,8 +1,7 @@
 import { useEffect } from 'react';
 import { SERVICE_CONCENTRATION_LAYER_ID } from 'components/layers/ServiceConcentrationLayer';
-import premiseSource from 'data/sources/premiseSource';
 import { PREMISE_SERVICES_LAYER_ID } from 'components/layers/PremiseServicesLayer';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   addLayer,
   removeLayer,
@@ -15,10 +14,14 @@ import PremiseRightView from './premiseViews/PremiseRightView';
 import { ActiveFilters } from 'components/common/sideAnalysticsPanel/ActiveFilters';
 import { StateSlices } from 'utils/types';
 import FilterListIcon from '@material-ui/icons/FilterList';
+import usePremiseSource from 'data/sources/premiseSource';
 
 export default function PremiseService() {
   const dispatch = useDispatch();
-
+  const selectPremiseByPhase = usePremiseSource();
+  // @ts-ignore
+  const phase = useSelector((state) => state.app.phase);
+  const premiseSource = selectPremiseByPhase(phase || 1);
   useEffect(() => {
     dispatch(addSource(premiseSource));
     dispatch(
