@@ -7,7 +7,7 @@ const concatenatedValues: MethodFunc<any[]> = (input, column, params) => {
     return [];
   }
 
-  let splitValue: string = ',';
+  let splitValue: string = '|';
   if (params) {
     splitValue = params?.splitValue ? params?.splitValue : splitValue;
   }

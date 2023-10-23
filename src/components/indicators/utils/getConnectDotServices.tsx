@@ -1,4 +1,5 @@
 import MethodFunc from './methodType';
+import { defaultFilterFunction } from './miscelleniousFunctions';
 
 const getConnectDotServices: MethodFunc<any[]> = (input, column, params) => {
   let output: any[] = [];
@@ -11,7 +12,7 @@ const getConnectDotServices: MethodFunc<any[]> = (input, column, params) => {
 
   for (let serviceEntry of input) {
     const services: number[] = serviceEntry[column]
-      .split(',')
+      .split('|')
       .map((d: string) => +d);
 
     for (let service of services) {
@@ -42,7 +43,8 @@ const getConnectDotServices: MethodFunc<any[]> = (input, column, params) => {
       }
     }
   }
-  return output;
+  // @ts-ignore
+  return defaultFilterFunction(output, 7);
 };
 
 export default getConnectDotServices;

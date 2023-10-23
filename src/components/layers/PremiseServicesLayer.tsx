@@ -10,7 +10,7 @@ import { color } from 'd3';
 import CustomGeoJsonLayer from './CustomLayer/CustomGeoJsonLayer';
 import useCustomDataLoad from './hooks/useCustomDataLoad';
 import { useEffect, useState } from 'react';
-import premiseSource from 'data/sources/premiseSource';
+import usePremiseSource from 'data/sources/premiseSource';
 import premisePopup from './utils/premisePopup';
 
 export const PREMISE_SERVICES_LAYER_ID = 'premiseServicesLayer';
@@ -44,9 +44,12 @@ export default function PremiseServicesLayer() {
   const source = useSelector((state) =>
     selectSourceById(state, premiseServicesLayer?.source),
   );
-
+  // @ts-ignore
+  const phase = useSelector((state) => state.app.phase);
+  const selectPremiseByPhase = usePremiseSource();
   useEffect(() => {
     (async function fetchData() {
+      const premiseSource = selectPremiseByPhase(phase || 1);
       const { data } = await fetchLayerData({
         ...premiseSource,
         source: premiseSource.data,
@@ -54,7 +57,7 @@ export default function PremiseServicesLayer() {
       });
       setData(data);
     })();
-  }, []);
+  }, [phase]);
 
   const cartoLayerProps = useCartoLayerProps({
     source,

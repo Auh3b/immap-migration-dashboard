@@ -22,6 +22,7 @@ import {
 import { grey, red } from '@material-ui/core/colors';
 import { UNICEF_COLORS } from 'theme';
 import { dequal } from 'dequal';
+import PhaseIndicator from './PhaseIndicator';
 
 const drawerWidth = 355;
 
@@ -104,6 +105,7 @@ export default function SideAnalyticsPanel({
             title,
             value,
           }))}
+          isOpen={isOpen}
           setValue={setValue}
           value={value}
         />
@@ -114,10 +116,10 @@ export default function SideAnalyticsPanel({
 
 const useNavStyle = makeStyles((theme) => ({
   root: {
-    margin: theme.spacing(0.5),
+    minWidth: 'unset',
+    width: '100%',
     boxShadow: ({ isCurrent }: any) =>
       isCurrent ? theme.shadows[3] : theme.shadows[0],
-    width: theme.mixins.toolbar.minHeight,
     borderRadius: theme.shape.borderRadius,
     color: ({ value, isCurrent }: any) =>
       isCurrent ? UNICEF_COLORS[0] : value ? grey[400] : red[400],
@@ -171,22 +173,24 @@ function NavButton({
   }, []);
 
   return (
-    <Tooltip
-      open={open}
-      onOpen={handleOpen}
-      onClose={handleClose}
-      id={`${title}-tooltip`}
-      title={title}
-      placement='right'
-      arrow
-    >
-      <IconButton
-        onClick={(e) => onValueChange(e, value)}
-        className={classes.root}
+    <div style={{ padding: '8px', width: '100%' }}>
+      <Tooltip
+        open={open}
+        onOpen={handleOpen}
+        onClose={handleClose}
+        id={`${title}-tooltip`}
+        title={title}
+        placement='right'
+        arrow
       >
-        {icon}
-      </IconButton>
-    </Tooltip>
+        <IconButton
+          onClick={(e) => onValueChange(e, value)}
+          className={classes.root}
+        >
+          {icon}
+        </IconButton>
+      </Tooltip>
+    </div>
   );
 }
 
@@ -194,10 +198,12 @@ function SideMenu({
   value,
   setValue,
   menuItems,
+  isOpen,
 }: {
   value: number;
   setValue: (value: number) => void;
   menuItems: Partial<PanelContent>[];
+  isOpen?: boolean;
 }) {
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
@@ -212,6 +218,7 @@ function SideMenu({
       container
       style={{ color: grey['600'] }}
     >
+      <PhaseIndicator isPanelOpen={isOpen} />
       {menuItems.length &&
         menuItems.map(({ icon, title, value: itemValue }) => (
           <NavButton
@@ -283,6 +290,7 @@ function ContentPanel({ children, value }: ContentPanelProps) {
   const classes = usePanelStyles({ value });
   return (
     <Grid item className={classes.root}>
+      {Boolean(value) && <PhaseIndicator fullText />}
       {children.length &&
         children.map(({ content, value: itemValue, title }) => (
           <TabPanel key={title} value={value} index={itemValue}>

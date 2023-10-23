@@ -7,8 +7,8 @@ import {
   Typography,
 } from '@material-ui/core';
 import { Lock } from '@material-ui/icons';
-import immapLogo from 'assets/img/immap-logo.png';
-import { ReactComponent as UnicefLogo } from 'assets/img/unicef-logo-2-sp.svg';
+import { ReactComponent as OrgLogo } from 'assets/img/3iSolution.svg';
+import { ReactComponent as UnicefLogo } from 'assets/img/unicef-logo-2.svg';
 import hero from 'assets/img/migration-reformed.png';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useSelector } from 'react-redux';
@@ -234,7 +234,7 @@ export function Organisations() {
         <UnicefLogo className={classes.logo} />
       </Grid>
       <Grid item>
-        <img src={immapLogo} alt='iMMAP Logo' className={classes.logo} />
+        <OrgLogo className={classes.logo} />
       </Grid>
     </Grid>
   );

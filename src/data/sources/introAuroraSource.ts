@@ -3,6 +3,10 @@ import { MAP_TYPES } from '@deck.gl/carto';
 
 const INTRO_AURORA_SOURCE_ID = 'introduction_aurora_source';
 
+const phases = {
+  1: '`carto-dw-ac-4v8fnfsh.shared.LACRO_Marzo_2023`',
+};
+
 const COLUMNS = [
   'e004_regio',
   'e07_gener',
@@ -20,13 +24,11 @@ const COLUMNS = [
   'geom',
 ];
 
-const source = {
+const useIntroAuroraSource = () => (phaseIndex) => ({
   id: INTRO_AURORA_SOURCE_ID,
   type: MAP_TYPES.QUERY,
   connection: 'carto_dw',
-  data: `SELECT ${COLUMNS.join(
-    ',',
-  )} FROM \`carto-dw-ac-4v8fnfsh.shared.LACRO_Marzo_2023\``,
-};
+  data: `SELECT * FROM ${phases[phaseIndex] || phases[1]}`,
+});
 
-export default source;
+export default useIntroAuroraSource;

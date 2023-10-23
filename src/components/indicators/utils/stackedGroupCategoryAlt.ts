@@ -10,8 +10,8 @@ const stackedGroupCategoriesAlt = (
   const values: any[] = [];
   for (let f of input) {
     //@ts-ignore
-    const value = f[valueColumn].split(',');
-    const key = f[column].split(',');
+    const value = f[valueColumn].split('|');
+    const key = f[column].split('|');
     for (let i = 0; i < key.length; i++) {
       if (value[i]) {
         values.push({
