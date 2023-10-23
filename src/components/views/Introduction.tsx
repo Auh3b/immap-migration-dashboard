@@ -10,10 +10,10 @@ import IntroHeader from './introductionViews/IntroHeader';
 import { useEffect, useState } from 'react';
 //@ts-ignore
 import { fetchLayerData, FORMATS } from '@deck.gl/carto';
-import introPremiseSource from 'data/sources/introPremiseSource';
-import introAuroraSource from 'data/sources/introAuroraSource';
+import useIntroPremiseSource from 'data/sources/introPremiseSource';
+import useIntroAuroraSource from 'data/sources/introAuroraSource';
 import executeIntroMethod from 'components/indicators/introduction/utils/executeIntroMethod';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setIsIntroDataReady } from 'store/introSlice';
 import { setError } from 'store/appSlice';
 import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const fetchPremise = async () => {
+const fetchPremise = async (introPremiseSource) => {
   const { data: result } = await fetchLayerData({
     source: introPremiseSource.data,
     type: introPremiseSource.type,
@@ -62,7 +62,7 @@ const fetchPremise = async () => {
   });
   return result;
 };
-const fetchAurora = async () => {
+const fetchAurora = async (introAuroraSource) => {
   const { data: result } = await fetchLayerData({
     source: introAuroraSource.data,
     type: introAuroraSource.type,
@@ -76,10 +76,18 @@ export default function Introduction() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
+  // @ts-ignore
+  const phase = useSelector((state) => state.app.phase);
+  const introPremiseSource = useIntroPremiseSource();
+  const introAuroraSource = useIntroAuroraSource();
 
-  const fetchData = async () => {
+  const fetchData = async (phase) => {
     setIsLoading(true);
-    Promise.all([fetchAurora(), fetchPremise()])
+    dispatch(setIsIntroDataReady(false));
+    Promise.all([
+      fetchAurora(introAuroraSource(phase ?? 1)),
+      fetchPremise(introPremiseSource(phase ?? 1)),
+    ])
       .then(([aurora, premise]) => {
         return executeIntroMethod({
           methodName: EXTERNAL_METHOD_NAMES.SET_DATA,
@@ -97,11 +105,11 @@ export default function Introduction() {
   };
 
   useEffect(() => {
-    fetchData();
+    fetchData(phase);
     return () => {
       setIsLoading(false);
     };
-  }, []);
+  }, [phase]);
 
   return (
     <Grid
@@ -140,12 +148,8 @@ function IntroContent({ isLoading }: { isLoading: Boolean }) {
     <Grid container wrap='nowrap' item className={classes.root}>
       {isLoading && <ComponentFallback />}
       <IntroLeftView />
-      {!isLoading && (
-        <>
-          <IntroMiddleView />
-          <IntroRightView />
-        </>
-      )}
+      <IntroMiddleView />
+      <IntroRightView />
     </Grid>
   );
 }

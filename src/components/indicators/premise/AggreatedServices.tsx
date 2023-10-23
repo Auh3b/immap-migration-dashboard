@@ -31,7 +31,7 @@ import { SERVICE_STAT_COLUMNS } from './utils/premiseServiceDefinitions';
 const otherColumns = {
   country: 'ubicacion_',
   region: 'lugar_enc',
-  organisation: 'org_pert',
+  organisation: 'org_pert1',
   persons: 'nna_atend',
   lat: 'latitude',
   long: 'longitude',

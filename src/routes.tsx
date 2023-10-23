@@ -22,7 +22,7 @@ const ProjectPhaseSelect = lazy(
 );
 // [hygen] Import views
 
-export const BOARD_ROUTE_DEFAULT = '/board';
+export const BOARD_ROUTE_DEFAULT = 'board';
 
 export const BOARD_ROUTES = {
   SERVICES: 'feedback_servicios',
@@ -48,7 +48,9 @@ const routes = [
     path: ROUTE_PATHS.DEFAULT,
     element: (
       <ProtectedRoute>
-        <Main />
+        <DefaultView>
+          <Main />
+        </DefaultView>
       </ProtectedRoute>
     ),
     children: [
@@ -58,29 +60,24 @@ const routes = [
       },
       {
         path: BOARD_ROUTE_DEFAULT,
-        element: (
-          <DefaultView>
-            <Main />
-          </DefaultView>
-        ),
         children: [
           { path: ROUTE_PATHS.SERVICES, element: <Services /> },
           { path: ROUTE_PATHS.MIGRATION_FLOW, element: <MigrationFlow /> },
           { path: ROUTE_PATHS.MEDIA, element: <Media /> },
           { path: ROUTE_PATHS.PREMISE_SERVICE, element: <PremiseService /> },
           { path: ROUTE_PATHS.DINÁMICA_AURORA, element: <DinámicaAurora /> },
+          {
+            path: ROUTE_PATHS.SERVICIO_FEEDBACK_2,
+            element: <ServicioFeedback2 />,
+          },
         ],
-      },
-      {
-        path: ROUTE_PATHS.SERVICIO_FEEDBACK_2,
-        element: <ServicioFeedback2 />,
-      },
-      {
-        path: ROUTE_PATHS.PROJECT_PHASE_SELECT,
-        element: <ProjectPhaseSelect />,
       },
       // [hygen] Add routes
     ],
+  },
+  {
+    path: ROUTE_PATHS.PROJECT_PHASE_SELECT,
+    element: <ProjectPhaseSelect />,
   },
   { path: ROUTE_PATHS.INTRODUCTION, element: <Introduction /> },
   { path: ROUTE_PATHS.LOGIN, element: <Login /> },

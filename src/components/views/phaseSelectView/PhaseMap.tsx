@@ -151,7 +151,6 @@ function PhaseSurveySites(props: PhaseSurveySitesProps) {
     // @ts-ignore
     const getScaledRadius = getLinearScale(domain, [1, 5]);
     return site.features.map((d, i) => {
-      console.log(d);
       return (
         <circle
           key={'sites_' + i}

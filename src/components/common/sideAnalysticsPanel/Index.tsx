@@ -116,10 +116,10 @@ export default function SideAnalyticsPanel({
 
 const useNavStyle = makeStyles((theme) => ({
   root: {
-    margin: theme.spacing(0.5),
+    minWidth: 'unset',
+    width: '100%',
     boxShadow: ({ isCurrent }: any) =>
       isCurrent ? theme.shadows[3] : theme.shadows[0],
-    width: theme.mixins.toolbar.minHeight,
     borderRadius: theme.shape.borderRadius,
     color: ({ value, isCurrent }: any) =>
       isCurrent ? UNICEF_COLORS[0] : value ? grey[400] : red[400],
@@ -173,22 +173,24 @@ function NavButton({
   }, []);
 
   return (
-    <Tooltip
-      open={open}
-      onOpen={handleOpen}
-      onClose={handleClose}
-      id={`${title}-tooltip`}
-      title={title}
-      placement='right'
-      arrow
-    >
-      <IconButton
-        onClick={(e) => onValueChange(e, value)}
-        className={classes.root}
+    <div style={{ padding: '8px', width: '100%' }}>
+      <Tooltip
+        open={open}
+        onOpen={handleOpen}
+        onClose={handleClose}
+        id={`${title}-tooltip`}
+        title={title}
+        placement='right'
+        arrow
       >
-        {icon}
-      </IconButton>
-    </Tooltip>
+        <IconButton
+          onClick={(e) => onValueChange(e, value)}
+          className={classes.root}
+        >
+          {icon}
+        </IconButton>
+      </Tooltip>
+    </div>
   );
 }
 
@@ -288,9 +290,7 @@ function ContentPanel({ children, value }: ContentPanelProps) {
   const classes = usePanelStyles({ value });
   return (
     <Grid item className={classes.root}>
-      {Boolean(value) && 
-      <PhaseIndicator fullText />
-      }
+      {Boolean(value) && <PhaseIndicator fullText />}
       {children.length &&
         children.map(({ content, value: itemValue, title }) => (
           <TabPanel key={title} value={value} index={itemValue}>

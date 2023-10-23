@@ -44,9 +44,12 @@ export default function PremiseServicesLayer() {
   const source = useSelector((state) =>
     selectSourceById(state, premiseServicesLayer?.source),
   );
-  const premiseSource = usePremiseSource();
+  // @ts-ignore
+  const phase = useSelector((state) => state.app.phase);
+  const selectPremiseByPhase = usePremiseSource();
   useEffect(() => {
     (async function fetchData() {
+      const premiseSource = selectPremiseByPhase(phase || 1);
       const { data } = await fetchLayerData({
         ...premiseSource,
         source: premiseSource.data,
@@ -54,7 +57,7 @@ export default function PremiseServicesLayer() {
       });
       setData(data);
     })();
-  }, []);
+  }, [phase]);
 
   const cartoLayerProps = useCartoLayerProps({
     source,

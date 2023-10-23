@@ -1,6 +1,6 @@
 import { Grid, Tab, Tabs, makeStyles } from '@material-ui/core';
 import { NavLink } from 'react-router-dom';
-import { ROUTE_PATHS } from 'routes';
+import { BOARD_ROUTE_DEFAULT, ROUTE_PATHS } from 'routes';
 import useGetPathname from 'hooks/useGetPathname';
 
 const useStylesNavigationMenu = makeStyles((theme) => ({
@@ -41,37 +41,37 @@ export default function NavigationMenu({
           label='Servicios'
           value='servicios'
           component={NavLink}
-          to={ROUTE_PATHS.PREMISE_SERVICE}
+          to={'/' + BOARD_ROUTE_DEFAULT + '/' + ROUTE_PATHS.PREMISE_SERVICE}
         />
         <Tab
           label='Feedback Servicios'
           value='feedback_servicios'
           component={NavLink}
-          to={ROUTE_PATHS.SERVICES}
+          to={'/' + BOARD_ROUTE_DEFAULT + '/' + ROUTE_PATHS.SERVICES}
         />
         <Tab
           label='Feedback Servicios 2'
           value='servicio_feedback_2'
           component={NavLink}
-          to={ROUTE_PATHS.SERVICIO_FEEDBACK_2}
+          to={'/' + BOARD_ROUTE_DEFAULT + '/' + ROUTE_PATHS.SERVICIO_FEEDBACK_2}
         />
         <Tab
           label='Flujos Migratorios'
           value='flujos_migratorios'
           component={NavLink}
-          to={ROUTE_PATHS.MIGRATION_FLOW}
+          to={'/' + BOARD_ROUTE_DEFAULT + '/' + ROUTE_PATHS.MIGRATION_FLOW}
         />
         <Tab
           label='Conexiones en la ruta'
           value='conexiones_en_la_ruta'
           component={NavLink}
-          to={ROUTE_PATHS.DINÁMICA_AURORA}
+          to={'/' + BOARD_ROUTE_DEFAULT + '/' + ROUTE_PATHS.DINÁMICA_AURORA}
         />
         <Tab
           label='Redes sociales'
           value='redes_sociales'
           component={NavLink}
-          to={ROUTE_PATHS.MEDIA}
+          to={'/' + BOARD_ROUTE_DEFAULT + '/' + ROUTE_PATHS.MEDIA}
         />
       </Tabs>
     </Grid>

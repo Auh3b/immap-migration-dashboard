@@ -19,6 +19,7 @@ import getViewport from 'components/indicators/premise/utils/getViewport';
 import { FlyToInterpolator } from '@deck.gl/core';
 import { useSelector } from 'react-redux';
 import phaseDataSelector from './utils/phaseDataSelector';
+import { scaleLinear } from 'd3';
 
 const INITIAL_VIEW_STATE = {
   latitude: 8.62581290990417,
@@ -141,7 +142,7 @@ const sitePhases = {
     type: 'query',
     connection: 'carto_dw',
     source:
-      'SELECT * FROM `carto-dw-ac-4v8fnfsh.shared.lacro_marzo_phase_1_clusters_v2`',
+      'SELECT * FROM `carto-dw-ac-4v8fnfsh.shared.migration_round_2_clusters`',
     format: 'geojson',
   },
 };
@@ -151,6 +152,18 @@ function SurveySitesLayer() {
   const phase = useSelector((state) => state.app.phase);
   const setDetails = useContext(MapContext).setDetails;
   const [data, setData] = useState(null);
+
+  const scalePoints = useCallback(
+    (count: number) => {
+      if (data) {
+        const range = [5, 20];
+        const domain = data.features.map((d) => d.properties.aggregated_count);
+        return scaleLinear().domain(domain).range(range)(count);
+      }
+    },
+    [data],
+  );
+
   const fetchdata = async (phase: number) => {
     const phaseData = phaseDataSelector(phase, sitePhases);
     const result = await fetchLayerData(phaseData);
@@ -188,10 +201,10 @@ function SurveySitesLayer() {
       data,
       pointType: 'circle',
       stroked: false,
-      pointRadiusScale: 100,
-      pointRadiusUnits: 'meters',
+      pointRadiusScale: 1,
+      pointRadiusUnits: 'pixels',
       // @ts-ignore
-      getPointRadius: (d) => d.properties.aggregated_count,
+      getPointRadius: (d) => scalePoints(d.properties.aggregated_count),
       getFillColor: [51, 218, 255, 200],
     });
   }
