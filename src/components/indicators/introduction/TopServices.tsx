@@ -44,6 +44,7 @@ export default function TopServices() {
           selectedCategories={selectedCategories}
           data={data}
           labels={{
+            '': 'No responde',
             '999999': 'No responde',
             lospatios: 'Los Patios',
             dtlobito: 'DT Lobito',
