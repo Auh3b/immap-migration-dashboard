@@ -1,4 +1,4 @@
-import NoWidgetData from './../../common/customWidgets/NoWidgetData';
+import NoWidgetData from 'components/common/customWidgets/NoWidgetData';
 import {
   FormControl,
   Grid,
@@ -31,7 +31,8 @@ import { SERVICE_STAT_COLUMNS } from './utils/premiseServiceDefinitions';
 const otherColumns = {
   country: 'ubicacion_',
   region: 'lugar_enc',
-  organisation: 'org_pert1',
+  principal: 'org_pert1',
+  implemetor: 'org_pert2',
   persons: 'nna_atend',
   lat: 'latitude',
   long: 'longitude',
@@ -157,7 +158,7 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
         const padding = 100;
         const geojson = getFeatureCollection({
           input: data,
-          coordinateLocation: (value) => point(value[6]),
+          coordinateLocation: (value) => point(value[7]),
           filterFunction: (d) => d[column] === currentSelection,
         });
 
