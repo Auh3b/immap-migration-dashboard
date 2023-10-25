@@ -22,9 +22,10 @@ const getConnectDotServices: MethodFunc<any[]> = (input, column, params) => {
           service ?? 'Otro',
           null,
           serviceEntry[otherColumns.region],
-          serviceEntry[otherColumns.organisation],
+          serviceEntry[otherColumns.principal],
+          serviceEntry[otherColumns.implemetor],
           serviceEntry[otherColumns.persons],
-          `${serviceEntry[otherColumns.organisation]} - ${
+          `${serviceEntry[otherColumns.principal]} - ${
             servicesKey[service] ?? 'Otro'
           }`,
           [serviceEntry[otherColumns.long], serviceEntry[otherColumns.lat]],
@@ -44,7 +45,7 @@ const getConnectDotServices: MethodFunc<any[]> = (input, column, params) => {
     }
   }
   // @ts-ignore
-  return defaultFilterFunction(output, 7);
+  return defaultFilterFunction(output, 8);
 };
 
 export default getConnectDotServices;

@@ -13,7 +13,8 @@ const DATA_DIMENSIONS = [
   'service',
   'country',
   'region',
-  'organisation',
+  'principal',
+  'implementor',
   'personas',
   'org/service',
   'geom',
@@ -44,32 +45,32 @@ export default function CustomConnectDotChart({ data: _data, groupName }: any) {
         type: 'scatter',
         symbolSize: 15,
         encode: {
-          y: 9,
-          x: 8,
-          itemName: DATA_DIMENSIONS[5],
+          y: 10,
+          x: 9,
+          itemName: DATA_DIMENSIONS[6],
         },
         itemStyle: {
-          color: STAT_CATEGORY_COLORS.get(DATA_DIMENSIONS[8]),
+          color: STAT_CATEGORY_COLORS.get(DATA_DIMENSIONS[9]),
         },
       },
       {
         type: 'scatter',
         symbolSize: 15,
         encode: {
-          y: 9,
-          x: 7,
-          itemName: DATA_DIMENSIONS[5],
+          y: 10,
+          x: 8,
+          itemName: DATA_DIMENSIONS[6],
         },
         itemStyle: {
-          color: STAT_CATEGORY_COLORS.get(DATA_DIMENSIONS[7]),
+          color: STAT_CATEGORY_COLORS.get(DATA_DIMENSIONS[8]),
         },
       },
       {
         type: 'custom',
         renderItem: (params: any, api: any) => {
-          const categoryIndex = api.value(9);
-          const dailyCapacity = api.value(7);
-          const yesterdayCount = api.value(8);
+          const categoryIndex = api.value(10);
+          const dailyCapacity = api.value(8);
+          const yesterdayCount = api.value(9);
           const p1 = api.coord([dailyCapacity, categoryIndex]);
           const p2 = api.coord([yesterdayCount, categoryIndex]);
           const [x1, y1] = p1;
@@ -177,6 +178,7 @@ export default function CustomConnectDotChart({ data: _data, groupName }: any) {
               _nothing,
               _location,
               org,
+              impl,
               _personas,
               _orgServ,
               _geom,
@@ -191,8 +193,12 @@ export default function CustomConnectDotChart({ data: _data, groupName }: any) {
             style='min-width: 35px; display: flex; flex-direction: column; gap: 8px;'
             >
             <span style='display: flex; flex-direction: column;'>
-              <span>Organización:</span>
+              <span>Organización principal:</span>
               <span>${org}</span>
+            </span>
+            <span style='display: flex; flex-direction: column;'>
+              <span>Organización Implementadora:</span>
+              <span>${impl}</span>
             </span>
             <span style='display: flex; flex-direction: column;'>
               <span>Servicio:</span>
