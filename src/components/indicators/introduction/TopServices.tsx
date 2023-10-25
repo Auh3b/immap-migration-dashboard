@@ -43,7 +43,12 @@ export default function TopServices() {
           onSelectedCategoriesChange={handleSelectedCategoriesChange}
           selectedCategories={selectedCategories}
           data={data}
-          labels={{ '999999': 'No responde' }}
+          labels={{
+            '999999': 'No responde',
+            lospatios: 'Los Patios',
+            dtlobito: 'DT Lobito',
+            loschiles: 'Los Chiles',
+          }}
         />
       </Grid>
     </TitleWrapper>
