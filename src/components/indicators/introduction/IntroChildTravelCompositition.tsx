@@ -22,7 +22,7 @@ const methodParams = {
     { name: 'cuan_nna_n', type: SummarisationTypes.SUM },
     { name: 'cuan_nna_s', type: SummarisationTypes.SUM },
   ],
-  legend: ['Acompañados NNA', 'Separados NNA'],
+  legend: ['No Acompañados NNA', 'Separados NNA'],
 };
 
 export default function IntroChildTravelCompositition() {
