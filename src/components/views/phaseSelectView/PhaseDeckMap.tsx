@@ -193,6 +193,7 @@ function SurveySitesLayer() {
     if (phase) {
       fetchdata(phase);
     }
+    return () => {};
   }, [phase]);
 
   if (data && phase) {
