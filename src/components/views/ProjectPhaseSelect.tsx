@@ -1,10 +1,11 @@
 import PhaseContent from './phaseSelectView/PhaseContent';
 import PhaseDeckMap from './phaseSelectView/PhaseDeckMap';
-import { Grid } from '@material-ui/core';
+import { Divider, Grid } from '@material-ui/core';
 import { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { setPhase } from 'store/appSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import PhaseHeader from './phaseSelectView/PhaseHeader';
 
 const useStyles = makeStyles((theme) => ({
   projectPhaseSelect: {
@@ -26,16 +27,20 @@ export default function ProjectPhaseSelect() {
   // [hygen] Add useEffect
 
   return (
-    <Grid
-      container
-      justifyContent={'space-between'}
-      className={classes.projectPhaseSelect}
-    >
-      <Grid item md={6} container direction='column'>
-        <PhaseContent phase={phase} />
-      </Grid>
-      <Grid item md={5}>
-        <PhaseDeckMap />
+    <Grid container direction={'column'} style={{ height: '100%' }}>
+      <PhaseHeader />
+      <Divider orientation='horizontal' />
+      <Grid
+        container
+        justifyContent={'space-between'}
+        className={classes.projectPhaseSelect}
+      >
+        <Grid item md={6} container direction='column'>
+          <PhaseContent phase={phase} />
+        </Grid>
+        <Grid item md={5}>
+          <PhaseDeckMap />
+        </Grid>
       </Grid>
     </Grid>
   );
