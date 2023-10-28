@@ -8,7 +8,7 @@ import {
 } from '@material-ui/core';
 import { Lock } from '@material-ui/icons';
 import OrgLogo from 'assets/img/3iSolution.png';
-import { ReactComponent as UnicefLogo } from 'assets/img/unicef-logo-2.svg';
+import { ReactComponent as UnicefLogo } from 'assets/img/unicef-logo-2-sp.svg';
 import hero from 'assets/img/migration-reformed.png';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useSelector } from 'react-redux';
