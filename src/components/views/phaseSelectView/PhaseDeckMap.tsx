@@ -12,7 +12,6 @@ import {
 import DeckGL from '@deck.gl/react';
 // @ts-ignore
 import { fetchLayerData } from '@deck.gl/carto';
-import { GeoJsonLayer } from '@deck.gl/layers';
 import americaFeatureCollection from './americas';
 import { Grid, makeStyles } from '@material-ui/core';
 import getViewport from 'components/indicators/premise/utils/getViewport';
@@ -22,7 +21,8 @@ import { useSelector } from 'react-redux';
 import { scaleLinear } from 'd3';
 import useCustomCompareEffectAlt from 'components/indicators/media/hooks/useCustomCompareEffectAlt';
 import { dequal } from 'dequal';
-import { CompositeLayer } from 'deck.gl';
+import AnimatedCircleLayer from './utils/AnimatedCircleLayer';
+import PolygonWithLabels from './utils/PolygonWithLabels';
 
 const INITIAL_VIEW_STATE = {
   latitude: 8.62581290990417,
@@ -74,7 +74,7 @@ function DeckMapContainer() {
       }}
       controller
       layers={[SurveySitesLayer(), CountriesLayer()]}
-    />
+    ></DeckGL>
   );
 }
 
@@ -118,85 +118,11 @@ function CountriesLayer() {
     },
     [phase],
   );
-  return new GeoJsonLayer({
-    id: 'countries',
+  return new PolygonWithLabels({
     data: americaFeatureCollection,
-    // @ts-ignore
     getFillColor,
-    stroked: true,
-    getLineColor: [0, 0, 0, 255],
-    getLineWidth: 1,
-    lineWidthMinPixels: 0.5,
-    updateTriggers: {
-      getFillColor: phase,
-    },
+    phase,
   });
-}
-
-class AnimatedCircleLayer extends CompositeLayer<any, any> {
-  constructor(props: any) {
-    super(props);
-  }
-  renderLayers() {
-    // @ts-ignore
-    const { data, scalePoints, endPoint } = this.props;
-    return [
-      new GeoJsonLayer(
-        // @ts-ignore
-        this.getSubLayerProps({
-          id: 'circle-fill',
-          data,
-          pointType: 'circle',
-          stroked: false,
-          pointRadiusScale: 1,
-          pointRadiusUnits: 'pixels',
-          // @ts-ignore
-          getPointRadius: (d) => scalePoints(d.properties.aggregated_count),
-          getFillColor: [51, 218, 255, 200],
-        }),
-      ),
-      new GeoJsonLayer(
-        // @ts-ignore
-        this.getSubLayerProps({
-          id: 'circle-overlay',
-          data,
-          pointType: 'circle',
-          stroked: false,
-          pointRadiusScale: 1,
-          pointRadiusUnits: 'pixels',
-          // @ts-ignore
-          getPointRadius: (d) =>
-            scalePoints(d.properties.aggregated_count) * 1.75,
-          getFillColor: [51, 218, 255, 25],
-        }),
-      ),
-      new GeoJsonLayer(
-        // @ts-ignore
-        this.getSubLayerProps({
-          id: 'circle-pulsing',
-          data,
-          pointType: 'circle',
-          stroked: true,
-          filled: false,
-          pointRadiusScale: 1,
-          pointRadiusUnits: 'pixels',
-          // @ts-ignore
-          getPointRadius: (d) =>
-            scalePoints(d.properties.aggregated_count) * endPoint,
-          lineWidthUnits: 'pixels',
-          getLineColor: [255, 255, 255, 150],
-          getLineWidth: 1,
-          transitions: {
-            // @ts-ignore
-            getPointRadius: 500,
-          },
-          updateTriggers: {
-            getPointRadius: endPoint,
-          },
-        }),
-      ),
-    ];
-  }
 }
 
 const sitePhases = [
