@@ -138,9 +138,11 @@ class AnimatedCircleLayer extends CompositeLayer<any, any> {
     super(props);
   }
   renderLayers() {
+    // @ts-ignore
     const { data, scalePoints, endPoint } = this.props;
     return [
       new GeoJsonLayer(
+        // @ts-ignore
         this.getSubLayerProps({
           id: 'circle-fill',
           data,
@@ -154,6 +156,7 @@ class AnimatedCircleLayer extends CompositeLayer<any, any> {
         }),
       ),
       new GeoJsonLayer(
+        // @ts-ignore
         this.getSubLayerProps({
           id: 'circle-overlay',
           data,
@@ -168,6 +171,7 @@ class AnimatedCircleLayer extends CompositeLayer<any, any> {
         }),
       ),
       new GeoJsonLayer(
+        // @ts-ignore
         this.getSubLayerProps({
           id: 'circle-pulsing',
           data,
