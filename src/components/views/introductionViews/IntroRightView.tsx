@@ -8,7 +8,7 @@ export const useRightStyles = makeStyles((theme) => ({
   root: {
     overflowY: 'auto',
     height: '100%',
-    maxHeight: `calc(100vh - 48px)`,
+    maxHeight: `calc(100vh - ${48 + theme.spacing(2)}px)`,
     BorderLeft: `1px solid ${UNICEF_COLORS[0]}`,
     [theme.breakpoints.down('md')]: {
       overflow: 'none',
