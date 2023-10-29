@@ -27,7 +27,7 @@ export default function CustomWordCloud({
   onWordSelectChange,
   selectedWords,
   height = 400,
-  width = 400,
+  width = 350,
 }: {
   data: { name: string; value: number }[];
   onWordSelectChange?: (values: any) => void;
