@@ -35,10 +35,10 @@ export default function ProjectPhaseSelect() {
         justifyContent={'space-between'}
         className={classes.projectPhaseSelect}
       >
-        <Grid item md={6} container direction='column'>
+        <Grid item lg={6} container direction='column'>
           <PhaseContent phase={phase} />
         </Grid>
-        <Grid item md={5}>
+        <Grid item lg={5}>
           <PhaseDeckMap />
         </Grid>
       </Grid>
