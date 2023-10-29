@@ -63,7 +63,6 @@ export default function TreeMapChart({
           position: 'insideTopLeft',
           distance: 5,
           formatter: '{b} - {c}',
-          fontFamily: 'Barlow',
           fontSize: 16,
         },
         levels: [

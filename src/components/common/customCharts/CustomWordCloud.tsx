@@ -61,7 +61,6 @@ export default function CustomWordCloud({
       .words(words)
       .rotate(0)
       .padding(8)
-      .font('Barlow')
       .fontSize((d) => Math.sqrt(d.size / 10 ** exponent) * 12)
       .on('word', ({ x, y, text, size, font, value }: any) => {
         output = [...output, [x, y, text, size, font, value]];
@@ -91,10 +90,8 @@ export default function CustomWordCloud({
           const y = api.value(1);
           const text = api.value(2);
           const size = api.value(3);
-          const fontFamily = api.value(4);
           const font = api.font({
             fontSize: size,
-            fontFamily,
             fontWeight: 'bold',
           });
 

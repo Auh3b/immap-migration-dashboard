@@ -39,8 +39,6 @@ export default function CustomPieWidgetUI({
       position: 'center',
       rich: {
         b: {
-          //@ts-ignore
-          fontFamily: theme.typography.charts.fontFamily,
           fontSize: theme.spacing(1.75),
           lineHeight: theme.spacing(1.75),
           fontWeight: 'normal',
