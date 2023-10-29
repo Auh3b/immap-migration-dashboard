@@ -1,5 +1,7 @@
-import { Snackbar } from '@material-ui/core';
+import { IconButton, Snackbar } from '@material-ui/core';
+import { Close } from '@material-ui/icons';
 import { Alert } from '@material-ui/lab';
+import { Fragment } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setMessage } from 'store/appSlice';
 
@@ -7,7 +9,7 @@ export default function MessageSnackbar() {
   const dispatch = useDispatch();
   // @ts-ignore
   const message = useSelector((state) => state.app.message);
-  console.log(message);
+  const handleClose = () => dispatch(setMessage(null));
   return (
     <Snackbar
       anchorOrigin={{
@@ -16,9 +18,20 @@ export default function MessageSnackbar() {
       }}
       open={Boolean(message)}
       autoHideDuration={5000}
-      onClose={() => dispatch(setMessage(null))}
+      onClose={handleClose}
     >
-      <Alert severity={message?.severity}>{message?.text}</Alert>
+      <Alert
+        severity={message?.severity}
+        action={
+          <Fragment>
+            <IconButton size={'small'} onClick={handleClose}>
+              <Close fontSize={'small'} />
+            </IconButton>
+          </Fragment>
+        }
+      >
+        {message?.text}
+      </Alert>
     </Snackbar>
   );
 }
