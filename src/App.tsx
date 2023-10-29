@@ -10,6 +10,7 @@ import theme from './theme';
 import routes from './routes';
 import useAuth from './hooks/Auth0';
 import './app.css';
+import MessageSnackbar from 'components/common/MessageSnackbar';
 
 const useStyles = makeStyles(() => ({
   app: {
@@ -28,6 +29,7 @@ export default function App() {
       <CssBaseline />
       <Grid container direction='column' className={classes.app}>
         <LazyLoadRoute>{routing}</LazyLoadRoute>
+        <MessageSnackbar />
       </Grid>
     </ThemeProvider>
   );
