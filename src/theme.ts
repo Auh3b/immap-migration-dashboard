@@ -91,10 +91,7 @@ export const UNICEF_COLORS: string[] = [
 const customTheme = {
   palette: {
     primary: {
-      // light: will be calculated from palette.primary.main,
       main: UNICEF_COLORS[0],
-      // dark: will be calculated from palette.primary.main,
-      // contrastText: will be calculated to contrast with palette.primary.main
     },
     secondary: {
       main: UNICEF_COLORS[0],
@@ -108,25 +105,6 @@ const customTheme = {
     },
     common: {},
   },
-  // typography: {
-  //   fontFamily: 'Barlow',
-  //   fontWeightLight: 300,
-  //   fontWeightRegure: 400,
-  //   fontWeightBold: 700,
-  //   h1: { fontFamily: 'Barlow' },
-  //   h2: { fontFamily: 'Barlow' },
-  //   h3: { fontFamily: 'Barlow' },
-  //   h4: { fontFamily: 'Barlow' },
-  //   h5: { fontFamily: 'Barlow' },
-  //   h6: { fontFamily: 'Barlow' },
-  //   subtitle1: { fontFamily: 'Barlow' },
-  //   subtitle2: { fontFamily: 'Barlow' },
-  //   body1: { fontFamily: 'Barlow' },
-  //   body2: { fontFamily: 'Barlow' },
-  //   button: { fontFamily: 'Barlow' },
-  //   caption: { fontFamily: 'Barlow', fontWeight: 300 },
-  //   overline: { fontFamily: 'Barlow' },
-  // },
 };
 
 const theme = createTheme(deepmerge(cartoThemeOptions, customTheme));

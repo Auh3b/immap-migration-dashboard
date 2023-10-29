@@ -39,7 +39,7 @@ export const ROUTE_PATHS = {
   NOT_FOUND: '/404',
   INTRODUCTION: '/inicio',
   ...BOARD_ROUTES,
-  PROJECT_PHASE_SELECT: '/phase_select',
+  PROJECT_PHASE_SELECT: '/ronda',
   // [hygen] Add path routes
 };
 

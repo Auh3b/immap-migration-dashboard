@@ -1,3 +1,4 @@
+import { AlertProps } from '@material-ui/lab';
 import { createSlice } from '@reduxjs/toolkit';
 
 const slice = createSlice({
@@ -11,10 +12,14 @@ const slice = createSlice({
     isSidePanelOpen: false,
     sidePanelWidth: 348,
     phase: null,
+    message: null,
   },
   reducers: {
     setError: (state, action) => {
       state.error = action.payload;
+    },
+    setMessage: (state, action) => {
+      state.message = action.payload;
     },
     setBottomSheetOpen: (state, action) => {
       state.bottomSheetOpen = action.payload;
@@ -73,5 +78,12 @@ export const setIsSidePanelOpen = (payload?: boolean) => ({
 });
 export const setPhase = (payload: number) => ({
   type: 'app/setPhase',
+  payload,
+});
+
+export const setMessage = (
+  payload: { text: string; severity: AlertProps['severity'] } | null,
+) => ({
+  type: 'app/setMessage',
   payload,
 });

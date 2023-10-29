@@ -1,5 +1,8 @@
 // @ts-ignore
 import { MAP_TYPES } from '@deck.gl/carto';
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { setMessage } from 'store/appSlice';
 
 const INTRO_AURORA_SOURCE_ID = 'introduction_aurora_source';
 
@@ -24,11 +27,29 @@ const COLUMNS = [
   'geom',
 ];
 
-const useIntroAuroraSource = () => (phaseIndex) => ({
-  id: INTRO_AURORA_SOURCE_ID,
-  type: MAP_TYPES.QUERY,
-  connection: 'carto_dw',
-  data: `SELECT * FROM ${phases[phaseIndex] || phases[1]}`,
-});
+const useIntroAuroraSource = () => {
+  const [index, setIndex] = useState(0);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    if (index === 2 && !phases[index]) {
+      dispatch(
+        setMessage({
+          text: `Ronda ${index} aún no disponible para Aurora`,
+          severity: 'warning',
+        }),
+      );
+    }
+  }, [index]);
+
+  return (phaseIndex) => {
+    setIndex(phaseIndex);
+    return {
+      id: INTRO_AURORA_SOURCE_ID,
+      type: MAP_TYPES.QUERY,
+      connection: 'carto_dw',
+      data: `SELECT * FROM ${phases[phaseIndex] || phases[1]}`,
+    };
+  };
+};
 
 export default useIntroAuroraSource;

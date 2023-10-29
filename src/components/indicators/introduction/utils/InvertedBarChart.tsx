@@ -21,7 +21,6 @@ export default function InvertedBarChart({
       show: true,
       color: 'white',
       position: 'outside',
-      fontFamily: 'Barlow',
     }),
     [data],
   );
@@ -71,7 +70,6 @@ export default function InvertedBarChart({
         data: data.map(({ name }) => name),
         axisLabel: {
           color: 'white',
-          fontFamily: 'Barlow',
         },
         splitLine: {
           show: false,

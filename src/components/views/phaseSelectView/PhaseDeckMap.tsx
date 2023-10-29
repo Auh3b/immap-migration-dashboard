@@ -5,21 +5,24 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useMemo,
   useState,
 } from 'react';
 // @ts-ignore
 import DeckGL from '@deck.gl/react';
 // @ts-ignore
 import { fetchLayerData } from '@deck.gl/carto';
-import { GeoJsonLayer } from '@deck.gl/layers';
 import americaFeatureCollection from './americas';
 import { Grid, makeStyles } from '@material-ui/core';
 import getViewport from 'components/indicators/premise/utils/getViewport';
 //@ts-ignore
 import { FlyToInterpolator } from '@deck.gl/core';
 import { useSelector } from 'react-redux';
-import phaseDataSelector from './utils/phaseDataSelector';
 import { scaleLinear } from 'd3';
+import useCustomCompareEffectAlt from 'components/indicators/media/hooks/useCustomCompareEffectAlt';
+import { dequal } from 'dequal';
+import AnimatedCircleLayer from './utils/AnimatedCircleLayer';
+import PolygonWithLabels from './utils/PolygonWithLabels';
 
 const INITIAL_VIEW_STATE = {
   latitude: 8.62581290990417,
@@ -71,7 +74,7 @@ function DeckMapContainer() {
       }}
       controller
       layers={[SurveySitesLayer(), CountriesLayer()]}
-    />
+    ></DeckGL>
   );
 }
 
@@ -115,43 +118,42 @@ function CountriesLayer() {
     },
     [phase],
   );
-  return new GeoJsonLayer({
-    id: 'countries',
+  return new PolygonWithLabels({
     data: americaFeatureCollection,
-    // @ts-ignore
     getFillColor,
-    stroked: true,
-    getLineColor: [0, 0, 0, 255],
-    getLineWidth: 1,
-    lineWidthMinPixels: 0.5,
-    updateTriggers: {
-      getFillColor: phase,
-    },
+    phase,
   });
 }
 
-const sitePhases = {
-  1: {
+const sitePhases = [
+  {
     type: 'query',
     connection: 'carto_dw',
     source:
       'SELECT * FROM `carto-dw-ac-4v8fnfsh.shared.lacro_marzo_phase_1_clusters_v2` WHERE aggregated_count > 100',
     format: 'geojson',
   },
-  2: {
+  {
     type: 'query',
     connection: 'carto_dw',
     source:
       'SELECT * FROM `carto-dw-ac-4v8fnfsh.shared.migration_round_2_clusters`',
     format: 'geojson',
   },
-};
+];
 
 function SurveySitesLayer() {
   //@ts-ignore
   const phase = useSelector((state) => state.app.phase);
+  const [endPoint, setEndPoint] = useState(1);
   const setDetails = useContext(MapContext).setDetails;
-  const [data, setData] = useState(null);
+  const [dataLayers, setDataLayers] = useState<null | []>(null);
+  const data = useMemo(() => {
+    if (dataLayers && phase) {
+      return dataLayers[phase - 1];
+    }
+    return null;
+  }, [dataLayers, phase]);
 
   const scalePoints = useCallback(
     (count: number) => {
@@ -164,48 +166,61 @@ function SurveySitesLayer() {
     [data],
   );
 
-  const fetchdata = async (phase: number) => {
-    const phaseData = phaseDataSelector(phase, sitePhases);
-    const result = await fetchLayerData(phaseData);
+  useCustomCompareEffectAlt(
+    () => {
+      if (data) {
+        const { zoom, latitude, longitude } = getViewport({
+          // @ts-ignore
+          geojson: data,
+          padding: 50,
+          width: 300,
+          height: 500,
+        });
 
-    const { zoom, latitude, longitude } = getViewport({
+        setDetails((prev) => ({
+          ...prev,
+          viewState: {
+            // @ts-ignore
+            ...prev.viewState,
+            zoom,
+            latitude,
+            longitude,
+          },
+        }));
+      }
+    },
+    [data],
+    dequal,
+  );
+
+  const fetchdata = () => {
+    Promise.all(sitePhases.map((d) => fetchLayerData(d))).then((results) =>
       // @ts-ignore
-      geojson: result.data,
-      padding: 50,
-      width: 300,
-      height: 500,
-    });
-
-    setDetails((prev) => ({
-      ...prev,
-      viewState: {
-        // @ts-ignore
-        ...prev.viewState,
-        zoom,
-        latitude,
-        longitude,
-      },
-    }));
-    setData(result.data);
+      setDataLayers(results.map((d) => d.data)),
+    );
   };
 
   useEffect(() => {
-    if (phase) {
-      fetchdata(phase);
-    }
-  }, [phase]);
+    fetchdata();
+    return () => {
+      setDataLayers(null);
+    };
+  }, []);
 
-  if (data && phase) {
-    return new GeoJsonLayer({
-      id: 'survey_site',
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setEndPoint((prev) => (prev ? 0 : 1.75));
+    }, 1000);
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
+  if (data) {
+    return new AnimatedCircleLayer({
       data,
-      pointType: 'circle',
-      stroked: false,
-      pointRadiusScale: 1,
-      pointRadiusUnits: 'pixels',
-      // @ts-ignore
-      getPointRadius: (d) => scalePoints(d.properties.aggregated_count),
-      getFillColor: [51, 218, 255, 200],
+      scalePoints,
+      endPoint,
     });
   }
 }
