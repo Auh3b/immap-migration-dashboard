@@ -112,6 +112,7 @@ class CustomTimelineLayer extends CompositeLayer<any, any> {
         return;
       }
 
+      //@ts-ignore
       const data = this.aggregateFeatures(this.props.data, iconGroupsConfig);
       //@ts-ignore
       this.setState({
