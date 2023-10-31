@@ -5,15 +5,17 @@ import {
   IconButton,
   Paper,
   Tooltip,
+  Typography,
   makeStyles,
 } from '@material-ui/core';
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 import ErrorIcon from '@material-ui/icons/Error';
 import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
 import { UNICEF_COLORS } from 'theme';
 import usePageInfo from 'hooks/usePageInfo';
 import MigrationPageInfo from 'components/views/migrationViews/MigrationPageInfo';
 import CloseIcon from '@material-ui/icons/Close';
+import { ROUTE_PATHS } from 'routes';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,7 +34,8 @@ export default function InformationSection() {
   const handleToggle = () => {
     setIsOpen((prev) => !prev);
   };
-  const { location } = usePageInfo();
+  const location = usePageInfo();
+  console.log(location);
   return (
     <>
       {location && (
@@ -105,7 +108,16 @@ const useContentStyles = makeStyles((theme) => ({
   },
 }));
 
-const CONTENT_KEY = new Map([['migrationFlow', <MigrationPageInfo />]]);
+const CONTENT_KEY = new Map<string, ReactNode>([
+  [ROUTE_PATHS.MIGRATION_FLOW, <MigrationPageInfo />],
+  [
+    ROUTE_PATHS.DINÁMICA_AURORA,
+    <Typography>
+      Nota: Total de conexiones a Aurora en las que se puede identificar la
+      ubicación, latitud y longitud
+    </Typography>,
+  ],
+]);
 
 function InfoContent({ content = '', isOpen, handleToggle }: any) {
   const classes = useContentStyles();

@@ -16,6 +16,8 @@ import { StateSlices } from 'utils/types';
 import TuneIcon from '@material-ui/icons/Tune';
 import DinamicaFilters from './dinamicaViews/DinamicaFilters';
 import { SOURCE_NAMES } from 'data/sources/sourceTypes';
+import { setPageInfo } from 'store/mapSlice';
+import { ROUTE_PATHS } from 'routes';
 
 export default function DinámicaAurora() {
   const dispatch = useDispatch();
@@ -31,7 +33,7 @@ export default function DinámicaAurora() {
 
   useEffect(() => {
     dispatch(addSource(sources.timelineSource));
-
+    dispatch(setPageInfo(ROUTE_PATHS.DINÁMICA_AURORA));
     dispatch(
       addLayer({
         id: SURVEY_TIMELINE_LAYER_ID,
@@ -42,6 +44,7 @@ export default function DinámicaAurora() {
     return () => {
       dispatch(removeLayer(SURVEY_TIMELINE_LAYER_ID));
       dispatch(removeSource(SOURCE_NAMES.TIMELINE_SOURCE));
+      dispatch(setPageInfo(null));
     };
   }, [dispatch]);
 

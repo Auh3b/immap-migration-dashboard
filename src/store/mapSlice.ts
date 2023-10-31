@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const slice = createSlice({
   name: 'map',
   initialState: {
-    pageInfo: {},
+    pageInfo: null,
     transition: null,
   },
   reducers: {
