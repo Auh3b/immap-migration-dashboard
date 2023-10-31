@@ -199,21 +199,21 @@ function Phase(props: PropsWithChildren<PhaseProps>) {
       direction='column'
       style={{ width: '100%', height: '100%' }}
     >
-      {Boolean(props.index) && (
-        <Typography variant={'h5'} style={{ marginBottom: '8px' }}>
-          {props.title}
-        </Typography>
-      )}
       <Grid
         item
         style={{
           paddingRight: '16px',
           width: '100%',
-          maxHeight: containerHeight ? containerHeight * 0.95 : 0,
+          maxHeight: containerHeight ? containerHeight * 0.9 : 0,
           overflowY: 'scroll',
           overflowX: 'hidden',
         }}
       >
+        {Boolean(props.index) && (
+          <Typography variant={'h5'} style={{ marginBottom: '8px' }}>
+            {props.title}
+          </Typography>
+        )}
         {props.content}
         {Boolean(props.index) && <PhaseSelect index={props.index} />}
       </Grid>
