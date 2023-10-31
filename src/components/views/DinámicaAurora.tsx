@@ -1,5 +1,5 @@
-import timelineSource from 'data/sources/timelineSource';
-import { useDispatch } from 'react-redux';
+import useTimelineSource from 'data/sources/timelineSource';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   addLayer,
   removeLayer,
@@ -7,7 +7,7 @@ import {
   removeSource,
 } from '@carto/react-redux';
 import MainView from './main/MainView';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { SURVEY_TIMELINE_LAYER_ID } from 'components/layers/SurveyTimelineLayer';
 import DinamicaLeftView from './dinamicaViews/DinamicaLeftView';
 import { ActiveFilters } from 'components/common/sideAnalysticsPanel/ActiveFilters';
@@ -15,26 +15,33 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 import { StateSlices } from 'utils/types';
 import TuneIcon from '@material-ui/icons/Tune';
 import DinamicaFilters from './dinamicaViews/DinamicaFilters';
+import { SOURCE_NAMES } from 'data/sources/sourceTypes';
 
 export default function DinámicaAurora() {
   const dispatch = useDispatch();
-  const sources = {
-    timelineSource: timelineSource.id,
-  };
+  // @ts-ignore
+  const phase = useSelector((state) => state.app.phase);
+  const getTimelineSource = useTimelineSource();
+  const sources = useMemo(
+    () => ({
+      timelineSource: getTimelineSource(phase),
+    }),
+    [phase],
+  );
 
   useEffect(() => {
-    dispatch(addSource(timelineSource));
+    dispatch(addSource(sources.timelineSource));
 
     dispatch(
       addLayer({
         id: SURVEY_TIMELINE_LAYER_ID,
-        source: timelineSource.id,
+        source: SOURCE_NAMES.TIMELINE_SOURCE,
       }),
     );
 
     return () => {
       dispatch(removeLayer(SURVEY_TIMELINE_LAYER_ID));
-      dispatch(removeSource(timelineSource.id));
+      dispatch(removeSource(SOURCE_NAMES.TIMELINE_SOURCE));
     };
   }, [dispatch]);
 
@@ -62,7 +69,11 @@ export default function DinámicaAurora() {
           },
         ],
         left: {
-          element: <DinamicaLeftView dataSources={sources} />,
+          element: (
+            <DinamicaLeftView
+              dataSources={{ timelineSource: SOURCE_NAMES.TIMELINE_SOURCE }}
+            />
+          ),
           expandable: false,
         },
       }}

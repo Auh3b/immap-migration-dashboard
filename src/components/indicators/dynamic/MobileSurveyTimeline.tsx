@@ -11,7 +11,7 @@ const NOTE =
 const id =
   'Localización_de_personas_migrantes_conectadas_a_Aurora_en_los_distintos_monitoreos';
 const title = 'Personas migrantes conectadas a Aurora';
-const column = 'timeunix';
+const column = '';
 const filterType = _FilterTypes.IN;
 const methodName = EXTERNAL_METHOD_NAMES.TIMELINE_VALUES_ALT;
 
