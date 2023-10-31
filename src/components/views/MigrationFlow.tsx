@@ -20,11 +20,14 @@ import MigrationPageInfo from './migrationViews/MigrationPageInfo';
 import { StateSlices } from 'utils/types';
 import MigrationFilters from './migrationViews/MigrationFilters';
 import TuneIcon from '@material-ui/icons/Tune';
+import { ROUTE_PATHS } from 'routes';
 
 export default function MigrationFlow() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(addSource(mainSource));
+
+    dispatch(setPageInfo(ROUTE_PATHS.MIGRATION_FLOW));
 
     dispatch(
       addLayer({
@@ -43,7 +46,7 @@ export default function MigrationFlow() {
       dispatch(removeLayer(MIGRATION_FLOW_LAYER_ID));
       dispatch(removeLayer(HOTSPOTS_LAYER_ID));
       dispatch(removeSource(mainSource.id));
-      dispatch(setPageInfo({}));
+      dispatch(setPageInfo(null));
     };
   }, [dispatch]);
 
