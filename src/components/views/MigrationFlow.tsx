@@ -1,9 +1,9 @@
 import MigrationRightView from './migrationViews/MigrationRightView';
 import MigrationLeftView from './migrationViews/MigrationLeftView';
-import mainSource from '../../data/sources/mainSource';
+import useMainSource, { MAIN_SOURCE_ID } from '../../data/sources/mainSource';
 import MainView from './main/MainView';
-import { useDispatch } from 'react-redux';
-import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useMemo } from 'react';
 import {
   addLayer,
   addSource,
@@ -24,28 +24,37 @@ import { ROUTE_PATHS } from 'routes';
 
 export default function MigrationFlow() {
   const dispatch = useDispatch();
+  // @ts-ignore
+  const phase = useSelector((state) => state.app.phase) || 1;
+  const getMainSource = useMainSource();
+  const sources = useMemo(
+    () => ({
+      mainSource: getMainSource(phase),
+    }),
+    [phase],
+  );
   useEffect(() => {
-    dispatch(addSource(mainSource));
+    dispatch(addSource(sources.mainSource));
 
     dispatch(setPageInfo(ROUTE_PATHS.MIGRATION_FLOW));
 
     dispatch(
       addLayer({
         id: MIGRATION_FLOW_LAYER_ID,
-        source: mainSource.id,
+        source: MAIN_SOURCE_ID,
       }),
     );
     dispatch(
       addLayer({
         id: HOTSPOTS_LAYER_ID,
-        source: mainSource.id,
+        source: MAIN_SOURCE_ID,
       }),
     );
 
     return () => {
       dispatch(removeLayer(MIGRATION_FLOW_LAYER_ID));
       dispatch(removeLayer(HOTSPOTS_LAYER_ID));
-      dispatch(removeSource(mainSource.id));
+      dispatch(removeSource(MAIN_SOURCE_ID));
       dispatch(setPageInfo(null));
     };
   }, [dispatch]);
@@ -80,11 +89,19 @@ export default function MigrationFlow() {
           },
         ],
         left: {
-          element: <MigrationLeftView dataSources={{ mainSource }} />,
+          element: (
+            <MigrationLeftView
+              dataSources={{ mainSource: { id: MAIN_SOURCE_ID } }}
+            />
+          ),
           expandable: false,
         },
         right: {
-          element: <MigrationRightView dataSources={{ mainSource }} />,
+          element: phase !== 2 && (
+            <MigrationRightView
+              dataSources={{ mainSource: { id: MAIN_SOURCE_ID } }}
+            />
+          ),
           expandable: false,
         },
       }}
