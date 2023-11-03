@@ -35,7 +35,6 @@ export default function InformationSection() {
     setIsOpen((prev) => !prev);
   };
   const location = usePageInfo();
-  console.log(location);
   return (
     <>
       {location && (
