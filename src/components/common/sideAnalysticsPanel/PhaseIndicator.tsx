@@ -65,11 +65,20 @@ function PhaseIndicatorSelector(props: PhaseIndicatorSelectorProps) {
       open={Boolean(props.anchorEl)}
       anchorEl={props.anchorEl}
       onClose={onClose}
+      getContentAnchorEl={null}
+      anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'center',
+      }}
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'left',
+      }}
     >
       <MenuList>
         {[1, 2].map((d) => (
-          <MenuItem key={'phase_' + d} onClick={handleClick(d)}>
-            Phase {d}
+          <MenuItem key={'phase_' + d} dense onClick={handleClick(d)}>
+            Ronda {d}
           </MenuItem>
         ))}
       </MenuList>
