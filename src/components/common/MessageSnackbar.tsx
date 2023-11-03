@@ -30,7 +30,7 @@ export default function MessageSnackbar() {
           </Fragment>
         }
       >
-        {message?.text}
+        <span dangerouslySetInnerHTML={{ __html: message?.text }} />
       </Alert>
     </Snackbar>
   );
