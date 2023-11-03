@@ -12,7 +12,6 @@ export default function MainView({ children }: { children: MainViewChildren }) {
   const { breakpoints }: CustomTheme = useTheme();
   const isMobile = useMediaQuery(breakpoints.down('xs'));
   const [view, setView] = useState<null | ReactNode>(null);
-
   useEffect(() => {
     if (isMobile) {
       setView(<Mobile children={children} />);
@@ -23,7 +22,7 @@ export default function MainView({ children }: { children: MainViewChildren }) {
     return () => {
       setView(null);
     };
-  }, [breakpoints, isMobile]);
+  }, [breakpoints, isMobile, children]);
 
   return (
     <>
