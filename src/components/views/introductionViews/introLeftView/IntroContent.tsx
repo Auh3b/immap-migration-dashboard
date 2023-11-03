@@ -48,9 +48,10 @@ export default function IntroContent() {
       <Typography className={classes.description}>
         El Monitoreo de Flujos Migratorios Mixtos y su acceso a Servicios de
         Asistencia Humanitaria corresponde a un proyecto conjunto entre UNICEF y
-        iMMAP que tiene –entre sus principales objetivos– caracterizar y
-        monitorear la oferta y demanda de servicios de asistencia humanitaria en
-        la ruta en Necoclí (Colombia), Panamá y Costa Rica.
+        3iSolution (legalmente iMMAP France) que tiene –entre sus principales
+        objetivos– caracterizar y monitorear la oferta y demanda de servicios de
+        asistencia humanitaria en la ruta en Necoclí (Colombia), Panamá y Costa
+        Rica.
       </Typography>
       <Typography className={classes.description}>
         La recolección de la información se realizó por dos principales

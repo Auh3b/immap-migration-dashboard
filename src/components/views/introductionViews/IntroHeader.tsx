@@ -15,6 +15,7 @@ import { ROUTE_PATHS } from 'routes';
 import UserMenu from 'components/common/header/UserMenu';
 import { useState } from 'react';
 import NavigationMenu from 'components/common/header/NavigationMenu';
+import { useSelector } from 'react-redux';
 
 const useHeaderStyles = makeStyles((theme) => ({
   bar: {
@@ -86,8 +87,15 @@ const useHeaderStyles = makeStyles((theme) => ({
   },
 }));
 
+const subtitles = {
+  1: 'Recolección de datos: 6 de marzo a 04 de abril – Necoclí, Panamá y Costa Rica',
+  2: 'Recolección de datos: 16 a 28 de octubre - Chile, Colombia y Costa Rica',
+};
+
 export default function IntroHeader() {
   const classes = useHeaderStyles();
+  // @ts-ignore
+  const phase = useSelector((state) => state.app.phase) || 1;
   const [isNavOpen, setIsNavOpen] = useState<boolean>(false);
   const handleOpen = () => {
     setIsNavOpen((prev) => !prev);
@@ -109,8 +117,7 @@ export default function IntroHeader() {
             Monitoreo a la Respuesta y Flujos Migratorios Mixtos
           </Typography>
           <Typography className={classes.subtitle}>
-            Recolección de datos: 6 de marzo a 04 de abril – Necoclí, Panamá y
-            Costa Rica
+            {subtitles[phase]}
           </Typography>
         </Grid>
         <Button color='primary' onClick={handleOpen}>
