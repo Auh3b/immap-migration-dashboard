@@ -10,7 +10,7 @@ import useGetPathname from 'hooks/useGetPathname';
 import { ROUTE_PATHS } from 'routes';
 import CustomGeoJsonLayer from './CustomLayer/CustomGeoJsonLayer';
 import useCustomDataLoad from './hooks/useCustomDataLoad';
-import mainSource from 'data/sources/mainSource';
+import useMainsource from 'data/sources/mainSource';
 
 export const HOTSPOTS_LAYER_ID = 'hotspotsLayer';
 
@@ -22,8 +22,11 @@ const HOTSPOT_LABEL = new Map([
 
 export default function HotspotsLayer() {
   const [data, setData] = useState(null);
+  // @ts-ignore
+  const phase = useSelector((state) => state.app.phase);
   const dispatch = useDispatch();
   const pathname = useGetPathname();
+  const getMainSource = useMainsource();
   const { hotspotsLayer } = useSelector(
     (state: RootState) => state.carto.layers,
   );
@@ -33,14 +36,16 @@ export default function HotspotsLayer() {
 
   useEffect(() => {
     (async function fetchData() {
+      const mainSource = getMainSource(phase);
       const { data } = await fetchLayerData({
-        ...mainSource,
+        type: mainSource.type,
+        connection: mainSource.connection,
         source: mainSource.data,
         format: 'geojson',
       });
       setData(data);
     })();
-  }, []);
+  }, [phase]);
 
   const layerConfig = useMemo(
     () => ({

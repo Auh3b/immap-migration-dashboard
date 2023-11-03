@@ -11,9 +11,10 @@ import { format, scaleLinear } from 'd3';
 import distance from '@turf/distance';
 import d3Hex2RGB from 'utils/d3Hex2RGB';
 import { LEGEND_TYPES } from '@carto/react-ui';
-import mainSource from 'data/sources/mainSource';
+import useMainSource from 'data/sources/mainSource';
 // @ts-ignore
 import { fetchLayerData } from '@deck.gl/carto';
+import { useEffect, useState } from 'react';
 
 const layerStyle = new Map([
   ['País de nacimiento', d3Hex2RGB(1)],
@@ -204,19 +205,15 @@ const getArcHeight = (d: any) => {
   };
 };
 
-async function fetchData() {
-  const { data } = await fetchLayerData({
-    ...mainSource,
-    source: mainSource.data,
-    format: 'json',
-  });
-  return data.filter(filterCoordinates);
-}
 export default function MigrationFlowLayer() {
+  const [data, setData] = useState(null);
   const dispatch = useDispatch();
+  // @ts-ignore
+  const phase = useSelector((state) => state.app.phase);
   const { layers: loadedLayers } = useSelector(
     (state: RootState) => state.carto,
   );
+  const getMainSource = useMainSource();
   const { migrationFlowLayer } = useSelector(
     (state: RootState) => state.carto.layers,
   );
@@ -224,16 +221,30 @@ export default function MigrationFlowLayer() {
     selectSourceById(state, migrationFlowLayer?.source),
   );
 
+  useEffect(() => {
+    (async function () {
+      const mainSource = getMainSource(phase);
+      const { data } = await fetchLayerData({
+        type: mainSource.type,
+        connection: mainSource.connection,
+        source: mainSource.data,
+        format: 'json',
+      });
+      setData(data.filter(filterCoordinates));
+    })();
+    return () => setData(null);
+  }, [phase]);
+
   const cartoLayerProps = useCartoLayerProps({
     source,
     layerConfig: migrationFlowLayer,
   });
   delete cartoLayerProps.onDataLoad;
 
-  if (migrationFlowLayer && source) {
+  if (migrationFlowLayer && source && data) {
     return new TravelLayer({
       ...cartoLayerProps,
-      data: fetchData(),
+      data,
       id: MIGRATION_FLOW_LAYER_ID,
       getSourcePosition: (d: any) => [+d['long_paisn'], d['lat_paisna']],
       getTargetPosition: (d: any) => [d['lon_eng'], d['lat_eng']],
