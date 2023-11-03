@@ -150,7 +150,7 @@ class TravelLayer extends CompositeLayer<any, any> {
         this.getSubLayerProps({
           id: layerName[1],
           data,
-          getSourcePosition: (d: any) => [+d['long_paisi'], d['lat_paisin']],
+          getSourcePosition: (d: any) => [+d['long_paisi'], +d['lat_paisin']],
           getTargetPosition,
           getWidth,
           getHeight,
@@ -166,7 +166,7 @@ class TravelLayer extends CompositeLayer<any, any> {
         this.getSubLayerProps({
           id: layerName[2],
           data,
-          getSourcePosition: (d: any) => [+d['long_paisv'], d['lat_paisvi']],
+          getSourcePosition: (d: any) => [+d['long_paisv'], +d['lat_paisvi']],
           getTargetPosition,
           getWidth,
           getHeight,
@@ -183,26 +183,16 @@ class TravelLayer extends CompositeLayer<any, any> {
 
 const filterCoordinates = (d: any) => {
   return (
-    +d['long_paisn'] !== 999999 &&
-    +d['lat_paisna'] !== 999999 &&
-    +d['lon_eng'] !== 999999 &&
-    +d['lat_eng'] !== 999999 &&
-    +d['long_paisv'] !== 999999 &&
-    +d['long_paisv'] !== 999999 &&
-    +d['long_paisi'] !== 999999 &&
-    +d['lat_paisvi'] !== 999999
+    +d['long_paisn'] <= 180 &&
+    +d['lat_paisna'] <= 180 &&
+    +d['lon_eng'] <= 180 &&
+    +d['lat_eng'] <= 180 &&
+    +d['long_paisi'] <= 180 &&
+    +d['lat_paisin'] <= 180 &&
+    +d['long_paisv'] <= 180 &&
+    +d['lat_paisvi'] <= 180 &&
+    +d['lon_eng'] >= -180
   );
-};
-
-const getArcHeight = (d: any) => {
-  return {
-    ...d,
-    arcHeight:
-      getHeight(
-        [+d['long_paisn'], +d['lat_paisna']],
-        [d['lon_eng'], d['lat_eng']],
-      ) || 0.5,
-  };
 };
 
 export default function MigrationFlowLayer() {
@@ -246,8 +236,8 @@ export default function MigrationFlowLayer() {
       ...cartoLayerProps,
       data,
       id: MIGRATION_FLOW_LAYER_ID,
-      getSourcePosition: (d: any) => [+d['long_paisn'], d['lat_paisna']],
-      getTargetPosition: (d: any) => [d['lon_eng'], d['lat_eng']],
+      getSourcePosition: (d: any) => [+d['long_paisn'], +d['lat_paisna']],
+      getTargetPosition: (d: any) => [+d['lon_eng'], +d['lat_eng']],
       getWidth: 1,
       getHeight: 1,
       getTilt: 0,
