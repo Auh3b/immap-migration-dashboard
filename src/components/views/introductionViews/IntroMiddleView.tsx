@@ -15,6 +15,7 @@ import NnaCountry from 'components/indicators/introduction/NnaCountry';
 import IntroSickPremise from 'components/indicators/introduction/IntroSickPremise';
 import IntroChildTravelParty from 'components/indicators/introduction/IntroChildTravelParty';
 import IntroChildTravelCompositition from 'components/indicators/introduction/IntroChildTravelCompositition';
+import { useSelector } from 'react-redux';
 
 export const useMiddleStyles = makeStyles((theme) => ({
   root: {
@@ -59,6 +60,8 @@ export const useMiddleStyles = makeStyles((theme) => ({
 }));
 
 export default function IntroMiddleView() {
+  // @ts-ignore
+  const phase = useSelector((state) => state.app.phase);
   const classes = useMiddleStyles();
   return (
     <Grid
@@ -82,15 +85,21 @@ export default function IntroMiddleView() {
         <IntroSickPremise />
       </Grid>
       <Grid item wrap='nowrap' container className={classes.indicatorsGroup}>
-        <Grid wrap='nowrap' lg={4} item container direction='column'>
-          <TotalChildren />
-          <TotalDisabled />
+        <Grid item container>
+          <Grid item lg={phase === 2 ? 'auto' : 6}>
+            <TotalChildren />
+          </Grid>
+          <Grid item lg={phase === 2 ? 4 : 6}>
+            <TotalDisabled />
+          </Grid>
+          <Grid item lg={phase === 2 ? 4 : 6}>
+            <TotalPregnant />
+          </Grid>
+          <Grid item lg={phase === 2 ? 4 : 6}>
+            <TotalChronicPatients />
+          </Grid>
         </Grid>
-        <Grid wrap='nowrap' lg={4} direction='column' item container>
-          <TotalPregnant />
-          <TotalChronicPatients />
-        </Grid>
-        <Grid item lg={4}>
+        <Grid item>
           <NnaCountry />
         </Grid>
       </Grid>

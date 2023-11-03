@@ -7,6 +7,7 @@ import useIntroData from './hooks/useIntroData';
 import { useSelector } from 'react-redux';
 import getSourceFilter from '../media/utils/getSourceFilter';
 import useIntroCategoryChange from './hooks/useCategoryChange';
+import { Fragment } from 'react';
 
 const title = 'Presencia de NNA solos';
 const column = 'm06_durant';
@@ -19,6 +20,8 @@ const methodParams = {
 };
 
 export default function NnaSolo() {
+  // @ts-ignore
+  const phase = useSelector((state) => state.app.phase);
   const { data, isLoading } = useIntroData({
     id,
     column,
@@ -36,23 +39,27 @@ export default function NnaSolo() {
     owner: id,
   });
   return (
-    <Grid item lg={3}>
-      <TitleWrapper
-        title={title}
-        subtitle={subtitle}
-        isLoading={isLoading}
-        filterable
-      >
-        <Grid item>
-          <InvertedBarChart
+    <Fragment>
+      {phase !== 2 && (
+        <Grid item lg={3}>
+          <TitleWrapper
+            title={title}
+            subtitle={subtitle}
+            isLoading={isLoading}
             filterable
-            data={data}
-            styles={{ height: '100px' }}
-            selectedCategories={selectedCategories}
-            onSelectedCategoriesChange={handleSelectedCategoriesChange}
-          />
+          >
+            <Grid item>
+              <InvertedBarChart
+                filterable
+                data={data}
+                styles={{ height: '100px' }}
+                selectedCategories={selectedCategories}
+                onSelectedCategoriesChange={handleSelectedCategoriesChange}
+              />
+            </Grid>
+          </TitleWrapper>
         </Grid>
-      </TitleWrapper>
-    </Grid>
+      )}
+    </Fragment>
   );
 }

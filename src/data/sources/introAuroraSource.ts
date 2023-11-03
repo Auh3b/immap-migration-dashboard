@@ -8,6 +8,7 @@ const INTRO_AURORA_SOURCE_ID = 'introduction_aurora_source';
 
 const phases = {
   1: '`carto-dw-ac-4v8fnfsh.shared.LACRO_Marzo_2023`',
+  2: '`carto-dw-ac-4v8fnfsh.shared.aurora_round_2`',
 };
 
 const COLUMNS = [

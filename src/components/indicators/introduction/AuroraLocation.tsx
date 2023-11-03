@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { Fragment, useMemo } from 'react';
 import { Grid } from '@material-ui/core';
 import TitleWrapper from '../../common/TitleWrapper';
 import IntroPieChart from '../../common/customCharts/CustomPieWidgetUI';
@@ -17,6 +17,8 @@ const filterable = true;
 const methodName = EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES;
 
 export default function AuroraLocation() {
+  // @ts-ignore
+  const phase = useSelector((state) => state.app.phase);
   const { data, isLoading } = useIntroData({
     id,
     column,
@@ -37,20 +39,24 @@ export default function AuroraLocation() {
   });
 
   return (
-    <TitleWrapper
-      title={title}
-      subtitle={subtitle}
-      isLoading={isLoading}
-      filterable={filterable}
-    >
-      <Grid item>
-        <IntroPieChart
-          data={data}
+    <Fragment>
+      {phase !== 2 && (
+        <TitleWrapper
+          title={title}
+          subtitle={subtitle}
+          isLoading={isLoading}
           filterable={filterable}
-          selectedCategories={selectedCategories}
-          onSelectedCategoriesChange={handleSelectedCategoriesChange}
-        />
-      </Grid>
-    </TitleWrapper>
+        >
+          <Grid item>
+            <IntroPieChart
+              data={data}
+              filterable={filterable}
+              selectedCategories={selectedCategories}
+              onSelectedCategoriesChange={handleSelectedCategoriesChange}
+            />
+          </Grid>
+        </TitleWrapper>
+      )}
+    </Fragment>
   );
 }
