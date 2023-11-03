@@ -151,16 +151,16 @@ function Content() {
       </Grid>
       <Grid item>
         <Typography className={classes.description} color='inherit'>
-          En este contexto, UNICEF junto con iMMAP proponen una metodología
-          novedosa para la caracterización y monitoreo de la demanda y oferta de
-          servicios humanitarios a población migrante en la ruta Colombia –
-          Panamá – Costa Rica con especial énfasis en niños, niñas y
-          adolescentes. Este Dashboard muestra los principales resultados y
-          análisis obtenidos de los datos recolectados, los cuales ayudarán,
-          entre otras cosas, a la comprensión del fenómeno migratorio en esta
-          región, la elaboración de planes de respuesta ante el aumento de
-          volumen de migrantes, o, para generar un sistema de alertas tempranas
-          a los tomadores de decisiones.
+          En este contexto, UNICEF junto con 3iSolution (legalmente iMMAP
+          France) proponen una metodología novedosa para la caracterización y
+          monitoreo de la demanda y oferta de servicios humanitarios a población
+          migrante en la ruta Colombia – Panamá – Costa Rica con especial
+          énfasis en niños, niñas y adolescentes. Este Dashboard muestra los
+          principales resultados y análisis obtenidos de los datos recolectados,
+          los cuales ayudarán, entre otras cosas, a la comprensión del fenómeno
+          migratorio en esta región, la elaboración de planes de respuesta ante
+          el aumento de volumen de migrantes, o, para generar un sistema de
+          alertas tempranas a los tomadores de decisiones.
         </Typography>
       </Grid>
 
