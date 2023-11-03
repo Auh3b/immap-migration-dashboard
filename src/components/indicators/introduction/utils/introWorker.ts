@@ -7,6 +7,7 @@ import { Filters, filterValues } from 'utils/filterFunctions';
 import stackedBarCategories from 'components/indicators/utils/stackedBarCategories';
 import groupedColumns from 'components/indicators/utils/groupedColumns';
 import { getTemporalFilters } from 'utils/dateHelpers';
+import { defaultFilterFunction } from 'components/indicators/utils/miscelleniousFunctions';
 
 const methodMap = new Map<string, Function>([
   [EXTERNAL_METHOD_NAMES.SET_DATA, setData],
@@ -43,7 +44,7 @@ function executeMethod({ source, methodName, column, params }: any) {
     }
 
     if (input.length) {
-      result = method(input, column, params);
+      result = method(defaultFilterFunction(input, column), column, params);
       return { result: result === undefined ? true : result };
     }
 

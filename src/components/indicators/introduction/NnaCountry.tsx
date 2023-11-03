@@ -1,5 +1,5 @@
 import { Grid } from '@material-ui/core';
-import { useCallback } from 'react';
+import { Fragment, useCallback } from 'react';
 import TitleWrapper from '../../common/TitleWrapper';
 import CustomWordCloud from 'components/common/customCharts/CustomWordCloud';
 import { useDispatch, useSelector } from 'react-redux';
@@ -17,6 +17,8 @@ const id = 'nna_solo_países';
 const methodName = EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES;
 
 export default function NnaCountry() {
+  // @ts-ignore
+  const phase = useSelector((state) => state.app.phase);
   const dispatch = useDispatch();
 
   const { data, isLoading } = useIntroData({
@@ -57,19 +59,23 @@ export default function NnaCountry() {
   const selectedWords = getSourceFilter(id, filters, source) || [];
 
   return (
-    <TitleWrapper
-      title={title}
-      subtitle={subtitle}
-      isLoading={isLoading}
-      filterable
-    >
-      <Grid item>
-        <CustomWordCloud
-          data={data}
-          selectedWords={selectedWords}
-          onWordSelectChange={onWordSelectChange}
-        />
-      </Grid>
-    </TitleWrapper>
+    <Fragment>
+      {phase !== 2 && (
+        <TitleWrapper
+          title={title}
+          subtitle={subtitle}
+          isLoading={isLoading}
+          filterable
+        >
+          <Grid item>
+            <CustomWordCloud
+              data={data}
+              selectedWords={selectedWords}
+              onWordSelectChange={onWordSelectChange}
+            />
+          </Grid>
+        </TitleWrapper>
+      )}
+    </Fragment>
   );
 }

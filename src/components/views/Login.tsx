@@ -8,6 +8,7 @@ import {
 } from '@material-ui/core';
 import { Lock } from '@material-ui/icons';
 import OrgLogo from 'assets/img/3iSolution.png';
+import AuroraLogo from 'assets/img/aurora_logo.png';
 import { ReactComponent as UnicefLogo } from 'assets/img/unicef-logo-2-sp.svg';
 import hero from 'assets/img/migration-reformed.png';
 import { useAuth0 } from '@auth0/auth0-react';
@@ -236,6 +237,9 @@ export function Organisations() {
       <Grid item>
         <img src={OrgLogo} className={classes.logo} />
       </Grid>
+      <Grid item>
+        <img src={AuroraLogo} className={classes.logo} />
+      </Grid>
     </Grid>
   );
 }
@@ -269,7 +273,7 @@ function LoginFooter() {
           Fecha de actualización: 03/28/2023.
         </Typography>
         <Typography className={classes.text} display='block'>
-          &copy; iMMAP {new Date(Date.now()).getFullYear()}
+          &copy; 3iSolution {new Date(Date.now()).getFullYear()}
         </Typography>
       </Grid>
     </>
