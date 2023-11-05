@@ -25,21 +25,9 @@ const useStyles = makeStyles((theme) => ({
   introduction: {
     position: 'relative',
     height: '100%',
-    [theme.breakpoints.down('lg')]: {
-      paddingTop: theme.spacing(1),
-      paddingLeft: theme.spacing(1),
-      paddingRight: theme.spacing(1),
-      paddingBottom: theme.spacing(1),
-    },
     [theme.breakpoints.down('sm')]: {
       maxHeight: '100vh',
       overflowY: 'scroll',
-    },
-    [theme.breakpoints.up('lg')]: {
-      paddingTop: theme.spacing(2),
-      paddingLeft: theme.spacing(2),
-      paddingRight: theme.spacing(2),
-      paddingBottom: theme.spacing(2),
     },
   },
   clearButton: {

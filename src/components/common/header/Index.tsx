@@ -27,10 +27,9 @@ export const useStylesCommon = makeStyles((theme) => ({
 const useStyles = makeStyles((theme) => ({
   header: {
     boxShadow: 'none',
-    zIndex: theme.zIndex.modal + 1,
+    zIndex: 1500,
     overflow: 'hidden',
     backgroundColor: 'white',
-    // borderBottom: '0.5px solid #F4F4F4',
   },
 }));
 

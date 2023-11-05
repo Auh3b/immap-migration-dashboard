@@ -14,6 +14,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { clsx } from 'clsx';
 import {
   CSSProperties,
+  Fragment,
   MouseEvent,
   ReactNode,
   useEffect,
@@ -32,19 +33,11 @@ export const useStyles = makeStyles((theme) => ({
   },
   drawerOpen: {
     overflowX: 'hidden',
+    overflowY: 'hidden',
     width: drawerWidth,
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
   },
   drawerClose: {
     overflowX: 'hidden',
-    width: theme.mixins.toolbar.minHeight,
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
   },
   drawerPadding: {
     height: theme.spacing(2),
@@ -74,43 +67,63 @@ export default function SideAnalyticsPanel({
     } else {
       handleOpenToggle(false);
     }
-  }, [value, setValue]);
+    return () => {
+      handleOpenToggle(false);
+    };
+  }, [value]);
   return !children.length ? null : (
-    <Drawer
-      variant='permanent'
-      anchor='left'
-      className={clsx(classes.drawer, {
-        [classes.drawerOpen]: isOpen,
-        [classes.drawerClose]: !isOpen,
-      })}
-      classes={{
-        paper: clsx({
+    <Fragment>
+      <SideMenu
+        menuItems={children.map(({ icon, title, value }) => ({
+          icon,
+          title,
+          value,
+        }))}
+        isOpen={isOpen}
+        setValue={setValue}
+        value={value}
+      />
+      <Drawer
+        ModalProps={{
+          BackdropProps: {
+            invisible: true,
+          },
+        }}
+        variant='temporary'
+        anchor='left'
+        className={clsx(classes.drawer, {
           [classes.drawerOpen]: isOpen,
           [classes.drawerClose]: !isOpen,
-        }),
-      }}
-      open={isOpen}
-    >
-      <Grid
-        wrap='nowrap'
-        container
-        alignItems='stretch'
-        style={{ width: '100%', height: '100%', paddingTop: '48px' }}
+        })}
+        classes={{
+          paper: clsx({
+            [classes.drawerOpen]: isOpen,
+            [classes.drawerClose]: !isOpen,
+          }),
+        }}
+        open={isOpen}
       >
-        <ContentPanel children={children} value={value} />
-        {isOpen && <Divider orientation='vertical' />}
-        <SideMenu
-          menuItems={children.map(({ icon, title, value }) => ({
-            icon,
-            title,
-            value,
-          }))}
-          isOpen={isOpen}
-          setValue={setValue}
-          value={value}
-        />
-      </Grid>
-    </Drawer>
+        <Grid
+          wrap='nowrap'
+          container
+          alignItems='stretch'
+          style={{ width: '100%', height: '100%', marginTop: '48px' }}
+        >
+          <ContentPanel children={children} value={value} />
+          {isOpen && <Divider orientation='vertical' />}
+          <SideMenu
+            menuItems={children.map(({ icon, title, value }) => ({
+              icon,
+              title,
+              value,
+            }))}
+            isOpen={isOpen}
+            setValue={setValue}
+            value={value}
+          />
+        </Grid>
+      </Drawer>
+    </Fragment>
   );
 }
 
@@ -210,38 +223,41 @@ function SideMenu({
   };
 
   return (
-    <Grid
-      direction='column'
-      alignItems='flex-start'
-      item
-      xs
-      container
-      style={{ color: grey['600'] }}
-    >
-      <PhaseIndicator isPanelOpen={isOpen} />
-      {menuItems.length &&
-        menuItems.map(({ icon, title, value: itemValue }) => (
+    <Fragment>
+      <Grid
+        direction='column'
+        alignItems='flex-start'
+        item
+        xs
+        container
+        style={{ color: grey['600'], flexGrow: 0 }}
+      >
+        <PhaseIndicator isPanelOpen={isOpen} />
+        {menuItems.length &&
+          menuItems.map(({ icon, title, value: itemValue }) => (
+            <NavButton
+              key={title}
+              value={itemValue}
+              title={title}
+              selectedValue={value}
+              onValueChange={handleChange}
+              icon={icon}
+            />
+          ))}
+        {value ? (
           <NavButton
-            key={title}
-            value={itemValue}
-            title={title}
+            value={0}
             selectedValue={value}
+            title={'Cerrar'}
             onValueChange={handleChange}
-            icon={icon}
+            icon={<ChevronLeftIcon />}
           />
-        ))}
-      {value ? (
-        <NavButton
-          value={0}
-          selectedValue={value}
-          title={'Cerrar'}
-          onValueChange={handleChange}
-          icon={<ChevronLeftIcon />}
-        />
-      ) : (
-        <></>
-      )}
-    </Grid>
+        ) : (
+          <></>
+        )}
+      </Grid>
+      <Divider orientation='vertical' />
+    </Fragment>
   );
 }
 
