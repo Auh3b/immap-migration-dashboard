@@ -20,7 +20,7 @@ import { useSelector } from 'react-redux';
 const useHeaderStyles = makeStyles((theme) => ({
   bar: {
     backgroundColor: theme.palette.background.paper,
-    zIndex: theme.zIndex.drawer + 1,
+    zIndex: theme.zIndex.snackbar + 1,
     borderBottom: '1px solid rgba(44, 48, 50, 0.12)',
   },
   root: {

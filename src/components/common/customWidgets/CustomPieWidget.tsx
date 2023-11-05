@@ -39,7 +39,7 @@ export default function CustomPieWidget({
       if (categories && categories.length) {
         const withRegExp =
           filterType === _FilterTypes.STRING_SEARCH
-            ? categories.map((d: any) => `^(.*,|)${d}(,.*|)$`)
+            ? categories.map((d: any) => `^(.*\||)${d}(\|.*|)$`)
             : categories;
         dispatch(
           addFilter({

@@ -28,7 +28,7 @@ function filterIn(column: string | number, value: number | string) {
 function filterSearch(column: string | number, value: string) {
   return (d: any) => {
     const dataValue = d[column] as string;
-    const regExp = new RegExp(`^(.*,|)${value}(,.*|)$`);
+    const regExp = new RegExp(`^(.*\||)${value}(\|.*|)$`);
     const isTrue = regExp.test(dataValue);
 
     if (isTrue) {

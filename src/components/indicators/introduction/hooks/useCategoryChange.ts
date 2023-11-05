@@ -22,7 +22,7 @@ export default function useIntroCategoryChange({
       if (categories && categories.length) {
         const withRegExp =
           type === _FilterTypes.STRING_SEARCH
-            ? categories.map((d: any) => `^(.*,|)${d}(,.*|)$`)
+            ? categories.map((d: any) => `^(.*\||)${d}(\|.*|)$`)
             : categories;
         dispatch(
           addIntroFilter({
