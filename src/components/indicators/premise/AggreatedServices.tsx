@@ -132,7 +132,7 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
               useRegExp: true,
               valueFormatter,
             },
-            values: ['^(.*,|)' + currentSelection + '(,.*|)$'],
+            values: [`^(.*\||)${currentSelection}(\|.*|)$`],
             owner,
           }),
         );

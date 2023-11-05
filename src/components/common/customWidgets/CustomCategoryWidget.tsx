@@ -36,7 +36,7 @@ export default function CustomCategoryWidget({
       if (categories && categories.length) {
         const withRegExp =
           filterType === _FilterTypes.STRING_SEARCH
-            ? categories.map((d: any) => `^(.*,|)${d}(,.*|)$`)
+            ? categories.map((d: any) => `^(.*\||)${d}(\|.*|)$`)
             : categories;
 
         const valueFormatter =
