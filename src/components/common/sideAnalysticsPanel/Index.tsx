@@ -88,6 +88,7 @@ export default function SideAnalyticsPanel({
           BackdropProps: {
             invisible: true,
           },
+          keepMounted: true,
         }}
         variant='temporary'
         anchor='left'
