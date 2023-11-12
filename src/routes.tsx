@@ -37,7 +37,7 @@ export const ROUTE_PATHS = {
   LOGIN: '/login',
   DEFAULT: '/',
   NOT_FOUND: '/404',
-  INTRODUCTION: 'inicio',
+  INTRODUCTION: '/inicio',
   ...BOARD_ROUTES,
   PROJECT_PHASE_SELECT: '/ronda',
   // [hygen] Add path routes

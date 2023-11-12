@@ -107,7 +107,7 @@ export default function Introduction() {
       className={classes.introduction}
     >
       <IntroHeader />
-      <IntroContent isLoading={isLoading} />
+      <IntroContent />
     </Grid>
   );
 }
@@ -127,14 +127,13 @@ const useContentStyles = makeStyles((theme) => ({
   },
 }));
 
-function IntroContent({ isLoading }: { isLoading: Boolean }) {
+function IntroContent() {
   const isMobile = useMediaQuery((theme: CustomTheme) =>
     theme.breakpoints.down('sm'),
   );
   const classes = useContentStyles({ isMobile });
   return (
     <Grid container wrap='nowrap' item className={classes.root}>
-      {isLoading && <ComponentFallback />}
       <IntroLeftView />
       <IntroMiddleView />
       <IntroRightView />

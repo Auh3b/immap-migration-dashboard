@@ -40,7 +40,7 @@ export default function useLoadingState() {
   const pageRef = useRef<string>();
 
   const pageMap = {
-    [ROUTE_PATHS.INTRODUCTION]: 'intro',
+    ['inicio']: 'intro',
     [ROUTE_PATHS.PREMISE_SERVICE]: 'carto',
     [ROUTE_PATHS.SERVICIO_FEEDBACK_2]: 'carto',
     [ROUTE_PATHS.SERVICES]: 'carto',
