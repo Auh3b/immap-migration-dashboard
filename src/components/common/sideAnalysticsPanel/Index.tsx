@@ -155,48 +155,10 @@ function NavButton({
 }) {
   const isCurrent = dequal(value, selectedValue);
   const classes = useNavStyle({ value, isCurrent });
-  const [open, setOpen] = useState(false);
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const promptIcons = async () => {
-    setTimeout(() => {
-      handleOpen();
-      return new Promise((resolve) => {
-        return resolve(
-          setTimeout(() => {
-            handleClose();
-          }, 3000),
-        );
-      });
-    }, 3000);
-  };
-
-  useEffect(() => {
-    if (value) {
-      promptIcons();
-      return () => {
-        setOpen(false);
-      };
-    }
-  }, []);
 
   return (
     <div style={{ padding: '8px', width: '100%' }}>
-      <Tooltip
-        open={open}
-        onOpen={handleOpen}
-        onClose={handleClose}
-        id={`${title}-tooltip`}
-        title={title}
-        placement='right'
-        arrow
-      >
+      <Tooltip title={title} placement='right' arrow>
         <IconButton
           onClick={(e) => onValueChange(e, value)}
           className={classes.root}
