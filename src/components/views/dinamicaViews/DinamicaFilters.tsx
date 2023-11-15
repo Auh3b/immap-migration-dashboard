@@ -5,7 +5,7 @@ export default function DinamicaFilters() {
   return (
     <>
       <DinamicaStrictDateFilter />
-      <PushFilter />
+      {/* <PushFilter /> */}
     </>
   );
 }
