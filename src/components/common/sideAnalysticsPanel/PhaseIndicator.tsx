@@ -1,7 +1,15 @@
-import { Button, Grid, Menu, MenuItem, MenuList } from '@material-ui/core';
+import {
+  Button,
+  CircularProgress,
+  Grid,
+  Menu,
+  MenuItem,
+  MenuList,
+  withStyles,
+} from '@material-ui/core';
+import useLoadingState from 'hooks/useLoadingState';
 import {
   Dispatch,
-  Fragment,
   MouseEvent,
   SetStateAction,
   useEffect,
@@ -28,21 +36,42 @@ export default function PhaseIndicator(props: PhaseIndicatorProps) {
   const handleClick = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl((prev) => (prev ? null : event.currentTarget));
   };
+
+  const { isReady } = useLoadingState();
   return (
     <Grid style={{ padding: '8px', width: '100%' }}>
-      <Button
+      {/* @ts-ignore */}
+      <PhaseIndicatorButton
         color={'primary'}
-        disabled={props.isPanelOpen}
-        fullWidth
-        style={{ minWidth: 'unset' }}
-        onClick={handleClick}
         variant={'contained'}
+        onClick={handleClick}
+        fullWidth
+        startIcon={!isReady && <PhaseLoadingIcon />}
       >
-        {props.fullText ? 'Phase ' + phase : phase}
-      </Button>
+        {isReady && (
+          <span style={{ padding: '6px 6px' }}>
+            {props.fullText ? 'Phase ' + phase : phase}
+          </span>
+        )}
+      </PhaseIndicatorButton>
       <PhaseIndicatorSelector anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
     </Grid>
   );
+}
+
+var PhaseIndicatorButton = withStyles((theme) => ({
+  root: {
+    minWidth: 'unset',
+    padding: 0,
+  },
+  startIcon: {
+    padding: '6px 6px',
+    margin: 0,
+  },
+}))(Button);
+
+function PhaseLoadingIcon() {
+  return <CircularProgress size={24} color='inherit' />;
 }
 
 interface PhaseIndicatorSelectorProps {

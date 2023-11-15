@@ -80,9 +80,15 @@ export default function IntroMiddleView() {
         <NnaSolo />
       </Grid>
       <Grid wrap='nowrap' item container className={classes.indicatorsGroup}>
-        <AuroraLocation />
-        <MigrantNationalities />
-        <IntroSickPremise />
+        <Grid item lg={phase === 2 ? 'auto' : 4}>
+          <AuroraLocation />
+        </Grid>
+        <Grid item lg={phase === 2 ? 6 : 4}>
+          <MigrantNationalities />
+        </Grid>
+        <Grid item lg={phase === 2 ? 6 : 4}>
+          <IntroSickPremise />
+        </Grid>
       </Grid>
       <Grid item wrap='nowrap' container className={classes.indicatorsGroup}>
         <Grid item container>

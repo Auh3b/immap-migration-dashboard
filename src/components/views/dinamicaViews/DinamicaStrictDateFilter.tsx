@@ -1,10 +1,5 @@
 import { StateSlices } from 'utils/types';
-import useTimelineSource from 'data/sources/timelineSource';
-//@ts-ignore
-import { fetchLayerData, FORMATS } from '@deck.gl/carto';
-import executeExternalMethod from 'utils/methods/executeExternalMethod';
 import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
-import { useEffect, useState } from 'react';
 import StrictDateFilter from 'components/common/dataFilters/strictDataFilter/Index';
 import { FilterTypes } from 'utils/filterFunctions';
 import { SOURCE_NAMES } from 'data/sources/sourceTypes';
