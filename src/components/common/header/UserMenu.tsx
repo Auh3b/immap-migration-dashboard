@@ -1,4 +1,5 @@
 import { MouseEvent, useState } from 'react';
+import { Link as RouteLink } from 'react-router-dom';
 import {
   Grid,
   Link,
@@ -97,6 +98,9 @@ export default function UserMenu() {
         onClose={handleClose}
         className={classes.menu}
       >
+        <MenuItem component={RouteLink} to='/profile'>
+          Profile
+        </MenuItem>
         <MenuItem onClick={handleLogout}>Logout</MenuItem>
       </Menu>
     </>

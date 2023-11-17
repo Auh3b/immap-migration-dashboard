@@ -2,6 +2,7 @@ import { lazy } from 'react';
 import ProtectedRoute from 'components/common/ProtectedRoute';
 import DefaultView from 'components/common/DefaultView';
 import { Navigate } from 'react-router-dom';
+import Profile from 'components/views/Profile';
 
 const Main = lazy(
   () => import(/* webpackPrefetch: true */ 'components/views/main/Main'),
@@ -40,6 +41,7 @@ export const ROUTE_PATHS = {
   INTRODUCTION: '/inicio',
   ...BOARD_ROUTES,
   PROJECT_PHASE_SELECT: '/ronda',
+  PROJECT_PROFILE: 'profile',
   // [hygen] Add path routes
 };
 
@@ -70,6 +72,7 @@ const routes = [
             path: ROUTE_PATHS.SERVICIO_FEEDBACK_2,
             element: <ServicioFeedback2 />,
           },
+          { path: ROUTE_PATHS.PROJECT_PROFILE, element: <Profile /> },
         ],
       },
       // [hygen] Add routes

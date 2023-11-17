@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux';
 import { StateSlices } from 'utils/types';
 
 const getStoreReadyLookUp = (store, state) => {
-  console.log(state[store]);
   switch (store) {
     case StateSlices.CARTO: {
       return Object.values(state.carto.featuresReady) || [];
@@ -20,7 +19,6 @@ const getStoreReadyLookUp = (store, state) => {
 };
 
 const checkReadyState = (readyStates: boolean | boolean[]) => {
-  console.log(readyStates);
   if (!readyStates) return false;
   if (typeof readyStates === 'boolean') {
     return readyStates;
@@ -40,7 +38,7 @@ export default function useLoadingState() {
   const pageRef = useRef<string>();
 
   const pageMap = {
-    ['inicio']: 'intro',
+    inicio: 'intro',
     [ROUTE_PATHS.PREMISE_SERVICE]: 'carto',
     [ROUTE_PATHS.SERVICIO_FEEDBACK_2]: 'carto',
     [ROUTE_PATHS.SERVICES]: 'carto',
