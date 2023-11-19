@@ -1,5 +1,4 @@
 import { Grid, Typography, makeStyles } from '@material-ui/core';
-// import { TimeseriesFilter } from 'components/common/dataFilters/TimeseriesFilter';
 import StrictDateFilter from 'components/common/dataFilters/strictDataFilter/Index';
 import executeIntroMethod from 'components/indicators/introduction/utils/executeIntroMethod';
 import { useEffect, useState } from 'react';
@@ -7,10 +6,6 @@ import { useSelector } from 'react-redux';
 import { FilterTypes } from 'utils/filterFunctions';
 import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
 import { StateSlices } from 'utils/types';
-
-// const source = 'aurora';
-// const id = 'fecha_filtro';
-// const column = 'timeunix';
 
 const useExtraStyles = makeStyles((theme) => ({
   root: {
@@ -32,7 +27,6 @@ export default function IntroExtraFilters() {
       >
         filtros adicionales
       </Typography>
-      {/* <TimeseriesFilter id={id} source={source} column={column} /> */}
       <IntroStrictDateFilter />
     </Grid>
   );

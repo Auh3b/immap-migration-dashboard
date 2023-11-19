@@ -1,8 +1,6 @@
 // @ts-ignore
 import { MAP_TYPES } from '@deck.gl/carto';
 import { SOURCE_NAMES } from './sourceTypes';
-// import { useMemo } from 'react';
-// import { useSelector } from 'react-redux';
 
 const PREMISE_SOURCE_ID = SOURCE_NAMES.PREMISE_SOURCE;
 
@@ -63,7 +61,5 @@ const usePremiseSource = () => {
     data: `SELECT * FROM ${phases[phaseIndex || 1]}`,
   });
 };
-//`SELECT * FROM shared.Premise_22032023`
-//carto-dw-ac-4v8fnfsh.shared.Premise_22032023
 
 export default usePremiseSource;
