@@ -2,6 +2,8 @@ export const SOURCE_NAMES = {
   MAIN_SOURCE: 'main_source',
   PREMISE_SOURCE: 'premise_source',
   TIMELINE_SOURCE: 'timeline_source',
+  INTRO_AURORA_SOURCE: 'introduction_aurora_source',
+  INTRO_PREMISE_SOURCE: 'introduction_premise_source',
   AGG_SERVICE_SOURCE: 'aggregate_service_source',
   AGG_SERVICE_CHILDREN_SOURCE: 'aggregate_service_children_source',
   MIGRATION_FLOW_SOURCE: 'migration_flow_source',
