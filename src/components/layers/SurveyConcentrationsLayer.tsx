@@ -199,6 +199,9 @@ export default function SurveyConcentrationsLayer() {
         type: MAP_TYPES.TABLE,
         connection: hotSpotSource.connection,
         format: FORMATS.GEOJSON,
+        headers: {
+          'cache-control': 'max-age=300',
+        },
       });
       //@ts-ignore
       setData(data);

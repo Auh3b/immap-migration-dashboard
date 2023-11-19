@@ -132,6 +132,9 @@ const sitePhases = [
     source:
       'SELECT * FROM `carto-dw-ac-4v8fnfsh.shared.lacro_marzo_phase_1_clusters_v2` WHERE aggregated_count > 100',
     format: 'geojson',
+    headers: {
+      'cache-control': 'max-age=300',
+    },
   },
   {
     type: 'query',
@@ -139,6 +142,9 @@ const sitePhases = [
     source:
       'SELECT * FROM `carto-dw-ac-4v8fnfsh.shared.migration_round_2_clusters`',
     format: 'geojson',
+    headers: {
+      'cache-control': 'max-age=300',
+    },
   },
 ];
 

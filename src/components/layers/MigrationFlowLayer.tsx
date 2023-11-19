@@ -219,6 +219,9 @@ export default function MigrationFlowLayer() {
         connection: mainSource.connection,
         source: mainSource.data,
         format: 'json',
+        headers: {
+          'cache-control': 'max-age=300',
+        },
       });
       setData(data.filter(filterCoordinates));
     })();

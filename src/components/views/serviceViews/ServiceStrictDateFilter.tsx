@@ -16,6 +16,9 @@ const fetchChild = async () => {
     type: serviceFeedbackNnaV2Source.type,
     connection: serviceFeedbackNnaV2Source.connection,
     format: FORMATS.JSON,
+    headers: {
+      'cache-control': 'max-age=300',
+    },
   });
   return result;
 };
@@ -26,6 +29,9 @@ const fetchAdult = async () => {
     type: serviceFeedbackV2Source.type,
     connection: serviceFeedbackV2Source.connection,
     format: FORMATS.JSON,
+    headers: {
+      'cache-control': 'max-age=300',
+    },
   });
   return result;
 };

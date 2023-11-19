@@ -47,6 +47,9 @@ const fetchPremise = async (introPremiseSource) => {
     type: introPremiseSource.type,
     connection: introPremiseSource.connection,
     format: FORMATS.JSON,
+    headers: {
+      'cache-control': 'max-age=300',
+    },
   });
   return result;
 };
@@ -56,6 +59,9 @@ const fetchAurora = async (introAuroraSource) => {
     type: introAuroraSource.type,
     connection: introAuroraSource.connection,
     format: FORMATS.JSON,
+    headers: {
+      'cache-control': 'max-age=300',
+    },
   });
   return result;
 };
