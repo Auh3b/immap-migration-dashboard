@@ -1,7 +1,7 @@
 // @ts-ignore
 import { MAP_TYPES } from '@deck.gl/carto';
 
-const INTRO_AURORA_SOURCE_ID = 'introduction_aurora_source';
+const INTRO_AURORA_SOURCE_ID = 'introduction_premise_source';
 
 const phases = {
   1: '`carto-dw-ac-4v8fnfsh.shared.services_round_1_22032023`',

@@ -1,11 +1,15 @@
-import PushFilter from 'components/common/sideAnalysticsPanel/PushFilter';
 import DinamicaStrictDateFilter from './DinamicaStrictDateFilter';
+import CountryFilter from 'components/filters/CountryFilter';
+import { SOURCE_NAMES } from 'data/sources/sourceTypes';
 
 export default function DinamicaFilters() {
   return (
     <>
       <DinamicaStrictDateFilter />
-      {/* <PushFilter /> */}
+      <CountryFilter
+        title='Seleccionar País'
+        dataSource={SOURCE_NAMES.TIMELINE_SOURCE}
+      />
     </>
   );
 }

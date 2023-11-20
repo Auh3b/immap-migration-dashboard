@@ -42,6 +42,9 @@ export default function HotspotsLayer() {
         connection: mainSource.connection,
         source: mainSource.data,
         format: 'geojson',
+        headers: {
+          'cache-control': 'max-age=300',
+        },
       });
       setData(data);
     })();

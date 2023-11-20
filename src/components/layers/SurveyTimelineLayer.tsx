@@ -39,6 +39,9 @@ export default function SurveyTimelineLayer() {
         connection: timelineSource.connection,
         source: timelineSource.data,
         format: 'geojson',
+        headers: {
+          'cache-control': 'max-age=300',
+        },
       });
       setData(data);
     })();

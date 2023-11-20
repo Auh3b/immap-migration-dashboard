@@ -15,6 +15,8 @@ import { ActiveFilters } from 'components/common/sideAnalysticsPanel/ActiveFilte
 import { StateSlices } from 'utils/types';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import usePremiseSource from 'data/sources/premiseSource';
+import PremiseFilters from './premiseViews/PremiseFilters';
+import TuneIcon from '@material-ui/icons/Tune';
 
 export default function PremiseService() {
   const dispatch = useDispatch();
@@ -59,6 +61,12 @@ export default function PremiseService() {
             value: 2,
             title: 'Filtros Activos',
             icon: <FilterListIcon />,
+          },
+          {
+            content: <PremiseFilters />,
+            value: 3,
+            title: 'Filtros Adicionales',
+            icon: <TuneIcon />,
           },
         ],
         left: {

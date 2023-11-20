@@ -1,10 +1,9 @@
 import { Grid } from '@material-ui/core';
-import ServicesByPush from './ServicesByPush';
 import ServiceStrictDateFilter from './ServiceStrictDateFilter';
 import CountryFilter from 'components/filters/CountryFilter';
 import { SOURCE_NAMES } from 'data/sources/sourceTypes';
 
-export default function ServiceFilters() {
+export default function ServiceFiltersOld() {
   return (
     <Grid container direction='column' item>
       <ServiceStrictDateFilter />
@@ -16,7 +15,6 @@ export default function ServiceFilters() {
         title='Seleccionar País - NNA'
         dataSource={SOURCE_NAMES.AGG_SERVICE_CHILDREN_SOURCE}
       />
-      <ServicesByPush />
     </Grid>
   );
 }

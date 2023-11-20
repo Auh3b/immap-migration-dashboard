@@ -8,13 +8,7 @@ import {
   withStyles,
 } from '@material-ui/core';
 import useLoadingState from 'hooks/useLoadingState';
-import {
-  Dispatch,
-  MouseEvent,
-  SetStateAction,
-  useEffect,
-  useState,
-} from 'react';
+import { MouseEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPhase } from 'store/appSlice';
 
@@ -27,17 +21,23 @@ export default function PhaseIndicator(props: PhaseIndicatorProps) {
   const dispatch = useDispatch();
   // @ts-ignore
   const phase = useSelector((state) => state.app.phase);
+
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
   useEffect(() => {
     if (!phase) {
       dispatch(setPhase(1));
     }
   }, [phase]);
+
   const handleClick = (event: MouseEvent<HTMLElement>) => {
-    setAnchorEl((prev) => (prev ? null : event.currentTarget));
+    setAnchorEl(event.currentTarget);
   };
 
+  const onClose = () => setAnchorEl(null);
+
   const { isReady } = useLoadingState();
+
   return (
     <Grid style={{ padding: '8px', width: '100%' }}>
       {/* @ts-ignore */}
@@ -54,7 +54,7 @@ export default function PhaseIndicator(props: PhaseIndicatorProps) {
           </span>
         )}
       </PhaseIndicatorButton>
-      <PhaseIndicatorSelector anchorEl={anchorEl} setAnchorEl={setAnchorEl} />
+      <PhaseIndicatorSelector anchorEl={anchorEl} onClose={onClose} />
     </Grid>
   );
 }
@@ -76,22 +76,20 @@ function PhaseLoadingIcon() {
 
 interface PhaseIndicatorSelectorProps {
   anchorEl: HTMLElement | null;
-  setAnchorEl: Dispatch<
-    SetStateAction<PhaseIndicatorSelectorProps['anchorEl']>
-  >;
+  onClose: () => void;
 }
 
 function PhaseIndicatorSelector(props: PhaseIndicatorSelectorProps) {
   const dispatch = useDispatch();
-  const onClose = () => props.setAnchorEl(null);
-
+  const open = Boolean(props.anchorEl);
+  const onClose = () => props.onClose();
   const handleClick = (phaseIndex: number) => () => {
     dispatch(setPhase(phaseIndex));
     onClose();
   };
   return (
     <Menu
-      open={Boolean(props.anchorEl)}
+      open={open}
       anchorEl={props.anchorEl}
       onClose={onClose}
       getContentAnchorEl={null}
@@ -106,7 +104,7 @@ function PhaseIndicatorSelector(props: PhaseIndicatorSelectorProps) {
     >
       <MenuList>
         {[1, 2].map((d) => (
-          <MenuItem key={'phase_' + d} dense onClick={handleClick(d)}>
+          <MenuItem key={'ronda_' + d} onClick={handleClick(d)}>
             Ronda {d}
           </MenuItem>
         ))}

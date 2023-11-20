@@ -17,7 +17,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setIsIntroDataReady } from 'store/introSlice';
 import { setError } from 'store/appSlice';
 import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
-import ComponentFallback from 'components/common/ComponentFallback';
 import { CustomTheme } from 'theme';
 import clsx from 'clsx';
 
@@ -47,6 +46,9 @@ const fetchPremise = async (introPremiseSource) => {
     type: introPremiseSource.type,
     connection: introPremiseSource.connection,
     format: FORMATS.JSON,
+    headers: {
+      'cache-control': 'max-age=300',
+    },
   });
   return result;
 };
@@ -56,6 +58,9 @@ const fetchAurora = async (introAuroraSource) => {
     type: introAuroraSource.type,
     connection: introAuroraSource.connection,
     format: FORMATS.JSON,
+    headers: {
+      'cache-control': 'max-age=300',
+    },
   });
   return result;
 };

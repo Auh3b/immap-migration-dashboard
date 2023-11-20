@@ -54,6 +54,9 @@ export default function PremiseServicesLayer() {
         ...premiseSource,
         source: premiseSource.data,
         format: 'geojson',
+        headers: {
+          'cache-control': 'max-age=300',
+        },
       });
       setData(data);
     })();
