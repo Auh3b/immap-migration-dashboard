@@ -1,7 +1,9 @@
 // @ts-ignore
 import { MAP_TYPES } from '@deck.gl/carto';
+import { SOURCE_NAMES } from './sourceTypes';
 
-const SERVICE_FEEDBACK_NNA_V2_SOURCE_ID = 'serviceFeedbackNnaV2Source';
+const SERVICE_FEEDBACK_NNA_V2_SOURCE_ID =
+  SOURCE_NAMES.AGG_SERVICE_CHILDREN_SOURCE;
 
 const COLUMNS = [
   'id',
@@ -11,6 +13,8 @@ const COLUMNS = [
   'm20',
   'm21',
   'push',
+  'country_name',
+  'country_code',
   'geom',
 ];
 

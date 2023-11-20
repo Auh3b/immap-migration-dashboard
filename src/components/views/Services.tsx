@@ -16,6 +16,8 @@ import { AGGREGATE_SERVICES_CHILDREN_LAYER_ID } from 'components/layers/Aggregat
 import { ActiveFilters } from 'components/common/sideAnalysticsPanel/ActiveFilters';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { StateSlices } from 'utils/types';
+import ServiceFiltersOld from './serviceViews/ServiceFiltersOld';
+import TuneIcon from '@material-ui/icons/Tune';
 
 const ServiceLeftView = lazy(() => import('./serviceViews/ServiceLeftView'));
 const ServicesRightView = lazy(
@@ -81,6 +83,12 @@ export default function Services() {
             value: 2,
             title: 'Filtros Activos',
             icon: <FilterListIcon />,
+          },
+          {
+            content: <ServiceFiltersOld />,
+            value: 3,
+            title: 'Filtros Adicionales',
+            icon: <TuneIcon />,
           },
         ],
         left: {

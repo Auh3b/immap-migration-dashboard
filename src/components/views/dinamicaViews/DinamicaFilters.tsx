@@ -6,7 +6,10 @@ export default function DinamicaFilters() {
   return (
     <>
       <DinamicaStrictDateFilter />
-      <CountryFilter dataSource={SOURCE_NAMES.TIMELINE_SOURCE} />
+      <CountryFilter
+        title='Seleccionar País'
+        dataSource={SOURCE_NAMES.TIMELINE_SOURCE}
+      />
     </>
   );
 }

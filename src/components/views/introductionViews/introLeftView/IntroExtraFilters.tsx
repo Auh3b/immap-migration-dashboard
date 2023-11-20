@@ -1,5 +1,6 @@
 import { Grid, Typography, makeStyles } from '@material-ui/core';
 import StrictDateFilter from 'components/common/dataFilters/strictDataFilter/Index';
+import CountryFilterIntro from 'components/filters/CountryFilterIntro';
 import executeIntroMethod from 'components/indicators/introduction/utils/executeIntroMethod';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -28,6 +29,16 @@ export default function IntroExtraFilters() {
         filtros adicionales
       </Typography>
       <IntroStrictDateFilter />
+      <CountryFilterIntro
+        title='Seleccionar País - Aurora'
+        source={'aurora'}
+        id='countryFilterAurora'
+      />
+      <CountryFilterIntro
+        id='countryFilterPremise'
+        title='Seleccionar País - Servicio'
+        source={'premise'}
+      />
     </Grid>
   );
 }

@@ -9,24 +9,23 @@ import {
 } from '@material-ui/core';
 import useWidgetFetch from 'components/common/customWidgets/hooks/useWidgetFetch';
 import useWidgetFilterValues from 'components/common/customWidgets/hooks/useWidgetFilterValues';
-import regionName from 'components/indicators/media/utils/getCountryByRegion';
-import { SOURCE_NAMES } from 'data/sources/sourceTypes';
 import { ChangeEvent } from 'react';
 import { useDispatch } from 'react-redux';
 import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
 
 const id = 'countryFilter';
 const methodName = EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES;
-const column = 'country_code';
+const column = 'country_name';
 // const global = true;
 const type = FilterTypes.IN;
 
 interface CountryFilterProps {
   dataSource: string;
+  title: string;
 }
 
 export default function CountryFilter(props: CountryFilterProps) {
-  const { dataSource } = props;
+  const { dataSource, title } = props;
   const selectedValues =
     useWidgetFilterValues({ dataSource, id, column, type }) || [];
   const dispatch = useDispatch();
@@ -60,25 +59,25 @@ export default function CountryFilter(props: CountryFilterProps) {
   };
 
   return (
-    <Grid item style={{ marginTop: '8px' }}>
+    <Grid item style={{ margin: '8px' }}>
       <FormControl variant={'outlined'}>
-        <InputLabel id='countrySelect'>Seleccionar País</InputLabel>
+        <InputLabel id='countrySelect'>{title}</InputLabel>
         <Select
           labelId='countrySelect'
           id='countrySelect'
           multiple
           value={selectedValues}
-          label='Seleccionar País'
+          label={title}
           onChange={handleSelect}
         >
           {data.length &&
-            data.map((d: { name: string; value: number }, i) => (
-              <MenuItem key={d?.name || i} value={d?.name || i}>
-                {regionName.of(
-                  d?.name === 'z' ? 'ZZ' : d?.name?.toUpperCase() || 'ZZ',
-                )}
-              </MenuItem>
-            ))}
+            data
+              .filter(({ name }) => name != 'z')
+              .map((d: { name: string; value: number }, i) => (
+                <MenuItem key={d?.name || i} value={d?.name || i}>
+                  {d.name || 'Unknown Region'}
+                </MenuItem>
+              ))}
         </Select>
       </FormControl>
     </Grid>

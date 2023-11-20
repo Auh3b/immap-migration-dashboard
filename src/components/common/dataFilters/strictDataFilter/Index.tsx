@@ -16,6 +16,8 @@ const useStyles = makeStyles((theme) => ({
   root: {
     position: 'relative',
     width: '100%',
+    marginTop: theme.spacing(1),
+    marginBottom: theme.spacing(1),
     padding: theme.spacing(1),
     borderRadius: theme.shape.borderRadius,
     border: '1px solid ' + grey[200],

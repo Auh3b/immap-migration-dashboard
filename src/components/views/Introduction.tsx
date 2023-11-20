@@ -17,7 +17,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setIsIntroDataReady } from 'store/introSlice';
 import { setError } from 'store/appSlice';
 import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
-import ComponentFallback from 'components/common/ComponentFallback';
 import { CustomTheme } from 'theme';
 import clsx from 'clsx';
 
