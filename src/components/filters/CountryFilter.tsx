@@ -59,7 +59,7 @@ export default function CountryFilter(props: CountryFilterProps) {
   };
 
   return (
-    <Grid item style={{ margin: '8px' }}>
+    <Grid item style={{ margin: '8px 0' }}>
       <FormControl variant={'outlined'}>
         <InputLabel id='countrySelect'>{title}</InputLabel>
         <Select
