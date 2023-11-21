@@ -51,24 +51,26 @@ export default function PremiseService() {
   return (
     <MainView>
       {{
-        side: [
-          {
-            content: (
-              <ActiveFilters
-                filterSources={[{ stateSlice: StateSlices.CARTO }]}
-              />
-            ),
-            value: 2,
-            title: 'Filtros Activos',
-            icon: <FilterListIcon />,
-          },
-          {
-            content: <PremiseFilters />,
-            value: 3,
-            title: 'Filtros Adicionales',
-            icon: <TuneIcon />,
-          },
-        ],
+        side: {
+          children: [
+            {
+              content: (
+                <ActiveFilters
+                  filterSources={[{ stateSlice: StateSlices.CARTO }]}
+                />
+              ),
+              value: 2,
+              title: 'Filtros Activos',
+              icon: <FilterListIcon />,
+            },
+            {
+              content: <PremiseFilters />,
+              value: 3,
+              title: 'Filtros Adicionales',
+              icon: <TuneIcon />,
+            },
+          ],
+        },
         left: {
           element: (
             <PremiseLeftView

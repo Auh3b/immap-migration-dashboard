@@ -1,6 +1,7 @@
 import { descending } from 'd3';
 import MethodFunc from './methodType';
 import groupByValue, { GroupByTypes } from 'utils/groupByValue';
+import { defaultFilterFunction } from './miscelleniousFunctions';
 
 const concatenatedValues: MethodFunc<any[]> = (input, column, params) => {
   if (!input.length) {
@@ -20,7 +21,7 @@ const concatenatedValues: MethodFunc<any[]> = (input, column, params) => {
     .map((i: any) => Object.fromEntries(new Map([[column, i]])));
 
   const groupData = groupByValue({
-    input: pivotedData,
+    input: defaultFilterFunction(pivotedData, column),
     valueColumn: column,
     keyColumn: column,
     type: GroupByTypes.COUNT,

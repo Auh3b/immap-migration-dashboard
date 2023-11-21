@@ -11,13 +11,13 @@ import useLoadingState from 'hooks/useLoadingState';
 import { MouseEvent, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPhase } from 'store/appSlice';
+import { PhaseIndicatorProps } from './sideAnalyticsPanelTypes';
 
-interface PhaseIndicatorProps {
-  isPanelOpen?: boolean;
-  fullText?: boolean;
-}
-
-export default function PhaseIndicator(props: PhaseIndicatorProps) {
+export default function PhaseIndicator({
+  disabled = false,
+  isPanelOpen = false,
+  fullText,
+}: PhaseIndicatorProps) {
   const dispatch = useDispatch();
   // @ts-ignore
   const phase = useSelector((state) => state.app.phase);
@@ -45,12 +45,13 @@ export default function PhaseIndicator(props: PhaseIndicatorProps) {
         color={'primary'}
         variant={'contained'}
         onClick={handleClick}
+        disabled={isPanelOpen || disabled}
         fullWidth
         startIcon={!isReady && <PhaseLoadingIcon />}
       >
         {isReady && (
           <span style={{ padding: '6px 6px' }}>
-            {props.fullText ? 'Phase ' + phase : phase}
+            {fullText ? 'Phase ' + phase : phase}
           </span>
         )}
       </PhaseIndicatorButton>
