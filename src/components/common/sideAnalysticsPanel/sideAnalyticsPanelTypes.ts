@@ -11,9 +11,24 @@ export interface PanelContent {
   content: ReactNode;
   icon?: ReactNode;
 }
-export type SidePanelChildrenProps = PanelContent[];
-export interface SideAnalyticsPanelProps {
-  children?: SidePanelChildrenProps;
+interface SidePanelChildrenProps {
+  disableRoundSelector?: boolean;
+  showRoundSelector?: boolean;
+  children: PanelContent[];
+}
+export type SideAnalyticsPanelProps = SidePanelChildrenProps;
+
+export interface SideMenuProps {
+  value: number;
+  setValue: (value: number) => void;
+  menuItems: Partial<PanelContent>[];
+  isOpen?: boolean;
+}
+
+export interface PhaseIndicatorProps {
+  isPanelOpen?: boolean;
+  disabled?: boolean;
+  fullText?: boolean;
 }
 
 export interface ActiveFiltersProps {

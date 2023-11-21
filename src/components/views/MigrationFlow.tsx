@@ -64,30 +64,32 @@ export default function MigrationFlow() {
   return (
     <MainView>
       {{
-        side: [
-          {
-            content: <MigrationPageInfo />,
-            value: 1,
-            title: 'Metodología',
-            icon: <HelpOutlineIcon />,
-          },
-          {
-            content: (
-              <ActiveFilters
-                filterSources={[{ stateSlice: StateSlices.CARTO }]}
-              />
-            ),
-            value: 2,
-            title: 'Filtros Activos',
-            icon: <FilterListIcon />,
-          },
-          {
-            content: <MigrationFilters />,
-            value: 3,
-            title: 'Filtros Adicionales',
-            icon: <TuneIcon />,
-          },
-        ],
+        side: {
+          children: [
+            {
+              content: <MigrationPageInfo />,
+              value: 1,
+              title: 'Metodología',
+              icon: <HelpOutlineIcon />,
+            },
+            {
+              content: (
+                <ActiveFilters
+                  filterSources={[{ stateSlice: StateSlices.CARTO }]}
+                />
+              ),
+              value: 2,
+              title: 'Filtros Activos',
+              icon: <FilterListIcon />,
+            },
+            {
+              content: <MigrationFilters />,
+              value: 3,
+              title: 'Filtros Adicionales',
+              icon: <TuneIcon />,
+            },
+          ],
+        },
         left: {
           element: (
             <MigrationLeftView

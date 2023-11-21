@@ -45,7 +45,7 @@ export default function Desktop({ children }: { children: MainViewChildren }) {
 
   return (
     <>
-      <SideAnalyticsPanel>{children?.side}</SideAnalyticsPanel>
+      <SideAnalyticsPanel {...children?.side}>{}</SideAnalyticsPanel>
       <SideView direction={'left'} expandable={children?.left?.expandable}>
         {children?.left?.element}
       </SideView>

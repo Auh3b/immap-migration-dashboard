@@ -1,6 +1,7 @@
 import {
   PanelContent,
   SideAnalyticsPanelProps,
+  SideMenuProps,
 } from './sideAnalyticsPanelTypes';
 import {
   Divider,
@@ -16,6 +17,7 @@ import {
   CSSProperties,
   Fragment,
   MouseEvent,
+  PropsWithChildren,
   ReactNode,
   useEffect,
   useState,
@@ -54,6 +56,8 @@ export const useStyles = makeStyles((theme) => ({
 
 export default function SideAnalyticsPanel({
   children = [],
+  showRoundSelector = true,
+  disableRoundSelector = false,
 }: SideAnalyticsPanelProps) {
   const [value, setValue] = useState(0);
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -82,7 +86,14 @@ export default function SideAnalyticsPanel({
         isOpen={isOpen}
         setValue={setValue}
         value={value}
-      />
+      >
+        {showRoundSelector && (
+          <PhaseIndicator
+            isPanelOpen={isOpen}
+            disabled={disableRoundSelector}
+          />
+        )}
+      </SideMenu>
       <Drawer
         ModalProps={{
           BackdropProps: {
@@ -110,7 +121,11 @@ export default function SideAnalyticsPanel({
           alignItems='stretch'
           style={{ width: '100%', height: '100%', marginTop: '48px' }}
         >
-          <ContentPanel children={children} value={value} />
+          <ContentPanel
+            showRoundSelector={showRoundSelector}
+            children={children}
+            value={value}
+          />
           {isOpen && <Divider orientation='vertical' />}
           <SideMenu
             menuItems={children.map(({ icon, title, value }) => ({
@@ -121,7 +136,14 @@ export default function SideAnalyticsPanel({
             isOpen={isOpen}
             setValue={setValue}
             value={value}
-          />
+          >
+            {showRoundSelector && (
+              <PhaseIndicator
+                isPanelOpen={isOpen}
+                disabled={disableRoundSelector}
+              />
+            )}
+          </SideMenu>
         </Grid>
       </Drawer>
     </Fragment>
@@ -175,12 +197,8 @@ function SideMenu({
   setValue,
   menuItems,
   isOpen,
-}: {
-  value: number;
-  setValue: (value: number) => void;
-  menuItems: Partial<PanelContent>[];
-  isOpen?: boolean;
-}) {
+  children,
+}: PropsWithChildren<SideMenuProps>) {
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
   };
@@ -195,7 +213,7 @@ function SideMenu({
         container
         style={{ color: grey['600'], flexGrow: 0 }}
       >
-        <PhaseIndicator isPanelOpen={isOpen} />
+        {Boolean(children) && children}
         {menuItems.length &&
           menuItems.map(({ icon, title, value: itemValue }) => (
             <NavButton
@@ -261,15 +279,20 @@ const usePanelStyles = makeStyles((theme) => ({
 }));
 
 interface ContentPanelProps {
+  showRoundSelector?: boolean;
   children?: Partial<PanelContent>[];
   value: number;
 }
 
-function ContentPanel({ children, value }: ContentPanelProps) {
+function ContentPanel({
+  children,
+  value,
+  showRoundSelector,
+}: ContentPanelProps) {
   const classes = usePanelStyles({ value });
   return (
     <Grid item className={classes.root}>
-      {Boolean(value) && <PhaseIndicator fullText />}
+      {showRoundSelector && <PhaseIndicator fullText />}
       {children.length &&
         children.map(({ content, value: itemValue, title }) => (
           <TabPanel key={title} value={value} index={itemValue}>

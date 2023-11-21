@@ -13,9 +13,34 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 import { ActiveFilters } from 'components/common/sideAnalysticsPanel/ActiveFilters';
 import { StateSlices } from 'utils/types';
 import MediaFilterToolbar from './mediaViews/mediaFilterToolbar/Index';
+import { SideAnalyticsPanelProps } from 'components/common/sideAnalysticsPanel/sideAnalyticsPanelTypes';
 
 export const MediaMainView = lazy(() => import('./mediaViews/MediaMainView'));
-
+const sidePanelProps: SideAnalyticsPanelProps = {
+  showRoundSelector: false,
+  children: [
+    {
+      content: <span>Methodology</span>,
+      value: 1,
+      title: 'Metodología',
+      icon: <HelpOutlineIcon />,
+    },
+    {
+      content: (
+        <ActiveFilters filterSources={[{ stateSlice: StateSlices.MEDIA }]} />
+      ),
+      value: 2,
+      title: 'Filtros Activos',
+      icon: <FilterListIcon />,
+    },
+    {
+      content: <MediaFilterToolbar />,
+      value: 3,
+      title: 'Filtros Adicionales',
+      icon: <TuneIcon />,
+    },
+  ],
+};
 export default function Media() {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(true);
@@ -48,32 +73,7 @@ export default function Media() {
 
   return (
     <>
-      <SideAnalyticsPanel>
-        {[
-          {
-            content: <span>Methodology</span>,
-            value: 1,
-            title: 'Metodología',
-            icon: <HelpOutlineIcon />,
-          },
-          {
-            content: (
-              <ActiveFilters
-                filterSources={[{ stateSlice: StateSlices.MEDIA }]}
-              />
-            ),
-            value: 2,
-            title: 'Filtros Activos',
-            icon: <FilterListIcon />,
-          },
-          {
-            content: <MediaFilterToolbar />,
-            value: 3,
-            title: 'Filtros Adicionales',
-            icon: <TuneIcon />,
-          },
-        ]}
-      </SideAnalyticsPanel>
+      <SideAnalyticsPanel {...sidePanelProps}></SideAnalyticsPanel>
       <MediaMainView isLoading={isLoading} />
     </>
   );
