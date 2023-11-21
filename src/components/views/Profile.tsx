@@ -26,6 +26,7 @@ export default function Profile() {
   return (
     <Grid container wrap={'nowrap'} className={classes.root}>
       <ProfileMenu value={value} onTabChange={handleTabChange} />
+      <Divider flexItem orientation={'vertical'} />
       <ProfileContent value={value} views={{ 0: <UserDetails /> }} />
     </Grid>
   );
@@ -38,10 +39,16 @@ interface ProfileMenuProps {
 
 function ProfileMenu({ value, onTabChange }: ProfileMenuProps) {
   return (
-    <Grid item lg={3}>
-      <Tabs orientation={'vertical'} value={value} onChange={onTabChange}>
-        <Tab label='User Details' />
-        <Tab label='Admin' />
+    <Grid item lg={2}>
+      <Tabs
+        indicatorColor='primary'
+        textColor='primary'
+        orientation={'vertical'}
+        value={value}
+        onChange={onTabChange}
+      >
+        <Tab label='Details' />
+        <Tab label='Setting' />
       </Tabs>
     </Grid>
   );
