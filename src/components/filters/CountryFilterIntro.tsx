@@ -7,10 +7,9 @@ import {
   Select,
 } from '@material-ui/core';
 import useIntroCategoryChange from 'components/indicators/introduction/hooks/useCategoryChange';
-import useIntroData from 'components/indicators/introduction/hooks/useIntroData';
-import getSourceFilter from 'components/indicators/media/utils/getSourceFilter';
-import { ChangeEvent, useCallback, useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { ChangeEvent, useCallback, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addIntroFilter, removeIntroFilter } from 'store/introSlice';
 import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
 
 const methodName = EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES;
@@ -19,38 +18,37 @@ const column = 'country_name';
 const type = FilterTypes.IN;
 
 interface CountryFilterProps {
-  source: string;
+  sources: string[];
   title: string;
   id: string;
 }
-
+const data = ['Colombia', 'Chile', 'Costa Rica', 'Panama'];
 export default function CountryFilterIntro(props: CountryFilterProps) {
-  const { source, title, id } = props;
-  //@ts-ignore
-  const _filters = useSelector((state) => state.intro.filters) || {};
-  const selectedValues = useMemo(
-    () => getSourceFilter(id, _filters, source),
-    [_filters],
+  const { sources, title, id } = props;
+  const [selectedValues, setSelectedValues] = useState([]);
+  const dispatch = useDispatch();
+
+  const handleSelects = useCallback(
+    (values: string[]) => {
+      if (values.length) {
+        sources.forEach((source) => {
+          dispatch(removeIntroFilter({ column, source, owner: id }));
+        });
+        setSelectedValues([]);
+      }
+      sources.forEach((source) => {
+        dispatch(addIntroFilter({ column, source, owner: id, values, type }));
+      });
+      setSelectedValues(values);
+    },
+    [sources],
   );
 
-  const { data } = useIntroData({
-    id,
-    methodName,
-    column,
-    source,
-  });
-  const handleSelect = useIntroCategoryChange({
-    source,
-    owner: id,
-    type,
-    column,
-  });
-
   const handleChange = useCallback(
-    (e: ChangeEvent<{ value: unknown }>) => {
-      handleSelect(e.target.value);
+    (e: ChangeEvent<{ value: string[] }>) => {
+      handleSelects(e.target.value);
     },
-    [handleSelect],
+    [handleSelects],
   );
 
   return (
@@ -65,14 +63,11 @@ export default function CountryFilterIntro(props: CountryFilterProps) {
           label={title}
           onChange={handleChange}
         >
-          {data.length &&
-            data
-              .filter(({ name }) => name != 'z')
-              .map((d: { name: string; value: number }, i) => (
-                <MenuItem key={d?.name || i} value={d?.name || i}>
-                  {d.name || 'Unknown Region'}
-                </MenuItem>
-              ))}
+          {data.map((d) => (
+            <MenuItem key={d} value={d}>
+              {d}
+            </MenuItem>
+          ))}
         </Select>
       </FormControl>
     </Grid>
