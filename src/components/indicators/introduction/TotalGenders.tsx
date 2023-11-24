@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 import useIntroData from './hooks/useIntroData';
 import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
 
-const title = 'Géneros';
+const title = 'Género';
 const subtitle = '';
 const column = 'e07_gener';
 const id = 'géneros';
