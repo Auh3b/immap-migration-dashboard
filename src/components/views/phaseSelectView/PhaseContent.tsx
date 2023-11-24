@@ -86,7 +86,7 @@ const phases = {
   },
   1: {
     index: 1,
-    title: 'Phase 1',
+    title: 'Primera Ronda',
     content: (
       <Fragment>
         <ContextText>
@@ -126,22 +126,41 @@ const phases = {
   },
   2: {
     index: 2,
-    title: 'Phase 2',
+    title: 'Segunda Ronda',
     content: (
       <Fragment>
         <ContextText>
-          Este Dashboard muestra los principales resultados y análisis,
-          obtenidos de los datos recolectados en la segunda ronda en la cual
-          participaron además de Colombia, Panamá y Costa Rica, se incluyeron
-          las dinámicas de la frontera norte en Chile. En esta segunda ronda,
-          además de los ejercicios realizados en la ronda anterior, se realizó
-          énfasis en la evaluación de servicios por medio de QR, obteniendo
+          Este Dashboard muestra los principales resultados y análisis obtenidos
+          de los datos recolectados en la segunda ronda para la caracterización
+          y monitoreo de flujos migratorios mixtos y su acceso a servicios
+          humanitarios. Para esta segunda ronda participaron las zonas ya
+          incluidas en la primera ronda (Necoclí en Colombia, Panamá y Costa
+          Rica) y se han sumado nuevas zonas en Chile (Arica, Colchane e
+          Iquique) y Colombia (Cúcuta e Ipiales), que aportan a la comprensión y
+          análisis del fenómeno migratorio en zonas de frontera y paso de la
+          población migrante en tránsito.
+        </ContextText>
+        <ContextText>
+          Además de los ejercicios realizados en la ronda anterior, durante la
+          segunda ronda se realizó énfasis en la evaluación de servicios por
+          medio de QR instalados en los puntos de ayuda humanitaria, obteniendo
           feedback de la población migrante en los puntos de servicios
-          utilizados, para capturar percepción de accesibilidad, satisfacción y
-          experiencia sobre los servicios recibidos. El ejercicio de recolección
-          comenzó el 9 de octubre y tomará 6 semanas, se realiza en Chile
-          (Arica, Iquique y Colchane), Colombia (Necoclí, Ipiales y Cucutá),
-          Panamá (frontera sur) y Costa Rica (frontera norte y sur).
+          utilizados para capturar percepción de accesibilidad, satisfacción y
+          experiencia sobre los servicios recibidos.
+        </ContextText>
+        <ContextText>
+          En la página inicial el usuario(a) podrá encontrar las cifras claves
+          relacionadas con flujos migratorios mixtos y puntos de ayuda
+          humanitaria presentes en las zonas de recolección. También podrán
+          encontrar tableros específicos con indicadores sobre servicios de
+          ayuda humanitaria, flujos migratorios mixtos, conexiones en la ruta
+          (monitoreo) y redes sociales.
+        </ContextText>
+        <ContextText>
+          Nota: El ejercicio de recolección comenzó el 9 de octubre y tomará 6
+          semanas. El despliegue operativo se realiza en Chile (Arica, Iquique y
+          Colchane), Colombia (Necoclí, Ipiales y Cúcuta), Panamá (frontera sur)
+          y Costa Rica (frontera norte y sur).
         </ContextText>
       </Fragment>
     ),
