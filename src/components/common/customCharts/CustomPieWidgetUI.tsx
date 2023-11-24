@@ -63,6 +63,7 @@ export default function CustomPieWidgetUI({
         radius: ['65%', '90%'],
         bottom: '10%',
         avoidLabelOverlap: false,
+        legendHoverLink: false,
         label: {
           show: showLabel,
           ...labelOptions,
