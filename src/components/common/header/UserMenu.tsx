@@ -98,7 +98,7 @@ export default function UserMenu() {
         onClose={handleClose}
         className={classes.menu}
       >
-        <MenuItem component={RouteLink} to='/profile'>
+        <MenuItem component={RouteLink} to='/board/profile'>
           Profile
         </MenuItem>
         <MenuItem onClick={handleLogout}>Logout</MenuItem>
