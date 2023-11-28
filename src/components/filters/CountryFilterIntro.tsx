@@ -6,7 +6,6 @@ import {
   MenuItem,
   Select,
 } from '@material-ui/core';
-import useIntroCategoryChange from 'components/indicators/introduction/hooks/useCategoryChange';
 import { ChangeEvent, useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addIntroFilter, removeIntroFilter } from 'store/introSlice';
@@ -30,14 +29,25 @@ export default function CountryFilterIntro(props: CountryFilterProps) {
 
   const handleSelects = useCallback(
     (values: string[]) => {
-      if (values.length) {
+      if (!values.length) {
         sources.forEach((source) => {
-          dispatch(removeIntroFilter({ column, source, owner: id }));
+          dispatch(
+            removeIntroFilter({ column, source, owner: id + '_' + source }),
+          );
         });
         setSelectedValues([]);
+        return;
       }
       sources.forEach((source) => {
-        dispatch(addIntroFilter({ column, source, owner: id, values, type }));
+        dispatch(
+          addIntroFilter({
+            column,
+            source,
+            owner: id + '_' + source,
+            values,
+            type,
+          }),
+        );
       });
       setSelectedValues(values);
     },
