@@ -30,14 +30,9 @@ export default function IntroExtraFilters() {
       </Typography>
       <IntroStrictDateFilter />
       <CountryFilterIntro
-        title='Seleccionar País - Aurora'
-        source={'aurora'}
+        title='Seleccionar País'
+        sources={['aurora', 'premise']}
         id='countryFilterAurora'
-      />
-      <CountryFilterIntro
-        id='countryFilterPremise'
-        title='Seleccionar País - Servicio'
-        source={'premise'}
       />
     </Grid>
   );
