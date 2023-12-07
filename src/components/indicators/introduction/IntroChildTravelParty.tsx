@@ -7,7 +7,7 @@ import ReactEcharts from 'components/common/customCharts/ReactEcharts';
 import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
 import useIntroData from './hooks/useIntroData';
 
-const title = 'NNA no acompañados y separados';
+const title = 'NIÑOS, NIÑAS Y ADOLESCENTES NO ACOMPAÑADOS Y SEPARADOS';
 const NOTE =
   'Presencia de niños, niñas y adolescentes no acompañados y separados';
 const id = 'nna_viajes_fiesta';
