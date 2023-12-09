@@ -89,7 +89,7 @@ const useHeaderStyles = makeStyles((theme) => ({
 
 const subtitles = {
   1: 'Recolección de datos: 6 de marzo a 04 de abril – Necoclí, Panamá y Costa Rica',
-  2: 'Recolección de datos: 16 de octubre al 15 de noviembre - Chile, Colombia y Costa Rica',
+  2: 'Recolección de datos: 16 de octubre al 26 de noviembre - Chile, Colombia y Costa Rica',
 };
 
 export default function IntroHeader() {
