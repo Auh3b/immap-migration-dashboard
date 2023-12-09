@@ -1,4 +1,4 @@
-import { Grid, Typography, makeStyles } from '@material-ui/core';
+import { Grid, Tooltip, Typography, makeStyles } from '@material-ui/core';
 import { UNICEF_COLORS } from 'theme';
 
 const STAT_CATEGORY_COLORS = new Map([
@@ -17,43 +17,58 @@ const useLegendStyle = makeStyles((theme) => ({
     marginBottom: theme.spacing(2),
   },
   legendItem: {
-    gap: theme.spacing(2),
+    gap: theme.spacing(0.5),
   },
   icon: {
-    width: '10px',
-    height: '10px',
+    minWidth: '10px',
+    minHeight: '10px',
     borderRadius: '100%',
+  },
+  text: {
+    ...theme.typography.overline,
+    fontSize: '8px',
+    flexGrow: 1,
   },
 }));
 
 export default function AggreatedServicesLegend() {
   return (
-    <Grid container item wrap='nowrap'>
+    <Grid container item wrap='nowrap' justifyContent={'space-between'}>
       <Legend colors={STAT_CATEGORY_COLORS} />
       <Legend colors={CAPACITY_COLORS} />
     </Grid>
   );
 }
 
-function Legend({ colors }: any) {
+function Legend({ colors }: { colors: Map<string, string> }) {
   const classes = useLegendStyle();
   const legend = Array.from(colors);
   return (
     <Grid item xs={6} direction='column' container className={classes.root}>
-      {legend.map(([title, color]) => (
-        <Grid
+      {legend.map(([title, color], i) => (
+        <Tooltip
           key={title}
-          alignItems='center'
-          item
-          container
-          className={classes.legendItem}
+          title={title}
+          arrow
+          placement={i ? 'bottom' : 'top'}
         >
-          <span
-            className={classes.icon}
-            style={{ backgroundColor: color }}
-          ></span>
-          <Typography variant='overline'>{title}</Typography>
-        </Grid>
+          <Grid
+            alignItems='center'
+            wrap='nowrap'
+            item
+            container
+            className={classes.legendItem}
+          >
+            <Grid
+              item
+              className={classes.icon}
+              style={{ backgroundColor: color }}
+            />
+            <Typography className={classes.text} noWrap>
+              {title}
+            </Typography>
+          </Grid>
+        </Tooltip>
       ))}
     </Grid>
   );
