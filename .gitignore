@@ -41,9 +41,6 @@ yarn-debug.log*
 yarn-error.log*
 src/components/indicators/migration/utils/countries.ts
 
-.dockerignore
-Dockerfile
-
 # test
 /data
 /test
