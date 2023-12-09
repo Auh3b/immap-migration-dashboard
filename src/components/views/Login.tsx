@@ -270,7 +270,7 @@ function LoginFooter() {
           preliminar y esta en proceso de revisión.
         </Typography>
         <Typography className={classes.text} display='block'>
-          Fecha de actualización: 03/28/2023.
+          Fecha de actualización: 11/27/2023.
         </Typography>
         <Typography className={classes.text} display='block'>
           &copy; 3iSolution {new Date(Date.now()).getFullYear()}
