@@ -4,11 +4,11 @@ The application allows for adding in your own aggregation functions as per your 
 
 - **Input**:
 
-  | Params | Type   | Description |
-  | ------ | ------ | ----------- |
-  | Data   | Array  |             |
-  | Column | string |             |
-  | Params | Object |             |
+  | Params | Type   | Description                                               |
+  | ------ | ------ | --------------------------------------------------------- |
+  | Data   | Array  | An array of data object based on the data source          |
+  | Column | string | The column of filled to be used as an aggregation element |
+  | Params | Object | Extra parameters to be added to the method                |
 
 - **Returns**: `Array` - An array of `Objects` having properties of name `string` and value `number`.
 

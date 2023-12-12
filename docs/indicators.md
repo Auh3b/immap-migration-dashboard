@@ -10,16 +10,16 @@ Most indicators are visualised based on the props.
 
 - **Input**:
 
-  | Param              | Type   | Default | Description |
-  | ------------------ | ------ | ------- | ----------- |
-  | props              | object |         |             |
-  | props.id           | string |         |             |
-  | props.title        | string |         |             |
-  | props.dataSource   | string |         |             |
-  | props.column       | string |         |             |
-  | props.filterType   | string |         |             |
-  | props.methodName   | string |         |             |
-  | props.methodParams | object |         |             |
+  | Param              | Type   | Description                                            |
+  | ------------------ | ------ | ------------------------------------------------------ |
+  | props              | object |                                                        |
+  | props.id           | string | ID for the widget instance.                            |
+  | props.title        | string | Title to show in the widget header.                    |
+  | props.dataSource   | string | ID of the data source to get the data from.            |
+  | props.column       | string | Name of the data source’s column to get the data from. |
+  | props.filterType   | string |                                                        |
+  | props.methodName   | string | Name of the method to which operation of the data      |
+  | props.methodParams | object | Extra parameters to be added to the method             |
 
 - **Example**:
   In this example, the indicator displays the count of organisations.
