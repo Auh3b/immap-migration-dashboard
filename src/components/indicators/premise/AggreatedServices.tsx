@@ -229,7 +229,7 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
             />
           </Grid>
           <AggreatedServicesLegend />
-          {data.length && !isLoading && regions ? (
+          {data.length && regions ? (
             regions.map((groupName) => {
               return (
                 <CustomConnectDotChart
@@ -248,10 +248,14 @@ export default function AggreatedServices({ dataSource }: BasicWidgetType) {
   );
 }
 
-const useSelectSyles = makeStyles(() => ({
+const useSelectSyles = makeStyles((theme) => ({
   root: {
     width: '50%',
     alignSelf: 'flex-start',
+  },
+  label: {
+    ...theme.typography.overline,
+    fontSize: '8px !important',
   },
 }));
 
@@ -327,10 +331,15 @@ function Selector({
   return (
     <Grid item className={classes.root}>
       <FormControl>
-        <InputLabel>
-          <Typography variant='overline'>Seleccionar {name}</Typography>
+        <InputLabel shrink className={classes.label} id={name + '_label'}>
+          Seleccionar {name}
         </InputLabel>
-        <Select value={currentSelection} onChange={handleChange}>
+        <Select
+          id={id}
+          labelId={name + '_label'}
+          value={currentSelection}
+          onChange={handleChange}
+        >
           <MenuItem value={'all'}>
             <Typography variant='overline'>All</Typography>
           </MenuItem>
