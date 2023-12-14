@@ -57,7 +57,7 @@ export default function InvertedBarChart({
       grid: {
         top: '3%',
         left: '5%',
-        right: '5%%',
+        right: '10%%',
         bottom: '3%',
         containLabel: true,
       },
