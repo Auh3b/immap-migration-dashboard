@@ -34,10 +34,17 @@ function getDifferenceColor(value: number) {
 export default function CustomConnectDotChart({ data: _data, groupName }: any) {
   const theme = useTheme();
 
-  const data = useMemo(
+  const data: any[] = useMemo(
     () => _data.filter((d: any) => d[2] === groupName),
     [_data],
   );
+
+  const height: string = useMemo(() => {
+    const titleHeight = 60;
+    const itemHeight = (data.length + 1) * 24;
+    const padding = 120;
+    return `${titleHeight + itemHeight + padding}px`;
+  }, [data]);
 
   const series = useMemo(() => {
     return [
@@ -67,7 +74,7 @@ export default function CustomConnectDotChart({ data: _data, groupName }: any) {
       },
       {
         type: 'custom',
-        renderItem: (params: any, api: any) => {
+        renderItem: (_params: any, api: any) => {
           const categoryIndex = api.value(10);
           const dailyCapacity = api.value(8);
           const yesterdayCount = api.value(9);
@@ -81,23 +88,23 @@ export default function CustomConnectDotChart({ data: _data, groupName }: any) {
             stroke,
             lineWidth: 10,
           });
-          if (params?.dataIndex !== params?.dataInsideLength) {
-            return {
-              type: 'group',
-              children: [
-                {
-                  type: 'line',
-                  shape: {
-                    x1,
-                    y1,
-                    x2,
-                    y2,
-                  },
-                  style: lineStyle,
+          return {
+            type: 'group',
+            diffChildrenByName: true,
+            children: [
+              {
+                type: 'line',
+                shape: {
+                  x1,
+                  y1,
+                  x2,
+                  y2,
                 },
-              ],
-            };
-          }
+                style: lineStyle,
+                name: categoryIndex,
+              },
+            ],
+          };
         },
       },
     ];
@@ -109,11 +116,13 @@ export default function CustomConnectDotChart({ data: _data, groupName }: any) {
       title: {
         show: true,
         text: groupName,
+        itemGap: 0,
+        padding: 0,
+        textStyle: {},
       },
       grid: {
         left: '5%',
-        right: '10%',
-        bottom: '3%',
+        right: '5%',
         containLabel: true,
       },
       yAxis: {
@@ -121,7 +130,7 @@ export default function CustomConnectDotChart({ data: _data, groupName }: any) {
         name: 'Organización/Servicio',
         nameLocation: 'end',
         nameTextStyle: {
-          fontWeight: 'bold',
+          fontWeight: 600,
           align: 'center',
           verticalAlign: 'middle',
         },
@@ -131,8 +140,9 @@ export default function CustomConnectDotChart({ data: _data, groupName }: any) {
             return value.split('+')[0];
           },
           hideOverlap: true,
-          width: 200,
+          width: 75,
           overflow: 'break',
+          fontSize: 8,
         },
         axisTick: {
           alignWithLabel: true,
@@ -146,7 +156,7 @@ export default function CustomConnectDotChart({ data: _data, groupName }: any) {
         nameTextStyle: {
           align: 'center',
           verticalAlign: 'middle',
-          fontWeight: 'bold',
+          fontWeight: 600,
         },
         axisLabel: {
           hideOverlap: true,
@@ -163,9 +173,9 @@ export default function CustomConnectDotChart({ data: _data, groupName }: any) {
         padding: [theme.spacing(0.5), theme.spacing(1)],
         borderWidth: 0,
         textStyle: {
-          ...theme.typography.caption,
-          fontSize: 12,
-          lineHeight: 16,
+          ...theme.typography.body1,
+          fontSize: 10,
+          lineHeight: 14,
           color: theme.palette.common.white,
         },
         //@ts-ignore
@@ -224,12 +234,13 @@ export default function CustomConnectDotChart({ data: _data, groupName }: any) {
     }),
     [series],
   );
-
+  // console.log(groupName, height);
+  console.log(option);
   return (
     <>
       <ReactEchart
         option={option}
-        style={{ height: '650px' }}
+        style={{ height /*:'640px'*/ }}
         opts={{ renderer: 'svg' }}
       />
     </>

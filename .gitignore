@@ -41,7 +41,6 @@ yarn-debug.log*
 yarn-error.log*
 src/components/indicators/migration/utils/countries.ts
 
-
 # test
 /data
 /test
