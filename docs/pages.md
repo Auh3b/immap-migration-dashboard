@@ -15,14 +15,20 @@ At the top level of view component you return `MainView` component that renders 
 
 The `MainView` component takes in the takes in a child component as Object:
 
-| Name                   | Type   | Default | Description |
-| ---------------------- | ------ | ------- | ----------- |
-| children               | Object |         |
-| children.side          | object |         |             |
-| children.side.children | Array  |         |
-| children.left          | Object |         |
-| children.right         | Object |         |
-| children.bottom        | Object |         |
+| Name                       | Type   | Default | Description                                                     |
+| -------------------------- | ------ | ------- | --------------------------------------------------------------- |
+| children                   | Object |         |
+| children.side              | object |         |                                                                 |
+| children.side.children     | Array  |         |
+| children.left              | Object |         |
+| children.left.element      | Object |         | React component having indicator components                     |
+| children.left.expandable   |        | false   | if `true` the section will be expanded from the default bounds. |
+| children.right             | Object |         |
+| children.right.element     | Object |         | React component having indicator components                     |
+| children.right.expandable  |        | false   | if `true` the section will be expanded from the default bounds. |
+| children.bottom            | Object |         |
+| children.bottom.element    | Object |         | React component having indicator components                     |
+| children.bottom.expandable |        | false   | if `true` the section will be expanded from the default bounds. |
 
 - **Example:**
 
