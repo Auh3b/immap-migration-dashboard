@@ -49,10 +49,10 @@ function OauthProvider({ children }: { children: JSX.Element }) {
     <Auth0Provider
       domain={domain}
       clientId={clientId}
-      {...(organizationId !== '' ? { organization: organizationId } : {})}
+      // {...(organizationId !== '' ? { organization: organizationId } : {})}
       redirectUri={window.location.origin}
-      scopes={scopes.join(' ')}
-      audience={audience}
+      // scopes={scopes.join(' ')}
+      // audience={audience}
       cacheLocation='localstorage'
     >
       {children}

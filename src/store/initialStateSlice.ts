@@ -22,8 +22,8 @@ export const initialState: InitialCarto3State = {
   googleApiKey: '', // only required when using a Google Basemap,
   googleMapId: '', // only required when using a Google Custom Basemap
   oauth: {
-    domain: 'auth.carto.com',
-    clientId: 'ebwqhBhEtDbonOIiowYmClZKYQUzLdwV', // type here your application clientId
+    domain: process.env.REACT_APP_AUTH0_DOMAIN,
+    clientId: process.env.REACT_APP_AUTH0_CLIENT_ID, // type here your application clientId
     organizationId: '', // organizationId is required for SSO
     scopes: [
       'read:current_user',

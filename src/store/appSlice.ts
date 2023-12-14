@@ -1,9 +1,11 @@
+import { User } from '@auth0/auth0-react';
 import { AlertProps } from '@material-ui/lab';
 import { createSlice } from '@reduxjs/toolkit';
 
 const slice = createSlice({
   name: 'app',
   initialState: {
+    user: null,
     error: null,
     bottomSheetOpen: false,
     showChartModal: false,
@@ -15,6 +17,9 @@ const slice = createSlice({
     message: null,
   },
   reducers: {
+    setUser: (state, action) => {
+      state.user = action.payload;
+    },
     setError: (state, action) => {
       state.error = action.payload;
     },
@@ -49,6 +54,10 @@ const slice = createSlice({
 
 export default slice.reducer;
 
+export const setUser = (payload: User) => ({
+  type: 'app/setUser',
+  payload,
+});
 export const setError = (payload: string | null) => ({
   type: 'app/setError',
   payload,
@@ -87,3 +96,5 @@ export const setMessage = (
   type: 'app/setMessage',
   payload,
 });
+
+export const getUser = (state) => state.app.user;

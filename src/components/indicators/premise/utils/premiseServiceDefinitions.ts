@@ -15,6 +15,7 @@ export const SERVICES_KEY = new Map([
   [15, 'Servicios de protección NNA'],
   [16, 'Restablecimiento de contacto familiar'],
   [17, 'Gestión de casos'],
+  [18, 'Transferencias'],
 ]);
 
 export const SICK_CATEGORY_ABREVATIONS = new Map([

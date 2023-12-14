@@ -31,8 +31,8 @@ import { SERVICE_STAT_COLUMNS } from './utils/premiseServiceDefinitions';
 const otherColumns = {
   country: 'ubicacion_',
   region: 'lugar_enc',
-  principal: 'org_pert1',
-  implemetor: 'org_pert2',
+  principal: 'org_pert2',
+  implemetor: 'org_pert1',
   persons: 'nna_atend',
   lat: 'latitude',
   long: 'longitude',
