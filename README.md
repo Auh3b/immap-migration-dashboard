@@ -90,6 +90,17 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
+## Dockerfile
+
+You can run the system on a docker container
+
+```
+$ docker build -t aurora-front .
+$ docker run -e /path/to/.env -p 3000:3000 aurora-front
+```
+
+For the variables required for the `.env` file, please refer to `.env.dist`
+
 ## Documentation
 
 For documentation for this application, go here: [link](/docs/)
