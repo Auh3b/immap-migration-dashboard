@@ -1,4 +1,5 @@
 import {
+  ChangeEvent,
   Dispatch,
   SetStateAction,
   createContext,
@@ -13,12 +14,21 @@ import DeckGL from '@deck.gl/react';
 // @ts-ignore
 import { fetchLayerData } from '@deck.gl/carto';
 import americaFeatureCollection from './americas';
-import { Grid, makeStyles } from '@material-ui/core';
+import {
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  Grid,
+  Paper,
+  Radio,
+  RadioGroup,
+  makeStyles,
+} from '@material-ui/core';
 import getViewport from 'components/indicators/premise/utils/getViewport';
 //@ts-ignore
 import { FlyToInterpolator } from '@deck.gl/core';
 import { useSelector } from 'react-redux';
-import { scaleLinear } from 'd3';
+import { extent, scaleLinear } from 'd3';
 import useCustomCompareEffectAlt from 'components/indicators/media/hooks/useCustomCompareEffectAlt';
 import { dequal } from 'dequal';
 import AnimatedCircleLayer from './utils/AnimatedCircleLayer';
@@ -29,6 +39,9 @@ const INITIAL_VIEW_STATE = {
   longitude: -81.39079408436801,
   zoom: 2,
   maxZoom: 16,
+  pitch: 0,
+  bearing: 0,
+  dragRotate: false,
 };
 
 interface _MapContext {
@@ -74,7 +87,9 @@ function DeckMapContainer() {
       }}
       controller
       layers={[SurveySitesLayer(), CountriesLayer()]}
-    ></DeckGL>
+    >
+      <SourceSelect />
+    </DeckGL>
   );
 }
 
@@ -129,8 +144,23 @@ const sitePhases = [
   {
     type: 'query',
     connection: 'carto_dw',
-    source:
-      'SELECT * FROM `carto-dw-ac-4v8fnfsh.shared.lacro_marzo_phase_1_clusters_v2` WHERE aggregated_count > 100',
+    source: `
+    With __q1 as (
+      Select * FROM \`carto-dw-ac-4v8fnfsh.shared.LACRO_Marzo_2023\`
+    ),
+    __q2 as (
+      SELECT
+      ST_CENTROID_AGG(geom) AS geom,
+      COUNT(*) AS aggregated_count,
+      country_name
+    FROM
+      __q1
+    GROUP BY
+      country_name
+    )
+
+    SELECT * FROM __q2
+    `,
     format: 'geojson',
     headers: {
       'cache-control': 'max-age=300',
@@ -139,8 +169,23 @@ const sitePhases = [
   {
     type: 'query',
     connection: 'carto_dw',
-    source:
-      'SELECT * FROM `carto-dw-ac-4v8fnfsh.shared.migration_round_2_clusters`',
+    source: `
+    With __q1 as (
+      Select * FROM \`carto-dw-ac-4v8fnfsh.shared.aurora_round_2\`
+    ),
+    __q2 as (
+      SELECT
+      ST_CENTROID_AGG(geom) AS geom,
+      COUNT(*) AS aggregated_count,
+      country_name
+    FROM
+      __q1
+    GROUP BY
+      country_name
+    )
+
+    SELECT * FROM __q2
+    `,
     format: 'geojson',
     headers: {
       'cache-control': 'max-age=300',
@@ -148,29 +193,33 @@ const sitePhases = [
   },
 ];
 
+const scalePoints = (data: Record<string, unknown>) => {
+  const range = [5, 20];
+  // @ts-ignore
+  const domain = data.features.map((d) => d.properties.aggregated_count);
+  // @ts-ignore
+  const scale = scaleLinear().domain(extent(domain)).range(range);
+  return (count: number) => {
+    const scaledPoint = scale(count);
+    return scaledPoint;
+  };
+};
+
 function SurveySitesLayer() {
+  const { viewState } = useContext(MapContext).details;
   //@ts-ignore
   const phase = useSelector((state) => state.app.phase);
+  const [source, setSources] = useState<any[] | null>(sitePhases);
   const [endPoint, setEndPoint] = useState(1);
   const setDetails = useContext(MapContext).setDetails;
   const [dataLayers, setDataLayers] = useState<null | []>(null);
+
   const data = useMemo(() => {
     if (dataLayers && phase) {
       return dataLayers[phase - 1];
     }
     return null;
   }, [dataLayers, phase]);
-
-  const scalePoints = useCallback(
-    (count: number) => {
-      if (data) {
-        const range = [5, 20];
-        const domain = data.features.map((d) => d.properties.aggregated_count);
-        return scaleLinear().domain(domain).range(range)(count);
-      }
-    },
-    [data],
-  );
 
   useCustomCompareEffectAlt(
     () => {
@@ -200,7 +249,7 @@ function SurveySitesLayer() {
   );
 
   const fetchdata = () => {
-    Promise.all(sitePhases.map((d) => fetchLayerData(d))).then((results) =>
+    Promise.all(source.map((d) => fetchLayerData(d))).then((results) =>
       // @ts-ignore
       setDataLayers(results.map((d) => d.data)),
     );
@@ -209,9 +258,10 @@ function SurveySitesLayer() {
   useEffect(() => {
     fetchdata();
     return () => {
+      setSources(null);
       setDataLayers(null);
     };
-  }, []);
+  }, [source]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -227,6 +277,37 @@ function SurveySitesLayer() {
       data,
       scalePoints,
       endPoint,
+      viewState,
+      color: [255, 87, 51],
     });
   }
+}
+
+function SourceSelect() {
+  const [value, setvalue] = useState('aurora');
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setvalue(e.target.value);
+  };
+  return (
+    <Paper
+      variant={'outlined'}
+      style={{ padding: 16, position: 'absolute', top: 8, left: 8 }}
+    >
+      <FormControl>
+        <FormLabel>Source</FormLabel>
+        <RadioGroup value={value} onChange={handleChange}>
+          <FormControlLabel
+            value={'aurora'}
+            control={<Radio />}
+            label={'Aurora'}
+          />
+          <FormControlLabel
+            value={'servicio'}
+            control={<Radio />}
+            label={'Servicio'}
+          />
+        </RadioGroup>
+      </FormControl>
+    </Paper>
+  );
 }
