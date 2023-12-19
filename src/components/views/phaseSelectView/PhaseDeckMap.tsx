@@ -1,4 +1,5 @@
 import {
+  ChangeEvent,
   Dispatch,
   SetStateAction,
   createContext,
@@ -13,22 +14,38 @@ import DeckGL from '@deck.gl/react';
 // @ts-ignore
 import { fetchLayerData } from '@deck.gl/carto';
 import americaFeatureCollection from './americas';
-import { Grid, makeStyles } from '@material-ui/core';
+import {
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  Grid,
+  Paper,
+  Radio,
+  RadioGroup,
+  makeStyles,
+} from '@material-ui/core';
 import getViewport from 'components/indicators/premise/utils/getViewport';
 //@ts-ignore
 import { FlyToInterpolator } from '@deck.gl/core';
+
 import { useSelector } from 'react-redux';
-import { scaleLinear } from 'd3';
+import { extent, scaleLinear } from 'd3';
 import useCustomCompareEffectAlt from 'components/indicators/media/hooks/useCustomCompareEffectAlt';
 import { dequal } from 'dequal';
 import AnimatedCircleLayer from './utils/AnimatedCircleLayer';
 import PolygonWithLabels from './utils/PolygonWithLabels';
+import auroraPhases from './data/auroraPhaseSources';
+import servicePhases from './data/servicePhaseSources';
+import { SERVICES_KEY } from 'components/indicators/premise/utils/premiseServiceDefinitions';
 
 const INITIAL_VIEW_STATE = {
   latitude: 8.62581290990417,
   longitude: -81.39079408436801,
   zoom: 2,
   maxZoom: 16,
+  pitch: 0,
+  bearing: 0,
+  dragRotate: false,
 };
 
 interface _MapContext {
@@ -61,8 +78,52 @@ export default function PhaseDeckMap() {
 }
 
 const transitionInterpolator = new FlyToInterpolator();
+
+function getTooltip(dimension) {
+  if (!dimension) return () => null;
+  const textFn = dimension === 'aurora' ? getAuroraText : getServicioText;
+  return ({ object }) => {
+    console.log(object);
+    const text = object ? textFn(object?.properties) : null;
+    console.log(text);
+    return (
+      text && {
+        html: `<div>${text}</div>`,
+        style: {
+          maxWidth: '300px',
+          backgoundColor: 'rgba(0,0,0,0.5)',
+          padding: '4px',
+        },
+      }
+    );
+  };
+}
+
+function getAuroraText(value: any) {
+  return `Pais: ${value.country_name} <Br> Migrantes: ${value.aggregated_count} `;
+}
+
+function getServicioText(value: any) {
+  const services = Array.from(
+    new Set((value.services as string).split('|')),
+  ).map((d) => `<li>${SERVICES_KEY.get(+d)}</li>`);
+  return `<ul> ${services.join('')}</>`;
+}
+
 function DeckMapContainer() {
-  const { viewState } = useContext(MapContext).details;
+  const {
+    details: { viewState, source },
+    setDetails,
+  } = useContext(MapContext);
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setDetails((prev) => ({ ...prev, source: value }));
+  };
+  useEffect(() => {
+    if (!source) {
+      setDetails((prev) => ({ ...prev, source: 'aurora' }));
+    }
+  }, []);
   return (
     // @ts-ignore
     <DeckGL
@@ -72,9 +133,12 @@ function DeckMapContainer() {
         transitionDuration: 500,
         transitionInterpolator,
       }}
+      getTooltip={getTooltip(source)}
       controller
       layers={[SurveySitesLayer(), CountriesLayer()]}
-    ></DeckGL>
+    >
+      <SourceSelect value={source} handleChange={handleChange} />
+    </DeckGL>
   );
 }
 
@@ -125,52 +189,38 @@ function CountriesLayer() {
   });
 }
 
-const sitePhases = [
-  {
-    type: 'query',
-    connection: 'carto_dw',
-    source:
-      'SELECT * FROM `carto-dw-ac-4v8fnfsh.shared.lacro_marzo_phase_1_clusters_v2` WHERE aggregated_count > 100',
-    format: 'geojson',
-    headers: {
-      'cache-control': 'max-age=300',
-    },
-  },
-  {
-    type: 'query',
-    connection: 'carto_dw',
-    source:
-      'SELECT * FROM `carto-dw-ac-4v8fnfsh.shared.migration_round_2_clusters`',
-    format: 'geojson',
-    headers: {
-      'cache-control': 'max-age=300',
-    },
-  },
-];
+const scalePoints = (data: Record<string, unknown>) => {
+  const range = [5, 20];
+  // @ts-ignore
+  const domain = data.features.map((d) => d.properties.aggregated_count);
+  // @ts-ignore
+  const scale = scaleLinear().domain(extent(domain)).range(range);
+  return (count: number) => {
+    const scaledPoint = scale(count);
+    return scaledPoint;
+  };
+};
+
+const getFillColor = (value) => {
+  if (!value) return [255, 87, 51];
+  return value === 'aurora' ? [255, 87, 51] : [28, 171, 226];
+};
 
 function SurveySitesLayer() {
+  const { viewState, source: dimension } = useContext(MapContext).details;
   //@ts-ignore
   const phase = useSelector((state) => state.app.phase);
+  const [source, setSources] = useState<any[] | null>(auroraPhases);
   const [endPoint, setEndPoint] = useState(1);
   const setDetails = useContext(MapContext).setDetails;
   const [dataLayers, setDataLayers] = useState<null | []>(null);
+
   const data = useMemo(() => {
     if (dataLayers && phase) {
       return dataLayers[phase - 1];
     }
     return null;
   }, [dataLayers, phase]);
-
-  const scalePoints = useCallback(
-    (count: number) => {
-      if (data) {
-        const range = [5, 20];
-        const domain = data.features.map((d) => d.properties.aggregated_count);
-        return scaleLinear().domain(domain).range(range)(count);
-      }
-    },
-    [data],
-  );
 
   useCustomCompareEffectAlt(
     () => {
@@ -199,19 +249,31 @@ function SurveySitesLayer() {
     dequal,
   );
 
-  const fetchdata = () => {
-    Promise.all(sitePhases.map((d) => fetchLayerData(d))).then((results) =>
+  useEffect(() => {
+    if (!dimension) {
+      setSources(auroraPhases);
+    }
+    if (dimension === 'aurora') {
+      setSources(auroraPhases);
+    }
+    if (dimension === 'servicio') {
+      setSources(servicePhases);
+    }
+  }, [dimension]);
+
+  const fetchdata = (dataSources) => {
+    Promise.all(dataSources.map((d) => fetchLayerData(d))).then((results) =>
       // @ts-ignore
       setDataLayers(results.map((d) => d.data)),
     );
   };
 
   useEffect(() => {
-    fetchdata();
+    fetchdata(source);
     return () => {
       setDataLayers(null);
     };
-  }, []);
+  }, [source]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -227,6 +289,48 @@ function SurveySitesLayer() {
       data,
       scalePoints,
       endPoint,
+      viewState,
+      getText: dimension === 'aurora' ? getAuroraText : getServicioText,
+      color: getFillColor(dimension),
     });
   }
+}
+
+function SourceSelect(props: {
+  value: string | unknown;
+  handleChange: (e) => void;
+}) {
+  // @ts-ignore
+  const phase = useSelector((state) => state.app.phase);
+  const { value, handleChange } = props;
+  return (
+    <>
+      {Boolean(phase) && (
+        <Paper
+          variant={'outlined'}
+          style={{
+            padding: '8px 16px',
+            position: 'absolute',
+            bottom: 8,
+            left: 8,
+          }}
+        >
+          <FormControl>
+            <RadioGroup value={value || 'aurora'} onChange={handleChange}>
+              <FormControlLabel
+                value={'aurora'}
+                control={<Radio />}
+                label={'Concentraciones de migrantes'}
+              />
+              <FormControlLabel
+                value={'servicio'}
+                control={<Radio />}
+                label={'Ubicaciones de servicio'}
+              />
+            </RadioGroup>
+          </FormControl>
+        </Paper>
+      )}
+    </>
+  );
 }
