@@ -104,9 +104,9 @@ function getAuroraText(value: any) {
 }
 
 function getServicioText(value: any) {
-  const services = Array.from(
-    new Set((value.services as string).split('|')),
-  ).map((d) => `<li>${SERVICES_KEY.get(+d)}</li>`);
+  const services = Array.from(new Set((value.services as string).split('|')))
+    .filter((d) => !['999999', 999999].includes(d))
+    .map((d) => `<li>${SERVICES_KEY.get(+d) || 'Otro'}</li>`);
   return `<ul> ${services.join('')}</>`;
 }
 
