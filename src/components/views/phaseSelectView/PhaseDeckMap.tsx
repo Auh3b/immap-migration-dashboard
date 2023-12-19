@@ -79,20 +79,35 @@ export default function PhaseDeckMap() {
 
 const transitionInterpolator = new FlyToInterpolator();
 
-function getTooltip({ object }) {
-  console.log(object);
-  return null;
+function getTooltip(dimension) {
+  if (!dimension) return () => null;
+  const textFn = dimension === 'aurora' ? getAuroraText : getServicioText;
+  return ({ object }) => {
+    console.log(object);
+    const text = object ? textFn(object?.properties) : null;
+    console.log(text);
+    return (
+      text && {
+        html: `<div>${text}</div>`,
+        style: {
+          maxWidth: '300px',
+          backgoundColor: 'rgba(0,0,0,0.5)',
+          padding: '4px',
+        },
+      }
+    );
+  };
 }
 
 function getAuroraText(value: any) {
-  return `Pais: ${value.country_name} \n Migrantes: ${value.aggregated_count} `;
+  return `Pais: ${value.country_name} <Br> Migrantes: ${value.aggregated_count} `;
 }
 
 function getServicioText(value: any) {
   const services = Array.from(
     new Set((value.services as string).split('|')),
-  ).map((d) => SERVICES_KEY.get(+d));
-  return services.join(', ');
+  ).map((d) => `<li>${SERVICES_KEY.get(+d)}</li>`);
+  return `<ul> ${services.join('')}</>`;
 }
 
 function DeckMapContainer() {
@@ -104,6 +119,11 @@ function DeckMapContainer() {
     const value = e.target.value;
     setDetails((prev) => ({ ...prev, source: value }));
   };
+  useEffect(() => {
+    if (!source) {
+      setDetails((prev) => ({ ...prev, source: 'aurora' }));
+    }
+  }, []);
   return (
     // @ts-ignore
     <DeckGL
@@ -113,7 +133,7 @@ function DeckMapContainer() {
         transitionDuration: 500,
         transitionInterpolator,
       }}
-      getTooltip={getTooltip}
+      getTooltip={getTooltip(source)}
       controller
       layers={[SurveySitesLayer(), CountriesLayer()]}
     >
@@ -179,6 +199,11 @@ const scalePoints = (data: Record<string, unknown>) => {
     const scaledPoint = scale(count);
     return scaledPoint;
   };
+};
+
+const getFillColor = (value) => {
+  if (!value) return [255, 87, 51];
+  return value === 'aurora' ? [255, 87, 51] : [28, 171, 226];
 };
 
 function SurveySitesLayer() {
@@ -266,7 +291,7 @@ function SurveySitesLayer() {
       endPoint,
       viewState,
       getText: dimension === 'aurora' ? getAuroraText : getServicioText,
-      color: [255, 87, 51],
+      color: getFillColor(dimension),
     });
   }
 }
@@ -275,27 +300,37 @@ function SourceSelect(props: {
   value: string | unknown;
   handleChange: (e) => void;
 }) {
+  // @ts-ignore
+  const phase = useSelector((state) => state.app.phase);
   const { value, handleChange } = props;
   return (
-    <Paper
-      variant={'outlined'}
-      style={{ padding: 16, position: 'absolute', bottom: 8, left: 8 }}
-    >
-      <FormControl>
-        <FormLabel>Source</FormLabel>
-        <RadioGroup value={value || 'aurora'} onChange={handleChange}>
-          <FormControlLabel
-            value={'aurora'}
-            control={<Radio />}
-            label={'Aurora'}
-          />
-          <FormControlLabel
-            value={'servicio'}
-            control={<Radio />}
-            label={'Servicio'}
-          />
-        </RadioGroup>
-      </FormControl>
-    </Paper>
+    <>
+      {Boolean(phase) && (
+        <Paper
+          variant={'outlined'}
+          style={{
+            padding: '8px 16px',
+            position: 'absolute',
+            bottom: 8,
+            left: 8,
+          }}
+        >
+          <FormControl>
+            <RadioGroup value={value || 'aurora'} onChange={handleChange}>
+              <FormControlLabel
+                value={'aurora'}
+                control={<Radio />}
+                label={'Concentraciones de migrantes'}
+              />
+              <FormControlLabel
+                value={'servicio'}
+                control={<Radio />}
+                label={'Ubicaciones de servicio'}
+              />
+            </RadioGroup>
+          </FormControl>
+        </Paper>
+      )}
+    </>
   );
 }
