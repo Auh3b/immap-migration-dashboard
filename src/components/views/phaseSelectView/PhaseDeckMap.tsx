@@ -83,9 +83,7 @@ function getTooltip(dimension) {
   if (!dimension) return () => null;
   const textFn = dimension === 'aurora' ? getAuroraText : getServicioText;
   return ({ object }) => {
-    console.log(object);
     const text = object ? textFn(object?.properties) : null;
-    console.log(text);
     return (
       text && {
         html: `<div>${text}</div>`,
