@@ -1,6 +1,8 @@
 import { GeoJsonLayer, PathLayer } from '@deck.gl/layers';
 import { WebMercatorViewport } from '@deck.gl/core';
 import { CompositeLayer } from 'deck.gl';
+// @ts-ignore
+import { CollisionFilterExtension } from '@deck.gl/extensions';
 
 const generateText = (
   d: Record<string, unknown>,
@@ -40,7 +42,8 @@ class AnimatedCircleLayer extends CompositeLayer<any, any> {
   }
   renderLayers() {
     // @ts-ignore
-    const { data, scalePoints, endPoint, viewState, color } = this.props;
+    const { data, scalePoints, endPoint, viewState, color, getText } =
+      this.props;
     const getScaledFigure = scalePoints(data);
     return [
       // new PathLayer({
@@ -65,7 +68,7 @@ class AnimatedCircleLayer extends CompositeLayer<any, any> {
           data,
           pointType: 'circle',
           stroked: false,
-          pickable: true,
+          pickable: false,
           pointRadiusScale: 1,
           pointRadiusUnits: 'pixels',
           // @ts-ignore
@@ -92,14 +95,15 @@ class AnimatedCircleLayer extends CompositeLayer<any, any> {
           getTextSize: 16,
           getTextPixelOffset: (d, { index }) =>
             index % 2 === 0
-              ? [-20, getScaledFigure(d.properties.aggregated_count) * 1.75]
+              ? [0, -getScaledFigure(d.properties.aggregated_count) * 1.75]
               : [0, getScaledFigure(d.properties.aggregated_count) * 1.75],
-          getTextAnchor: (d, { index }) => (index % 2 === 0 ? 'start' : 'end'),
           getTextColor: [255, 255, 255, 255],
           getTextBackgroundColor: [0, 0, 0, 150],
+          getTextAlignmentBaseline: 'top',
           textBackgroundPadding: [2, 2],
           textBackground: true,
           textBillboard: true,
+          extensions: [new CollisionFilterExtension()],
         }),
       ),
       new GeoJsonLayer(
@@ -111,7 +115,7 @@ class AnimatedCircleLayer extends CompositeLayer<any, any> {
           stroked: true,
           filled: false,
           pointRadiusScale: 1,
-          pickable: false,
+          pickable: true,
           pointRadiusUnits: 'pixels',
           // @ts-ignore
           getPointRadius: (d) =>
