@@ -2,6 +2,8 @@
 
 This application extends existing carto code which has extensively been [documented](https://docs.carto.com). This directory contains documentation of extended front-end mechanics of this application.
 
+The application also uses [Material UI 4](https://v4.mui.com/) for styling.
+
 The topics include:
 
 - [Layers](./layer.md)

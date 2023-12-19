@@ -83,3 +83,21 @@ return (
 )
 
 ```
+
+You can added a wrapper component of your indicators/visualisation as a side panel component. The strategy in most existing wrapper component is to also add a `dataSources` in order to field to [indicator](./indicators.md) component to used as fetch data from appropriate sources which correspond to the loaded data.
+
+- **example:**
+
+```JavaScript
+export default function MigrationLeftView(props) {
+  const { dataSources: { mainSource } } = props
+  return (
+    <>
+      <CountryFlow dataSource={mainSource} />
+      <OriginCountry dataSource={mainSource} />
+      <CountryResiding dataSource={mainSource} />
+      <CountryDeparted dataSource={mainSource} />
+    </>
+  );
+}
+```

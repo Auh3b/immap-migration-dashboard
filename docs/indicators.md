@@ -40,3 +40,22 @@ Most indicators are visualised based on the props.
       />
     )
   ```
+
+Though you can go decide yourself the strategy to which to design indicators. However, most of the indicators follow this pattern:
+
+- **Example:**
+
+```JavaScript
+export default function TransportMode({ dataSource }: BasicWidgetType) {
+  const { widget } = useWidgetEffect(
+    <CustomCategoryWidget {...props} dataSource={dataSource} />,
+    [dataSource],
+  );
+  return (
+    <Grid item>
+      {widget}
+      <WidgetNote note={NOTE} />
+    </Grid>
+  );
+}
+```

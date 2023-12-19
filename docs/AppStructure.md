@@ -1,3 +1,5 @@
+# APPLICATION STRUCTURE
+
 ## `ASSETS`
 
 Directory for static assets such as images
@@ -10,47 +12,7 @@ Directory for component of react application having both carto-components and cu
 
 Directory of components having visualisation components pertaining to specific indicator. They have been grouped by [view](#views).
 
-### `DYNAMIC`
-
-### `INTRODUCTION`
-
-#### `HOOKS`
-
-#### `UTILS`
-
-### `MEDIA`
-
-### `MIGRATION`
-
-### `PREMISE`
-
-### `SERVICES`
-
-## `LAYERS`
-
 ## `VIEWS`
-
-### `DINAMICAVIEWS`
-
-### `INTRODUCTIONVIEWS`
-
-#### `INTROLEFTVIEW`
-
-### `MAIN`
-
-### `MEDIAVIEWS`
-
-#### `MEDIAFILTERTOOLBAR`
-
-#### `MEDIATOOLBAR`
-
-### `MIGRATIONVIEWS`
-
-### `PHASESELECTVIEW`
-
-### `PREMISEVIEWS`
-
-### `SERVICEVIEWS`
 
 ## `DATA`
 
