@@ -27,12 +27,16 @@ import {
 import getViewport from 'components/indicators/premise/utils/getViewport';
 //@ts-ignore
 import { FlyToInterpolator } from '@deck.gl/core';
+
 import { useSelector } from 'react-redux';
 import { extent, scaleLinear } from 'd3';
 import useCustomCompareEffectAlt from 'components/indicators/media/hooks/useCustomCompareEffectAlt';
 import { dequal } from 'dequal';
 import AnimatedCircleLayer from './utils/AnimatedCircleLayer';
 import PolygonWithLabels from './utils/PolygonWithLabels';
+import auroraPhases from './data/auroraPhaseSources';
+import servicePhases from './data/servicePhaseSources';
+import { SERVICES_KEY } from 'components/indicators/premise/utils/premiseServiceDefinitions';
 
 const INITIAL_VIEW_STATE = {
   latitude: 8.62581290990417,
@@ -74,8 +78,32 @@ export default function PhaseDeckMap() {
 }
 
 const transitionInterpolator = new FlyToInterpolator();
+
+function getTooltip({ object }) {
+  console.log(object);
+  return null;
+}
+
+function getAuroraText(value: any) {
+  return `Pais: ${value.country_name} \n Migrantes: ${value.aggregated_count} `;
+}
+
+function getServicioText(value: any) {
+  const services = Array.from(
+    new Set((value.services as string).split('|')),
+  ).map((d) => SERVICES_KEY.get(+d));
+  return services.join(', ');
+}
+
 function DeckMapContainer() {
-  const { viewState } = useContext(MapContext).details;
+  const {
+    details: { viewState, source },
+    setDetails,
+  } = useContext(MapContext);
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setDetails((prev) => ({ ...prev, source: value }));
+  };
   return (
     // @ts-ignore
     <DeckGL
@@ -85,10 +113,11 @@ function DeckMapContainer() {
         transitionDuration: 500,
         transitionInterpolator,
       }}
+      getTooltip={getTooltip}
       controller
       layers={[SurveySitesLayer(), CountriesLayer()]}
     >
-      <SourceSelect />
+      <SourceSelect value={source} handleChange={handleChange} />
     </DeckGL>
   );
 }
@@ -140,59 +169,6 @@ function CountriesLayer() {
   });
 }
 
-const sitePhases = [
-  {
-    type: 'query',
-    connection: 'carto_dw',
-    source: `
-    With __q1 as (
-      Select * FROM \`carto-dw-ac-4v8fnfsh.shared.LACRO_Marzo_2023\`
-    ),
-    __q2 as (
-      SELECT
-      ST_CENTROID_AGG(geom) AS geom,
-      COUNT(*) AS aggregated_count,
-      country_name
-    FROM
-      __q1
-    GROUP BY
-      country_name
-    )
-
-    SELECT * FROM __q2
-    `,
-    format: 'geojson',
-    headers: {
-      'cache-control': 'max-age=300',
-    },
-  },
-  {
-    type: 'query',
-    connection: 'carto_dw',
-    source: `
-    With __q1 as (
-      Select * FROM \`carto-dw-ac-4v8fnfsh.shared.aurora_round_2\`
-    ),
-    __q2 as (
-      SELECT
-      ST_CENTROID_AGG(geom) AS geom,
-      COUNT(*) AS aggregated_count,
-      country_name
-    FROM
-      __q1
-    GROUP BY
-      country_name
-    )
-
-    SELECT * FROM __q2
-    `,
-    format: 'geojson',
-    headers: {
-      'cache-control': 'max-age=300',
-    },
-  },
-];
-
 const scalePoints = (data: Record<string, unknown>) => {
   const range = [5, 20];
   // @ts-ignore
@@ -206,10 +182,10 @@ const scalePoints = (data: Record<string, unknown>) => {
 };
 
 function SurveySitesLayer() {
-  const { viewState } = useContext(MapContext).details;
+  const { viewState, source: dimension } = useContext(MapContext).details;
   //@ts-ignore
   const phase = useSelector((state) => state.app.phase);
-  const [source, setSources] = useState<any[] | null>(sitePhases);
+  const [source, setSources] = useState<any[] | null>(auroraPhases);
   const [endPoint, setEndPoint] = useState(1);
   const setDetails = useContext(MapContext).setDetails;
   const [dataLayers, setDataLayers] = useState<null | []>(null);
@@ -248,17 +224,28 @@ function SurveySitesLayer() {
     dequal,
   );
 
-  const fetchdata = () => {
-    Promise.all(source.map((d) => fetchLayerData(d))).then((results) =>
+  useEffect(() => {
+    if (!dimension) {
+      setSources(auroraPhases);
+    }
+    if (dimension === 'aurora') {
+      setSources(auroraPhases);
+    }
+    if (dimension === 'servicio') {
+      setSources(servicePhases);
+    }
+  }, [dimension]);
+
+  const fetchdata = (dataSources) => {
+    Promise.all(dataSources.map((d) => fetchLayerData(d))).then((results) =>
       // @ts-ignore
       setDataLayers(results.map((d) => d.data)),
     );
   };
 
   useEffect(() => {
-    fetchdata();
+    fetchdata(source);
     return () => {
-      setSources(null);
       setDataLayers(null);
     };
   }, [source]);
@@ -278,24 +265,25 @@ function SurveySitesLayer() {
       scalePoints,
       endPoint,
       viewState,
+      getText: dimension === 'aurora' ? getAuroraText : getServicioText,
       color: [255, 87, 51],
     });
   }
 }
 
-function SourceSelect() {
-  const [value, setvalue] = useState('aurora');
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setvalue(e.target.value);
-  };
+function SourceSelect(props: {
+  value: string | unknown;
+  handleChange: (e) => void;
+}) {
+  const { value, handleChange } = props;
   return (
     <Paper
       variant={'outlined'}
-      style={{ padding: 16, position: 'absolute', top: 8, left: 8 }}
+      style={{ padding: 16, position: 'absolute', bottom: 8, left: 8 }}
     >
       <FormControl>
         <FormLabel>Source</FormLabel>
-        <RadioGroup value={value} onChange={handleChange}>
+        <RadioGroup value={value || 'aurora'} onChange={handleChange}>
           <FormControlLabel
             value={'aurora'}
             control={<Radio />}
