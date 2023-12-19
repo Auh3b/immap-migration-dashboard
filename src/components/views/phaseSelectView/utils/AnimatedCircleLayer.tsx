@@ -38,8 +38,8 @@ class AnimatedCircleLayer extends CompositeLayer<any, any> {
     super(props);
   }
   renderLayers() {
-    // @ts-ignore
     const { data, scalePoints, endPoint, viewState, color, getText } =
+      // @ts-ignore
       this.props;
     const getScaledFigure = scalePoints(data);
     return [
