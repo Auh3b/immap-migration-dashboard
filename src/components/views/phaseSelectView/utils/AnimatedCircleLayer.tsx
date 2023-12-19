@@ -13,9 +13,7 @@ const generateText = (
   const filtered_array = object_array.filter(([key, value]) =>
     keys.includes(key),
   );
-  const text_map = filtered_array
-    .map(([key, value]) => `${keyMap[key] || key}: ${value}`)
-    .join('\n');
+  const text_map = filtered_array.map(([key, value]) => `${value}`).join('\n');
   return text_map;
 };
 
@@ -32,7 +30,6 @@ const pathGenerator = ({ data, viewState, offset }: any) => {
   const pixelCoords = getViewport.project([x0, y0]);
   const [x1, y1] = getViewport.unproject(pixelCoords.map((d) => d + offset));
   const path = [x0, y0, x1, y1];
-  console.log(path);
   return path;
 };
 
@@ -74,6 +71,9 @@ class AnimatedCircleLayer extends CompositeLayer<any, any> {
           // @ts-ignore
           getPointRadius: (d) => getScaledFigure(d.properties.aggregated_count),
           getFillColor: [...color, 200],
+          updateTriggers: {
+            getFillColor: color,
+          },
         }),
       ),
       new GeoJsonLayer(
@@ -84,7 +84,7 @@ class AnimatedCircleLayer extends CompositeLayer<any, any> {
           pointType: 'circle+text',
           stroked: false,
           pointRadiusScale: 1,
-          pickable: false,
+          pickable: true,
           pointRadiusUnits: 'pixels',
           // @ts-ignore
           getPointRadius: (d) =>
@@ -95,8 +95,8 @@ class AnimatedCircleLayer extends CompositeLayer<any, any> {
           getTextSize: 16,
           getTextPixelOffset: (d, { index }) =>
             index % 2 === 0
-              ? [0, -getScaledFigure(d.properties.aggregated_count) * 1.75]
-              : [0, getScaledFigure(d.properties.aggregated_count) * 1.75],
+              ? [0, -getScaledFigure(d.properties.aggregated_count) * 2]
+              : [0, getScaledFigure(d.properties.aggregated_count) * 2],
           getTextColor: [255, 255, 255, 255],
           getTextBackgroundColor: [0, 0, 0, 150],
           getTextAlignmentBaseline: 'top',
@@ -104,6 +104,9 @@ class AnimatedCircleLayer extends CompositeLayer<any, any> {
           textBackground: true,
           textBillboard: true,
           extensions: [new CollisionFilterExtension()],
+          updateTriggers: {
+            getFillColor: color,
+          },
         }),
       ),
       new GeoJsonLayer(
@@ -115,7 +118,7 @@ class AnimatedCircleLayer extends CompositeLayer<any, any> {
           stroked: true,
           filled: false,
           pointRadiusScale: 1,
-          pickable: true,
+          pickable: false,
           pointRadiusUnits: 'pixels',
           // @ts-ignore
           getPointRadius: (d) =>
