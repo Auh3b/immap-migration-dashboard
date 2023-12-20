@@ -48,4 +48,5 @@ export const SERVICE_STAT_COLUMNS = new Map([
   [15, ['serv_tra_2', 'atend_serv']],
   [16, ['serv_tra_2', 'atend_serv']],
   [17, ['serv_tra_2', 'atend_serv']],
+  [18, ['serv_tra_2', 'atend_serv']],
 ]);
