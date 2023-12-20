@@ -12,9 +12,7 @@ export const SERVICES_KEY = new Map([
   [12, 'Transporte humanitario'],
   [13, 'Otro'],
   [14, 'Servicios de protección'],
-  [15, 'Servicios de protección NNA'],
   [16, 'Restablecimiento de contacto familiar'],
-  [17, 'Gestión de casos'],
   [18, 'Transferencias'],
 ]);
 
@@ -44,9 +42,7 @@ export const SERVICE_STAT_COLUMNS = new Map([
   [11, ['serv_psico', 'serv_psi_1']],
   [12, ['serv_trans', 'serv_tra_1']],
   [13, ['serv_tra_2', 'atend_serv']],
-  [14, ['serv_tra_2', 'atend_serv']],
-  [15, ['serv_tra_2', 'atend_serv']],
-  [16, ['serv_tra_2', 'atend_serv']],
-  [17, ['serv_tra_2', 'atend_serv']],
-  [18, ['serv_tra_2', 'atend_serv']],
+  [14, ['serv_prot_c', 'serv_prot_a']],
+  [16, ['serv_esta_c', 'serv_esta_a']],
+  [18, ['serv_trans_c', 'serv_trans_a']],
 ]);
