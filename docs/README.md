@@ -6,7 +6,7 @@ The application also uses [Material UI 4](https://v4.mui.com/) for styling.
 
 The topics include:
 
-- [Layers](./layer.md)
+- [Layers](./layers.md)
 - [Pages](./pages.md)
 - [Custom Methods](./custom-method.md)
 - [Indicators](./indicators.md)
