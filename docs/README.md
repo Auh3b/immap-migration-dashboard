@@ -10,3 +10,6 @@ The topics include:
 - [Pages](./pages.md)
 - [Custom Methods](./custom-method.md)
 - [Indicators](./indicators.md)
+- [Sources](./sources.md)
+- [User Creation](./user-creation.md)
+- [Deployment](./deployment.md)
