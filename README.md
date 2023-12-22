@@ -117,14 +117,14 @@ Netlify is a popular platform for deploying and hosting web applications, provid
    - **Environmental Variables**
      You need required environmental variables:
 
-     | Name                         | Variable                  | Description |
-     | ---------------------------- | ------------------------- | ----------- |
-     | CI                           | false                     |             |
-     | NODE_OPTIONS                 | --max_old_space_size=4096 |             |
-     | NODE_VERSION                 | 16.13                     |             |
-     | REACT_APP_AUTH0_CLIENT_ID    |                           |             |
-     | REACT_APP_AUTH0_DOMAIN       |                           |             |
-     | REACT_APP_CARTO_ACCESS_TOKEN |                           |             |
+     | Name                         | Variable                                                                                                                                   | Description                                                                                                                                                                                                             |
+     | ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+     | CI                           | false                                                                                                                                      |                                                                                                                                                                                                                         |
+     | NODE_OPTIONS                 | --max_old_space_size=4096                                                                                                                  |                                                                                                                                                                                                                         |
+     | NODE_VERSION                 | 16.13                                                                                                                                      |                                                                                                                                                                                                                         |
+     | REACT_APP_AUTH0_CLIENT_ID    |                                                                                                                                            | The ID of the Auth0 Application you set up earlier in this quickstart. You can find this in the Auth0 Dashboard under your Application's Settings in the Client ID field                                                |
+     | REACT_APP_AUTH0_DOMAIN       | The domain of your Auth0 tenant. Generally, you can find this in the Auth0 Dashboard under your Application's Settings in the Domain field |                                                                                                                                                                                                                         |
+     | REACT_APP_CARTO_ACCESS_TOKEN |                                                                                                                                            | API Access Tokens are the simplest method of authorization for a developer or an application to use the CARTO APIs. For more information: [Link](https://docs.carto.com/carto-user-manual/developers/api-access-tokens) |
 
 4. **Deploy Your Site:**
    Once your repository is connected, Netlify will automatically trigger a build and deploy your site. You can monitor the build process in the Netlify dashboard.
