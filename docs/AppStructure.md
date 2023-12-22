@@ -14,11 +14,11 @@ Directory of components having visualisation components pertaining to specific i
 
 ## `VIEWS`
 
+Dirctory of page components
+
 ## `DATA`
 
-Directory having data models to derive from carto
-
-## `SOURCES`
+Directory having data models to derive from carto.
 
 ## `FIREDB`
 
