@@ -99,7 +99,7 @@ docker build -t aurora-front .
 docker run -e /path/to/.env -p 3000:3000 aurora-front
 ```
 
-For the variables required for the `.env` file, please refer to `.env.dist`
+For the variables required for the `.env` file, please [refer to](https://github.com/Auh3b/immap-migration-dashboard/blob/main/.env.dist) `.env.dist`
 
 ## Steps for Netlify Deployment
 
