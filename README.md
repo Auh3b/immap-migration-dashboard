@@ -154,6 +154,6 @@ Netlify is a popular platform for deploying and hosting web applications, provid
 
 Remember to check the documentation for the specific technologies and frameworks you are using in your project, as there may be additional considerations for certain setups.
 
-## Documentation
+## More Documentation
 
-For documentation for this application, go here: [link](/docs/)
+For more documentation for this application, go here: [link](/docs/)
