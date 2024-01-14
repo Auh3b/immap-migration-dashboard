@@ -94,7 +94,7 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 
 You can run the system on a docker container
 
-```
+```Bash
 docker build -t aurora-front .
 docker run -e /path/to/.env -p 3000:3000 aurora-front
 ```

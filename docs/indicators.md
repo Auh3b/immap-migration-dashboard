@@ -66,523 +66,820 @@ The following section highlights all the indicators used in this application
 
 ### Services
 
+The indicators below are for the page: `Feedback Servicios`
+
+`Page`: [services](/src/components/indicators/services)
+
 #### Servicequalitychildren.Tsx
+
+`File Location`: [ServiceQualityChildren.tsx](/src/components/indicators/services/ServiceQualityChildren.tsx)
 
 | name         | value                                                   | description |
 | ------------ | ------------------------------------------------------- | ----------- |
-| note         | Nivel de satisfacción del servicio prestado al migrante |             |
 | id           | serviceQualityAdult                                     |             |
 | title        | Calidad del servicio                                    |             |
+| column       | m18_1                                                   |             |
 | filtertype   | \_FilterTypes.IN                                        |             |
 | methodname   | EXTERNAL_METHOD_NAMES.STACKED_GROUP_CATEGORIES_ALT_2    |             |
-| methodparams |                                                         |             |
+| methodparams | { aidTypes: serviceTypeChildren, labels, valueColumn, } |             |
+| note         |                                                         |             |
 
 #### Servicetypeadult.Tsx
 
-| name       | value                                                | description |
-| ---------- | ---------------------------------------------------- | ----------- |
-| note       | Ayudas humanitarias recibidas según zona de tránsito |             |
-| id         | Ayudas_humanitarias                                  |             |
-| title      | Ayudas humanitarias                                  |             |
-| filtertype | \_FilterTypes.IN                                     |             |
-| methodname | EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES               |             |
+`File Location`: [ServiceTypeAdult.tsx](/src/components/indicators/services/ServiceTypeAdult.tsx)
+
+| name         | value                                  | description |
+| ------------ | -------------------------------------- | ----------- |
+| id           | Ayudas_humanitarias                    |             |
+| title        | Ayudas humanitarias                    |             |
+| column       | m12                                    |             |
+| filtertype   | \_FilterTypes.IN                       |             |
+| methodname   | EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES |             |
+| methodparams |                                        |             |
+| note         |                                        |             |
 
 #### Servicesatisfychildren.Tsx
 
-| name         | value                                                | description |
-| ------------ | ---------------------------------------------------- | ----------- |
-| note         | Nivel de satisfacción del servicio tomado            |             |
-| id           | serviceSatisfactionChildren                          |             |
-| title        | Recomendación del servicio                           |             |
-| filtertype   | \_FilterTypes.IN                                     |             |
-| methodname   | EXTERNAL_METHOD_NAMES.STACKED_GROUP_CATEGORIES_ALT_2 |             |
-| methodparams |                                                      |             |
-
-#### Serviceaccesschildren.Tsx
-
-| name         | value                                                | description |
-| ------------ | ---------------------------------------------------- | ----------- |
-| note         | Percepción de accesibilidad a servicios humanitarios |             |
-| id           | accessServicesAdult                                  |             |
-| title        | Accesibilidad                                        |             |
-| filtertype   | \_FilterTypes.IN                                     |             |
-| methodname   | EXTERNAL_METHOD_NAMES.STACKED_GROUP_CATEGORIES_ALT_2 |             |
-| methodparams |                                                      |             |
-
-#### Servicetypechildren.Tsx
-
-| name       | value                                                | description |
-| ---------- | ---------------------------------------------------- | ----------- |
-| note       | Ayudas humanitarias recibidas según zona de tránsito |             |
-| id         | Ayudas_humanitarias_NNA                              |             |
-| title      | Ayudas humanitarias NNA                              |             |
-| filtertype | \_FilterTypes.IN                                     |             |
-| methodname | EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES               |             |
-
-#### Serviceaccessadult.Tsx
-
-| name         | value                                                | description |
-| ------------ | ---------------------------------------------------- | ----------- |
-| note         | Percepción de accesibilidad a servicios humanitarios |             |
-| id           | accessServicesAdult                                  |             |
-| title        | Accesibilidad                                        |             |
-| filtertype   | \_FilterTypes.IN                                     |             |
-| methodname   | EXTERNAL_METHOD_NAMES.STACKED_GROUP_CATEGORIES_ALT_2 |             |
-| methodparams |                                                      |             |
-
-#### Servicequalityadult.Tsx
+`File Location`: [ServiceSatisfyChildren.tsx](/src/components/indicators/services/ServiceSatisfyChildren.tsx)
 
 | name         | value                                                   | description |
 | ------------ | ------------------------------------------------------- | ----------- |
-| note         | Nivel de satisfacción del servicio prestado al migrante |             |
-| id           | serviceQualityAdult                                     |             |
-| title        | Calidad del servicio                                    |             |
+| id           | serviceSatisfactionChildren                             |             |
+| title        | Recomendación del servicio                              |             |
+| column       | m18_1                                                   |             |
 | filtertype   | \_FilterTypes.IN                                        |             |
 | methodname   | EXTERNAL_METHOD_NAMES.STACKED_GROUP_CATEGORIES_ALT_2    |             |
-| methodparams |                                                         |             |
+| methodparams | { aidTypes: serviceTypeChildren, labels, valueColumn, } |             |
+| note         |                                                         |             |
 
-#### Servicesatisfyadult.Tsx
+#### Serviceaccesschildren.Tsx
+
+`File Location`: [ServiceAccessChildren.tsx](/src/components/indicators/services/ServiceAccessChildren.tsx)
+
+| name         | value                                                   | description |
+| ------------ | ------------------------------------------------------- | ----------- |
+| id           | accessServicesAdult                                     |             |
+| title        | Accesibilidad                                           |             |
+| column       | m18_1                                                   |             |
+| filtertype   | \_FilterTypes.IN                                        |             |
+| methodname   | EXTERNAL_METHOD_NAMES.STACKED_GROUP_CATEGORIES_ALT_2    |             |
+| methodparams | { aidTypes: serviceTypeChildren, labels, valueColumn, } |             |
+| note         |                                                         |             |
+
+#### Servicetypechildren.Tsx
+
+`File Location`: [ServiceTypeChildren.tsx](/src/components/indicators/services/ServiceTypeChildren.tsx)
+
+| name         | value                                  | description |
+| ------------ | -------------------------------------- | ----------- |
+| id           | Ayudas_humanitarias_NNA                |             |
+| title        | Ayudas humanitarias NNA                |             |
+| column       | m18_1                                  |             |
+| filtertype   | \_FilterTypes.IN                       |             |
+| methodname   | EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES |             |
+| methodparams |                                        |             |
+| note         |                                        |             |
+
+#### Serviceaccessadult.Tsx
+
+`File Location`: [ServiceAccessAdult.tsx](/src/components/indicators/services/ServiceAccessAdult.tsx)
 
 | name         | value                                                | description |
 | ------------ | ---------------------------------------------------- | ----------- |
-| note         | Disposición para recomendar el servicio tomado       |             |
-| id           | serviceSatisfaction                                  |             |
-| title        | Recomendación del servicio                           |             |
+| id           | accessServicesAdult                                  |             |
+| title        | Accesibilidad                                        |             |
+| column       | m12                                                  |             |
 | filtertype   | \_FilterTypes.IN                                     |             |
 | methodname   | EXTERNAL_METHOD_NAMES.STACKED_GROUP_CATEGORIES_ALT_2 |             |
-| methodparams |                                                      |             |
+| methodparams | { aidTypes, labels, valueColumn, }                   |             |
+| note         |                                                      |             |
+
+#### Servicequalityadult.Tsx
+
+`File Location`: [ServiceQualityAdult.tsx](/src/components/indicators/services/ServiceQualityAdult.tsx)
+
+| name         | value                                                | description |
+| ------------ | ---------------------------------------------------- | ----------- |
+| id           | serviceQualityAdult                                  |             |
+| title        | Calidad del servicio                                 |             |
+| column       | m12                                                  |             |
+| filtertype   | \_FilterTypes.IN                                     |             |
+| methodname   | EXTERNAL_METHOD_NAMES.STACKED_GROUP_CATEGORIES_ALT_2 |             |
+| methodparams | { aidTypes, labels, valueColumn, }                   |             |
+| note         |                                                      |             |
+
+#### Servicesatisfyadult.Tsx
+
+`File Location`: [ServiceSatisfyAdult.tsx](/src/components/indicators/services/ServiceSatisfyAdult.tsx)
+
+| name         | value                                                | description |
+| ------------ | ---------------------------------------------------- | ----------- |
+| id           | serviceSatisfaction                                  |             |
+| title        | Recomendación del servicio                           |             |
+| column       | m12                                                  |             |
+| filtertype   | \_FilterTypes.IN                                     |             |
+| methodname   | EXTERNAL_METHOD_NAMES.STACKED_GROUP_CATEGORIES_ALT_2 |             |
+| methodparams | { aidTypes, labels, valueColumn, }                   |             |
+| note         |                                                      |             |
 
 #### Serviceavailability.Tsx
 
+`File Location`: [ServiceAvailability.tsx](/src/components/indicators/services/ServiceAvailability.tsx)
+
 | name         | value                                          | description |
 | ------------ | ---------------------------------------------- | ----------- |
-| title        | Aggregate Service Performance                  |             |
 | id           | aggregateServices                              |             |
+| column       | m12                                            |             |
 | filtertype   | \_FilterTypes.IN                               |             |
 | methodname   | EXTERNAL_METHOD_NAMES.GET_SERVICE_AVAILABILITY |             |
-| methodparams |                                                |             |
+| methodparams | { columns: [m14, m15, m16], }                  |             |
 | note         |                                                |             |
+| title        |                                                |             |
 
 ### Introduction
 
+The indicators below are for the page: `Inicio`
+
+`Page`: [introduction](/src/components/indicators/introduction)
+
 #### Principalsimplementor.Tsx
+
+`File Location`: [PrincipalsImplementor.tsx](/src/components/indicators/introduction/PrincipalsImplementor.tsx)
 
 | name         | value                                   | description |
 | ------------ | --------------------------------------- | ----------- |
-| title        | Socios implementadores/Principales      |             |
+| column       | [[org_pert1], [org_pert2]]              |             |
 | id           | Principales_Implementador               |             |
 | methodname   | EXTERNAL_METHOD_NAMES.AGGREGATE_COLUMNS |             |
-| methodparams |                                         |             |
+| methodparams | { columns, }                            |             |
+| filtertype   |                                         |             |
+| note         |                                         |             |
+| title        |                                         |             |
 
 #### Totalpregnant.Tsx
 
-| name       | value                                  | description |
-| ---------- | -------------------------------------- | ----------- |
-| title      | Mujeres gestantes en los grupos        |             |
-| id         | totalPregnant                          |             |
-| methodname | EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES |             |
+`File Location`: [TotalPregnant.tsx](/src/components/indicators/introduction/TotalPregnant.tsx)
+
+| name         | value                                  | description |
+| ------------ | -------------------------------------- | ----------- |
+| title        | Mujeres gestantes en los grupos        |             |
+| column       | m01\_\_en_t                            |             |
+| id           | totalPregnant                          |             |
+| methodname   | EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES |             |
+| filtertype   |                                        |             |
+| methodparams |                                        |             |
+| note         |                                        |             |
 
 #### Totalchronicpatients.Tsx
 
-| name       | value                                  | description |
-| ---------- | -------------------------------------- | ----------- |
-| id         | totalChronicPatients                   |             |
-| title      | Personas con enfermedades crónicas     |             |
-| methodname | EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES |             |
+`File Location`: [TotalChronicPatients.tsx](/src/components/indicators/introduction/TotalChronicPatients.tsx)
+
+| name         | value                                  | description |
+| ------------ | -------------------------------------- | ----------- |
+| column       | m02\_\_en_t                            |             |
+| title        | Personas con enfermedades crónicas     |             |
+| methodname   | EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES |             |
+| filtertype   |                                        |             |
+| id           |                                        |             |
+| methodparams |                                        |             |
+| note         |                                        |             |
 
 #### Toporganisations.Tsx
 
-| name       | value                                  | description |
-| ---------- | -------------------------------------- | ----------- |
-| title      | Top de 5 organizaciones                |             |
-| id         | top_Organizaciones                     |             |
-| methodname | EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES |             |
+`File Location`: [TopOrganisations.tsx](/src/components/indicators/introduction/TopOrganisations.tsx)
+
+| name         | value                                  | description |
+| ------------ | -------------------------------------- | ----------- |
+| column       | org_pert                               |             |
+| id           | top_Organizaciones                     |             |
+| methodname   | EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES |             |
+| filtertype   |                                        |             |
+| methodparams |                                        |             |
+| note         |                                        |             |
+| title        |                                        |             |
 
 #### Totaldisabled.Tsx
 
-| name       | value                                  | description |
-| ---------- | -------------------------------------- | ----------- |
-| title      | Personas con condición de discapacidad |             |
-| id         | totalDisabled                          |             |
-| methodname | EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES |             |
+`File Location`: [TotalDisabled.tsx](/src/components/indicators/introduction/TotalDisabled.tsx)
+
+| name         | value                                  | description |
+| ------------ | -------------------------------------- | ----------- |
+| title        | Personas con condición de discapacidad |             |
+| id           | totalDisabled                          |             |
+| column       | m03\_\_dent                            |             |
+| methodname   | EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES |             |
+| filtertype   |                                        |             |
+| methodparams |                                        |             |
+| note         |                                        |             |
 
 #### Totalmigrants.Tsx
 
+`File Location`: [TotalMigrants.tsx](/src/components/indicators/introduction/TotalMigrants.tsx)
+
 | name         | value                                   | description |
 | ------------ | --------------------------------------- | ----------- |
-| title        | Personas en los grupos de viaje         |             |
+| column       |                                         |             |
 | id           | totalMigrants                           |             |
 | methodname   | EXTERNAL_METHOD_NAMES.AGGREGATE_COLUMNS |             |
-| methodparams |                                         |             |
+| methodparams | { columns, }                            |             |
+| filtertype   |                                         |             |
+| note         |                                         |             |
+| title        |                                         |             |
 
 #### Organisationcount.Tsx
 
+`File Location`: [OrganisationCount.tsx](/src/components/indicators/introduction/OrganisationCount.tsx)
+
 | name         | value                                   | description |
 | ------------ | --------------------------------------- | ----------- |
-| id           | organización_count                      |             |
 | title        | PUNTOS DE SERVICIOS CARACTERIZADOS      |             |
+| column       |                                         |             |
 | methodname   | EXTERNAL_METHOD_NAMES.AGGREGATE_COLUMNS |             |
-| methodparams |                                         |             |
+| methodparams | { columns, }                            |             |
+| filtertype   |                                         |             |
+| id           |                                         |             |
+| note         |                                         |             |
 
 #### Topsurveylocation.Tsx
 
-| name       | value                                      | description |
-| ---------- | ------------------------------------------ | ----------- |
-| title      | Total de encuestas por área de recolección |             |
-| id         | top_Survey_Sitios                          |             |
-| methodname | EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES     |             |
+`File Location`: [TopSurveyLocation.tsx](/src/components/indicators/introduction/TopSurveyLocation.tsx)
+
+| name         | value                                  | description |
+| ------------ | -------------------------------------- | ----------- |
+| column       | lugar_enc                              |             |
+| id           | top_Survey_Sitios                      |             |
+| methodname   | EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES |             |
+| filtertype   |                                        |             |
+| methodparams |                                        |             |
+| note         |                                        |             |
+| title        |                                        |             |
 
 #### Migrantnationalities.Tsx
 
-| name       | value                                  | description |
-| ---------- | -------------------------------------- | ----------- |
-| title      | Nacionalidad de la persona conectada   |             |
-| id         | nacionalidades_migrantes               |             |
-| methodname | EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES |             |
+`File Location`: [MigrantNationalities.tsx](/src/components/indicators/introduction/MigrantNationalities.tsx)
+
+| name         | value                                  | description |
+| ------------ | -------------------------------------- | ----------- |
+| column       | e08*pais*                              |             |
+| id           | nacionalidades_migrantes               |             |
+| methodname   | EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES |             |
+| filtertype   |                                        |             |
+| methodparams |                                        |             |
+| note         |                                        |             |
+| title        |                                        |             |
 
 #### Introchildtravelparty.Tsx
 
-| name         | value                                        | description |
-| ------------ | -------------------------------------------- | ----------- |
-| title        | NNA no acompañados y separados               |             |
-| note         |                                              |             |
-| id           | nna_viajes_fiesta                            |             |
-| methodname   | EXTERNAL_METHOD_NAMES.STACKED_BAR_CATEGORIES |             |
-| methodparams |                                              |             |
+`File Location`: [IntroChildTravelParty.tsx](/src/components/indicators/introduction/IntroChildTravelParty.tsx)
+
+| name         | value                                                                       | description |
+| ------------ | --------------------------------------------------------------------------- | ----------- |
+| note         | Presencia de niños, niñas y adolescentes no acompañados y separados         |             |
+| id           | nna_viajes_fiesta                                                           |             |
+| column       | serv_dif_n                                                                  |             |
+| methodname   | EXTERNAL_METHOD_NAMES.STACKED_BAR_CATEGORIES                                |             |
+| methodparams | { columns: [nna_no_aco, nna_separ_], legend: [No acompañados, Separados], } |             |
+| filtertype   |                                                                             |             |
+| title        |                                                                             |             |
 
 #### Totalchildren.Tsx
 
+`File Location`: [TotalChildren.tsx](/src/components/indicators/introduction/TotalChildren.tsx)
+
 | name         | value                                   | description |
 | ------------ | --------------------------------------- | ----------- |
-| id           | totalChildren                           |             |
+| column       |                                         |             |
 | title        | NNA reportados en los grupos de viaje   |             |
 | methodname   | EXTERNAL_METHOD_NAMES.AGGREGATE_COLUMNS |             |
-| methodparams |                                         |             |
+| methodparams | { columns, }                            |             |
+| filtertype   |                                         |             |
+| id           |                                         |             |
+| note         |                                         |             |
 
 #### Totalgenders.Tsx
 
+`File Location`: [TotalGenders.tsx](/src/components/indicators/introduction/TotalGenders.tsx)
+
 | name         | value                                  | description |
 | ------------ | -------------------------------------- | ----------- |
-| title        | Género                                 |             |
+| column       | e07_gener                              |             |
 | id           | géneros                                |             |
 | methodname   | EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES |             |
-| methodparams |                                        |             |
+| methodparams | { sortType: Sort_Type.ASC, }           |             |
+| filtertype   |                                        |             |
+| note         |                                        |             |
+| title        |                                        |             |
 
 #### Averagegroupsize.Tsx
 
-| name         | value                                   | description |
-| ------------ | --------------------------------------- | ----------- |
-| title        | Tamaño promedio de los grupos de viaje  |             |
-| id           | tamaño_de_grupo_promedio                |             |
-| methodname   | EXTERNAL_METHOD_NAMES.AGGREGATE_COLUMNS |             |
-| methodparams |                                         |             |
+`File Location`: [AverageGroupSize.tsx](/src/components/indicators/introduction/AverageGroupSize.tsx)
+
+| name         | value                                                                                                                   | description |
+| ------------ | ----------------------------------------------------------------------------------------------------------------------- | ----------- |
+| id           | tamaño_de_grupo_promedio                                                                                                |             |
+| column       |                                                                                                                         |             |
+| methodname   | EXTERNAL_METHOD_NAMES.AGGREGATE_COLUMNS                                                                                 |             |
+| methodparams | { columns: [ { name: e17__cua, type: SummarisationTypes.SUM }, { name: objectid, type: SummarisationTypes.COUNT }, ], } |             |
+| filtertype   |                                                                                                                         |             |
+| note         |                                                                                                                         |             |
+| title        |                                                                                                                         |             |
 
 #### Nnasolo.Tsx
 
+`File Location`: [NnaSolo.tsx](/src/components/indicators/introduction/NnaSolo.tsx)
+
 | name         | value                                  | description |
 | ------------ | -------------------------------------- | ----------- |
-| title        | Presencia de NNA solos                 |             |
+| column       | m06_durant                             |             |
 | id           | nna_Solo                               |             |
 | methodname   | EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES |             |
-| methodparams |                                        |             |
+| methodparams | { sortType: Sort_Type.ASC, }           |             |
+| filtertype   |                                        |             |
+| note         |                                        |             |
+| title        |                                        |             |
 
 #### Totalaurora.Tsx
 
-| name         | value                                   | description |
-| ------------ | --------------------------------------- | ----------- |
-| id           | totalAurora                             |             |
-| title        | Personas conectadas                     |             |
-| methodname   | EXTERNAL_METHOD_NAMES.AGGREGATE_COLUMNS |             |
-| methodparams |                                         |             |
+`File Location`: [TotalAurora.tsx](/src/components/indicators/introduction/TotalAurora.tsx)
+
+| name         | value                                                                  | description |
+| ------------ | ---------------------------------------------------------------------- | ----------- |
+| column       |                                                                        |             |
+| title        | Personas conectadas                                                    |             |
+| methodname   | EXTERNAL_METHOD_NAMES.AGGREGATE_COLUMNS                                |             |
+| methodparams | { columns: [ { name: objectid, type: SummarisationTypes.COUNT, }, ], } |             |
+| filtertype   |                                                                        |             |
+| id           |                                                                        |             |
+| note         |                                                                        |             |
 
 #### Introchildtravelcompositition.Tsx
 
-| name         | value                                 | description |
-| ------------ | ------------------------------------- | ----------- |
-| title        |                                       |             |
-| note         |                                       |             |
-| id           | nna_viajes_fiesta_composición         |             |
-| methodname   | EXTERNAL_METHOD_NAMES.GROUPED_COLUMNS |             |
-| methodparams |                                       |             |
+`File Location`: [IntroChildTravelCompositition.tsx](/src/components/indicators/introduction/IntroChildTravelCompositition.tsx)
+
+| name         | value                                                                                                                                                                  | description |
+| ------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| note         | Cuántos niños, niñas y adolescentes no acompañados y separados atendieron durante la semana inmediatamente anterior                                                    |             |
+| id           | nna_viajes_fiesta_composición                                                                                                                                          |             |
+| column       | serv_dif_n                                                                                                                                                             |             |
+| methodname   | EXTERNAL_METHOD_NAMES.GROUPED_COLUMNS                                                                                                                                  |             |
+| methodparams | { columns: [ { name: cuan_nna_n, type: SummarisationTypes.SUM }, { name: cuan_nna_s, type: SummarisationTypes.SUM }, ], legend: [No Acompañados NNA, Separados NNA], } |             |
+| filtertype   |                                                                                                                                                                        |             |
+| title        |                                                                                                                                                                        |             |
 
 #### Nnacountry.Tsx
 
-| name       | value                                  | description |
-| ---------- | -------------------------------------- | ----------- |
-| title      | Identificación NNA solos               |             |
-| id         | nna_solo_países                        |             |
-| methodname | EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES |             |
+`File Location`: [NnaCountry.tsx](/src/components/indicators/introduction/NnaCountry.tsx)
+
+| name         | value                                  | description |
+| ------------ | -------------------------------------- | ----------- |
+| column       | m07\_\_en_q                            |             |
+| id           | nna_solo_países                        |             |
+| methodname   | EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES |             |
+| filtertype   |                                        |             |
+| methodparams |                                        |             |
+| note         |                                        |             |
+| title        |                                        |             |
 
 #### Topservices.Tsx
 
-| name       | value                                            | description |
-| ---------- | ------------------------------------------------ | ----------- |
-| title      | PUNTOS DE SERVICIOS SOBREPASADOS EN SU CAPACIDAD |             |
-| id         | top_Servicios                                    |             |
-| methodname | EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES           |             |
+`File Location`: [TopServices.tsx](/src/components/indicators/introduction/TopServices.tsx)
+
+| name         | value                                  | description |
+| ------------ | -------------------------------------- | ----------- |
+| column       | sobrepasa\_                            |             |
+| id           | top_Servicios                          |             |
+| methodname   | EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES |             |
+| filtertype   |                                        |             |
+| methodparams |                                        |             |
+| note         |                                        |             |
+| title        |                                        |             |
 
 #### Childrenpercentage.Tsx
 
+`File Location`: [ChildrenPercentage.tsx](/src/components/indicators/introduction/ChildrenPercentage.tsx)
+
 | name         | value                                   | description |
 | ------------ | --------------------------------------- | ----------- |
-| id           | nna_porcentaje                          |             |
 | title        | Porcentaje NNA en grupos de viaje       |             |
+| column       |                                         |             |
 | methodname   | EXTERNAL_METHOD_NAMES.AGGREGATE_COLUMNS |             |
-| methodparams |                                         |             |
+| methodparams | { columns, }                            |             |
+| filtertype   |                                         |             |
+| id           |                                         |             |
+| note         |                                         |             |
 
 #### Introsickpremise.Tsx
 
-| name       | value                                     | description |
-| ---------- | ----------------------------------------- | ----------- |
-| title      | Retos del punto de servicio               |             |
-| id         | gente_enferma                             |             |
-| methodname | EXTERNAL_METHOD_NAMES.CONCATENATED_VALUES |             |
+`File Location`: [IntroSickPremise.tsx](/src/components/indicators/introduction/IntroSickPremise.tsx)
+
+| name         | value                                     | description |
+| ------------ | ----------------------------------------- | ----------- |
+| column       | princ_re_1                                |             |
+| id           | gente_enferma                             |             |
+| methodname   | EXTERNAL_METHOD_NAMES.CONCATENATED_VALUES |             |
+| filtertype   |                                           |             |
+| methodparams |                                           |             |
+| note         |                                           |             |
+| title        |                                           |             |
 
 #### Auroralocation.Tsx
 
-| name       | value                                                     | description |
-| ---------- | --------------------------------------------------------- | ----------- |
-| title      | Distribución por zona geográfica donde la persona conectó |             |
-| id         | aurora_ubicaciones                                        |             |
-| methodname | EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES                    |             |
+`File Location`: [AuroraLocation.tsx](/src/components/indicators/introduction/AuroraLocation.tsx)
+
+| name         | value                                  | description |
+| ------------ | -------------------------------------- | ----------- |
+| column       | e004_regio                             |             |
+| id           | aurora_ubicaciones                     |             |
+| methodname   | EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES |             |
+| filtertype   |                                        |             |
+| methodparams |                                        |             |
+| note         |                                        |             |
+| title        |                                        |             |
 
 ### Dynamic
 
+The indicators below are for the page: `Conexiones en la ruta`
+
+`Page`: [dynamic](/src/components/indicators/dynamic)
+
 #### Mobilesurveytimeline.Tsx
 
-| name       | value                                     | description |
-| ---------- | ----------------------------------------- | ----------- |
-| note       |                                           |             |
-| id         |                                           |             |
-| title      | Personas migrantes conectadas a Aurora    |             |
-| filtertype | \_FilterTypes.IN                          |             |
-| methodname | EXTERNAL_METHOD_NAMES.TIMELINE_VALUES_ALT |             |
+`File Location`: [MobileSurveyTimeline.tsx](/src/components/indicators/dynamic/MobileSurveyTimeline.tsx)
+
+| name         | value                                                                              | description |
+| ------------ | ---------------------------------------------------------------------------------- | ----------- |
+| id           | Localización_de_personas_migrantes_conectadas_a_Aurora_en_los_distintos_monitoreos |             |
+| title        | Personas migrantes conectadas a Aurora                                             |             |
+| column       |                                                                                    |             |
+| filtertype   | \_FilterTypes.IN                                                                   |             |
+| methodname   | EXTERNAL_METHOD_NAMES.TIMELINE_VALUES_ALT                                          |             |
+| methodparams |                                                                                    |             |
+| note         |                                                                                    |             |
 
 #### Averageelapseddays.Tsx
 
-| name       | value                                                        | description |
-| ---------- | ------------------------------------------------------------ | ----------- |
-| title      | Días promedio transcuridos entre Enganche y último monitoreo |             |
-| id         | Días*promedio_transcuridos_entre_Enganche_y*último_monitoreo |             |
-| note       |                                                              |             |
-| methodname | EXTERNAL_METHOD_NAMES.GET_AVERAGE_ELAPSED_DAYS               |             |
+`File Location`: [AverageElapsedDays.tsx](/src/components/indicators/dynamic/AverageElapsedDays.tsx)
+
+| name         | value                                                                         | description |
+| ------------ | ----------------------------------------------------------------------------- | ----------- |
+| id           | Días*promedio_transcuridos_entre_Enganche_y*último_monitoreo                  |             |
+| column       | dias                                                                          |             |
+| note         | Tiempo estimado (días) que ha transcurrido entre el enganche y el último push |             |
+| methodname   | EXTERNAL_METHOD_NAMES.GET_AVERAGE_ELAPSED_DAYS                                |             |
+| filtertype   |                                                                               |             |
+| methodparams |                                                                               |             |
+| title        |                                                                               |             |
 
 #### Avgdaybycountry.Tsx
 
-| name         | value                                         | description |
-| ------------ | --------------------------------------------- | ----------- |
-| title        |                                               |             |
-| id           |                                               |             |
-| note         |                                               |             |
-| filtertype   | \_FilterTypes.IN                              |             |
-| methodname   | EXTERNAL_METHOD_NAMES.GET_AVG_DAYS_BY_COUNTRY |             |
-| methodparams |                                               |             |
+`File Location`: [AvgDayByCountry.tsx](/src/components/indicators/dynamic/AvgDayByCountry.tsx)
+
+| name         | value                                                                                                   | description |
+| ------------ | ------------------------------------------------------------------------------------------------------- | ----------- |
+| id           | Días*promedio_transcurridos_entre_Enganche_y*último_monitoreo_por_aís                                   |             |
+| column       | pais_fin                                                                                                |             |
+| note         | Tiempo estimado (días) que ha transcurrido entre el enganche y el último país de localización reportado |             |
+| filtertype   | \_FilterTypes.IN                                                                                        |             |
+| methodname   | EXTERNAL_METHOD_NAMES.GET_AVG_DAYS_BY_COUNTRY                                                           |             |
+| methodparams | { valueColumn: dias, }                                                                                  |             |
+| title        |                                                                                                         |             |
 
 ### Migration
 
+The indicators below are for the page: `Flujos Migratorios`
+
+`Page`: [migration](/src/components/indicators/migration)
+
 #### Transitinfomation.Tsx
 
-| name       | value                                  | description |
-| ---------- | -------------------------------------- | ----------- |
-| note       |                                        |             |
-| id         | Necesidades_de_información             |             |
-| title      | Necesidades de información             |             |
-| filtertype | \_FilterTypes.IN                       |             |
-| methodname | EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES |             |
+`File Location`: [TransitInfomation.tsx](/src/components/indicators/migration/TransitInfomation.tsx)
+
+| name         | value                                  | description |
+| ------------ | -------------------------------------- | ----------- |
+| id           | Necesidades_de_información             |             |
+| title        | Necesidades de información             |             |
+| column       | m28\_\_que                             |             |
+| filtertype   | \_FilterTypes.IN                       |             |
+| methodname   | EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES |             |
+| methodparams |                                        |             |
+| note         |                                        |             |
 
 #### Countrydeparted.Tsx
 
-| name       | value                                       | description |
-| ---------- | ------------------------------------------- | ----------- |
-| note       | País desde donde inicia el flujo migratorio |             |
-| id         | País_inicial_de_flujo_migratorio            |             |
-| title      | País inicial de flujo migratorio            |             |
-| filtertype | \_FilterTypes.IN                            |             |
-| methodname | EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES      |             |
+`File Location`: [CountryDeparted.tsx](/src/components/indicators/migration/CountryDeparted.tsx)
+
+| name         | value                                  | description |
+| ------------ | -------------------------------------- | ----------- |
+| id           | País_inicial_de_flujo_migratorio       |             |
+| title        | País inicial de flujo migratorio       |             |
+| column       | e10*pais*                              |             |
+| filtertype   | \_FilterTypes.IN                       |             |
+| methodname   | EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES |             |
+| methodparams |                                        |             |
+| note         |                                        |             |
 
 #### Transitstoplength.Tsx
 
-| name       | value                                  | description |
-| ---------- | -------------------------------------- | ----------- |
-| note       |                                        |             |
-| id         | Días_de_estadía                        |             |
-| title      | Días de estadía                        |             |
-| filtertype | \_FilterTypes.IN                       |             |
-| methodname | EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES |             |
+`File Location`: [TransitStopLength.tsx](/src/components/indicators/migration/TransitStopLength.tsx)
+
+| name         | value                                  | description |
+| ------------ | -------------------------------------- | ----------- |
+| id           | Días_de_estadía                        |             |
+| title        | Días de estadía                        |             |
+| column       | m30\_\_cua                             |             |
+| filtertype   | \_FilterTypes.IN                       |             |
+| methodname   | EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES |             |
+| methodparams |                                        |             |
+| note         |                                        |             |
 
 #### Countryresiding.Tsx
 
-| name       | value                                  | description |
-| ---------- | -------------------------------------- | ----------- |
-| note       | País donde vivía hace un año.          |             |
-| id         | País_donde_vivía                       |             |
-| title      | País donde vivía                       |             |
-| filtertype | \_FilterTypes.IN                       |             |
-| methodname | EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES |             |
+`File Location`: [CountryResiding.tsx](/src/components/indicators/migration/CountryResiding.tsx)
+
+| name         | value                                  | description |
+| ------------ | -------------------------------------- | ----------- |
+| id           | País_donde_vivía                       |             |
+| title        | País donde vivía                       |             |
+| column       | e12*pais*                              |             |
+| filtertype   | \_FilterTypes.IN                       |             |
+| methodname   | EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES |             |
+| methodparams |                                        |             |
+| note         |                                        |             |
 
 #### Origincountry.Tsx
 
-| name       | value                                         | description |
-| ---------- | --------------------------------------------- | ----------- |
-| note       | País de nacimiento del migrante que responde. |             |
-| id         | País_de_nacimiento                            |             |
-| title      | País de nacimiento                            |             |
-| filtertype | \_FilterTypes.IN                              |             |
-| methodname | EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES        |             |
+`File Location`: [OriginCountry.tsx](/src/components/indicators/migration/OriginCountry.tsx)
+
+| name         | value                                  | description |
+| ------------ | -------------------------------------- | ----------- |
+| id           | País_de_nacimiento                     |             |
+| title        | País de nacimiento                     |             |
+| column       | e08*pais*                              |             |
+| filtertype   | \_FilterTypes.IN                       |             |
+| methodname   | EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES |             |
+| methodparams |                                        |             |
+| note         |                                        |             |
 
 #### Countryflow.Tsx
 
-| name         | value                                        | description |
-| ------------ | -------------------------------------------- | ----------- |
-| note         | Migración de flujo de país                   |             |
-| id           | Country Flow                                 |             |
-| title        | Migración de flujo de país                   |             |
-| filtertype   | \_FilterTypes.IN                             |             |
-| methodname   | EXTERNAL_METHOD_NAMES.GET_SUNBURST_HIERARCHY |             |
-| methodparams |                                              |             |
+`File Location`: [CountryFlow.tsx](/src/components/indicators/migration/CountryFlow.tsx)
+
+| name         | value                                                                            | description |
+| ------------ | -------------------------------------------------------------------------------- | ----------- |
+| id           | Country Flow                                                                     |             |
+| title        | Migración de flujo de país                                                       |             |
+| column       | e08*pais*                                                                        |             |
+| filtertype   | \_FilterTypes.IN                                                                 |             |
+| methodname   | EXTERNAL_METHOD_NAMES.GET_SUNBURST_HIERARCHY                                     |             |
+| methodparams | { lv2: e12*pais*, lv3: e10*pais*, colorScaleType: COLOR_SCALE_TYPE.SEQUENTIAL, } |             |
+| note         |                                                                                  |             |
 
 #### Transportmode.Tsx
 
-| name       | value                                          | description |
-| ---------- | ---------------------------------------------- | ----------- |
-| note       | Medios de transporte empleados durante la ruta |             |
-| id         | Medios_de_transporte                           |             |
-| title      | Medios de transporte                           |             |
-| filtertype | \_FilterTypes.STRING_SEARCH                    |             |
-| methodname | EXTERNAL_METHOD_NAMES.CONCATENATED_VALUES      |             |
+`File Location`: [TransportMode.tsx](/src/components/indicators/migration/TransportMode.tsx)
+
+| name         | value                                     | description |
+| ------------ | ----------------------------------------- | ----------- |
+| id           | Medios_de_transporte                      |             |
+| title        | Medios de transporte                      |             |
+| column       | e14_medios                                |             |
+| filtertype   | \_FilterTypes.STRING_SEARCH               |             |
+| methodname   | EXTERNAL_METHOD_NAMES.CONCATENATED_VALUES |             |
+| methodparams |                                           |             |
+| note         |                                           |             |
 
 #### Transitstopreason.Tsx
 
-| name       | value                                     | description |
-| ---------- | ----------------------------------------- | ----------- |
-| note       | Razón (es) para no continuar el viaje.    |             |
-| id         | Razón_no_continúa_viaje                   |             |
-| title      | Razón no continúa viaje                   |             |
-| filtertype | \_FilterTypes.STRING_SEARCH               |             |
-| methodname | EXTERNAL_METHOD_NAMES.CONCATENATED_VALUES |             |
+`File Location`: [TransitStopReason.tsx](/src/components/indicators/migration/TransitStopReason.tsx)
+
+| name         | value                                     | description |
+| ------------ | ----------------------------------------- | ----------- |
+| id           | Razón_no_continúa_viaje                   |             |
+| title        | Razón no continúa viaje                   |             |
+| column       | m29_por_qu                                |             |
+| filtertype   | \_FilterTypes.STRING_SEARCH               |             |
+| methodname   | EXTERNAL_METHOD_NAMES.CONCATENATED_VALUES |             |
+| methodparams |                                           |             |
+| note         |                                           |             |
 
 ### Media
 
+The indicators below are for the page: `Redes sociales`
+
+`Page`: [media](/src/components/indicators/media)
+
 #### Sentimentpresentages.Tsx
 
-| name | value | description |
-| ---- | ----- | ----------- |
+`File Location`: [SentimentPresentages.tsx](/src/components/indicators/media/SentimentPresentages.tsx)
+
+| name         | value | description |
+| ------------ | ----- | ----------- |
+| column       |       |             |
+| filtertype   |       |             |
+| id           |       |             |
+| methodname   |       |             |
+| methodparams |       |             |
+| note         |       |             |
+| title        |       |             |
 
 #### Sentimenttimeline.Tsx
 
-| name | value | description |
-| ---- | ----- | ----------- |
+`File Location`: [SentimentTimeline.tsx](/src/components/indicators/media/SentimentTimeline.tsx)
+
+| name         | value | description |
+| ------------ | ----- | ----------- |
+| column       |       |             |
+| filtertype   |       |             |
+| id           |       |             |
+| methodname   |       |             |
+| methodparams |       |             |
+| note         |       |             |
+| title        |       |             |
 
 #### Mediaorigin.Tsx
 
-| name | value | description |
-| ---- | ----- | ----------- |
+`File Location`: [MediaOrigin.tsx](/src/components/indicators/media/MediaOrigin.tsx)
+
+| name         | value | description |
+| ------------ | ----- | ----------- |
+| column       |       |             |
+| filtertype   |       |             |
+| id           |       |             |
+| methodname   |       |             |
+| methodparams |       |             |
+| note         |       |             |
+| title        |       |             |
 
 #### Mediaengagement.Tsx
 
-| name | value                         | description |
-| ---- | ----------------------------- | ----------- |
-| id   | Serie_de_compromiso_histórico |             |
+`File Location`: [MediaEngagement.tsx](/src/components/indicators/media/MediaEngagement.tsx)
+
+| name         | value | description |
+| ------------ | ----- | ----------- |
+| column       |       |             |
+| filtertype   |       |             |
+| id           |       |             |
+| methodname   |       |             |
+| methodparams |       |             |
+| note         |       |             |
+| title        |       |             |
 
 #### Topphrases.Tsx
 
-| name | value | description |
-| ---- | ----- | ----------- |
+`File Location`: [TopPhrases.tsx](/src/components/indicators/media/TopPhrases.tsx)
+
+| name         | value      | description |
+| ------------ | ---------- | ----------- |
+| column       | topPhrases |             |
+| filtertype   |            |             |
+| id           |            |             |
+| methodname   |            |             |
+| methodparams |            |             |
+| note         |            |             |
+| title        |            |             |
 
 #### Mediaaggregateindicators.Tsx
 
-| name | value | description |
-| ---- | ----- | ----------- |
+`File Location`: [MediaAggregateIndicators.tsx](/src/components/indicators/media/MediaAggregateIndicators.tsx)
+
+| name         | value  | description |
+| ------------ | ------ | ----------- |
+| column       | source |             |
+| filtertype   |        |             |
+| id           |        |             |
+| methodname   |        |             |
+| methodparams |        |             |
+| note         |        |             |
+| title        |        |             |
 
 ### Premise
 
+The indicators below are for the page: `Servicios`
+
+`Page`: [premise](/src/components/indicators/premise)
+
 #### Aggreatedservices.Tsx
 
-| name         | value                                            | description |
-| ------------ | ------------------------------------------------ | ----------- |
-| id           |                                                  |             |
-| title        |                                                  |             |
-| methodname   | EXTERNAL_METHOD_NAMES.GET_CONNECTED_DOT_SERVICES |             |
-| methodparams |                                                  |             |
+`File Location`: [AggreatedServices.tsx](/src/components/indicators/premise/AggreatedServices.tsx)
+
+| name         | value                                                                                                                                                                                     | description |
+| ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| title        | Capacidad de atención y operación del punto de servicio o ayuda humanitaria                                                                                                               |             |
+| methodname   | EXTERNAL_METHOD_NAMES.GET_CONNECTED_DOT_SERVICES                                                                                                                                          |             |
+| methodparams | { otherColumns, serviceStatColumns: Object.fromEntries(SERVICE_STAT_COLUMNS), servicesKey: Object.fromEntries(SERVICES_KEY), serviceStatColumnLength: SERVICE_STAT_COLUMNS_NAME.length, } |             |
+| column       |                                                                                                                                                                                           |             |
+| filtertype   |                                                                                                                                                                                           |             |
+| id           |                                                                                                                                                                                           |             |
+| note         |                                                                                                                                                                                           |             |
 
 #### Childrendiffservices.Tsx
 
-| name       | value                                     | description |
-| ---------- | ----------------------------------------- | ----------- |
-| note       |                                           |             |
-| id         | childrenDifferentiatedServices            |             |
-| title      | Cuales servicios diferenciados            |             |
-| filtertype | \_FilterTypes.STRING_SEARCH               |             |
-| methodname | EXTERNAL_METHOD_NAMES.CONCATENATED_VALUES |             |
+`File Location`: [ChildrenDiffServices.tsx](/src/components/indicators/premise/ChildrenDiffServices.tsx)
+
+| name         | value                                     | description |
+| ------------ | ----------------------------------------- | ----------- |
+| id           | childrenDifferentiatedServices            |             |
+| title        | Cuales servicios diferenciados            |             |
+| column       | cual_ser_1                                |             |
+| filtertype   | \_FilterTypes.STRING_SEARCH               |             |
+| methodname   | EXTERNAL_METHOD_NAMES.CONCATENATED_VALUES |             |
+| methodparams |                                           |             |
+| note         |                                           |             |
 
 #### Childdiffservicesavailabilty.Tsx
 
-| name       | value                                      | description |
-| ---------- | ------------------------------------------ | ----------- |
-| title      | Servicios diferenciados para NNA           |             |
-| note       |                                            |             |
-| id         | childrenDiffirentiatedServicesAvailability |             |
-| filtertype | \_FilterTypes.IN                           |             |
-| methodname | EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES     |             |
+`File Location`: [ChildDiffServicesAvailabilty.tsx](/src/components/indicators/premise/ChildDiffServicesAvailabilty.tsx)
+
+| name         | value                                                                                                                   | description |
+| ------------ | ----------------------------------------------------------------------------------------------------------------------- | ----------- |
+| note         | El punto de servicio/ayuda humanitaria actualmente cuenta con servicios diferenciados para niños, niñas y adolescentes? |             |
+| id           | childrenDiffirentiatedServicesAvailability                                                                              |             |
+| column       | serv_dif_n                                                                                                              |             |
+| filtertype   | \_FilterTypes.IN                                                                                                        |             |
+| methodname   | EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES                                                                                  |             |
+| methodparams |                                                                                                                         |             |
+| title        |                                                                                                                         |             |
 
 #### Orgsurveyed.Tsx
 
-| name       | value                                                      | description |
-| ---------- | ---------------------------------------------------------- | ----------- |
-| note       | Nombre de la organización a la que pertenece el encuestado |             |
-| id         | Socio_implementador                                        |             |
-| title      | Socio implementador                                        |             |
-| filtertype | \_FilterTypes.IN                                           |             |
-| methodname | EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES                     |             |
+`File Location`: [OrgSurveyed.tsx](/src/components/indicators/premise/OrgSurveyed.tsx)
+
+| name         | value                                  | description |
+| ------------ | -------------------------------------- | ----------- |
+| id           | Socio_implementador                    |             |
+| title        | Socio implementador                    |             |
+| column       | org_pert1                              |             |
+| filtertype   | \_FilterTypes.IN                       |             |
+| methodname   | EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES |             |
+| methodparams |                                        |             |
+| note         |                                        |             |
 
 #### Childrentravelparty.Tsx
 
-| name         | value                                        | description |
-| ------------ | -------------------------------------------- | ----------- |
-| title        | NNA no acompañados y separados               |             |
-| note         |                                              |             |
-| id           | childrenTravelParty                          |             |
-| filtertype   | \_FilterTypes.IN                             |             |
-| methodname   | EXTERNAL_METHOD_NAMES.STACKED_BAR_CATEGORIES |             |
-| methodparams |                                              |             |
+`File Location`: [ChildrenTravelParty.tsx](/src/components/indicators/premise/ChildrenTravelParty.tsx)
+
+| name         | value                                                                       | description |
+| ------------ | --------------------------------------------------------------------------- | ----------- |
+| note         | Presencia de niños, niñas y adolescentes no acompañados y separados         |             |
+| id           | childrenTravelParty                                                         |             |
+| column       | serv_dif_n                                                                  |             |
+| filtertype   | \_FilterTypes.IN                                                            |             |
+| methodname   | EXTERNAL_METHOD_NAMES.STACKED_BAR_CATEGORIES                                |             |
+| methodparams | { columns: [nna_no_aco, nna_separ_], legend: [No acompañados, Separados], } |             |
+| title        |                                                                             |             |
 
 #### Organisationprincipals.Tsx
 
-| name       | value                                                       | description |
-| ---------- | ----------------------------------------------------------- | ----------- |
-| note       | Nombre de la organización a la que pertenece el encuestado  |             |
-| id         | Socio_Principal                                             |             |
-| title      | Socio Principal                                             |             |
-| filtertype | \_FilterTypes.IN                                            |             |
-| methodname | EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES                      |             |
+`File Location`: [OrganisationPrincipals.tsx](/src/components/indicators/premise/OrganisationPrincipals.tsx)
+
+| name         | value                                  | description |
+| ------------ | -------------------------------------- | ----------- |
+| id           | Socio_Principal                        |             |
+| title        | Socio Principal                        |             |
+| column       | org_pert2                              |             |
+| filtertype   | \_FilterTypes.IN                       |             |
+| methodname   | EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES |             |
+| methodparams |                                        |             |
+| note         |                                        |             |
 
 #### Childrentravelpartycomposition.Tsx
 
-| name         | value                                 | description |
-| ------------ | ------------------------------------- | ----------- |
-| title        |                                       |             |
-| note         |                                       |             |
-| id           | childrenTravelPartyComposition        |             |
-| filtertype   | \_FilterTypes.IN                      |             |
-| methodname   | EXTERNAL_METHOD_NAMES.GROUPED_COLUMNS |             |
-| methodparams |                                       |             |
+`File Location`: [ChildrenTravelPartyComposition.tsx](/src/components/indicators/premise/ChildrenTravelPartyComposition.tsx)
+
+| name         | value                                                                                                                 | description |
+| ------------ | --------------------------------------------------------------------------------------------------------------------- | ----------- |
+| note         | Cuántos niños, niñas y adolescentes no acompañados y separados atendieron durante la semana inmediatamente anterior   |             |
+| id           | childrenTravelPartyComposition                                                                                        |             |
+| column       | serv_dif_n                                                                                                            |             |
+| filtertype   | \_FilterTypes.IN                                                                                                      |             |
+| methodname   | EXTERNAL_METHOD_NAMES.GROUPED_COLUMNS                                                                                 |             |
+| methodparams | { columns: [cuan_nna_n, cuan_nna_s], legend: [Acompañados NNA, Separados NNA], aggregateType: AggregationTypes.SUM, } |             |
+| title        |                                                                                                                       |             |
 
 #### Childrenundercare.Tsx
 
-| name       | value                                  | description |
-| ---------- | -------------------------------------- | ----------- |
-| note       |                                        |             |
-| id         | childrenUnderCare                      |             |
-| title      | Identificación de NNA atendidos        |             |
-| filtertype | \_FilterTypes.CLOSED_OPEN              |             |
-| methodname | EXTERNAL_METHOD_NAMES.HISTOGRAM_VALUES |             |
+`File Location`: [ChildrenUnderCare.tsx](/src/components/indicators/premise/ChildrenUnderCare.tsx)
+
+| name         | value                                  | description |
+| ------------ | -------------------------------------- | ----------- |
+| id           | childrenUnderCare                      |             |
+| title        | Identificación de NNA atendidos        |             |
+| column       | nna_atend                              |             |
+| filtertype   | \_FilterTypes.CLOSED_OPEN              |             |
+| methodname   | EXTERNAL_METHOD_NAMES.HISTOGRAM_VALUES |             |
+| methodparams |                                        |             |
+| note         |                                        |             |
 
 #### Servicesprovided.Tsx
 
-| name       | value                                     | description |
-| ---------- | ----------------------------------------- | ----------- |
-| note       |                                           |             |
-| id         | serviceProvided                           |             |
-| title      | Tipos de servicios prestados en el punto  |             |
-| filtertype | \_FilterTypes.STRING_SEARCH               |             |
-| methodname | EXTERNAL_METHOD_NAMES.CONCATENATED_VALUES |             |
+`File Location`: [ServicesProvided.tsx](/src/components/indicators/premise/ServicesProvided.tsx)
+
+| name         | value                                     | description |
+| ------------ | ----------------------------------------- | ----------- |
+| id           | serviceProvided                           |             |
+| title        | Tipos de servicios prestados en el punto  |             |
+| column       | serv_tipo1                                |             |
+| filtertype   | \_FilterTypes.STRING_SEARCH               |             |
+| methodname   | EXTERNAL_METHOD_NAMES.CONCATENATED_VALUES |             |
+| methodparams |                                           |             |
+| note         |                                           |             |

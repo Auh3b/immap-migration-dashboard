@@ -71,3 +71,5 @@ To add the custom method or aggregation function, use the following steps:
      />
    )
    ```
+
+## Project Methods
