@@ -48,3 +48,5 @@ src/assets/img/*.Identifier
 # test
 /data
 /test
+
+__pycache__
