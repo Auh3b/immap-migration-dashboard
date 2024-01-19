@@ -97,7 +97,10 @@ export default function Services() {
           element: (
             <ServiceLeftView
               classes={classes}
-              dataSources={{ mainSource, aggregateServicesSource }}
+              dataSources={{
+                mainSource,
+                aggregateServicesSource: aggregateServicesSource.id,
+              }}
             />
           ),
           expandable: false,
@@ -108,8 +111,8 @@ export default function Services() {
               classes={classes}
               dataSources={{
                 mainSource,
-                aggregateServicesSource,
-                aggreateServiceChildrenSource,
+                aggregateServicesSource: aggregateServicesSource.id,
+                aggreateServiceChildrenSource: aggreateServiceChildrenSource.id,
               }}
             />
           ),
