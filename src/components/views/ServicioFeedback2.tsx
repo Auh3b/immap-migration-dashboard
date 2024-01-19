@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
-import serviceFeedbackNnaV2Source from 'data/sources/serviceFeedbackNnaV2Source';
+import useFeedbackNnaSource, {
+  SERVICE_FEEDBACK_NNA_V2_SOURCE_ID,
+} from 'data/sources/serviceFeedbackNnaV2Source';
 import { SERVICI_FEEDBACK_NNA_LAYER_ID } from 'components/layers/ServiciFeedbackNnaLayer';
-import serviceFeedbackV2Source from 'data/sources/serviceFeedbackV2Source';
 import { SERVICIO_FEEDBACK_2_LAYER_ID } from 'components/layers/ServicioFeedback_2Layer';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   addLayer,
   removeLayer,
@@ -19,6 +20,9 @@ import ServiceFeedbackLeftView from './serviceViews/ServiceFeedbackLeftView';
 import ServiceFeedbackRightView from './serviceViews/ServiceFeedbackRightView';
 import TuneIcon from '@material-ui/icons/Tune';
 import ServiceFilters from './serviceViews/ServiceFilters';
+import useFeedbackSource, {
+  SERVICE_FEEDBACK_V2_SOURCE_ID,
+} from 'data/sources/serviceFeedbackV2Source';
 
 const useStyles = makeStyles(() => ({
   servicioFeedback_2: {},
@@ -26,39 +30,42 @@ const useStyles = makeStyles(() => ({
 
 export default function ServicioFeedback2() {
   const dispatch = useDispatch();
+  // @ts-ignore
+  const phase = useSelector((state) => state.app.phase);
   const classes = useStyles();
+  const getAdultSource = useFeedbackSource();
+  const getChildSource = useFeedbackNnaSource();
 
   useEffect(() => {
-    dispatch(addSource(serviceFeedbackV2Source));
+    dispatch(addSource(getAdultSource(phase)));
+    dispatch(addSource(getChildSource(phase)));
 
+    return () => {
+      dispatch(removeSource(SERVICE_FEEDBACK_V2_SOURCE_ID));
+      dispatch(removeSource(SERVICE_FEEDBACK_NNA_V2_SOURCE_ID));
+    };
+  }, [dispatch, phase]);
+
+  useEffect(() => {
     dispatch(
       addLayer({
         id: SERVICIO_FEEDBACK_2_LAYER_ID,
-        source: serviceFeedbackV2Source.id,
+        source: SERVICE_FEEDBACK_V2_SOURCE_ID,
+      }),
+    );
+
+    dispatch(
+      addLayer({
+        id: SERVICI_FEEDBACK_NNA_LAYER_ID,
+        source: SERVICE_FEEDBACK_NNA_V2_SOURCE_ID,
       }),
     );
 
     return () => {
       dispatch(removeLayer(SERVICIO_FEEDBACK_2_LAYER_ID));
-      dispatch(removeSource(serviceFeedbackV2Source.id));
-    };
-  }, [dispatch]);
-
-  useEffect(() => {
-    dispatch(addSource(serviceFeedbackNnaV2Source));
-
-    dispatch(
-      addLayer({
-        id: SERVICI_FEEDBACK_NNA_LAYER_ID,
-        source: serviceFeedbackNnaV2Source.id,
-      }),
-    );
-
-    return () => {
       dispatch(removeLayer(SERVICI_FEEDBACK_NNA_LAYER_ID));
-      dispatch(removeSource(serviceFeedbackNnaV2Source.id));
     };
-  }, [dispatch]);
+  }, [dispatch, phase]);
 
   // [hygen] Add useEffect
 
@@ -89,7 +96,9 @@ export default function ServicioFeedback2() {
           element: (
             <ServiceFeedbackLeftView
               classes={classes}
-              dataSources={{ serviceFeedbackV2Source }}
+              dataSources={{
+                serviceFeedbackV2Source: SERVICE_FEEDBACK_V2_SOURCE_ID,
+              }}
             />
           ),
           expandable: false,
@@ -98,7 +107,9 @@ export default function ServicioFeedback2() {
           element: (
             <ServiceFeedbackRightView
               classes={classes}
-              dataSources={{ serviceFeedbackNnaV2Source }}
+              dataSources={{
+                serviceFeedbackNnaV2Source: SERVICE_FEEDBACK_NNA_V2_SOURCE_ID,
+              }}
             />
           ),
           expandable: false,
