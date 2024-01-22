@@ -9,7 +9,7 @@ const TIMELINE_SOURCE_ID = SOURCE_NAMES.TIMELINE_SOURCE;
 
 const phases = {
   1: '`carto-dw-ac-4v8fnfsh.shared.LACRO_Marzo_2023`',
-  2: '`carto-dw-ac-4v8fnfsh.shared.aurora_round_2`',
+  2: '`carto-dw-ac-4v8fnfsh.shared.aurora_round_2_31102023`',
 };
 
 const useTimelineSource = () => {
