@@ -25,6 +25,7 @@ export function getIconGroupConfig(round: number): IconGroupConfig {
 
     output = [...output, newEntry];
   }
+  console.log(output);
 
   return output;
 }
@@ -34,7 +35,7 @@ export const iconGroupsConfig = [
     name: 'Enganche',
     coordinatesAccessor: (d: any) => [+d['lon_mon'], +d['lat_mon']],
     filterFunction: (d: any) => +d['lon_mon'] !== 999999,
-    color: d3Hex2RGB(1),
+    color: d3Hex2RGB(0),
   },
   {
     name: 'Push 1',
@@ -76,6 +77,30 @@ export const iconGroupsConfig = [
     name: 'Push 7',
     coordinatesAccessor: (d: any) => [+d['lon_mon8'], +d['lat_mon8']],
     filterFunction: (d: any) => +d['lon_mon8'] !== 999999,
-    color: d3Hex2RGB(0),
+    color: d3Hex2RGB(8),
+  },
+  {
+    name: 'Push 8',
+    coordinatesAccessor: (d: any) => [+d['lon_mon9'], +d['lat_mon9']],
+    filterFunction: (d: any) => +d['lon_mon9'] !== 999999,
+    color: d3Hex2RGB(9),
+  },
+  {
+    name: 'Push 9',
+    coordinatesAccessor: (d: any) => [+d['lon_mon10'], +d['lat_mon10']],
+    filterFunction: (d: any) => +d['lon_mon10'] !== 999999,
+    color: d3Hex2RGB(10),
+  },
+  {
+    name: 'Push 10',
+    coordinatesAccessor: (d: any) => [+d['lon_mon11'], +d['lat_mon11']],
+    filterFunction: (d: any) => +d['lon_mon11'] !== 999999,
+    color: d3Hex2RGB(11),
+  },
+  {
+    name: 'Push 11',
+    coordinatesAccessor: (d: any) => [+d['lon_mon12'], +d['lat_mon12']],
+    filterFunction: (d: any) => +d['lon_mon12'] !== 999999,
+    color: d3Hex2RGB(12),
   },
 ];
