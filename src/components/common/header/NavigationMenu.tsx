@@ -3,8 +3,8 @@ import { NavLink, Navigate, useNavigate } from 'react-router-dom';
 import { BOARD_ROUTE_DEFAULT, ROUTE_PATHS } from 'routes';
 import useGetPathname from 'hooks/useGetPathname';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
-import { setMessage } from 'store/appSlice';
+// import { useEffect } from 'react';
+// import { setMessage } from 'store/appSlice';
 
 const useStylesNavigationMenu = makeStyles((theme) => ({
   navTabs: {
@@ -27,19 +27,6 @@ export default function NavigationMenu({
   const pathname = useGetPathname();
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   if (phase === 2 && phase2Routes.includes(pathname)) {
-  //     navigate(ROUTE_PATHS.INTRODUCTION);
-  //     dispatch(
-  //       setMessage({
-  //         text: `Página de <span style="text-transform: capitalize; font-weight: bold">
-  //         ${pathname.replaceAll('_', ' ')}
-  //         </span> no disponible en la Ronda 2`,
-  //         severity: 'info',
-  //       }),
-  //     );
-  //   }
-  // }, [phase, pathname]);
   return (
     <Grid
       container
@@ -66,14 +53,14 @@ export default function NavigationMenu({
           component={NavLink}
           to={'/' + BOARD_ROUTE_DEFAULT + '/' + ROUTE_PATHS.PREMISE_SERVICE}
         />
-        <Tab
+        {/* <Tab
           label='Feedback Servicios'
           value='feedback_servicios'
           component={NavLink}
           to={'/' + BOARD_ROUTE_DEFAULT + '/' + ROUTE_PATHS.SERVICES}
-        />
+        /> */}
         <Tab
-          label='Feedback Servicios 2'
+          label='Feedback Servicios'
           value='servicio_feedback_2'
           component={NavLink}
           to={'/' + BOARD_ROUTE_DEFAULT + '/' + ROUTE_PATHS.SERVICIO_FEEDBACK_2}
