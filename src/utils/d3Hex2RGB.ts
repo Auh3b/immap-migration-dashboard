@@ -13,6 +13,7 @@ const UNICEF_COLORS = [
   '#777779',
   '#2D2926',
   '#374EA2',
+  '#008080',
 ];
 
 export default function d3Hex2RGB(value: number | string) {
