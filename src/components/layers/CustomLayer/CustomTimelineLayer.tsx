@@ -9,7 +9,11 @@ import {
   featureCollection,
   point,
 } from '@turf/helpers';
-import { IconGroupConfig, iconGroupsConfig } from '../utils/surveyIconGroup';
+import {
+  IconGroupConfig,
+  iconGroupsConfig,
+  getIconGroupConfig,
+} from '../utils/surveyIconGroup';
 
 class CustomTimelineLayer extends CompositeLayer<any, any> {
   constructor(props: Record<any, any>) {
@@ -45,6 +49,8 @@ class CustomTimelineLayer extends CompositeLayer<any, any> {
         //@ts-ignore
         .filter(filterFunction);
 
+      console.log(filteredGroup);
+
       if (filteredGroup.length) {
         const newFeature = filteredGroup
           //@ts-ignore
@@ -52,6 +58,7 @@ class CustomTimelineLayer extends CompositeLayer<any, any> {
         outputFeatures = [...outputFeatures, ...newFeature];
       }
     }
+    console.log(outputFeatures);
 
     return featureCollection(outputFeatures);
   }
@@ -94,12 +101,17 @@ class CustomTimelineLayer extends CompositeLayer<any, any> {
 
   //@ts-ignore
   updateState({ props, oldProps, changeFlags }) {
+    console.log(this.props);
     //@ts-ignore
     if (changeFlags.dataChanged && this.props.data) {
       //@ts-ignore
       if (!this.state.data) {
         //@ts-ignore
-        const data = this.aggregateFeatures(this.props.data, iconGroupsConfig);
+        const data = this.aggregateFeatures(
+          this.props.data,
+          //@ts-ignore
+          getIconGroupConfig(this.props.phase),
+        );
         //@ts-ignore
         this.setState({
           data,
@@ -113,7 +125,11 @@ class CustomTimelineLayer extends CompositeLayer<any, any> {
       }
 
       //@ts-ignore
-      const data = this.aggregateFeatures(this.props.data, iconGroupsConfig);
+      const data = this.aggregateFeatures(
+        this.props.data,
+        //@ts-ignore
+        getIconGroupConfig(this.props.phase),
+      );
       //@ts-ignore
       this.setState({
         data,
@@ -141,6 +157,7 @@ class CustomTimelineLayer extends CompositeLayer<any, any> {
   renderLayers() {
     //@ts-ignore
     const { data } = this.state;
+    console.log(data);
 
     return [
       new GeoJsonLayer(

@@ -13,7 +13,7 @@ const id = 'push';
 const column = 'servi_tipo1';
 const dataSource = '';
 const methodName = EXTERNAL_METHOD_NAMES.CONCATENATED_VALUES;
-const pushes = [1, 2, 3, 4, 5, 6, 7, 8];
+const pushes = [0, 1, 2, 3, 4, 5, 6, 7];
 
 export default function PushFilter() {
   const [selected, setSelected] = useState([]);
@@ -34,7 +34,7 @@ export default function PushFilter() {
       >
         {pushes.map((d) => (
           <MenuItem key={'push_' + d} value={d}>
-            {d === 1 ? 'Enchanche' : 'Push ' + (d - 1)}
+            {d ? 'Push ' + d : 'Enchanche'}
           </MenuItem>
         ))}
       </Select>

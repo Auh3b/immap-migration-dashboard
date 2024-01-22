@@ -9,7 +9,27 @@ interface IconGroup {
 
 export type IconGroupConfig = IconGroup[];
 
-export const iconGroupsConfig: IconGroupConfig = [
+export function getIconGroupConfig(round: number): IconGroupConfig {
+  let output = [];
+  const length = round == 2 ? 13 : 8;
+  for (let i = 0; i < length; i++) {
+    const lat = `lat_mon${i || ''}`;
+    const lon = `lon_mon${i || ''}`;
+    const push = i ? `Push ${i}` : 'Enganche';
+    const newEntry = {
+      name: push,
+      coordinatesAccessor: (d: any) => [+d[lon], +d[lat]],
+      filterFunction: (d: any) => +d[lon] !== 999999,
+      color: d3Hex2RGB(i),
+    };
+
+    output = [...output, newEntry];
+  }
+
+  return output;
+}
+
+export const iconGroupsConfig = [
   {
     name: 'Enganche',
     coordinatesAccessor: (d: any) => [+d['lon_mon'], +d['lat_mon']],
