@@ -49,16 +49,19 @@ class CustomTimelineLayer extends CompositeLayer<any, any> {
         //@ts-ignore
         .filter(filterFunction);
 
-      console.log(filteredGroup);
+      if (!filteredGroup.length) {
+        continue;
+      }
 
-      if (filteredGroup.length) {
+      try {
         const newFeature = filteredGroup
           //@ts-ignore
           .map((d) => point(coordinatesAccessor(d), { ...d, name, color }));
         outputFeatures = [...outputFeatures, ...newFeature];
+      } catch (error) {
+        continue;
       }
     }
-    console.log(outputFeatures);
 
     return featureCollection(outputFeatures);
   }
@@ -101,7 +104,6 @@ class CustomTimelineLayer extends CompositeLayer<any, any> {
 
   //@ts-ignore
   updateState({ props, oldProps, changeFlags }) {
-    console.log(this.props);
     //@ts-ignore
     if (changeFlags.dataChanged && this.props.data) {
       //@ts-ignore
@@ -110,7 +112,8 @@ class CustomTimelineLayer extends CompositeLayer<any, any> {
         const data = this.aggregateFeatures(
           this.props.data,
           //@ts-ignore
-          getIconGroupConfig(this.props.phase),
+          // getIconGroupConfig(this.props.phase),
+          iconGroupsConfig,
         );
         //@ts-ignore
         this.setState({
@@ -128,7 +131,8 @@ class CustomTimelineLayer extends CompositeLayer<any, any> {
       const data = this.aggregateFeatures(
         this.props.data,
         //@ts-ignore
-        getIconGroupConfig(this.props.phase),
+        // getIconGroupConfig(this.props.phase),
+        iconGroupsConfig,
       );
       //@ts-ignore
       this.setState({
@@ -157,7 +161,6 @@ class CustomTimelineLayer extends CompositeLayer<any, any> {
   renderLayers() {
     //@ts-ignore
     const { data } = this.state;
-    console.log(data);
 
     return [
       new GeoJsonLayer(
