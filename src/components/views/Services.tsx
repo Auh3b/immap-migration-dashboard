@@ -2,8 +2,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import MainView from './main/MainView';
 import mainSource from 'data/sources/mainSource';
 import { lazy, useEffect } from 'react';
-import aggregateServicesSource from 'data/sources/aggregateServicesSource';
-import aggreateServiceChildrenSource from 'data/sources/aggreateServiceChildrenSource';
+import useAggregateSource, {
+  AGGREGATE_SERVICES_SOURCE_ID,
+} from 'data/sources/aggregateServicesSource';
+import useAggreateServiceChildrenSource, {
+  AGGREATE_SERVICE_CHILDREN_SOURCE_ID,
+} from 'data/sources/aggreateServiceChildrenSource';
 import { AGGREGATE_SERVICE_LAYER_ID } from 'components/layers/AggregateServiceLayer';
 import {
   addLayer,
@@ -11,7 +15,7 @@ import {
   removeLayer,
   removeSource,
 } from '@carto/react-redux';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { AGGREGATE_SERVICES_CHILDREN_LAYER_ID } from 'components/layers/AggregateServicesChildrenLayer';
 import { ActiveFilters } from 'components/common/sideAnalysticsPanel/ActiveFilters';
 import FilterListIcon from '@material-ui/icons/FilterList';
@@ -37,37 +41,42 @@ export default function Services() {
   const dispatch = useDispatch();
   const classes = useViewStyle();
 
+  // @ts-ignore
+  const phase = useSelector((state) => state.app.phase);
+  const getAggregateSource = useAggregateSource();
+  const getAggregateChildrenSource = useAggreateServiceChildrenSource();
+
   useEffect(() => {
-    dispatch(addSource(aggregateServicesSource));
+    dispatch(addSource(getAggregateSource(phase)));
 
     dispatch(
       addLayer({
         id: AGGREGATE_SERVICE_LAYER_ID,
-        source: aggregateServicesSource.id,
+        source: AGGREGATE_SERVICES_SOURCE_ID,
       }),
     );
 
     return () => {
       dispatch(removeLayer(AGGREGATE_SERVICE_LAYER_ID));
-      dispatch(removeSource(aggregateServicesSource.id));
+      dispatch(removeSource(AGGREGATE_SERVICES_SOURCE_ID));
     };
-  }, [dispatch]);
+  }, [dispatch, phase]);
 
   useEffect(() => {
-    dispatch(addSource(aggreateServiceChildrenSource));
+    dispatch(addSource(getAggregateChildrenSource(phase)));
 
     dispatch(
       addLayer({
         id: AGGREGATE_SERVICES_CHILDREN_LAYER_ID,
-        source: aggreateServiceChildrenSource.id,
+        source: AGGREATE_SERVICE_CHILDREN_SOURCE_ID,
       }),
     );
 
     return () => {
       dispatch(removeLayer(AGGREGATE_SERVICES_CHILDREN_LAYER_ID));
-      dispatch(removeSource(aggreateServiceChildrenSource.id));
+      dispatch(removeSource(AGGREATE_SERVICE_CHILDREN_SOURCE_ID));
     };
-  }, [dispatch]);
+  }, [dispatch, phase]);
 
   // [hygen] Add useEffect
   return (
@@ -99,7 +108,7 @@ export default function Services() {
               classes={classes}
               dataSources={{
                 mainSource,
-                aggregateServicesSource: aggregateServicesSource.id,
+                aggregateServicesSource: AGGREGATE_SERVICES_SOURCE_ID,
               }}
             />
           ),
@@ -111,8 +120,9 @@ export default function Services() {
               classes={classes}
               dataSources={{
                 mainSource,
-                aggregateServicesSource: aggregateServicesSource.id,
-                aggreateServiceChildrenSource: aggreateServiceChildrenSource.id,
+                aggregateServicesSource: AGGREGATE_SERVICES_SOURCE_ID,
+                aggreateServiceChildrenSource:
+                  AGGREATE_SERVICE_CHILDREN_SOURCE_ID,
               }}
             />
           ),
