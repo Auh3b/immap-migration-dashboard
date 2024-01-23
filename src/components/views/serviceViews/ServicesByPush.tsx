@@ -1,10 +1,10 @@
 import { Grid, Typography, makeStyles, withStyles } from '@material-ui/core';
 import { TimelineDot, ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
 import { MouseEvent, useMemo } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { UNICEF_COLORS } from 'theme';
-import serviceFeedbackNnaV2Source from 'data/sources/serviceFeedbackNnaV2Source';
-import serviceFeedbackV2Source from 'data/sources/serviceFeedbackV2Source';
+import { SERVICE_FEEDBACK_NNA_V2_SOURCE_ID } from 'data/sources/serviceFeedbackNnaV2Source';
+import { SERVICE_FEEDBACK_V2_SOURCE_ID } from 'data/sources/serviceFeedbackV2Source';
 import { _FilterTypes } from '@carto/react-core';
 import { addFilter, removeFilter } from '@carto/react-redux';
 import useWidgetFetch from 'components/common/customWidgets/hooks/useWidgetFetch';
@@ -12,12 +12,20 @@ import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
 import useWidgetFilterValues from 'components/common/customWidgets/hooks/useWidgetFilterValues';
 
 const id = 'empujes_de_servicio';
-const pushs = [1, 2, 3, 4, 5];
 const column = 'push';
 const filterType = _FilterTypes.IN;
 const methodName = EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES;
-const adultSource = serviceFeedbackV2Source.id;
-const childSource = serviceFeedbackNnaV2Source.id;
+const adultSource = SERVICE_FEEDBACK_V2_SOURCE_ID;
+const childSource = SERVICE_FEEDBACK_NNA_V2_SOURCE_ID;
+
+const getPushes = (phase: number) => {
+  const extent = phase === 2 ? 13 : 8;
+  const pushList = Array(extent)
+    .fill(0)
+    .map((d, i) => i);
+
+  return pushList;
+};
 
 const StyleToggleButtonGroup = withStyles((theme) => ({
   root: {
@@ -45,6 +53,8 @@ const StyledToggleButton = withStyles((theme) => ({
 
 export default function ServicesByPush() {
   const dispatch = useDispatch();
+  // @ts-ignore
+  const phase = useSelector((state) => state.app.phase) || 1;
 
   const { data: _adultData } = useWidgetFetch({
     id,
@@ -99,12 +109,14 @@ export default function ServicesByPush() {
     return [];
   }, [adultPush, childPush]);
 
+  const pushs = useMemo(() => getPushes(phase), [phase]);
+
   const handlePush = (_e: MouseEvent<HTMLElement>, newPushes: any[]) => {
     if (newPushes.length) {
       dispatch(
         addFilter({
           column,
-          id: serviceFeedbackV2Source.id,
+          id: adultSource,
           type: filterType,
           values: newPushes,
           owner: id + '_-_adulto',
@@ -113,7 +125,7 @@ export default function ServicesByPush() {
       dispatch(
         addFilter({
           column,
-          id: serviceFeedbackNnaV2Source.id,
+          id: childSource,
           type: filterType,
           values: newPushes,
           owner: id + '_-_nna',
@@ -123,14 +135,14 @@ export default function ServicesByPush() {
       dispatch(
         removeFilter({
           column,
-          id: serviceFeedbackV2Source.id,
+          id: adultSource,
           owner: id + '_-_adulto',
         }),
       );
       dispatch(
         removeFilter({
           column,
-          id: serviceFeedbackNnaV2Source.id,
+          id: childSource,
           owner: id + '_-_nna',
         }),
       );

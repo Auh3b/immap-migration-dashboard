@@ -18,7 +18,7 @@ export const SURVEY_TIMELINE_LAYER_ID = 'surveyTimelineLayer';
 export default function SurveyTimelineLayer() {
   const dispatch = useDispatch();
   // @ts-ignore
-  const phase = useSelector((state) => state.app.phase);
+  const phase = useSelector((state) => state.app.phase) || 1;
   const getTimelineSource = useTimelineSource();
   const [data, setData] = useState<null | any[]>(null);
   const { layers: loadedLayers } = useSelector(
@@ -67,6 +67,7 @@ export default function SurveyTimelineLayer() {
       getFillColor: [241, 109, 122],
       pointRadiusMinPixels: 2,
       pickable: true,
+      phase,
       dispatch,
       source,
       loadedLayers,

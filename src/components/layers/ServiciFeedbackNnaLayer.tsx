@@ -10,27 +10,44 @@ import { UNICEF_COLORS } from 'theme';
 
 export const SERVICI_FEEDBACK_NNA_LAYER_ID = 'serviciFeedbackNnaLayer';
 
-const DATA = UNICEF_COLORS.slice(1, 6).map((color, index) => ({
-  color,
-  label: 'Push ' + (index + 1),
-}));
+interface ColorSet {
+  color: string;
+  label: string;
+}
 
-const layerConfig = {
-  id: SERVICI_FEEDBACK_NNA_LAYER_ID,
-  layerAttributes: {
-    title: 'Persona que viaja sin NNA',
-    visible: true,
-    legend: {
-      type: LEGEND_TYPES.CATEGORY,
-      labels: DATA.map((data) => data.label),
-      colors: DATA.map((data) => data.color),
-      collapsible: false,
+type ColorSetGroup = ColorSet[];
+
+const getLegendData = (phase: number): ColorSetGroup => {
+  const extent = phase === 2 ? 13 : 8;
+  const arrayList = Array(extent).fill(0);
+
+  return arrayList.map((d, i) => ({
+    color: UNICEF_COLORS[i],
+    label: i ? `Push ${i}` : 'Enganche',
+  }));
+};
+
+const getlayerConfig = (colorSetGroup: ColorSetGroup) => {
+  return {
+    id: SERVICI_FEEDBACK_NNA_LAYER_ID,
+    layerAttributes: {
+      title: 'Persona que viaja sin NNA',
+      visible: true,
+      legend: {
+        type: LEGEND_TYPES.CATEGORY,
+        labels: colorSetGroup.map((data) => data.label),
+        colors: colorSetGroup.map((data) => data.color),
+        isStrokeColor: true,
+        collapsible: false,
+      },
     },
-  },
+  };
 };
 
 export default function ServiciFeedbackNnaLayer() {
   const dispatch = useDispatch();
+  // @ts-ignore
+  const phase = useSelector((state) => state.app.phase);
   const { serviciFeedbackNnaLayer } = useSelector(
     (state: RootState) => state.carto.layers,
   );
@@ -41,6 +58,10 @@ export default function ServiciFeedbackNnaLayer() {
     source,
     layerConfig: serviciFeedbackNnaLayer,
   });
+
+  const legendData = getLegendData(phase);
+
+  const layerConfig = getlayerConfig(legendData);
 
   if (serviciFeedbackNnaLayer && source) {
     return new CartoLayer({

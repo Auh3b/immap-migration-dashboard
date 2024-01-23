@@ -18,10 +18,10 @@ export default function ServiceLeftView({ dataSources }: any) {
   const { aggregateServicesSource } = dataSources;
   return (
     <MainColumnView>
-      <ServiceTypeAdult dataSource={aggregateServicesSource.id} />
-      <ServiceAccessAdult dataSource={aggregateServicesSource.id} />
-      <ServiceQualityAdult dataSource={aggregateServicesSource.id} />
-      <ServiceSatisfyAdult dataSource={aggregateServicesSource.id} />
+      <ServiceTypeAdult dataSource={aggregateServicesSource} />
+      <ServiceAccessAdult dataSource={aggregateServicesSource} />
+      <ServiceQualityAdult dataSource={aggregateServicesSource} />
+      <ServiceSatisfyAdult dataSource={aggregateServicesSource} />
     </MainColumnView>
   );
 }
