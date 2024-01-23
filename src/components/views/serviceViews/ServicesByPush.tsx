@@ -1,7 +1,7 @@
 import { Grid, Typography, makeStyles, withStyles } from '@material-ui/core';
 import { TimelineDot, ToggleButton, ToggleButtonGroup } from '@material-ui/lab';
 import { MouseEvent, useMemo } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { UNICEF_COLORS } from 'theme';
 import { SERVICE_FEEDBACK_NNA_V2_SOURCE_ID } from 'data/sources/serviceFeedbackNnaV2Source';
 import { SERVICE_FEEDBACK_V2_SOURCE_ID } from 'data/sources/serviceFeedbackV2Source';
@@ -12,12 +12,20 @@ import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
 import useWidgetFilterValues from 'components/common/customWidgets/hooks/useWidgetFilterValues';
 
 const id = 'empujes_de_servicio';
-const pushs = [1, 2, 3, 4, 5];
 const column = 'push';
 const filterType = _FilterTypes.IN;
 const methodName = EXTERNAL_METHOD_NAMES.GROUP_CATEGORIES;
 const adultSource = SERVICE_FEEDBACK_V2_SOURCE_ID;
 const childSource = SERVICE_FEEDBACK_NNA_V2_SOURCE_ID;
+
+const getPushes = (phase: number) => {
+  const extent = phase === 2 ? 13 : 8;
+  const pushList = Array(extent)
+    .fill(0)
+    .map((d, i) => i);
+
+  return pushList;
+};
 
 const StyleToggleButtonGroup = withStyles((theme) => ({
   root: {
@@ -45,6 +53,8 @@ const StyledToggleButton = withStyles((theme) => ({
 
 export default function ServicesByPush() {
   const dispatch = useDispatch();
+  // @ts-ignore
+  const phase = useSelector((state) => state.app.phase) || 1;
 
   const { data: _adultData } = useWidgetFetch({
     id,
@@ -98,6 +108,8 @@ export default function ServicesByPush() {
     }
     return [];
   }, [adultPush, childPush]);
+
+  const pushs = useMemo(() => getPushes(phase), [phase]);
 
   const handlePush = (_e: MouseEvent<HTMLElement>, newPushes: any[]) => {
     if (newPushes.length) {
