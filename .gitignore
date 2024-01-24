@@ -44,5 +44,7 @@ src/components/indicators/migration/utils/countries.ts
 # test
 /data
 /test
+/test
+src/assets/img/*.Identifier
 
 __pycache__
