@@ -88,7 +88,6 @@ export default function ServicioFeedback_2Layer() {
       setData(data);
     })();
   }, [phase]);
-  console.log(data);
 
   if (servicioFeedback_2Layer && source) {
     return new CustomGeoJsonLayer({
