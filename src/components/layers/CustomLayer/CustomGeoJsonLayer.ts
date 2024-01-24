@@ -39,13 +39,18 @@ class CustomGeoJsonLayer extends CompositeLayer<any, any> {
   renderLayers() {
     const {
       data,
-      getFillColor,
-      stroked,
-      pointRadiusUnits,
-      lineWidthUnits,
-      pickable,
-      getLineColor,
+      getFillColor = [0, 0, 0, 255],
+      getLineColor = [0, 0, 0, 255],
+      stroked = true,
+      filled = true,
       pointRadiusMinPixels,
+      opacity,
+      pickable,
+      getPointRadius,
+      pointRadiusScale,
+      getLineWidth = 1,
+      pointRadiusUnits = 'pixels',
+      lineWidthUnits = 'pixels',
     } = this.props;
 
     return [
@@ -54,12 +59,17 @@ class CustomGeoJsonLayer extends CompositeLayer<any, any> {
         this.getSubLayerProps({
           data,
           getFillColor,
-          stroked,
           pointRadiusUnits,
           lineWidthUnits,
+          stroked,
+          filled,
+          pointRadiusMinPixels,
+          getLineWidth,
+          opacity,
           pickable,
           getLineColor,
-          pointRadiusMinPixels,
+          getPointRadius,
+          pointRadiusScale,
         }),
       ),
     ];

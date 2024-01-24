@@ -1,12 +1,17 @@
 import { useDispatch, useSelector } from 'react-redux';
 // @ts-ignore
-import { CartoLayer } from '@deck.gl/carto';
-import { selectSourceById, updateLayer } from '@carto/react-redux';
+import { CartoLayer, fetchLayerData } from '@deck.gl/carto';
+import { removeLayer, selectSourceById, updateLayer } from '@carto/react-redux';
 import { useCartoLayerProps } from '@carto/react-api';
 import { RootState } from 'store/store';
 import d3Hex2RGB from 'utils/d3Hex2RGB';
 import { LEGEND_TYPES } from '@carto/react-ui';
 import { UNICEF_COLORS } from 'theme';
+import CustomGeoJsonLayer from './CustomLayer/CustomGeoJsonLayer';
+import useCustomDataLoad from './hooks/useCustomDataLoad';
+import { useEffect, useState } from 'react';
+import useCustomCompareEffectAlt from 'components/indicators/media/hooks/useCustomCompareEffectAlt';
+import { dequal } from 'dequal';
 
 export const SERVICI_FEEDBACK_NNA_LAYER_ID = 'serviciFeedbackNnaLayer';
 
@@ -37,8 +42,7 @@ const getlayerConfig = (colorSetGroup: ColorSetGroup) => {
         type: LEGEND_TYPES.CATEGORY,
         labels: colorSetGroup.map((data) => data.label),
         colors: colorSetGroup.map((data) => data.color),
-        isStrokeColor: true,
-        collapsible: false,
+        collapsible: true,
       },
     },
   };
@@ -46,6 +50,7 @@ const getlayerConfig = (colorSetGroup: ColorSetGroup) => {
 
 export default function ServiciFeedbackNnaLayer() {
   const dispatch = useDispatch();
+  const [data, setData] = useState(null);
   // @ts-ignore
   const phase = useSelector((state) => state.app.phase);
   const { serviciFeedbackNnaLayer } = useSelector(
@@ -59,22 +64,60 @@ export default function ServiciFeedbackNnaLayer() {
     layerConfig: serviciFeedbackNnaLayer,
   });
 
+  delete cartoLayerProps.onDataLoad;
+
+  const [onGeojsonDataLoad] = useCustomDataLoad({ source });
+
   const legendData = getLegendData(phase);
 
   const layerConfig = getlayerConfig(legendData);
 
-  if (serviciFeedbackNnaLayer && source) {
-    return new CartoLayer({
+  useCustomCompareEffectAlt(
+    () => {
+      if (source) {
+        (async function () {
+          const { data } = await fetchLayerData({
+            ...source,
+            source: source.data,
+            format: 'geojson',
+            headers: {
+              'cache-control': 'max-age=300',
+            },
+          });
+          setData(data);
+        })();
+      }
+    },
+    [source, phase],
+    dequal,
+  );
+
+  if (serviciFeedbackNnaLayer && source && data) {
+    return new CustomGeoJsonLayer({
       ...cartoLayerProps,
       id: SERVICI_FEEDBACK_NNA_LAYER_ID,
+      data,
       getFillColor: (d: any) => d3Hex2RGB(+d?.properties?.push || 0),
-      stroked: false,
-      pointRadiusMinPixels: 8,
+      pointRadiusUnits: 'pixels',
+      lineWidthUnits: 'pixels',
+      stroked: true,
+      pointRadiusMinPixels: 5,
       opacity: 0.5,
       pickable: true,
-      onDataLoad: (data: any) => {
-        dispatch(updateLayer(layerConfig));
-        cartoLayerProps && cartoLayerProps.onDataLoad(data);
+      getLineColor: [124, 33, 62, 0],
+      getPointRadius: 8,
+      pointRadiusScale: 1,
+      onGeojsonDataLoad,
+      addLegend: () => {
+        dispatch(
+          updateLayer({
+            id: SERVICI_FEEDBACK_NNA_LAYER_ID,
+            layerAttributes: { ...layerConfig.layerAttributes },
+          }),
+        );
+      },
+      removeLegend: () => {
+        dispatch(removeLayer(SERVICI_FEEDBACK_NNA_LAYER_ID));
       },
     });
   }
