@@ -81,8 +81,8 @@ export default function PremiseServicesLayer() {
       lineWidthUnits: 'pixels',
       pickable: true,
       getLineColor: [124, 33, 62, 0],
-      getPointRadius: 1000,
-      pointRadiusScale: 5,
+      getPointRadius: 8,
+      pointRadiusScale: 1,
       pointRadiusMinPixels: 5,
       onGeojsonDataLoad,
       addLegend: () => {

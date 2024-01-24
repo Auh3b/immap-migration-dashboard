@@ -19,10 +19,10 @@ export default function ServicesRightView({ dataSources }: any) {
 
   return (
     <MainColumnView>
-      <ServiceTypeChildren dataSource={aggreateServiceChildrenSource.id} />
-      <ServiceAccessChildren dataSource={aggreateServiceChildrenSource.id} />
-      <ServiceQualityChildren dataSource={aggreateServiceChildrenSource.id} />
-      <ServiceSatisfyChildren dataSource={aggreateServiceChildrenSource.id} />
+      <ServiceTypeChildren dataSource={aggreateServiceChildrenSource} />
+      <ServiceAccessChildren dataSource={aggreateServiceChildrenSource} />
+      <ServiceQualityChildren dataSource={aggreateServiceChildrenSource} />
+      <ServiceSatisfyChildren dataSource={aggreateServiceChildrenSource} />
     </MainColumnView>
   );
 }
