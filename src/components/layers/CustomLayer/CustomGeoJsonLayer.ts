@@ -29,6 +29,8 @@ class CustomGeoJsonLayer extends CompositeLayer<any, any> {
         propName: 'data',
         layer: this,
       });
+
+      this.props?.addLegend();
     }
   }
 

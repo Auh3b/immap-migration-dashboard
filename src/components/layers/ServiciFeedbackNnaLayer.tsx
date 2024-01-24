@@ -10,8 +10,7 @@ import { UNICEF_COLORS } from 'theme';
 import CustomGeoJsonLayer from './CustomLayer/CustomGeoJsonLayer';
 import useCustomDataLoad from './hooks/useCustomDataLoad';
 import { useEffect, useState } from 'react';
-import useCustomCompareEffectAlt from 'components/indicators/media/hooks/useCustomCompareEffectAlt';
-import { dequal } from 'dequal';
+import useFeedbackNnaSource from 'data/sources/serviceFeedbackNnaV2Source';
 
 export const SERVICI_FEEDBACK_NNA_LAYER_ID = 'serviciFeedbackNnaLayer';
 
@@ -72,27 +71,24 @@ export default function ServiciFeedbackNnaLayer() {
 
   const layerConfig = getlayerConfig(legendData);
 
-  useCustomCompareEffectAlt(
-    () => {
-      if (source) {
-        (async function () {
-          const { data } = await fetchLayerData({
-            ...source,
-            source: source.data,
-            format: 'geojson',
-            headers: {
-              'cache-control': 'max-age=300',
-            },
-          });
-          setData(data);
-        })();
-      }
-    },
-    [source, phase],
-    dequal,
-  );
+  const getSource = useFeedbackNnaSource();
 
-  if (serviciFeedbackNnaLayer && source && data) {
+  useEffect(() => {
+    (async function () {
+      const source = getSource(phase);
+      const { data } = await fetchLayerData({
+        ...source,
+        source: source.data,
+        format: 'geojson',
+        headers: {
+          'cache-control': 'max-age=300',
+        },
+      });
+      setData(data);
+    })();
+  }, [phase]);
+
+  if (serviciFeedbackNnaLayer && source) {
     return new CustomGeoJsonLayer({
       ...cartoLayerProps,
       id: SERVICI_FEEDBACK_NNA_LAYER_ID,

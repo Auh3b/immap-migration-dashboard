@@ -10,8 +10,9 @@ import { UNICEF_COLORS } from 'theme';
 import CustomGeoJsonLayer from './CustomLayer/CustomGeoJsonLayer';
 import useCustomCompareEffectAlt from 'components/indicators/media/hooks/useCustomCompareEffectAlt';
 import { dequal } from 'dequal';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useCustomDataLoad from './hooks/useCustomDataLoad';
+import useFeedbackSource from 'data/sources/serviceFeedbackV2Source';
 
 export const SERVICIO_FEEDBACK_2_LAYER_ID = 'servicioFeedback_2Layer';
 
@@ -43,7 +44,7 @@ const getlayerConfig = (colorSetGroup: ColorSetGroup) => {
         labels: colorSetGroup.map((data) => data.label),
         colors: colorSetGroup.map((data) => data.color),
         isStrokeColor: true,
-        collapsible: false,
+        collapsible: true,
       },
     },
   };
@@ -72,26 +73,22 @@ export default function ServicioFeedback_2Layer() {
   const legendData = getLegendData(phase);
 
   const layerConfig = getlayerConfig(legendData);
-
-  useCustomCompareEffectAlt(
-    () => {
-      if (source) {
-        (async function () {
-          const { data } = await fetchLayerData({
-            ...source,
-            source: source.data,
-            format: 'geojson',
-            headers: {
-              'cache-control': 'max-age=300',
-            },
-          });
-          setData(data);
-        })();
-      }
-    },
-    [source, phase],
-    dequal,
-  );
+  const getSource = useFeedbackSource();
+  useEffect(() => {
+    (async function () {
+      const source = getSource(phase);
+      const { data } = await fetchLayerData({
+        ...source,
+        source: source.data,
+        format: 'geojson',
+        headers: {
+          'cache-control': 'max-age=300',
+        },
+      });
+      setData(data);
+    })();
+  }, [phase]);
+  console.log(data);
 
   if (servicioFeedback_2Layer && source) {
     return new CustomGeoJsonLayer({
@@ -119,7 +116,7 @@ export default function ServicioFeedback_2Layer() {
         );
       },
       removeLegend: () => {
-        dispatch(removeLayer(SERVICIO_FEEDBACK_2_LAYER_ID));
+        // dispatch(removeLayer(SERVICIO_FEEDBACK_2_LAYER_ID));
       },
     });
   }
