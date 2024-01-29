@@ -234,8 +234,6 @@ export default function CustomConnectDotChart({ data: _data, groupName }: any) {
     }),
     [series],
   );
-  // console.log(groupName, height);
-  console.log(option);
   return (
     <>
       <ReactEchart

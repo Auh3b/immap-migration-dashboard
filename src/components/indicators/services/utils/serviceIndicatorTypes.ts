@@ -10,6 +10,8 @@ export const aidTypes = new Map([
   [9, 'Dinero en efectivo'],
   [10, 'Transporte humanitario'],
   [11, 'Otro'],
+  [12, 'Educación o espacios educativos'],
+  [13, 'Espacios seguros para adultos'],
 ]);
 
 export const serviceTypeChildren = new Map([

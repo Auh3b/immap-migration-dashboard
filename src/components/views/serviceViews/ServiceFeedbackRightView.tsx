@@ -19,10 +19,10 @@ export default function ServiceFeedbackRightView({ dataSources }: any) {
 
   return (
     <MainColumnView>
-      <ServiceTypeChildren dataSource={serviceFeedbackNnaV2Source.id} />
-      <ServiceAccessChildren dataSource={serviceFeedbackNnaV2Source.id} />
-      <ServiceQualityChildren dataSource={serviceFeedbackNnaV2Source.id} />
-      <ServiceSatisfyChildren dataSource={serviceFeedbackNnaV2Source.id} />
+      <ServiceTypeChildren dataSource={serviceFeedbackNnaV2Source} />
+      <ServiceAccessChildren dataSource={serviceFeedbackNnaV2Source} />
+      <ServiceQualityChildren dataSource={serviceFeedbackNnaV2Source} />
+      <ServiceSatisfyChildren dataSource={serviceFeedbackNnaV2Source} />
     </MainColumnView>
   );
 }

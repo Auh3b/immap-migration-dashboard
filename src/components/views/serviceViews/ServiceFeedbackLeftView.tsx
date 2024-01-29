@@ -18,10 +18,10 @@ export default function ServiceFeedbackLeftView({ dataSources }: any) {
   const { serviceFeedbackV2Source } = dataSources;
   return (
     <MainColumnView>
-      <ServiceTypeAdult dataSource={serviceFeedbackV2Source.id} />
-      <ServiceAccessAdult dataSource={serviceFeedbackV2Source.id} />
-      <ServiceQualityAdult dataSource={serviceFeedbackV2Source.id} />
-      <ServiceSatisfyAdult dataSource={serviceFeedbackV2Source.id} />
+      <ServiceTypeAdult dataSource={serviceFeedbackV2Source} />
+      <ServiceAccessAdult dataSource={serviceFeedbackV2Source} />
+      <ServiceQualityAdult dataSource={serviceFeedbackV2Source} />
+      <ServiceSatisfyAdult dataSource={serviceFeedbackV2Source} />
     </MainColumnView>
   );
 }

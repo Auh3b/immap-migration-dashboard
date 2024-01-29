@@ -86,6 +86,7 @@ export const UNICEF_COLORS: string[] = [
   '#777779',
   '#2D2926',
   '#374EA2',
+  '#008080',
 ];
 
 const customTheme = {
