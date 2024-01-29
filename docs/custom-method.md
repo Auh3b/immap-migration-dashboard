@@ -42,7 +42,7 @@ To add the custom method or aggregation function, use the following steps:
     }
    ```
 
-3. Add the function to worker scripts `/app-id/src/utils/method/methods.ts`
+3. Add the function to worker scripts `/app-id/src/utils/method/methodWorker.ts`
 
    ```JavaScript
     import new_method from "~/src/components/indicators/utils"
