@@ -4,6 +4,7 @@ Data sources are `destination` names that reference the location of data on Cart
 
 **Destination String:**
 ![destination](assets/carto_data_source_structure_norm.png)
+\n
 **Destination Breakdown:**
 ![destination](/docs/assets/carto_data_source_structure_details.drawio.png)
 
