@@ -35,6 +35,7 @@ storybook-static
 .structure.txt
 .setenv.sh
 *.py
+*.Identifier
 
 npm-debug.log*
 yarn-debug.log*
