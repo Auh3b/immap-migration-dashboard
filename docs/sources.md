@@ -102,6 +102,8 @@ The following is the data sources for the first round of Migration Flow project 
 - _Pages_:
   - [Redes sociales](/src/components/views/Media.tsx)
 
+**Note:** The dataset has been retrieved from [Meltwater API](https://developer.meltwater.com/docs/meltwater-api/). A script was run to aggregate the data to a manageble size while perserving desired indicators types. Access to the raw data is no longer available. Last update was `29/10/2023`
+
 ## Round 2
 
 The following is the data sources for the first round of Migration Flow project (October 2023 - December 2023):
