@@ -4,7 +4,7 @@ import { useMemo } from 'react';
 import iconStyles from './utils/iconStyles';
 import useIntroData from './hooks/useIntroData';
 import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
-const title = 'Personas con condición de discapacidad';
+const title = 'PERSONAS EN SITUACIÓN DE DISCAPACIDAD';
 const subtitle = 'Reportadas en Chatbot';
 const id = 'totalDisabled';
 const column = 'm03__dent';

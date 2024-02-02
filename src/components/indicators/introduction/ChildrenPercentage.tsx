@@ -9,7 +9,7 @@ import { EXTERNAL_METHOD_NAMES } from 'utils/methods/methods';
 import useIntroData from './hooks/useIntroData';
 
 const id = 'nna_porcentaje';
-const title = 'Porcentaje NNA en grupos de viaje';
+const title = 'PORCENTAJE DE NIÑOS, NIÑAS Y ADOLESCENTES EN GRUPOS DE VIAJE';
 const column = '';
 const methodName = EXTERNAL_METHOD_NAMES.AGGREGATE_COLUMNS;
 const source = 'aurora';

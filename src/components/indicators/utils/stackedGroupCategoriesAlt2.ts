@@ -16,7 +16,7 @@ const stackedGroupCategoriesAlt2: MethodFunc<any[]> = (
     //@ts-ignore
     key: aidTypes.get(d[column]) ?? d[column],
     //@ts-ignore
-    value: labels.get(d[valueColumn]),
+    value: labels.get(+d[valueColumn] || 0),
   }));
 
   const output = stackCategoryTotals({

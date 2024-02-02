@@ -15,6 +15,7 @@ class PolygonWithLabels extends CompositeLayer<any, any> {
           data,
           getFillColor,
           stroked: true,
+          pickable: false,
           getLineColor: [0, 0, 0, 255],
           getLineWidth: 1,
           lineWidthMinPixels: 0.5,

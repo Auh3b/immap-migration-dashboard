@@ -34,7 +34,6 @@ storybook-static
 .structure.py
 .structure.txt
 .setenv.sh
-*.py
 *.Identifier
 
 npm-debug.log*
@@ -47,4 +46,5 @@ src/components/indicators/migration/utils/countries.ts
 /test
 /test
 src/assets/img/*.Identifier
+
 __pycache__

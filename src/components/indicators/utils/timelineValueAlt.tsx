@@ -20,7 +20,9 @@ const timelineValueAlt: MethodFunc<any[]> = (input, column, params) => {
     output = [...output, outputItem];
   }
 
-  return output;
+  return output
+    .map((d, i) => ({ ...d, index: i }))
+    .filter(({ value }) => Boolean(value));
 };
 
 export default timelineValueAlt;

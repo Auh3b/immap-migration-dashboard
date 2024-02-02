@@ -63,7 +63,7 @@ const routes = [
       {
         path: BOARD_ROUTE_DEFAULT,
         children: [
-          { path: ROUTE_PATHS.SERVICES, element: <Services /> },
+          // { path: ROUTE_PATHS.SERVICES, element: <Services /> },
           { path: ROUTE_PATHS.MIGRATION_FLOW, element: <MigrationFlow /> },
           { path: ROUTE_PATHS.MEDIA, element: <Media /> },
           { path: ROUTE_PATHS.PREMISE_SERVICE, element: <PremiseService /> },

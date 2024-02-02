@@ -10,28 +10,44 @@ import { UNICEF_COLORS } from 'theme';
 
 export const SERVICIO_FEEDBACK_2_LAYER_ID = 'servicioFeedback_2Layer';
 
-const DATA = UNICEF_COLORS.slice(1, 6).map((color, index) => ({
-  color,
-  label: 'Push ' + (index + 1),
-}));
+interface ColorSet {
+  color: string;
+  label: string;
+}
 
-const layerConfig = {
-  id: SERVICIO_FEEDBACK_2_LAYER_ID,
-  layerAttributes: {
-    title: 'Persona que viaja con NNA',
-    visible: true,
-    legend: {
-      type: LEGEND_TYPES.CATEGORY,
-      labels: DATA.map((data) => data.label),
-      colors: DATA.map((data) => data.color),
-      isStrokeColor: true,
-      collapsible: false,
+type ColorSetGroup = ColorSet[];
+
+const getLegendData = (phase: number): ColorSetGroup => {
+  const extent = phase === 2 ? 13 : 8;
+  const arrayList = Array(extent).fill(0);
+
+  return arrayList.map((d, i) => ({
+    color: UNICEF_COLORS[i],
+    label: i ? `Push ${i}` : 'Enganche',
+  }));
+};
+
+const getlayerConfig = (colorSetGroup: ColorSetGroup) => {
+  return {
+    id: SERVICIO_FEEDBACK_2_LAYER_ID,
+    layerAttributes: {
+      title: 'Persona que viaja con NNA',
+      visible: true,
+      legend: {
+        type: LEGEND_TYPES.CATEGORY,
+        labels: colorSetGroup.map((data) => data.label),
+        colors: colorSetGroup.map((data) => data.color),
+        isStrokeColor: true,
+        collapsible: false,
+      },
     },
-  },
+  };
 };
 
 export default function ServicioFeedback_2Layer() {
   const dispatch = useDispatch();
+  // @ts-ignore
+  const phase = useSelector((state) => state.app.phase) || 1;
   const { servicioFeedback_2Layer } = useSelector(
     (state: RootState) => state.carto.layers,
   );
@@ -42,6 +58,10 @@ export default function ServicioFeedback_2Layer() {
     source,
     layerConfig: servicioFeedback_2Layer,
   });
+
+  const legendData = getLegendData(phase);
+
+  const layerConfig = getlayerConfig(legendData);
 
   if (servicioFeedback_2Layer && source) {
     return new CartoLayer({

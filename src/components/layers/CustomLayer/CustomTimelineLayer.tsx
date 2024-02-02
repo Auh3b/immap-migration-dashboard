@@ -9,7 +9,11 @@ import {
   featureCollection,
   point,
 } from '@turf/helpers';
-import { IconGroupConfig, iconGroupsConfig } from '../utils/surveyIconGroup';
+import {
+  IconGroupConfig,
+  iconGroupsConfig,
+  getIconGroupConfig,
+} from '../utils/surveyIconGroup';
 
 class CustomTimelineLayer extends CompositeLayer<any, any> {
   constructor(props: Record<any, any>) {
@@ -45,11 +49,17 @@ class CustomTimelineLayer extends CompositeLayer<any, any> {
         //@ts-ignore
         .filter(filterFunction);
 
-      if (filteredGroup.length) {
+      if (!filteredGroup.length) {
+        continue;
+      }
+
+      try {
         const newFeature = filteredGroup
           //@ts-ignore
           .map((d) => point(coordinatesAccessor(d), { ...d, name, color }));
         outputFeatures = [...outputFeatures, ...newFeature];
+      } catch (error) {
+        continue;
       }
     }
 
@@ -99,7 +109,12 @@ class CustomTimelineLayer extends CompositeLayer<any, any> {
       //@ts-ignore
       if (!this.state.data) {
         //@ts-ignore
-        const data = this.aggregateFeatures(this.props.data, iconGroupsConfig);
+        const data = this.aggregateFeatures(
+          this.props.data,
+          //@ts-ignore
+          // getIconGroupConfig(this.props.phase),
+          iconGroupsConfig,
+        );
         //@ts-ignore
         this.setState({
           data,
@@ -113,7 +128,12 @@ class CustomTimelineLayer extends CompositeLayer<any, any> {
       }
 
       //@ts-ignore
-      const data = this.aggregateFeatures(this.props.data, iconGroupsConfig);
+      const data = this.aggregateFeatures(
+        this.props.data,
+        //@ts-ignore
+        // getIconGroupConfig(this.props.phase),
+        iconGroupsConfig,
+      );
       //@ts-ignore
       this.setState({
         data,
