@@ -8,7 +8,13 @@ Data sources are `destination` names that reference the location of data on Cart
 
 **Destination Breakdown:**
 
-![destination](/docs/assets/carto_data_source_structure_details.drawio.png)
+![destination](/docs/assets/carto_data_source_structure_details.png)
+
+For this project:
+
+- **data_warehouse:** `carto-dw-ac-4v8fnfsh`
+- **location:** `shared`
+- **data_set_name:** `varied` (see below)
 
 **Note:** `_sourceFile_` is the file that contains the data source configuration.
 
