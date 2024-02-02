@@ -3,9 +3,11 @@
 Data sources are `destination` names that reference the location of data on Carto DataWarehouse (Google BigQuery). They are used to retrieve the data using Carto's SQL API. Data Source are sent with authorised user token which determines if the user has the right to access to that particular dataset.
 
 **Destination String:**
+
 ![destination](assets/carto_data_source_structure_norm.png)
-\n
+
 **Destination Breakdown:**
+
 ![destination](/docs/assets/carto_data_source_structure_details.drawio.png)
 
 **Note:** `_sourceFile_` is the file that contains the data source configuration.
