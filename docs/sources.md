@@ -104,7 +104,7 @@ The following is the data sources for the first round of Migration Flow project 
 
 ## Round 2
 
-The following is the data sources for the first round of Migration Flow project (March 2023 - May 2023):
+The following is the data sources for the first round of Migration Flow project (October 2023 - December 2023):
 
 ### aurora_round_2
 

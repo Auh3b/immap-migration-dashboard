@@ -1,5 +1,8 @@
 import { ascending, descending, rollup } from 'd3';
 
+/**
+ * Return an array of object  to populate a stacked bar chart
+ */
 const stackedGroupCategoriesAlt = (
   input: any[],
   column: string,

@@ -1,6 +1,9 @@
 import MethodFunc from './methodType';
 import stackCategoryTotals from './stackCategoryTotals';
 
+/**
+ * Return an array of object  to populate a stacked bar chart
+ */
 const stackedGroupCategoriesAlt2: MethodFunc<any[]> = (
   input: any[],
   column: string,

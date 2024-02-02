@@ -1,5 +1,8 @@
 import { rollup } from 'd3';
 
+/**
+ * Return an array of object  to populate a stacked bar chart
+ */
 const stackedGroupCategories = (
   input: any[],
   column: string,

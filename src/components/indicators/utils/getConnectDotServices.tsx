@@ -1,6 +1,9 @@
 import MethodFunc from './methodType';
 import { defaultFilterFunction } from './miscelleniousFunctions';
 
+/**
+ * Return an array of values for the Connect dot visual
+ */
 const getConnectDotServices: MethodFunc<any[]> = (input, column, params) => {
   let output: any[] = [];
   const {

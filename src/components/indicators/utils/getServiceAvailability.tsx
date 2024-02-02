@@ -1,6 +1,9 @@
 import { AggregationTypes, groupValuesByColumn } from '@carto/react-core';
 import MethodFunc from './methodType';
 
+/**
+ * Return an array of values for service availability visualisation
+ */
 const getServiceAvailability: MethodFunc<any[]> = (input, column, params) => {
   let output: any[] = [];
   const { columns: valueColumns } = params;

@@ -2,6 +2,9 @@ import { AggregationTypes, aggregationFunctions } from '@carto/react-core';
 import MethodFunc from 'components/indicators/utils/methodType';
 import { UNICEF_COLORS } from 'theme';
 
+/**
+ * Return an array of object  to populate a stacked bar chart
+ */
 const singleStackBarValues: MethodFunc<any[]> = (input, column, params) => {
   const { columns, legend, aggregationType = AggregationTypes.SUM } = params;
   let name = [legend];

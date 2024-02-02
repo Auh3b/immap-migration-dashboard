@@ -29,6 +29,10 @@ const SUMMARIZATION_METHOD = Object.fromEntries([
   [SummarisationTypes.COUNT, (input: any[], column: string) => input.length],
 ]);
 
+/**
+ * Aggregate columns or field based on summarization type
+ *
+ */
 const aggregateColumns: MethodFunc<any[]> = (input, column, params) => {
   if (!input.length) return [];
 

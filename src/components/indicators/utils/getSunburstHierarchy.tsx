@@ -7,7 +7,6 @@ import {
   sum,
 } from 'd3';
 import groupCategories from './groupCategories';
-// import { UNICEF_COLORS } from 'theme';
 
 export const COLOR_SCALE_TYPE = {
   SEQUENTIAL: 'sequential',
@@ -85,6 +84,10 @@ function getColors(input: any[], columns: string[], colorScaleType: string) {
   const colorMap = getColorMap(uniqueValues, colorScale, colorScaleType);
   return colorMap;
 }
+
+/**
+ * Rerturn an array of object in a hierarchy structure of parents and children values
+ */
 function getSunburstHierarchy(
   input: any[],
   column: string,

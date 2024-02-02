@@ -33,8 +33,8 @@ The application allows for adding in your own aggregation functions as per your 
 
 To add the custom method or aggregation function, use the following steps:
 
-1. Add the custom function in the function director `/app-id/src/components/indicators/utils`
-2. Add the script reference in methodWorker registery (Map) `/app-id/src/utils/method/methods.ts`
+1. Add the custom function in the function director [`~/src/components/indicators/utils`](/src/utils/)
+2. Add the script reference in methodWorker registery (Map) [`~/src/utils/methods/methods.ts`](/src/utils/methods/methods.ts)
 
    ```JavaScript
     export const EXTERNAL_METHODS = {
@@ -42,7 +42,7 @@ To add the custom method or aggregation function, use the following steps:
     }
    ```
 
-3. Add the function to worker scripts `/app-id/src/utils/method/methodWorker.ts`
+3. Add the function to worker scripts [`~/src/utils/method/methodWorker.ts`](/src/utils/methods/methodWorker.ts)
 
    ```JavaScript
     import new_method from "~/src/components/indicators/utils"
@@ -73,3 +73,25 @@ To add the custom method or aggregation function, use the following steps:
    ```
 
 ## Project Methods
+
+Methods or function developed for calculating indicators include:
+
+- `AggregateColumns` - [Link](/src/components/indicators/utils/AggregateColumns.ts)
+- `concatenatedValues` - [Link](/src/components/indicators/utils/concatenatedValues.ts)
+- `getAverageElapsedDays` - [Link](/src/components/indicators/utils/getAverageElapsedDays.tsx)
+- `getAvgDaysByCountry` - [Link](/src/components/indicators/utils/getAvgDaysByCountry.tsx)
+- `getConnectDotServices` - [Link](/src/components/indicators/utils/getConnectDotServices.tsx)
+- `getHierarchy` - [Link](/src/components/indicators/utils/getHierarchy.ts)
+- `getServiceAvailability` - [Link](/src/components/indicators/utils/getServiceAvailability.tsx)
+- `getSunburstHierarchy` - [Link](/src/components/indicators/utils/getSunburstHierarchy.tsx)
+- `groupCategories` - [Link](/src/components/indicators/utils/groupCategories.ts)
+- `histogramValues` - [Link](/src/components/indicators/utils/histogramValues.ts)
+- `miscelleniousFunctions` - [Link](/src/components/indicators/utils/miscelleniousFunctions.ts)
+- `singleStackBarValues` - [Link](/src/components/indicators/utils/singleStackBarValues.ts)
+- `stackCategoryTotals` - [Link](/src/components/indicators/utils/stackCategoryTotals.ts)
+- `stackedBarCategories` - [Link](/src/components/indicators/utils/stackedBarCategories.ts)
+- `stackedGroupCategories` - [Link](/src/components/indicators/utils/stackedGroupCategories.ts)
+- `stackedGroupCategoriesAlt2` - [Link](/src/components/indicators/utils/stackedGroupCategoriesAlt2.ts)
+- `stackedGroupCategoryAlt` - [Link](/src/components/indicators/utils/stackedGroupCategoryAlt.ts)
+- `timelineValueAlt` - [Link](/src/components/indicators/utils/timelineValueAlt.tsx)
+- `timelineValues` - [Link](/src/components/indicators/utils/timelineValues.ts)

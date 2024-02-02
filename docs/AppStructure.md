@@ -2,36 +2,36 @@
 
 ## `ASSETS`
 
-Directory for static assets such as images
+[Directory](/src/assets/) for static assets such as images.
 
 ## `COMPONENTS`
 
-Directory for component of react application having both carto-components and custom react components.
+[Directory](/src/components/) for component of react application having both carto-components and custom react components.
 
-## `INDICATORS`
+### `Indicators`
 
-Directory of components having visualisation components pertaining to specific indicator. They have been grouped by [view](#views).
+[Directory](/src/components/indicators/) of components having visualisation components pertaining to specific indicator. They have been grouped by [view](#views). For documentation of indicator, see [here](/docs/indicators.md).
 
-## `VIEWS`
+### `Views`
 
-Dirctory of page components
+[Directory](/src/components/views/) of page components. For documentation of views, see [here](/docs/pages.md).
+
+### `Layers`
+
+[Directory](/src/components/layers/) of layer components. For documentation of views, see [here](/docs/layers.md).
 
 ## `DATA`
 
-Directory having data models to derive from carto.
-
-## `FIREDB`
-
-Directory having firebase functions. This was used with retrieve data from firebase storage.
+[Directory](/src/data/) having data models to derive from carto. For documentation of data sources, see [here](/docs/sources.md).
 
 ## `HOOKS`
 
-Directory of hooks used through out the application.
+[Directory](/src/hooks/) of hooks used through out the application.
 
 ## `STORE`
 
-Directory for redux stores
+[Directory](/src/store/) for redux stores.
 
 ## `UTILS`
 
-Directory having extra common functions.
+[Directory](/src/utils/) having extra common functions.

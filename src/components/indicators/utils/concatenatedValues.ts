@@ -3,6 +3,10 @@ import MethodFunc from './methodType';
 import groupByValue, { GroupByTypes } from 'utils/groupByValue';
 import { defaultFilterFunction } from './miscelleniousFunctions';
 
+/**
+ * Aggreagate unique concatenated values based on each entry
+ */
+
 const concatenatedValues: MethodFunc<any[]> = (input, column, params) => {
   if (!input.length) {
     return [];

@@ -12,6 +12,9 @@ const SORT_FUNCTION = Object.fromEntries([
   [Sort_Type.DESC, descending],
 ]);
 
+/**
+ * return an array of objects which has grouped values of single column
+ */
 export default function groupCategories(
   input: any[],
   column: string,

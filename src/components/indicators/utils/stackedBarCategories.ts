@@ -3,6 +3,9 @@ import { ascending } from 'd3';
 import groupByValue, { GroupByTypes } from 'utils/groupByValue';
 import { defaultFilterFunction } from './miscelleniousFunctions';
 
+/**
+ * Return an array of object  to populate a stacked bar chart
+ */
 const stackedBarCategories: MethodFunc<any[]> = (input, column, params) => {
   try {
     const { columns, legend, aggType } = params;

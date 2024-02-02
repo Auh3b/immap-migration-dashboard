@@ -1,5 +1,8 @@
 import { descending, rollup } from 'd3';
 
+/**
+ * Return an array of object  to populate a stacked category chart
+ */
 export default function stackCategoryTotals({
   input,
   labels,
