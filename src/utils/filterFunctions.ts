@@ -1,3 +1,5 @@
+import { MediaFieldValues } from 'components/views/mediaViews/utils/mediaUtils';
+
 export enum FilterTypes {
   IN = 'in',
   BETWEEN = 'between', // [a, b] both are included
@@ -47,7 +49,7 @@ function filterRange(column: string, value: [number, number]) {
 function filterWordCloud(column: string, value: string) {
   return (d: any) => {
     const words: string = d[column]
-      .map(([word, count]: [string, number]) => word)
+      .map(({ name: word }: MediaFieldValues) => word)
       .join(',');
     return words.search(value) === -1 ? false : true;
   };

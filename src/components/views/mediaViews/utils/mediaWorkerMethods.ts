@@ -1,4 +1,4 @@
-import { ascending, descending, flatRollup, max, min, sum } from 'd3';
+import { ascending, descending, flatRollup, max, merge, min, sum } from 'd3';
 import { MEDIA_SOURCES, Input, MediaParams, POST_URL_MAP } from './mediaUtils';
 import groupByValue, { GroupByTypes } from 'utils/groupByValue';
 import { Filters, filterValues } from 'utils/filterFunctions';
@@ -9,7 +9,10 @@ import { getUnixTimestamp } from 'utils/dateHelpers';
 let mediaData: Partial<Input>;
 
 export function setMediaData({ data }: MediaParams) {
-  mediaData = data;
+  const volume = sum(data, (d) => d.volume);
+  const sources = Array.from(new Set(data.map(({ source }) => source)));
+  const summary = { volume, sources };
+  mediaData = { summary, sources: data };
   return true;
 }
 
@@ -95,7 +98,7 @@ export function getSentimentPercentages({ filters }: MediaParams) {
         .map(({ sentiment }: any) => sentiment);
       let groupSentiment: any[] = [];
       for (let group of sentimentBySource) {
-        for (let [name, value] of group) {
+        for (let { name, value } of group) {
           groupSentiment = [...groupSentiment, { name, value }];
         }
       }
@@ -143,14 +146,14 @@ export function getSentimentHistory({ filters }: MediaParams) {
     const data = applyFiltersToData(mediaData, filters);
     const { sources: _sources } = data;
     let _data2: any[] = [];
-    let dates = Array.from(new Set(_sources.map(({ date }: any) => date)));
+    let dates = Array.from(new Set(_sources.map(({ date }) => date)));
     for (let dateValue of dates) {
       const sentimentByDate = _sources
         .filter(({ date }: any) => date === dateValue)
         .map(({ sentiment }: any) => sentiment);
       let groupSentiment: any[] = [];
       for (let group of sentimentByDate) {
-        for (let [name, value] of group) {
+        for (let { name, value } of group) {
           groupSentiment = [...groupSentiment, { name, value }];
         }
       }
@@ -224,16 +227,9 @@ export function getTopPhrases({ filters }: MediaParams) {
 
     const { sources: _sources } = data;
 
-    let _data2: any[] = [];
+    const groupsArray = _sources.map(({ topPhrases }) => topPhrases);
 
-    const groupsArray = _sources.map(({ topPhrases }: any) => topPhrases);
-
-    for (let group of groupsArray) {
-      for (let [name, value] of group) {
-        _data2 = [..._data2, { name, value }];
-      }
-    }
-
+    const _data2: any[] = merge(groupsArray);
     const output = groupByValue({
       input: _data2,
       valueColumn: 'value',
@@ -271,7 +267,7 @@ export function getTopPosts({ filters }: MediaParams) {
       let _output: any[] = [];
       for (let { source, date, topPosts } of listBySource) {
         if (source === 'news') continue;
-        for (let [name, value] of topPosts) {
+        for (let { name, value } of topPosts) {
           const url = POST_URL_MAP.get(source)(name) || name;
           const id = crypto.randomBytes(20).toString('hex');
           _output = [..._output, { id, source, name, date, value, url }];
@@ -324,7 +320,7 @@ export function getKeywords(_e: MediaParams) {
     for (let group of groupsArray) {
       _data2 = [
         ..._data2,
-        ...group.map(([name, value]) => ({
+        ...group.map(({ name, value }) => ({
           name: name.toLocaleLowerCase(),
           value,
         })),
