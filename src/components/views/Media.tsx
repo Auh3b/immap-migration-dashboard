@@ -1,4 +1,6 @@
 import { lazy, useEffect, useState } from 'react';
+// @ts-ignore
+import { fetchLayerData } from '@deck.gl/carto';
 import { setError } from 'store/appSlice';
 import { getDownloadURL, ref } from 'firebase/storage';
 import { fireStorage } from 'firedb';
@@ -14,6 +16,7 @@ import { ActiveFilters } from 'components/common/sideAnalysticsPanel/ActiveFilte
 import { StateSlices } from 'utils/types';
 import MediaFilterToolbar from './mediaViews/mediaFilterToolbar/Index';
 import { SideAnalyticsPanelProps } from 'components/common/sideAnalysticsPanel/sideAnalyticsPanelTypes';
+import mediaSource from 'data/sources/mediaSource';
 
 export const MediaMainView = lazy(() => import('./mediaViews/MediaMainView'));
 const sidePanelProps: SideAnalyticsPanelProps = {
@@ -48,13 +51,14 @@ export default function Media() {
   const fetchMediaData = async () => {
     setIsLoading(true);
     try {
-      const dataRef = ref(
-        fireStorage,
-        'data/summarised_meltwater_data_v15.json',
-      );
-      const dataUrl = await getDownloadURL(dataRef);
-      const dataReq = await fetch(dataUrl);
-      const data = await dataReq.json();
+      const { data } = await fetchLayerData({
+        ...mediaSource,
+        source: mediaSource.data,
+        format: 'json',
+        headers: {
+          'cache-control': 'max-age=300',
+        },
+      });
       const result = await executeMethod(METHOD_NAMES.SET_MEDIA_DATA, { data });
       if (!result) {
         throw 'Something went wrong when loading data';
