@@ -79,3 +79,5 @@ export interface MediaParams {
   data?: Sources;
   filters?: Filters;
 }
+
+export type MediaFieldValues = FieldValues;
