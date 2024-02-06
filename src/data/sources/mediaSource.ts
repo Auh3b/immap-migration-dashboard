@@ -37,7 +37,7 @@ const source = {
                   ) as x
                 FROM UNNEST(JSON_QUERY_ARRAY(topphrases)) as l
                 ) AS item
-            ) AS topphrases,
+            ) AS topPhrases,
             (
               SELECT 
                 ARRAY_AGG(item.x) 
@@ -61,7 +61,7 @@ const source = {
                   ) as x
                 FROM UNNEST(JSON_QUERY_ARRAY(topposts)) as l
                 ) AS item
-            ) AS topposts
+            ) AS topPosts
             
         FROM \`carto-dw-ac-4v8fnfsh.shared.processed_meltwater_data_v3_with_location\``,
 };
