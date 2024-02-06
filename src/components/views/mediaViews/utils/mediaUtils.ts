@@ -50,15 +50,18 @@ interface Summary {
   sources: string[];
 }
 
-type FieldValues = [string, number];
+interface FieldValues {
+  name: string;
+  value: number;
+}
 
 interface SourceField {
   date: string;
   source: string;
   volume: number;
+  country: string;
   topPhrases: FieldValues[];
   sentiment: FieldValues[];
-  countries: FieldValues[];
   languages: FieldValues[];
   topPosts: FieldValues[];
   keywords: FieldValues[];
@@ -73,6 +76,6 @@ export interface Input {
 }
 
 export interface MediaParams {
-  data?: Partial<Input>;
+  data?: Sources;
   filters?: Filters;
 }
